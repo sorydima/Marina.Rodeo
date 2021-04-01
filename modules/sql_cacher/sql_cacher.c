@@ -531,7 +531,7 @@ static int insert_in_cachedb(cache_entry_t *c_entry, db_handlers_t *db_hdls,
 	unsigned int i, offset = 0, strs_offset = 0;
 	int int_val;
 	int int_key_len = 0, rc = 0;
-	char int_buf[4], int_enc_buf[INT_B64_ENC_LEN];
+	char int_enc_buf[INT_B64_ENC_LEN];
 	char *int_key_buf = NULL;
 	str str_val;
 	db_type_t val_type;
@@ -547,8 +547,7 @@ static int insert_in_cachedb(cache_entry_t *c_entry, db_handlers_t *db_hdls,
 	}
 
 	/* store the reload version (base64 encoded) */
-	memcpy(int_buf, &reload_version, 4);
-	base64encode((unsigned char *)int_enc_buf, (unsigned char *)int_buf, 4);
+	base64encode((unsigned char *)int_enc_buf, (unsigned char *)&reload_version, 4);
 	memcpy(cdb_val.s, int_enc_buf, INT_B64_ENC_LEN);
 
 	offset += INT_B64_ENC_LEN;
@@ -570,15 +569,13 @@ static int insert_in_cachedb(cache_entry_t *c_entry, db_handlers_t *db_hdls,
 				break;
 			default: continue;
 		}
+
 		if (VAL_NULL(values + i))
 			memset(int_enc_buf, 0, INT_B64_ENC_LEN);
-		else {
-			memcpy(int_buf, &int_val, 4);
-			base64encode((unsigned char *)int_enc_buf, (unsigned char *)int_buf, 4);
-		}
+		else
+			base64encode((unsigned char *)int_enc_buf, (unsigned char *)&int_val, 4);
 
 		memcpy(cdb_val.s + offset, int_enc_buf, INT_B64_ENC_LEN);
-
 		offset += INT_B64_ENC_LEN;
 	}
 
@@ -600,15 +597,14 @@ static int insert_in_cachedb(cache_entry_t *c_entry, db_handlers_t *db_hdls,
 				break;
 			default: continue;
 		}
+
 		if (VAL_NULL(values + i))
 			int_val = 0;
 		else
 			int_val = strs_offset;
 
-		memcpy(int_buf, &int_val, 4);
-		base64encode((unsigned char *)int_enc_buf, (unsigned char *)int_buf, 4);
+		base64encode((unsigned char *)int_enc_buf, (unsigned char *)&int_val, 4);
 		memcpy(cdb_val.s + offset, int_enc_buf, INT_B64_ENC_LEN);
-
 		offset += INT_B64_ENC_LEN;
 
 		memcpy(cdb_val.s + strs_offset, str_val.s, str_val.len);
@@ -1345,7 +1341,6 @@ static int cdb_val_decode(pv_name_fix_t *pv_name, str *cdb_val, int reload_versi
 							str *str_res, int *int_res)
 {
 	int int_val, next_str_off, i, rc;
-	char int_buf[4];
 	const char zeroes[INT_B64_ENC_LEN] = {0};
 
 	if (pv_name->col_offset == -1) {
@@ -1354,10 +1349,9 @@ static int cdb_val_decode(pv_name_fix_t *pv_name, str *cdb_val, int reload_versi
 	}
 
 	/* decode the reload version */
-	if (base64decode((unsigned char *)int_buf,
+	if (base64decode((unsigned char *)&int_val,
 		(unsigned char *)(cdb_val->s), INT_B64_ENC_LEN) != 4)
 		goto error;
-	memcpy(&int_val, int_buf, 4);
 
 	if (reload_version != int_val)
 		return 3;
@@ -1367,10 +1361,9 @@ static int cdb_val_decode(pv_name_fix_t *pv_name, str *cdb_val, int reload_versi
 		return 1;
 
 	/* decode the integer value or the offset of the string value */
-	if (base64decode((unsigned char *)int_buf,
+	if (base64decode((unsigned char *)&int_val,
 		(unsigned char *)(cdb_val->s + pv_name->col_offset), INT_B64_ENC_LEN) != 4)
 		goto error;
-	memcpy(&int_val, int_buf, 4);
 
 	if (is_str_column(pv_name)) {
 		/* null string value in db */
@@ -1384,11 +1377,10 @@ static int cdb_val_decode(pv_name_fix_t *pv_name, str *cdb_val, int reload_versi
 			/* calculate the length of the current string using the offset of the next not null string */
 			i = 1;
 			do {
-				rc = base64decode((unsigned char *)int_buf, (unsigned char *)(cdb_val->s +
+				rc = base64decode((unsigned char *)&next_str_off, (unsigned char *)(cdb_val->s +
 					pv_name->col_offset + i * INT_B64_ENC_LEN), INT_B64_ENC_LEN);
 				if (rc != 4)
 					goto error;
-				memcpy(&next_str_off, int_buf, 4);
 				i++;
 			} while (next_str_off == 0 && pv_name->col_offset + i*INT_B64_ENC_LEN <
 						(pv_name->c_entry->nr_columns + 1) * INT_B64_ENC_LEN);
