@@ -278,7 +278,7 @@ static int qr_child_init(int rank)
 	}
 
 	if (!(qr_db_hdl = qr_dbf.init(&db_url)))
-		LM_ERR("failed to load db url %.*s\n", db_url.len, db_url.s);
+		LM_ERR("failed to load db url %s\n", db_url_escape(&db_url));
 
 	if (rank == 1 && qr_reload(&qr_dbf, qr_db_hdl) < 0)
 		LM_ERR("failed to load data from db\n");
@@ -536,7 +536,7 @@ static int qr_check_db(void)
 	}
 
 	if (!(qr_db_hdl = qr_dbf.init(&db_url))) {
-		LM_ERR("failed to load db url %.*s\n", db_url.len, db_url.s);
+		LM_ERR("failed to load db url %s\n", db_url_escape(&db_url));
 		return -1;
 	}
 
