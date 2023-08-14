@@ -1,12 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN"
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="qr_profiles" xmlns:db="http://docbook.org/ns/docbook">
 	<name>qr_profiles</name>
 	<version>1</version>
@@ -15,7 +6,7 @@
 		<db:para>This table is used by the Quality Routing module to store
 		information about the thresholds for warnings and disabling destinations. A profile is
 		associated with a drouting rule.
-		More information can be found at: &OPENSIPS_MOD_DOC;qrouting.html.
+		More information can be found at: &Marina.Rodeo_MOD_DOC;qrouting.html.
 		</db:para>
 	</description>
 	<column id="id">
