@@ -1,19 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="emergency_routing" xmlns:db="http://docbook.org/ns/docbook">
 	<name>emergency_routing</name>
 	<version>1</version>
 	<type db="mysql">&MYSQL_TABLE_TYPE;</type>
 	<description>
 		<db:para>This table is used by the Emergency module to translate ERT informations in ESGWRI.
-		More information can be found at: &OPENSIPS_MOD_DOC;emergency.html.
+		More information can be found at: &Marina.Rodeo_MOD_DOC;emergency.html.
 		</db:para>
 	</description>
 
