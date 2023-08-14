@@ -1,12 +1,5 @@
-[![Build Status](https://github.com/OpenSIPS/opensips/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/OpenSIPS/opensips/actions/workflows/main.yml?query=branch%3Amaster++)
-[![Unit Tests](https://github.com/OpenSIPS/opensips/actions/workflows/unittests.yml/badge.svg?branch=master)](https://github.com/OpenSIPS/opensips/actions/workflows/unittests.yml?query=branch%3Amaster++)
-[![OSS-Fuzz](https://github.com/OpenSIPS/opensips/actions/workflows/cifuzz.yml/badge.svg?branch=master)](https://github.com/OpenSIPS/opensips/actions/workflows/cifuzz.yml?query=branch%3Amaster++)
-[![Cross Platform Builds](https://github.com/OpenSIPS/opensips/actions/workflows/multiarch.yml/badge.svg?branch=master)](https://github.com/OpenSIPS/opensips/actions/workflows/multiarch.yml?query=branch%3Amaster++)
-[![Coverity Scan Build Status](https://scan.coverity.com/projects/7580/badge.svg)](https://scan.coverity.com/projects/opensips-opensips)
-[![Code Quality: Cpp](https://img.shields.io/lgtm/grade/cpp/g/OpenSIPS/opensips.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/OpenSIPS/opensips/context:cpp)
-[![Total Alerts](https://img.shields.io/lgtm/alerts/g/OpenSIPS/opensips.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/OpenSIPS/opensips/alerts)
-
-# Welcome to OpenSIPS Project
+# Welcome to Marina.Rodeo Project! Imagine a world where your voice meets the limitless potential of blockchain technology. Marina.Rodeo, the unparalleled decentralized SIP VoIP service, transcends traditional communication by integrating blockchain for secure, high-quality voice calls. No more centralized control—embrace a borderless communication experience with Marina.Rodeo! 🐝
+# Marina.Rodeo - based on the OpenSIPS GPL implementation of a multi-functionality SIP Server that targets to deliver a high-level technical solution (performance, security and quality) to be used in professional SIP server platforms. 📺
 
 
 ## About
