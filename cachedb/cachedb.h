@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2011-2019 OpenSIPS Solutions
+ * Copyright (C) 2011-2019 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -154,7 +154,7 @@ typedef struct cachedb_funcs_t {
 		const cdb_dict_t *pairs);
 	int (*map_remove) (cachedb_con *con, const str *key, const str *subkey);
 
-	/* Checks if the database is replicated (in an OpenSIPS cluster).
+	/* Checks if the database is replicated (in an Marina.Rodeo cluster).
 	 * Currently only makes sense for cachedb_local
 	 */
 	int (*is_replicated) (cachedb_con *con);
