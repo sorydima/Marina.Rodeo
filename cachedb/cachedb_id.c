@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2011 OpenSIPS Solutions
+ * Copyright (C) 2011 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -340,7 +340,7 @@ static int parse_cachedb_url(struct cachedb_id* id, const str* url)
 		if (begin == url->s+url->len) {
 			if (st == ST_USER_HOST) {
 				/* Not considered an error - to cope with modules that
-				 * offer cacheDB functionality backed up by OpenSIPS mem */
+				 * offer cacheDB functionality backed up by Marina.Rodeo mem */
 				id->flags |= CACHEDB_ID_NO_URL;
 				LM_DBG("Just scheme, no actual url\n");
 				return 0;
