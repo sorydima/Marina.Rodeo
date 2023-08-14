@@ -2,8 +2,8 @@
 # $Id$
 #
 
-# OpenSIPS database descriptions for modules
-TABLES := $(patsubst opensips-%.xml,%,$(wildcard opensips-*.xml))
+# Marina.Rodeo database descriptions for modules
+TABLES := $(patsubst marinarodeo-%.xml,%,$(wildcard marinarodeo-*.xml))
 
 ROOT=../..
 STYLESHEETS=$(ROOT)/doc/dbschema/xsl
@@ -64,13 +64,13 @@ pi_framework:
 		XML_CATALOG_FILES=$(CATALOG) $(XSLTPROC) $(XSLTPROC_FLAGS) \
 		--stringparam dir "$(ROOT)/scripts/pi_http" \
 		--stringparam prefix "$$FILE-" \
-		$(PI_FRAMEWORK_TABLE_XSL) opensips-"$$FILE".xml ; \
+		$(PI_FRAMEWORK_TABLE_XSL) marinarodeo-"$$FILE".xml ; \
 	done
 	for FILE in $(TABLES); do \
 		XML_CATALOG_FILES=$(CATALOG) $(XSLTPROC) $(XSLTPROC_FLAGS) \
 		--stringparam dir "$(ROOT)/scripts/pi_http" \
 		--stringparam prefix "$$FILE-" \
-		$(PI_FRAMEWORK_MOD_XSL) opensips-"$$FILE".xml ; \
+		$(PI_FRAMEWORK_MOD_XSL) marinarodeo-"$$FILE".xml ; \
 	done
 	cat $(ROOT)/scripts/pi_http/pi_framework-00 \
 		$(ROOT)/scripts/pi_http/*-table \
@@ -90,7 +90,7 @@ mysql:
 		--stringparam dir "$(ROOT)/scripts/mysql" \
 		--stringparam prefix "$$FILE-" \
 		--stringparam db "mysql" \
-		$(MYSQL_XSL) opensips-"$$FILE".xml ; \
+		$(MYSQL_XSL) marinarodeo-"$$FILE".xml ; \
 	done
 
 mysql_clean:
@@ -103,7 +103,7 @@ sqlite:
 		--stringparam dir "$(ROOT)/scripts/sqlite" \
 		--stringparam prefix "$$FILE-" \
 		--stringparam db "sqlite" \
-		$(SQLITE_XSL) opensips-"$$FILE".xml ; \
+		$(SQLITE_XSL) marinarodeo-"$$FILE".xml ; \
 	done
 
 sqlite_clean:
@@ -118,7 +118,7 @@ postgres:
 		--stringparam dir "$(ROOT)/scripts/postgres" \
 		--stringparam prefix "$$FILE-" \
 		--stringparam db "postgres" \
-		$(POSTGRES_XSL) opensips-"$$FILE".xml ; \
+		$(POSTGRES_XSL) marinarodeo-"$$FILE".xml ; \
 	done
 
 postgres_clean:
@@ -131,7 +131,7 @@ oracle:
 		--stringparam dir "$(ROOT)/scripts/oracle" \
 		--stringparam prefix "$$FILE-" \
 		--stringparam db "oracle" \
-		$(ORACLE_XSL) opensips-"$$FILE".xml ; \
+		$(ORACLE_XSL) marinarodeo-"$$FILE".xml ; \
 	done
 
 oracle_clean:
@@ -141,18 +141,18 @@ oracle_clean:
 dbtext:
 	for FILE in $(TABLES); do \
 		XML_CATALOG_FILES=$(CATALOG) $(XSLTPROC) $(XSLTPROC_FLAGS) \
-		--stringparam dir "$(ROOT)/scripts/dbtext/opensips" \
+		--stringparam dir "$(ROOT)/scripts/dbtext/marinarodeo" \
 		--stringparam prefix "" \
 		--stringparam db "dbtext" \
-		$(DBTEXT_XSL) opensips-"$$FILE".xml ; \
+		$(DBTEXT_XSL) marinarodeo-"$$FILE".xml ; \
 	done
 	set -e; \
-	TMPFILE=`mktemp -t opensips-test.XXXXXXXXXX`; \
-	for FILE in  $(sort $(wildcard $(ROOT)/scripts/dbtext/opensips/*)) ; do \
+	TMPFILE=`mktemp -t marinarodeo-test.XXXXXXXXXX`; \
+	for FILE in  $(sort $(wildcard $(ROOT)/scripts/dbtext/marinarodeo/*)) ; do \
 		if [ -f "$$FILE" ]; then \
-			if [  "$$FILE" != "$(ROOT)/scripts/dbtext/opensips/version" -a \
+			if [  "$$FILE" != "$(ROOT)/scripts/dbtext/marinarodeo/version" -a \
 					`wc -l "$$FILE" | cut -f 1 -d ' '` -gt 1 ]; then \
-				tail -1 "$$FILE" >> "$(ROOT)/scripts/dbtext/opensips/version" ; \
+				tail -1 "$$FILE" >> "$(ROOT)/scripts/dbtext/marinarodeo/version" ; \
  				head -n 1 "$$FILE" > "$$TMPFILE" ; \
 				cp "$$TMPFILE" "$$FILE" ; \
 			fi ; \
@@ -161,23 +161,23 @@ dbtext:
 	rm -f "$$TMPFILE"
 
 dbtext_clean:
-	-@rm -f $(ROOT)/scripts/dbtext/opensips/*
+	-@rm -f $(ROOT)/scripts/dbtext/marinarodeo/*
 
 .PHONY: db_berkeley db_berkeley_clean
 db_berkeley:
 	for FILE in $(TABLES); do \
 		XML_CATALOG_FILES=$(CATALOG) $(XSLTPROC) $(XSLTPROC_FLAGS) \
-		--stringparam dir "$(ROOT)/scripts/db_berkeley/opensips" \
+		--stringparam dir "$(ROOT)/scripts/db_berkeley/marinarodeo" \
 		--stringparam prefix "" \
 		--stringparam db "db_berkeley" \
-		$(DB_BERKELEY_XSL) opensips-"$$FILE".xml ; \
+		$(DB_BERKELEY_XSL) marinarodeo-"$$FILE".xml ; \
 	done
 	set -e; \
-	TMPFILE=`mktemp -t opensips-test.XXXXXXXXXX`; \
-	for FILE in  $(sort $(wildcard $(ROOT)/scripts/db_berkeley/opensips/*)) ; do \
+	TMPFILE=`mktemp -t marinarodeo-test.XXXXXXXXXX`; \
+	for FILE in  $(sort $(wildcard $(ROOT)/scripts/db_berkeley/marinarodeo/*)) ; do \
 		if [ -f "$$FILE" ]; then \
-			if [  "$$FILE" != "$(ROOT)/scripts/db_berkeley/opensips/version" ]; then \
-				tail -2 "$$FILE" >> "$(ROOT)/scripts/db_berkeley/opensips/version" ; \
+			if [  "$$FILE" != "$(ROOT)/scripts/db_berkeley/marinarodeo/version" ]; then \
+				tail -2 "$$FILE" >> "$(ROOT)/scripts/db_berkeley/marinarodeo/version" ; \
  				head -n 10 "$$FILE" > "$$TMPFILE" ; \
 				cp "$$TMPFILE" "$$FILE" ; \
 			fi ; \
@@ -186,7 +186,7 @@ db_berkeley:
 	rm -f "$$TMPFILE"
 
 db_berkeley_clean:
-	-@rm -f $(ROOT)/scripts/db_berkeley/opensips/*
+	-@rm -f $(ROOT)/scripts/db_berkeley/marinarodeo/*
 
 
 .PHONY: docbook docbook_clean
@@ -195,7 +195,7 @@ docbook:
 		XML_CATALOG_FILES=$(CATALOG) $(XSLTPROC) $(XSLTPROC_FLAGS) \
 		--stringparam dir "$(ROOT)/doc/database" \
 		--stringparam prefix "$$FILE-" \
-		$(DOCBOOK_XSL) opensips-"$$FILE".xml ; \
+		$(DOCBOOK_XSL) marinarodeo-"$$FILE".xml ; \
 	done ; \
 
 	# link all documents to one file, to get nicer output
