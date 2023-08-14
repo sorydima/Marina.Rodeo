@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="b2b_logic" xmlns:db="http://docbook.org/ns/docbook">
     <name>b2b_logic</name>
     <version>5</version>
     <type db="mysql">&MYSQL_TABLE_TYPE;</type>
     <description>
-        <db:para>Table for the b2b_logic module. More information can be found at: &OPENSIPS_MOD_DOC;b2b_logic.html
+        <db:para>Table for the b2b_logic module. More information can be found at: &Marina.Rodeo_MOD_DOC;b2b_logic.html
         </db:para>
     </description>
 
