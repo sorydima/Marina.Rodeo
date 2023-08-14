@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN"
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="missed_calls" xmlns:db="http://docbook.org/ns/docbook">
     <name>missed_calls</name>
     <version>5</version>
     <type db="mysql">&MYSQL_TABLE_TYPE;</type>
     <description>
-        <db:para>This table is used by the ACC module for keeping track of missed calls. This table is similar to the 'acc' table. More information is available at: &OPENSIPS_MOD_DOC;acc.html</db:para>
+        <db:para>This table is used by the ACC module for keeping track of missed calls. This table is similar to the 'acc' table. More information is available at: &Marina.Rodeo_MOD_DOC;acc.html</db:para>
     </description>
 
     <column id="id">
