@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//pub/opensips/.org//DTD DBSchema V1.1//EN"
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="tracer" xmlns:db="http://docbook.org/ns/docbook">
     <name>sip_trace</name>
     <version>5</version>
     <type db="mysql">&MYSQL_TABLE_TYPE;</type>
     <description>
-        <db:para>This table is used to store incoming/outgoing SIP messages in database. More informations can be found in the tracer module documentation at: &OPENSIPS_MOD_DOC;tracer.html.
+        <db:para>This table is used to store incoming/outgoing SIP messages in database. More informations can be found in the tracer module documentation at: &Marina.Rodeo_MOD_DOC;tracer.html.
         </db:para>
     </description>
 
