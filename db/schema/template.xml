@@ -1,12 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-<!-- set DTD for XML format, use values from entities.xml -->
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="table_name" xmlns:db="http://docbook.org/ns/docbook"> <!-- set id for colref links and namespace for "db:para" nodes -->
     <name>table_name</name>
     <version>2</version>
