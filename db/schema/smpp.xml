@@ -1,12 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="smpp" xmlns:db="http://docbook.org/ns/docbook">
 	<name>smpp</name>
 	<version>1</version>
@@ -15,7 +6,7 @@
 		<db:para>
 			This table is used to provision Short Message Service Center (SMSC)
 			information to connect to over the SMPP (Short Message Peer-to-Peer).
-			More information can be found at: &OPENSIPS_MOD_DOC;proto_smpp.html.
+			More information can be found at: &Marina.Rodeo_MOD_DOC;proto_smpp.html.
 		</db:para>
 	</description>
 
