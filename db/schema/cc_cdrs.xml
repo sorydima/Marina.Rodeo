@@ -1,12 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="cc_cdrs" xmlns:db="http://docbook.org/ns/docbook">
 	<name>cc_cdrs</name>
 	<version>2</version>
@@ -14,7 +5,7 @@
 	<description>
 		<db:para>This table is used by the Call Center module to store
 		the Call Data Records (CDRs) for all the handled calls.
-		More information can be found at: &OPENSIPS_MOD_DOC;call_center.html.
+		More information can be found at: &Marina.Rodeo_MOD_DOC;call_center.html.
 		</db:para>
 	</description>
 
