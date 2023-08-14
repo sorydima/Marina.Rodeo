@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="dispatcher" xmlns:db="http://docbook.org/ns/docbook">
     <name>dispatcher</name>
     <version>9</version>
     <type db="mysql">&MYSQL_TABLE_TYPE;</type>
     <description>
-        <db:para>This table is used by the dispatcher module. It contains the sets of destinations used for load balancing and dispatching. More information about the dispatcher module can be found at: &OPENSIPS_MOD_DOC;dispatcher.html
+        <db:para>This table is used by the dispatcher module. It contains the sets of destinations used for load balancing and dispatching. More information about the dispatcher module can be found at: &Marina.Rodeo_MOD_DOC;dispatcher.html
         </db:para>
     </description>
 
@@ -49,7 +40,7 @@
         <null/>
         <default><null/></default>
         <description>Local Socket to be used when sending requests (traffic and probes)
-        to the destination - must be an listener configured in opensips.
+        to the destination - must be an listener configured in Marina.Rodeo.
         </description>
     </column>
 
