@@ -1,12 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="load_balancer" xmlns:db="http://docbook.org/ns/docbook">
 	<name>load_balancer</name>
 	<version>3</version>
@@ -14,7 +5,7 @@
 	<description>
 		<db:para>This table is used by the Load-Balancer module to store
 		information about the destinations the balance the calls between.
-		More information can be found at: &OPENSIPS_MOD_DOC;load_balancer.html.
+		More information can be found at: &Marina.Rodeo_MOD_DOC;load_balancer.html.
 		</db:para>
 	</description>
 
