@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 <!--
-Thank you for issuing a feature request in OpenSIPS!
+Thank you for issuing a feature request in Marina.Rodeo!
 
 In order for us to understand better the feature you want, kindly provide all the available information you have about it, according to the template below
 -->
@@ -25,7 +25,7 @@ A clear and concise description of what you want to happen.
 
 **Implementation**
 <!--
-Indicate in which OpenSIPS component this feature affects should be integrated in, and what type the component should have
+Indicate in which Marina.Rodeo component this feature affects should be integrated in, and what type the component should have
 --> 
   - Component: <!-- (example: `core`, `dialog` module, `tm` module) -->
   - Type: <!-- (example: variable, function, module's parameter) -->
