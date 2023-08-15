@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="address" xmlns:db="http://docbook.org/ns/docbook">
 	<name>address</name>
 	<version>5</version>
 	<type db="mysql">&MYSQL_TABLE_TYPE;</type>
 	<description>
-		<db:para>This table is used by the permissions module. More information is available at: &OPENSIPS_MOD_DOC;permissions.html
+		<db:para>This table is used by the permissions module. More information is available at: &Marina.Rodeo_MOD_DOC;permissions.html
 		</db:para>
 	</description>
 
@@ -81,6 +72,6 @@
 		<size>32</size>
 		<default><null/></default>
 		<null/>
-		<description>Extra context information, not used by OpenSIPS, but simply exposed to the script level via scripting variables</description>
+		<description>Extra context information, not used by Marina.Rodeo, but simply exposed to the script level via scripting variables</description>
 	</column>
 </table>
