@@ -1,12 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN"
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="freeswitch" xmlns:db="http://docbook.org/ns/docbook">
 	<name>freeswitch</name>
 	<version>1</version>
@@ -14,7 +5,7 @@
 	<description>
 		<db:para>Generic FreeSWITCH integration, allowing full control over
 		the ESL commands and event notifications. More information can be found
-		at: &OPENSIPS_MOD_DOC;freeswitch_scripting.html
+		at: &Marina.Rodeo_MOD_DOC;freeswitch_scripting.html
 		</db:para>
 	</description>
 
@@ -63,6 +54,6 @@
 		<type>string</type>
 		<size>255</size>
 		<null/>
-		<description>Comma-separated, case-sensitive values holding the exact FreeSWITCH ESL events which OpenSIPS will attempt to subscribe to</description>
+		<description>Comma-separated, case-sensitive values holding the exact FreeSWITCH ESL events which Marina.Rodeo will attempt to subscribe to</description>
 	</column>
 </table>
