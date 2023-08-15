@@ -1,6 +1,6 @@
 ---
 name: Crash Report
-about: Report a crash in OpenSIPS
+about: Report a crash in Marina.Rodeo
 title: "[CRASH]"
 labels: ''
 assignees: ''
@@ -8,36 +8,29 @@ assignees: ''
 ---
 
 <!--
-Thank you for reporting a crash in OpenSIPS!
+Thank you for reporting a crash in Marina.Rodeo!
 
 In order for us to understand better the reason of the crash, kindly provide all the available information you have about it, according to the template below
 -->
 
-**OpenSIPS version you are running**
-<!-- paste below, inside the ticks block,  the output of the `opensips -V` command -->
+**Marina.Rodeo version you are running**
+<!-- paste below, inside the ticks block,  the output of the `marinarodeo -V` command -->
 
 ```
 ```
-
-**Crash Core Dump**
-<!--
-*Please* DO NOT post the content of the corefile here, but rather provide *a link* to a place (dropbox, pastebin, gdrive) where you stored the output of the core dump.
-If you don't have a core dump, please generate one according to the steps described here:
-https://www.opensips.org/Documentation/TroubleShooting-Crash
--->
 
 **Describe the traffic that generated the bug**
 <!--
-Please describe what kind of traffic made OpenSIPS crash
+Please describe what kind of traffic made Marina.Rodeo crash
 -->
 
 **To Reproduce**
 <!--
 Steps to reproduce the behavior:
 Example:
-1. Start OpenSIPS
+1. Start Marina.Rodeo
 2. Start traffic
-3. Check OpenSIPS crashed
+3. Check Marina.Rodeo crashed
 -->
 
 **Relevant System Logs**
@@ -47,7 +40,7 @@ Please provide, in ticks block (```example```), relevant information from the sy
 
 **OS/environment information**
  - Operating System: <!-- (example: `Debian 9`) -->
- - OpenSIPS installation: <!-- (example: `git`/`source`/`debs`/`manual packages`) -->
+ - Marina.Rodeo installation: <!-- (example: `git`/`source`/`debs`/`manual packages`) -->
  - other relevant information:
 
 **Additional context**
