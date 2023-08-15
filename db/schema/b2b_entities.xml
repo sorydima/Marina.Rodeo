@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="b2b_entities" xmlns:db="http://docbook.org/ns/docbook">
     <name>b2b_entities</name>
     <version>2</version>
     <type db="mysql">&MYSQL_TABLE_TYPE;</type>
     <description>
-        <db:para>Table for the b2b_entities module. More information can be found at: &OPENSIPS_MOD_DOC;b2b_entities.html
+        <db:para>Table for the b2b_entities module. More information can be found at: &Marina.Rodeo_MOD_DOC;b2b_entities.html
         </db:para>
     </description>
 
@@ -164,7 +155,7 @@
         <name>mod_name</name>
         <type>string</type>
         <size>32</size>
-        <description>OpenSIPS module that this entity belongs to</description>
+        <description>Marina.Rodeo module that this entity belongs to</description>
     </column>
 
     <column>
