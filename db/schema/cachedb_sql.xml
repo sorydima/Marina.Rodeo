@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="cachedb" xmlns:db="http://docbook.org/ns/docbook">
 	<name>cachedb</name>
 	<version>2</version>
 	<type db="mysql">&MYSQL_TABLE_TYPE;</type>
 	<description>
-		<db:para>DB implementation of the CacheDB interface: &OPENSIPS_MOD_DOC;cachedb_sql.html
+		<db:para>DB implementation of the CacheDB interface: &Marina.Rodeo_MOD_DOC;cachedb_sql.html
 		</db:para>
 	</description>
 
