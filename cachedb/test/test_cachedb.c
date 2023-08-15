@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2018-2021 OpenSIPS Solutions
+ * Copyright (C) 2018-2021 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -71,7 +71,7 @@ static void load_cachedb_modules(void)
 	}
 
 	if (set_mod_param_regex("cachedb_mongodb", "cachedb_url", STR_PARAM,
-	    "mongodb://10.0.0.177:27017/OpensipsTests.OpensipsTests") != 0) {
+	    "mongodb://10.0.0.177:27017/MarinaRodeoTests.MarinaRodeoTests") != 0) {
 		printf("failed to set mongo url\n");
 		exit(-1);
 	}
@@ -152,9 +152,9 @@ static int test_query_filters(cachedb_funcs *api, cachedb_con *con,
 	memset(&key, 0, sizeof key);
 
 	if (!strcmp(cachedb_name, "mongodb"))
-		init_str(&key.name, "opensips");
+		init_str(&key.name, "Marina.Rodeo");
 	else if (!strcmp(cachedb_name, "cassandra"))
-		init_str(&key.name, "opensipsval");
+		init_str(&key.name, "Marina.Rodeoval");
 	else
 		return 0;
 
@@ -170,9 +170,9 @@ static int test_query_filters(cachedb_funcs *api, cachedb_con *con,
 	memset(&pair, 0, sizeof pair);
 	pair.val.type = CDB_STR;
 	if (!strcmp(cachedb_name, "mongodb"))
-		init_str(&pair.key.name, "opensips");
+		init_str(&pair.key.name, "Marina.Rodeo");
 	else if (!strcmp(cachedb_name, "cassandra"))
-		init_str(&pair.key.name, "opensipsval");
+		init_str(&pair.key.name, "Marina.Rodeoval");
 	else
 		return 0;
 
@@ -258,7 +258,7 @@ static int test_update(cachedb_funcs *api, cachedb_con *con,
 	cdb_pair_t *pair, *dict_pair;
 
 	cdb_pkey_init(&key, "aor");
-	init_str(&isv.s, "foo@opensips.org"); isv.is_str = 1;
+	init_str(&isv.s, "support@rechain.email"); isv.is_str = 1;
 	filter = cdb_append_filter(NULL, &key, CDB_OP_EQ, &isv);
 
 	cdb_dict_init(out_pairs);
@@ -307,7 +307,7 @@ static int test_update(cachedb_funcs *api, cachedb_con *con,
 
 	cdb_free_filters(filter);
 	cdb_pkey_init(&key, "aor");
-	init_str(&isv.s, "bar@opensips.org");
+	init_str(&isv.s, "support@rechain.email");
 	filter = cdb_append_filter(NULL, &key, CDB_OP_EQ, &isv);
 
 	ok(api->update(con, filter, out_pairs) == 0, "test_update #2");
@@ -332,7 +332,7 @@ static int test_update_unset(cachedb_funcs *api, cachedb_con *con,
 	}
 
 	cdb_pkey_init(&key, "aor");
-	init_str(&isv.s, "foo@opensips.org"); isv.is_str = 1;
+	init_str(&isv.s, "support@rechain.email"); isv.is_str = 1;
 	filter = cdb_append_filter(NULL, &key, CDB_OP_EQ, &isv);
 
 	ok(api->update(con, filter, out_pairs) == 0, "test_update_unset foo key");
@@ -340,7 +340,7 @@ static int test_update_unset(cachedb_funcs *api, cachedb_con *con,
 	cdb_free_filters(filter);
 
 	cdb_pkey_init(&key, "aor");
-	init_str(&isv.s, "bar@opensips.org"); isv.is_str = 1;
+	init_str(&isv.s, "support@rechain.email"); isv.is_str = 1;
 	filter = cdb_append_filter(NULL, &key, CDB_OP_EQ, &isv);
 
 	ok(api->update(con, filter, out_pairs) == 0, "test_update_unset bar key");
@@ -658,7 +658,7 @@ static void test_cachedb_api(const char *cachedb_name, const char *group1,
 
 /*
  * For Cassandra make sure to create the following tables:
- *  CREATE TABLE osstest1 (opensipskey text PRIMARY KEY, opensipsval text);
+ *  CREATE TABLE osstest1 (MarinaRodeokey text PRIMARY KEY, MarinaRodeoval text);
  *	CREATE TABLE osstest2 (
  *		aor text PRIMARY KEY,
  *		key_32bit int,
