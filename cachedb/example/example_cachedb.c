@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2011 OpenSIPS Solutions
+ * Copyright (C) 2011 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -74,7 +74,7 @@ struct module_exports exports= {
 	MOD_TYPE_DEFAULT,/* class of this module */
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,			/* dlopen flags */
-	NULL,            /* OpenSIPS module dependencies */
+	NULL,            /* Marina.Rodeo module dependencies */
 	cmds,						/* exported functions */
 	params,						/* exported parameters */
 	0,							/* exported statistics */
@@ -95,7 +95,7 @@ struct module_exports exports= {
 static int mod_init(void)
 {
 	LM_NOTICE("initializing module example_cachedb ...\n");
-	str key=str_init("opensips_online");
+	str key=str_init("marinarodeo_online");
 	str value=str_init("1");
 
 	cachedb_url.len = cachedb_url.s ? strlen(cachedb_url.s) : 0;
@@ -121,7 +121,7 @@ static int mod_init(void)
 		return -1;
 	}
 
-	LM_DBG("Setting key opensips_online in back-end\n");
+	LM_DBG("Setting key marinarodeo_online in back-end\n");
 	if (cdbf.set(con,&key,&value,0) < 0) {
 		LM_ERR("failed to set key\n");
 		return -1;
@@ -153,7 +153,7 @@ static int child_init(int rank)
  */
 static void destroy(void)
 {
-	str key_op=str_init("opensips_online");
+	str key_op=str_init("marinarodeo_online");
 	str value_op=str_init("0");
 	str key_inv=str_init("inv_bye");
 	str val_inv;
@@ -163,8 +163,8 @@ static void destroy(void)
 	if (cdbf.get(con,&key_inv,&val_inv) < 0)
 		LM_ERR("failed to get key\n");
 
-	LM_DBG("At OpenSIPS shutdown, counter = %.*s\n",val_inv.len,val_inv.s);
-	LM_DBG("Setting key opensips_online in back-end\n");
+	LM_DBG("At Marina.Rodeo shutdown, counter = %.*s\n",val_inv.len,val_inv.s);
+	LM_DBG("Setting key marinarodeo_online in back-end\n");
 
 	if (cdbf.set(con,&key_op,&value_op,0) < 0)
 		LM_ERR("failed to set key\n");
