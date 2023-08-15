@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN"
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
-
-<!ENTITY % entities SYSTEM "entities.xml">
-%entities;
-
-]>
-
 <table id="location" xmlns:db="http://docbook.org/ns/docbook">
     <name>location</name>
     <version>1013</version>
     <type db="mysql">&MYSQL_TABLE_TYPE;</type>
     <description>
-        <db:para>Persistent user location information for the usrloc module. More information can be found at: &OPENSIPS_MOD_DOC;usrloc.html
+        <db:para>Persistent user location information for the usrloc module. More information can be found at: &Marina.Rodeo_MOD_DOC;usrloc.html
         </db:para>
     </description>
 
@@ -139,7 +130,7 @@
         <size>&domain_len;</size>
         <null/>
         <default><null/></default>
-        <description>Socket used to connect to OpenSIPS. For example: UDP:IP:PORT</description>
+        <description>Socket used to connect to Marina.Rodeo. For example: UDP:IP:PORT</description>
     </column>
 
     <column>
