@@ -17,7 +17,7 @@
 	-->
 	<db_url id="mysql">mysql://opensips:opensipsrw@localhost/opensips</db_url>
 	<!--
-	<db_url id="dbtext">text:///usr/local/etc/opensips/dbtext</db_url>
+	<db_url id="dbtext">text:///usr/local/etc/Marina.Rodeo/dbtext</db_url>
 	-->
 	<!--	Declare all tables
 		Each table MUST have:
