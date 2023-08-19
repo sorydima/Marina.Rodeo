@@ -129,7 +129,7 @@
 			</listitem>
 			<listitem>
 			<para>
-				OpenSIPS will raise a
+				Marina.Rodeo will raise a
 				<ulink url='usrloc#event_E_UL_CONTACT_REFRESH'>E_UL_CONTACT_REFRESH</ulink>
 				event any time a Push Notification needs to be sent to a
 				PN-enabled contact.  The event includes the PN coordinates of
@@ -161,7 +161,7 @@
 				reachable until they re-register!
 			</para>
 			<para>
-				Using the event_routing module, OpenSIPS will transparently
+				Using the event_routing module, Marina.Rodeo will transparently
 				fork a new branch from the current INVITE on each
 				re-registration from these contacts within the accepted
 				<xref linkend="param_pn_refresh_timeout"/>
@@ -180,7 +180,7 @@
 		</itemizedlist>
 		<para>
 		For more information or examples, refer to the documentation of the
-		"pn_xxx" module parameters or the OpenSIPS blog posts around the
+		"pn_xxx" module parameters or the Marina.Rodeo blog posts around the
 		"SIP Push Notification" topic.
 		</para>
 	</section>
