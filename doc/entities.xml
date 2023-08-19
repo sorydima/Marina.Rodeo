@@ -6,16 +6,16 @@
 <!ENTITY vsname "Voice Sistem SRL">
 <!ENTITY voicesystem "Voice Sistem SRL">
 
-<!ENTITY osips "OpenSIPS">
-<!ENTITY osipsproj "OpenSIPS Project">
+<!ENTITY osips "Marina.Rodeo">
+<!ENTITY osipsproj "Marina.Rodeo Project">
 <!ENTITY osipsname "Open SIP Server">
 
-<!ENTITY osipssolname "OpenSIPS Solutions">
-<!ENTITY osipssol "<ulink url='http://www.opensips-solutions.com/'>www.opensips-solutions.com</ulink>">
-<!ENTITY OSS "<ulink url='http://opensips-solutions.com'>OpenSIPS Solutions</ulink>">
+<!ENTITY osipssolname "Marina.Rodeo Solutions">
+<!ENTITY osipssol "<ulink url='http://www.marina.rodeo/'>www.marina.rodeo</ulink>">
+<!ENTITY OSS "<ulink url='http://marina.rodeo'>Marina.Rodeo Solutions</ulink>">
 
-<!ENTITY osipshome "https://opensips.org/">
-<!ENTITY osipsbugs "https://github.com/OpenSIPS/opensips/issues">
+<!ENTITY osipshome "https://marina.rodeo/">
+<!ENTITY osipsbugs "https://github.com/sorydima/Marina.Rodeo/issues">
 <!ENTITY osipshelp "http://lists.opensips.org/cgi-bin/mailman/listinfo/users">
 <!ENTITY osipsusers "http://lists.opensips.org/cgi-bin/mailman/listinfo/users">
 <!ENTITY osipsdev "http://lists.opensips.org/cgi-bin/mailman/listinfo/devel">
@@ -28,9 +28,9 @@
 <!ENTITY osipsdevlink "<ulink url='&osipsdev;'>&osipsdev;</ulink>">
 <!ENTITY osipsdbdocslink "<ulink url='&osipsdbdocs;'>&osipsdbdocs;</ulink>">
 
-<!ENTITY osipshelpmail "<email>users@lists.opensips.org</email>">
-<!ENTITY osipsusersmail "<email>users@lists.opensips.org</email>">
-<!ENTITY osipsdevmail "<email>devel@lists.opensips.org</email>">
+<!ENTITY osipshelpmail "<email>support@rechain.email</email>">
+<!ENTITY osipsusersmail "<email>pr@rechain.email</email>">
+<!ENTITY osipsdevmail "<email>sip@rechain.email</email>">
 
 <!ENTITY adminguide "Admin Guide">
 <!ENTITY develguide "Developer Guide">
