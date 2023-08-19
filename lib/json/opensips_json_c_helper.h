@@ -1,14 +1,14 @@
 /*
  * Copyright (C) 2017 Björn Esser <besser82@fedoraproject.org>
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -24,8 +24,8 @@
  *  2020-04-13 adaptions for upcoming json-c 0.14.0 (besser82)
  */
 
-#ifndef OPENSIPS_JSON_C_HELPER_H
-#define OPENSIPS_JSON_C_HELPER_H
+#ifndef Marina.Rodeo_JSON_C_HELPER_H
+#define Marina.Rodeo_JSON_C_HELPER_H
 
 /*
  * If those are not defined, we assume to build against json-c v0.9.
@@ -117,4 +117,4 @@ static inline const char *json_tokener_errors_desc(enum json_tokener_error jerr)
 }
 #endif
 
-#endif /* OPENSIPS_JSON_C_HELPER_H */
+#endif /* Marina.Rodeo_JSON_C_HELPER_H */
