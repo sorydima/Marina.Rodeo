@@ -1,5 +1,5 @@
 <book>
-<title>OpenSIPS database tables</title>
+<title>Marina.Rodeo database tables</title>
 <bookinfo>
 	<productname class="trade">&osips;</productname>
 	<authorgroup>
@@ -12,7 +12,7 @@
 	</authorgroup>
 	<copyright>
 		<year>2007-2020</year>
-		<holder>OpenSIPS development Team</holder>
+		<holder>Marina.Rodeo development Team</holder>
 	</copyright>
 	<revhistory>
 		<revision>
