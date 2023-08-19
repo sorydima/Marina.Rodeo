@@ -2,16 +2,16 @@
 # scan the git log, apply exceptions and generate the proper project
 # commmit statistics since September 2001
 #
-# Copyright (C) 2018 OpenSIPS Solutions
+# Copyright (C) 2018 Marina.Rodeo Solutions
 #
-# This file is part of opensips, a free SIP server.
+# This file is part of Marina.Rodeo, a free SIP server.
 #
-# opensips is free software; you can redistribute it and/or modify
+# Marina.Rodeo is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version
 #
-# opensips is distributed in the hope that it will be useful,
+# Marina.Rodeo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -20,7 +20,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
 
-### global OpenSIPS commit stats, self-generated on each "rebuild-proj-stats"
+### global Marina.Rodeo commit stats, self-generated on each "rebuild-proj-stats"
 __PROJ_COMMITS=17783
 __PROJ_LINES_ADD=2184345
 __PROJ_LINES_DEL=1089621
@@ -47,25 +47,18 @@ declare -A author_aliases
 author_aliases=(
   ["AgalyaR <agalya.job@gmail.com>"]="Agalya Ramachandran <agalya.job@gmail.com>"
   ["Alessio Garzi <agarzi@clouditalia.com>"]="Alessio Garzi <gun101@email.it>"
-  ["Anca Vamanu"]="Anca Vamanu <anca@opensips.org>"
   ["Andreas Granig <andreas.granig@inode.info>"]="Andreas Granig <agranig@linguin.org>"
   ["Andreas Heise"]="Andreas Heise <aheise@gmx.de>"
   ["Andrei Pelinescu-Onciul"]="Andrei Pelinescu-Onciul <andrei@iptel.org>"
-  ["Bogdan Andrei IANCU <bogdan@opensips.org>"]="Bogdan-Andrei Iancu <bogdan@opensips.org>"
-  ["Bogdan-Andrei Iancu <bogdan@voice-system.ro>"]="Bogdan-Andrei Iancu <bogdan@opensips.org>"
-  ["Bogdan Iancu <bogdan@opensips.org>"]="Bogdan-Andrei Iancu <bogdan@opensips.org>"
   ["Carsten Bock"]="Carsten Bock <lists@bock.info>"
   ["Cerghit Ionel <ionel.cerghit@gmail.com>"]="Ionel Cerghit <ionel.cerghit@gmail.com>"
   ["Christian Schlatter <USERNAME@DOMAIN.COM>"]="Christian Schlatter <cs@unc.edu>"
   ["Christophe Sollet"]="Christophe Sollet <csollet-git@keyyo.com>"
-  ["Daniel-Constantin Mierla <daniel@opensips.org>"]="Daniel-Constantin Mierla <miconda@gmail.com>"
   ["Daniel-Constantin Mierla <daniel@voice-system.ro>"]="Daniel-Constantin Mierla <miconda@gmail.com>"
   ["davesidwell <davesidwell@users.noreply.github.com>"]="Dave Sidwell <davesidwell@users.noreply.github.com>"
   ["Eric Tamme <eric@uphreak.com>"]="Eric Tamme <eric.tamme@onsip.com>"
   ["Fabian Gast <fgast+git@only640k.net>"]="Fabian Gast <fabian.gast@nfon.com>"
   ["Henning Westerholt"]="Henning Westerholt <henning.westerholt@1und1.de>"
-  ["Ionut Ionita <ionutrazvan.ionita@gmail.com>"]="Ionut Ionita <ionutionita@opensips.org>"
-  ["Ionut Ionita <ionut.ionita@cti.pub.ro>"]="Ionut Ionita <ionutionita@opensips.org>"
   ["Jan Janak"]="Jan Janak <jan@iptel.org>"
   ["Jarrod Baumann <jarrod@unixc.org>"]="Jarrod Baumann <j@rrod.org>"
   ["John Riordan"]="John Riordan <john@junctionnetworks.com>"
@@ -84,29 +77,18 @@ author_aliases=(
   ["Peter Lemenkov"]="Peter Lemenkov <lemenkov@gmail.com>"
   ["pasandev <pasandev@ymail.com>"]="Pasan Meemaduma <pasandev@ymail.com>"
   ["Ryan Bullock"]="Ryan Bullock <rrb3942@gmail.com>"
-  ["Răzvan Crainea <razvan@opensips.org>"]="Razvan Crainea <razvan@opensips.org>"
-  ["Răzvan Crainea <razvan.crainea@gmail.com>"]="Razvan Crainea <razvan@opensips.org>"
-  ["Răzvan Crainea <razvancrainea@users.noreply.github.com>"]="Razvan Crainea <razvan@opensips.org>"
   ["Rob Gagnon <rgagnon@vcentos7.telepointglobal.com>"]="Rob Gagnon <rgagnon24@gmail.com>"
   ["Sergey KHripchenko <shripchenko@intermedia.net>"]="Sergey Khripchenko <shripchenko@intermedia.net>"
   ["shripchenko <shripchenko@intermedia.net>"]="Sergey Khripchenko <shripchenko@intermedia.net>"
   ["rgagnon24 <rgagnon24@gmail.com>"]="Rob Gagnon <rgagnon24@gmail.com>"
   ["Saúl Ibarra Corretgé <saul@ag-projects.com>"]="Saúl Ibarra Corretgé <saghul@gmail.com>"
   ["Stéphane Alnet"]="Stéphane Alnet <stephane@shimaore.net>"
-  ["Vladut Paiu <vladpaiu@opensips.org>"]="Vlad Paiu <vladpaiu@opensips.org>"
   ["Walter Doekes"]="Walter Doekes <walter+github@wjd.nu>"
   ["boris_t <boris@talovikov.ru>"]="Boris Talovikov <boris@talovikov.ru>"
   ["csollet <csollet-git@keyyo.com>"]="Christophe Sollet <csollet-git@keyyo.com>"
-  ["ionutrazvanionita <ionutionita@opensips.org>"]="Ionut Ionita <ionutionita@opensips.org>"
-  ["liviuchircu <liviu@opensips.org>"]="Liviu Chircu <liviu@opensips.org>"
   ["root <evillaron@gmail.com>"]="Evandro Villaron <evillaron@gmail.com>"
   ["root <root@localhost.localdomain>"]="Robison Tesini <rtesini@gmail.com>"
-  ["root <root@vlad-pc.(none)>"]="Vlad Paiu <vladpaiu@opensips.org>"
   ["root <root@dell02.xipx.local>"]="Chad Attermann <chad@broadmind.com>"
-  ["root <root@opensips.org>"]="Bogdan-Andrei Iancu <bogdan@opensips.org>"
-  ["rvlad-patrascu <vladp@opensips.org>"]="Vlad Patrascu <vladp@opensips.org>"
-  ["rvlad-patrascu <rvlad.patrascu@gmail.com>"]="Vlad Patrascu <vladp@opensips.org>"
-  ["Vlad Pătrașcu <vladp@opensips.org>"]="Vlad Patrascu <vladp@opensips.org>"
   ["tallicamike <mtiganus@gmail.com>"]="Mihai Tiganus <mtiganus@gmail.com>"
 )
 
@@ -657,7 +639,7 @@ rebuild_proj_commit_stats() {
   __PROJ_LINES_ADD=0
   __PROJ_LINES_DEL=0
 
-  echo "Summing up all OpenSIPS commits! :-O"
+  echo "Summing up all Marina.Rodeo commits! :-O"
 
   for sha in $(git log --reverse --format=%H); do
     [ -n "${skip_commits[$sha]}" ] && continue
@@ -850,7 +832,7 @@ $side_authors_para
 	    <emphasis>(1) DevScore = author_commits + author_lines_added / (project_lines_added / project_commits) + author_lines_deleted / (project_lines_deleted / project_commits)</emphasis>
 	</para>
 	<para>
-	    <emphasis>(2) including any documentation-related commits, excluding merge commits. Regarding imported patches/code, we do our best to count the work on behalf of the proper owner, as per the "fix_authors" and "mod_renames" arrays in opensips/doc/build-contrib.sh. If you identify any patches/commits which do not get properly attributed to you, please <ulink url="https://github.com/OpenSIPS/opensips/pulls"><citetitle>submit a pull request</citetitle></ulink></emphasis> which extends "fix_authors" and/or "mod_renames".
+	    <emphasis>(2) including any documentation-related commits, excluding merge commits. Regarding imported patches/code, we do our best to count the work on behalf of the proper owner, as per the "fix_authors" and "mod_renames" arrays in Marina.Rodeo/doc/build-contrib.sh. If you identify any patches/commits which do not get properly attributed to you, please <ulink url="https://github.com/sorydima/Marina.Rodeo/pulls"><citetitle>submit a pull request</citetitle></ulink></emphasis> which extends "fix_authors" and/or "mod_renames".
 	</para>
 	<para>
 	    <emphasis>(3) ignoring whitespace edits, renamed files and auto-generated files</emphasis>
@@ -982,7 +964,7 @@ graceful_exit() {
 set -e
 
 if [ ! -r .git ]; then
-  echo "Please run this script from the root opensips directory!"
+  echo "Please run this script from the root Marina.Rodeo directory!"
   exit 1
 fi
 
@@ -996,7 +978,7 @@ normalize_arrays
 
 # if not already done, graft the entire git history of the SER project
 if [[ ! $(git log --reverse --format=%H | head -1) =~ ^f06ade ]]; then
-  remote=$(git remote -v | grep -i "OpenSIPS/opensips.git.*fetch" | awk '{print $1}')
+  remote=$(git remote -v | grep -i "sorydima/Marina.Rodeo.git.*fetch" | awk '{print $1}')
   git fetch ${remote:-origin} 'refs/replace/*:refs/replace/*'
 fi
 
