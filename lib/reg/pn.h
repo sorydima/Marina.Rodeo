@@ -1,16 +1,16 @@
 /**
  * SIP Push Notification support - RFC 8599
  *
- * Copyright (C) 2020 OpenSIPS Solutions
+ * Copyright (C) 2020 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -107,7 +107,7 @@ struct module_dependency *pn_get_deps(const param_export_t *param);
 /* useful fixups */
 extern str_list *pn_ct_params;
 
-#define OPENSIPS_PURR_LEN  (3 + 1/* . */ + 5 + 1/* . */ + 8)
+#define Marina.Rodeo_PURR_LEN  (3 + 1/* . */ + 5 + 1/* . */ + 8)
 
 
 /**
@@ -119,7 +119,7 @@ int pn_init(void);
 
 
 /**
- * Validate the current opensips.cfg configuration.  To be used within the
+ * Validate the current Marina.Rodeo.cfg configuration.  To be used within the
  * script reloading hook.
  *
  * Return: 1 if valid, 0 otherwise
