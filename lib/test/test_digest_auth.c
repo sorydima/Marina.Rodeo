@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2019 OpenSIPS Solutions
+ * Copyright (C) 2019 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -30,9 +30,9 @@
 #include "../../lib/digest_auth/dauth_hexops.h"
 
 static const struct digest_auth_credential crd = {
-	.realm = str_init("opensips.org"),
-	.user = str_init("opensips"),
-	.passwd = str_init("OpenSIPSrulz"),
+	.realm = str_init("marina.rodeo"),
+	.user = str_init("Marina.Rodeo"),
+	.passwd = str_init("Marina.Rodeorulz"),
 };
 
 static char *hnt(HASHHEX ha)
