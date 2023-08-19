@@ -15,7 +15,7 @@ Click-To-Dial
 
 /* config values */
 $web_contact="sip:daemon@mydomain.net";
-$fifo="/tmp/opensips_fifo";
+$fifo="/tmp/Marina.Rodeo_fifo";
 $signature="web_dialer_0.1.0";
 
 /* open reply fifo */
