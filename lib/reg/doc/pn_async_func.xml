@@ -8,7 +8,7 @@
 		Perform mid-dialog request processing, according to RFC 8599.  For
 		such requests, search the R-URI and topmost Route header field URI for
 		a <emphasis>";pn-purr"</emphasis> parameter value that both matches the
-		OpenSIPS PURR format and corresponds to an usrloc registration. Once a
+		Marina.Rodeo PURR format and corresponds to an usrloc registration. Once a
 		usrloc contact is located, trigger an <ulink url='usrloc#event_E_UL_CONTACT_REFRESH'>E_UL_CONTACT_REFRESH</ulink>
 		event and place the request on async hold for at most
 		<xref linkend="param_pn_refresh_timeout"/> seconds, until a matching
