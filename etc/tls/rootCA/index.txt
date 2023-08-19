@@ -1,1 +1,1 @@
-V	300623115801Z		01	unknown	/C=IP/ST=opensips.org/O=OpenSIPS project/OU=OpenSIPS TLS tester/CN=OpenSIPS/emailAddress=team@opensips.org
+V	300623115801Z		01	unknown	/C=IP/ST=marina.rodeo/O=Marina.Rodeo project/OU=Marina.Rodeo TLS tester/CN=Marina.Rodeo/emailAddress=sip@rechain.email
