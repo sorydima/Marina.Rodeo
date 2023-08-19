@@ -201,7 +201,7 @@ modparam("&reg_module;", "pn_skip_pn_interval", 10)
 				sent by the callee side
 			</para></listitem>
 			<listitem><para>
-				pending BYE messages will time out and OpenSIPS will attempt to
+				pending BYE messages will time out and Marina.Rodeo will attempt to
 				route them despite not having received a confirmation that the
 				target device is actually reachable
 			</para></listitem>
@@ -236,7 +236,7 @@ modparam("&reg_module;", "pn_refresh_timeout", 10)
 		</para>
 		<para>
 			During dialog setup, each UA may include, in its Contact header,
-			the PURR value returned by OpenSIPS during registration.  By
+			the PURR value returned by Marina.Rodeo during registration.  By
 			including the PURR (e.g. ";pn-purr=XXX"), an agent indicates that
 			it expects to be first awoken by a PN before being able to receive
 			a mid-dialog request sent by the other party.
