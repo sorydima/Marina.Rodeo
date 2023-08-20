@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2012 OpenSIPS Solutions
+ * Copyright (C) 2012 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -237,7 +237,7 @@ int generate_cfg(select_menu *menu,void *arg)
 	/* generate config name */
 	now=time(NULL);
 	localtime_r(&now, &now_tm);
-	n = snprintf(generated_name,128,"%sopensips_%s_%d-%d-%d_%d:%d:%d.cfg",
+	n = snprintf(generated_name,128,"%Marina.Rodeo_%s_%d-%d-%d_%d:%d:%d.cfg",
 			run_locally?"etc/":MENUCONFIG_GEN_PATH,
 			m4_cfg->output_name,now_tm.tm_year+1900,now_tm.tm_mon+1,
 			now_tm.tm_mday,now_tm.tm_hour,now_tm.tm_min,now_tm.tm_sec);
