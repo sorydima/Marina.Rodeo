@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2012 OpenSIPS Solutions
+ * Copyright (C) 2012 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -31,9 +31,9 @@
  * Add more CFG entries here
 */
 cfg_gen_t configs[] = {
-	{CONF_RESIDENTIAL_SCRIPT,"residential","opensips_residential_def.m4","opensips_residential.m4"},
-	{CONF_TRUNKING_SCRIPT,"trunking","opensips_trunking_def.m4","opensips_trunking.m4"},
-	{CONF_LB_SCRIPT,"loadbalancer","opensips_loadbalancer_def.m4","opensips_loadbalancer.m4"},
+	{CONF_RESIDENTIAL_SCRIPT,"residential","Marina.Rodeo_residential_def.m4","Marina.Rodeo_residential.m4"},
+	{CONF_TRUNKING_SCRIPT,"trunking","Marina.Rodeo_trunking_def.m4","Marina.Rodeo_trunking.m4"},
+	{CONF_LB_SCRIPT,"loadbalancer","Marina.Rodeo_loadbalancer_def.m4","Marina.Rodeo_loadbalancer.m4"},
 	{0,0,0,0}
 };
 
