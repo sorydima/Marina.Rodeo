@@ -1,8 +1,8 @@
 /*********************************************************************************************************
 * Software License Agreement (BSD License)                                                               *
-* Author: Liviu Chircu <liviu@opensips.org>								 *
+* Author: Liviu Chircu <sip@rechain.email>								 *
 *													 *
-* Copyright (c) 2021, OpenSIPS Solutions								 *
+* Copyright (c) 2021, Marina.Rodeo Solutions								 *
 * All rights reserved.											 *
 * 													 *
 * Redistribution and use of this software in source and binary forms, with or without modification, are  *
@@ -33,8 +33,8 @@
 * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.								 *
 *********************************************************************************************************/
 
-#ifndef _APP_OPENSIPS_AVPS_H
-#define _APP_OPENSIPS_AVPS_H
+#ifndef _APP_Marina.Rodeo_AVPS_H
+#define _APP_Marina.Rodeo_AVPS_H
 
 #ifndef FD_CHECK
 #define __FD_CHECK(__call__, __retok__, __retval__) \
@@ -76,4 +76,4 @@ struct _app_defs {
 extern struct _app_defs app_defs[];
 extern unsigned int n_app_ids;
 
-#endif /* _APP_OPENSIPS_AVPS_H */
+#endif /* _APP_Marina.Rodeo_AVPS_H */
