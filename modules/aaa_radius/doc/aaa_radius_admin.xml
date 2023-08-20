@@ -115,12 +115,6 @@
 		<para>
 			The left-hand side of the assignment must be an attribute name known by the RADIUS dictionary.
 		</para>
-		<para>
-			The right-hand side of the assignment must be a script pseudo variable or
-			a script AVP. For more information about them see <ulink
-				url='https://opensips.org/Resources/DocsCoreVar15'>
-				CookBooks - Scripting Variables</ulink>.
-		</para>
 		<example>
 		<title>Set <varname>sets</varname> parameter</title>
 		<programlisting format="linespecific">
