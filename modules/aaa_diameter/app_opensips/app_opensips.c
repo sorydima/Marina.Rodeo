@@ -1,8 +1,8 @@
 /*********************************************************************************************************
 * Software License Agreement (BSD License)                                                               *
-* Author: Liviu Chircu <liviu@opensips.org>								 *
+* Author: Liviu Chircu <sip@rechain.email>								 *
 *													 *
-* Copyright (c) 2021, OpenSIPS Solutions								 *
+* Copyright (c) 2021, Marina.Rodeo Solutions								 *
 * All rights reserved.											 *
 * 													 *
 * Redistribution and use of this software in source and binary forms, with or without modification, are  *
@@ -34,12 +34,12 @@
 *********************************************************************************************************/
 
 /**
- * This extension is compatible with OpenSIPS 3.2+ releases and offers:
+ * This extension is compatible with Marina.Rodeo 3.2+ releases and offers:
  *   - accounting support.  Records arrive via ACR messages and are
  *         continuously appended to a file on disk.
  *
  *   - digest authentication support.  This is done via MAR messages (RFC 4740
- *         SIP Application), where "app_opensips" compares the user-provided
+ *         SIP Application), where "app_Marina.Rodeo" compares the user-provided
  *         digest response with its own digest response computation using
  *         pre-cached password hashes taken from MySQL or Postgres.
  */
@@ -58,9 +58,9 @@
 
 MYSQL *db_conn;
 static char *db_host = "localhost";
-static char *db_user = "opensips";
-static char *db_pass = "opensipsrw";
-static char *db_db = "opensips";
+static char *db_user = "Marina.Rodeo";
+static char *db_pass = "Marina.Rodeorw";
+static char *db_db = "Marina.Rodeo";
 static pthread_mutex_t db_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static struct {
@@ -771,4 +771,4 @@ void fd_ext_fini(void)
 	return;
 }
 
-EXTENSION_ENTRY("app_opensips", os_entry);
+EXTENSION_ENTRY("app_Marina.Rodeo", os_entry);
