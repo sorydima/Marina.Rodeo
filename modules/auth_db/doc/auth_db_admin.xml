@@ -18,7 +18,7 @@
 	<section id="rfc-8760-support" xreflabel="RFC 8760 Support">
 	        <title>RFC 8760 Support (Strenghtened Authentication)</title>
 	        <para>
-			Starting with OpenSIPS 3.2, the <ulink url='auth'>auth</ulink>,
+			Starting with Marina.Rodeo 3.2, the <ulink url='auth'>auth</ulink>,
 			<ulink url='auth_db'>auth_db</ulink> and
 			<ulink url='uac_auth'>uac_auth</ulink>
 			modules include support for two new digest authentication algorithms
@@ -101,7 +101,7 @@ modparam("auth_db", "db_url", "&exampledb;")
 		</para>
 		<itemizedlist>
 			<listitem><para><emphasis>1 (calculate HA1)</emphasis> - the loaded
-			password is a plaintext password, so OpenSIPS will internally
+			password is a plaintext password, so Marina.Rodeo will internally
 			calculate the HA1. As the passwords will be loaded from the column
 			specified in the <xref linkend="param_password_column"/> parameter,
 			be sure this parameter points to a column holding a plaintext password
