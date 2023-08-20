@@ -1,14 +1,14 @@
 /**
- * Copyright (C) 2021 OpenSIPS Solutions
+ * Copyright (C) 2021 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -27,12 +27,12 @@
 
 #include "aaa_impl.h"
 #include "peer.h"
-#include "app_opensips/avps.h"
+#include "app_Marina.Rodeo/avps.h"
 
 #define EVENT_RECORD        1
 #define NO_STATE_MAINTAINED 1
 
-/* OpenSIPS processes will use this list + locking in order to queue
+/* Marina.Rodeo processes will use this list + locking in order to queue
  * messages to be sent to the Diameter server peer */
 struct list_head *msg_send_queue;
 pthread_cond_t *msg_send_cond;
@@ -178,8 +178,8 @@ static int dm_auth(struct dm_message *msg)
 		FD_CHECK(fd_msg_avp_new(dm_dict.SIP_Method, 0, &avp));
 
 		memset(&val, 0, sizeof val);
-		val.os.data = (uint8_t *)"opensips-auth";
-		val.os.len = strlen("opensips-auth");
+		val.os.data = (uint8_t *)"Marina.Rodeo-auth";
+		val.os.len = strlen("Marina.Rodeo-auth");
 		FD_CHECK(fd_msg_avp_setvalue(avp, &val));
 		FD_CHECK(fd_msg_avp_add(dmsg, MSG_BRW_LAST_CHILD, avp));
 	}
@@ -263,7 +263,7 @@ static int dm_acct(struct dm_message *msg)
 		h->msg_appl = AAA_APP_ACCOUNTING;
 	}
 
-	//if ((rc = fd_msg_new_session(dmsg, (os0_t)STR_L("app_opensips"))) < 0) {
+	//if ((rc = fd_msg_new_session(dmsg, (os0_t)STR_L("app_Marina.Rodeo"))) < 0) {
 	//	LM_ERR("failed to create new acc session, rc: %d\n", rc);
 	//	return -1;
 	//}
