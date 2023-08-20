@@ -1,14 +1,14 @@
 /**
- * Copyright (C) 2021 OpenSIPS Solutions
+ * Copyright (C) 2021 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -27,7 +27,7 @@
 
 #include "aaa_impl.h"
 #include "peer.h"
-#include "app_opensips/avps.h"
+#include "app_Marina.Rodeo/avps.h"
 
 struct local_rules_definition {
 	char *avp_name;
@@ -1181,7 +1181,7 @@ int dm_init_sip_application(void)
 
 
 /*
- * Register a series of AVPs needed by OpenSIPS (some dating back from RADIUS,
+ * Register a series of AVPs needed by Marina.Rodeo (some dating back from RADIUS,
  * and some purely custom / non-standardized).
  *
  * Note that these AVPs may be overridden in the freeDiameter-client.conf file
