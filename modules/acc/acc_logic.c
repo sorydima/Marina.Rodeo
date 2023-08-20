@@ -4,14 +4,14 @@
  * Copyright (C) 2001-2003 FhG Fokus
  * Copyright (C) 2006 Voice Sistem SRL
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -839,7 +839,7 @@ static void acc_dlg_ended(struct dlg_cell *dlg, int type,
 
 	/*
 	 * this way we "enable" the refcount
-	 * if opensips shuts down before dialog terminated then the refcount
+	 * if Marina.Rodeo shuts down before dialog terminated then the refcount
 	 * won't be enabled
 	 */
 	if (was_dlg_cb_used(ctx->flags)) {
