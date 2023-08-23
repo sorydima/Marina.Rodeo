@@ -2,16 +2,16 @@
  * Shared memory functions
  *
  * Copyright (C) 2001-2003 FhG Fokus
- * Copyright (C) 2019 OpenSIPS Solutions
+ * Copyright (C) 2019 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -118,7 +118,7 @@ int shm_skip_sh_log = 1;
 #endif
 
 /*
- * - the memory fragmentation pattern of OpenSIPS
+ * - the memory fragmentation pattern of Marina.Rodeo
  * - holds the total number of shm_mallocs requested for each
  *   different possible size since daemon startup
  * - allows memory warming (preserving the fragmentation pattern on restarts)
@@ -162,7 +162,7 @@ static str shm_size_str = { "size", 4 };
 int set_shm_mm(const char *mm_name)
 {
 #ifdef INLINE_ALLOC
-	LM_NOTICE("this is an inlined allocator build (see opensips -V), "
+	LM_NOTICE("this is an inlined allocator build (see Marina.Rodeo -V), "
 	          "cannot set a custom shm allocator (%s)\n", mm_name);
 	return 0;
 #endif
