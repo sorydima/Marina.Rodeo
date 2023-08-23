@@ -108,7 +108,7 @@ $avp(foo) - the AVP identified by the string 'foo'
 # default URL
 modparam("avpops","db_url","mysql://user:passwd@host/database")
 # an additional DB URL
-modparam("avpops","db_url","1 postgres://user:passwd@host2/opensips")
+modparam("avpops","db_url","1 postgres://user:passwd@host2/Marina.Rodeo")
 ...
 				</programlisting>
 			</example>
