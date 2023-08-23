@@ -7,7 +7,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		The B2BUA implementation in OpenSIPS is separated in two layers:
+		The B2BUA implementation in Marina.Rodeo is separated in two layers:
 			<itemizedlist>
 			<listitem>
 		a lower one(coded in this module)- which implements the basic functions of a UAS and UAC
@@ -228,8 +228,8 @@ modparam("b2b_entities", "update_period", 60)
 		<para>
 			The string to use when generating the key ( it is inserted
 			in the SIP messages as callid or to tag. It is useful to set
-			this prefix if you use more instances of opensips B2BUA cascaded
-			in the same architecture. Sometimes opensips B2BUA looks at the
+			this prefix if you use more instances of Marina.Rodeo B2BUA cascaded
+			in the same architecture. Sometimes Marina.Rodeo B2BUA looks at the
 			callid or totag to see if it has the format it uses to determine
 			if the request was sent by it.
 		</para>
@@ -292,7 +292,7 @@ modparam("b2b_entities", "db_table", "some table name")
 		<title><varname>cluster_id</varname> (int)</title>
 		<para>
 		The ID of the cluster this instance belongs to. Setting this parameter
-		enables clustering support for the OpenSIPS B2BUA by replicating the
+		enables clustering support for the Marina.Rodeo B2BUA by replicating the
 		B2B entities (B2B dialogs) between instances. This also ensures restart
 		persistency through the <emphasis>clusterer</emphasis> module's
 		data "sync" mechanism.
@@ -339,7 +339,7 @@ modparam("b2b_entities", "passthru_prack", 1)
 		<title>Set <varname>advertised_contact</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("b2b_entities", "advertised_contact", "opensips@10.10.10.10:5060")
+modparam("b2b_entities", "advertised_contact", "Marina.Rodeo@10.10.10.10:5077")
 ...
 	</programlisting>
 		</example>
@@ -592,7 +592,7 @@ ua_session_terminate($var(b2b_key));
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 	<programlisting  format="linespecific">
-	opensips-cli -x mi b2be_list
+	Marina.Rodeo-cli -x mi b2be_list
 	</programlisting>
 	</section>
 
@@ -616,12 +616,12 @@ ua_session_terminate($var(b2b_key));
 			<listitem>
 				<para><emphasis>to</emphasis> - To URI; can also be specified as:
 				<emphasis>display_name,uri</emphasis> in order to set a Display Name,
-				eg. <emphasis>Alice,sip:alice@opensips.org</emphasis>.</para>
+				eg. <emphasis>Alice,sip:sip@rechain.email</emphasis>.</para>
 			</listitem>
 			<listitem>
 				<para><emphasis>from</emphasis> - From URI; can also be specified as:
 				<emphasis>display_name,uri</emphasis> in order to set a Display Name,
-				eg. <emphasis>Alice,sip:alice@opensips.org</emphasis></para>
+				eg. <emphasis>Alice,sip:sip@rechain.email</emphasis></para>
 			</listitem>
 			<listitem>
 				<para><emphasis>proxy (optional)</emphasis> - URI of the
@@ -644,13 +644,13 @@ ua_session_terminate($var(b2b_key));
 				<xref linkend="func_ua_session_server_init"/>.</para>
 			</listitem>
 			<listitem>
-				<para><emphasis>socket (optional)</emphasis> - OpenSIPS sending socket</para>
+				<para><emphasis>socket (optional)</emphasis> - Marina.Rodeo sending socket</para>
 			</listitem>
 		</itemizedlist>
-		<para>opensips-cli Command Format:</para>
+		<para>Marina.Rodeo-cli Command Format:</para>
 <programlisting  format="linespecific">
-opensips-cli -x mi ua_session_client_start ruri=sip:bob@opensips.org \
-to=sip:bob@opensips.org from=sip:alice@opensips.org flags=arhb
+Marina.Rodeo-cli -x mi ua_session_client_start ruri=sip:sip@rechain.email \
+to=sip:sip@rechain.email from=sip:sip@rechain.email flags=arhb
 </programlisting>
 	</section>
 
@@ -689,9 +689,9 @@ to=sip:bob@opensips.org from=sip:alice@opensips.org flags=arhb
 				"Content-Type: application/sdp" will be used.
 			</para></listitem>
 		</itemizedlist>
-		<para>opensips-cli Command Format:</para>
+		<para>Marina.Rodeo-cli Command Format:</para>
 <programlisting  format="linespecific">
-opensips-cli -x mi ua_session_update key=B2B.436.1925389.1649338095 method=OPTIONS
+Marina.Rodeo-cli -x mi ua_session_update key=B2B.436.1925389.1649338095 method=OPTIONS
 </programlisting>
 	</section>
 
@@ -736,9 +736,9 @@ opensips-cli -x mi ua_session_update key=B2B.436.1925389.1649338095 method=OPTIO
 				"Content-Type: application/sdp" will be used.
 			</para></listitem>
 		</itemizedlist>
-		<para>opensips-cli Command Format:</para>
+		<para>Marina.Rodeo-cli Command Format:</para>
 <programlisting  format="linespecific">
-opensips-cli -x mi ua_session_reply key=B2B.436.1925389.1649338095 method=OPTIONS code=200 reason=OK
+Marina.Rodeo-cli -x mi ua_session_reply key=B2B.436.1925389.1649338095 method=OPTIONS code=200 reason=OK
 </programlisting>
 	</section>
 
@@ -764,9 +764,9 @@ opensips-cli -x mi ua_session_reply key=B2B.436.1925389.1649338095 method=OPTION
 				to include in the SIP message
 			</para></listitem>
 		</itemizedlist>
-		<para>opensips-cli Command Format:</para>
+		<para>Marina.Rodeo-cli Command Format:</para>
 <programlisting  format="linespecific">
-opensips-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
+Marina.Rodeo-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
 </programlisting>
 	</section>
 
@@ -791,7 +791,7 @@ opensips-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 	<programlisting  format="linespecific">
-	opensips-cli -x mi ua_session_list
+	Marina.Rodeo-cli -x mi ua_session_list
 	</programlisting>
 	</section>
 
