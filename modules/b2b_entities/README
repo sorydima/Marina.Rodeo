@@ -8,7 +8,7 @@ B2B_ENTITIES
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -107,7 +107,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The B2BUA implementation in OpenSIPS is separated in two
+   The B2BUA implementation in Marina.Rodeo is separated in two
    layers:
      * a lower one(coded in this module)- which implements the
        basic functions of a UAS and UAC
@@ -136,7 +136,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
      * tm
      * a db module
@@ -145,7 +145,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * none
 
 1.3. Exported Parameters
@@ -241,8 +241,8 @@ modparam("b2b_entities", "update_period", 60)
 
    The string to use when generating the key ( it is inserted in
    the SIP messages as callid or to tag. It is useful to set this
-   prefix if you use more instances of opensips B2BUA cascaded in
-   the same architecture. Sometimes opensips B2BUA looks at the
+   prefix if you use more instances of Marina.Rodeo B2BUA cascaded in
+   the same architecture. Sometimes Marina.Rodeo B2BUA looks at the
    callid or totag to see if it has the format it uses to
    determine if the request was sent by it.
 
@@ -285,7 +285,7 @@ modparam("b2b_entities", "db_table", "some table name")
 1.3.12. cluster_id (int)
 
    The ID of the cluster this instance belongs to. Setting this
-   parameter enables clustering support for the OpenSIPS B2BUA by
+   parameter enables clustering support for the Marina.Rodeo B2BUA by
    replicating the B2B entities (B2B dialogs) between instances.
    This also ensures restart persistency through the clusterer
    module's data "sync" mechanism.
@@ -317,8 +317,7 @@ modparam("b2b_entities", "passthru_prack", 1)
 
    Example 1.14. Set advertised_contact parameter
 ...
-modparam("b2b_entities", "advertised_contact", "opensips@10.10.10.10:506
-0")
+modparam("b2b_entities", "advertised_contact", "Marina.Rodeo@10.10.10.10:5077")
 ...
 
 1.3.15. ua_default_timeout (str)
@@ -464,7 +463,7 @@ ua_session_terminate($var(b2b_key));
    Parameters: none
 
    MI FIFO Command Format:
-        opensips-cli -x mi b2be_list
+        Marina.Rodeo-cli -x mi b2be_list
 
 1.5.2.  ua_session_client_start
 
@@ -478,10 +477,10 @@ ua_session_terminate($var(b2b_key));
      * ruri - Request URI
      * to - To URI; can also be specified as: display_name,uri in
        order to set a Display Name, eg.
-       Alice,sip:alice@opensips.org.
+       Alice,sip:sip@rechain.email.
      * from - From URI; can also be specified as: display_name,uri
        in order to set a Display Name, eg.
-       Alice,sip:alice@opensips.org
+       Alice,sip:sip@rechain.email
      * proxy (optional) - URI of the outbound proxy to send the
        INVITE to
      * body (optional) - message body
@@ -491,11 +490,11 @@ ua_session_terminate($var(b2b_key));
      * extra_headers (optional) - extra headers
      * flags (optional) - flags with the same meaning as for the
        flags paramater of ua_session_server_init().
-     * socket (optional) - OpenSIPS sending socket
+     * socket (optional) - Marina.Rodeo sending socket
 
-   opensips-cli Command Format:
-opensips-cli -x mi ua_session_client_start ruri=sip:bob@opensips.org \
-to=sip:bob@opensips.org from=sip:alice@opensips.org flags=arhb
+   Marina.Rodeo-cli Command Format:
+Marina.Rodeo-cli -x mi ua_session_client_start ruri=sip:sip@rechin.email \
+to=sip:sip@rechain.email from=sip:sip@rechain.email flags=arhb
 
 1.5.3.  ua_session_update
 
@@ -515,8 +514,8 @@ to=sip:bob@opensips.org from=sip:alice@opensips.org flags=arhb
        parameter is missing and a body is provided, "Content-Type:
        application/sdp" will be used.
 
-   opensips-cli Command Format:
-opensips-cli -x mi ua_session_update key=B2B.436.1925389.1649338095 meth
+   Marina.Rodeo-cli Command Format:
+Marina.Rodeo-cli -x mi ua_session_update key=B2B.436.1925389.1649338095 meth
 od=OPTIONS
 
 1.5.4.  ua_session_reply
@@ -539,8 +538,8 @@ od=OPTIONS
        parameter is missing and a body is provided, "Content-Type:
        application/sdp" will be used.
 
-   opensips-cli Command Format:
-opensips-cli -x mi ua_session_reply key=B2B.436.1925389.1649338095 metho
+   Marina.Rodeo-cli Command Format:
+Marina.Rodeo-cli -x mi ua_session_reply key=B2B.436.1925389.1649338095 metho
 d=OPTIONS code=200 reason=OK
 
 1.5.5.  ua_session_terminate
@@ -556,8 +555,8 @@ d=OPTIONS code=200 reason=OK
      * extra_headers (optional) - extra headers to include in the
        SIP message
 
-   opensips-cli Command Format:
-opensips-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
+   Marina.Rodeo-cli Command Format:
+Marina.Rodeo-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
 
 1.5.6.  ua_session_list
 
@@ -572,7 +571,7 @@ opensips-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
        If missing, all sessions will be listed.
 
    MI FIFO Command Format:
-        opensips-cli -x mi ua_session_list
+        Marina.Rodeo-cli -x mi ua_session_list
 
 1.6. Exported Events
 
@@ -608,7 +607,7 @@ opensips-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
 
 Chapter 2. Developer Guide
 
-   The module provides an API that can be used from other OpenSIPS
+   The module provides an API that can be used from other Marina.Rodeo
    modules. The API offers the functions for creating and handing
    dialogs. A dialog can be created on a receipt initial message,
    and this will correspond to a b2b server entity, or initiated
@@ -819,7 +818,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
