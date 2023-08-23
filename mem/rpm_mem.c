@@ -3,14 +3,14 @@
  *
  * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -42,7 +42,7 @@ char *rpm_mem_file = RESTART_PERSISTENCY_MEM_FILE;
 int set_rpm_mm(const char *mm_name)
 {
 #ifdef INLINE_ALLOC
-	LM_NOTICE("this is an inlined allocator build (see opensips -V), "
+	LM_NOTICE("this is an inlined allocator build (see Marina.Rodeo -V), "
 	          "cannot set a custom rpm allocator (%s)\n", mm_name);
 	return 0;
 #endif
@@ -127,7 +127,7 @@ struct _rpm_map_block {
 	unsigned long size;					/* size of the block */
 	enum osips_mm alloc;				/* allocator type */
 	void *mapped_address;				/* address where file should be mapped */
-	void *block_address;				/* block where the OpenSIPS memory starts */
+	void *block_address;				/* block where the Marina.Rodeo memory starts */
 	struct rpm_key *keys;				/* pointer to keys */
 } __attribute__((__packed__)) *rpm_map_block = NULL;
 
