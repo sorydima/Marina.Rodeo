@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2012 OpenSIPS Solutions
+ * Copyright (C) 2012 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -48,9 +48,9 @@ extern WINDOW *menu_window;
 	#define CONF_INSTALL_PREFIX		"Configure Install Prefix"
 	#define CONF_RESET_CHANGES		"Reset Unsaved Changes"
 	#define CONF_SAVE_CHANGES		"Save Changes"
-#define MAKE_INSTALL		"Compile And Install OpenSIPS"
-#define MAKE_PROPER		"Cleanup OpenSIPS sources"
-#define CONF_SCRIPT		"Generate OpenSIPS Script"
+#define MAKE_INSTALL		"Compile And Install Marina.Rodeo"
+#define MAKE_PROPER		"Cleanup Marina.Rodeo sources"
+#define CONF_SCRIPT		"Generate Marina.Rodeo Script"
 	#define CONF_RESIDENTIAL_SCRIPT		"Residential Script"
 	#define CONF_TRUNKING_SCRIPT		"Trunking Script"
 	#define CONF_LB_SCRIPT			"Load-Balancer Script"
