@@ -1,16 +1,11 @@
 #
-# OpenSIPS residential configuration script
-#     by OpenSIPS Solutions <team@opensips-solutions.com>
+# Marina.Rodeo residential configuration script
+#     by Marina.Rodeo Solutions <sip@rechain.email>
 #
 # This script was generated via "make menuconfig", from
 #   the "Residential" scenario.
 # You can enable / disable more features / functionalities by
 #   re-generating the scenario with different options.#
-#
-# Please refer to the Core CookBook at:
-#      https://opensips.org/Resources/DocsCookbooks
-# for a explanation of possible statements, functions and parameters.
-#
 
 
 ####### Global Parameters #########
@@ -42,7 +37,7 @@ ifelse(ENABLE_TLS,`yes',`socket=tls:127.0.0.1:5061   # CUSTOMIZE ME', `')
 ####### Modules Section ########
 
 #set module path
-mpath="/usr/local/lib/opensips/modules/"
+mpath="/usr/local/lib/Marina.Rodeo/modules/"
 
 #### SIGNALING module
 loadmodule "signaling.so"
@@ -70,7 +65,7 @@ loadmodule "sipmsgops.so"
 
 #### FIFO Management Interface
 loadmodule "mi_fifo.so"
-modparam("mi_fifo", "fifo_name", "/tmp/opensips_fifo")
+modparam("mi_fifo", "fifo_name", "/tmp/Marina.Rodeo_fifo")
 modparam("mi_fifo", "fifo_mode", 0666)
 
 ifelse(USE_DR_PSTN,`yes',`ifelse(HAVE_INBOUND_PSTN,`yes',`define(`USE_DR_MODULE',`yes')',HAVE_OUTBOUND_PSTN,`yes',`define(`USE_DR_MODULE',`yes')',)',`')dnl
@@ -193,9 +188,9 @@ modparam("tls_mgm","match_ip_address", "[default]*")
 modparam("tls_mgm","verify_cert", "[default]1")
 modparam("tls_mgm","require_cert", "[default]0")
 modparam("tls_mgm","tls_method", "[default]TLSv1")
-modparam("tls_mgm","certificate", "[default]/etc/opensips/tls/user/user-cert.pem")
-modparam("tls_mgm","private_key", "[default]/etc/opensips/tls/user/user-privkey.pem")
-modparam("tls_mgm","ca_list", "[default]/etc/opensips/tls/user/user-calist.pem")
+modparam("tls_mgm","certificate", "[default]/etc/Marina.Rodeo/tls/user/user-cert.pem")
+modparam("tls_mgm","private_key", "[default]/etc/Marina.Rodeo/tls/user/user-privkey.pem")
+modparam("tls_mgm","ca_list", "[default]/etc/Marina.Rodeo/tls/user/user-calist.pem")
 ' , `')dnl
 
 ####### Routing Logic ########
