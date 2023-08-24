@@ -10,7 +10,7 @@ cachedb_memcached Module
         1.3. Limitations
         1.4. Dependencies
 
-              1.4.1. OpenSIPS Modules
+              1.4.1. Marina.Rodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -70,14 +70,14 @@ Chapter 1. Admin Guide
 
 1.4. Dependencies
 
-1.4.1. OpenSIPS Modules
+1.4.1. Marina.Rodeo Modules
 
    None.
 
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libmemcached:
        libmemcached can be downloaded from:
        http://tangent.org/552/libmemcached.html. Download the
@@ -96,7 +96,7 @@ Chapter 1. Admin Guide
 
 1.5.1. cachedb_url (string)
 
-   The urls of the server groups that OpenSIPS will connect to in
+   The urls of the server groups that Marina.Rodeo will connect to in
    order to use the from script cache_store,cache_fetch, etc
    operations. It can be set more than one time. The prefix part
    of the URL will be the identifier that will be used from the
@@ -159,7 +159,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
