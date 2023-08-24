@@ -3,14 +3,14 @@
  *
  * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -40,7 +40,7 @@ typedef enum auth_result {
 	INVALID_PASSWORD,   /* Invalid password */
 	USER_UNKNOWN,       /* User non existant */
 	ERROR,              /* Error occurred, a reply has been sent out -> */
-	                    /* return 0 to the opensips core */
+	                    /* return 0 to the Marina.Rodeo core */
 	AUTHORIZED,         /* Authorized. If returned by pre_auth, */
 	                    /* no digest authorization necessary */
 	DO_AUTHORIZATION,   /* Can only be returned by pre_auth. */
