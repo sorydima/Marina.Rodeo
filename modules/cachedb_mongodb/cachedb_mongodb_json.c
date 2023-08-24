@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2011-2017 OpenSIPS Project
+ * Copyright (C) 2011-2017 Marina.Rodeo Project
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -191,7 +191,7 @@ void bson_to_json_generic(struct json_object *obj, bson_iter_t *it,
 					break;
 				case BSON_TYPE_INT64:
 					LM_DBG("Found key %s with type long\n", curr_key);
-					/* no intrinsic support in OpenSIPS for 64bit integers -
+					/* no intrinsic support in Marina.Rodeo for 64bit integers -
 					 * converting to string */
 					s = int2str(bson_iter_int64(it), &len);
 					s[len]=0;
@@ -202,7 +202,7 @@ void bson_to_json_generic(struct json_object *obj, bson_iter_t *it,
 					}
 					break;
 				case BSON_TYPE_DOUBLE:
-					/* no intrinsic support in OpenSIPS for floating point numbers
+					/* no intrinsic support in Marina.Rodeo for floating point numbers
 					 * converting to int */
 					LM_DBG("Found key %s with type double\n",curr_key);
 					if (type == BSON_TYPE_DOCUMENT)
