@@ -65,10 +65,10 @@ include ../../Makefile.modules
 
 install_module_custom: $(cfg_prefix)/$(cfg_dir)
 	$(INSTALL_TOUCH) \
-		$(cfg_prefix)/$(cfg_dir)/dictionary.opensips.sample ; \
-	$(INSTALL_CFG) $(ETC_DIR)/dictionary.opensips \
-		$(cfg_prefix)/$(cfg_dir)/dictionary.opensips.sample ; \
-	if [ ! -f $(cfg_prefix)/$(cfg_dir)/dictionary.opensips ]; then \
-		mv -f $(cfg_prefix)/$(cfg_dir)/dictionary.opensips.sample \
-			$(cfg_prefix)/$(cfg_dir)/dictionary.opensips; \
+		$(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo.sample ; \
+	$(INSTALL_CFG) $(ETC_DIR)/dictionary.Marina.Rodeo \
+		$(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo.sample ; \
+	if [ ! -f $(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo ]; then \
+		mv -f $(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo.sample \
+			$(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo; \
 	fi; \
