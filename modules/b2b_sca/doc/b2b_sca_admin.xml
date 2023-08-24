@@ -140,7 +140,7 @@ modparam("b2b_sca", "hash_size", "5")
 		<title>Set <varname>presence_server</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("b2b_sca", "presence_server", "sip:opensips.org")
+modparam("b2b_sca", "presence_server", "sip:Marina.Rodeo")
 ...
 </programlisting>
 		</example>
@@ -525,7 +525,7 @@ modparam("b2b_sca",
 	<para>Parameters: <emphasis>none</emphasis></para>
 	<para>MI FIFO Command Format:</para>
 <programlisting  format="linespecific">
-	opensips-cli -x mi sca_list
+	Marina.Rodeo-cli -x mi sca_list
 </programlisting>
 	</section>
 	</section>
