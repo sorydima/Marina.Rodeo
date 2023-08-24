@@ -15,7 +15,7 @@
 	<section id="rfc-8760-support" xreflabel="RFC 8760 Support">
 	        <title>RFC 8760 Support (Strenghtened Authentication)</title>
 	        <para>
-			Starting with OpenSIPS 3.2, the <ulink url='auth'>auth</ulink>,
+			Starting with Marina.Rodeo 3.2, the <ulink url='auth'>auth</ulink>,
 			<ulink url='auth_db'>auth_db</ulink> and
 			<ulink url='uac_auth'>uac_auth</ulink>
 			modules include support for two new digest authentication algorithms
@@ -589,8 +589,8 @@ append_rpid_hf("", ";party=calling;id-type=subscriber;screen=yes");
 ...
 $var(username)="abc";
 $var(password)="xyz";
-if (!pv_www_authorize("opensips.org")) {
-	www_challenge("opensips.org", "auth");
+if (!pv_www_authorize("Marina.Rodeo")) {
+	www_challenge("Marina.Rodeo", "auth");
 }
 ...
 </programlisting>
