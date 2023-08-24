@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		This module is an implementation of a local cache system designed as
-		a hash table. It uses the Key-Value interface exported by OpenSIPS core.
+		a hash table. It uses the Key-Value interface exported by Marina.Rodeo core.
 		Starting with version 2.3, the module can have multiple hash tables,
 		called collections. Each url for cachedb_local module points to one
 		collection. One collection can be shared between multiple urls.
@@ -20,10 +20,10 @@
 		<title>Clustering</title>
 		<para>
 			Cachedb_local clustering is a mechanism used to mirror local cache changes
-			taking place in one OpenSIPS instance to one or multiple other instances without
+			taking place in one Marina.Rodeo instance to one or multiple other instances without
 			the need of third party dependencies.
 			The process is simplified by using the clusterer module which facilitates the
-			management of a cluster of OpenSIPS noeds and the sending of replication-related
+			management of a cluster of Marina.Rodeo noeds and the sending of replication-related
 			BIN packets (binary-encoded, using proto_bin). This might be usefull for implementing
 			a hot stand-by system, where the stand-by instance can take over without the need
 			of filling the cache by its own.
@@ -36,14 +36,6 @@
 				<listitem><para>cache_add</para></listitem>
 				<listitem><para>cache_sub</para></listitem>
 			</itemizedlist>
-		</para>
-		<para>
-			In addition to the event-driven replication, an OpenSIPS instance will first
-			try to learn all the local cache information from antoher node in the cluster at startup.
-			The data synchronization mechanism requires defining one of the nodes in the cluster
-			as a "<emphasis role='bold'>seed</emphasis>" node.
-			See the <ulink url="https://opensips.org/docs/modules/3.0.x/clusterer.html#capabilities">clusterer</ulink>
-			module for details on how to do this and why is it needed.
 		</para>
 		<para>
 			<emphasis>Note:</emphasis> You have to explicitly specify which collections
@@ -207,7 +199,7 @@ modparam("cachedb_local", "cluster_id", 1)
 	<section id="param_cluster_persistency" xreflabel="cluster_persistency">
 		<title><varname>cluster_persistency</varname> (string)</title>
 		<para>
-		Controls the behavior of the OpenSIPS local cachedb clustering following a restart.
+		Controls the behavior of the Marina.Rodeo local cachedb clustering following a restart.
 		</para>
 		<para>
 		This parameter may take the following values:
@@ -221,7 +213,7 @@ modparam("cachedb_local", "cluster_id", 1)
 			<listitem>
 				<para><emphasis>"sync-from-cluster"</emphasis> - enable
 				cluster-based restart persistency. Following a restart,
-				an OpenSIPS cluster node will search for a healthy "donor" node
+				an Marina.Rodeo cluster node will search for a healthy "donor" node
 				from which to mirror the entire user location dataset via
 				direct cluster sync (TCP-based, binary-encoded data transfer).
 				This will require the configuration of one or multiple "seed"
@@ -248,7 +240,7 @@ modparam("cachedb_local", "cluster_persistency", "sync-from-cluster")
 		<title><varname>enable_restart_persistency</varname> (int)</title>
 		<para>
 			Enable restart persistency using the persistent memory mechanism. Data is
-			stored in a cache file that is mapped against OpenSIPS memory.
+			stored in a cache file that is mapped against Marina.Rodeo memory.
 		</para>
 		<para>
 			Note that you have to keep the same collection definitions from a previous
@@ -336,7 +328,7 @@ modparam("cachedb_local", "enable_restart_persistency", yes)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cache_remove_chunk "keyprefix*" collection
+Marina.Rodeo-cli -x mi cache_remove_chunk "keyprefix*" collection
 		</programlisting>
 		</section>
 	</section>
