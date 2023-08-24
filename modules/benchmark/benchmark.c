@@ -1,18 +1,18 @@
 /*
- * Benchmarking module for OpenSIPS
+ * Benchmarking module for Marina.Rodeo
  *
  * Copyright (C) 2007 Collax GmbH
  *                    (Bastian Friedrich <bastian.friedrich@collax.com>)
  * Copyright (C) 2007 Voice Sistem SRL
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -180,7 +180,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,
 	0,          /* load function */
-	NULL,       /* OpenSIPS module dependencies */
+	NULL,       /* Marina.Rodeo module dependencies */
 	cmds,       /* Exported functions */
 	0,          /* Exported async functions */
 	params,     /* Exported parameters */
@@ -203,7 +203,7 @@ struct module_exports exports = {
 
 /*
  * mod_init
- * Called by opensips at init time
+ * Called by Marina.Rodeo at init time
  */
 static int mod_init(void) {
 
@@ -232,7 +232,7 @@ static int child_init(int rank)
 
 /*
  * destroy
- * called by opensips at exit time
+ * called by Marina.Rodeo at exit time
  */
 static void destroy(void)
 {
