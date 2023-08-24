@@ -103,7 +103,7 @@ modparam("aaa_diameter", "fd_log_level", 0)
 		<title>Setting the <varname>realm</varname> parameter</title>
 		<programlisting format="linespecific">
 
-modparam("aaa_diameter", "realm", "opensips.org")
+modparam("aaa_diameter", "realm", "Marina.Rodeo")
 
 </programlisting>
 		</example>
@@ -113,7 +113,7 @@ modparam("aaa_diameter", "realm", "opensips.org")
 		<title><varname>peer_identity (string)</varname></title>
 		<para>
 		The identity (realm subdomain) of the Diameter server peer, to which
-		the OpenSIPS Diameter client peer will connect.
+		the Marina.Rodeo Diameter client peer will connect.
 		</para>
 		<para>
 			Default value is <emphasis>"server"</emphasis>
@@ -150,7 +150,7 @@ modparam("aaa_diameter", "aaa_url", "diameter:freeDiameter-client.conf")
 		<title>Setting the <varname>aaa_url</varname> parameter</title> with an extra AVPs file.
 		<programlisting format="linespecific">
 
-modparam("aaa_diameter", "aaa_url", "diameter:freeDiameter-client.conf;extra-avps-file:dictionary.opensips")
+modparam("aaa_diameter", "aaa_url", "diameter:freeDiameter-client.conf;extra-avps-file:dictionary.Marina.Rodeo")
 
 </programlisting>
 		</example>
@@ -189,13 +189,13 @@ modparam("aaa_diameter", "answer_timeout", 5000)
 		<itemizedlist>
 			<listitem><para>
 				<emphasis>app_id</emphasis> (integer) - ID of the application.
-				A custom application must be defined in the dictionary.opensips
+				A custom application must be defined in the dictionary.Marina.Rodeo
 				Diameter configuration file before it can be recognized.
 			</para></listitem>
 			<listitem><para>
 				<emphasis>cmd_code</emphasis> (integer) - ID of the command.  A
 				custom command code, name and AVP requirements must be defined
-				in the dictionary.opensips Diameter configuration file beforehand.
+				in the dictionary.Marina.Rodeo Diameter configuration file beforehand.
 				body of the HTTP response.
 			</para></listitem>
 			<listitem><para>
@@ -232,11 +232,11 @@ modparam("aaa_diameter", "answer_timeout", 5000)
 		This function can be used from any route.
 		</para>
 		<example>
-		<title><function moreinfo="none">dictionary.opensips</function> extended syntax</title>
+		<title><function moreinfo="none">dictionary.Marina.Rodeo</function> extended syntax</title>
 		<programlisting format="linespecific">
 
 # Example of defining custom Diameter AVPs, Application IDs,
-# Requests and Replies in the "dictionary.opensips" file
+# Requests and Replies in the "dictionary.Marina.Rodeo" file
 
 ATTRIBUTE out_gw            232 string
 ATTRIBUTE trunk_id          233 string
