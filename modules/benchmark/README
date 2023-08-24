@@ -8,7 +8,7 @@ Benchmark Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -80,11 +80,11 @@ Chapter 1. Admin Guide
 
    This module helps developers to benchmark their module
    functions. By adding this module's functions via the
-   configuration file or through its API, OpenSIPS can log
+   configuration file or through its API, Marina.Rodeo can log
    profiling information for every function.
 
    The duration between calls to start_timer and log_timer is
-   stored and logged via OpenSIPS's logging facility. Please note
+   stored and logged via Marina.Rodeo's logging facility. Please note
    that all durations are given as microseconds (don't confuse
    with milliseconds!).
 
@@ -99,15 +99,15 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules.
+     * No dependencies on other Marina.Rodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -233,7 +233,7 @@ bm_log_timer("test");
        "enable" parameter.
 
    MI FIFO Command Format:
-                        opensips-cli -x mi bm_enable_global 1
+                        Marina.Rodeo-cli -x mi bm_enable_global 1
 
 1.6.2. bm_enable_timer
 
@@ -247,7 +247,7 @@ bm_log_timer("test");
 
    Example 1.6. Enabling a timer
 ...
-opensips-cli -x mi bm_enable_timer test 1
+Marina.Rodeo-cli -x mi bm_enable_timer test 1
 ...
 
 1.6.3. bm_granularity
@@ -258,7 +258,7 @@ opensips-cli -x mi bm_enable_timer test 1
      * granularity - See discription of "granularity" parameter.
 
    MI FIFO Command Format:
-                        opensips-cli -x mi bm_granularity 300
+                        Marina.Rodeo-cli -x mi bm_granularity 300
 
 1.6.4. bm_loglevel
 
@@ -268,7 +268,7 @@ opensips-cli -x mi bm_enable_timer test 1
      * log_level - See discription of "loglevel" parameter.
 
    MI FIFO Command Format:
-                        opensips-cli -x mi bm_loglevel 4
+                        Marina.Rodeo-cli -x mi bm_loglevel 4
 
 1.6.5. bm_poll_results
 
@@ -288,7 +288,7 @@ opensips-cli -x mi bm_enable_timer test 1
 
    Example 1.7. Getting the results via FIFO interface
 ...
-opensips-cli -x mi bm_poll_results
+Marina.Rodeo-cli -x mi bm_poll_results
 register_timer
         3/40/12/14/13.333333
         9/204/12/97/22.666667
@@ -311,7 +311,7 @@ bm_log_timer("usrloc-lookup");
 Chapter 2. Developer Guide
 
    The benchmark module provides an internal API to be used by
-   other OpenSIPS modules. The available functions are identical
+   other Marina.Rodeo modules. The available functions are identical
    to the user exported functions.
 
    Please note that this module is intended mainly for developers.
@@ -389,7 +389,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
