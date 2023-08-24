@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2011-2017 OpenSIPS Project
+ * Copyright (C) 2011-2017 Marina.Rodeo Project
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -23,7 +23,7 @@
 
 #include "../../cachedb/cachedb.h"
 #include "../../db/db.h"
-#include "../../lib/json/opensips_json_c_helper.h"
+#include "../../lib/json/Marina.Rodeo_json_c_helper.h"
 
 #define MONGO_HAVE_STDINT 1
 
