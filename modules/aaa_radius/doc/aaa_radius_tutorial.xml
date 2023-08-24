@@ -39,7 +39,7 @@ tar -xzvf freeradius-client-1.1.7.tar.gz
 		<programlisting format="linespecific">
 ........
 cd freeRADIUS-client/freeradius-client-1.1.7.tar.gz
-patch -p1 &lt; /path/to/opensips/modules/aaa_radius/radius_async_support.patch
+patch -p1 &lt; /path/to/Marina.Rodeo/modules/aaa_radius/radius_async_support.patch
 ./configure --any-options-you-want
 make
 sudo make install
