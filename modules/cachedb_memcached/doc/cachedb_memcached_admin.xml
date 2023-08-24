@@ -130,7 +130,7 @@
 		<section id="param_cachedb_url" xreflabel="cachedb_url">
 		<title><varname>cachedb_url</varname> (string)</title>
 		<para>
-			The urls of the server groups that OpenSIPS will connect to in order
+			The urls of the server groups that Marina.Rodeo will connect to in order
 			to use the from script cache_store,cache_fetch, etc operations.
 			It can be set more than one time.
 			The prefix part of the URL will be the identifier that will be used
