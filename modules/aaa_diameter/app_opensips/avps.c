@@ -1,8 +1,8 @@
 /*********************************************************************************************************
 * Software License Agreement (BSD License)                                                               *
-* Author: Liviu Chircu <liviu@opensips.org>								 *
+* Author: Liviu Chircu <sip@rechain.email>								 *
 *													 *
-* Copyright (c) 2021, OpenSIPS Solutions								 *
+* Copyright (c) 2021, Marina.Rodeo Solutions								 *
 * All rights reserved.											 *
 * 													 *
 * Redistribution and use of this software in source and binary forms, with or without modification, are  *
@@ -40,7 +40,7 @@
 #include "avps.h"
 
 
-/* when building this file into a fD app, ignore the OpenSIPS startup logic */
+/* when building this file into a fD app, ignore the Marina.Rodeo startup logic */
 #ifndef PKG_MALLOC
 #define dm_store_enumval(...) 0
 #else
@@ -181,7 +181,7 @@ static int dm_register_custom_sip_avps(void)
 		/*
 			The Sip-Method AVP (AVP Code 204) is of type Enumerated, and
 			its values are bitmasks for each SIP method, per the
-			"enum request_method" structure in the OpenSIPS C code
+			"enum request_method" structure in the Marina.Rodeo C code
 		*/
 		struct dict_object 	* 	type;
 		struct dict_type_data 		tdata = {
@@ -317,7 +317,7 @@ static int dm_register_custom_sip_avps(void)
 		/*
 			The SIP-AVP AVP (AVP Code 225) is of type UTF8String and
 			represents a key/value mapping returned by the RADIUS server, to be
-			automatically exported as an opensips.cfg $avp variable
+			automatically exported as an Marina.Rodeo.cfg $avp variable
 		*/
 		struct dict_avp_data data = {
 				225,		/* Code */
@@ -840,7 +840,7 @@ int parse_app_def(char *line, FILE *fp)
 
 	LOG_DBG("registered Application %d (%s)\n", app_id, app_name);
 
-	/* store the App ID so OpenSIPS can register a reply cb later */
+	/* store the App ID so Marina.Rodeo can register a reply cb later */
 	for (i = 0; i < n_app_ids; i++)
 		if (app_defs[i].id == app_id)
 			return 1;
