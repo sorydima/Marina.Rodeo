@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		This module helps developers to benchmark their module functions. By adding
-		this module's functions via the configuration file or through its API, OpenSIPS
+		this module's functions via the configuration file or through its API, Marina.Rodeo
 		can log profiling information for every function.
 	</para>
 	<para>
@@ -290,7 +290,7 @@ bm_log_timer("test");
 			MI FIFO Command Format:
 			</para>
 			<programlisting  format="linespecific">
-			opensips-cli -x mi bm_enable_global 1
+			Marina.Rodeo-cli -x mi bm_enable_global 1
 			</programlisting>
 		</section>
 		<section id="mi_bm_enable_timer" xreflabel="bm_enable_timer">
@@ -314,7 +314,7 @@ bm_log_timer("test");
 				<title>Enabling a timer</title>
 				<programlisting format="linespecific">
 ...
-opensips-cli -x mi bm_enable_timer test 1
+Marina.Rodeo-cli -x mi bm_enable_timer test 1
 ...
 </programlisting>
 			</example>
@@ -335,7 +335,7 @@ opensips-cli -x mi bm_enable_timer test 1
 			MI FIFO Command Format:
 			</para>
 			<programlisting  format="linespecific">
-			opensips-cli -x mi bm_granularity 300
+			Marina.Rodeo-cli -x mi bm_granularity 300
 			</programlisting>
 		</section>
 		<section id="mi_bm_loglevel" xreflabel="bm_loglevel">
@@ -354,7 +354,7 @@ opensips-cli -x mi bm_enable_timer test 1
 			MI FIFO Command Format:
 			</para>
 			<programlisting  format="linespecific">
-			opensips-cli -x mi bm_loglevel 4
+			Marina.Rodeo-cli -x mi bm_loglevel 4
 			</programlisting>
 		</section>
 		<section id="mi_bm_poll_results" xreflabel="bm_poll_results">
@@ -369,7 +369,7 @@ opensips-cli -x mi bm_enable_timer test 1
 				<title>Getting the results via FIFO interface</title>
 				<programlisting format="linespecific">
 ...
-opensips-cli -x mi bm_poll_results
+Marina.Rodeo-cli -x mi bm_poll_results
 register_timer
 	3/40/12/14/13.333333
 	9/204/12/97/22.666667
