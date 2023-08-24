@@ -9,7 +9,7 @@ B2B_LOGIC
         1.2. Scenario Logic
         1.3. Dependencies
 
-              1.3.1. OpenSIPS Modules
+              1.3.1. Marina.Rodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -150,7 +150,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The B2BUA implementation in OpenSIPS is separated in two
+   The B2BUA implementation in Marina.Rodeo is separated in two
    layers:
      * a lower one (implemented in the b2b_entities module) - the
        basic functions of a UAS and UAC
@@ -182,13 +182,13 @@ Chapter 1. Admin Guide
    by the b2b_logic module and the first step will be to put the
    two initial entities in contact. Requests and replies belonging
    to these dialogs will not enter the script through the standard
-   OpenSIPS routes but instead will be handled in b2b_logic
+   Marina.Rodeo routes but instead will be handled in b2b_logic
    dedicated routes (defined through the script_req_route and
    script_reply_route modparams or, the custom routes given as
    parameters to b2b_init_request()). The further steps of the
    scenario can be implemented in these routes, by calling
    dedicated b2b_logic script functions in order to perform
-   various actions. Normal "proxy-like" OpenSIPS functions should
+   various actions. Normal "proxy-like" Marina.Rodeo functions should
    not be executed in the b2b_logic routes.
 
    Some messages will be handled automatically by the module and
@@ -202,13 +202,13 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. OpenSIPS Modules
+1.3.1. Marina.Rodeo Modules
 
      * b2b_entities, a db module
 
 1.3.2. External Libraries or Applications
 
-   No libraries or applications required before running OpenSIPS
+   No libraries or applications required before running Marina.Rodeo
    with this module.
 
 1.4. Exported Parameters
@@ -395,7 +395,7 @@ modparam("b2b_logic", "b2bl_from_spec_param", "$var(b2bl_from)")
 route{
         ...
         # setting the From header
-        $var(b2bl_from) = "\"Call ID\" <sip:user@opensips.org>";
+        $var(b2bl_from) = "\"Call ID\" <sip:user@Marina.Rodeo>";
         ...
         b2b_init_request("top hiding");
         ...
@@ -404,7 +404,7 @@ route{
 1.4.14. server_address (str)
 
    The IP address of the machine that will be used as Contact in
-   the generated messages. This is compulsory only when OpenSIPS
+   the generated messages. This is compulsory only when Marina.Rodeo
    starts a call from the middle. For scenarios triggered by
    received calls, if it is not set, it is constructed dynamically
    from the socket where the initiating request was received. This
@@ -556,7 +556,7 @@ if(is_method("INVITE") && !has_totag() && prepaid_user()) {
 [extra_hdr_bodies])
 
    This function creates a new server entity (dialog where
-   OpenSIPS acts as a UAS) to be used for initializing a new B2B
+   Marina.Rodeo acts as a UAS) to be used for initializing a new B2B
    session. It should only be used for initial INVITES, before
    calling b2b_init_request().
 
@@ -587,7 +587,7 @@ if(is_method("INVITE") && !has_totag()) {
 [adv_contact], [extra_hdrs], [extra_hdr_bodies])
 
    This function creates a new client entity (dialog where
-   OpenSIPS acts as a UAC) to be used for initializing a new B2B
+   Marina.Rodeo acts as a UAC) to be used for initializing a new B2B
    session or for a bridge action. The function can be used before
    calling b2b_init_request() or b2b_bridge().
 
@@ -614,7 +614,7 @@ if(is_method("INVITE") && !has_totag()) {
 
    Example 1.23. b2b_client_new usage
 ...
-b2b_client_new("client1", "sip:alice@opensips.org");
+b2b_client_new("client1", "sip:alice@Marina.Rodeo");
 ...
 
 1.5.4.  b2b_bridge(entity1, entity2, [provmedia_uri], [flags])
@@ -683,7 +683,7 @@ route[b2b_logic_reply] {
    ...
    if ($b2b_logic.entity(id) == "client1" && $rm == "INVITE" && $rs >= 3
 00) {
-      b2b_client_new("client_retry", "sip:alice@opensips.org");
+      b2b_client_new("client_retry", "sip:alice@Marina.Rodeo");
 
       b2b_bridge_retry("client_retry");
    } else {
@@ -883,7 +883,7 @@ vp(header), $avp(header_content), "callee,sip:user@10.0.0.1,sip:10.0.0.1
 
 1.6.1.  b2b_trigger_scenario
 
-   This command initializes a new B2B session where OpenSIPS will
+   This command initializes a new B2B session where Marina.Rodeo will
    start a call from the middle. The initial entities to be
    connected are specified through the command's parameters and
    further scenario logic can be implemented in the b2b_logic
@@ -906,8 +906,8 @@ vp(header), $avp(header_content), "callee,sip:user@10.0.0.1,sip:10.0.0.1
        the format: key=value
 
    MI FIFO Command Format:
-        opensips-cli -x mi b2b_trigger_scenario marketing client1,sip:bo
-b@opensips.org client2,sip:322@opensips.org:5070 agent_uri=sip:alice@ope
+        Marina.Rodeo-cli -x mi b2b_trigger_scenario marketing client1,sip:bo
+b@Marina.Rodeo client2,sip:322@Marina.Rodeo:5077 agent_uri=sip:alice@ope
 nsips.org
 
 1.6.2.  b2b_bridge
@@ -934,10 +934,10 @@ nsips.org
        bridging scenario
 
    MI FIFO Command Format:
-        opensips-cli -x mi b2b_bridge 1020.30 sip:alice@opensips.org
+        Marina.Rodeo-cli -x mi b2b_bridge 1020.30 sip:alice@Marina.Rodeo
 
-   opensips-cli Command Format:
-        opensips-cli -x mi b2b_bridge 1020.30 sip:alice@opensips.org
+   Marina.Rodeo-cli Command Format:
+        Marina.Rodeo-cli -x mi b2b_bridge 1020.30 sip:alice@Marina.Rodeo
 
 1.6.3.  b2b_list
 
@@ -949,7 +949,7 @@ nsips.org
    Parameters: none
 
    MI FIFO Command Format:
-        opensips-cli -x mi b2b_list
+        Marina.Rodeo-cli -x mi b2b_list
 
 1.6.4.  b2b_terminate_call
 
@@ -962,7 +962,7 @@ nsips.org
        one of call legs of the ongoing session.
 
    MI FIFO Command Format:
-        opensips-cli -x mi b2b_terminate_call 159.0
+        Marina.Rodeo-cli -x mi b2b_terminate_call 159.0
 
 1.7. Exported Pseudo-Variables
 
@@ -1089,7 +1089,7 @@ route[b2b_logic_request] {
 
 Chapter 2. Developer Guide
 
-   The module provides an API that can be used from other OpenSIPS
+   The module provides an API that can be used from other Marina.Rodeo
    modules. The API offers the functions for instantiating b2b
    scenarios from other modules (this comes as an addition to the
    other two means of instantiating b2b scenarios - from script
@@ -1260,7 +1260,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
