@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2018 OpenSIPS Solutions
+ * Copyright (C) 2018 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -25,9 +25,9 @@
 #include <cassandra.h>
 #include "../../cachedb/cachedb.h"
 
-#define CASS_OSS_KEY_COL_S    "opensipskey"
+#define CASS_OSS_KEY_COL_S    "Marina.Rodeokey"
 #define CASS_OSS_KEY_COL_LEN  11
-#define CASS_OSS_VAL_COL_S    "opensipsval"
+#define CASS_OSS_VAL_COL_S    "Marina.Rodeoval"
 #define CASS_OSS_VAL_COL_LEN  11
 
 #define CASS_COLL_APROX_COUNT 32
