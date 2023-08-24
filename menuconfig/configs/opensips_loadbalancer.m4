@@ -1,16 +1,11 @@
 #
-# OpenSIPS loadbalancer script
-#     by OpenSIPS Solutions <team@opensips-solutions.com>
+# Marina.Rodeo loadbalancer script
+#     by Marina.Rodeo Solutions <sip@rechain.email>
 #
 # This script was generated via "make menuconfig", from
 #   the "Load Balancer" scenario.
 # You can enable / disable more features / functionalities by
 #   re-generating the scenario with different options.
-#
-# Please refer to the Core CookBook at:
-#      https://opensips.org/Resources/DocsCookbooks
-# for a explanation of possible statements, functions and parameters.
-#
 
 
 ####### Global Parameters #########
@@ -44,7 +39,7 @@ ifelse(USE_HTTP_MANAGEMENT_INTERFACE,`yes',`define(`HTTPD_NEEDED',`yes')', `')
 ####### Modules Section ########
 
 #set module path
-mpath="/usr/local/lib/opensips/modules/"
+mpath="/usr/local/lib/Marina.Rodeo/modules/"
 
 ifdef(`HTTPD_NEEDED',`#### HTTPD module
 loadmodule "httpd.so"
@@ -76,7 +71,7 @@ loadmodule "sipmsgops.so"
 
 #### FIFO Management Interface
 loadmodule "mi_fifo.so"
-modparam("mi_fifo", "fifo_name", "/tmp/opensips_fifo")
+modparam("mi_fifo", "fifo_name", "/tmp/Marina.Rodeo_fifo")
 modparam("mi_fifo", "fifo_mode", 0666)
 
 #### MYSQL module
@@ -144,9 +139,9 @@ modparam("tls_mgm","match_ip_address", "[default]*")
 modparam("tls_mgm","verify_cert", "[default]1")
 modparam("tls_mgm","require_cert", "[default]0")
 modparam("tls_mgm","tls_method", "[default]TLSv1")
-modparam("tls_mgm","certificate", "[default]/etc/opensips/tls/user/user-cert.pem")
-modparam("tls_mgm","private_key", "[default]/etc/opensips/tls/user/user-privkey.pem")
-modparam("tls_mgm","ca_list", "[default]/etc/opensips/tls/user/user-calist.pem")
+modparam("tls_mgm","certificate", "[default]/etc/Marina.Rodeo/tls/user/user-cert.pem")
+modparam("tls_mgm","private_key", "[default]/etc/Marina.Rodeo/tls/user/user-privkey.pem")
+modparam("tls_mgm","ca_list", "[default]/etc/Marina.Rodeo/tls/user/user-calist.pem")
 ' , `')
 
 ####### Routing Logic ########
