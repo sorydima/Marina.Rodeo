@@ -9,7 +9,7 @@
 	<para>
 		This module is an implementation of a cache system designed to work with
 		MongoDB servers.
-		It implements the Key-Value interface exposed by the OpenSIPS core.
+		It implements the Key-Value interface exposed by the Marina.Rodeo core.
 	</para>
 	<para>
 		The underlying client library is compatible with any of the following
@@ -42,7 +42,7 @@
 			<listitem>
 			<para>
 				<emphasis>the cache is 100% persistent. A restart
-					of OpenSIPS server will not affect the DB. The MongoDB is also
+					of Marina.Rodeo server will not affect the DB. The MongoDB is also
 				persistent so it can also be restarted without loss of information.</emphasis>
 			</para>
 			</listitem>
@@ -57,7 +57,7 @@
 
 			<listitem>
 			<para>
-				<emphasis>By creating a MongoDB Cluster, multiple OpenSIPS
+				<emphasis>By creating a MongoDB Cluster, multiple Marina.Rodeo
 				instances can easily share key-value information</emphasis>
 			</para>
 			</listitem>
@@ -146,9 +146,9 @@ sudo yum install json-c-devel mongo-c-driver-devel
 		<section id="param_cachedb_url" xreflabel="cachedb_url">
 		<title><varname>cachedb_url</varname> (string)</title>
 		<para>
-			The URLs of the server groups that OpenSIPS will connect to in order
+			The URLs of the server groups that Marina.Rodeo will connect to in order
 			to allow the cache_store(), cache_fetch(), etc. functions to be used
-			from the OpenSIPS script. It can be set more than one time.
+			from the Marina.Rodeo script. It can be set more than one time.
 			The prefix part of the URL will be the identifier that will be used
 			from the script.
 		</para>
@@ -166,23 +166,23 @@ sudo yum install json-c-devel mongo-c-driver-devel
 ...
 # Connect to a single <emphasis>mongod</emphasis> instance
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb://localhost:27017/opensipsDB.dialog")
+         "mongodb://localhost:27017/Marina.RodeoDB.dialog")
 
 # Connect to a <emphasis>mongod</emphasis> replica set
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb://10.0.0.10,10.0.0.11:27017/opensipsDB.dialog?replicaSet=my-set")
+         "mongodb://10.0.0.10,10.0.0.11:27017/Marina.RodeoDB.dialog?replicaSet=my-set")
 
 # Connect to a <emphasis>mongos</emphasis> instance (routes to a sharded cluster)
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb://localhost/opensipsDB.dialog")
+         "mongodb://localhost/Marina.RodeoDB.dialog")
 
 # Example of multiple connections:
 #   * to a main <emphasis>mongos</emphasis>, with failover to a backup <emphasis>mongos</emphasis>
 #   * to a single <emphasis>mongod</emphasis>
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb:cluster://localhost,10.0.0.10:27017/opensipsDB.dialog")
+         "mongodb:cluster://localhost,10.0.0.10:27017/Marina.RodeoDB.dialog")
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb://localhost:27017/opensipsDB.userlocation")
+         "mongodb://localhost:27017/Marina.RodeoDB.userlocation")
 ...
 	</programlisting>
 		</example>
@@ -294,7 +294,7 @@ modparam("cachedb_mongodb", "compat_mode_3.0", 1)
 			<ulink url="https://docs.mongodb.com/manual/reference/command/nav-crud/">
 				MongoDB website</ulink>. Query results
 			are returned as JSON documents, that one can further process
-			in the OpenSIPS script by using the JSON module.
+			in the Marina.Rodeo script by using the JSON module.
 		</para>
 
 		<para>
