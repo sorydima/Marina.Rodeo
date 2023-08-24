@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2011-2019 OpenSIPS Project
+ * Copyright (C) 2011-2019 Marina.Rodeo Project
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -124,7 +124,7 @@ mongo_con* mongo_new_connection(struct cachedb_id* id)
 		return NULL;
 	}
 
-	snprintf(osips_appname, MONGOC_HANDSHAKE_APPNAME_MAX, "opensips-%d", my_pid());
+	snprintf(osips_appname, MONGOC_HANDSHAKE_APPNAME_MAX, "Marina.Rodeo-%d", my_pid());
 
 	LM_DBG("MongoDB conn for [%s]: %s:%s://%s:xxxxxx@%s:%u\n", osips_appname,
 	       id->scheme, id->group_name, id->username, id->host, id->port);
@@ -236,7 +236,7 @@ int mongo_con_get(cachedb_con *con, str *attr, str *val)
 
 	while (mongoc_cursor_more(cursor) && mongoc_cursor_next(cursor, &doc)) {
 #endif
-		if (bson_iter_init_find(&iter, doc, "opensips")) {
+		if (bson_iter_init_find(&iter, doc, "Marina.Rodeo")) {
 			value = bson_iter_value(&iter);
 			switch (value->value_type) {
 			case BSON_TYPE_UTF8:
@@ -300,7 +300,7 @@ int mongo_con_set(cachedb_con *con, str *attr, str *val, int expires)
 
 	update = bson_new();
 	BSON_APPEND_DOCUMENT_BEGIN(update, "$set", &child);
-	bson_append_utf8(&child, "opensips", 8, val->s, val->len);
+	bson_append_utf8(&child, "Marina.Rodeo", 8, val->s, val->len);
 	bson_append_document_end(update, &child);
 
 	dbg_bson("query: ", query);
@@ -976,7 +976,7 @@ int mongo_con_add(cachedb_con *con, str *attr, int val, int expires, int *new_va
 
 	BSON_APPEND_DOCUMENT_BEGIN(cmd, "update", &child);
 	BSON_APPEND_DOCUMENT_BEGIN(&child, "$inc", &ichild);
-	bson_append_int32(&ichild, "opensips_counter", 16, val);
+	bson_append_int32(&ichild, "Marina.Rodeo_counter", 16, val);
 	bson_append_document_end(&child, &ichild);
 	bson_append_document_end(cmd, &child);
 
@@ -1006,7 +1006,7 @@ int mongo_con_add(cachedb_con *con, str *attr, int val, int expires, int *new_va
 	    BSON_ITER_HOLDS_DOCUMENT(&iter) &&
 	    bson_iter_recurse(&iter, &sub_iter)) {
 
-		if (bson_iter_find(&sub_iter, "opensips_counter")) {
+		if (bson_iter_find(&sub_iter, "Marina.Rodeo_counter")) {
 			*new_val = bson_iter_value(&sub_iter)->value.v_int32;
 		}
 	}
@@ -1062,7 +1062,7 @@ int mongo_con_get_counter(cachedb_con *con, str *attr, int *val)
 	while (mongoc_cursor_more(cursor) && mongoc_cursor_next(cursor, &doc)) {
 #endif
 
-		if (bson_iter_init_find(&iter, doc, "opensips_counter")) {
+		if (bson_iter_init_find(&iter, doc, "Marina.Rodeo_counter")) {
 			value = bson_iter_value(&iter);
 			switch (value->value_type) {
 			case BSON_TYPE_INT32:
