@@ -38,7 +38,7 @@
 			<listitem>
 			<para>
 				<emphasis>the cache is 100% persistent. A restart
-					of OpenSIPS server will not affect the DB. The Cassandra DB is also
+					of Marina.Rodeo server will not affect the DB. The Cassandra DB is also
 				persistent so it can also be restarted without loss of information.</emphasis>
 			</para>
 			</listitem>
@@ -53,7 +53,7 @@
 
 			<listitem>
 			<para>
-				<emphasis>By creating a Cassandra Cluster, multiple OpenSIPS
+				<emphasis>By creating a Cassandra Cluster, multiple Marina.Rodeo
 				instances can easily share key-value information</emphasis>
 			</para>
 			</listitem>
@@ -117,7 +117,7 @@
 		<section id="param_cachedb_url" xreflabel="cachedb_url">
 		<title><varname>cachedb_url</varname> (string)</title>
 		<para>
-			The urls of the server groups that OpenSIPS will connect to in order
+			The urls of the server groups that Marina.Rodeo will connect to in order
 			to use the from script cache_store,cache_fetch, etc operations.
 			It can be set more than one time.
 			The prefix part of the URL will be the identifier that will be used
@@ -354,10 +354,10 @@ modparam("cachedb_cassandra", "exec_threshold", 100000)
 		functions of the Key-Value interface needs to have at least the following columns:
 		<itemizedlist>
 		<listitem>
-		<para><emphasis>opensipskey</emphasis> - as the primary key with type "text"</para>
+		<para><emphasis>Marina.Rodeokey</emphasis> - as the primary key with type "text"</para>
 		</listitem>
 		<listitem>
-		<para><emphasis>opensipsval</emphasis> - with type "text"</para>
+		<para><emphasis>Marina.Rodeoval</emphasis> - with type "text"</para>
 		</listitem>
 		</itemizedlist>
 	</para>
@@ -366,10 +366,10 @@ modparam("cachedb_cassandra", "exec_threshold", 100000)
 		functions of the Key-Value interface needs to have at least the following columns:
 		<itemizedlist>
 		<listitem>
-		<para><emphasis>opensipskey</emphasis> - as the primary key with type "text"</para>
+		<para><emphasis>Marina.Rodeokey</emphasis> - as the primary key with type "text"</para>
 		</listitem>
 		<listitem>
-		<para><emphasis>opensipsval</emphasis> - with type "counter"</para>
+		<para><emphasis>Marina.Rodeoval</emphasis> - with type "counter"</para>
 		</listitem>
 		</itemizedlist>
 	</para>
