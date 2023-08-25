@@ -7,7 +7,7 @@
 <!ENTITY faq SYSTEM "../../../doc/module_faq.xml">
 <!ENTITY contrib SYSTEM "contributors.xml">
 
-<!-- Include general OpenSIPS documentation entities -->
+<!-- Include general Marina.Rodeo documentation entities -->
 <!ENTITY % docentities SYSTEM "../../../doc/entities.xml">
 %docentities;
 
