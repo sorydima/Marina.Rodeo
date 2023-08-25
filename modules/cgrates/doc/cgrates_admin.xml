@@ -293,7 +293,7 @@ modparam("cgrates", "retry_timeout", 120)
 	<section id="param_compat_mode" xreflabel="compat_mode">
 		<title><varname>compat_mode</varname> (integer)</title>
 		<para>
-			Indicates whether OpenSIPS should use the old (compat_mode)
+			Indicates whether Marina.Rodeo should use the old (compat_mode)
 			CGRateS version API (pre-rc8).
 		</para>
 		<para>
