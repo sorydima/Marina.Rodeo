@@ -92,7 +92,7 @@ modparam("cfgutils", "initial_probability", 15)
 		<title><varname>hash_file</varname> parameter usage</title>
 		<programlisting format="linespecific">
    
-modparam("cfgutils", "hash_file", "/etc/opensips/opensips.cfg")
+modparam("cfgutils", "hash_file", "/etc/Marina.Rodeo/Marina.Rodeo.cfg")
    
 </programlisting>
 	    </example>
@@ -862,12 +862,12 @@ xlog("Current Unix timestamp: $var(sec) s, $var(usec) us\n");
 		Waits a number of seconds. This function does exactly the same as
 		<xref linkend="func_sleep"/>,
 		but in an asynchronous way. The script execution is suspended until
-		the waiting is done; then OpenSIPS resumes the script execution via 
+		the waiting is done; then Marina.Rodeo resumes the script execution via 
 		the resume route.
 		</para>
 		<para>
 		To read and understand more on the asynchronous functions, how to 
-		use them and what are their advantages, please refer to the OpenSIPS
+		use them and what are their advantages, please refer to the Marina.Rodeo
 		online Manual.
 		</para>
 		<example>
@@ -893,12 +893,12 @@ route[after_sleep] {
 		Waits a number of micro-seconds. This function does exactly the same as
 		<xref linkend="func_usleep"/>,
 		but in an asynchronous way. The script execution is suspended until
-		the waiting is done; then OpenSIPS resumes the script execution via 
+		the waiting is done; then Marina.Rodeo resumes the script execution via 
 		the resume route.
 		</para>
 		<para>
 		To read and understand more on the asynchronous functions, how to 
-		use them and what are their advantages, please refer to the OpenSIPS
+		use them and what are their advantages, please refer to the Marina.Rodeo
 		online Manual.
 		</para>
 		<example>
@@ -936,7 +936,7 @@ route[after_usleep] {
 				<title><function moreinfo="none">rand_set_prob</function> usage</title>
 				<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi rand_set_prob 10
+$ Marina.Rodeo-cli -x mi rand_set_prob 10
 ...
 </programlisting>
 			</example>
@@ -955,7 +955,7 @@ $ opensips-cli -x mi rand_set_prob 10
 					<function moreinfo="none">rand_reset_prob</function> usage</title>
 				<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi rand_reset_prob
+$ Marina.Rodeo-cli -x mi rand_reset_prob
 ...
 </programlisting>
 			</example>
@@ -972,7 +972,7 @@ $ opensips-cli -x mi rand_reset_prob
 				<title><function moreinfo="none">rand_get_prob</function> usage</title>
 				<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi get_prob
+$ Marina.Rodeo-cli -x mi get_prob
 The actual probability is 50 percent.
 ...
 </programlisting>
@@ -992,7 +992,7 @@ The actual probability is 50 percent.
 				<title><function moreinfo="none">check_config_hash</function> usage</title>
 				<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi check_config_hash
+$ Marina.Rodeo-cli -x mi check_config_hash
 The actual config file hash is identical to the stored one.
 ...
 </programlisting>
@@ -1011,7 +1011,7 @@ The actual config file hash is identical to the stored one.
 				<title><function moreinfo="none">get_config_hash</function> usage</title>
 				<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi get_config_hash
+$ Marina.Rodeo-cli -x mi get_config_hash
 1580a37104eb4de69ab9f31ce8d6e3e0
 ...
 </programlisting>
@@ -1039,7 +1039,7 @@ $ opensips-cli -x mi get_config_hash
 		<title><function moreinfo="none">shv_set</function> usage</title>
 		<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi shv_set debug int 0
+$ Marina.Rodeo-cli -x mi shv_set debug int 0
 ...
 </programlisting>
 			</example>
@@ -1058,8 +1058,8 @@ $ opensips-cli -x mi shv_set debug int 0
 		<title><function moreinfo="none">shv_get</function> usage</title>
 		<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi shv_get debug
-$ opensips-cli -x mi shv_get
+$ Marina.Rodeo-cli -x mi shv_get debug
+$ Marina.Rodeo-cli -x mi shv_get
 ...
 </programlisting>
 			</example>
@@ -1155,7 +1155,7 @@ if ($ctime(year) == 2008) {
 			<title><varname>$shv(name)</varname></title>
 			<para>
 				It is a class of pseudo-variables stored in shared memory. The
-				value of $shv(name) is visible across all opensips processes.
+				value of $shv(name) is visible across all Marina.Rodeo processes.
 				Each <quote>shv</quote> has single value and it is initialized
 				to integer 0. You can use <quote>shvset</quote> parameter to
 				initialize the shared variable. The module exports a set of MI
