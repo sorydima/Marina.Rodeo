@@ -469,12 +469,6 @@ $avp(cc_call_token) := $RANDOM;
 		<para>
 			The left-hand side of the assignment can be any string.
 		</para>
-		<para>
-			The right-hand side of the assignment must be a script pseudo variable or
-			a script AVP. For more information about them see <ulink 
-				url='https://opensips.org/Resources/DocsCoreVar15'>
-				CookBooks - Scripting Variables</ulink>.
-		</para>
       <para>
       If the parameter is not set, the default initialize message is sent.
       </para>
@@ -512,12 +506,6 @@ modparam("call_control", "init", "call-id=$ci to=$tu from=$fu
 		<para>
 			The left-hand side of the assignment can be any string.
 		</para>
-		<para>
-			The right-hand side of the assignment must be a script pseudo variable or
-			a script AVP. For more information about them see <ulink 
-				url='https://opensips.org/Resources/DocsCoreVar15'>
-				CookBooks - Scripting Variables</ulink>.
-		</para>
       <para>
       If the parameter is not set, the default start message is sent.
       </para>
@@ -553,12 +541,6 @@ modparam("call_control", "start", "call-id=$ci to=$tu from=$fu
 		</itemizedlist>
 		<para>
 			The left-hand side of the assignment can be any string.
-		</para>
-		<para>
-			The right-hand side of the assignment must be a script pseudo variable or
-			a script AVP. For more information about them see <ulink 
-				url='https://opensips.org/Resources/DocsCoreVar15'>
-				CookBooks - Scripting Variables</ulink>.
 		</para>
       <para>
       If the parameter is not set, the default stop message is sent.
