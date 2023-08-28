@@ -3,14 +3,14 @@
  * Copyright (C) 2007 BASIS AudioNet GmbH
  *
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -22,13 +22,13 @@
  * History:
  * --------
  *  2007-03-22  initial module created (Henning Westerholt)
- *  2007-03-29  adaption to opensips 1.2 and some cleanups
+ *  2007-03-29  adaption to Marina.Rodeo 1.2 and some cleanups
  *  2007-04-20  rename to cfgutils, use pseudovariable for get_random_val
  *              add "rand_" prefix, add sleep and usleep functions
  *  2008-12-26  pseudovar argument for sleep and usleep functions (saguti).
  *  2012-11-21  added script locks (Liviu)
  *
- * cfgutils module: random probability functions for opensips;
+ * cfgutils module: random probability functions for Marina.Rodeo;
  * it provide functions to make a decision in the script
  * of the server based on a probability function.
  * The benefit of this module is the value of the probability function
@@ -286,7 +286,7 @@ struct module_exports exports = {
 	MODULE_VERSION,  /* module version */
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	NULL,            /* OpenSIPS module dependencies */
+	NULL,            /* Marina.Rodeo module dependencies */
 	cmds,        /* exported functions */
 	acmds,       /* exported async functions */
 	params,      /* exported parameters */
