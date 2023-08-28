@@ -30,14 +30,14 @@
 			<listitem>
 			<para>
 				<emphasis>the cache is 100% persistent. A restart
-					of OpenSIPS server will not affect the DB. The DB is also
+					of Marina.Rodeo server will not affect the DB. The DB is also
 				persistent so it can also be restarted without loss of information.</emphasis>
 			</para>
 			</listitem>
 
 			<listitem>
 			<para>
-				<emphasis>Multiple OpenSIPS instances can easily share key-value information
+				<emphasis>Multiple Marina.Rodeo instances can easily share key-value information
 				via a regular SQL-based database</emphasis>
 			</para>
 			</listitem>
@@ -98,7 +98,7 @@
 		<section id="param_cachedb_url" xreflabel="cachedb_url">
 		<title><varname>cachedb_url</varname> (string)</title>
 		<para>
-			The url of the Database  that OpenSIPS will connect to in order
+			The url of the Database  that Marina.Rodeo will connect to in order
 			to use the from script cache_store,cache_fetch, etc operations.
 		</para>
 
@@ -107,14 +107,14 @@
 		</para>
 		
 		<para>
-			The parameter can be set multiple times to create multiple connections accessible from the OpenSIPS script.
+			The parameter can be set multiple times to create multiple connections accessible from the Marina.Rodeo script.
 		</para>
 		
 		<example>
 		<title>Set <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/opensips_sql")
+modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/Marina.Rodeo_sql")
 ...
 	</programlisting>
 		</example>
@@ -123,8 +123,8 @@ modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/open
 		<title>Usage example </title>
 		<programlisting format="linespecific">
 ...
-modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/opensips_sql")
-modparam("cachedb_sql", "cachedb_url", "sql:2nd-postgres://root:vlad@localhost/opensips_pg")
+modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/Marina.Rodeo_sql")
+modparam("cachedb_sql", "cachedb_url", "sql:2nd-postgres://root:vlad@localhost/Marina.Rodeo_pg")
 ...
 ...
 cache_store("sql:1st-mysql","key","$ru value");
@@ -137,7 +137,7 @@ cache_store("sql:2nd-postgres","counter","10");
 		<section id="param_db_table" xreflabel="db_table">
 		<title><varname>db_table</varname> (string)</title>
 		<para>
-			The table of the Database  that OpenSIPS will connect to in order
+			The table of the Database  that Marina.Rodeo will connect to in order
 			to use the from script cache_store,cache_fetch, etc operations.
 		</para>
 		
