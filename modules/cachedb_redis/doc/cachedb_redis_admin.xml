@@ -38,7 +38,7 @@
 			<listitem>
 			<para>
 				<emphasis>the cache is 100% persistent. A restart
-					of OpenSIPS server will not affect the DB. The Redis DB is also
+					of Marina.Rodeo server will not affect the DB. The Redis DB is also
 				persistent so it can also be restarted without loss of information.</emphasis>
 			</para>
 			</listitem>
@@ -53,7 +53,7 @@
 
 			<listitem>
 			<para>
-				<emphasis>By creating a Redis Cluster, multiple OpenSIPS
+				<emphasis>By creating a Redis Cluster, multiple Marina.Rodeo
 				instances can easily share key-value information</emphasis>
 			</para>
 			</listitem>
@@ -133,7 +133,7 @@
 		<section id="param_cachedb_url" xreflabel="cachedb_url">
 		<title><varname>cachedb_url</varname> (string)</title>
 		<para>
-			The URLs of the server groups that OpenSIPS will connect to in order
+			The URLs of the server groups that Marina.Rodeo will connect to in order
 			to use, from script, the cache_store(), cache_fetch(), etc. operations.
 			It may be set more than once.  The prefix part of the URL will be
 			the identifier that will be used from the script.
@@ -230,7 +230,7 @@ modparam("cachedb_redis", "query_timeout",1000)
 		<title>Set the <varname>shutdown_on_error</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-# abort OpenSIPS startup if Redis is down
+# abort Marina.Rodeo startup if Redis is down
 modparam("cachedb_redis", "shutdown_on_error", 1)
 ...
 		</programlisting>
