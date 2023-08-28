@@ -38,15 +38,6 @@
 		<section>
 		<title>DB tables</title>
 		<para>
-		Each entity has a corresponding table in the database, for 
-		provisioning purposes - the <emphasis>cc_flows</emphasis> and 
-		<emphasis>cc_agents</emphasis> tables, see
-		<ulink url='https://opensips.org/Documentation/Install-DBSchema--3-3#AEN2656'>DB schema</ulink>.
-		Data is loaded at startup and cached into memory ; runtime reload is 
-		possible via the MI commands (see the <emphasis>cc_reload</emphasis> 
-		command in <xref linkend="exported_mi_functions"/>).
-		</para>
-		<para>
 		Additionally there is a table <emphasis>cc_cdrs</emphasis> for writing 
 		the CDRs - this operation is done in realtime, after the call in 
 		completed, covering all possible cases: call was dropped while in 
@@ -211,7 +202,7 @@
 		the Database holding the provisioning tables (cc_flows, cc_agents
 		and cc_calls tables).
 		</para>
-		If not explicitly set, the global OpenSIPS DB URL will be used.
+		If not explicitly set, the global Marina.Rodeo DB URL will be used.
 		<para>
 		</para>
 		<example>
@@ -231,7 +222,7 @@ modparam("call_center", "db_url",
 		SQL address to the DB server -- database specific. This must be
 		the Database where the CDRs table (cc_cdrs) is located.
 		</para>
-		If not explicitly set, the global OpenSIPS DB URL will be used.
+		If not explicitly set, the global Marina.Rodeo DB URL will be used.
 		<para>
 		</para>
 		<example>
@@ -250,11 +241,11 @@ modparam("call_center", "acc_db_url",
 		<para>
 		SQL address/URL of the DB server (database specific) where the
 		runtime tables (non provisioning tables) are located. The
-		runtime tables are the tables populated by OpenSIPS with data
+		runtime tables are the tables populated by Marina.Rodeo with data
 		learned during runtime. To be more specific, the only runtime
 		table we have so far is the "cc_calls" table.
 		</para>
-		If not explicitly set, the global OpenSIPS DB URL will be used.
+		If not explicitly set, the global Marina.Rodeo DB URL will be used.
 		<para>
 		</para>
 		<example>
@@ -897,7 +888,7 @@ modparam("call_center", "ccf_m_flow_id_column", "audio_flow_id")
 				"agent" B2B scenarios. It is
 				intended for custom integration of the call center module and 
 				it is 100% up to the script writer about the value and purpose
-				of this parameter, OpenSIPS will not touch or interpret it.
+				of this parameter, Marina.Rodeo will not touch or interpret it.
 			</para></listitem>
 		</itemizedlist>
 		<para>
@@ -1204,7 +1195,7 @@ cc_agent_login("agentX",0);
 		MI FIFO Command usage:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cc_reload
+Marina.Rodeo-cli -x mi cc_reload
 </programlisting>
 	</section>
 
@@ -1228,7 +1219,7 @@ opensips-cli -x mi cc_reload
 		MI FIFO Command usage:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cc_agent_login agentX 0
+Marina.Rodeo-cli -x mi cc_agent_login agentX 0
 </programlisting>
 	</section>
 
@@ -1250,7 +1241,7 @@ opensips-cli -x mi cc_agent_login agentX 0
 		MI FIFO Command usage:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cc_list_queue
+Marina.Rodeo-cli -x mi cc_list_queue
 </programlisting>
 	</section>
 
@@ -1271,7 +1262,7 @@ opensips-cli -x mi cc_list_queue
 		MI FIFO Command usage:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cc_list_flows
+Marina.Rodeo-cli -x mi cc_list_flows
 </programlisting>
 	</section>
 
@@ -1291,7 +1282,7 @@ opensips-cli -x mi cc_list_flows
 		MI FIFO Command usage:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cc_list_agents
+Marina.Rodeo-cli -x mi cc_list_agents
 </programlisting>
 	</section>
 
@@ -1312,7 +1303,7 @@ opensips-cli -x mi cc_list_agents
 		MI FIFO Command usage:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cc_list_agents
+Marina.Rodeo-cli -x mi cc_list_agents
 </programlisting>
 	</section>
 
@@ -1364,7 +1355,7 @@ opensips-cli -x mi cc_list_agents
 		MI FIFO Command usage:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cc_dispatch_call_to_agent B2B452.dee2.33 agentX
+Marina.Rodeo-cli -x mi cc_dispatch_call_to_agent B2B452.dee2.33 agentX
 </programlisting>
 	</section>
 
@@ -1385,7 +1376,7 @@ opensips-cli -x mi cc_dispatch_call_to_agent B2B452.dee2.33 agentX
 		MI FIFO Command usage:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cc_internal_call_dispatching 0
+Marina.Rodeo-cli -x mi cc_internal_call_dispatching 0
 </programlisting>
 	</section>
 
@@ -1404,7 +1395,7 @@ opensips-cli -x mi cc_internal_call_dispatching 0
 		MI FIFO Command usage:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cc_reset_stats
+Marina.Rodeo-cli -x mi cc_reset_stats
 </programlisting>
 	</section>
 
