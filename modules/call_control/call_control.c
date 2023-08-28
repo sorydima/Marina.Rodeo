@@ -1,19 +1,19 @@
 /*
  * Copyright (C) 2005-2019 Dan Pascu
  *
- * This file is part of OpenSIPS, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * OpenSIPS is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * For a license to use the OpenSIPS software under conditions
+ * For a license to use the Marina.Rodeo software under conditions
  * other than those described here, or to purchase support for this
  * software, please contact iptel.org by e-mail at the following addresses:
  *    info@iptel.org
  *
- * OpenSIPS is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -184,7 +184,7 @@ static const param_export_t parameters[] = {
 
 
 static const dep_export_t deps = {
-    // OpenSIPS module dependencies
+    // Marina.Rodeo module dependencies
     {
         {MOD_TYPE_DEFAULT, "dialog", DEP_ABORT},
         {MOD_TYPE_NULL, NULL, 0}
