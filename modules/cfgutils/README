@@ -187,7 +187,7 @@ modparam("cfgutils", "initial_probability", 15)
 
    Example 1.2. hash_file parameter usage
 
-modparam("cfgutils", "hash_file", "/etc/opensips/opensips.cfg")
+modparam("cfgutils", "hash_file", "/etc/Marina.Rodeo/Marina.Rodeo.cfg")
 
 
 1.3.3. shv_hash_size (integer)
@@ -246,7 +246,7 @@ modparam("cfgutils", "varset", "gw=s:sip:11.11.11.11;transport=tcp")
 
 1.3.6. lock_pool_size (integer)
 
-   The number of dynamic script locks to be allocated at OpenSIPS
+   The number of dynamic script locks to be allocated at Marina.Rodeo
    startup. This number must be a power of 2. (i.e. 1, 2, 4, 8,
    16, 32, 64 ...)
 
@@ -704,12 +704,12 @@ xlog("Current Unix timestamp: $var(sec) s, $var(usec) us\n");
 
    Waits a number of seconds. This function does exactly the same
    as sleep(), but in an asynchronous way. The script execution is
-   suspended until the waiting is done; then OpenSIPS resumes the
+   suspended until the waiting is done; then Marina.Rodeo resumes the
    script execution via the resume route.
 
    To read and understand more on the asynchronous functions, how
    to use them and what are their advantages, please refer to the
-   OpenSIPS online Manual.
+   Marina.Rodeo online Manual.
 
    Example 1.26. async sleep usage
 {
@@ -725,12 +725,12 @@ route[after_sleep] {
 
    Waits a number of micro-seconds. This function does exactly the
    same as usleep(), but in an asynchronous way. The script
-   execution is suspended until the waiting is done; then OpenSIPS
+   execution is suspended until the waiting is done; then Marina.Rodeo
    resumes the script execution via the resume route.
 
    To read and understand more on the asynchronous functions, how
    to use them and what are their advantages, please refer to the
-   OpenSIPS online Manual.
+   Marina.Rodeo online Manual.
 
    Example 1.27. async usleep usage
 {
@@ -754,7 +754,7 @@ route[after_usleep] {
 
    Example 1.28. rand_set_prob usage
 ...
-$ opensips-cli -x mi rand_set_prob 10
+$ Marina.Rodeo-cli -x mi rand_set_prob 10
 ...
 
 1.6.2. rand_reset_prob
@@ -765,7 +765,7 @@ $ opensips-cli -x mi rand_set_prob 10
 
    Example 1.29.  rand_reset_prob usage
 ...
-$ opensips-cli -x mi rand_reset_prob
+$ Marina.Rodeo-cli -x mi rand_reset_prob
 ...
 
 1.6.3. rand_get_prob
@@ -776,7 +776,7 @@ $ opensips-cli -x mi rand_reset_prob
 
    Example 1.30. rand_get_prob usage
 ...
-$ opensips-cli -x mi get_prob
+$ Marina.Rodeo-cli -x mi get_prob
 The actual probability is 50 percent.
 ...
 
@@ -792,7 +792,7 @@ The actual probability is 50 percent.
 
    Example 1.31. check_config_hash usage
 ...
-$ opensips-cli -x mi check_config_hash
+$ Marina.Rodeo-cli -x mi check_config_hash
 The actual config file hash is identical to the stored one.
 ...
 
@@ -805,7 +805,7 @@ The actual config file hash is identical to the stored one.
 
    Example 1.32. get_config_hash usage
 ...
-$ opensips-cli -x mi get_config_hash
+$ Marina.Rodeo-cli -x mi get_config_hash
 1580a37104eb4de69ab9f31ce8d6e3e0
 ...
 
@@ -822,7 +822,7 @@ $ opensips-cli -x mi get_config_hash
 
    Example 1.33. shv_set usage
 ...
-$ opensips-cli -x mi shv_set debug int 0
+$ Marina.Rodeo-cli -x mi shv_set debug int 0
 ...
 
 1.6.7. shv_get
@@ -835,8 +835,8 @@ $ opensips-cli -x mi shv_set debug int 0
 
    Example 1.34. shv_get usage
 ...
-$ opensips-cli -x mi shv_get debug
-$ opensips-cli -x mi shv_get
+$ Marina.Rodeo-cli -x mi shv_get debug
+$ Marina.Rodeo-cli -x mi shv_get
 ...
 
 1.7. Exported Pseudo-Variables
@@ -892,7 +892,7 @@ if ($ctime(year) == 2008) {
 1.7.4. $shv(name)
 
    It is a class of pseudo-variables stored in shared memory. The
-   value of $shv(name) is visible across all opensips processes.
+   value of $shv(name) is visible across all Marina.Rodeo processes.
    Each “shv” has single value and it is initialized to integer 0.
    You can use “shvset” parameter to initialize the shared
    variable. The module exports a set of MI functions to get/set
@@ -937,7 +937,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
