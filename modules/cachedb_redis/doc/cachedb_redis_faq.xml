@@ -5,7 +5,7 @@
 	<qandaset defaultlabel="number">
 	<qandaentry>
 		<question>
-		<para>My OpenSIPS is occasionally crashing in libhiredis, what to do?</para>
+		<para>My Marina.Rodeo is occasionally crashing in libhiredis, what to do?</para>
 		</question>
 		<answer>
 		<para>
