@@ -414,14 +414,14 @@ if (has_totag() &amp;&amp; &amp;&amp; loose_route()) {
 		</para>
 		<programlisting  format="linespecific">
 # blind transfer to sip:agent@127.0.0.1
-opensips-cli -x mi call_transfer \
+Marina.Rodeo-cli -x mi call_transfer \
 	callid=4b664b48-5639-40bf-bff8-3a866c145c3b \
 	leg=caller \
 	destination=sip:agent@217.0.0.1
 		</programlisting>
 		<programlisting  format="linespecific">
 # attended transfer between two calls
-opensips-cli -x mi call_transfer \
+Marina.Rodeo-cli -x mi call_transfer \
 	callid=e8d024db-78e5-4d18-9794-5b8ba837bed4
 	leg=caller \
 	transfer_callid=559abf97-9834-4380-bba1-a036eb245450 \
@@ -457,7 +457,7 @@ opensips-cli -x mi call_transfer \
 		</para>
 		<programlisting  format="linespecific">
 # put a call on hold
-opensips-cli -x mi call_hold \
+Marina.Rodeo-cli -x mi call_hold \
 	callid=921b00e4-fec0-4a36-9397-a40ab74e1893
 		</programlisting>
 		</section>
@@ -490,7 +490,7 @@ opensips-cli -x mi call_hold \
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi call_unhold \
+Marina.Rodeo-cli -x mi call_unhold \
 	callid=921b00e4-fec0-4a36-9397-a40ab74e1893
 		</programlisting>
 		</section>
