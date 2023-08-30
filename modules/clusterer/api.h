@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2015-2017 OpenSIPS Project
+ * Copyright (C) 2015-2017 Marina.Rodeo Project
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -193,7 +193,7 @@ typedef int (*request_sync_f)(str * capability, int cluster_id, int from_cb);
  * otherwise, a new packet will be built and the previous one will be sent out.
  *
  * @data_version: a way for modules to avoid data corruption when receiving
- *                sync packets from an OpenSIPS running a different version
+ *                sync packets from an Marina.Rodeo running a different version
  *
  * This function should only be called from the callback for the SYNC_REQ_RCV event.
  */
