@@ -395,7 +395,7 @@ modparam("clusterer", "sync_packet_size", 32765)
             <title><varname>dispatch_jobs</varname></title>
             <para>
             Enables the dispatching of jobs(processing replicated data packets)
-            from the receiving TCP worker process to free opensips workers
+            from the receiving TCP worker process to free Marina.Rodeo workers
             (including UDP, timer processes etc.).
             </para>
             <para>
@@ -870,7 +870,7 @@ if (cluster_check_addr(1, $si)) {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi clusterer_reload
+		Marina.Rodeo-cli -x mi clusterer_reload
 		</programlisting>
 	</section>
 
@@ -888,7 +888,7 @@ if (cluster_check_addr(1, $si)) {
 		<example>
 		<title><function>clusterer_list</function> usage</title>
 		<programlisting format="linespecific">
-$ opensips-cli -x mi clusterer_list
+$ Marina.Rodeo-cli -x mi clusterer_list
 {
     "Clusters": [
         {
@@ -927,7 +927,7 @@ $ opensips-cli -x mi clusterer_list
 		<example>
 		<title><function>clusterer_list_topology</function> usage</title>
 		<programlisting format="linespecific">
-$ opensips-cli -x mi clusterer_list_topology
+$ Marina.Rodeo-cli -x mi clusterer_list_topology
 {
     "Clusters": [
         {
@@ -981,9 +981,9 @@ $ opensips-cli -x mi clusterer_list_topology
 		</para>
 		<programlisting  format="linespecific">
 		#disable the local instance
-		opensips-cli -x mi clusterer_set_status 1 0
+		Marina.Rodeo-cli -x mi clusterer_set_status 1 0
 		#disable node ID 3
-		opensips-cli -x mi clusterer_set_status 1 3 0
+		Marina.Rodeo-cli -x mi clusterer_set_status 1 3 0
 		</programlisting>
 	</section>
 
@@ -1018,7 +1018,7 @@ $ opensips-cli -x mi clusterer_list_topology
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi clusterer_remove_node 1 3
+		Marina.Rodeo-cli -x mi clusterer_remove_node 1 3
 		</programlisting>
 	</section>
 
@@ -1056,7 +1056,7 @@ $ opensips-cli -x mi clusterer_list_topology
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cluster_send_mi 1 3 lb_reload
+Marina.Rodeo-cli -x mi cluster_send_mi 1 3 lb_reload
 		</programlisting>
 		</section>
 
@@ -1091,7 +1091,7 @@ opensips-cli -x mi cluster_send_mi 1 3 lb_reload
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi cluster_broadcast_mi 1 dr_reload partition_5
+Marina.Rodeo-cli -x mi cluster_broadcast_mi 1 dr_reload partition_5
 		</programlisting>
 		</section>
 
@@ -1109,7 +1109,7 @@ opensips-cli -x mi cluster_broadcast_mi 1 dr_reload partition_5
 		<example>
 		<title><function>clusterer_list_cap</function> usage</title>
 		<programlisting format="linespecific">
-$ opensips-cli -x mi clusterer_list_cap
+$ Marina.Rodeo-cli -x mi clusterer_list_cap
 {
     "Clusters": [
         {
@@ -1161,9 +1161,9 @@ $ opensips-cli -x mi clusterer_list_cap
 		</para>
 		<programlisting  format="linespecific">
 		#disable dialog replication in cluster 1
-		opensips-cli -x mi clusterer_set_cap_status 1 dialog-dlg-repl 0
+		Marina.Rodeo-cli -x mi clusterer_set_cap_status 1 dialog-dlg-repl 0
 		#enable dialog profile replication in cluster 2
-		opensips-cli -x mi clusterer_set_cap_status 2 dialog-prof-repl 1
+		Marina.Rodeo-cli -x mi clusterer_set_cap_status 2 dialog-prof-repl 1
 		</programlisting>
 	</section>
 
@@ -1186,7 +1186,7 @@ $ opensips-cli -x mi clusterer_list_cap
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi clusterer_shtag_set_active vip1/3
+		Marina.Rodeo-cli -x mi clusterer_shtag_set_active vip1/3
 		</programlisting>
 		</section>
 
@@ -1204,7 +1204,7 @@ $ opensips-cli -x mi clusterer_list_cap
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi clusterer_list_shtags
+		Marina.Rodeo-cli -x mi clusterer_list_shtags
 		</programlisting>
 	</section>
 
@@ -1477,10 +1477,6 @@ $ opensips-cli -x mi clusterer_list_cap
 
 	</programlisting>
 	</section>
-	<para>
-	For how to access and use the Status/Report information, please see
-	<ulink url='https://www.opensips.org/Documentation/Interface-StatusReport-3-4'>Status/Report Interface documentation</ulink>.
-	</para>
 
 </section>
 
