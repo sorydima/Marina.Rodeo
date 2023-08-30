@@ -8,7 +8,7 @@ cpl_c Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -92,7 +92,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * any DB module- a DB module for interfacing the DB
@@ -108,7 +108,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libxml2 and libxml2-devel - on some SO, these to packages
        are merged into libxml2. This library contains an engine
        for XML parsing, DTD validation and DOM manipulation.
@@ -195,13 +195,13 @@ modparam("cpl_c","cpl_bin_column","cpl_bin")
    Points to the DTD file describing the CPL grammar. The file
    name may include also the path to the file. This path can be
    absolute or relative (be careful the path will be relative to
-   the starting directory of OpenSIPS).
+   the starting directory of Marina.Rodeo).
 
    This parameter is MANDATORY!
 
    Example 1.7. Set cpl_dtd_file parameter
 ...
-modparam("cpl_c","cpl_dtd_file","/etc/opensips/cpl-06.dtd")
+modparam("cpl_c","cpl_dtd_file","/etc/Marina.Rodeo/cpl-06.dtd")
 ...
 
 1.3.8. log_dir (string)
@@ -215,7 +215,7 @@ modparam("cpl_c","cpl_dtd_file","/etc/opensips/cpl-06.dtd")
 
    Example 1.8. Set log_dir parameter
 ...
-modparam("cpl_c","log_dir","/var/log/opensips/cpl")
+modparam("cpl_c","log_dir","/var/log/Marina.Rodeo/cpl")
 ...
 
 1.3.9. proxy_recurse (int)
@@ -325,11 +325,11 @@ modparam("cpl_c","use_domain",1)
    processing, the function is very flexible, being able to run in
    different modes (see below the"mode" parameter). Normally this
    function will end script execution. There is no guaranty that
-   the CPL script interpretation ended when OpenSIPS script ended
+   the CPL script interpretation ended when Marina.Rodeo script ended
    also (for the same INVITE ;-)) - this can happen when the CPL
    script does a PROXY and the script interpretation pause after
    proxying and it will be resume when some reply is received
-   (this can happen in a different process of OpenSIPS).
+   (this can happen in a different process of Marina.Rodeo).
 
    If the function returns true to script, if value "1" is
    returned, the SIP server should continue with the normal
@@ -445,7 +445,7 @@ if ($rm=="REGISTER") {
      * cpl_filename: file name
 
    MI FIFO Command format:
-                 opensips-cli -x mi LOAD_CPL sip:bob@domain.com cpl_scri
+                 Marina.Rodeo-cli -x mi LOAD_CPL sip:bob@domain.com cpl_scri
 pt.xml
 
 1.5.2.  REMOVE_CPL
@@ -459,7 +459,7 @@ pt.xml
      * username : name of the user
 
    MI FIFO Command format:
-                 opensips-cli -x mi REMOVE_CPL sip:bob@domain.com
+                 Marina.Rodeo-cli -x mi REMOVE_CPL sip:bob@domain.com
 
 1.5.3.  GET_CPL
 
@@ -471,23 +471,22 @@ pt.xml
      * username : name of the user
 
    MI FIFO Command format:
-                 opensips-cli -x mi GET_CPL sip:bob@domain.com
+                 Marina.Rodeo-cli -x mi GET_CPL sip:bob@domain.com
 
 1.6. Installation and Running
 
 1.6.1. Database setup
 
-   Before running OpenSIPS with cpl_c, you have to setup the
+   Before running Marina.Rodeo with cpl_c, you have to setup the
    database table where the module will store the CPL scripts. For
    that, if the table was not created by the installation script
    or you choose to install everything by yourself you can use the
    cpc-create.sql SQL script in the database directories in the
-   opensips/scripts folder as template. Database and table name
+   Marina.Rodeo/scripts folder as template. Database and table name
    can be set with module parameters so they can be changed, but
    the name of the columns must be as they are in the SQL script.
    You can also find the complete database documentation on the
-   project webpage,
-   https://opensips.org/docs/db/db-schema-devel.html.
+   project webpage.
 
 Chapter 2. Contributors
 
@@ -522,7 +521,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -569,4 +568,4 @@ Chapter 3. Documentation
 
    Documentation Copyrights:
 
-   Copyright © 2003 FhG FOKUS
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
