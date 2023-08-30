@@ -214,7 +214,7 @@ modparam("cpl_c","cpl_bin_column","cpl_bin")
 				<title>Set <varname>cpl_dtd_file</varname> parameter</title>
 				<programlisting format="linespecific">
 ...
-modparam("cpl_c","cpl_dtd_file","/etc/opensips/cpl-06.dtd")
+modparam("cpl_c","cpl_dtd_file","/etc/Marina.Rodeo/cpl-06.dtd")
 ...
 </programlisting>
 			</example>
@@ -236,7 +236,7 @@ modparam("cpl_c","cpl_dtd_file","/etc/opensips/cpl-06.dtd")
 				<title>Set <varname>log_dir</varname> parameter</title>
 				<programlisting format="linespecific">
 ...
-modparam("cpl_c","log_dir","/var/log/opensips/cpl")
+modparam("cpl_c","log_dir","/var/log/Marina.Rodeo/cpl")
 ...
 </programlisting>
 			</example>
@@ -419,7 +419,7 @@ modparam("cpl_c","use_domain",1)
 				script ended also (for the same INVITE ;-)) - this can happen 
 				when the CPL script does a PROXY and the script interpretation 
 				pause after proxying and it will be resume when some reply is
-				received (this can happen in a different process of OpenSIPS).
+				received (this can happen in a different process of Marina.Rodeo).
 			</para>
 			<para>
 				If the function returns true to script, if value "1" is 
@@ -594,7 +594,7 @@ if ($rm=="REGISTER") {
 			MI FIFO Command format:
 			</para>
 			<programlisting format="linespecific">
-                 opensips-cli -x mi LOAD_CPL sip:bob@domain.com cpl_script.xml
+                 Marina.Rodeo-cli -x mi LOAD_CPL sip:bob@domain.com cpl_script.xml
 </programlisting>
 		</section>
 
@@ -618,7 +618,7 @@ if ($rm=="REGISTER") {
 			MI FIFO Command format:
 			</para>
 			<programlisting format="linespecific">
-                 opensips-cli -x mi REMOVE_CPL sip:bob@domain.com
+                 Marina.Rodeo-cli -x mi REMOVE_CPL sip:bob@domain.com
 </programlisting>
 		</section>
 
@@ -640,7 +640,7 @@ if ($rm=="REGISTER") {
 			MI FIFO Command format:
 			</para>
 			<programlisting format="linespecific">
-                 opensips-cli -x mi GET_CPL sip:bob@domain.com
+                 Marina.Rodeo-cli -x mi GET_CPL sip:bob@domain.com
 </programlisting>
 		</section>
 	</section>
@@ -655,7 +655,7 @@ if ($rm=="REGISTER") {
 			the table was not created by the installation script or you choose
 			to install everything by yourself you can use the cpc-create.sql
 			<acronym>SQL</acronym> script in the database directories in the 
-			opensips/scripts folder as template. 
+			Marina.Rodeo/scripts folder as template. 
 			Database and table name can be set with module parameters so they 
 			can be changed, but the name of the columns must be as they are 
 			in the <acronym>SQL</acronym> script.
