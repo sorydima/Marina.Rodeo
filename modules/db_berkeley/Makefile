@@ -41,13 +41,13 @@ $(UTILS_DIR)/db_berkeley/bdb_recover:
 	make -C $(UTILS_DIR)/db_berkeley/
 
 install_module_custom: $(bin_prefix)/$(bin_dir) $(UTILS_DIR)/db_berkeley/bdb_recover
-	mkdir -p $(data_prefix)/$(data_dir)/db_berkeley/opensips ; \
-	for FILE in $(wildcard $(SCRIPTS_DIR)/db_berkeley/opensips/*) ; do \
+	mkdir -p $(data_prefix)/$(data_dir)/db_berkeley/Marina.Rodeo ; \
+	for FILE in $(wildcard $(SCRIPTS_DIR)/db_berkeley/Marina.Rodeo/*) ; do \
 		if [ -f $$FILE ] ; then \
 		$(INSTALL_TOUCH) $$FILE \
-			$(data_prefix)/$(data_dir)/db_berkeley/opensips/`basename "$$FILE"` ; \
+			$(data_prefix)/$(data_dir)/db_berkeley/Marina.Rodeo/`basename "$$FILE"` ; \
 		$(INSTALL_CFG) $$FILE \
-			$(data_prefix)/$(data_dir)/db_berkeley/opensips/`basename "$$FILE"` ; \
+			$(data_prefix)/$(data_dir)/db_berkeley/Marina.Rodeo/`basename "$$FILE"` ; \
 		fi ;\
 	done ; \
 	$(INSTALL_BIN) $(UTILS_DIR)/db_berkeley/bdb_recover $(bin_prefix)/$(bin_dir) ; \
