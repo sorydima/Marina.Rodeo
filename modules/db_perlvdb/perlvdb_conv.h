@@ -4,14 +4,14 @@
  * Copyright (C) 2007 Collax GmbH
  *                    (Bastian Friedrich <bastian.friedrich@collax.com>)
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -33,9 +33,9 @@
 
 #include <XSUB.h>
 
-#define PERL_CLASS_VALUE	"OpenSIPS::VDB::Value"
-#define PERL_CLASS_PAIR		"OpenSIPS::VDB::Pair"
-#define PERL_CLASS_REQCOND	"OpenSIPS::VDB::ReqCond"
+#define PERL_CLASS_VALUE	"Marina.Rodeo::VDB::Value"
+#define PERL_CLASS_PAIR		"Marina.Rodeo::VDB::Pair"
+#define PERL_CLASS_REQCOND	"Marina.Rodeo::VDB::ReqCond"
 
 #define PERL_CONSTRUCTOR_NAME	"new"
 
