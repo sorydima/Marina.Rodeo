@@ -7,8 +7,8 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		This is a module which provides SQLite support for OpenSIPS.
-		It implements the DB API defined in OpenSIPS.
+		This is a module which provides SQLite support for Marina.Rodeo.
+		It implements the DB API defined in Marina.Rodeo.
 	</para>
 	</section>
 
@@ -26,9 +26,9 @@
 			</listitem>
 			</itemizedlist>
 			Also this module provides two ways of creating the query. One is to use
-		sqlite3_bind_* functions after opensips creates the prepared statement query.
+		sqlite3_bind_* functions after Marina.Rodeo creates the prepared statement query.
 		The second one directly uses only sqlite3_snprintf function to print the
-		values into the opensips created query. In theory, the second one should
+		values into the Marina.Rodeo created query. In theory, the second one should
 		be faster and should allow you to make more queries to the database in
 		the same time, so by default this one will be active. You can use the
 		sqlite3_bind_* interface by simply uncommenting the SQLITE_BIND line
