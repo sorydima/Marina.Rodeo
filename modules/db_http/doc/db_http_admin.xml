@@ -16,7 +16,7 @@
 	</para>
 	<para>
 	The module can provide SSL, authentication, and all the functionalities
-	of an opensips db as long as the server supports them ( except result_fetch).
+	of an Marina.Rodeo db as long as the server supports them ( except result_fetch).
 	</para>
 	<para>
 	There is a slight difference between the url of db_http and
@@ -309,7 +309,7 @@ modparam("db_http", "disable_expect",1)
 		<para>
 		There are several types of queries and the server can tell
 		them apart by the query_type variable. Each type of query uses
-		specific variables simillar to those in the opensips db_api.
+		specific variables simillar to those in the Marina.Rodeo db_api.
 		</para>
 		<example>
 		<title>Example query.</title>
