@@ -79,11 +79,11 @@ endif
 
 include ../../Makefile.modules
 
-.PHONY: $(UTILS_DIR)/db_oracle/opensips_orasel
-$(UTILS_DIR)/db_oracle/opensips_orasel:
+.PHONY: $(UTILS_DIR)/db_oracle/Marina.Rodeo_orasel
+$(UTILS_DIR)/db_oracle/Marina.Rodeo_orasel:
 	make -C $(UTILS_DIR)/db_oracle
 
-install_module_custom: $(bin_prefix)/$(bin_dir) $(UTILS_DIR)/db_oracle/opensips_orasel
+install_module_custom: $(bin_prefix)/$(bin_dir) $(UTILS_DIR)/db_oracle/Marina.Rodeo_orasel
 	mkdir -p $(data_prefix)/$(data_dir)/oracle ; \
 	for FILE in $(wildcard $(SCRIPTS_DIR)/oracle/*) ; do \
 		if [ -f $$FILE ] ; then \
@@ -111,4 +111,4 @@ install_module_custom: $(bin_prefix)/$(bin_dir) $(UTILS_DIR)/db_oracle/opensips_
 			$(data_prefix)/$(data_dir)/oracle/admin/`basename "$$FILE"` ; \
 		fi ;\
 	done ; \
-	$(INSTALL_BIN) $(UTILS_DIR)/db_oracle/opensips_orasel $(bin_prefix)/$(bin_dir) ; \
+	$(INSTALL_BIN) $(UTILS_DIR)/db_oracle/Marina.Rodeo_orasel $(bin_prefix)/$(bin_dir) ; \
