@@ -13,9 +13,9 @@
 				The db_cachedb module will expose the same front db api, however it will run on top
 				of a NoSQL back-end, emulating the SQL calls to the back-end specific queries.
 
-				Thus, any OpenSIPS module that would regularily need a regular SQL-based database,
+				Thus, any Marina.Rodeo module that would regularily need a regular SQL-based database,
 				will now be able to run over a NoSQL back-end, allowing for a much easier distribution
-				and integration of the currently existing OpenSIPS modules in a distributed environment.
+				and integration of the currently existing Marina.Rodeo modules in a distributed environment.
             </para>
 		</section>
 	</section>
@@ -86,7 +86,7 @@ modparam("db_cachedb","cachedb_url","mongodb:mycluster://127.0.0.1:27017/db.col"
 				In order to achieve such a setup, one would have to  set the db_url parameter of the auth_db module to point to the DB_CACHEDB URL.
             </para>
             <example>
-                <title>OpenSIPS CFG Snippet for using DB_CACHEDB
+                <title>Marina.Rodeo CFG Snippet for using DB_CACHEDB
                 </title>
                 <programlisting format="linespecific">
 loadmodule "auth_db.so"
@@ -128,7 +128,7 @@ modparam("auth_db","db_url","cachedb://mongodb:mycluster")
                 <varname>Extensive Testing Needed</varname>
             </title>
             <para>
-				Since there are many OpenSIPS modules that currently use the DB interface, it wasn't feasible to test all scenarios with all modules, and there still might be some incompatibilities.  
+				Since there are many Marina.Rodeo modules that currently use the DB interface, it wasn't feasible to test all scenarios with all modules, and there still might be some incompatibilities.  
 
 				The module was tested with some regularily used modules ( like usrloc, dialog, permissions, drouting ), but more testing is very much welcome, and feedback is appreciated.
             </para>
@@ -144,7 +144,7 @@ modparam("auth_db","db_url","cachedb://mongodb:mycluster")
 
 				Still, a specific data collection needs to be present, and that is the equivalent of the 'version' table from the SQL. Since most modules check the version table at the module setup, it's the user's responsability to setup such a 'version' collection in the respective NoSQL back-end.
 
-				For example, for the MongoDB cluster, 'version' is a reserved keyword, so one would have to change the default version table that OpenSIPS uses ( via the 'db_version_table' global parameter ) and then manually insert the version number with something like db.my_version_table.insert({table_version : NumberInt(5), table_name : "address"})
+				For example, for the MongoDB cluster, 'version' is a reserved keyword, so one would have to change the default version table that Marina.Rodeo uses ( via the 'db_version_table' global parameter ) and then manually insert the version number with something like db.my_version_table.insert({table_version : NumberInt(5), table_name : "address"})
             </para>
         </section>
     </section>
