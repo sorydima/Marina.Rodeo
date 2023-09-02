@@ -5,14 +5,14 @@
  * Copyright (C) 2007-2008 1&1 Internet AG
  * Copyright (C) 2009 Voice Sistem SRL
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -915,7 +915,7 @@ static int db_mysql_store_result(const db_con_t* _h, db_res_t** _r)
 		LM_ERR("error while converting result\n");
 		pkg_free(*_r);
 		*_r = 0;
-		/* all mem on opensips API side is already freed by
+		/* all mem on Marina.Rodeo API side is already freed by
 		 * db_mysql_convert_result in case of error, but we also need
 		 * to free the mem from the mysql lib side */
 		mysql_free_result(CON_RESULT(_h));
