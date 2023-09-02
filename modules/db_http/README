@@ -8,7 +8,7 @@ DB_HTTP Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -88,7 +88,7 @@ Chapter 1. Admin Guide
    exactly the format decribed in the specifications section.
 
    The module can provide SSL, authentication, and all the
-   functionalities of an opensips db as long as the server
+   functionalities of an Marina.Rodeo db as long as the server
    supports them ( except result_fetch).
 
    There is a slight difference between the url of db_http and the
@@ -109,7 +109,7 @@ modparam("presence", "db_url","http://user:pass@www.some.com/some/some")
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    This module does not depend on other modules.
 
@@ -270,7 +270,7 @@ modparam("db_http", "disable_expect",1)
 
    There are several types of queries and the server can tell them
    apart by the query_type variable. Each type of query uses
-   specific variables simillar to those in the opensips db_api.
+   specific variables simillar to those in the Marina.Rodeo db_api.
 
    Example 1.13. Example query.
 ...
@@ -488,7 +488,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -528,4 +528,4 @@ Chapter 3. Documentation
 
    Documentation Copyrights:
 
-   Copyright © 2009 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
