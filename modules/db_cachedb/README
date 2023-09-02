@@ -11,7 +11,7 @@ db_cachedb Module
 
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -48,7 +48,7 @@ db_cachedb Module
    List of Examples
 
    1.1. Set cachedb_url parameter
-   1.2. OpenSIPS CFG Snippet for using DB_CACHEDB
+   1.2. Marina.Rodeo CFG Snippet for using DB_CACHEDB
 
 Chapter 1. Admin Guide
 
@@ -58,15 +58,15 @@ Chapter 1. Admin Guide
 
    The db_cachedb module will expose the same front db api,
    however it will run on top of a NoSQL back-end, emulating the
-   SQL calls to the back-end specific queries. Thus, any OpenSIPS
+   SQL calls to the back-end specific queries. Thus, any Marina.Rodeo
    module that would regularily need a regular SQL-based database,
    will now be able to run over a NoSQL back-end, allowing for a
    much easier distribution and integration of the currently
-   existing OpenSIPS modules in a distributed environment.
+   existing Marina.Rodeo modules in a distributed environment.
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * At least one NoSQL cachedb_* module.
@@ -74,7 +74,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -98,7 +98,7 @@ modparam("db_cachedb","cachedb_url","mongodb:mycluster://127.0.0.1:27017
    db_url parameter of the auth_db module to point to the
    DB_CACHEDB URL.
 
-   Example 1.2. OpenSIPS CFG Snippet for using DB_CACHEDB
+   Example 1.2. Marina.Rodeo CFG Snippet for using DB_CACHEDB
 loadmodule "auth_db.so"
 modparam("auth_db", "load_credentials", "$avp(user_rpid)=rpid")
 
@@ -130,7 +130,7 @@ modparam("auth_db","db_url","cachedb://mongodb:mycluster")
 
 1.5.2.  Extensive Testing Needed
 
-   Since there are many OpenSIPS modules that currently use the DB
+   Since there are many Marina.Rodeo modules that currently use the DB
    interface, it wasn't feasible to test all scenarios with all
    modules, and there still might be some incompatibilities. The
    module was tested with some regularily used modules ( like
@@ -149,7 +149,7 @@ modparam("auth_db","db_url","cachedb://mongodb:mycluster")
    such a 'version' collection in the respective NoSQL back-end.
    For example, for the MongoDB cluster, 'version' is a reserved
    keyword, so one would have to change the default version table
-   that OpenSIPS uses ( via the 'db_version_table' global
+   that Marina.Rodeo uses ( via the 'db_version_table' global
    parameter ) and then manually insert the version number with
    something like db.my_version_table.insert({table_version :
    NumberInt(5), table_name : "address"})
@@ -178,7 +178,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -212,4 +212,4 @@ Chapter 3. Documentation
 
    Documentation Copyrights:
 
-   Copyright © 2013 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
