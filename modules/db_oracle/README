@@ -8,7 +8,7 @@ oracle Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -18,7 +18,7 @@ oracle Module
 
         1.4. Exported Functions
         1.5. Installation
-        1.6. Utility opensips_orasel
+        1.6. Utility Marina.Rodeo_orasel
 
    2. Contributors
 
@@ -47,7 +47,7 @@ Chapter 1. User's Guide
 1.1. Overview
 
    This is a module which provides Oracle connectivity for
-   OpenSIPS. It implements the DB API defined in OpenSIPS. If you
+   Marina.Rodeo. It implements the DB API defined in Marina.Rodeo. If you
    want to use the nathelper module, or any other modules that
    calls the get_all_ucontacts API export from usrloc, then you
    need to set the DORACLE_USRLOC define in the Makefile.defs file
@@ -55,15 +55,15 @@ Chapter 1. User's Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules.
+     * No dependencies on other Marina.Rodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * instantclient-sdk-10.2.0.3 - the development headers and
        libraries of OCI.
 
@@ -114,23 +114,23 @@ modparam("db_oracle", "reconnect", 0.5)
    the next options.
      * - edit the "Makefile" and remove "db_oracle" from
        "excluded_modules" list. Then follow the standard procedure
-       to install OpenSIPS: "make all; make install".
+       to install Marina.Rodeo: "make all; make install".
      * - from command line use: 'make all
        include_modules="db_oracle"; make install
        include_modules="db_oracle"'.
 
-1.6. Utility opensips_orasel
+1.6. Utility Marina.Rodeo_orasel
 
-   For working with opensips-cli tool, should be able to print the
+   For working with Marina.Rodeo-cli tool, should be able to print the
    'query' results to the terminal in a user-readable form. The
    standard command-line Oracle client (sqlplus) is not quite
    suitable for this, as it cannot align row width to real
    (received) data's (it always prints a cell width as described
    in the db scheme). This problem has been solved by inclusion
-   the utility opensips_orasel, which formats printing
+   the utility Marina.Rodeo_orasel, which formats printing
    approximately in the same way as the 'mysql' client utility. In
    addition, this utility known about the "agreements and types"
-   in DB that are used in OpenSIPS for the work with Oracle and
+   in DB that are used in Marina.Rodeo for the work with Oracle and
    formats printing taking these into account.
 
 Chapter 2. Contributors
@@ -163,7 +163,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -203,4 +203,4 @@ Chapter 3. Documentation
 
    Documentation Copyrights:
 
-   Copyright © 2007-2008 TRUNK MOBILE, INC.
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
