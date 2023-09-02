@@ -5,16 +5,16 @@
  * Copyright (C) 2003 August.Net Services, LLC
  * Copyright (C) 2006 Norman Brandinger
  * Copyright (C) 2008 1&1 Internet AG
- * Copyright (C) 2019 OpenSIPS project
+ * Copyright (C) 2019 Marina.Rodeo project
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -41,7 +41,7 @@
  *            a call (or multiple calls) to PQgetResult.
  *            Removed transaction processing calls (BEGIN/COMMIT/ROLLBACK) as
  *            they added uneeded overhead.  Klaus' testing showed in excess of
- *            1ms gain by removing each command.  In addition, OpenSIPS only
+ *            1ms gain by removing each command.  In addition, Marina.Rodeo only
  *            issues single queries and is not, at this time transaction aware.
  *            The transaction processing routines have been left in place
  *            should this support be needed in the future.
