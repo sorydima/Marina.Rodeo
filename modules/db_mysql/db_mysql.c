@@ -3,16 +3,16 @@
  *
  * Copyright (C) 2001-2003 FhG Fokus
  * Copyright (C) 2008 1&1 Internet AG
- * Copyright (C) 2016 OpenSIPS Solutions
+ * Copyright (C) 2016 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -104,7 +104,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,               /* load function */
-	&deps,           /* OpenSIPS module dependencies */
+	&deps,           /* Marina.Rodeo module dependencies */
 	cmds,
 	0,               /* exported async functions */
 	params,          /* module parameters */
