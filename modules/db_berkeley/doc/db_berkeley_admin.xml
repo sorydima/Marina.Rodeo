@@ -7,8 +7,8 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		This is a module which integrates the Berkeley DB into OpenSIPS.
-		It implements the DB API defined in OpenSIPS.
+		This is a module which integrates the Berkeley DB into Marina.Rodeo.
+		It implements the DB API defined in Marina.Rodeo.
 	</para>
 	</section>
 
@@ -146,14 +146,14 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 				<emphasis>table_path</emphasis> - to reload a particular table
 				provide the tablename as the arguement; to reload
 				all tables provide the db_path to the db files. The path can be found
-				in opensipsc-cli config variable.
+				in Marina.Rodeo-cli config variable.
 			</para></listitem>
 		</itemizedlist>
 		<para>
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi bdb_reload subscriber
+		Marina.Rodeo-cli -x mi bdb_reload subscriber
 		</programlisting>
 	</section>
 	</section>
@@ -167,7 +167,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 		</para>
 		
 		<para>
-		Next, prepare to compile OpenSIPS with the db_berkeley module. 
+		Next, prepare to compile Marina.Rodeo with the db_berkeley module. 
 		In the directory /modules/db_berkeley, modify the Makefile to point 
 		to your distribution of Berkeley DB. You may also define 'BDB_EXTRA_DEBUG' 
 		to compile in extra debug logs. However, it is not a recommended 
@@ -196,18 +196,18 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 		</itemizedlist>
 		
 		<para>
-		Installation of OpenSIPS is performed by simply running make install
+		Installation of Marina.Rodeo is performed by simply running make install
 		as root user of the main directory. This will install the binaries 
 		in /usr/local/sbin/.
 		If this was successful, &osips; control engine files should now 
-		be installed as /usr/local/sbin/opensipsdbctl.
+		be installed as /usr/local/sbin/Marina.Rodeo-dbctl.
 		</para>
 		
 		<para>
 		Decide where (on the filesystem) you want to install the Berkeley DB files.
-		For instance, '/usr/local/etc/opensips/db_berkeley' directory.
-		Make note of this directory as we need to add this path to the opensips-cli config file.
-		Note: OpenSIPS will not startup without these DB files.
+		For instance, '/usr/local/etc/Marina.Rodeo/db_berkeley' directory.
+		Make note of this directory as we need to add this path to the Marina.Rodeo-cli config file.
+		Note: Marina.Rodeo will not startup without these DB files.
 		</para>
 		
 		<para>
@@ -215,7 +215,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 		The DB files are initially seeded with necessary meta-data. 
 		This is a good time to review the meta-data section details,
 		before making modifications to your tables dbschema.
-		By default, the files are installed in '/usr/local/share/opensips/db_berkeley/opensips'
+		By default, the files are installed in '/usr/local/share/Marina.Rodeo/db_berkeley/Marina.Rodeo'
 		By default these tables are created Read/Write and without any journalling as 
 		shown. These settings can be modified on a per table basis.
 		Note: If you plan to use bdb_recover, you must change the LOGFLAGS.
@@ -229,20 +229,20 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 		
 		
 		<para>
-		Execute opensipsdbctl - There are three (3) groups of tables you may need depending
+		Execute Marina.Rodeo-dbctl - There are three (3) groups of tables you may need depending
 		on your situation.
 		</para>
 	        <programlisting  format="linespecific">
-		opensipsdbctl create   		(required)
-		opensipsdbctl presence 		(optional)
-		opensipsdbctl extra    		(optional)
+		Marina.Rodeo-dbctl create   		(required)
+		Marina.Rodeo-dbctl presence 		(optional)
+		Marina.Rodeo-dbctl extra    		(optional)
 		</programlisting>
 		
 		<para>
-		Modify the OpenSIPS configuration file to use db_berkeley module. 
+		Modify the Marina.Rodeo configuration file to use db_berkeley module. 
 		The database URL for modules must be the path to the directory where 
 		the Berkeley DB table-files are located, prefixed by "berkeley://", 
-		e.g., "berkeley:///usr/local/etc/opensips/db_berkeley". 
+		e.g., "berkeley:///usr/local/etc/Marina.Rodeo/db_berkeley". 
 		</para>
 		
 		<para>
@@ -279,7 +279,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 	<title>Database Schema and Metadata</title>
 	
 	<para>
-	All Berkeley DB tables are created via the opensipsdbctl script. 
+	All Berkeley DB tables are created via the Marina.Rodeo-dbctl script. 
 	This section provides details as to the content and 
 	format of the DB file upon creation.
 	</para>
@@ -482,7 +482,7 @@ username(str) domain(str) password(str) ha1(str) ha1b(str) first_name(str) last_
 	The db_berkeley module uses the Concurrent Data Store (CDS) architecture. 
 	As such, no transaction or journaling is provided by the DB natively. 
 	The application bdb_recover is specifically written to recover data from 
-	journal files that OpenSIPS creates.  
+	journal files that Marina.Rodeo creates.  
 	The bdb_recover application requires an additional text file that contains 
 	the table schema.
 	</para>
@@ -490,7 +490,7 @@ username(str) domain(str) password(str) ha1(str) ha1b(str) first_name(str) last_
 	<para>
 	The schema is loaded with the '-s' option and is required for all operations.
 	Provide the path to the db_berkeley plain-text schema files. By default, these
-	install to '/usr/local/share/opensips/db_berkeley/opensips/'.
+	install to '/usr/local/share/Marina.Rodeo/db_berkeley/Marina.Rodeo/'.
 	</para>
 	
 	<para>
