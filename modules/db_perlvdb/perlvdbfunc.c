@@ -4,14 +4,14 @@
  * Copyright (C) 2007 Collax GmbH
  *                    (Bastian Friedrich <bastian.friedrich@collax.com>)
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -86,7 +86,7 @@ SV *getobj(db_con_t *con) {
  * - not null
  * - not undef
  * - an object
- * - derived from OpenSIPS::VDB
+ * - derived from Marina.Rodeo::VDB
  */
 int checkobj(SV* obj) {
 	if (obj != NULL) {
@@ -315,12 +315,12 @@ int perlvdb_db_query(db_con_t* h, db_key_t* k, db_op_t* op, db_val_t* v,
 	if(SvOK(order))
 		SvREFCNT_dec(order);
 
-	/* Transform perl result set to OpenSIPS result set */
+	/* Transform perl result set to Marina.Rodeo result set */
 	if (!resultset) {
 		/* No results. */
 		retval = -1;
 	} else {
-		if (sv_isa(resultset, "OpenSIPS::VDB::Result")) {
+		if (sv_isa(resultset, "Marina.Rodeo::VDB::Result")) {
 			retval = perlresult2dbres(resultset, r);
 		/* Nested refs are decreased/deleted inside the routine */
 			SvREFCNT_dec(resultset);
