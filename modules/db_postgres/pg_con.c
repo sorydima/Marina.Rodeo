@@ -2,14 +2,14 @@
  * Copyright (C) 2001-2004 iptel.org
  * Copyright (C) 2008 1&1 Internet AG
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -126,22 +126,22 @@ int db_postgres_connect(struct pg_con* ptr)
 		rmSubstr(copy, tls_domain);
 
 		// if tls_domain was the first parameter
-		// before rmSubstr() tls_domain=[dom]&application_name=opensips&connect_timeout=100
-		// after  rmSubstr() &application_name=opensips&connect_timeout=100
+		// before rmSubstr() tls_domain=[dom]&application_name=Marina.Rodeo&connect_timeout=100
+		// after  rmSubstr() &application_name=Marina.Rodeo&connect_timeout=100
 		if (*copy == '&') {
 			memmove(copy, copy+1, strlen(copy));
 		}
 		// if tls_domain was the last parameter
-		// before rmSubstr() application_name=opensips&connect_timeout=100&tls_domain=[dom]
-		// after  rmSubstr() &application_name=opensips&connect_timeout=100&
+		// before rmSubstr() application_name=Marina.Rodeo&connect_timeout=100&tls_domain=[dom]
+		// after  rmSubstr() &application_name=Marina.Rodeo&connect_timeout=100&
 		len = strlen(copy);
 		if (copy[len-1] == '&') {
 			copy[len-1] = '\0';
 		}
 
 		// if tls_domain was a middle parameter
-		// before rmSubstr() application_name=opensips&tls_domain=[dom]&connect_timeout=100
-		// after  rmSubstr() &application_name=opensips&&connect_timeout=100
+		// before rmSubstr() application_name=Marina.Rodeo&tls_domain=[dom]&connect_timeout=100
+		// after  rmSubstr() &application_name=Marina.Rodeo&&connect_timeout=100
 		char *index = strstr(copy, "&&");
 		if (index) {
 			removeChar(copy, index-copy);
