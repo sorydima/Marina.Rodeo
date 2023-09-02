@@ -26,12 +26,12 @@
 		database backend using the db_url_parameter:
 	</para>
 	<programlisting>
-modparam("acc", "db_url", "perlvdb:OpenSIPS::VDB::Adapter::AccountingSIPtrace")
+modparam("acc", "db_url", "perlvdb:Marina.Rodeo::VDB::Adapter::AccountingSIPtrace")
 </programlisting>
 	<para>
 		This configuration options tells acc module that it should use the
 		db_perlvdb module which will in turn use the Perl class
-		OpenSIPS::VDB::Adapter::AccountingSIPtrace
+		Marina.Rodeo::VDB::Adapter::AccountingSIPtrace
 		to relay the database requests.
 	</para>
 	</section>
