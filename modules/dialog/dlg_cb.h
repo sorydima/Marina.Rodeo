@@ -1,15 +1,15 @@
 /*
- * Copyright (C) 2009-2020 OpenSIPS Solutions
+ * Copyright (C) 2009-2020 Marina.Rodeo Solutions
  * Copyright (C) 2006 Voice Sistem SRLs
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -112,7 +112,7 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
  *   - MI-based termination
  *
  * SIP signaling: confirmed and acknowledged dialog, and a BYE or an internal
- *                termination (in the latter case, OpenSIPS will take
+ *                termination (in the latter case, Marina.Rodeo will take
  *                care of generating proper BYEs for each participant)
  * Registration:  per-dialog, "dlg" must be given
  * Trigger count: 0 - 1 times per dialog, exclusive with DLGCB_EXPIRED, and one
@@ -122,7 +122,7 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
 
 /*
  * The dialog's state has unequivocally progressed to "terminated" because the
- * maximum timeout value ($DLG_timeout) has been reached.  OpenSIPS will take
+ * maximum timeout value ($DLG_timeout) has been reached.  Marina.Rodeo will take
  * care of generating proper BYEs for each participant.
  *
  * SIP signaling: confirmed and acknowledged dialog with exceeded max lifetime
@@ -172,7 +172,7 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
  * last chance to alter their contents before they end up on the network.
  *
  * Note: this does not include responses to internally generated dual BYE
- * requests, as they are not forwarded -- OpenSIPS just absorbs them.
+ * requests, as they are not forwarded -- Marina.Rodeo just absorbs them.
  *
  * SIP signaling: confirmed and acknowledged dialog
  * Registration:  per-dialog, "dlg" must be given
@@ -220,7 +220,7 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
  * Called just before the dialog values / profiles are serialized and
  * written to disk or network (e.g. for binary replication).  Subscribers have
  * the chance to refresh their dialog-held information and avoid data loss or
- * inconsistencies between OpenSIPS cluster nodes.
+ * inconsistencies between Marina.Rodeo cluster nodes.
  *
  * Triggered by:  SIP, timer, MI or shutdown
  * Registration:  per-dialog, "dlg" must be given
@@ -233,7 +233,7 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
 /*
  * Called just after the dialog values were received through the clusterer
  * replication packets. Subscribers have the chance to refresh their dialog-held
- * information and avoid data loss or inconsistencies between OpenSIPS cluster
+ * information and avoid data loss or inconsistencies between Marina.Rodeo cluster
  * nodes.
  *
  * Triggered by:  replication packets received on the network
