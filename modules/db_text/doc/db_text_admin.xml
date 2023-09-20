@@ -27,7 +27,7 @@
 		NOTE: even when is in non-caching mode, the module does not write
 		back to hard drive after changes. In this mode, the module checks if
 		the corresponding file on disk has changed, and reloads it. The write
-		on disk happens at OpenSIPS shut down.
+		on disk happens at Marina.Rodeo shut down.
 	</para>
 		<section>
 		<title>Design of db_text engine</title>
@@ -42,7 +42,7 @@
 				the	database URL for modules must be the path to the directory
 				where the table-files are located, prefixed by 
 				<quote>text://</quote>, e.g., 
-				<quote>text:///var/dbtext/opensips</quote>. If there is no
+				<quote>text:///var/dbtext/Marina.Rodeo</quote>. If there is no
 				<quote>/</quote> after <quote>text://</quote> then
 				<quote>CFG_DIR/</quote> is inserted at the beginning of the
 				database path. So, either you provide an absolute path to
@@ -277,7 +277,7 @@ modparam("db_text", "db_mode", 1)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi dbt_dump
+Marina.Rodeo-cli -x mi dbt_dump
 		</programlisting>
 	</section>
 	<section id="mi_dbt_reload" xreflabel="dbt_reload">
@@ -306,13 +306,13 @@ opensips-cli -x mi dbt_dump
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi dbt_reload
+Marina.Rodeo-cli -x mi dbt_reload
 		</programlisting>
 		<programlisting  format="linespecific">
-opensips-cli -x mi dbt_reload /path/to/dbtext/database
+Marina.Rodeo-cli -x mi dbt_reload /path/to/dbtext/database
 		</programlisting>
 		<programlisting  format="linespecific">
-opensips-cli -x mi dbt_reload /path/to/dbtext/database table_name
+Marina.Rodeo-cli -x mi dbt_reload /path/to/dbtext/database table_name
 		</programlisting>
 	</section>
 	</section>
@@ -326,7 +326,7 @@ opensips-cli -x mi dbt_reload /path/to/dbtext/database table_name
 		the	database URL for modules must be the path to the directory
 		where the table-files are located, prefixed by
 		<quote>text://</quote>, e.g., 
-		<quote>text:///var/dbtext/opensips</quote>. If there is no <quote>/</quote>
+		<quote>text:///var/dbtext/Marina.Rodeo</quote>. If there is no <quote>/</quote>
 		after <quote>text://</quote> then <quote>CFG_DIR/</quote> is inserted
 		at the beginning of the database path. So, either you provide an
 		absolute path to database directory or a relative one to 
@@ -336,7 +336,7 @@ opensips-cli -x mi dbt_reload /path/to/dbtext/database table_name
 		<title>Load the db_text module</title>
 <programlisting format="linespecific">
 ...
-loadmodule "/path/to/opensips/modules/db_text.so"
+loadmodule "/path/to/Marina.Rodeo/modules/db_text.so"
 ...
 modparam("module_name", "database_URL", "text:///path/to/dbtext/database")
 ...
@@ -352,7 +352,7 @@ modparam("module_name", "database_URL", "text:///path/to/dbtext/database")
 		<para>
 		You have to populate the table 'subscriber' by hand with user profiles 
 		in order to have authentication. To use with the given configuration
-		file, the table files must be placed in the '/tmp/opensipsdb' directory.
+		file, the table files must be placed in the '/tmp/Marina.Rodeodb' directory.
 		</para>
 		<example>
 		<title>Definition of 'subscriber' table (one line)</title>
