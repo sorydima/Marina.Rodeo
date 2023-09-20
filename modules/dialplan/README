@@ -14,7 +14,7 @@ dialplan Module
 
         1.5. Dependencies
 
-              1.5.1. OpenSIPS Modules
+              1.5.1. Marina.Rodeo Modules
               1.5.2. External Libraries or Applications
 
         1.6. Exported Parameters
@@ -166,10 +166,6 @@ Chapter 1. Admin Guide
    you want to do with the module, you need to populate the
    appropriate DB records.
 
-   The definition of the tables used by the dialplan module can be
-   found at
-   https://opensips.org/docs/db/db-schema-devel.html#AEN1501
-
 1.4.1. What to place in table
 
 1.4.1.1. String translation (regexp detection, subst translation)
@@ -218,7 +214,7 @@ Chapter 1. Admin Guide
      * subst_exp = NULL ; no translation
      * repl_exp = NULL ; no translation
      * attrs = "serviceX" ; whatever string you will get into
-       OpenSIPS script and it will provide you more information
+       Marina.Rodeo script and it will provide you more information
        (totally custom)
 
 1.4.1.4. String conversion (equal detection, replacement)
@@ -230,11 +226,11 @@ Chapter 1. Admin Guide
      * match_flags = 0 (0 - case sensitive, 1 - case insensitive
        matching)
      * subst_exp = NULL ; no subst translation
-     * repl_exp = "OpenSIPS" ; output string
+     * repl_exp = "Marina.Rodeo" ; output string
 
 1.5. Dependencies
 
-1.5.1. OpenSIPS Modules
+1.5.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * None
@@ -242,7 +238,7 @@ Chapter 1. Admin Guide
 1.5.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libpcre-dev - the development libraries of PCRE.
 
 1.6. Exported Parameters
@@ -255,7 +251,7 @@ Chapter 1. Admin Guide
    be inherited from db_url, db_default_url or table_name,
    respectively. The name of the default partition is 'default'.
 
-   Note: OpenSIPS will validate each partition, so make sure to
+   Note: Marina.Rodeo will validate each partition, so make sure to
    add any required entries in the "version" table of each
    database defined through the 'db_url' property.
 
@@ -264,14 +260,14 @@ Chapter 1. Admin Guide
 modparam("dialplan", "partition", "
         pstn:
                 table_name = dialplan;
-                db_url = mysql://opensips:opensipsrw@127.0.0.1/opensips"
+                db_url = mysql://Marina.Rodeo:Marina.Rodeo@127.0.0.1/Marina.Rodeo"
 )
 ...
 
    Example 1.2.  Define the 'pstn' partition and make it the
    'default' partition, so we avoid loading the 'dialplan' table
 ...
-db_default_url = "mysql://opensips:opensipsrw@localhost/opensips"
+db_default_url = "mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo"
 
 loadmodule "dialplan.so"
 modparam("dialplan", "partition", "
@@ -493,7 +489,7 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
        specified, all partitions will be reloaded.
 
    MI DATAGRAM Command Format:
-                opensips-cli -x mi dp_reload
+                Marina.Rodeo-cli -x mi dp_reload
 
 1.8.2. dp_translate
 
@@ -510,7 +506,7 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
        dpid is located
 
    MI DATAGRAM Command Format:
-        opensips-cli -x mi dp_translate 10 +40123456789
+        Marina.Rodeo-cli -x mi dp_translate 10 +40123456789
 
 1.8.3. dp_show_partiton
 
@@ -523,7 +519,7 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
        is specified, all known partitions will be listed.
 
    MI DATAGRAM Command Format:
-        opensips-cli -x mi dp_translate default
+        Marina.Rodeo-cli -x mi dp_translate default
 
 1.9. Exported Status/Report Identifiers
 
@@ -583,26 +579,20 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
         ]
     }
 
-   For how to access and use the Status/Report information, please
-   see
-   https://www.opensips.org/Documentation/Interface-StatusReport-3
-   -3.
-
 1.10. Installation
 
-   The modules requires one table in OpenSIPS database:
+   The modules requires one table in Marina.Rodeo database:
    dialplan.The SQL syntax to create them can be found in
    dialplan-create.sql script in the database directories in the
-   opensips/scripts folder. You can also find the complete
-   database documentation on the project webpage,
-   https://opensips.org/docs/db/db-schema-devel.html.
+   Marina.Rodeo/scripts folder. You can also find the complete
+   database documentation on the project webpage.
 
 Chapter 2. Developer's Guide
 
    Revision History
    Revision $Revision: 5895 $ $Date$
 
-   The module does not provide any API to use in other OpenSIPS
+   The module does not provide any API to use in other Marina.Rodeo
    modules.
 
 Chapter 3. Contributors
@@ -637,7 +627,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
