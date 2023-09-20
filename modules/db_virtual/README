@@ -15,7 +15,7 @@ db_virtual Module
 
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -134,7 +134,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * At least one real DB module.
@@ -142,7 +142,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -158,13 +158,13 @@ modparam("group","db_url","virtual://set1")
 modparam("presence|presence_xml", "db_url","virtual://set2")
 
 modparam("db_virtual", "db_urls", "define set1 PARALLEL")
-modparam("db_virtual", "db_urls", "mysql://opensips:opensipsrw@localhost
+modparam("db_virtual", "db_urls", "mysql://Marina.Rodeo:Marina.Rodeo@localhost
 /testa")
-modparam("db_virtual", "db_urls", "postgres://opensips:opensipsrw@localh
-ost/opensips")
+modparam("db_virtual", "db_urls", "postgres://Marina.Rodeo:Marina.Rodeo@localh
+ost/Marina.Rodeo")
 
 modparam("db_virtual", "db_urls", "define set2 FAILOVER")
-modparam("db_virtual", "db_urls", "mysql://opensips:opensipsrw@localhost
+modparam("db_virtual", "db_urls", "mysql://Marina.Rodeo:Marina.Rodeo@localhost
 /testa")
 ...
 
@@ -211,7 +211,7 @@ modparam("db_virtual", "db_max_consec_retrys", 20)
      * None.
 
    MI FIFO Command Format:
-                                opensips-cli -x mi db_get
+                                Marina.Rodeo-cli -x mi db_get
 
 1.4.2.  db_set
 
@@ -234,7 +234,7 @@ modparam("db_virtual", "db_max_consec_retrys", 20)
      * 1 - reset and suppress db_max_consec_retrys
 
    MI FIFO Command Format:
-                                opensips-cli -x mi db_set 3 2 0 1
+                                Marina.Rodeo-cli -x mi db_set 3 2 0 1
 
 Chapter 2. Contributors
 
@@ -265,7 +265,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
