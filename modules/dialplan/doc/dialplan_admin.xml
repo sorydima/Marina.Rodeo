@@ -98,10 +98,6 @@
 		Depending what kind of operation (translation, matching, etc) you want
 		to do with the module, you need to populate the appropriate DB records.
 		</para>
-		<para>
-		The definition of the tables used by the dialplan module can be found
-		at <ulink url="https://opensips.org/db-schema.html#AEN1501">&osipsdbdocslink;#AEN1501</ulink>
-		</para>
 		<section>
 		<title>What to place in table</title>
 
@@ -229,7 +225,7 @@
 			<listitem>
 			<para>
 				<emphasis>attrs</emphasis> = "serviceX" ;
-				whatever string you will get into OpenSIPS script and it will
+				whatever string you will get into Marina.Rodeo script and it will
 				provide you more information (totally custom)
 				</para>
 			</listitem>
@@ -267,7 +263,7 @@
 			</listitem>
 			<listitem>
 			<para>
-				<emphasis>repl_exp</emphasis> = "OpenSIPS" ;
+				<emphasis>repl_exp</emphasis> = "Marina.Rodeo" ;
 				output string
 				</para>
 			</listitem>
@@ -328,7 +324,7 @@
 		the default partition is 'default'.
 		</para>
 		<para>
-		Note: OpenSIPS will validate each partition, so make sure to add any
+		Note: Marina.Rodeo will validate each partition, so make sure to add any
 		required entries in the "version" table of each database defined
 		through the 'db_url' property.
 		</para>
@@ -340,7 +336,7 @@
 modparam("dialplan", "partition", "
 	pstn:
 		table_name = dialplan;
-		db_url = mysql://opensips:opensipsrw@127.0.0.1/opensips")
+		db_url = mysql://Marina.Rodeo:Marina.Rodeo@127.0.0.1/Marina.Rodeo")
 ...
 		</programlisting>
 		</example>
@@ -349,7 +345,7 @@ modparam("dialplan", "partition", "
 		<title> Define the 'pstn' partition and make it the 'default' partition, so we avoid loading the 'dialplan' table</title>
 		<programlisting format="linespecific">
 ...
-db_default_url = "mysql://opensips:opensipsrw@localhost/opensips"
+db_default_url = "mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo"
 
 loadmodule "dialplan.so"
 modparam("dialplan", "partition", "
@@ -734,7 +730,7 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
 		MI DATAGRAM Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi dp_reload
+		Marina.Rodeo-cli -x mi dp_reload
 		</programlisting>
 		</section>
 
@@ -765,7 +761,7 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
 		MI DATAGRAM Command Format:
 		</para>
 		<programlisting  format="linespecific">
-        opensips-cli -x mi dp_translate 10 +40123456789
+        Marina.Rodeo-cli -x mi dp_translate 10 +40123456789
 		</programlisting>
 		</section>
 
@@ -789,7 +785,7 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
 		MI DATAGRAM Command Format:
 		</para>
 		<programlisting  format="linespecific">
-        opensips-cli -x mi dp_translate default
+        Marina.Rodeo-cli -x mi dp_translate default
 		</programlisting>
 		</section>
 	</section>
@@ -879,20 +875,15 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
 	</programlisting>
 	</section>
 
-	<para>
-	For how to access and use the Status/Report information, please see
-	<ulink url='>https://www.opensips.org/Documentation/Interface-StatusReport-3-3'>https://www.opensips.org/Documentation/Interface-StatusReport-3-3</ulink>.
-	</para>
-
 </section>
 
 
 	<section>
 		<title>Installation</title>
 		<para>
-		The modules requires one table in OpenSIPS database: dialplan.The SQL
+		The modules requires one table in Marina.Rodeo database: dialplan.The SQL
 		syntax to create them can be found in dialplan-create.sql
-		script in the database directories in the opensips/scripts folder.
+		script in the database directories in the Marina.Rodeo/scripts folder.
 		You can also find the complete database documentation on the
 		project webpage, &osipsdbdocslink;.
 		</para>
