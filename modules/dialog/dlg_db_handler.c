@@ -1,15 +1,15 @@
 /*
- * Copyright (C) 2009-2020 OpenSIPS Solutions
+ * Copyright (C) 2009-2020 Marina.Rodeo Solutions
  * Copyright (C) 2007-2009 Voice System SRL
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -641,7 +641,7 @@ static int load_dialog_info_from_db(int dlg_hash_size)
 				 *    we do, we drop the loaded dialog, as it has already been
 				 *    learned through replication
 				 * 2) a call looping scenario - a call that passes more than
-				 *    once through the same OpenSIPS instance, basically
+				 *    once through the same Marina.Rodeo instance, basically
 				 *    creating different dialogs with different hash IDs - in
 				 *    this case we shall learn the new dialog (Ticket #2311)
 				 */
@@ -664,7 +664,7 @@ static int load_dialog_info_from_db(int dlg_hash_size)
 			if(dlg->h_entry != hash_entry){
 				dlg_unlock(d_table, d_entry);
 				LM_ERR("inconsistent hash data in the dialog database: "
-					"you may have restarted opensips using a different "
+					"you may have restarted Marina.Rodeo using a different "
 					"hash_size: please erase %.*s database and restart\n"
 					"dlg : %u, db : %u\n",
 					dialog_table_name.len, dialog_table_name.s,
@@ -1953,7 +1953,7 @@ static int sync_dlg_db_mem(void)
 
 				if(dlg->h_entry != hash_entry){
 					LM_ERR("inconsistent hash data in the dialog database: "
-						"you may have restarted opensips using a different "
+						"you may have restarted Marina.Rodeo using a different "
 						"hash_size: please erase %.*s database and restart\n",
 						dialog_table_name.len, dialog_table_name.s);
 					shm_free(dlg);
