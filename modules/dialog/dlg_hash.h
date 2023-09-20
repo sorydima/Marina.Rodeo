@@ -1,15 +1,15 @@
 /*
- * Copyright (C) 2009-2020 OpenSIPS Solutions
+ * Copyright (C) 2009-2020 Marina.Rodeo Solutions
  * Copyright (C) 2006-2009 Voice System SRL
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -101,8 +101,8 @@ struct dlg_leg {
 	str route_set;
 	str contact;    /* this leg's Contact URI (most recent version) */
 	str adv_contact;	/* topology hiding advertised contact towards this leg - full header */
-	str in_sdp;			/* latest SDP advertised by the uac ( full body ), after all OpenSIPS changes */
-	str out_sdp;		/* latest SDP advertised towards this leg ( full body ), after all OpenSIPS changes */
+	str in_sdp;			/* latest SDP advertised by the uac ( full body ), after all Marina.Rodeo changes */
+	str out_sdp;		/* latest SDP advertised towards this leg ( full body ), after all Marina.Rodeo changes */
 	str tmp_in_sdp;		/* temporarily stored in_sdp until confirmation (200 OK) arrives */
 	str tmp_out_sdp;	/* temporarily stored out_sdp until confirmation (200 OK) arrives */
 	str route_uris[64];
