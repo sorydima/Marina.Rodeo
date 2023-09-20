@@ -17,12 +17,12 @@ NAME=db_text.so
 include ../../Makefile.modules
 
 install_module_custom: 
-	mkdir -p $(data_prefix)/$(data_dir)/dbtext/opensips ; \
-	for FILE in $(wildcard $(SCRIPTS_DIR)/dbtext/opensips/*) ; do \
+	mkdir -p $(data_prefix)/$(data_dir)/dbtext/Marina.Rodeo ; \
+	for FILE in $(wildcard $(SCRIPTS_DIR)/dbtext/Marina.Rodeo/*) ; do \
 		if [ -f $$FILE ] ; then \
 			$(INSTALL_TOUCH) $$FILE \
-				$(data_prefix)/$(data_dir)/dbtext/opensips/`basename "$$FILE"` ; \
+				$(data_prefix)/$(data_dir)/dbtext/Marina.Rodeo/`basename "$$FILE"` ; \
 			$(INSTALL_CFG) $$FILE \
-				$(data_prefix)/$(data_dir)/dbtext/opensips/`basename "$$FILE"` ; \
+				$(data_prefix)/$(data_dir)/dbtext/Marina.Rodeo/`basename "$$FILE"` ; \
 		fi ;\
 	done ;\
