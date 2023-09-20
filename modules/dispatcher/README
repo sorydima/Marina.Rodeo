@@ -8,7 +8,7 @@ dispatcher Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS modules
+              1.2.1. Marina.Rodeo modules
               1.2.2. External libraries or applications
 
         1.3. Exported Parameters
@@ -92,7 +92,7 @@ dispatcher Module
 
         1.8. Installation and Running
 
-              1.8.1. OpenSIPS config file
+              1.8.1. Marina.Rodeo config file
 
    2. Frequently Asked Questions
    3. Contributors
@@ -161,7 +161,7 @@ dispatcher Module
    1.42. ds_is_in_list usage
    1.43. ds_count usage
    1.44. ds_count usage
-   1.45. OpenSIPS config script - sample dispatcher usage
+   1.45. Marina.Rodeo config script - sample dispatcher usage
 
 Chapter 1. Admin Guide
 
@@ -207,7 +207,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS modules
+1.2.1. Marina.Rodeo modules
 
    The following modules must be loaded before this module:
      * TM - only if active recovery of failed hosts is required.
@@ -218,7 +218,7 @@ Chapter 1. Admin Guide
 1.2.2. External libraries or applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module:
+   before running Marina.Rodeo with this module:
      * none.
 
 1.3. Exported Parameters
@@ -243,7 +243,7 @@ modparam("dispatcher", "db_url", "mysql://user:passwb@localhost/database
    The name of the avp to contain the attributes string of the
    current destination. When a destination is selected,
    automatically, this AVP will provide the attributes string -
-   this is an opaque string (from OpenSIPS point of view) : it is
+   this is an opaque string (from Marina.Rodeo point of view) : it is
    loaded from destination definition ( via DB) and blindly
    provided in the script. Setting this parameter will only change
    the default partition's attrs_avp. Use the partition parameter
@@ -264,7 +264,7 @@ modparam("dispatcher", "attrs_avp", "$avp(272)")
    Name of the avp to contain the script attributes string of the
    current destination. When a destination is selected,
    automatically, this AVP will provide the attributes string -
-   this is an opaque string (from OpenSIPS point of view) : it is
+   this is an opaque string (from Marina.Rodeo point of view) : it is
    provided via the ds_push_script_attrs MI or SCRIPT function.
 
 Note
@@ -409,7 +409,7 @@ modparam("dispatcher", "ds_ping_maxfwd", 2)
 1.3.11. ds_probing_sock (str)
 
    A socket description [proto:]host[:port] of the local socket
-   (which is used by OpenSIPS for SIP traffic) to be used (if
+   (which is used by Marina.Rodeo for SIP traffic) to be used (if
    multiple) for sending the probing messages from.
 
    Default value is “NULL(none)”.
@@ -612,7 +612,7 @@ modparam("dispatcher", "persistent_state", 0)
 
    If clustering enbled, the module will automatically share
    changes over the status of the destinations with the other
-   OpenSIPS instances that are part of a cluster. Whenever such a
+   Marina.Rodeo instances that are part of a cluster. Whenever such a
    status changes (following an MI command, a probing result, a
    script command), the module will replicate this status change
    to all the nodes in this given cluster.
@@ -622,13 +622,13 @@ modparam("dispatcher", "persistent_state", 0)
    destinations. See the cluster_sharing_tag option.
 
    For more info on how to define and populate a cluster (with
-   OpenSIPS nodes) see the "clusterer" module.
+   Marina.Rodeo nodes) see the "clusterer" module.
 
    Default value is “0 (none)”.
 
    Example 1.24. Set cluster_id parameter
 ...
-# replicate destination status with all OpenSIPS in cluster ID 9
+# replicate destination status with all Marina.Rodeo in cluster ID 9
 modparam("dispatcher", "cluster_id", 9)
 ...
 
@@ -854,7 +854,7 @@ modparam("dispatcher", "probe_mode_col", "probing")
    "fs://user:password@127.0.0.1:8021". The default ESL port is
    8021.
 
-   OpenSIPS will establish a connection with the given socket and
+   Marina.Rodeo will establish a connection with the given socket and
    periodically calculate/update the weights of these destinations
    using statistics pushed by the FreeSWITCH box.
 
@@ -863,7 +863,7 @@ modparam("dispatcher", "probe_mode_col", "probing")
    FreeSWITCH ones.
 
    The dynamic weights are recalculated every
-   event_heartbeat_interval seconds (see the "freeswitch" OpenSIPS
+   event_heartbeat_interval seconds (see the "freeswitch" Marina.Rodeo
    module for more details regarding this setting), as the stats
    from FreeSWITCH are expected to arrive. The update formula is
    shown below (FreeSWITCH stats are highlighted in bold):
@@ -885,11 +885,11 @@ modparam("dispatcher", "fetch_freeswitch_stats", 1)
    from FreeSWITCH are available yet.
 
    Important: When mixing normal destinations with
-   FreeSWITCH-enabled ones in the same dispatching set, OpenSIPS
+   FreeSWITCH-enabled ones in the same dispatching set, Marina.Rodeo
    will truncate any weight values that are larger than
    max_freeswitch_weight to the value of this parameter!
 
-   NOTE: OpenSIPS internally rounds weights to nearest integer, so
+   NOTE: Marina.Rodeo internally rounds weights to nearest integer, so
    larger max weight values will more accurately represent the
    current load on the FreeSWITCH boxes! For example, if you set
    this parameter to 1, the box will receive no traffic whenever
@@ -933,7 +933,7 @@ modparam("dispatcher", "max_freeswitch_weight", 1000)
             determine the load on each server. If the parameter is
             not specified, then the first entry in the set is
             chosen.
-          + “10” - The algo_route OpenSIPS route is called for
+          + “10” - The algo_route Marina.Rodeo route is called for
             each dispatcher entry in the setid, in order to decide
             the routing order. See the algo_route parameter for
             usage examples
@@ -1198,7 +1198,7 @@ if (ds_push_script_attrs($var(my_attributes),$si , $sp, 1, 'my_partition
      * address: address of the destination in the group
 
    MI FIFO Command Format:
-opensips-cli -x mi ds_set_state a 2 sip:10.0.0.202
+Marina.Rodeo-cli -x mi ds_set_state a 2 sip:10.0.0.202
 
 1.5.2.  ds_list
 
@@ -1214,7 +1214,7 @@ opensips-cli -x mi ds_set_state a 2 sip:10.0.0.202
        the provided partition.
 
    MI FIFO Command Format:
-opensips-cli -x mi ds_list
+Marina.Rodeo-cli -x mi ds_list
 
 1.5.3.  ds_reload
 
@@ -1232,8 +1232,8 @@ opensips-cli -x mi ds_list
           + “y”: inherit state
 
    MI FIFO Command Format:
-opensips-cli -x mi ds_reload
-opensips-cli -x mi ds_reload inherit_state=n
+Marina.Rodeo-cli -x mi ds_reload
+Marina.Rodeo-cli -x mi ds_reload inherit_state=n
 
 1.5.4.  ds_push_script_attrs
 
@@ -1251,7 +1251,7 @@ opensips-cli -x mi ds_reload inherit_state=n
        script attributes
 
    MI FIFO Command Format:
-#opensips-cli -x mi ds_push_script_attrs '{"ping":"30000","load":"50"}'
+#Marina.Rodeo-cli -x mi ds_push_script_attrs '{"ping":"30000","load":"50"}'
 '192.168.0.107' 5091 1 main
 
 1.6. Exported Events
@@ -1348,19 +1348,13 @@ to [inactive] due to negative probing reply\n"
             ]
         },
 
-
-   For how to access and use the Status/Report information, please
-   see
-   https://www.opensips.org/Documentation/Interface-StatusReport-3
-   -3.
-
 1.8. Installation and Running
 
-1.8.1. OpenSIPS config file
+1.8.1. Marina.Rodeo config file
 
    Next picture displays a sample usage of dispatcher.
 
-   Example 1.45. OpenSIPS config script - sample dispatcher usage
+   Example 1.45. Marina.Rodeo config script - sample dispatcher usage
 ...
 #
 # sample config file for dispatcher module
@@ -1373,10 +1367,10 @@ check_via = off     # (cmd. line: -v)
 dns = off           # (cmd. line: -r)
 rev_dns = off       # (cmd. line: -R)
 
-# for more info: opensips -h
+# for more info: Marina.Rodeo -h
 
 # ------------------ module loading ----------------------------------
-mpath = "/usr/lib/x86_64-linux-gnu/opensips/modules"
+mpath = "/usr/lib/x86_64-linux-gnu/Marina.Rodeo/modules"
 
 loadmodule "maxfwd.so"
 loadmodule "signaling.so"
@@ -1388,8 +1382,8 @@ loadmodule "dispatcher.so"
 loadmodule "proto_udp.so"
 
 # ----------------- setting module-specific parameters ---------------
-modparam("dispatcher", "db_url", "mysql://opensips:opensipsrw@localhost/
-opensips")
+modparam("dispatcher", "db_url", "mysql://Marina.Rodeo:Marina.Rodeo@localhost/
+Marina.Rodeo")
 
 route {
         if (!mf_process_maxfwd_header(10)) {
@@ -1468,35 +1462,23 @@ Chapter 2. Frequently Asked Questions
 
    2.6.
 
-   Where can I find more about OpenSIPS?
-
-   Take a look at https://opensips.org/.
+   Where can I find more about Marina.Rodeo?
 
    2.7.
 
    Where can I post a question about this module?
 
-   First at all check if your question was already answered on one
-   of our mailing lists:
-     * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
-     * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
-
    E-mails regarding any stable version should be sent to
-   <users@lists.opensips.org> and e-mail regarding development
+   <sip@rechain.email> and e-mail regarding development
    versions or SVN snapshots should be send to
-   <devel@lists.opensips.org>.
-
-   If you want to keep the mail private, send it to
-   <users@lists.opensips.org>.
+   <support@rechain.email>.
 
    2.8.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues
+   https://github.com/sorydima/Marina.Rodeo/issues
 
 Chapter 3. Contributors
 
@@ -1535,7 +1517,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
