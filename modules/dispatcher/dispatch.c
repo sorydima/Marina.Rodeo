@@ -1,18 +1,18 @@
 /*
  * dispatcher module
  *
- * Copyright (C) 2010-2015 OpenSIPS Solutions
+ * Copyright (C) 2010-2015 Marina.Rodeo Solutions
  * Copyright (C) 2005-2010 Voice-System.ro
  * Copyright (C) 2004-2006 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -1086,7 +1086,7 @@ static ds_data_t* ds_load_data(ds_partition_t *partition)
 		if ( attrs.len ) {
 			sock = parse_sock_info(&attrs);
 			if (sock == NULL) {
-				LM_ERR("socket <%.*s> is not local to opensips (we must "
+				LM_ERR("socket <%.*s> is not local to Marina.Rodeo (we must "
 					"listen on it) -> ignoring it\n", attrs.len, attrs.s);
 			}
 		} else {
