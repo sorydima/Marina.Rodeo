@@ -1,14 +1,14 @@
 /*
  * Copyright (C) 2005-2009 Voice Sistem SRL
  *
- * This file is part of Open SIP Server (OpenSIPS).
+ * This file is part of SIP Server (Marina.Rodeo).
  *
- * DROUTING OpenSIPS-module is free software; you can redistribute it and/or
+ * DROUTING Marina.Rodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * DROUTING OpenSIPS-module is distributed in the hope that it will be useful,
+ * DROUTING Marina.Rodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -587,7 +587,7 @@ static module_dependency_t *get_deps_probing_interval(const param_export_t *para
 }
 
 static const dep_export_t deps = {
-	{ /* OpenSIPS module dependencies */
+	{ /* Marina.Rodeo module dependencies */
 		{ MOD_TYPE_SQLDB, NULL, DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -604,7 +604,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* OpenSIPS module dependencies */
+	&deps,           /* Marina.Rodeo module dependencies */
 	cmds,            /* Exported functions */
 	0,               /* Exported async functions */
 	params,          /* Exported parameters */
@@ -1592,7 +1592,7 @@ void fix_cache_sockets(struct head_cache *cache)
 		sock = grep_internal_sock_info(&csock->host, csock->port, csock->proto);
 		if (!sock) {
 			LM_ERR("socket <%.*s:%d> (%d) is not local to "
-					"OpenSIPS (we must listen on it) -> ignoring socket\n",
+					"Marina.Rodeo (we must listen on it) -> ignoring socket\n",
 					csock->host.len, csock->host.s, csock->port, csock->proto);
 			free = csock;
 			csock = csock->next;
@@ -2121,7 +2121,7 @@ static int dr_init(void)
 			if (dr_probe_sock_s.len) {
 				dr_probe_sock = parse_sock_info(&dr_probe_sock_s);
 				if (dr_probe_sock==NULL) {
-					LM_ERR("socket <%.*s> is not local to opensips (we must listen "
+					LM_ERR("socket <%.*s> is not local to Marina.Rodeo (we must listen "
 							"on it\n", dr_probe_sock_s.len, dr_probe_sock_s.s);
 					goto error;
 				}
