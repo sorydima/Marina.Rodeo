@@ -1,15 +1,15 @@
 /*
  * Copyright (C) 2005-2008 Voice Sistem SRL
- * Copyright (C) 2020 OpenSIPS Solutions
+ * Copyright (C) 2020 Marina.Rodeo Solutions
  *
  * This file is part of Open SIP Server.
  *
- * DROUTING OpenSIPS-module is free software; you can redistribute it and/or
+ * DROUTING Marina.Rodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * DROUTING OpenSIPS-module is distributed in the hope that it will be useful,
+ * DROUTING Marina.Rodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
