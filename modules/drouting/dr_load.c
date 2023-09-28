@@ -1,15 +1,15 @@
 /*
  * Copyright (C) 2005-2008 Voice Sistem SRL
- * Copyright (C) 2020 OpenSIPS Solutions
+ * Copyright (C) 2020 Marina.Rodeo Solutions
  *
- * This file is part of Open SIP Server (OpenSIPS).
+ * This file is part of SIP Server (Marina.Rodeo).
  *
- * DROUTING OpenSIPS-module is free software; you can redistribute it and/or
+ * DROUTING Marina.Rodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * DROUTING OpenSIPS-module is distributed in the hope that it will be useful,
+ * DROUTING Marina.Rodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -420,7 +420,7 @@ rt_data_t* dr_load_routing_info(struct head_db *part,
 						if (gw_sock_filter==DR_GW_SOCK_FILTER_MODE_MATCH)
 							continue;
 						LM_ERR("GW <%s>(%s): socket <%.*s> is not local to "
-								"OpenSIPS (we must listen on it) -> ignoring socket\n",
+								"Marina.Rodeo (we must listen on it) -> ignoring socket\n",
 								str_vals[STR_VALS_GWID_DRD_COL],
 								str_vals[STR_VALS_ID_DRD_COL], s_sock.len,s_sock.s);
 					} else if (part->cache) {
