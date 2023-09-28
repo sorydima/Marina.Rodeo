@@ -16,7 +16,7 @@ Dynamic Routing Module
 
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -216,7 +216,7 @@ Chapter 1. Admin Guide
 
 1.1.2. Features
 
-   The dynamic routing implementation for OpenSIPS is designed
+   The dynamic routing implementation for Marina.Rodeo is designed
    with the following properties:
      * The routing info (destinations, carriers, rules, groups) is
        stored in a database and loaded into memory at start up
@@ -444,7 +444,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * a database module.
@@ -467,7 +467,7 @@ Chapter 1. Admin Guide
    Example 1.1. Set db_url parameter
 ...
 modparam("drouting", "db_url",
-        "mysql://opensips:opensipsrw@localhost/opensips")
+        "mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo")
 ...
 
 1.3.2. drd_table(str)
@@ -749,13 +749,13 @@ modparam("drouting", "probing_reply_codes", "501, 403")
 1.3.22. probing_socket (string)
 
    A socket description [proto:]host[:port] of the local socket
-   (which is used by OpenSIPS for SIP traffic) to be used (if
+   (which is used by Marina.Rodeo for SIP traffic) to be used (if
    multiple) for sending the probing messages from.
 
    For probing gateway the highest priority has socket from
    gateway configuration in dr_gateways table. Then socket from
    global probing_socket parameter and the lowest priority is
-   default behaviour with auto selected socket wich OpenSIPS
+   default behaviour with auto selected socket wich Marina.Rodeo
    listens on.
 
    Default value is “NULL”.
@@ -774,15 +774,15 @@ modparam("drouting", "probing_socket", "udp:192.168.1.100:5060")
    The supported filtering modes are:
      * "all" - all the gateways defined in DB are loaded into
        memory, disregarding what socket value they have. NOTE: for
-       the gw sockets not matching any OpenSIPS listeners/sockets,
+       the gw sockets not matching any Marina.Rodeo listeners/sockets,
        the GW will be loaded with NULL/no socket.
      * "ignore" - all the gateways defined in DB are loaded into
        memory, but ignoring the socket value they have (the socket
        will be set to NULL/NONE with no attempt to check it
-       against the OpenSIPS listeners/sockets).
+       against the Marina.Rodeo listeners/sockets).
      * "matched-only" - in this mode the module will load from DB
        only the gateways that have a configured a socket matching
-       any of the the OpenSIPS listeners/sockets. If the gateways
+       any of the the Marina.Rodeo listeners/sockets. If the gateways
        socket does not match, it will be discards, not loaded into
        memory at all.
 
@@ -790,11 +790,11 @@ modparam("drouting", "probing_socket", "udp:192.168.1.100:5060")
 
    Example 1.23. Set gw_socket_filter_mode parameter
 ...
-# multiple OpenSIPS instances sharing a DR setting, so each should
+# multiple Marina.Rodeo instances sharing a DR setting, so each should
 # load only the GWs they have sockets for.
 modparam("drouting", "gw_socket_filter_mode", "matched-only")
 ...
-# an OpenSIPs instance not doing routing, but needing to be
+# an Marina.Rodeo instance not doing routing, but needing to be
 # aware of all the gws, so load them all ignoring the sockets
 modparam("drouting", "gw_socket_filter_mode", "ignore")
 ...
@@ -808,7 +808,7 @@ modparam("drouting", "gw_socket_filter_mode", "ignore")
 
    If clustering enbled, the module will automatically share
    changes over the status of the gateways/destinations/carriers
-   with the other OpenSIPS instances that are part of a cluster.
+   with the other Marina.Rodeo instances that are part of a cluster.
    Whenever such a status changes (following an MI command, a
    probing result, a script command), the module will replicate
    this status change to all the nodes in this given cluster.
@@ -818,13 +818,13 @@ modparam("drouting", "gw_socket_filter_mode", "ignore")
    gateways. See the cluster_sharing_tag option.
 
    For more info on how to define and populate a cluster (with
-   OpenSIPS nodes) see the "clusterer" module.
+   Marina.Rodeo nodes) see the "clusterer" module.
 
    Default value is “0 (none)”.
 
    Example 1.24. Set cluster_id parameter
 ...
-# replicate gw/carrier status with all OpenSIPS in cluster ID 9
+# replicate gw/carrier status with all Marina.Rodeo in cluster ID 9
 modparam("drouting", "cluster_id", 9)
 ...
 
@@ -968,7 +968,7 @@ modparam("drouting", "use_partitions", 1)
    Example 1.32. Set db_partitions_url parameter
 ...
 modparam("drouting", "db_partitions_url", "mysql://user:password@localho
-st/opensips_partitions")
+st/Marina.Rodeo_partitions")
 ...
 
 1.3.33. db_partitions_table (str)
@@ -1053,7 +1053,7 @@ modparam("drouting", "extra_id_chars", ":_-.")
    partition.
 
    The syntax of the parameter is: "token : query", where token is
-   a special name given to a "dr_rules" table, so OpenSIPS can
+   a special name given to a "dr_rules" table, so Marina.Rodeo can
    match it against the custom queries defined using this
    parameter.
 
@@ -1608,7 +1608,7 @@ if ( dr_match( 1, , $var(did) ) )
        </listitem>
 
    MI FIFO Command Format:
-                opensips-cli -x mi dr_reload part_1
+                Marina.Rodeo-cli -x mi dr_reload part_1
 
 1.5.2. dr_gw_status
 
@@ -1637,22 +1637,22 @@ if ( dr_match( 1, , $var(did) ) )
 
    Example 1.48. dr_gw_status usage when use_partitions is set to
    0
-$ opensips-cli -x mi dr_gw_status gw_id=2
+$ Marina.Rodeo-cli -x mi dr_gw_status gw_id=2
 State:: Active
-$ opensips-cli -x mi dr_gw_status gw_id=2 status=0
-$ opensips-cli -x mi dr_gw_status gw_id=2
+$ Marina.Rodeo-cli -x mi dr_gw_status gw_id=2 status=0
+$ Marina.Rodeo-cli -x mi dr_gw_status gw_id=2
 Enabled:: Disabled MI
-$ opensips-cli -x mi dr_gw_status gw_id=3
+$ Marina.Rodeo-cli -x mi dr_gw_status gw_id=3
 Enabled:: Inactive
 
    Example 1.49. dr_gw_status usage when use_partitionsis set to 1
-$ opensips-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw
+$ Marina.Rodeo-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw
 State:: Active
-$ opensips-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw stat
+$ Marina.Rodeo-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw stat
 us=0
-$ opensips-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw
+$ Marina.Rodeo-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw
 enabled:: disabled mi
-$ opensips-cli -x mi dr_gw_status partition_name=partition8 status=3
+$ Marina.Rodeo-cli -x mi dr_gw_status partition_name=partition8 status=3
 enabled:: inactive
 
 1.5.3. dr_carrier_status
@@ -1681,19 +1681,19 @@ enabled:: inactive
             carrier_id is provided.
 
    Example 1.50. dr_carrier_status usage when use_partitions is 0
-$ opensips-cli -x mi dr_carrier_status carrier_id=CR1
+$ Marina.Rodeo-cli -x mi dr_carrier_status carrier_id=CR1
 Enabled:: no
-$ opensips-cli -x mi dr_carrier_status carrier_id=CR1 status=1
-$ opensips-cli -x mi dr_carrier_status carrier_id=CR1
+$ Marina.Rodeo-cli -x mi dr_carrier_status carrier_id=CR1 status=1
+$ Marina.Rodeo-cli -x mi dr_carrier_status carrier_id=CR1
 Enabled:: yes
 
    Example 1.51. dr_carrier_status usage when use_partitions is 1
-$ opensips-cli -x mi dr_carrier_status partition_name=my_partition carri
+$ Marina.Rodeo-cli -x mi dr_carrier_status partition_name=my_partition carri
 er_id=CR1
 Enabled:: no
-$ opensips-cli -x mi dr_carrier_status partition_name=partition_1 carrie
+$ Marina.Rodeo-cli -x mi dr_carrier_status partition_name=partition_1 carrie
 r_id=CR1 status=1
-$ opensips-cli -x mi dr_carrier_status partition_name=partition_3 carrie
+$ Marina.Rodeo-cli -x mi dr_carrier_status partition_name=partition_3 carrie
 r_id=CR1
 Enabled:: yes
 
@@ -1710,14 +1710,14 @@ Enabled:: yes
             time of the last reload for the given partition.
 
    Example 1.52. dr_reload_status usage when use_partitions is 0
-$ opensips-cli -x mi dr_reload_status
+$ Marina.Rodeo-cli -x mi dr_reload_status
 Date:: Tue Aug 12 12:26:00 2014
 
    Example 1.53. dr_reload_status usage when use_partitions is 1
-$ opensips-cli -x mi dr_reload_status
+$ Marina.Rodeo-cli -x mi dr_reload_status
 Partition:: part_test Date=Tue Aug 12 12:24:13 2014
 Partition:: part_2 Date=Tue Aug 12 12:24:13 2014
-$ opensips-cli -x mi dr_reload_status part_test
+$ Marina.Rodeo-cli -x mi dr_reload_status part_test
 Partition:: part_test Date=Tue Aug 12 12:24:13 2014
 
 1.5.5. dr_number_routing
@@ -1738,7 +1738,7 @@ Partition:: part_test Date=Tue Aug 12 12:24:13 2014
           + number - the number to test against
 
    MI FIFO Command Format:
-                opensips-cli -x mi dr_number_routing partition_name=part
+                Marina.Rodeo-cli -x mi dr_number_routing partition_name=part
 1 group_id=3 number=012340987
 
 1.5.6.  dr_enable_probing
@@ -1750,10 +1750,10 @@ Partition:: part_test Date=Tue Aug 12 12:24:13 2014
      * status (optional) - 1 - enable, 0 - disable gateway probing
 
    Example 1.54. dr_enable_probing usage
-$ opensips-cli -x mi dr_enable_probing
+$ Marina.Rodeo-cli -x mi dr_enable_probing
 Status:: 1
-$ opensips-cli -x mi dr_enable_probing 0
-$ opensips-cli -x mi dr_enable_probing
+$ Marina.Rodeo-cli -x mi dr_enable_probing 0
+$ Marina.Rodeo-cli -x mi dr_enable_probing
 Status:: 0
 
 1.6. Exported Events
@@ -1854,24 +1854,17 @@ probing reply\n"
         ]
     }
 
-   For how to access and use the Status/Report information, please
-   see
-   https://www.opensips.org/Documentation/Interface-StatusReport-3
-   -3.
-
 1.8. Installation
 
-   The module requires 4 tables in the OpenSIPS database:
+   The module requires 4 tables in the Marina.Rodeo database:
    dr_groups, dr_gateways, dr_carriers, dr_rules. The SQL syntax
    to create them can be found in the drouting-create.sql script,
-   located in the database directories of the opensips/scripts
-   folder. You can also find the complete database documentation
-   on the project webpage,
-   https://opensips.org/docs/db/db-schema-devel.html.
+   located in the database directories of the Marina.Rodeo/scripts
+   folder.
 
 Chapter 2. Developer Guide
 
-   The module provides no function to be used by other OpenSIPS
+   The module provides no function to be used by other Marina.Rodeo
    modules.
 
 Chapter 3. Contributors
@@ -1908,7 +1901,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1958,6 +1951,6 @@ Chapter 4. Documentation
 
    Documentation Copyrights:
 
-   Copyright © 2009-2012 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
 
    Copyright © 2005-2008 Voice Sistem SRL
