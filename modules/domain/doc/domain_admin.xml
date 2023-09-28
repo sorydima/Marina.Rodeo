@@ -52,7 +52,7 @@
 		</para>
 		<para>
 		Default value is 
-			<quote>mysql://opensipsro:opensipsro@localhost/opensips</quote>
+			<quote>mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo</quote>
 		</para>
 		<example>
 		<title>Setting db_url parameter</title>
@@ -267,7 +267,7 @@ if (is_domain_local($avp(some_avp), $avp(attrs))) {
 		MI FIFO Command Format:
 		</para>
         <programlisting  format="linespecific">
-		opensips-cli -x mi domain_reload
+		Marina.Rodeo-cli -x mi domain_reload
 		</programlisting>
 		
 	</section>
@@ -285,7 +285,7 @@ if (is_domain_local($avp(some_avp), $avp(attrs))) {
 		MI FIFO Command Format:
 		</para>
         <programlisting  format="linespecific">
-		opensips-cli -x mi domain_dump
+		Marina.Rodeo-cli -x mi domain_dump
 		</programlisting>
 	</section>
 	</section>
