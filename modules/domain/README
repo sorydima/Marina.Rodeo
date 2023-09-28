@@ -96,7 +96,7 @@ Chapter 1. Admin Guide
    This is URL of the database to be used.
 
    Default value is
-   “mysql://opensipsro:opensipsro@localhost/opensips”
+   “mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo”
 
    Example 1.1. Setting db_url parameter
 modparam("domain", "db_url", "mysql://ser:pass@db_host/ser")
@@ -244,7 +244,7 @@ if (is_domain_local($avp(some_avp), $avp(attrs))) {
    Parameters: none
 
    MI FIFO Command Format:
-                opensips-cli -x mi domain_reload
+                Marina.Rodeo-cli -x mi domain_reload
 
 1.5.2. domain_dump
 
@@ -256,7 +256,7 @@ if (is_domain_local($avp(some_avp), $avp(attrs))) {
    Parameters: none
 
    MI FIFO Command Format:
-                opensips-cli -x mi domain_dump
+                Marina.Rodeo-cli -x mi domain_dump
 
 1.6. Known Limitations
 
@@ -268,7 +268,7 @@ if (is_domain_local($avp(some_avp), $avp(attrs))) {
 Chapter 2. Developer Guide
 
    The module provides is_domain_local API function for use by
-   other OpenSIPS modules.
+   other Marina.Rodeo modules.
 
 2.1. Available Functions
 
@@ -312,7 +312,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
