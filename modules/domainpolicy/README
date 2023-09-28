@@ -98,7 +98,7 @@ Chapter 1. Admin Guide
    This is URL of the database to be used.
 
    Default value is
-   “mysql://opensipsro:opensipsro@localhost/opensips”
+   “mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo”
 
    Example 1.1. Setting db_url parameter
 modparam("domainpolicy", "db_url", "postgresql://user:pass@db_host/opens
@@ -530,7 +530,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
