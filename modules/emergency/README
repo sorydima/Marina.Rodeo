@@ -8,7 +8,7 @@ Emergency Call Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -65,7 +65,7 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The emergency module provides emergency call treatment for
-   OpenSIPS, following the architecture i2 specification of the
+   Marina.Rodeo, following the architecture i2 specification of the
    American entity NENA. (National Emergency Number Association).
    The NENA solution routes the emergency call to a closer gateway
    (ESGW) and this forward the call to a PSAP(call center
@@ -77,7 +77,7 @@ Chapter 1. Admin Guide
    of emergency treatment depending on location (VPC), validate
    location stored (VDB), among others. Along with these elements
    have the SIP Proxy that interface with these servers to route
-   the call. The OpenSIPS can do the functions of these SIP Proxy
+   the call. The Marina.Rodeo can do the functions of these SIP Proxy
    through this emergency module, may perform the function of a
    Call Server, Redirect Server and Routing Proxy, depending on
    the proposed scenario:
@@ -100,7 +100,7 @@ Chapter 1. Admin Guide
        routing information in the SIP Contact Header. The Call
        Server selects the proper ESGW based on this information.
 
-   The emergency module allows the OpenSIPS play the role of a
+   The emergency module allows the Marina.Rodeo play the role of a
    Call Server, a Proxy or Redirect Server Routing within the
    scenarios presented depending on how it is configured.
 
@@ -108,14 +108,14 @@ Chapter 1. Admin Guide
    as handle the call and sends the routing information request to
    the VPC. The emergency module through emergency_call() command
    will check if the INVITE received is an emergency call. In this
-   case, the OpenSIPS will get caller location information from
+   case, the Marina.Rodeo will get caller location information from
    specific headers and body in the INVITE. With this information
    along configuration parameters defined for this module, the
-   opensips implements the v2 interface that queries the VPC for
+   Marina.Rodeo implements the v2 interface that queries the VPC for
    routing information (i.e., ESQK, LRO, and either the ERT or
    ESGWRI), selects the proper ESGW based on the ESGWRI. When the
-   call ends the OpenSIPS receives BYE request, it warns the VPC
-   for clean your data that is based on the call. The OpenSIPS
+   call ends the Marina.Rodeo receives BYE request, it warns the VPC
+   for clean your data that is based on the call. The Marina.Rodeo
    through failure() command will try to route the calls via the
    PSTN using a national contingency number(LRO) if normal routing
    fails.
@@ -124,9 +124,9 @@ Chapter 1. Admin Guide
    provider The emergency module through emergency_call() command
    will check if the INVITE received is an emergency call. In this
    case, it will forward the call to a Routing Proxy that will
-   interface with the VPC and route the call. The OpenSIPS will
+   interface with the VPC and route the call. The Marina.Rodeo will
    leave the call, and all the request of this dialog received by
-   the opensips will be forwarded to the Routing Server.
+   the Marina.Rodeo will be forwarded to the Routing Server.
 
    1.4.Scenario III: The VSP requests routing information for the
    Redirect Server The emergency module through emergency_call()
@@ -141,11 +141,11 @@ Chapter 1. Admin Guide
    script and make the correct filling out of the emergency module
    tables, in accordance with the role chosen within the described
    scenarios. For more details check the "Emergency calls using
-   OpenSIPS".
+   Marina.Rodeo".
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * Dialog - Dialoge module..
@@ -155,7 +155,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libcurl.
 
 1.3. Exported Parameters
@@ -168,7 +168,7 @@ Chapter 1. Admin Guide
 
    Example 1.1. Setting the db_url parameter
 ...
-modparam("emergency", "db_url", "mysql://opensips:opensipsrw@localhost/o
+modparam("emergency", "db_url", "mysql://Marina.Rodeo:Marina.Rodeo@localhost/o
 pensips”)
 ...
 
@@ -209,34 +209,34 @@ modparam("emergency", "db_table_provider", "emergency_service_provider")
 
 1.3.5. proxy_role (integer)
 
-   This parameter define what role the opensips will take to treat
+   This parameter define what role the Marina.Rodeo will take to treat
    emergency call:
 
-   0 – The opensips is the Call Server in scenario I. In this role
-   the opensips implements the V2 interface, directly queries the
+   0 – The Marina.Rodeo is the Call Server in scenario I. In this role
+   the Marina.Rodeo implements the V2 interface, directly queries the
    VPC for ESGWRI/ESQK, selects the proper ESGW given the ESGWRI
    and routes calls Via the PSTN using the LRO if routing fails.
 
-   1 – The opensips is the Call Server in scenario II that sends
+   1 – The Marina.Rodeo is the Call Server in scenario II that sends
    the INVITE on emergency call to a Routing Proxy provider. The
    Routing Proxy provider implements the V2 interface.
 
-   2 - The opensips is the Routing Proxy in scenario II. In this
-   role the opensips implements the V2 interface, directly queries
+   2 - The Marina.Rodeo is the Routing Proxy in scenario II. In this
+   role the Marina.Rodeo implements the V2 interface, directly queries
    the VPC for ESGWRI/ESQK, selects the proper ESGW given the
    ESGWRI and routes calls Via the PSTN using the LRO if routing
    fails.
 
-   3 - The opensips is the Redirect Proxy in scenario III that
+   3 - The Marina.Rodeo is the Redirect Proxy in scenario III that
    receives the INVITE on emergency call from Call Server. The
    Redirect Server obtains the ESGWRI/ESQK from the VPC and sends
    in the SIP 3xx response to the Call Server.
 
-   4 - The opensips is the Call Server in scenario III that sends
+   4 - The Marina.Rodeo is the Call Server in scenario III that sends
    the INVITE on emergency call to a Redirect Server. The Redirect
    Server obtains the ESGWRI/ESQK from the VPC. It returns the
-   call to the opensips with the ESGWRI/ESQK in the header contact
-   in the SIP response. The opensips selects the proper ESGW based
+   call to the Marina.Rodeo with the ESGWRI/ESQK in the header contact
+   in the SIP response. The Marina.Rodeo selects the proper ESGW based
    on the ESGWRI.
 
    Default value is “0”.
@@ -248,7 +248,7 @@ modparam("emergency", "proxy_role", 0))
 
 1.3.6. url_vpc (string)
 
-   The VPC url that opensips request the routing information to
+   The VPC url that Marina.Rodeo request the routing information to
    emergency call. This VPC url has IP:Port format
 
    Default value is “empty string”.
@@ -260,7 +260,7 @@ modparam("emergency", "url_vpc", “192.168.0.103:5060”)
 
 1.3.7. emergency_codes (string)
 
-   Local emergency number. Opensips uses this number to recognize
+   Local emergency number. Marina.Rodeo uses this number to recognize
    a emergency call beyond the username default defined by
    RFC-5031 (urn:service.sos.). Along with the number should be
    given a brief description about this code. The format is
@@ -302,7 +302,7 @@ modparam("emergency","contingency_hostname",“176.34,29.102:5060”)
 
    The emergency_call_server is the url of the Routing
    Proxy/Redirect Server that will handle the emergency call in
-   cenario II. Its is mandatory if Opensips act as Call Server in
+   cenario II. Its is mandatory if Marina.Rodeo act as Call Server in
    scenario II (proxy_role = 1 and flag_third_enterprise = 0) or
    Call Server in scenario III (proxy_role = 2).
 
@@ -389,7 +389,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
