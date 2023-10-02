@@ -3,14 +3,14 @@
  *
  * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -92,7 +92,7 @@ int send_esct(struct sip_msg *msg, str callid_ori, str from_tag){
 
 	if (strlen(info_call->esct->esqk) > 0){
 
-		// if VPC provide ESQK then opensips need send esct to free this key
+		// if VPC provide ESQK then Marina.Rodeo need send esct to free this key
 		LM_DBG(" --- SEND ESQK =%s\n \n",info_call->esct->esqk);
 
 		time(&rawtime);
@@ -248,7 +248,7 @@ int treat_parse_esrResponse(struct sip_msg *msg, ESCT *call_cell, PARSED *parsed
 			call_cell->ert_srid = parsed->ert->selectiveRoutingID;
 
 			if (proxy_role == 4){
-				// in opensips as redirect role, consider esgwri as joint selectiveRoutingID + routingESN + npa + @vsp_address in contact headers in 300 response
+				// in Marina.Rodeo as redirect role, consider esgwri as joint selectiveRoutingID + routingESN + npa + @vsp_address in contact headers in 300 response
 				// get source ip address that send INVITE
 				vsp_addr = ip_addr2a(&msg->rcv.src_ip);
 				vsp_addr_len = strlen(vsp_addr);
