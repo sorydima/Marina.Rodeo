@@ -3,14 +3,14 @@
  *
  * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -477,7 +477,7 @@ int get_uris_to_subscribe(struct sip_msg* msg, str* contact, str* notifier, str*
 
 
 	/* build subscriber uri to use in From header */
-	// get ip address of opensips server in port that receive INVITE
+	// get ip address of Marina.Rodeo server in port that receive INVITE
 	if (get_ip_socket(msg, &rp_addr) == -1){
 		pkg_free(contact_aux);
 		pkg_free(notifier_aux);
@@ -495,7 +495,7 @@ int get_uris_to_subscribe(struct sip_msg* msg, str* contact, str* notifier, str*
 	memset(subscriber_aux, 0, size_subscriber + 1);
 	subscriber->s = subscriber_aux;
 	subscriber->len = size_subscriber;
-	memcpy(subscriber_aux, "sip:opensips_redirect", 21);
+	memcpy(subscriber_aux, "sip:Marina.Rodeo_redirect", 21);
 	subscriber_aux += 21;
 	memcpy(subscriber_aux, rp_addr, rp_addr_len);
 	LM_DBG("****** subscriber: %.*s\n", subscriber->len, subscriber->s);
