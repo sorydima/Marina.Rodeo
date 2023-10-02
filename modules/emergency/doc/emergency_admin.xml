@@ -8,9 +8,9 @@
 	<title>Overview</title>
 	<para>
 
-The emergency module provides emergency call treatment for OpenSIPS, following the architecture i2 specification of the American entity NENA. (National Emergency Number Association). The NENA solution routes the emergency call to a closer gateway (ESGW) and this forward the call to a PSAP(call center responsible for answering emergency calls) that serves the area of ​​the caller, so this must consider the handling and transport of caller location information in the SIP protocol.
+The emergency module provides emergency call treatment for Marina.Rodeo, following the architecture i2 specification of the American entity NENA. (National Emergency Number Association). The NENA solution routes the emergency call to a closer gateway (ESGW) and this forward the call to a PSAP(call center responsible for answering emergency calls) that serves the area of ​​the caller, so this must consider the handling and transport of caller location information in the SIP protocol.
 
-To attend this new need the NENA solution consists of several servers: to determine the location (LIS), to determine the area of emergency treatment depending on location (VPC), validate location stored (VDB), among others. Along with these elements have the SIP Proxy that interface with these servers to route the call. The OpenSIPS can do the functions of these SIP Proxy through this emergency module, may perform the function of a Call Server, Redirect Server and Routing Proxy, depending on the proposed scenario:
+To attend this new need the NENA solution consists of several servers: to determine the location (LIS), to determine the area of emergency treatment depending on location (VPC), validate location stored (VDB), among others. Along with these elements have the SIP Proxy that interface with these servers to route the call. The Marina.Rodeo can do the functions of these SIP Proxy through this emergency module, may perform the function of a Call Server, Redirect Server and Routing Proxy, depending on the proposed scenario:
 	</para>
 	<itemizedlist>
 		<listitem><para>
@@ -24,12 +24,12 @@ scenario III: The VSP requests routing information for the Redirect Server opera
 		</para></listitem>
 	</itemizedlist>
 	<para>
-The emergency module allows the OpenSIPS play the role of a Call Server, a Proxy or Redirect Server Routing within the scenarios presented depending on how it is configured.
+The emergency module allows the Marina.Rodeo play the role of a Call Server, a Proxy or Redirect Server Routing within the scenarios presented depending on how it is configured.
 	</para>
 	<para>
 		1.2. Scenario I: The VSP that originating the call is the same as handle the call and sends the routing information request to the VPC. 
 	
-		The emergency module through emergency_call() command  will check if the INVITE received is an emergency call. In this case, the OpenSIPS will get caller location information from specific headers and body in the INVITE. With this information along configuration parameters defined for this module, the opensips implements the v2 interface that queries the VPC for routing information (i.e., ESQK, LRO, and either the ERT or ESGWRI), selects the proper ESGW based on the ESGWRI. When the call ends the OpenSIPS receives BYE request, it warns the VPC for clean your data that is based on the call.	
+		The emergency module through emergency_call() command  will check if the INVITE received is an emergency call. In this case, the Marina.Rodeo will get caller location information from specific headers and body in the INVITE. With this information along configuration parameters defined for this module, the Marina.Rodeo implements the v2 interface that queries the VPC for routing information (i.e., ESQK, LRO, and either the ERT or ESGWRI), selects the proper ESGW based on the ESGWRI. When the call ends the Marina.Rodeo receives BYE request, it warns the VPC for clean your data that is based on the call.	
 		The &osips; through failure() command  will try to route the calls via the PSTN using a national contingency number(LRO) if normal routing fails.
 
 	</para>
@@ -37,7 +37,7 @@ The emergency module allows the OpenSIPS play the role of a Call Server, a Proxy
 		1.3.Scenario II: The VSP transfers the call to a Routing Server provider
 
 		The emergency module through emergency_call() command  will check if the INVITE received is an emergency call. In this case, it will forward the call to a Routing Proxy that will interface with the VPC and route the call.		
-		The OpenSIPS will leave the call, and all the request of this dialog received by the opensips will be forwarded to the Routing Server.
+		The Marina.Rodeo will leave the call, and all the request of this dialog received by the Marina.Rodeo will be forwarded to the Routing Server.
 
 	</para>
 	<para>
@@ -46,7 +46,7 @@ The emergency module allows the OpenSIPS play the role of a Call Server, a Proxy
 		The emergency module through emergency_call() command  will check if the INVITE received is an emergency call. In this case, it requests routing information to Redirect Server. The Redirect has interface with the VPC and return to VSP's Call Server response whith routing informations on Contact header.		
 		The Call Server uses this information to treat the call. When the emergency call ends, it must notify the Redirect Server that inform to VPC to release the resources.
 	</para>
-		To use this module should informs the mandatory parameters in script and make the correct filling out of the emergency module tables, in accordance with the role chosen within the described scenarios. For more details check the "Emergency calls using OpenSIPS".
+		To use this module should informs the mandatory parameters in script and make the correct filling out of the emergency module tables, in accordance with the role chosen within the described scenarios. For more details check the "Emergency calls using Marina.Rodeo".
 
 
 	</section>
@@ -110,7 +110,7 @@ The emergency module allows the OpenSIPS play the role of a Call Server, a Proxy
 		<title>Setting the <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("emergency", "db_url", "mysql://opensips:opensipsrw@localhost/opensips”)
+modparam("emergency", "db_url", "mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo”)
 ...
 		</programlisting>
 		</example>
@@ -180,36 +180,36 @@ modparam("emergency", "db_table_provider", "emergency_service_provider")
 	<section id="param_proxy_role" xreflabel="proxy_role">
 		<title><varname>proxy_role</varname> (integer)</title>
 		<para>
-		This parameter define what role the opensips will take to treat emergency   
+		This parameter define what role the Marina.Rodeo will take to treat emergency   
    		call:
 			<para>
-		    0 – The opensips is the Call Server in scenario I. In this role the 
-		        opensips implements the V2 interface, directly queries the VPC for 
+		    0 – The Marina.Rodeo is the Call Server in scenario I. In this role the 
+		        Marina.Rodeo implements the V2 interface, directly queries the VPC for 
 		        ESGWRI/ESQK, selects the proper ESGW given the ESGWRI and routes calls 
 		        Via the PSTN using the LRO if routing fails.
 			</para>
 			<para>
-		    1 – The opensips is the Call Server in scenario II that sends the INVITE on 
+		    1 – The Marina.Rodeo is the Call Server in scenario II that sends the INVITE on 
 		        emergency call to a Routing Proxy provider. The Routing Proxy provider 
 		        implements the V2 interface.
 			</para>
 			<para>
-		    2 - The opensips is the Routing Proxy in scenario II. In this role the 
-		        opensips implements the V2 interface, directly queries the VPC for 
+		    2 - The Marina.Rodeo is the Routing Proxy in scenario II. In this role the 
+		        Marina.Rodeo implements the V2 interface, directly queries the VPC for 
 		        ESGWRI/ESQK, selects the proper ESGW given the ESGWRI and routes calls 
 		        Via the PSTN using the LRO if routing fails.
 			</para>
 			<para>
-		    3 - The opensips is the Redirect Proxy in scenario III that receives the 
+		    3 - The Marina.Rodeo is the Redirect Proxy in scenario III that receives the 
 		        INVITE on emergency call from Call Server. The Redirect Server obtains 
 		        the ESGWRI/ESQK from the VPC and sends in the SIP 3xx response to the 
 		        Call Server.
 			</para>	        
 			<para>
-		    4 - The opensips is the Call Server in scenario III that sends the INVITE on 
+		    4 - The Marina.Rodeo is the Call Server in scenario III that sends the INVITE on 
 		 		emergency call to a Redirect Server. The Redirect Server obtains the 
-		 		ESGWRI/ESQK from the VPC. It returns the call to the opensips with the 
-		 		ESGWRI/ESQK in the header contact in the SIP response. The opensips  
+		 		ESGWRI/ESQK from the VPC. It returns the call to the Marina.Rodeo with the 
+		 		ESGWRI/ESQK in the header contact in the SIP response. The Marina.Rodeo  
 		 		selects the proper ESGW based on the ESGWRI.
 			</para>
 		</para>
@@ -231,7 +231,7 @@ modparam("emergency", "proxy_role", 0))
 	<section id="param_url_vpc" xreflabel="url_vpc">
 		<title><varname>url_vpc</varname> (string)</title>
 		<para>
-   		The VPC url that opensips request the routing information to emergency 
+   		The VPC url that Marina.Rodeo request the routing information to emergency 
    		call. This VPC url has IP:Port format
 		</para>
 		<para>
@@ -252,7 +252,7 @@ modparam("emergency", "url_vpc", “192.168.0.103:5060”)
 	<section id="param_emergency_codes" xreflabel="emergency_codes">
 		<title><varname>emergency_codes</varname> (string)</title>
 		<para>
-   		Local emergency number. Opensips uses this number to recognize a emergency 
+   		Local emergency number. Marina.Rodeo uses this number to recognize a emergency 
    		call beyond the username default defined by RFC-5031 (urn:service.sos.).
    		Along with the number should be given a brief description about this code.        
    		The format is code_number-description. It can register multiple emergency 
@@ -320,7 +320,7 @@ modparam("emergency","contingency_hostname",“176.34,29.102:5060”)
 		<title><varname>emergency_call_server</varname> (string)</title>
 		<para>
 		The emergency_call_server is the url of the Routing Proxy/Redirect Server
-		that will handle  the emergency call in cenario II. Its is mandatory if Opensips 
+		that will handle  the emergency call in cenario II. Its is mandatory if Marina.Rodeo 
 		act as Call Server in scenario II (proxy_role = 1 and flag_third_enterprise = 0) 
 		or Call Server in scenario III (proxy_role = 2).
 		</para>
