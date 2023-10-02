@@ -3,14 +3,14 @@
  *
  * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -110,7 +110,7 @@ static const param_export_t params[] = {
  * Module parameter variables
  */
 static const dep_export_t deps = {
-	{ /* OpenSIPS module dependencies */
+	{ /* Marina.Rodeo module dependencies */
 		{ MOD_TYPE_SQLDB, NULL, DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -128,7 +128,7 @@ struct module_exports exports = {
 	MODULE_VERSION, /* module version */
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* OpenSIPS module dependencies */
+	&deps,           /* Marina.Rodeo module dependencies */
 	cmds, /* Exported functions */
 	NULL,      /* Exported async functions */
 	params, /* Exported parameters */
@@ -1032,7 +1032,7 @@ error :
 /* verify if the call is an emergency call
  *  - verify if the field uri has a urn standard for emergency call defined by RFC 5031
  *  - if it does not, then verify if se user field is one of the emengency_code in the database
- *    - if it is a code, the module checks if the host is from the opensips
+ *    - if it is a code, the module checks if the host is from the Marina.Rodeo
  or if there is a field Geolocation_routing = 'yes"
  */
 int is_emergency_call(struct sip_msg *msg) {
@@ -1074,7 +1074,7 @@ int is_emergency_call(struct sip_msg *msg) {
 						LM_DBG(" --- IT IS ONWER HOST  \n \n");
 						return 1;
 					} else {
-						// Host isn't same of opensips, Geolocation_Routing determine if routing the INVITE (RFC 6442)
+						// Host isn't same of Marina.Rodeo, Geolocation_Routing determine if routing the INVITE (RFC 6442)
 						int ret = check_geolocation_header(msg);
 						return ret;
 					}
@@ -1094,7 +1094,7 @@ error:
 
 
 /* treatment of an emergency call
- *   - verify the opensips configuration:
+ *   - verify the Marina.Rodeo configuration:
  *       - 0 : Call Server from scenario I or Routing Proxy scenario II
  *       - 1 : Call Server from scenario II
  *       - 2 : callserver from scenario III
@@ -1398,7 +1398,7 @@ int treat_routing(struct sip_msg* msg, struct esct *call_cell, char* callidHeade
 		goto error;
 	}
 
-	// opensips with call server role in scenario I or with routing proxy hole in scenario II
+	// Marina.Rodeo with call server role in scenario I or with routing proxy hole in scenario II
 	if ((proxy_role == 0) || (proxy_role == 1)){
 
 		if (range == 2) {
@@ -1458,7 +1458,7 @@ int treat_routing(struct sip_msg* msg, struct esct *call_cell, char* callidHeade
 		}
 
 	}else{
-		// opensips with redirect server role
+		// Marina.Rodeo with redirect server role
 		if (proxy_role == 4){
 			LM_DBG(" ---TRATA REDIRECT\n \n");
 			if(add_hdr_rpl(call_cell, msg)==-1)
@@ -1985,7 +1985,7 @@ int fill_parm_with_BS(char** var) {
 	return 1;
 }
 
-/* verify if the ruri is from the same opensips
+/* verify if the ruri is from the same Marina.Rodeo
 */
 int check_myself(struct sip_msg *msg) {
 	int ret = 0;
@@ -1995,7 +1995,7 @@ int check_myself(struct sip_msg *msg) {
 		LM_ERR("cannot parse msg URI\n");
 		return 0;
 	}
-	LM_DBG(" --- opensips host %.*s \n \n",
+	LM_DBG(" --- Marina.Rodeo host %.*s \n \n",
 		msg->parsed_uri.host.len, msg->parsed_uri.host.s);
 
 	ret=check_self(&msg->parsed_uri.host, 0, 0);
@@ -2086,7 +2086,7 @@ char* formatted_xml(struct sip_msg *msg, char* lie, char* callidHeader, char* cb
 	}
 
 	if (proxy_role == 1 && ((strlen(vsp_hostname) == 0) || (strlen(vsp_nena_id) == 0))){
-		LM_ERR("vsp_hostname and vsp_nena_id are mandatory when opensips role as routing proxy in scenario II\n");
+		LM_ERR("vsp_hostname and vsp_nena_id are mandatory when Marina.Rodeo role as routing proxy in scenario II\n");
 		return NULL;
 	}
 
