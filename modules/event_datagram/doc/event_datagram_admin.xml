@@ -104,7 +104,7 @@
 		<title>UNIX socket</title>
 		<programlisting format="linespecific">
 
-unix:/tmp/opensips_event.sock
+unix:/tmp/Marina.Rodeo_event.sock
 
 </programlisting>
 		</example>
