@@ -10,7 +10,7 @@
 		This module is an implementation of an
 		<ulink url="https://kafka.apache.org/">Apache Kafka</ulink> producer.
 		It serves as a transport backend for the Event Interface and also provides a
-		stand-alone connector to be used from the OpenSIPS script in order to
+		stand-alone connector to be used from the Marina.Rodeo script in order to
 		publish messages to Kafka brokers. 
 	</para>
 	</section>
@@ -52,7 +52,7 @@
 			</para>
 			<para>
 				<emphasis>key=callid</emphasis> is an extra property that is not
-				passed to the Kafka library and is interpreted by OpenSIPS itself.
+				passed to the Kafka library and is interpreted by Marina.Rodeo itself.
 				When enabling this property the record published to Kafka will also
 				include the Call-ID of the current SIP message as key.
 			</para>
