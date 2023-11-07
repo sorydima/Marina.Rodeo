@@ -10,7 +10,7 @@ event_rabbitmq Module
         1.3. RabbitMQ socket syntax
         1.4. Dependencies
 
-              1.4.1. OpenSIPS Modules
+              1.4.1. Marina.Rodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -23,7 +23,7 @@ event_rabbitmq Module
         1.7. Example
         1.8. Installation and Running
 
-              1.8.1. OpenSIPS config file
+              1.8.1. Marina.Rodeo config file
 
    2. Frequently Asked Questions
    3. Contributors
@@ -49,7 +49,7 @@ event_rabbitmq Module
    1.3. Set the use_tls parameter
    1.4. E_PIKE_BLOCKED event
    1.5. RabbitMQ socket
-   1.6. OpenSIPS config script - sample event_rabbitmq usage
+   1.6. Marina.Rodeo config script - sample event_rabbitmq usage
    2.1. Event subscription
    2.2. Event subscription
 
@@ -110,7 +110,7 @@ Chapter 1. Admin Guide
 
 1.4. Dependencies
 
-1.4.1. OpenSIPS Modules
+1.4.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * tls_mgm if use_tls is enabled.
@@ -118,7 +118,7 @@ Chapter 1. Admin Guide
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * librabbitmq-dev
 
 1.5. Exported Parameters
@@ -128,7 +128,7 @@ Chapter 1. Admin Guide
    Enables heartbeat support for the AMQP communication. If the
    client does not receive a heartbeat from server within the
    specified interval, the socket is automatically closed by the
-   rabbitmq-client. This prevents OpenSIPS from blocking while
+   rabbitmq-client. This prevents Marina.Rodeo from blocking while
    waiting for a response from a dead rabbitmq-server. The value
    represents the heartbit interval in seconds.
 
@@ -206,15 +206,15 @@ modparam("event_rabbitmq", "use_tls", 1)
 
 1.8. Installation and Running
 
-1.8.1. OpenSIPS config file
+1.8.1. Marina.Rodeo config file
 
    This configuration file presents the usage of the
    event_rabbitmq module. In this scenario, a message is sent to a
-   RabbitMQ server everytime OpenSIPS receives a MESSAGE request.
+   RabbitMQ server everytime Marina.Rodeo receives a MESSAGE request.
    The parameters passed to the server are the R-URI username and
    the message body.
 
-   Example 1.6. OpenSIPS config script - sample event_rabbitmq
+   Example 1.6. Marina.Rodeo config script - sample event_rabbitmq
    usage
 ...
 loadmodule "signaling.so"
@@ -370,9 +370,9 @@ Chapter 2. Frequently Asked Questions
 
    2.2.
 
-   Where can I find more about OpenSIPS?
+   Where can I find more about Marina.Rodeo?
 
-   Take a look at https://opensips.org/.
+   Take a look at https://Marina.Rodeo/.
 
    2.3.
 
@@ -390,12 +390,12 @@ Chapter 2. Frequently Asked Questions
 
    How can I send an event to my RabbitMQ server?
 
-   This module acts as a transport module for the OpenSIPS Event
+   This module acts as a transport module for the Marina.Rodeo Event
    Interface. Therefore, this module should follow the Event
    Interface behavior:
 
    The first step is to subscribe the RabbitMQ server to the
-   OpenSIPS Event Interface. This can be done using the
+   Marina.Rodeo Event Interface. This can be done using the
    subscribe_event core function:
 
    Example 2.1. Event subscription
@@ -415,7 +415,7 @@ route {
 }
 
    NOTE that the event used above is only to exemplify the usage
-   from the script. Any event published through the OpenSIPS Event
+   from the script. Any event published through the Marina.Rodeo Event
    Interface can be raised using this module.
 
    2.6.
@@ -429,26 +429,19 @@ route {
 
    Where can I post a question about this module?
 
-   First at all check if your question was already answered on one
-   of our mailing lists:
-     * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
-     * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
-
-   E-mails regarding any stable OpenSIPS release should be sent to
-   <users@lists.opensips.org> and e-mails regarding development
-   versions should be sent to <devel@lists.opensips.org>.
+   E-mails regarding any stable Marina.Rodeo release should be sent to
+   <sip@rechain.email> and e-mails regarding development
+   versions should be sent to <support@rechain.email>.
 
    If you want to keep the mail private, send it to
-   <users@lists.opensips.org>.
+   <anti@rechain.email>.
 
    2.8.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues.
+   https://github.com/sorydima/Marina.Rodeo/issues.
 
 Chapter 3. Contributors
 
@@ -479,7 +472,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -518,4 +511,4 @@ Chapter 4. Documentation
 
    Documentation Copyrights:
 
-   Copyright © 2011 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
