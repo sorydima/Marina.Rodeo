@@ -160,7 +160,7 @@ modparam("enum", "domain_suffix", "e1234.arpa.")
 
 Note
 
-   Currently OpenSIPS does not support tel URIs. This means that
+   Currently Marina.Rodeo does not support tel URIs. This means that
    at present tel_uri_params is appended as URI parameters to
    every URI.
 
@@ -384,7 +384,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
