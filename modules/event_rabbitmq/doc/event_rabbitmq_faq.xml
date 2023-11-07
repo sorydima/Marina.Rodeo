@@ -16,7 +16,7 @@
 	</qandaentry>
 	<qandaentry>
 		<question>
-		<para>Where can I find more about OpenSIPS?</para>
+		<para>Where can I find more about Marina.Rodeo?</para>
 		</question>
 		<answer>
 		<para>
@@ -50,13 +50,13 @@
 		</question>
 		<answer>
 			<para>
-				This module acts as a transport module for the OpenSIPS
+				This module acts as a transport module for the Marina.Rodeo
 				Event Interface. Therefore, this module should follow the
 				Event Interface behavior:
 			</para>
 			<para>
 				The first step is to subscribe the RabbitMQ server to
-				the OpenSIPS Event Interface. This can be done using the
+				the Marina.Rodeo Event Interface. This can be done using the
 				<emphasis>subscribe_event</emphasis> core function:
 			</para>
 
@@ -86,7 +86,7 @@ route {
 			<para>
 				NOTE that the event used above is only to exemplify the
 				usage from the script. Any event published through the
-				OpenSIPS Event Interface can be raised using this module.
+				Marina.Rodeo Event Interface can be raised using this module.
 			</para>
 
 		</answer>
