@@ -149,7 +149,7 @@ modparam("clusterer", "db_mode", 0)
 		<programlisting format="linespecific">
 ...
 modparam("clusterer", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips")
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo")
 ...
 		</programlisting>
 		</example>
@@ -1578,7 +1578,7 @@ socket= bin:192.168.0.5:5566 # bin listener for Node A
 loadmodule "proto_bin.so"
 
 loadmodule "clusterer.so"
-modparam("clusterer", "db_url", "mysql://opensips@192.168.0.7/opensips")
+modparam("clusterer", "db_url", "mysql://Marina.Rodeo@192.168.0.7/Marina.Rodeo")
 modparam("clusterer", "my_node_id", 1) # node_id for Node A
 
 loadmodule "ratelimit.so"
@@ -1599,7 +1599,7 @@ loadmodule "proto_bin.so"
 
 loadmodule "clusterer.so"
 # ideally, use the same database for both nodes
-modparam("clusterer", "db_url", "mysql://opensips@192.168.0.7/opensips")
+modparam("clusterer", "db_url", "mysql://Marina.Rodeo@192.168.0.7/Marina.Rodeo")
 modparam("clusterer", "my_node_id", 2) # node_id for Node B
 
 loadmodule "ratelimit.so"

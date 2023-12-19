@@ -15,7 +15,7 @@ tm Module
 
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -242,7 +242,7 @@ Chapter 1. Admin Guide
    sent out - changes in that route should reflect only on that
    branch.
 
-   There are several types of flags in OpenSIPS :
+   There are several types of flags in Marina.Rodeo :
      * message/transaction flags - they are visible everywhere in
        the transaction (in all routes and in all sequential
        replies/request).
@@ -386,7 +386,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * clusterer module, if the anycast scenario is enabled (see
@@ -395,7 +395,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -643,9 +643,9 @@ modparam("tm", "enable_stats", 0)
    A branch flag index to be used in script to mark the minor
    branches ( before t_relay() ).
 
-   A minor branch is a branch OpenSIPS will not wait to complete
+   A minor branch is a branch Marina.Rodeo will not wait to complete
    during parallel forking. So, if the rest of the branches are
-   negativly replied OpenSIPS will not wait for a final answer
+   negativly replied Marina.Rodeo will not wait for a final answer
    from the minor branch, but it will simply cancel it.
 
    Main applicability of minor branch is to fork a branch to a
@@ -731,7 +731,7 @@ modparam("tm", "cluster_param", "tid")
    This parameter should be used in an anycast setup, and
    specifies whether a CANCEL message received on a listener that
    is marked as anycast should be automatically handled, or should
-   get in the OpenSIPS script. If this parameter is enabled
+   get in the Marina.Rodeo script. If this parameter is enabled
    (default), CANCEL messages received on an anycast listener will
    never enter the script, thus making the script cleaner.
 
@@ -784,7 +784,7 @@ modparam("tm", "cluster_auto_cancel", no)
        CANCEL, trust and pass further the Reason header from the
        received CANCEL - shortly, will propagate the Reason
        header.
-     * allow-no-cancel - (old 0x10 flag) Allows OpenSIPS to
+     * allow-no-cancel - (old 0x10 flag) Allows Marina.Rodeo to
        inspect and follow the Content-Disposition "no-cancel"
        indication (if present). As per RFC3841, section 9.1, the
        TM module may be instructed not to cancel all ongoing
@@ -873,7 +873,7 @@ t_reply(404, "Use $rU not found");
    requests, a 100 Trying reply will be immediately sent, unless
    auto_100trying is disabled. Once a SIP transaction is created,
    calling t_newtran() for retransmitted requests will end the
-   OpenSIPS script execution, with the lastly sent reply being
+   Marina.Rodeo script execution, with the lastly sent reply being
    retransmitted upstream.
 
    This function can be used from REQUEST_ROUTE.
@@ -1104,8 +1104,8 @@ failure_route[1] {
    Example 1.34. t_on_reply usage
 ...
 route {
-        seturi("sip:bob@opensips.org");  # first branch
-        append_branch("sip:alice@opensips.org"); # second branch
+        seturi("sip:bob@Marina.Rodeo.org");  # first branch
+        append_branch("sip:alice@Marina.Rodeo.org"); # second branch
 
         t_on_reply("global"); # the "global" reply route
                               # is set the whole transaction
@@ -1388,9 +1388,9 @@ if (is_method("ACK|CANCEL") && !t_check_trans()) {
 1.4.23.  t_reply_by_callid(code, reason_phrase, [callid], [cseq])
 
    This function is used to send a reply to an existing INVITE
-   transaction. The usual use case is when OpenSIPS is used as an
+   transaction. The usual use case is when Marina.Rodeo is used as an
    UAS and when an INVITE is receveid, it is "parked" locally on
-   OpenSIPS by replying to it with “t_reply(180, "Ringing")” or
+   Marina.Rodeo by replying to it with “t_reply(180, "Ringing")” or
    “t_reply(183, "Session Progress")” and later we need to handle
    CANCEL or BYE for it and send '487 Request Terminated' to the
    original INVITE transaction.
@@ -1523,7 +1523,7 @@ _in(ip):$socket_in(port)\r\n");
        “Content-Type” and “Content-length” headers)
 
    MI FIFO Command Format:
-                opensips-cli -x mi t_uac_dlg method=INVITE ruri="sip:ali
+                Marina.Rodeo-cli -x mi t_uac_dlg method=INVITE ruri="sip:ali
 ce@127.0.0.1:7050" headers="From: sip:bobster@127.0.0.1:1337\r\nTo: sip:
 alice@127.0.0.1:7050\r\nContact: sip:bobster@127.0.0.1:1337\r\n"
 
@@ -1536,7 +1536,7 @@ alice@127.0.0.1:7050\r\nContact: sip:bobster@127.0.0.1:1337\r\n"
      * cseq - cseq of the INVITE request to be cancelled.
 
    MI FIFO Command Format:
-                opensips-cli -x mi t_uac_cancel "1-23454@127.0.0.1" "1 I
+                Marina.Rodeo-cli -x mi t_uac_cancel "1-23454@127.0.0.1" "1 I
 NVITE"
 
 1.6.3.  t_hash
@@ -1547,7 +1547,7 @@ NVITE"
      * none
 
    MI FIFO Command Format:
-                opensips-cli -x mi t_hash
+                Marina.Rodeo-cli -x mi t_hash
 
 1.6.4.  t_reply
 
@@ -1566,7 +1566,7 @@ NVITE"
        “Content-Type” and “Content-length” headers)
 
    MI FIFO Command Format:
-                opensips-cli -x mi t_reply 403 Forbidden 46961:127968763
+                Marina.Rodeo-cli -x mi t_reply 403 Forbidden 46961:127968763
 7 abcde .
 
 1.7. Exported Statistics
@@ -1686,7 +1686,7 @@ Chapter 3. Frequently Asked Questions
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues.
+   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
 
 Chapter 4. Contributors
 
@@ -1729,7 +1729,7 @@ Chapter 4. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1785,8 +1785,8 @@ Chapter 5. Documentation
    (@juha-h), Elena-Ramona Modroiu, Jan Janak (@janakj), Jiri
    Kuthan (@jiriatipteldotorg).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2005-2008 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005-2008 Voice Sistem SRL
 
-   Copyright © 2003 FhG FOKUS
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS

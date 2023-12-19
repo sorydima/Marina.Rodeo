@@ -7,7 +7,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para> 
-	The modules is an XCAP client for OpenSIPS that can be used by other modules.
+	The modules is an XCAP client for Marina.Rodeo that can be used by other modules.
 	It fetches XCAP elements, either documents or part of them, by sending 
 	HTTP GET requests. It also offers support for conditional queries.
 	It uses libcurl library as a client-side HTTP transfer library.
@@ -158,7 +158,7 @@ modparam("xcap_client", "query_period", 50)
 		</para>
         <programlisting  format="linespecific">
 ...
-opensips-cli -x mi refreshXcapDoc /xcap-root/resource-lists/users/eyebeam/buddies-resource-list.xml 8000
+Marina.Rodeo-cli -x mi refreshXcapDoc /xcap-root/resource-lists/users/eyebeam/buddies-resource-list.xml 8000
 ...
 		</programlisting>
 	</section>

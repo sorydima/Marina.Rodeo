@@ -150,7 +150,7 @@ param("proto_msrp", "tls_handshake_timeout", 200) # number of milliseconds
 		<para>
 		This checking is done only when comes to send SIP traffic via TLS and
 		it is applied only against connections that were created / initiated 
-		by OpenSIPS (as TLS client). Any accepte connection (as TLS server)
+		by Marina.Rodeo (as TLS client). Any accepte connection (as TLS server)
 		will automatically match (the extra test will be skipped).
 		</para>
 		<para>
@@ -263,7 +263,7 @@ modparam("proto_msrp", "trace_filter_route", "msrp_filter")
 route[msrp_filter] {
 	...
 	/* all connections opened from/by ip 1.1.1.1:8000 will be traced
-	   on interface 1.1.1.10:5060(opensips listener)
+	   on interface 1.1.1.10:5060(Marina.Rodeo listener)
 	   all the other connections won't be */
 	 if ( $si == "1.1.1.1" &amp;&amp; $sp == 8000 &amp;&amp;
 		$socket_in(ip) == "1.1.1.10"  &amp;&amp; $socket_in(port) == 5060)

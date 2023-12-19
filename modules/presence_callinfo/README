@@ -13,7 +13,7 @@ Presence_CallInfo Module
 
         1.3. Dependencies
 
-              1.3.1. OpenSIPS Modules
+              1.3.1. Marina.Rodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -57,7 +57,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   This module provides OpenSIPS support for shared call
+   This module provides Marina.Rodeo support for shared call
    appearances (SCA) as defined by BroadWorks SIP Access Side
    Extensions Interface specifications. The SCA mechanism is a
    fundamental building block for a variety of enhanced telephony
@@ -109,7 +109,7 @@ Chapter 1. Admin Guide
    rules. It assumes that publish requests are only issued by a
    third-party application and subscribe requests only by
    subscriber to call-info and line-seize events. Authorization
-   can thus be easily done by OpenSIPS configuration file before
+   can thus be easily done by Marina.Rodeo configuration file before
    calling handle_publish() and handle_subscribe() functions.
 
    To get better understanding on how the module works please take
@@ -162,10 +162,10 @@ alice@example  presence  bob@example  watcher@example
 1.2.2. Internal publishing
 
    In this mode, the module requires the "dialog" module to be
-   loaded into OpenSIPS. All the publishing will be automatically
+   loaded into Marina.Rodeo. All the publishing will be automatically
    done (the modules will exchange data directly via C API).
 
-   From presence perspective, the OpenSIPS script must be
+   From presence perspective, the Marina.Rodeo script must be
    configured to handle the SUBSCRIBE requests only (there is no
    need for PUBLISH handling as there is no SIP publishing in this
    mode). So be sure to use the "handle_subscribe()" function
@@ -189,7 +189,7 @@ alice@example  presence  bob@example  watcher@example
 
 1.3. Dependencies
 
-1.3.1. OpenSIPS Modules
+1.3.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * presence.
@@ -319,7 +319,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -351,6 +351,6 @@ Chapter 3. Documentation
    (@lemenkov), Liviu Chircu (@liviuchircu), Bogdan-Andrei Iancu
    (@bogdan-iancu), Ovidiu Sas (@ovidiusas).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2010-2013 VoIP Embedded, Inc.
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2010-2013 VoIP Embedded, Inc.

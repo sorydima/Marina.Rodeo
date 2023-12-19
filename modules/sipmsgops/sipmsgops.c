@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -314,7 +314,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	NULL,            /* OpenSIPS module dependencies */
+	NULL,            /* Marina.Rodeo module dependencies */
 	cmds,       /* exported functions */
 	0,          /* exported async functions */
 	0,          /* module parameters */
@@ -377,7 +377,7 @@ static int remove_hf(struct sip_msg* msg, int_str_t* rhf)
 
 	for (hf=msg->headers; hf; hf=hf->next) {
 		/* for well known header names str_hf->s will be set to NULL
-		   during parsing of opensips.cfg and str_hf->len contains
+		   during parsing of Marina.Rodeo.cfg and str_hf->len contains
 		   the header type */
 		if (!rhf->is_str)
 		{

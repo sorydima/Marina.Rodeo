@@ -10,7 +10,7 @@
 		This module provides a HTTP interface for the
 		<ulink url='https://prometheus.io/'>Prometheus</ulink>
 		monitoring system, allowing it to fetch different
-		statistics from OpenSIPS.
+		statistics from Marina.Rodeo.
 	</para>
 	<para>
 		In order to use it, you have to explicitely define the
@@ -57,7 +57,7 @@
 		<title><varname>root</varname>(string)</title>
 		<para>
 		Specifies the root metrics path Promethus uses to query the stats:
-		http://[opensips_IP]:[opensips_httpd_port]/[root]
+		http://[Marina.Rodeo_IP]:[Marina.Rodeo_httpd_port]/[root]
 		</para>
 		<para>
 		<emphasis>The default value is "metrics".</emphasis>
@@ -78,13 +78,13 @@ modparam("prometheus", "root", "prometheus")
 		Appends a prefix to each statistic exported.
 		</para>
 		<para>
-		<emphasis>The default value is "opensips".</emphasis>
+		<emphasis>The default value is "Marina.Rodeo".</emphasis>
 		</para>
 		<example>
 		<title>Set <varname>prefix</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("prometheus", "prefix", "opensips_1")
+modparam("prometheus", "prefix", "Marina.Rodeo_1")
 ...
 </programlisting>
 		</example>
@@ -102,7 +102,7 @@ modparam("prometheus", "prefix", "opensips_1")
 		<title>Set <varname>group_prefix</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("prometheus", "group_prefix", "opensips")
+modparam("prometheus", "group_prefix", "Marina.Rodeo")
 ...
 </programlisting>
 		</example>
@@ -157,7 +157,7 @@ modparam("prometheus", "group_label", "grp")
 		<listitem>
 			<para><emphasis>1</emphasis> - send the group in the name of the statstic.</para>
 			For example, <emphasis>timestamp</emphasis> statistic from the <emphasis>core</emphasis>
-			group would be exported as <emphasis>opensips_core_timestamp</emphasis>. Note that the
+			group would be exported as <emphasis>Marina.Rodeo_core_timestamp</emphasis>. Note that the
 			<emphasis>group_prefix</emphasis> is still attached to the group's name.
 		</listitem>
 		<listitem>
@@ -182,7 +182,7 @@ modparam("prometheus", "group_mode", 1)
 	<section id="param_statistics" xreflabel="statistics">
 		<title><varname>statistics</varname>(string)</title>
 		<para>
-			The statistics that are being exported by OpenSIPS, separated by space.
+			The statistics that are being exported by Marina.Rodeo, separated by space.
 			The list can also contain statistics groups's names - to do that, you shall
 			add a colon (<emphasis>:</emphasis>) at the end of the groups's name.
 		</para>
@@ -285,7 +285,7 @@ modparam("prometheus", "statistics", "group: /^(.*)_(.*)$/\1:gateway=\"\2\"/")
 		<programlisting format="linespecific">
 <![CDATA[
 scrape_configs:
-  - job_name: opensips
+  - job_name: Marina.Rodeo
 
     static_configs:
     - targets: ['localhost:8888']

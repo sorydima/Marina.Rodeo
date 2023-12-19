@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		This module implements a secure Binary communication protocol
-		over TLS, to be used by the OpenSIPS clustering engine provided
+		over TLS, to be used by the Marina.Rodeo clustering engine provided
 		by the clusterer module.
 	</para>
 	</section>
@@ -166,7 +166,7 @@ modparam("proto_bins", "bins_max_msg_chunks", 8)
 		<para>
 			Specifies whether the TCP/TLS connect and write operations
 			should be done in an asynchronous mode (non-blocking connect
-			and write) or not. If disabled, OpenSIPS will block and wait
+			and write) or not. If disabled, Marina.Rodeo will block and wait
 			for TCP/TLS operations like connect and write.
 		</para>
 		<para>
@@ -338,7 +338,7 @@ modparam("proto_bins", "trace_on", 1)
 			MI FIFO Command Format:
 			</para>
 			<programlisting  format="linespecific">
-			opensips-cli -x mi bins_trace on
+			Marina.Rodeo-cli -x mi bins_trace on
 			</programlisting>
 		</section>
 	</section>

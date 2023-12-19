@@ -21,11 +21,11 @@
 	<section>
 	<title>Statistic Groups</title>
 	<para>
-		Starting with OpenSIPS 2.3, statistics may be grouped by prefixing
+		Starting with Marina.Rodeo 2.3, statistics may be grouped by prefixing
 		their names with the name of the desired group, along with a colon
 		separator (e.g. <emphasis role='bold'>$stat(method:invite)</emphasis> or
 <emphasis role='bold'>update_stat("packets:$var(ptype)", "+1")</emphasis>).
-		In order for this to work, the groups must be defined prior to OpenSIPS startup
+		In order for this to work, the groups must be defined prior to Marina.Rodeo startup
 		using the <emphasis role='bold'><xref linkend="param_stat_groups"/></emphasis>
 		module parameter.
 	</para>
@@ -138,7 +138,7 @@ modparam("statistics", "variable", "active_calls/no_reset")
 		<title><varname>stat_groups</varname> (string)</title>
 		<para>
 		A comma-separated values string, specifying the statistic groups that
-		may be used throughout the OpenSIPS script. Groups cannot contain leading or
+		may be used throughout the Marina.Rodeo script. Groups cannot contain leading or
 		trailing whitespace characters.
 		</para>
 		<example>
@@ -437,7 +437,7 @@ update_stat_series("avg", "PDD", $var(pdd_ms));
 			If a searching group is not provided, the statistic is first
 			searched for in the core groups. If not found, search continues with
 			the "dynamic" group which, by default, holds all non-explicitly
-			grouped statistics which are not exported by the OpenSIPS core.
+			grouped statistics which are not exported by the Marina.Rodeo core.
 			</para>
 			<example>
 			<title><varname>$stat</varname> usage</title>

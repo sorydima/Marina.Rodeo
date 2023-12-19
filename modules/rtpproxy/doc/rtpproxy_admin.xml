@@ -144,7 +144,7 @@
 			</para>
 			<para>
 				The patched version can also be found at:
-				https://opensips.org/pub/rtpproxy/
+				https://Marina.Rodeo.org/pub/rtpproxy/
 			</para>
 	</para>
 	</section>
@@ -384,7 +384,7 @@ modparam("rtpproxy", "nortpproxy_str", "a=sdpmangled:yes\r\n")
 		<programlisting format="linespecific">
 ...
 modparam("rtpproxy", "db_url", 
-		"mysql://opensips:opensipsrw@192.168.2.132/opensips")
+		"mysql://Marina.Rodeo:Marina.Rodeorw@192.168.2.132/Marina.Rodeo")
 ...
 
 </programlisting>
@@ -1146,9 +1146,9 @@ xlog("RTP statistics for $ci: dropped=$(avp(stats)[4])\n");
 			<programlisting format="linespecific">
 ...
 ## disable a RTPProxy by URL only
-$ opensips-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0
+$ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0
 ## disable a RTPProxy by URL and set ID (3)
-$ opensips-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
+$ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
 ...
 			</programlisting>
 			</example>
@@ -1168,7 +1168,7 @@ $ opensips-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
 				<function moreinfo="none">rtpproxy_show</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi rtpproxy_show
+$ Marina.Rodeo-cli -x mi rtpproxy_show
 ...
 			</programlisting>
 			</example>
@@ -1190,7 +1190,7 @@ $ opensips-cli -x mi rtpproxy_show
 				<function moreinfo="none">rtpproxy_reload</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi rtpproxy_reload
+$ Marina.Rodeo-cli -x mi rtpproxy_reload
 ...
 			</programlisting>
 			</example>
@@ -1228,7 +1228,7 @@ $ opensips-cli -x mi rtpproxy_reload
 		</title>
 		<para>
 			This event is raised when a RTPProxy server sends a DTMF
-			notification to OpenSIPS. In order to catch RFC 2833/4733
+			notification to Marina.Rodeo. In order to catch RFC 2833/4733
 			DTMF events, you need to provide the <emphasis>d</emphasis>
 			flag to <emphasis>rtpproxy_offer()</emphasis>/
 			<emphasis>rtpproxy_answer()</emphasis>.

@@ -9,7 +9,7 @@ tls_wolfssl Module
         1.2. Dependencies
 
               1.2.1. Compilation
-              1.2.2. OpenSIPS Modules
+              1.2.2. Marina.Rodeo Modules
               1.2.3. External Libraries or Applications
 
    2. Frequently Asked Questions
@@ -51,7 +51,7 @@ Chapter 1. Admin Guide
      * automake.
      * libtool.
 
-1.2.2. OpenSIPS Modules
+1.2.2. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * None.
@@ -59,7 +59,7 @@ Chapter 1. Admin Guide
 1.2.3. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 Chapter 2. Frequently Asked Questions
@@ -67,16 +67,16 @@ Chapter 2. Frequently Asked Questions
    2.1.
 
    Why do I get the following error when compiling the module?
-    make[1]: Entering directory '/usr/local/src/opensips/modules/tls_wol
+    make[1]: Entering directory '/usr/local/src/Marina.Rodeo/modules/tls_wol
 fssl'
     /bin/sh: 3: ./autogen.sh: not found
     env: './configure': No such file or directory
     make[1]: *** [Makefile:15: lib/lib/libwolfssl.a] Error 127
-    make[1]: Leaving directory '/usr/local/src/opensips/modules/tls_wolf
+    make[1]: Leaving directory '/usr/local/src/Marina.Rodeo/modules/tls_wolf
 ssl'
     make: *** [Makefile:197: modules] Error 2
 
-   If you obtained the OpenSIPS sources by cloning the repository
+   If you obtained the Marina.Rodeo sources by cloning the repository
    from Github, without using the --recursive option for the git
    clone command, you did not properly fetch the wolfSSL library
    code, which is included as a git submodule pointing to the
@@ -106,7 +106,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -133,6 +133,6 @@ Chapter 4. Documentation
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2021 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2021 www.Marina.Rodeo-solutions.com

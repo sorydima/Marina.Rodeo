@@ -12,7 +12,7 @@ TLS_MGM module
         1.5. Defining TLS domains
         1.6. Dependencies
 
-              1.6.1. OpenSIPS Modules
+              1.6.1. Marina.Rodeo Modules
               1.6.2. Dependencies of external libraries
 
         1.7. Exported Functions
@@ -24,7 +24,7 @@ TLS_MGM module
               1.8.1. tls_list
               1.8.2. tls_reload
 
-        1.9. OpenSIPS Exported parameters
+        1.9. Marina.Rodeo Exported parameters
 
               1.9.1. listen=interface
               1.9.2. tls_library (string)
@@ -91,7 +91,7 @@ TLS_MGM module
               1.10.22. $tls_peer_notBefore
               1.10.23. $tls_peer_notAfter
 
-        1.11. OpenSIPS with TLS - script example
+        1.11. Marina.Rodeo with TLS - script example
         1.12. Debug TLS connections
 
    2. Developer Guide
@@ -207,7 +207,7 @@ Chapter 1. Admin Guide
    module parameters (script level) and via an SQL table.
 
    A script example which details this module's usage can be found
-   in Section 1.11, “OpenSIPS with TLS - script example”.
+   in Section 1.11, “Marina.Rodeo with TLS - script example”.
 
 1.3. TLS libraries
 
@@ -216,7 +216,7 @@ Chapter 1. Admin Guide
    by openSSL or wolfSSL libraries) and transport protocol modules
    like proto_tls or proto_wss. The tls_mgm module transparently
    exposes the TLS operations implemented by tls_openssl and
-   tls_wolfssl modules to the higher-level OpenSIPS transport
+   tls_wolfssl modules to the higher-level Marina.Rodeo transport
    modules.
 
    The TLS library selection ca be configured through the
@@ -237,7 +237,7 @@ Chapter 1. Admin Guide
    multiple socket=tls:ip:port entries in the config file).
 
    For example, TLS domains can be used in virtual hosting
-   scenarios with TLS. OpenSIPS offers SIP service for multiple
+   scenarios with TLS. Marina.Rodeo offers SIP service for multiple
    domains, e.g. atlanta.com and biloxi.com. Altough both domains
    will be hosted on a single SIP proxy, the SIP proxy needs 2
    certificates: One for atlanta.com and one for biloxi.com. For
@@ -293,7 +293,7 @@ Chapter 1. Admin Guide
 
 1.6. Dependencies
 
-1.6.1. OpenSIPS Modules
+1.6.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * tls_openssl or tls_wolfssl, unless tls_library is set to
@@ -302,7 +302,7 @@ Chapter 1. Admin Guide
 1.6.2. Dependencies of external libraries
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.7. Exported Functions
@@ -336,10 +336,10 @@ if (is_peer_verified()) {
    previous DB defined domains are discarded but the script
    defined domains are preserved.
 
-1.9. OpenSIPS Exported parameters
+1.9. Marina.Rodeo Exported parameters
 
-   All these parameters can be used from the opensips.cfg file, to
-   configure the behavior of OpenSIPS-TLS.
+   All these parameters can be used from the Marina.Rodeo.cfg file, to
+   configure the behavior of Marina.Rodeo-TLS.
 
 1.9.1. listen=interface
 
@@ -356,7 +356,7 @@ socket= tls:1.2.3.4:5061
 
    Selects which TLS library to use. Possible values are:
      * auto - auto-detect which TLS library module (tls_openssl or
-       tls_wolfssl) was loaded. OpenSIPS will not start if no
+       tls_wolfssl) was loaded. Marina.Rodeo will not start if no
        module, or both modules are found.
      * none - do not use any TLS library; this is useful when the
        tls_mgm module is required only for the management of TLS
@@ -379,14 +379,14 @@ modparam("tls_mgm", "tls_library", "none")
 
    Sets the TLS protocol. The domain part represents the name of
    the TLS domain. The supported TLS methods are:
-     * TLSv1_3 - means OpenSIPS will accept only TLSv1.3
+     * TLSv1_3 - means Marina.Rodeo will accept only TLSv1.3
        connections. This version is only available starting with
        OpenSSL 1.1.1 version.
-     * TLSv1_2 - means OpenSIPS will accept only TLSv1.2
+     * TLSv1_2 - means Marina.Rodeo will accept only TLSv1.2
        connections (rfc3261 conformant).
-     * TLSv1 - means OpenSIPS will accept only TLSv1 connections
+     * TLSv1 - means Marina.Rodeo will accept only TLSv1 connections
        (rfc3261 conformant).
-     * SSLv23 - means OpenSIPS will accept any of the above
+     * SSLv23 - means Marina.Rodeo will accept any of the above
        methods, but the initial SSL hello must be v2 (in the
        initial hello all the supported protocols are advertised
        enabling switching to a higher and more secure version).
@@ -410,7 +410,7 @@ Warning
 
    If you want RFC3261 conformance and all your clients support
    TLSv1 (or you are planning to use encrypted "tunnels" only
-   between different OpenSIPS proxies) use TLSv1. If you want to
+   between different Marina.Rodeo proxies) use TLSv1. If you want to
    support older clients use SSLv23 (in fact most of the
    applications with SSL support use the SSLv23 method).
 
@@ -430,7 +430,7 @@ modparam("tls_mgm", "tls_method", "[dom]-")              # all supported
 
 1.9.4. certificate ([domain](string)
 
-   Public certificate file for OpenSIPS. It will be used as
+   Public certificate file for Marina.Rodeo. It will be used as
    server-side certificate for incoming TLS connections, and as a
    client-side certificate for outgoing TLS connections. The
    domain part represents the name of the TLS domain.
@@ -439,7 +439,7 @@ modparam("tls_mgm", "tls_method", "[dom]-")              # all supported
 
    Example 1.6. Set certificate variable
 ...
-modparam("tls_mgm", "certificate", "[dom]/mycerts/certs/opensips_server_
+modparam("tls_mgm", "certificate", "[dom]/mycerts/certs/Marina.Rodeo_server_
 cert.pem")
 ...
 
@@ -639,7 +639,7 @@ modparam("tls_mgm", "client_sip_domain_avp", "sip_match_dom")
    TLS connection to the database for the tls_mgm module itself.
 
    Example 1.18. Usage of db_url block
-modparam("tls_mgm", "db_url", "mysql://root:admin@localhost/opensips")
+modparam("tls_mgm", "db_url", "mysql://root:admin@localhost/Marina.Rodeo")
 
 1.9.18.  db_table (string)
 
@@ -1068,14 +1068,14 @@ route{
    $tls_peer_notAfter - Returns the notAfter validity date of the
    peer's certificate. String type.
 
-1.11. OpenSIPS with TLS - script example
+1.11. Marina.Rodeo with TLS - script example
 
    IMPORTANT: The TLS support is based on TCP, and for allowing
-   OpenSIPS to use TCP, it must be started in multi-process mode.
+   Marina.Rodeo to use TCP, it must be started in multi-process mode.
    So, there is a must to have the "fork" parameter set to "yes":
 
    NOTE: Since the TLS engine is quite memory consuming, increase
-   the used memory by the run time parameter "-m" (see OpenSIPS -h
+   the used memory by the run time parameter "-m" (see Marina.Rodeo -h
    for more details).
      * fork = yes
 
@@ -1100,7 +1100,7 @@ route{
   #TLS specific settings
   loadmodule "tls_mgm.so"
 
-  modparam("tls_mgm", "certificate", "/path/opensipsX_cert.pem")
+  modparam("tls_mgm", "certificate", "/path/Marina.RodeoX_cert.pem")
   modparam("tls_mgm", "private_key", "/path/privkey.pem")
   modparam("tls_mgm", "ca_list", "/path/calist.pem")
   modparam("tls_mgm", "ca_list", "/path/calist.pem")
@@ -1254,7 +1254,7 @@ route{
 1.12. Debug TLS connections
 
    If you want to debug TLS connections, put the following log
-   statements into your OpenSIPS.cfg. This will dump all available
+   statements into your Marina.Rodeo.cfg. This will dump all available
    TLS pseudo variables.
 
    Example 1.40. Example of TLS logging
@@ -1383,7 +1383,7 @@ Chapter 2. Developer Guide
 
 2.2. TLS_CONFIG
 
-   It contains configuration variables for OpenSIPS's TLS
+   It contains configuration variables for Marina.Rodeo's TLS
    (timeouts, file paths, etc).
 
 2.3. TLS_INIT
@@ -1428,7 +1428,7 @@ Chapter 2. Developer Guide
 
    Wrapper functions around the shm_* functions. OpenSSL uses
    non-shared memory to create its objects, thus it would not work
-   in OpenSIPS. By creating these wrappers and configuring OpenSSL
+   in Marina.Rodeo. By creating these wrappers and configuring OpenSSL
    to use them instead of its default memory functions, we have
    all OpenSSL objects in shared memory, ready to use.
 
@@ -1547,7 +1547,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1588,14 +1588,14 @@ Chapter 4. Documentation
    (@spacetourist), Peter Lemenkov (@lemenkov), Eseanu Marius
    Cristian (@eseanucristian).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2015 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2015 www.Marina.Rodeo-solutions.com
 
-   Copyright © 2013 Secusmart GmbH
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2013 Secusmart GmbH
 
-   Copyright © 2006 enum.at
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006 enum.at
 
-   Copyright © 2005 Cesc Santasusana
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Cesc Santasusana
 
-   Copyright © 2005 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Voice Sistem SRL

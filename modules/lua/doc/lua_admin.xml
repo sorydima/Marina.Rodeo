@@ -7,20 +7,20 @@
 	<section id="overview" xreflabel="Overview">
 		<title>Overview</title>
 		<para>
-   The time needed when writing a new OpenSIPS module
+   The time needed when writing a new Marina.Rodeo module
    unfortunately is quite high, while the options provided by the
    configuration file are limited to the features implemented in
    the modules.
 		</para>
 		<para>
    With this Lua module, you can easily implement your own
-   OpenSIPS extensions in Lua.
+   Marina.Rodeo extensions in Lua.
 		</para>
 	</section>
 	<section>
     <title>Installing the module</title>
     <para>
-    This Lua module is loaded in opensips.cfg (just like all the
+    This Lua module is loaded in Marina.Rodeo.cfg (just like all the
     other modules) with loadmodule("/path/to/lua.so");.
     </para>
     <para>
@@ -33,9 +33,9 @@
     <title>Using the module</title>
     <para>
     With the Lua module, you can access to lua function on the
-    OpenSIPS side. You need to define a file to load and call
+    Marina.Rodeo side. You need to define a file to load and call
     a function from it. Write a function "mongo_alias" and then
-    write in your opensips.cfg <programlisting format="linespecific">
+    write in your Marina.Rodeo.cfg <programlisting format="linespecific">
 ...
 if (lua_exec("mongo_alias")) {
 	...
@@ -43,7 +43,7 @@ if (lua_exec("mongo_alias")) {
 ...</programlisting>
     </para>
     <para>
-    On the Lua side, you have access to opensips functions and
+    On the Lua side, you have access to Marina.Rodeo functions and
     variables (AVP, pseudoVar, ...). Read the documentation below
     for further informations.
     </para>
@@ -51,7 +51,7 @@ if (lua_exec("mongo_alias")) {
   <section id="dependencies" xreflabel="Dependencies">
     <title>Dependencies</title>
     <section>
-      <title>OpenSIPS Modules</title>
+      <title>Marina.Rodeo Modules</title>
       <para>
       None ;-)
       </para>
@@ -60,7 +60,7 @@ if (lua_exec("mongo_alias")) {
       <title>External Libraries or Applications</title>
       <para>
       The following libraries or applications must be installed
-      before running OpenSIPS with this module loaded:
+      before running Marina.Rodeo with this module loaded:
         <itemizedlist>      
           <listitem><para>Lua 5.1.x or later</para></listitem>
           <listitem><para>memcached</para></listitem>
@@ -102,13 +102,13 @@ if (lua_exec("mongo_alias")) {
       "use" as many Lua module as necessary.
       </para>
       <para>
-      The default value is "/etc/opensips/opensips.lua"
+      The default value is "/etc/Marina.Rodeo/Marina.Rodeo.lua"
       </para>
       <example>
         <title>Set luafilename parameter</title>
         <programlisting format="linespecific">
 ...
-modparam("lua", "luafilename", "/etc/opensips/opensips.lua")
+modparam("lua", "luafilename", "/etc/Marina.Rodeo/Marina.Rodeo.lua")
 ...
         </programlisting>
       </example>
@@ -135,7 +135,7 @@ modparam("lua", "luafilename", "/etc/opensips/opensips.lua")
       Change the default memory allocator for the lua module.
       Possible values are :
         <itemizedlist>
-          <listitem><para>opensips (default)</para></listitem>
+          <listitem><para>Marina.Rodeo (default)</para></listitem>
           <listitem><para>malloc</para></listitem>
         </itemizedlist>
       </para>
@@ -199,7 +199,7 @@ if (lua_exec("mongo_alias")) {
     </itemizedlist>
     <para>MI FIFO Command Format:</para>
   <programlisting  format="linespecific">
-  opensips-cli -x mi watch
+  Marina.Rodeo-cli -x mi watch
   </programlisting>
   </section>
 

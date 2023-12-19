@@ -10,7 +10,7 @@ lua Module
         1.3. Using the module
         1.4. Dependencies
 
-              1.4.1. OpenSIPS Modules
+              1.4.1. Marina.Rodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -29,7 +29,7 @@ lua Module
 
               1.7.1. watch
 
-   2. OpenSIPS Lua API
+   2. Marina.Rodeo Lua API
 
         2.1. Available functions
 
@@ -87,17 +87,17 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The time needed when writing a new OpenSIPS module
+   The time needed when writing a new Marina.Rodeo module
    unfortunately is quite high, while the options provided by the
    configuration file are limited to the features implemented in
    the modules.
 
    With this Lua module, you can easily implement your own
-   OpenSIPS extensions in Lua.
+   Marina.Rodeo extensions in Lua.
 
 1.2. Installing the module
 
-   This Lua module is loaded in opensips.cfg (just like all the
+   This Lua module is loaded in Marina.Rodeo.cfg (just like all the
    other modules) with loadmodule("/path/to/lua.so");.
 
    For the Lua module to compile, you need a recent version of Lua
@@ -107,29 +107,29 @@ Chapter 1. Admin Guide
 1.3. Using the module
 
    With the Lua module, you can access to lua function on the
-   OpenSIPS side. You need to define a file to load and call a
+   Marina.Rodeo side. You need to define a file to load and call a
    function from it. Write a function "mongo_alias" and then write
-   in your opensips.cfg
+   in your Marina.Rodeo.cfg
 ...
 if (lua_exec("mongo_alias")) {
         ...
 }
 ...
 
-   On the Lua side, you have access to opensips functions and
+   On the Lua side, you have access to Marina.Rodeo functions and
    variables (AVP, pseudoVar, ...). Read the documentation below
    for further informations.
 
 1.4. Dependencies
 
-1.4.1. OpenSIPS Modules
+1.4.1. Marina.Rodeo Modules
 
    None ;-)
 
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * Lua 5.1.x or later
      * memcached
 
@@ -159,11 +159,11 @@ if (lua_exec("mongo_alias")) {
    only, but it may include an arbitary number of functions and
    "use" as many Lua module as necessary.
 
-   The default value is "/etc/opensips/opensips.lua"
+   The default value is "/etc/Marina.Rodeo/Marina.Rodeo.lua"
 
    Example 1.1. Set luafilename parameter
 ...
-modparam("lua", "luafilename", "/etc/opensips/opensips.lua")
+modparam("lua", "luafilename", "/etc/Marina.Rodeo/Marina.Rodeo.lua")
 ...
 
 1.5.2. lua_auto_reload (int)
@@ -181,7 +181,7 @@ modparam("lua", "luafilename", "/etc/opensips/opensips.lua")
 
    Change the default memory allocator for the lua module.
    Possible values are :
-     * opensips (default)
+     * Marina.Rodeo (default)
      * malloc
 
 1.6. Exported Functions
@@ -219,13 +219,13 @@ if (lua_exec("mongo_alias")) {
      * extension (optional) - required if action is provided
 
    MI FIFO Command Format:
-  opensips-cli -x mi watch
+  Marina.Rodeo-cli -x mi watch
 
-Chapter 2. OpenSIPS Lua API
+Chapter 2. Marina.Rodeo Lua API
 
 2.1. Available functions
 
-   This module provides access to a limited number of OpenSIPS
+   This module provides access to a limited number of Marina.Rodeo
    core functions.
 
 2.1.1. xdbg(message)
@@ -234,7 +234,7 @@ Chapter 2. OpenSIPS Lua API
 
 2.1.2. xlog([level],message)
 
-   Logs the message with OpenSIPS's logging facility. The logging
+   Logs the message with Marina.Rodeo's logging facility. The logging
    level is one of the following:
      * ALERT
      * CRIT
@@ -272,7 +272,7 @@ Chapter 2. OpenSIPS Lua API
 2.1.9. isMyself(host, port)
 
    Test if the host and optionally the port represent one of the
-   addresses that OpenSIPS listens on.
+   addresses that Marina.Rodeo listens on.
 
 2.1.10. grepSockInfo(host, port)
 
@@ -376,7 +376,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -410,6 +410,6 @@ Chapter 4. Documentation
    (@liviuchircu), Vlad Paiu (@vladpaiu), Arnaud Chong + Eric
    Gouyer.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2006-2011 Arnaud Chong, Eric Gouyer
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006-2011 Arnaud Chong, Eric Gouyer

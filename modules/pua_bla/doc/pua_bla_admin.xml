@@ -67,7 +67,7 @@
 		<title>Set <varname>default_domain</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_bla", "default_domain", "opensips.org")
+modparam("pua_bla", "default_domain", "Marina.Rodeo.org")
 ...
 </programlisting>
 		</example>
@@ -107,7 +107,7 @@ modparam("pua_bla", "header_name", "Sender")
 		<title>Set <varname>outbound_proxy</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_bla", "outbound_proxy", "sip:proxy@opensips.org")
+modparam("pua_bla", "outbound_proxy", "sip:proxy@Marina.Rodeo.org")
 ...
 </programlisting>
 		</example>
@@ -142,7 +142,7 @@ modparam("pua_bla", "server_address", "sip:bla@160.34.23.12")
 		<title>Set <varname>presence_server</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_bla", "presence_server", "sip:pa@opensips.org")
+modparam("pua_bla", "presence_server", "sip:pa@Marina.Rodeo.org")
 ...
 </programlisting>
 		</example>
@@ -168,7 +168,7 @@ modparam("pua_bla", "presence_server", "sip:pa@opensips.org")
 		<title><function>bla_set_flag</function> usage</title>
 	<programlisting format="linespecific">
 ...
-if(is_method("REGISTER") &amp;&amp; $tu=~"bla_aor@opensips.org") 
+if(is_method("REGISTER") &amp;&amp; $tu=~"bla_aor@Marina.Rodeo.org") 
 	bla_set_flag();		
 ...
 </programlisting>
@@ -191,7 +191,7 @@ if(is_method("REGISTER") &amp;&amp; $tu=~"bla_aor@opensips.org")
 		<title><function>bla_handle_notify</function> usage</title>
 	<programlisting format="linespecific">
 ...
-if(is_method("NOTIFY") &amp;&amp; $tu=~"bla_aor@opensips.org") 
+if(is_method("NOTIFY") &amp;&amp; $tu=~"bla_aor@Marina.Rodeo.org") 
 {
 		if( bla_handle_notify() ) 
 			t_reply(200, "OK");

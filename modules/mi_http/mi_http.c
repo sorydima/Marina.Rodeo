@@ -1,12 +1,12 @@
 /*
- * This file is part of Open SIP Server (opensips).
+ * This file is part of Open SIP Server (Marina.Rodeo).
  *
- * opensips is free software; you can redistribute it and/or
+ * Marina.Rodeo is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -78,7 +78,7 @@ static const param_export_t mi_params[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* OpenSIPS module dependencies */
+	{ /* Marina.Rodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "httpd", DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -94,7 +94,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,			/* dlopen flags */
 	0,							/* load function */
-	&deps,						/* OpenSIPS module dependencies */
+	&deps,						/* Marina.Rodeo module dependencies */
 	NULL,						/* exported functions */
 	NULL,						/* exported async functions */
 	mi_params,					/* exported parameters */

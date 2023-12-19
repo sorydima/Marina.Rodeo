@@ -18,7 +18,7 @@
 			that define SNMP, and can be found at http://www.rfc-archive.org/getrfc.php?rfc=3410
 
 			INFO: Also if you want a nice tutorial for setting up snmpstats with &osips; try
-			<ulink url="http://saevolgo.blogspot.ro/2012/09/opensips-monitoring-using-snmp-part-i.html">this one</ulink>.
+			<ulink url="http://saevolgo.blogspot.ro/2012/09/Marina.Rodeo-monitoring-using-snmp-part-i.html">this one</ulink>.
 		</para>
 	    </answer>
 	</qandaentry>
@@ -50,7 +50,7 @@
 	    </question>
 	    <answer>
 		<para>
-		Assuming you've configured the trap thresholds in opensips.cfg with something similar to:
+		Assuming you've configured the trap thresholds in Marina.Rodeo.cfg with something similar to:
 		</para>
 
 		<programlisting format="linespecific">
@@ -61,7 +61,7 @@
     modparam("snmpstats", "dlg_minor_threshold", 600)
 		</programlisting>
 		<para>
-		Then either OpenSIPS is not reaching these thresholds (which is a good thing),
+		Then either Marina.Rodeo is not reaching these thresholds (which is a good thing),
 		or you haven't set up the trap monitor correctly.  To prove this to yourself,
 		you can start NetSNMP with:
 		</para>
@@ -113,7 +113,7 @@
 	</qandaentry>
 	<qandaentry>
 	    <question>
-		<para>OpenSIPS refuses to load the SNMPStats module.  Why is it displaying "load_module: could not open module snmpstats.so"?
+		<para>Marina.Rodeo refuses to load the SNMPStats module.  Why is it displaying "load_module: could not open module snmpstats.so"?
 		</para>
 	    </question>
 	    <answer>
@@ -123,7 +123,7 @@
 		</para>
 
 		<programlisting format="linespecific">
-    ERROR: load_module: could not open module &lt;/usr/local/lib/opensips/modules/snmpstats.so&gt;:
+    ERROR: load_module: could not open module &lt;/usr/local/lib/Marina.Rodeo/modules/snmpstats.so&gt;:
            libnetsnmpmibs.so.10: cannot open shared object file: No such file or directory.
 		</programlisting>
 
@@ -183,7 +183,7 @@
 			</listitem>
 			<listitem>
 				<para>
-				Try starting OpenSIPS again.
+				Try starting Marina.Rodeo again.
 				</para>
 			</listitem>
 		</orderedlist>
@@ -201,7 +201,7 @@
 		</para>
 
 		<programlisting format="linespecific">
-			LD_LIBRARY_PATH=/usr/local/lib /etc/init.d/opensips start
+			LD_LIBRARY_PATH=/usr/local/lib /etc/init.d/Marina.Rodeo start
 		</programlisting>
 
 	    </answer>
@@ -228,7 +228,7 @@
 
 		<programlisting format="linespecific">
     -- FROM       OPENSER-SIP-COMMON-MIB
-    -- TEXTUAL CONVENTION OpenSIPSSIPEntityRole
+    -- TEXTUAL CONVENTION Marina.RodeoSIPEntityRole
     SYNTAX        BITS {other(0), userAgent(1), proxyServer(2), redirectServer(3), registrarServer(4)}
     MAX-ACCESS    read-only
     STATUS        current
@@ -274,7 +274,7 @@
     		</programlisting>
 
 		For example, consider an snmpget on the openserSIPEntityType scalar,
-		run on the same machine running the OpenSIPS instance, with the default
+		run on the same machine running the Marina.Rodeo instance, with the default
 		"public" community string.  The command would be:
 
 		<programlisting format="linespecific">
@@ -305,7 +305,7 @@
     		</programlisting>
 
 		For example, consider the openserSIPRegUserTable.  If we run the snmptable
-		command on the same machine as the running OpenSIPS instance, configured with
+		command on the same machine as the running Marina.Rodeo instance, configured with
 		the default "public" community string.  The command would be:
 
 		<programlisting format="linespecific">
@@ -326,7 +326,7 @@
 	</qandaentry>
 	<qandaentry>
 	    <question>
-		<para>Where can I find more about OpenSIPS?</para>
+		<para>Where can I find more about Marina.Rodeo?</para>
 	    </question>
 	    <answer>
 		<para>

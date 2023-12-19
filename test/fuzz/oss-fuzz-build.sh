@@ -1,6 +1,6 @@
 #!/bin/bash -eu
-# Copyright 2022 OpenSIPS Solutions
-# Copyright 2021 Google LLC
+# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 2022 Marina.Rodeo Solutions
+# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -49,12 +49,12 @@ ln -sf `pwd`/test/fuzz/fuzz_*.c ./parser/
 
 ${MAKE} static
 
-rm -f main.o libopensips.a
-ar -cr libopensips.a `find . -name "*.o" | grep -v '/fuzz_.*.o$'`
+rm -f main.o libMarina.Rodeo.a
+ar -cr libMarina.Rodeo.a `find . -name "*.o" | grep -v '/fuzz_.*.o$'`
 
 for fuzn in msg_parser uri_parser csv_parser core_funcs
 do
-  $CC $CFLAGS $LIB_FUZZING_ENGINE ./parser/fuzz_${fuzn}.o libopensips.a  ${LIBS} -o $OUT/fuzz_${fuzn}
+  $CC $CFLAGS $LIB_FUZZING_ENGINE ./parser/fuzz_${fuzn}.o libMarina.Rodeo.a  ${LIBS} -o $OUT/fuzz_${fuzn}
   if [ -e test/fuzz/fuzz_${fuzn}.dict ]
   then
     cp test/fuzz/fuzz_${fuzn}.dict $OUT

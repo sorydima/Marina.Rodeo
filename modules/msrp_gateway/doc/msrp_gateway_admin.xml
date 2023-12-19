@@ -260,7 +260,7 @@ if (is_method("MESSAGE")) {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi msrp_gw_list_sessions
+Marina.Rodeo-cli -x mi msrp_gw_list_sessions
 		</programlisting>
 		</section>
 
@@ -285,7 +285,7 @@ opensips-cli -x mi msrp_gw_list_sessions
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi msrp_gw_end_session alice@opensips.org-bob@opensips.org
+Marina.Rodeo-cli -x mi msrp_gw_end_session alice@Marina.Rodeo.org-bob@Marina.Rodeo.org
 		</programlisting>
 		</section>
 

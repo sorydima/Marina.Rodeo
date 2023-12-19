@@ -127,11 +127,11 @@ modparam("db_unixodbc", "use_escape_common", 1)
 	<section>
 	<title>Configuring and Running</title>
 	<para>
-	In the opensips.conf file, add the line:
+	In the Marina.Rodeo.conf file, add the line:
 	</para>
 	<programlisting format="linespecific">
 ....
-loadmodule "/usr/local/lib/opensips/modules/db_unixodbc.so"
+loadmodule "/usr/local/lib/Marina.Rodeo/modules/db_unixodbc.so"
 ....
 </programlisting>
 	<para>
@@ -139,8 +139,8 @@ loadmodule "/usr/local/lib/opensips/modules/db_unixodbc.so"
 	</para>
 	<programlisting format="linespecific">
 ....
-loadmodule "/usr/local/lib/opensips/modules/auth.so"
-loadmodule "/usr/local/lib/opensips/modules/auth_db.so"
+loadmodule "/usr/local/lib/Marina.Rodeo/modules/auth.so"
+loadmodule "/usr/local/lib/Marina.Rodeo/modules/auth_db.so"
 modparam("usrloc", "db_mode", 2)
 modparam("auth_db", "calculate_ha1", yes)
 modparam("auth_db", "password_column", "password")
@@ -153,7 +153,7 @@ modparam("auth_db", "password_column", "password")
 	<programlisting format="linespecific">
 ....
 modparam("usrloc|auth_db", "db_url", 
-    "unixodbc://opensips:opensipsrw@localhost/my_dsn")
+    "unixodbc://Marina.Rodeo:Marina.Rodeorw@localhost/my_dsn")
 ....
 </programlisting>
 	<para>

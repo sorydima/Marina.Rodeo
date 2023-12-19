@@ -1,7 +1,7 @@
 /*
- * opensips osp module.
+ * Marina.Rodeo osp module.
  *
- * This module enables opensips to communicate with an Open Settlement
+ * This module enables Marina.Rodeo to communicate with an Open Settlement
  * Protocol (OSP) server.  The Open Settlement Protocol is an ETSI
  * defined standard for Inter-Domain VoIP pricing, authorization
  * and usage exchange.  The technical specifications for OSP
@@ -9,16 +9,16 @@
  *
  * Uli Abend was the original contributor to this module.
  *
- * Copyright (C) 2001-2005 Fhg Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2005 Fhg Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -74,7 +74,7 @@
 #define OSP_REPORT_SNID         (1<<0)
 #define OSP_REPORT_DNID         (1<<1)
 
-#define OSP_OPENSIPS            "opensips"
+#define OSP_Marina.Rodeo            "Marina.Rodeo"
 
 extern int _osp_report_nid;
 extern int _osp_origdest_avpid;
@@ -426,7 +426,7 @@ static int ospReportUsageFromCookie(
     }
 
     /* RoleInfo must be set before BuildUsageFromScratch */
-    OSPPTransactionSetRoleInfo(transaction, OSPC_RSTATE_STOP, OSPC_RFORMAT_OSP, OSPC_RVENDOR_OPENSIPS);
+    OSPPTransactionSetRoleInfo(transaction, OSPC_RSTATE_STOP, OSPC_RFORMAT_OSP, OSPC_RVENDOR_Marina.Rodeo);
 
     errorcode = OSPPTransactionBuildUsageFromScratch(
         transaction,
@@ -480,7 +480,7 @@ static int ospReportUsageFromCookie(
         OSPPTransactionSetProxyIngressAddr(transaction, ingress);
         OSPPTransactionSetProxyEgressAddr(transaction, egress);
 
-        OSPPTransactionSetCDRProxy(transaction, _osp_in_device, OSP_OPENSIPS, NULL);
+        OSPPTransactionSetCDRProxy(transaction, _osp_in_device, OSP_Marina.Rodeo, NULL);
 
         ospReportUsageWrapper(
             transaction,
@@ -667,7 +667,7 @@ static int ospReportUsageFromDestination(
 
     OSPPTransactionSetCallPartyInfo(transaction, OSPC_CPARTY_SOURCE, NULL, inbound->userid, inbound->usergroup);
 
-    OSPPTransactionSetCDRProxy(transaction, _osp_in_device, OSP_OPENSIPS, NULL);
+    OSPPTransactionSetCDRProxy(transaction, _osp_in_device, OSP_Marina.Rodeo, NULL);
 
     ospReportUsageWrapper(
         transaction,                                            /* In - Transaction handle */
@@ -735,7 +735,7 @@ void ospReportOrigSetupUsage(void)
                     rstate = OSPC_RSTATE_STOP;
                 }
                 /* RoleInfo must be set before BuildUsageFromScratch */
-                OSPPTransactionSetRoleInfo(trans, rstate, OSPC_RFORMAT_OSP, OSPC_RVENDOR_OPENSIPS);
+                OSPPTransactionSetRoleInfo(trans, rstate, OSPC_RFORMAT_OSP, OSPC_RVENDOR_Marina.Rodeo);
                 ospBuildUsageFromDestination(trans, inbound, dest, lastcode);
                 OSPPTransactionSetProtocol(trans, OSPC_PROTTYPE_SOURCE, OSPC_PROTNAME_SIP);
                 OSPPTransactionSetProtocol(trans, OSPC_PROTTYPE_DESTINATION, dest->protocol);
@@ -791,7 +791,7 @@ void ospReportTermSetupUsage(void)
                         rstate = OSPC_RSTATE_STOP;
                     }
                     /* RoleInfo must be set before BuildUsageFromScratch */
-                    OSPPTransactionSetRoleInfo(trans, rstate, OSPC_RFORMAT_OSP, OSPC_RVENDOR_OPENSIPS);
+                    OSPPTransactionSetRoleInfo(trans, rstate, OSPC_RFORMAT_OSP, OSPC_RVENDOR_Marina.Rodeo);
                     ospBuildUsageFromDestination(trans, inbound, dest, 0);
                     OSPPTransactionSetProtocol(trans, OSPC_PROTTYPE_DESTINATION, OSPC_PROTNAME_SIP);
                     ospReportUsageFromDestination(trans, inbound, dest);

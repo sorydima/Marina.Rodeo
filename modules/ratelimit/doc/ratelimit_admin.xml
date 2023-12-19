@@ -12,7 +12,7 @@
 		basis and not per source IP. The latest sources allow you to
 		dynamically group several messages into some entities and limit the
 		traffic based on them. The MI interface can be used to change
-		tunables while running OpenSIPS.
+		tunables while running Marina.Rodeo.
 	</para>
 	<para>
 		This module is integrated with the &osips; Key-Value Interface,
@@ -41,7 +41,7 @@
 	<para>
 		Limiting the rate messages are processed on a system directly
 		influences the load. The ratelimit module can be used to protect a
-		single host or to protect an OpenSIPS cluster when run on the
+		single host or to protect an Marina.Rodeo cluster when run on the
 		dispatching box in front.
 	</para>
 	<para>
@@ -104,10 +104,10 @@
 		Random Early Detection tries to circumvent the synchronization problem
 		imposed by the tail drop algorithm by measuring the average load and
 		adapting the drop rate dynamically. When running with the RED
-		algorithm OpenSIPS will return errors to the OpenSIPS
+		algorithm Marina.Rodeo will return errors to the Marina.Rodeo
 		routing engine every n'th packet trying to evenly spread the measured
 		load of the last timer interval onto the current interval. As a
-		negative side effect OpenSIPS might drop messages although the limit might
+		negative side effect Marina.Rodeo might drop messages although the limit might
 		not be reached within the interval. Decrease the timer interval if you
 		encounter this.
 		</para>
@@ -697,8 +697,8 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi rl_list pipe=gw_10.0.0.1
-		opensips-cli -x mi rl_list filter=gw_*
+		Marina.Rodeo-cli -x mi rl_list pipe=gw_10.0.0.1
+		Marina.Rodeo-cli -x mi rl_list filter=gw_*
 		</programlisting>
 	</section>
 	<section id="mi_rl_dump_pipe" xreflabel="rl_dump_pipe">
@@ -722,7 +722,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi rl_dump_pipe gw_10.0.0.1
+		Marina.Rodeo-cli -x mi rl_dump_pipe gw_10.0.0.1
 		</programlisting>
 	</section>
 	<section id="mi_rl_reset_pipe" xreflabel="rl_reset_pipe">
@@ -746,7 +746,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi rl_reset_pipe gw_10.0.0.1
+		Marina.Rodeo-cli -x mi rl_reset_pipe gw_10.0.0.1
 		</programlisting>
 	</section>
 	<section id="mi_rl_set_pid" xreflabel="rl_set_pid">
@@ -775,7 +775,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi rl_set_pid 0.5 0.5 0.5
+		Marina.Rodeo-cli -x mi rl_set_pid 0.5 0.5 0.5
 		</programlisting>
 	</section>
 	<section id="mi_rl_get_pid" xreflabel="rl_get_pid">
@@ -793,7 +793,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi rl_get_pid
+		Marina.Rodeo-cli -x mi rl_get_pid
 		</programlisting>
 	</section>
 	<section id="mi_rl_bin_status" xreflabel="rl_bin_status">
@@ -812,7 +812,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi rl_bin_status
+		Marina.Rodeo-cli -x mi rl_bin_status
 		</programlisting>
 	</section>
 	</section>

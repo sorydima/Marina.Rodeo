@@ -124,7 +124,7 @@ Chapter 1. Admin Guide
    the database resides.
 
    Default value is
-   “mysql://opensipsro:opensipsro@localhost/opensips”.
+   “mysql://Marina.Rodeoro:Marina.Rodeoro@localhost/Marina.Rodeo”.
 
    Example 1.1. db_url parameter usage
 modparam("auth_db", "db_url", "dbdriver://username:password@dbhost/dbnam
@@ -538,8 +538,8 @@ Chapter 3. Documentation
    Konstantin Bokarius, Edson Gellert Schubert, Henning Westerholt
    (@henningw), Anatoly Pidruchny, Jan Janak (@janakj).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2005 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Voice Sistem SRL
 
-   Copyright © 2002-2003 FhG FOKUS
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2002-2003 FhG FOKUS

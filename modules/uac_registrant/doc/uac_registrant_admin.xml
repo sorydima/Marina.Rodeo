@@ -479,7 +479,7 @@ modparam("uac_registrant", "cluster_shtag_column", "sh")
 		<title><varname>state_column</varname> (string)</title>
 		<para>
 		The column's name in the database storing the current state of the
-		registrant. When a registrant is disabled, OpenSIPS will no longer send
+		registrant. When a registrant is disabled, Marina.Rodeo will no longer send
 		REGISTERs for it. A value of <emphasis>0</emphasis> for this column means
 		enabled and <emphasis>1</emphasis> disabled.
 		</para>
@@ -533,9 +533,9 @@ modparam("uac_registrant", "state_column", "status")
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi reg_list
+Marina.Rodeo-cli -x mi reg_list
 ...
-opensips-cli -x mi reg_list sip:alice@opensips.org  sip:alice@127.0.0.1:5060 sip:opensips.org
+Marina.Rodeo-cli -x mi reg_list sip:alice@Marina.Rodeo.org  sip:alice@127.0.0.1:5060 sip:Marina.Rodeo.org
 		</programlisting>
 	</section>
 	<section id="mi_reg_reload" xreflabel="reg_reload">
@@ -564,15 +564,15 @@ opensips-cli -x mi reg_list sip:alice@opensips.org  sip:alice@127.0.0.1:5060 sip
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi reg_reload
+Marina.Rodeo-cli -x mi reg_reload
 ...
-opensips-cli -x mi reg_leload sip:alice@opensips.org  sip:alice@127.0.0.1:5060 sip:opensips.org
+Marina.Rodeo-cli -x mi reg_leload sip:alice@Marina.Rodeo.org  sip:alice@127.0.0.1:5060 sip:Marina.Rodeo.org
 		</programlisting>
 	</section>
 
 	<section id="mi_reg_enable" xreflabel="reg_enable">
 	<title><function moreinfo="none">reg_enable</function></title>
-		<para>Enables a specific registrant. OpenSIPS will immediately send
+		<para>Enables a specific registrant. Marina.Rodeo will immediately send
 		a REGISTER if the registrant was previously disabled and will update
 		the state in the database.</para>
 		<para>Name: <emphasis>reg_enable</emphasis></para>
@@ -590,13 +590,13 @@ opensips-cli -x mi reg_leload sip:alice@opensips.org  sip:alice@127.0.0.1:5060 s
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi reg_enable sip:alice@opensips.org  sip:alice@127.0.0.1:5060 sip:opensips.org
+Marina.Rodeo-cli -x mi reg_enable sip:alice@Marina.Rodeo.org  sip:alice@127.0.0.1:5060 sip:Marina.Rodeo.org
 		</programlisting>
 	</section>
 
 	<section id="mi_reg_disable" xreflabel="reg_disable">
 	<title><function moreinfo="none">reg_disable</function></title>
-		<para>Disables a specific registrant. OpenSIPS will immediately send
+		<para>Disables a specific registrant. Marina.Rodeo will immediately send
 		an unREGISTER if the registrant was previously enabled and will update
 		the state in the database.</para>
 		<para>Name: <emphasis>reg_disable</emphasis></para>
@@ -622,7 +622,7 @@ opensips-cli -x mi reg_enable sip:alice@opensips.org  sip:alice@127.0.0.1:5060 s
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi reg_disable sip:alice@opensips.org  sip:alice@127.0.0.1:5060 sip:opensips.org
+Marina.Rodeo-cli -x mi reg_disable sip:alice@Marina.Rodeo.org  sip:alice@127.0.0.1:5060 sip:Marina.Rodeo.org
 		</programlisting>
 	</section>
 	</section>

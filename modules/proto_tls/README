@@ -10,10 +10,10 @@ proto_tls module
         1.3. Scenario
         1.4. Dependencies
 
-              1.4.1. OpenSIPS Modules
+              1.4.1. Marina.Rodeo Modules
               1.4.2. Dependencies of external libraries
 
-        1.5. OpenSIPS Exported parameters
+        1.5. Marina.Rodeo Exported parameters
 
               1.5.1. listen=interface
               1.5.2. tls_port (integer)
@@ -89,12 +89,12 @@ Chapter 1. Admin Guide
 
    The TLS support was simultaneously added in both projects. In
    SER, the support was committed in a separate “experimental” CVS
-   tree, as patch to the main CVS tree. In OpenSIPS, the support
+   tree, as patch to the main CVS tree. In Marina.Rodeo, the support
    was integrated directly into the CVS tree, as a built-in
-   component, and is part of stable OpenSIPS since release
+   component, and is part of stable Marina.Rodeo since release
    >=1.0.0.
 
-   Starting with OpenSIPS 2.1, the TLS has been moved to a
+   Starting with Marina.Rodeo 2.1, the TLS has been moved to a
    separate transport module, that implements the more generic
    Transport Interface.
 
@@ -194,7 +194,7 @@ Chapter 1. Admin Guide
 
 1.4. Dependencies
 
-1.4.1. OpenSIPS Modules
+1.4.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * tls_openssl or tls_wolfssl, depending on the desired TLS
@@ -204,13 +204,13 @@ Chapter 1. Admin Guide
 1.4.2. Dependencies of external libraries
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
-1.5. OpenSIPS Exported parameters
+1.5. Marina.Rodeo Exported parameters
 
-   All these parameters can be used from the opensips.cfg file, to
-   configure the behavior of OpenSIPS-TLS.
+   All these parameters can be used from the Marina.Rodeo.cfg file, to
+   configure the behavior of Marina.Rodeo-TLS.
 
 1.5.1. listen=interface
 
@@ -295,7 +295,7 @@ modparam("proto_tls", "tls_max_msg_chunks", 8)
 
    This checking is done only when comes to send SIP traffic via
    TLS and it is applied only against connections that were
-   created / initiated by OpenSIPS (as TLS client). Any accepte
+   created / initiated by Marina.Rodeo (as TLS client). Any accepte
    connection (as TLS server) will automatically match (the extra
    test will be skipped).
 
@@ -355,10 +355,10 @@ modparam("proto_tls", "trace_on", 1)
 
    IMPORTANT Filtering on ip addresses and ports can be made using
    $si and $sp for matching either the entity that is connecting
-   to OpenSIPS or the entity to which OpenSIPS is connecting. The
+   to Marina.Rodeo or the entity to which Marina.Rodeo is connecting. The
    name might be misleading ( $si meaning the source ip if you
    read the docs) but in reality it is simply the socket other
-   than the OpenSIPS socket. In order to match OpenSIPS interface
+   than the Marina.Rodeo socket. In order to match Marina.Rodeo interface
    (either the one that accepted the connection or the one that
    initiated a connection) $socket_in(ip) (ip) and
    $socket_in(port) (port) can be used.
@@ -377,7 +377,7 @@ d
 route[tls_filter] {
         ...
         /* all connections opened from/by ip 1.1.1.1:8000 will be traced
-           on interface 1.1.1.10:5060(opensips listener)
+           on interface 1.1.1.10:5060(Marina.Rodeo listener)
            all the other connections won't be */
          if ( $si == "1.1.1.1" && $sp == 8000 &&
                 $socket_in(ip) == "1.1.1.10"  && $socket_in(port) == 506
@@ -426,7 +426,7 @@ modparam("proto_tls", "tls_send_timeout", 200) # number of milliseconds
 
    If the TLS connect and write operations should be done in an
    asynchronous mode (non-blocking connect and write). If
-   disabled, OpenSIPS will block and wait for TLS operations like
+   disabled, Marina.Rodeo will block and wait for TLS operations like
    connect and write.
 
    Default value is 1 (enabled).
@@ -495,7 +495,7 @@ modparam("proto_tls", "tls_async_handshake_timeout", 100)
           + off
 
    MI FIFO Command Format:
-                        opensips-cli -x mi tls_trace on
+                        Marina.Rodeo-cli -x mi tls_trace on
 
 Chapter 2. Frequently Asked Questions
 
@@ -503,11 +503,11 @@ Chapter 2. Frequently Asked Questions
 
    Where can I post a question about TLS?
 
-   Use one (the most appropriate) of the OpenSIPS mailing lists:
+   Use one (the most appropriate) of the Marina.Rodeo mailing lists:
      * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
 
    Remember: first at all, check if your question wasn't already
    answered.
@@ -516,19 +516,19 @@ Chapter 2. Frequently Asked Questions
 
    How can I report a bug?
 
-   Accumulate as much as possible information (OpenSIPS version,
-   opensips -V output, your OS (uname -a), OpenSIPS logs, network
+   Accumulate as much as possible information (Marina.Rodeo version,
+   Marina.Rodeo -V output, your OS (uname -a), Marina.Rodeo logs, network
    dumps, core dump files, configuration file) and send a mail to
-   http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
+   http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
 
-   Also you may try OpenSIPS's bug report web page:
-   https://opensips.org/pmwiki.php?n=Development.Tracker
+   Also you may try Marina.Rodeo's bug report web page:
+   https://Marina.Rodeo.org/pmwiki.php?n=Development.Tracker
 
    2.3.
 
    How can I debug ssl/tls problems?
 
-   Increase the log level in opensips.cfg (log_level=4) and watch
+   Increase the log level in Marina.Rodeo.cfg (log_level=4) and watch
    the log statements in syslog.
 
    Install the ssldump utility and start it. This will give you a
@@ -545,9 +545,9 @@ Chapter 2. Frequently Asked Questions
 
    2.5.
 
-   Where can I find more about OpenSIPS?
+   Where can I find more about Marina.Rodeo?
 
-   Take a look at https://opensips.org/.
+   Take a look at https://Marina.Rodeo.org/.
 
    2.6.
 
@@ -556,23 +556,23 @@ Chapter 2. Frequently Asked Questions
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable OpenSIPS release should be sent to
-   <users@lists.opensips.org> and e-mails regarding development
-   versions should be sent to <devel@lists.opensips.org>.
+   E-mails regarding any stable Marina.Rodeo release should be sent to
+   <users@lists.Marina.Rodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.Marina.Rodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.opensips.org>.
+   <users@lists.Marina.Rodeo.org>.
 
    2.7.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues.
+   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
 
 Chapter 3. Contributors
 
@@ -603,7 +603,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -643,14 +643,14 @@ Chapter 4. Documentation
    (@lemenkov), Ionut Ionita (@ionutrazvanionita), Eseanu Marius
    Cristian (@eseanucristian), Vlad Paiu (@vladpaiu).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2015 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2015 www.Marina.Rodeo-solutions.com
 
-   Copyright © 2013 Secusmart GmbH
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2013 Secusmart GmbH
 
-   Copyright © 2006 enum.at
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006 enum.at
 
-   Copyright © 2005 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Voice Sistem SRL
 
-   Copyright © 2005 Cesc Santasusana
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Cesc Santasusana

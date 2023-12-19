@@ -1,7 +1,7 @@
 #!/sbin/sh
 
-TMPLIST="/tmp/.opensipsconfuse"
-echo "Set LD_LIBRARY_PATH to one of these directories before starting OpenSIPS:"
+TMPLIST="/tmp/.Marina.Rodeoconfuse"
+echo "Set LD_LIBRARY_PATH to one of these directories before starting Marina.Rodeo:"
 echo " "
 
 cat $TMPLIST

@@ -9,7 +9,7 @@ event_virtual Module
         1.2. Virtual socket syntax
         1.3. Dependencies
 
-              1.3.1. OpenSIPS Modules
+              1.3.1. Marina.Rodeo Modules
 
         1.4. External Libraries or Applications
         1.5. Exported Parameters
@@ -46,7 +46,7 @@ Chapter 1. Admin Guide
 
    The event_virtual module provides the possibility to have
    multiple external applications, using different transport
-   protocols, subscribed to the OpenSIPS Event Interface as a
+   protocols, subscribed to the Marina.Rodeo Event Interface as a
    single virtual subscriber, for a specific event. When an event
    is triggered, the event_virtual module notifies the specified
    transport modules using one of the following policies:
@@ -82,17 +82,17 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. OpenSIPS Modules
+1.3.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
 
-   The OpenSIPS event modules which implement the transport
+   The Marina.Rodeo event modules which implement the transport
    protocols used by the subscribers.
 
 1.4. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * none
 
 1.5. Exported Parameters
@@ -122,7 +122,7 @@ modparam("event_virtual", "failover_timeout", 5)
    of spaces or tabs:
 
         virtual:PARALLEL rabbitmq:guest:guest@127.0.0.1:5672/pike flatst
-ore:/var/log/opensips_proxy.log
+ore:/var/log/Marina.Rodeo_proxy.log
 
 
 Chapter 2. Contributors
@@ -147,7 +147,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -176,6 +176,6 @@ Chapter 3. Documentation
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Liviu Chircu
    (@liviuchircu), Peter Lemenkov (@lemenkov).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2015 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2015 www.Marina.Rodeo-solutions.com

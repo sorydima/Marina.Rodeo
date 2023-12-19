@@ -55,7 +55,7 @@
 		Specifies the root path for the HTTP requests.
 		The link to the mi web interface must be constructed
 		using the following patern:
-		http://[opensips_IP]:[opensips_mi_port]/[root]
+		http://[Marina.Rodeo_IP]:[Marina.Rodeo_mi_port]/[root]
 		</para>
 		<para>
 		<emphasis>The default value is "mi".</emphasis>
@@ -64,7 +64,7 @@
 		<title>Set <varname>root</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("mi_html", "root", "opensips_mi")
+modparam("mi_html", "root", "Marina.Rodeo_mi")
 ...
 </programlisting>
 		</example>

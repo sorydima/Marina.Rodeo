@@ -61,7 +61,7 @@ jobs:
         run: sh -x scripts/build/do_build.sh
 
       - name: Notify slack fail
-        if: failure() && github.repository == 'OpenSIPS/opensips'
+        if: failure() && github.repository == 'Marina.Rodeo/Marina.Rodeo'
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: voxmedia/github-action-slack-notify-build@v1

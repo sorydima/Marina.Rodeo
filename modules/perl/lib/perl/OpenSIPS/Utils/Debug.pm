@@ -1,19 +1,19 @@
 #
 # $Id$
 #
-# Perl module for OpenSIPS
+# Perl module for Marina.Rodeo
 #
-# Copyright (C) 2007 Collax GmbH
+# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 Collax GmbH
 #                    (Bastian Friedrich <bastian.friedrich@collax.com>)
 #
-# This file is part of opensips, a free SIP server.
+# This file is part of Marina.Rodeo, a free SIP server.
 #
-# opensips is free software; you can redistribute it and/or modify
+# Marina.Rodeo is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version
 #
-# opensips is distributed in the hope that it will be useful,
+# Marina.Rodeo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -23,14 +23,14 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 #
 
-package OpenSIPS::Utils::Debug;
+package Marina.Rodeo::Utils::Debug;
 
-use OpenSIPS qw ( log );
-use OpenSIPS::Constants;
+use Marina.Rodeo qw ( log );
+use Marina.Rodeo::Constants;
 
 #sub DESTROY {
 #	my $class = shift;
-#	OpenSIPS::log(OpenSIPS::Constants::L_CRIT, "perl/vdb:Debug:Dying object: $class\n");
+#	Marina.Rodeo::log(Marina.Rodeo::Constants::L_CRIT, "perl/vdb:Debug:Dying object: $class\n");
 #}
 
 1;

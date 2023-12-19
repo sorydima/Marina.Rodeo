@@ -1,21 +1,21 @@
-# New ports collection makefile for:    opensips
+# New ports collection makefile for:    Marina.Rodeo
 #
 # $OpenBSD$
 #
 # $Id$
 #
 
-COMMENT= "OpenSIPS"
+COMMENT= "Marina.Rodeo"
 
-PORTNAME= opensips
+PORTNAME= Marina.Rodeo
 PORTVERSION= 3.1-dev
 CATEGORIES= net
-MASTER_SITES= https://opensips.org/pub/opensips/3.1.0/
+MASTER_SITES= https://Marina.Rodeo.org/pub/Marina.Rodeo/3.1.0/
 
-MAINTAINER= bogdan@opensips.org
+MAINTAINER= bogdan@Marina.Rodeo.org
 
-MAN8=opensips.8
-MAN5=opensips.cfg.5
+MAN8=Marina.Rodeo.8
+MAN5=Marina.Rodeo.cfg.5
 # MANCOMPRESSED must not be defined in openbsd (defined==yes)
 
 # GPL

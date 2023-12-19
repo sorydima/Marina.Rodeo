@@ -420,7 +420,7 @@ modparam("pua_dialoginfo", "nopublish_flag", "no_publish")
 			<title>Set <varname>presence_server</varname> parameter</title>
 			<programlisting format="linespecific">
 ...
-modparam("pua_dialoginfo", "presence_server", "sip:ps@opensips.org:5060")
+modparam("pua_dialoginfo", "presence_server", "sip:ps@Marina.Rodeo.org:5060")
 ...
 </programlisting>
 		</example>
@@ -470,9 +470,9 @@ modparam("pua_dialoginfo", "callee_spec_param", "$avp(11)")
 		<title><varname>osips_ps</varname> (int)</title>
 		<para>
 			It is advisable to specify if you use a different presence server
-			than OpenSIPS presence server, by setting this parameter to 0.
+			than Marina.Rodeo presence server, by setting this parameter to 0.
 			By default, a trick (version in the Publish body is set '0000000') is
-			used when working with Opensips Presence Server
+			used when working with Marina.Rodeo Presence Server
 			to make the processing faster and this might not be accepted by other
 			presence servers.
 		</para>
@@ -517,7 +517,7 @@ modparam("pua_dialoginfo", "osips_ps", 0)
 		<programlisting format="linespecific">
 ...
 	if(is_method("INVITE"))
-		if($ru =~ "opensips.org")
+		if($ru =~ "Marina.Rodeo.org")
 			dialoginfo_set();
 ...
 		</programlisting>
@@ -557,7 +557,7 @@ branch_route[out]
 {
 ....
 	#align the published info with the RURI of the branch
-	dialoginfo_set_branch_callee("sip:$rU@opensips.org");
+	dialoginfo_set_branch_callee("sip:$rU@Marina.Rodeo.org");
 ...
 }
 		</programlisting>

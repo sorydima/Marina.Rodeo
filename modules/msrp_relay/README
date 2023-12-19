@@ -8,7 +8,7 @@ MSRP Relay Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -78,7 +78,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * proto_msrp
@@ -86,7 +86,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * openssl or libssl
      * openssl-dev or libssl-dev
 
@@ -239,7 +239,7 @@ route[msrp_routing] {
    the AUTH request.
 
    Example 1.9. auth_realm parameter usage
-modparam("msrp_relay", "auth_realm", "opensips.org")
+modparam("msrp_relay", "auth_realm", "Marina.Rodeo.org")
 
 1.3.12. auth_expires (int)
 
@@ -318,7 +318,7 @@ modparam("msrp_relay", "nonce_expire", 15)   # Set nonce_expire to 15s
    set
 
    Example 1.14. my_uri parameter usage
-modparam("msrp_relay", "my_uri", "msrp://opensips.org:2855;tcp")
+modparam("msrp_relay", "my_uri", "msrp://Marina.Rodeo.org:2855;tcp")
 
 Chapter 2. Contributors
 
@@ -339,7 +339,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -365,6 +365,6 @@ Chapter 3. Documentation
    Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Vlad
    Patrascu (@rvlad-patrascu).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2022 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2022 www.Marina.Rodeo-solutions.com

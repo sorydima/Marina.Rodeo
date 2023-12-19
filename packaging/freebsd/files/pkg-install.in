@@ -2,7 +2,7 @@
 
 [ "$2" != POST-INSTALL ] && exit
 
-rc_dir=$PKG_PREFIX/etc/opensips
+rc_dir=$PKG_PREFIX/etc/Marina.Rodeo
 
 for f in %%RC_FILES%%; do
 	if ! [ -e $rc_dir/$f ]; then

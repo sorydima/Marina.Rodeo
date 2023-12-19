@@ -1,9 +1,9 @@
-PKG=OpenSIPS
+PKG=Marina.Rodeo
 ARCH=sparc
 VERSION="3.1"
 CATEGORY=application
-EMAIL=bogdan@opensips.org
-NAME= OpenSIPS is a very fast and flexible SIP (RFC3261) server
+EMAIL=bogdan@Marina.Rodeo.org
+NAME= Marina.Rodeo is a very fast and flexible SIP (RFC3261) server
 SUNW_ISA=sparcv9
 BASEDIR=/usr/local
 CLASSES=none

@@ -157,8 +157,8 @@ if(is_gflag(4))
 			<title><function moreinfo="none">set_gflag</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi set_gflag 1
-$ opensips-cli -x mi set_gflag 0x3
+$ Marina.Rodeo-cli -x mi set_gflag 1
+$ Marina.Rodeo-cli -x mi set_gflag 0x3
 ...
 </programlisting>
 			</example>
@@ -178,8 +178,8 @@ $ opensips-cli -x mi set_gflag 0x3
 				<function moreinfo="none">reset_gflag</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi reset_gflag 1
-$ opensips-cli -x mi reset_gflag 0x3
+$ Marina.Rodeo-cli -x mi reset_gflag 1
+$ Marina.Rodeo-cli -x mi reset_gflag 0x3
 ...
 </programlisting>
 			</example>
@@ -201,19 +201,19 @@ $ opensips-cli -x mi reset_gflag 0x3
 			<title><function moreinfo="none">is_gflag</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi set_gflag 1024
-$ opensips-cli -x mi is_gflag 1024
+$ Marina.Rodeo-cli -x mi set_gflag 1024
+$ Marina.Rodeo-cli -x mi is_gflag 1024
 TRUE
-$ opensips-cli -x mi is_gflag 1025
+$ Marina.Rodeo-cli -x mi is_gflag 1025
 TRUE
-$ opensips-cli -x mi is_gflag 1023
+$ Marina.Rodeo-cli -x mi is_gflag 1023
 FALSE
-$ opensips-cli -x mi set_gflag 0x10
-$ opensips-cli -x mi is_gflag 1023
+$ Marina.Rodeo-cli -x mi set_gflag 0x10
+$ Marina.Rodeo-cli -x mi is_gflag 1023
 TRUE
-$ opensips-cli -x mi is_gflag 1007
+$ Marina.Rodeo-cli -x mi is_gflag 1007
 FALSE
-$ opensips-cli -x mi is_gflag 16
+$ Marina.Rodeo-cli -x mi is_gflag 16
 TRUE
 ...
 </programlisting>
@@ -230,7 +230,7 @@ TRUE
 				<function moreinfo="none">get_gflags</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi get_gflags
+$ Marina.Rodeo-cli -x mi get_gflags
 0x3039
 12345
 ...

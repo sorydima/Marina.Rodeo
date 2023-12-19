@@ -155,8 +155,8 @@ if(is_gflag(4))
 
    Example 1.5. set_gflag usage
 ...
-$ opensips-cli -x mi set_gflag 1
-$ opensips-cli -x mi set_gflag 0x3
+$ Marina.Rodeo-cli -x mi set_gflag 1
+$ Marina.Rodeo-cli -x mi set_gflag 0x3
 ...
 
 1.5.2. reset_gflag
@@ -168,8 +168,8 @@ $ opensips-cli -x mi set_gflag 0x3
 
    Example 1.6.  reset_gflag usage
 ...
-$ opensips-cli -x mi reset_gflag 1
-$ opensips-cli -x mi reset_gflag 0x3
+$ Marina.Rodeo-cli -x mi reset_gflag 1
+$ Marina.Rodeo-cli -x mi reset_gflag 0x3
 ...
 
 1.5.3. is_gflag
@@ -184,19 +184,19 @@ $ opensips-cli -x mi reset_gflag 0x3
 
    Example 1.7. is_gflag usage
 ...
-$ opensips-cli -x mi set_gflag 1024
-$ opensips-cli -x mi is_gflag 1024
+$ Marina.Rodeo-cli -x mi set_gflag 1024
+$ Marina.Rodeo-cli -x mi is_gflag 1024
 TRUE
-$ opensips-cli -x mi is_gflag 1025
+$ Marina.Rodeo-cli -x mi is_gflag 1025
 TRUE
-$ opensips-cli -x mi is_gflag 1023
+$ Marina.Rodeo-cli -x mi is_gflag 1023
 FALSE
-$ opensips-cli -x mi set_gflag 0x10
-$ opensips-cli -x mi is_gflag 1023
+$ Marina.Rodeo-cli -x mi set_gflag 0x10
+$ Marina.Rodeo-cli -x mi is_gflag 1023
 TRUE
-$ opensips-cli -x mi is_gflag 1007
+$ Marina.Rodeo-cli -x mi is_gflag 1007
 FALSE
-$ opensips-cli -x mi is_gflag 16
+$ Marina.Rodeo-cli -x mi is_gflag 16
 TRUE
 ...
 
@@ -207,7 +207,7 @@ TRUE
 
    Example 1.8.  get_gflags usage
 ...
-$ opensips-cli -x mi get_gflags
+$ Marina.Rodeo-cli -x mi get_gflags
 0x3039
 12345
 ...
@@ -243,7 +243,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -285,6 +285,6 @@ Chapter 3. Documentation
    Bokarius, Edson Gellert Schubert, Henning Westerholt
    (@henningw), Klaus Darilion.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2004 FhG FOKUS
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2004 FhG FOKUS

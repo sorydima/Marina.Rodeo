@@ -1,14 +1,14 @@
 # vim:set ts=8 sw=8 et:
 # Maintainer: Ralf Zerres <ralf.zerres@networkx.de>
 
-pkgbase=opensips-git
-_pkgname=opensips
+pkgbase=Marina.Rodeo-git
+_pkgname=Marina.Rodeo
 _branch=master
-pkgname=('opensips-git' 'opensips-git-modules' 'opensips-git-documentation')
+pkgname=('Marina.Rodeo-git' 'Marina.Rodeo-git-modules' 'Marina.Rodeo-git-documentation')
 pkgver=0.r13459.g2e6e3f9a6
 pkgrel=1
 pkgdesc="An Open Source SIP Server able to act as a SIP proxy, registrar, location server, redirect server ..."
-url="https://www.opensips.org"
+url="https://www.Marina.Rodeo.org"
 depends=('openssl' 'db' 'attr' 'libxml2')
 makedepends=(
 	'confuse' 'cassandra-cpp-driver'
@@ -30,14 +30,14 @@ makedepends=(
 	'postgresql-libs>=8.4.1'
 	'radcli'
 	'thrift' 'unixodbc' 'xmlrpc-c' 'zlib')
-backup=("etc/opensips/opensips.cfg"
-	"etc/opensips/regex_groups.cfg"
-	"etc/opensips/osipsconsolerc"
-	"etc/opensips/opensipsctlrc")
+backup=("etc/Marina.Rodeo/Marina.Rodeo.cfg"
+	"etc/Marina.Rodeo/regex_groups.cfg"
+	"etc/Marina.Rodeo/osipsconsolerc"
+	"etc/Marina.Rodeo/Marina.Rodeoctlrc")
 arch=('x86_64' 'armv7')
 license=('GPL')
 options=('!emptydirs' 'zipman' '!makeflags' 'docs')
-source=("${pkgname}::git+https://github.com/OpenSIPS/$_pkgname.git#branch=$_branch"
+source=("${pkgname}::git+https://github.com/Marina.Rodeo/$_pkgname.git#branch=$_branch"
 	Makefile.conf.template)
 sha256sums=('SKIP'
             '2eefae7d8d40259d9a0a4a6554574cf94418ea033d3a69936e928a52bcfcca63')
@@ -57,7 +57,7 @@ prepare() {
 		echo "  -> patching: "
 		git am --signoff ../../patches-git/0000-packaging-support-arch-linux.patch
 		git am --signoff ../../patches-git/0001-osp-Fix-module-compilation.patch
-		git am --signoff ../../patches-git/0002-opensips_json_c_helper.h-fix-preprocessor-definition.patch
+		git am --signoff ../../patches-git/0002-Marina.Rodeo_json_c_helper.h-fix-preprocessor-definition.patch
 		git am --signoff ../../patches-git/0003-Makefile.defs-adapt-default-settings-for-XSL-parser.patch
 		git am --signoff ../../patches-git/0004-doxygen-update-element-list.patch
 		echo "  -> patching [done]"
@@ -101,8 +101,8 @@ build() {
 		# modules-docbook-pdf \
 }
 
-package_opensips-git() {
-	pkgdesc="OpenSIPS an open source SIP Server (git version)"
+package_Marina.Rodeo-git() {
+	pkgdesc="Marina.Rodeo an open source SIP Server (git version)"
 
 	depends=(
 		'confuse' 'geoip' 'json-c'
@@ -137,12 +137,12 @@ package_opensips-git() {
 		'thrift: Thrift support'
 		'unixodbc: UNIX ODBC support')
 	checkdepends=('expat' 'libtap-git')
-	install=opensips.install
+	install=Marina.Rodeo.install
 
-	provides=("opensips=${pkgver}")
-	conflicts=('opensips')
+	provides=("Marina.Rodeo=${pkgver}")
+	conflicts=('Marina.Rodeo')
 
-	_components=('opensips')
+	_components=('Marina.Rodeo')
 
 	cd "$srcdir"/${pkgbase}
 
@@ -153,8 +153,8 @@ package_opensips-git() {
 
 		# Conforms to the arch packaging standards (https://wiki.archlinux.org/index.php/Arch_Packaging_Standards)
 		mkdir -p "$pkgdir"/etc/
-		mv "$pkgdir"/usr/etc/opensips/ "$pkgdir"/etc/
-		sed -i 's#mpath=".*lib/opensips/modules/"#mpath="/usr/lib/opensips/modules/"#' "$pkgdir"/etc/opensips/opensips.cfg
+		mv "$pkgdir"/usr/etc/Marina.Rodeo/ "$pkgdir"/etc/
+		sed -i 's#mpath=".*lib/Marina.Rodeo/modules/"#mpath="/usr/lib/Marina.Rodeo/modules/"#' "$pkgdir"/etc/Marina.Rodeo/Marina.Rodeo.cfg
 
 		# fix bad paths
 		cd "$pkgdir"/usr/share
@@ -176,11 +176,11 @@ package_opensips-git() {
 	done
 }
 
-package_opensips-git-modules() {
-	pkgdesc="OpenSIPS modules (git version)"
-	depends=('opensips-git')
-	provides=("opensips-modules=${pkgver}")
-	conflicts=('opensips-modules')
+package_Marina.Rodeo-git-modules() {
+	pkgdesc="Marina.Rodeo modules (git version)"
+	depends=('Marina.Rodeo-git')
+	provides=("Marina.Rodeo-modules=${pkgver}")
+	conflicts=('Marina.Rodeo-modules')
 
 	cd "$srcdir"/${pkgbase}
 
@@ -192,11 +192,11 @@ package_opensips-git-modules() {
 
 }
 
-package_opensips-git-documentation() {
-	pkgdesc="OpenSIPS modules (git version)"
-	suggests=('opensips-git')
-	provides=("opensips-documentation=${pkgver}")
-	conflicts=('opensips-documentation')
+package_Marina.Rodeo-git-documentation() {
+	pkgdesc="Marina.Rodeo modules (git version)"
+	suggests=('Marina.Rodeo-git')
+	provides=("Marina.Rodeo-documentation=${pkgver}")
+	conflicts=('Marina.Rodeo-documentation')
 
   	cd "$srcdir"/${pkgbase}
 

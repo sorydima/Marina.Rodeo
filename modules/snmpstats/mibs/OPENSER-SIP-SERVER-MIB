@@ -2,7 +2,7 @@
 --
 -- This MIB provides information related to the OpenSER SIP Router.
 -- 
--- Copyright (c) The Internet Society (2006)
+-- Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) The Internet Society (2006)
 -- Ammendments (c) Soma Networks, Inc. (2006)
 --
 -- All rights reserved.
@@ -96,7 +96,7 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
                  requests.  A Registrar is typically co-located with a
                  Proxy or Redirect Server.
 
-                 Copyright (C) The Internet Society (2006).
+                 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) The Internet Society (2006).
                  This version of this MIB module is part of RFC XXXX;
                   see the RFC itself for full legal notices."
               REVISION        "200603281700Z"

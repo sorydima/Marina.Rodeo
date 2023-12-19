@@ -163,7 +163,7 @@ modparam("b2b_entities", "script_reply_route", "b2b_reply")
 		<title>Set <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("b2b_entities", "db_url", "mysql://opensips:opensipsrw@127.0.0.1/opensips")
+modparam("b2b_entities", "db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@127.0.0.1/Marina.Rodeo")
 ...
 	</programlisting>
 		</example>

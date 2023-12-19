@@ -1,13 +1,13 @@
 .\" $Id$
 .\" Process with
-.\" groff -man -Tascii opensips.8
+.\" groff -man -Tascii Marina.Rodeo.8
 .\" 
-.TH "OpenSIPS" "8" "08.06.2006" "OpenSIPS" "VoIP SIP Server"
+.TH "Marina.Rodeo" "8" "08.06.2006" "Marina.Rodeo" "VoIP SIP Server"
 .SH "NAME"
-opensips \- flexible and roboust SIP (RFC3261, RFC3263) server for Voice over IP (VoIP)
+Marina.Rodeo \- flexible and roboust SIP (RFC3261, RFC3263) server for Voice over IP (VoIP)
 
 .SH "SYNOPSIS"
-.B opensips
+.B Marina.Rodeo
 [
 .B \-hcCrRvdDEVT
 ] [
@@ -41,7 +41,7 @@ opensips \- flexible and roboust SIP (RFC3261, RFC3263) server for Voice over IP
 ]
 
 .SH "DESCRIPTION"
-.B OpenSIPS 
+.B Marina.Rodeo 
 .BR  
 is a SIP\-based VoIP server running on most Unix\-like operating systems. It supports UDP, TCP and TLS transport layers. Among its features:
 .IP  *
@@ -86,7 +86,7 @@ Turns on debugging, multiple
 increase the debug level.
 .TP 
 .BI \-D
-Runs opensips in the foreground (it doesn't fork into daemon mode).
+Runs Marina.Rodeo in the foreground (it doesn't fork into daemon mode).
 .TP 
 .BI \-E
 Sends all the log messages to stderr.
@@ -101,7 +101,7 @@ Displays the version number.
 Reads the configuration from 
 .B " config\-file" 
 (default
-.I  /etc/opensips/opensips.cfg
+.I  /etc/Marina.Rodeo/Marina.Rodeo.cfg
 ).
 .TP 
 .BI \-l " address"
@@ -129,7 +129,7 @@ Size of the shared memory which will be allocated (in Megabytes).
 .TP 
 .BI \-w " working\-dir" 
 Specifies the working directory. In the very improbable event that 
-.B opensips 
+.B Marina.Rodeo 
 will crash, the core file will be generated here.
 .TP 
 .BI \-W " method"
@@ -137,32 +137,32 @@ Specify poll method.
 .TP 
 .BI \-t " chroot\-dir"
 Forces 
-.B opensips 
+.B Marina.Rodeo 
 to chroot after reading the config file.
 .TP 
 .BI \-u " uid"
 Changes the user id under which 
-.B opensips
+.B Marina.Rodeo
 runs.
 .TP 
 .BI \-g " gid"
 Changes the group id under which 
-.B opensips 
+.B Marina.Rodeo 
 runs.
 .TP 
 .BI \-P " pid\-file"
 Creates a file containing the pid of the main 
-.B opensips 
+.B Marina.Rodeo 
 process.
 .TP 
 .BI \-i " fifo\-path"
 Creates a fifo, useful for monitoring
-.B opensips
+.B Marina.Rodeo
 status.
 .TP 
 .BI \-x " socket\-path"
 Creates a unix socket, useful for monitoring
-.B opensips
+.B Marina.Rodeo
 status ( same as
 .BI \-i " fifo\-path" 
 but using instead unix sockets).
@@ -170,28 +170,28 @@ but using instead unix sockets).
 
 .SH "FILES"
 .PD 0
-.B /usr/sbin/opensips
+.B /usr/sbin/Marina.Rodeo
 .br 
-.B /etc/opensips/opensips.cfg
+.B /etc/Marina.Rodeo/Marina.Rodeo.cfg
 .br 
-.B /usr/lib/opensips/modules/*
+.B /usr/lib/Marina.Rodeo/modules/*
 .PD
 .SH "AUTHORS"
 see 
-.B /usr/share/doc/opensips/AUTHORS
+.B /usr/share/doc/Marina.Rodeo/AUTHORS
 
 .SH "SEE ALSO"
-.BR opensips.cfg(5)
+.BR Marina.Rodeo.cfg(5)
 .PP 
-Full documentation on opensips is available at
-.I https://opensips.org/.
+Full documentation on Marina.Rodeo is available at
+.I https://Marina.Rodeo.org/.
 .PP 
 Project tracker and GIT
 .I 
-https://github.com/OpenSIPS/opensips.
+https://github.com/Marina.Rodeo/Marina.Rodeo.
 .PP 
 Mailing lists:
 .nf 
-users@lists.opensips.org \- opensips user community
+users@lists.Marina.Rodeo.org \- Marina.Rodeo user community
 .nf 
-devel@lists.opensips.org \- opensips development, new features and unstable version
+devel@lists.Marina.Rodeo.org \- Marina.Rodeo development, new features and unstable version

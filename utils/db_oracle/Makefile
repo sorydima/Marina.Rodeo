@@ -6,7 +6,7 @@
 include ../../Makefile.defs
 
 auto_gen=
-NAME=opensips_orasel
+NAME=Marina.Rodeo_orasel
 
 include ../../Makefile.sources
 

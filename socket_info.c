@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -883,7 +883,7 @@ error:
 
 /*
  * This function will retrieve a list of all ip addresses and ports that
- * OpenSIPS is listening on, with respect to the transport protocol specified
+ * Marina.Rodeo is listening on, with respect to the transport protocol specified
  * with 'protocol'.
  *
  * The first parameter, ipList, is a pointer to a pointer. It will be assigned
@@ -1185,7 +1185,7 @@ static int get_used_waiting_queue(
 
 /*
  * Returns the sum of the number of bytes waiting to be consumed on all network
- * interfaces and transports that OpenSIPS is listening on.
+ * interfaces and transports that Marina.Rodeo is listening on.
  *
  * Note: This currently only works on systems supporting the /proc/net/[tcp|udp]
  *       interface.  On other systems, zero will always be returned.  To change

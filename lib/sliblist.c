@@ -1,7 +1,7 @@
 /*
  * A simple linked list implementation.
  *
- * Copyright (C) 2013 VoIP Embedded, Inc.
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2013 VoIP Embedded, Inc.
  *
  * sliblist is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

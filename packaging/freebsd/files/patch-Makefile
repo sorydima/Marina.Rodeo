@@ -32,39 +32,39 @@
 -				$(cfg-prefix)/$(cfg-dir)$(NAME).cfg; \
 -		fi
  		# radius dictionary
--		$(INSTALL_TOUCH) $(cfg-prefix)/$(cfg-dir)/dictionary.opensips.sample
--		$(INSTALL_CFG) etc/dictionary.opensips \
--			$(cfg-prefix)/$(cfg-dir)/dictionary.opensips.sample
-+		$(INSTALL_TOUCH) $(cfg-prefix)/$(cfg-dir)/dictionary.opensips.default
-+		$(INSTALL_CFG) etc/dictionary.opensips $(cfg-prefix)/$(cfg-dir)/dictionary.opensips.default
- 		if [ ! -f $(cfg-prefix)/$(cfg-dir)/dictionary.opensips ]; then \
--			mv -f $(cfg-prefix)/$(cfg-dir)/dictionary.opensips.sample \
-+			cp -f $(cfg-prefix)/$(cfg-dir)/dictionary.opensips.default \
- 				$(cfg-prefix)/$(cfg-dir)/dictionary.opensips; \
+-		$(INSTALL_TOUCH) $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.sample
+-		$(INSTALL_CFG) etc/dictionary.Marina.Rodeo \
+-			$(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.sample
++		$(INSTALL_TOUCH) $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.default
++		$(INSTALL_CFG) etc/dictionary.Marina.Rodeo $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.default
+ 		if [ ! -f $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo ]; then \
+-			mv -f $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.sample \
++			cp -f $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.default \
+ 				$(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo; \
  		fi
- 		# opensipsctl config
+ 		# Marina.Rodeoctl config
 @@ -445,7 +432,7 @@
- 		sed -e "s#/usr/local/lib/opensips#$(lib-target)#g" | \
- 		sed -e "s#/usr/local/etc/opensips#$(cfg-target)#g"  >/tmp/opensipsctl
- 		$(INSTALL_TOUCH) $(bin-prefix)/$(bin-dir)/opensipsctl
--		$(INSTALL_BIN) /tmp/opensipsctl $(bin-prefix)/$(bin-dir)
-+		$(BSD_INSTALL_SCRIPT) /tmp/opensipsctl $(bin-prefix)/$(bin-dir)
- 		rm -fr /tmp/opensipsctl
+ 		sed -e "s#/usr/local/lib/Marina.Rodeo#$(lib-target)#g" | \
+ 		sed -e "s#/usr/local/etc/Marina.Rodeo#$(cfg-target)#g"  >/tmp/Marina.Rodeoctl
+ 		$(INSTALL_TOUCH) $(bin-prefix)/$(bin-dir)/Marina.Rodeoctl
+-		$(INSTALL_BIN) /tmp/Marina.Rodeoctl $(bin-prefix)/$(bin-dir)
++		$(BSD_INSTALL_SCRIPT) /tmp/Marina.Rodeoctl $(bin-prefix)/$(bin-dir)
+ 		rm -fr /tmp/Marina.Rodeoctl
  		sed -e "s#/usr/local/sbin#$(bin-target)#g" \
- 			< scripts/opensipsctl.base > /tmp/opensipsctl.base
+ 			< scripts/Marina.Rodeoctl.base > /tmp/Marina.Rodeoctl.base
 @@ -492,10 +479,10 @@
- 		sed -e "s#/usr/local/lib/opensips#$(lib-target)#g" | \
- 		sed -e "s#/usr/local/etc/opensips#$(cfg-target)#g"  >/tmp/opensipsdbctl
- 		$(INSTALL_TOUCH) $(bin-prefix)/$(bin-dir)/opensipsdbctl
--		$(INSTALL_BIN) /tmp/opensipsdbctl $(bin-prefix)/$(bin-dir)
-+		$(BSD_INSTALL_SCRIPT) /tmp/opensipsdbctl $(bin-prefix)/$(bin-dir)
- 		rm -fr /tmp/opensipsdbctl
+ 		sed -e "s#/usr/local/lib/Marina.Rodeo#$(lib-target)#g" | \
+ 		sed -e "s#/usr/local/etc/Marina.Rodeo#$(cfg-target)#g"  >/tmp/Marina.Rodeodbctl
+ 		$(INSTALL_TOUCH) $(bin-prefix)/$(bin-dir)/Marina.Rodeodbctl
+-		$(INSTALL_BIN) /tmp/Marina.Rodeodbctl $(bin-prefix)/$(bin-dir)
++		$(BSD_INSTALL_SCRIPT) /tmp/Marina.Rodeodbctl $(bin-prefix)/$(bin-dir)
+ 		rm -fr /tmp/Marina.Rodeodbctl
  		$(INSTALL_TOUCH)   $(bin-prefix)/$(bin-dir)/$(NAME)unix
 -		$(INSTALL_BIN) utils/$(NAME)unix/$(NAME)unix $(bin-prefix)/$(bin-dir)
 +		$(BSD_INSTALL_SCRIPT) utils/$(NAME)unix/$(NAME)unix $(bin-prefix)/$(bin-dir)
  		# install dbtext stuff
- 		mkdir -p $(modules-prefix)/$(lib-dir)/opensipsctl ; \
- 		sed -e "s#/usr/local/share/opensips#$(data-target)#g" \
+ 		mkdir -p $(modules-prefix)/$(lib-dir)/Marina.Rodeoctl ; \
+ 		sed -e "s#/usr/local/share/Marina.Rodeo#$(data-target)#g" \
 @@ -624,9 +611,7 @@
  			if [ -f modules/"$$r"/README ]; then \
  				$(INSTALL_TOUCH)  $(doc-prefix)/$(doc-dir)/README ; \

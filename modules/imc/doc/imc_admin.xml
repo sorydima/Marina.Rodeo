@@ -162,8 +162,8 @@ modparam("imc", "imc_cmd_start_char", "#")
 		<title><varname>outbound_proxy</varname> (str)</title>
 		<para>
 	   The SIP address used as next hop when sending the message. Very
-   useful when using OpenSIPS with a domain name not in DNS, or
-   when using a separate OpenSIPS instance for imc processing. If
+   useful when using Marina.Rodeo with a domain name not in DNS, or
+   when using a separate Marina.Rodeo instance for imc processing. If
    not set, the message will be sent to the address in destination
    URI.
 		</para>
@@ -176,7 +176,7 @@ modparam("imc", "imc_cmd_start_char", "#")
 		<title>Set <varname>outbound_proxy</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("imc", "outbound_proxy", "sip:opensips.org;transport=tcp")
+modparam("imc", "outbound_proxy", "sip:Marina.Rodeo.org;transport=tcp")
 ...
 </programlisting>
 		</example>
@@ -230,7 +230,7 @@ if(is_method("MESSAGE)
 		MI FIFO Command Format:
 		</para>
         <programlisting  format="linespecific">
-		opensips-cli -x mi imc_list_rooms
+		Marina.Rodeo-cli -x mi imc_list_rooms
 		</programlisting>
 	</section>
 
@@ -253,7 +253,7 @@ if(is_method("MESSAGE)
 		MI FIFO Command Format:
 		</para>
         <programlisting  format="linespecific">
-		opensips-cli -x mi imc_list_members sip:chat-000@opensips.org
+		Marina.Rodeo-cli -x mi imc_list_members sip:chat-000@Marina.Rodeo.org
 		</programlisting>
 	</section>
 	</section>
@@ -304,8 +304,8 @@ if(is_method("MESSAGE)
     present it will be considered to be the address in the To
     header of the message
   -if the room does not exist the command is treated as create
-  -eg:join sip:chat-000@opensips.org,
-      or just, #join, sent to sip:chat-000@opensips.org
+  -eg:join sip:chat-000@Marina.Rodeo.org,
+      or just, #join, sent to sip:chat-000@Marina.Rodeo.org
 
 3.invite
   -invites a user to become a member of a room
@@ -315,15 +315,15 @@ if(is_method("MESSAGE)
 	   to be the address in the To header of the message
   -only certain users have the right to invite other user: the owner
     and the administrators
-  -eg: #invite sip:john@opensips.org sip:chat-000@opensips.org
-    or  #invite john@opensips.org sent to sip:chat-000@opensips.org
+  -eg: #invite sip:john@Marina.Rodeo.org sip:chat-000@Marina.Rodeo.org
+    or  #invite john@Marina.Rodeo.org sent to sip:chat-000@Marina.Rodeo.org
 
 4.accept
   -accepting an invitation
   -takes one optional parameter - the address of the room - if not
     present it will be considered to be the address in the To header
     of the message
-  -eg: #accept sip:john@opensips.org
+  -eg: #accept sip:john@Marina.Rodeo.org
 
 5.deny
   -rejects an invitation
@@ -336,7 +336,7 @@ if(is_method("MESSAGE)
     2)the address of the room -if not present it will be considered
 	  to be the address in the To header of the message
   -only certain members have the right to remove other members
-  -eg: #remove sip:john@opensips.org, sent to sip:chat-000@opensips.org
+  -eg: #remove sip:john@Marina.Rodeo.org, sent to sip:chat-000@Marina.Rodeo.org
 
 7.exit
   -leaving a room
@@ -365,7 +365,7 @@ if(is_method("MESSAGE)
 		tables were not created by the installation script or you choose
 		to install everything by yourself you can use the imc-create.sql
 		<acronym>SQL</acronym> script in the database directories in the 
-		opensips/scripts folder as template. 
+		Marina.Rodeo/scripts folder as template. 
 		You can also find the complete database documentation on the
 		project webpage, &osipsdbdocslink;.
 		</para>

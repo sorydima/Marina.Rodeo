@@ -1,13 +1,13 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
 inherit eutils
 
-DESCRIPTION="OpenSIPS - flexible and robust SIP (RFC3261) server"
-HOMEPAGE="https://opensips.org/"
+DESCRIPTION="Marina.Rodeo - flexible and robust SIP (RFC3261) server"
+HOMEPAGE="https://Marina.Rodeo.org/"
 MY_P="${P}_src"
-SRC_URI="https://opensips.org/pub/opensips/${PV}/src/${MY_P}.tar.gz"
+SRC_URI="https://Marina.Rodeo.org/pub/Marina.Rodeo/${PV}/src/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -83,7 +83,7 @@ src_compile() {
 		prefix=${ROOT}/ \
 		include_modules="${inc_mod}" \
 		cfg_prefix=${ROOT}/ \
-		cfg_target=${ROOT}/etc/opensips/ || die
+		cfg_target=${ROOT}/etc/Marina.Rodeo/ || die
 }
 
 src_install () {
@@ -95,31 +95,31 @@ src_install () {
 		bin_prefix=${D}/usr/sbin \
 		bin_dir="" \
 		cfg_prefix=${D}/etc \
-		cfg_dir=opensips/ \
-		cfg_target=${D}/etc/opensips \
-		modules_prefix=${D}/usr/lib/opensips \
+		cfg_dir=Marina.Rodeo/ \
+		cfg_target=${D}/etc/Marina.Rodeo \
+		modules_prefix=${D}/usr/lib/Marina.Rodeo \
 		modules_dir=modules \
-		modules_target=${D}/usr/lib/opensips/modules/ \
+		modules_target=${D}/usr/lib/Marina.Rodeo/modules/ \
 		man_prefix=${D}/usr/share/man \
 		man_dir="" \
 		doc_prefix=${D}/usr/share/doc \
 		doc_dir=${PF} || die
 	exeinto /etc/init.d
-	newexe ${FILESDIR}/opensips.init opensips
+	newexe ${FILESDIR}/Marina.Rodeo.init Marina.Rodeo
 
 	# fix what the Makefile don't do
 	use mysql || \
-		rm ${D}/usr/sbin/opensips_mysql.sh
+		rm ${D}/usr/sbin/Marina.Rodeo_mysql.sh
 }
 
 pkg_postinst() {
-	einfo "WARNING: If you upgraded from a previous OpenSIPS version"
+	einfo "WARNING: If you upgraded from a previous Marina.Rodeo version"
 	einfo "please read the README, NEWS and INSTALL files in the"
 	einfo "documentation directory because the database and the"
-	einfo "configuration file of old OpenSIPS versions are incompatible"
+	einfo "configuration file of old Marina.Rodeo versions are incompatible"
 	einfo "with the current version."
 }
 
 pkg_prerm () {
-	${D}/etc/init.d/opensips stop >/dev/null
+	${D}/etc/init.d/Marina.Rodeo stop >/dev/null
 }

@@ -1,16 +1,16 @@
 /*
- * OpenSIPS configuration file pre-processing
+ * Marina.Rodeo configuration file pre-processing
  *
- * Copyright (C) 2019 OpenSIPS Solutions
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2019 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -52,7 +52,7 @@ str cfgtok_line = str_init("__OSSPP_LINE__");
 str cfgtok_filebegin = str_init("__OSSPP_FILEBEGIN__");
 str cfgtok_fileend = str_init("__OSSPP_FILEEND__");
 
-static int flatten_opensips_cfg(FILE *cfg, const char *cfg_path, str *out);
+static int flatten_Marina.Rodeo_cfg(FILE *cfg, const char *cfg_path, str *out);
 static int exec_preprocessor(FILE *flat_cfg, const char *preproc_cmdline,
                              str *out);
 
@@ -61,7 +61,7 @@ static void cfg_context_reset_all(void);
 static void cfg_context_append_line(struct cfg_context *con,
                                     char *line, int len);
 
-int parse_opensips_cfg(const char *cfg_file, const char *preproc_cmdline,
+int parse_Marina.Rodeo_cfg(const char *cfg_file, const char *preproc_cmdline,
 															str *ret_buffer)
 {
 	FILE *cfg_stream;
@@ -85,7 +85,7 @@ int parse_opensips_cfg(const char *cfg_file, const char *preproc_cmdline,
 
 	cfg_context_reset_all();
 
-	if (flatten_opensips_cfg(cfg_stream,
+	if (flatten_Marina.Rodeo_cfg(cfg_stream,
 				cfg_stream == stdin ? "stdin" : cfg_file, &cfg_buf) < 0) {
 		LM_ERR("failed to resolve file imports for %s\n", cfg_file);
 		return -1;
@@ -232,7 +232,7 @@ int mk_included_file_path(char *line, int line_len, const char *current_dir,
 		memcpy(full_path, current_dir, len1);
 		fplen = len1;
 
-		/* this test can only fail when opensips runs from '/' */
+		/* this test can only fail when Marina.Rodeo runs from '/' */
 		if (current_dir[len1 - 1] != '/')
 			full_path[fplen++] = '/';
 
@@ -313,7 +313,7 @@ static void cfg_context_append_line(struct cfg_context *con,
 	con->loc++;
 }
 
-static int __flatten_opensips_cfg(FILE *cfg, const char *cfg_path,
+static int __flatten_Marina.Rodeo_cfg(FILE *cfg, const char *cfg_path,
                         char **flattened, int *sz, int *bytes_left, int reclev)
 {
 	FILE *included_cfg;
@@ -415,7 +415,7 @@ static int __flatten_opensips_cfg(FILE *cfg, const char *cfg_path,
 			}
 
 			included_cfg_path = strdup(included_cfg_path);
-			if (__flatten_opensips_cfg(included_cfg, included_cfg_path,
+			if (__flatten_Marina.Rodeo_cfg(included_cfg, included_cfg_path,
 			                           flattened, sz, bytes_left, reclev + 1)) {
 				free(included_cfg_path);
 				LM_ERR("failed to flatten cfg file %s\n", cfg_path);
@@ -468,12 +468,12 @@ out_err:
  * - adnotate each line of the final file
  * - close given FILE * and return a buffer corresponding to the new file
  */
-static int flatten_opensips_cfg(FILE *cfg, const char *cfg_path, str *out)
+static int flatten_Marina.Rodeo_cfg(FILE *cfg, const char *cfg_path, str *out)
 {
 	int sz = 0, bytes_left = 0;
 	char *flattened = NULL;
 
-	if (__flatten_opensips_cfg(cfg, cfg_path, &flattened, &sz, &bytes_left, 0)) {
+	if (__flatten_Marina.Rodeo_cfg(cfg, cfg_path, &flattened, &sz, &bytes_left, 0)) {
 		LM_ERR("failed to flatten cfg file %s\n", cfg_path);
 		return -1;
 	}

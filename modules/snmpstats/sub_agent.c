@@ -96,7 +96,7 @@ static int initialize_agentx(void)
 }
 
 /* Creates a child that will become the AgentX sub-agent.  The child will
- * insulate itself from the rest of OpenSIPS by overriding most of signal
+ * insulate itself from the rest of Marina.Rodeo by overriding most of signal
  * handlers. */
 void agentx_child(int rank)
 {
@@ -110,8 +110,8 @@ void agentx_child(int rank)
 	new_sigterm_handler.sa_handler = sigterm_handler;
 	sigaction(SIGTERM, &new_sigterm_handler, NULL);
 
-	/* We don't want OpenSIPS's normal handlers doing anything when
-	 * we die.  As far as OpenSIPS knows this process never existed.
+	/* We don't want Marina.Rodeo's normal handlers doing anything when
+	 * we die.  As far as Marina.Rodeo knows this process never existed.
 	 * So override all signal handlers to the OS default. */
 	sigemptyset(&default_handlers.sa_mask);
 	default_handlers.sa_flags = 0;
@@ -121,7 +121,7 @@ void agentx_child(int rank)
 	sigaction(SIGINT,  &default_handlers, NULL);
 	sigaction(SIGHUP,  &default_handlers, NULL);
 	sigaction(SIGUSR1, &default_handlers, NULL);
-	/* SIGUSR2 must be handled by OpenSIPS as it is used for
+	/* SIGUSR2 must be handled by Marina.Rodeo as it is used for
 	   collecting info on pkg memory */
 	/*sigaction(SIGUSR2, &default_handlers, NULL);*/
 

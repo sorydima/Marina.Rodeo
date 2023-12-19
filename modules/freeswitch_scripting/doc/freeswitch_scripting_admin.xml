@@ -7,11 +7,11 @@
 	<title>Overview</title>
 	<para>
 		<emphasis>freeswitch_scripting</emphasis> is a helper module that
-		exposes full control over the FreeSWITCH ESL interface to the OpenSIPS
+		exposes full control over the FreeSWITCH ESL interface to the Marina.Rodeo
 		script.
 	</para>
 	<para>
-		It allows the OpenSIPS script writer to subscribe
+		It allows the Marina.Rodeo script writer to subscribe
 		to generic FreeSWITCH ESL events as well as to run arbitrary
 		FreeSWITCH ESL commands and interpret their results.
 		It makes use of the <ulink url='freeswitch'>freeswitch</ulink>
@@ -189,7 +189,7 @@ modparam("freeswitch_scripting", "db_col_port", "tcp_port")
 		<title><varname>db_col_events</varname> (string)</title>
 		<para>
 		The SQL column name for the comma-separated, case-sensitive FreeSWITCH
-		event names which OpenSIPS will subscribe to.
+		event names which Marina.Rodeo will subscribe to.
 		</para>
 		<para>
 		<emphasis>
@@ -209,7 +209,7 @@ modparam("freeswitch_scripting", "db_col_events", "fs_events")
 	<section id="param_fs_subscribe" xreflabel="fs_subscribe">
 		<title><varname>fs_subscribe</varname> (string)</title>
 		<para>
-		Add a FreeSWITCH ESL URL to which OpenSIPS will connect at startup.
+		Add a FreeSWITCH ESL URL to which Marina.Rodeo will connect at startup.
 		The URL syntax includes support for specifying a list of events to
 		subscribe to and follows this pattern:
 		<emphasis role='bold'>[fs://][[username]:password@]host[:port][?event1[,event2]...]</emphasis>
@@ -246,7 +246,7 @@ modparam("freeswitch_scripting", "fs_subscribe", ":ClueCon@10.0.0.11:8021?DTMF,B
 		becomes mandatory.
 		</para>
 		<para>
-		The current OpenSIPS worker will block until an answer from FreeSWITCH
+		The current Marina.Rodeo worker will block until an answer from FreeSWITCH
 		arrives. The timeout for this operation can be controlled via the
 		<emphasis role='bold'>esl_cmd_timeout</emphasis> parameter of the
 		freeswitch connection manager module.
@@ -396,7 +396,7 @@ modparam("freeswitch_scripting", "fs_subscribe", ":ClueCon@10.0.0.11:8021?DTMF,B
 		<function moreinfo="none">E_FREESWITCH</function>
 		</title>
 		<para>
-		This event is raised when OpenSIPS receives an ESL event notification from
+		This event is raised when Marina.Rodeo receives an ESL event notification from
 		a socket that the "freeswitch_scripting" module is subscribed to.
 		</para>
 		<para>Parameters:</para>

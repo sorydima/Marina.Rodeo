@@ -7,7 +7,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-	The B2BUA implementation in OpenSIPS is separated in two layers:
+	The B2BUA implementation in Marina.Rodeo is separated in two layers:
 	<itemizedlist>
 		<listitem><para>
 		a lower one (implemented in the b2b_entities module) - the basic functions
@@ -40,7 +40,7 @@
 	<para>
 	High Availability for B2B sessions can be achieved by enabling the clustering support
 	offered by the the lower <emphasis>b2b_entities</emphasis> module (by setting the
-	<ulink url="https://opensips.org/docs/modules/3.1.x/b2b_entities.html#param_cluster_id">
+	<ulink url="https://Marina.Rodeo.org/docs/modules/3.1.x/b2b_entities.html#param_cluster_id">
 	cluster_id</ulink> modparam from <emphasis>b2b_entities</emphasis>).
 	</para>
 	</section>
@@ -51,13 +51,13 @@
 		After initializing a B2B session, the call legs will be handled by the b2b_logic
 		module and the first step will be to put the two initial entities in contact.
 		Requests and replies belonging to these dialogs will not enter the script through
-		the standard OpenSIPS routes but instead will be handled in b2b_logic dedicated routes
+		the standard Marina.Rodeo routes but instead will be handled in b2b_logic dedicated routes
 		(defined through the <xref linkend="param_script_req_route"/> and
 		<xref linkend="param_script_reply_route"/> modparams or, the custom routes given as
 		parameters to <xref linkend="func_b2b_init_request"/>).
 		The further steps of the scenario can be implemented in these routes, by calling
 		dedicated b2b_logic script functions in order to perform various actions. Normal
-		"proxy-like" OpenSIPS functions should not be executed in the b2b_logic routes.
+		"proxy-like" Marina.Rodeo functions should not be executed in the b2b_logic routes.
 	</para>
 	<para>
 		Some messages will be handled automatically by the module and will not enter the
@@ -250,7 +250,7 @@ modparam("b2b_logic", "custom_headers", "User-Agent;Date")
 		<title>Set <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("b2b_logic", "db_url", "mysql://opensips:opensipsrw@127.0.0.1/opensips")
+modparam("b2b_logic", "db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@127.0.0.1/Marina.Rodeo")
 ...
 	</programlisting>
 		</example>
@@ -362,7 +362,7 @@ modparam("b2b_logic", "b2bl_from_spec_param", "$var(b2bl_from)")
 route{
 	...
 	# setting the From header
-	$var(b2bl_from) = "\"Call ID\" &lt;sip:user@opensips.org&gt;";
+	$var(b2bl_from) = "\"Call ID\" &lt;sip:user@Marina.Rodeo.org&gt;";
 	...
 	b2b_init_request("top hiding");
 	...
@@ -375,7 +375,7 @@ route{
 		<title><varname>server_address</varname> (str)</title>
 		<para>
 			The IP address of the machine that will be used as Contact in
-			the generated messages. This is compulsory only when OpenSIPS
+			the generated messages. This is compulsory only when Marina.Rodeo
 			starts a call from the middle. For scenarios triggered by received
 			calls, if it is not set, it is constructed dynamically from the
 			socket where the initiating request was received.
@@ -593,7 +593,7 @@ if(is_method("INVITE") &amp;&amp; !has_totag() &amp;&amp; prepaid_user()) {
 			[extra_hdr_bodies])</function>
 		</title>
 		<para>
-			This function creates a new server entity (dialog where OpenSIPS acts as a UAS)
+			This function creates a new server entity (dialog where Marina.Rodeo acts as a UAS)
 			to be used for initializing a new B2B session. It should only be
 			used for initial INVITES, before calling <xref linkend="func_b2b_init_request"/>.
 		</para>
@@ -641,7 +641,7 @@ if(is_method("INVITE") &amp;&amp; !has_totag()) {
 			[adv_contact], [extra_hdrs], [extra_hdr_bodies])</function>
 		</title>
 		<para>
-			This function creates a new client entity (dialog where OpenSIPS acts as a UAC)
+			This function creates a new client entity (dialog where Marina.Rodeo acts as a UAC)
 			to be used for initializing a new B2B session or for a bridge action. The function
 			can be used before calling <xref linkend="func_b2b_init_request"/> or
 			<xref linkend="func_b2b_bridge"/>.
@@ -686,7 +686,7 @@ if(is_method("INVITE") &amp;&amp; !has_totag()) {
 			<title><function>b2b_client_new</function> usage</title>
 		<programlisting format="linespecific">
 ...
-b2b_client_new("client1", "sip:alice@opensips.org");
+b2b_client_new("client1", "sip:alice@Marina.Rodeo.org");
 ...
 		</programlisting>
 		</example>
@@ -792,7 +792,7 @@ route[b2b_logic_request] {
 route[b2b_logic_reply] {
    ...
    if ($b2b_logic.entity(id) == "client1" &amp;&amp; $rm == "INVITE" &amp;&amp; $rs >= 300) {
-      b2b_client_new("client_retry", "sip:alice@opensips.org");
+      b2b_client_new("client_retry", "sip:alice@Marina.Rodeo.org");
 
       b2b_bridge_retry("client_retry");
    } else {
@@ -1103,7 +1103,7 @@ if(is_method("REFER") &amp;&amp; !has_totag()) {
 		<function moreinfo="none">b2b_trigger_scenario</function>
 		</title>
 		<para>
-		This command initializes a new B2B session where OpenSIPS will start
+		This command initializes a new B2B session where Marina.Rodeo will start
 		a call from the middle. The initial entities to be connected are
 		specified through the command's parameters and further scenario logic
 		can be implemented in the b2b_logic dedicated routes.
@@ -1147,7 +1147,7 @@ if(is_method("REFER") &amp;&amp; !has_totag()) {
 		MI FIFO Command Format:
 		</para>
 	<programlisting  format="linespecific">
-	opensips-cli -x mi b2b_trigger_scenario marketing client1,sip:bob@opensips.org client2,sip:322@opensips.org:5070 agent_uri=sip:alice@opensips.org
+	Marina.Rodeo-cli -x mi b2b_trigger_scenario marketing client1,sip:bob@Marina.Rodeo.org client2,sip:322@Marina.Rodeo.org:5070 agent_uri=sip:alice@Marina.Rodeo.org
 		</programlisting>
 	</section>
 
@@ -1187,11 +1187,11 @@ if(is_method("REFER") &amp;&amp; !has_totag()) {
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 	<programlisting  format="linespecific">
-	opensips-cli -x mi b2b_bridge 1020.30 sip:alice@opensips.org
+	Marina.Rodeo-cli -x mi b2b_bridge 1020.30 sip:alice@Marina.Rodeo.org
 	</programlisting>
-		<para>opensips-cli Command Format:</para>
+		<para>Marina.Rodeo-cli Command Format:</para>
 	<programlisting  format="linespecific">
-	opensips-cli -x mi b2b_bridge 1020.30 sip:alice@opensips.org
+	Marina.Rodeo-cli -x mi b2b_bridge 1020.30 sip:alice@Marina.Rodeo.org
 	</programlisting>
 	</section>
 
@@ -1210,7 +1210,7 @@ if(is_method("REFER") &amp;&amp; !has_totag()) {
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 	<programlisting  format="linespecific">
-	opensips-cli -x mi b2b_list
+	Marina.Rodeo-cli -x mi b2b_list
 	</programlisting>
 	</section>
 
@@ -1235,7 +1235,7 @@ if(is_method("REFER") &amp;&amp; !has_totag()) {
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 	<programlisting  format="linespecific">
-	opensips-cli -x mi b2b_terminate_call 159.0
+	Marina.Rodeo-cli -x mi b2b_terminate_call 159.0
 	</programlisting>
 	</section>
 

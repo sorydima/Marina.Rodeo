@@ -613,7 +613,7 @@ modparam("acc", "db_table_missed_calls", "myMC_table")
 		<example>
 		<title>db_url example</title>
 		<programlisting format="linespecific">
-modparam("acc", "db_url", "mysql://user:password@localhost/opensips")
+modparam("acc", "db_url", "mysql://user:password@localhost/Marina.Rodeo")
 </programlisting>
 		</example>
 	</section>

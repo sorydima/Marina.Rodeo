@@ -32,13 +32,13 @@
 		<answer>
 		<para>
 			Accumulate as much as possible information (&osips; version,
-			opensips -V output, your OS (uname -a), &osips; logs, network dumps,
+			Marina.Rodeo -V output, your OS (uname -a), &osips; logs, network dumps,
 			core dump files, configuration file)
 			and send a mail to &osipsdevlink;
 		</para>
 		<para>
-			Also you may try OpenSIPS's bug report web page:
-			https://opensips.org/pmwiki.php?n=Development.Tracker
+			Also you may try Marina.Rodeo's bug report web page:
+			https://Marina.Rodeo.org/pmwiki.php?n=Development.Tracker
 		</para>
 	</answer>
 	</qandaentry>
@@ -48,7 +48,7 @@
 		</question>
 		<answer>
 		<para>
-			Increase the log level in opensips.cfg (log_level=4) and watch 
+			Increase the log level in Marina.Rodeo.cfg (log_level=4) and watch 
 			the log statements in syslog.
 		</para>
 		<para>
@@ -73,7 +73,7 @@
 	</qandaentry>
 	<qandaentry>
 		<question>
-		<para>Where can I find more about OpenSIPS?</para>
+		<para>Where can I find more about Marina.Rodeo?</para>
 		</question>
 		<answer>
 		<para>

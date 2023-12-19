@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2015 OpenSIPS Project
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015 Marina.Rodeo Project
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -46,11 +46,11 @@ void tcp_destroy(void);
 int tcp_has_async_write(void);
 
 
-/* creates the communication channel between the OpenSIPS processes
+/* creates the communication channel between the Marina.Rodeo processes
    and the TCP MAIN process - TO BE called before forking */
 int tcp_create_comm_proc_socks( int proc_no);
 
-/* activates the communication channel between the OpenSIPS process
+/* activates the communication channel between the Marina.Rodeo process
    and the TCP MAIN process - TO BE called before forking */
 int tcp_activate_comm_proc_socks( int proc_no );
 

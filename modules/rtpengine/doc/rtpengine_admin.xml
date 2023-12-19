@@ -310,7 +310,7 @@ modparam("rtpengine", "error_pv", "$var(rtpengine_error)")
 <programlisting format="linespecific">
 ...
 modparam("rtpengine", "db_url", 
-		"mysql://opensips:opensipsrw@localhost/opensips")
+		"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo")
 ...
 </programlisting>
 		</example>
@@ -1417,9 +1417,9 @@ rtpengine_play_dtmf("0"); # send the 0 code upstream
 			<programlisting format="linespecific">
 ...
 ## disable all rtpengines by URL
-$ opensips-cli -x mi rtpengine_enable udp:192.168.2.133:8081 0
+$ Marina.Rodeo-cli -x mi rtpengine_enable udp:192.168.2.133:8081 0
 ## enable rtpengine by URL and set ID (3)
-$ opensips-cli -x mi rtpengine_enable url=udp:192.168.2.133:8081 enable=1 setid=3
+$ Marina.Rodeo-cli -x mi rtpengine_enable url=udp:192.168.2.133:8081 enable=1 setid=3
 ...
 			</programlisting>
 			</example>
@@ -1439,7 +1439,7 @@ $ opensips-cli -x mi rtpengine_enable url=udp:192.168.2.133:8081 enable=1 setid=
 				<function moreinfo="none">rtpengine_show</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi rtpengine_show
+$ Marina.Rodeo-cli -x mi rtpengine_show
 ...
 			</programlisting>
 			</example>
@@ -1468,8 +1468,8 @@ $ opensips-cli -x mi rtpengine_show
 				<function moreinfo="none">rtpengine_reload</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi rtpengine_reload
-$ opensips-cli -x mi rtpengine_reload type=soft
+$ Marina.Rodeo-cli -x mi rtpengine_reload
+$ Marina.Rodeo-cli -x mi rtpengine_reload type=soft
 ...
 			</programlisting>
 			</example>
@@ -1498,7 +1498,7 @@ $ opensips-cli -x mi rtpengine_reload type=soft
 				<function moreinfo="none">teardown</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi teardown Y2IwYjQ2YmE2ZDg5MWVkNDNkZGIwZjAzNGM1ZDY0ZDQ
+$ Marina.Rodeo-cli -x mi teardown Y2IwYjQ2YmE2ZDg5MWVkNDNkZGIwZjAzNGM1ZDY0ZDQ
 ...
 			</programlisting>
 			</example>

@@ -21,8 +21,8 @@ DEBVERSION:=$(shell head -n 1 debian/changelog \
 UPVERSION:=$(shell echo $(DEBVERSION) \
 					| sed -e 's/^.*://' -e 's/-[0-9.]*$$//' -e 's/.dfsg$$//')
 
-FILENAME := opensips_$(UPVERSION).orig.tar.gz
-URL := https://github.com/OpenSIPS/opensips/archive/$(UPVERSION).tar.gz
+FILENAME := Marina.Rodeo_$(UPVERSION).orig.tar.gz
+URL := https://github.com/Marina.Rodeo/Marina.Rodeo/archive/$(UPVERSION).tar.gz
 
 #
 # INSTALL_PREFIX - can be defined at build time to force a specific install
@@ -123,148 +123,148 @@ endif
 # FOO_MODULES is the directory name within modules/ that belongs to the package
 # FOO_MOD_PATH is same as FOO_MODULES, but with 'modules/' prepended
 
-AUTH_JWT_PKGNAME = opensips-auth-jwt-module
+AUTH_JWT_PKGNAME = Marina.Rodeo-auth-jwt-module
 AUTH_JWT_MODULES = auth_jwt
 AUTH_JWT_MOD_PATH=$(addprefix modules/, $(AUTH_JWT_MODULES))
-AUTH_PKGNAME = opensips-auth-modules
+AUTH_PKGNAME = Marina.Rodeo-auth-modules
 AUTH_MODULES = auth uac_auth
 AUTH_MOD_PATH=$(addprefix modules/, $(AUTH_MODULES))
-BERKELEY_PKGNAME = opensips-berkeley-module
+BERKELEY_PKGNAME = Marina.Rodeo-berkeley-module
 BERKELEY_MODULES = db_berkeley
 BERKELEY_MOD_PATH=$(addprefix modules/, $(BERKELEY_MODULES))
-CARRIERROUTE_PKGNAME = opensips-carrierroute-module
+CARRIERROUTE_PKGNAME = Marina.Rodeo-carrierroute-module
 CARRIERROUTE_MODULES = carrierroute
 CARRIERROUTE_MOD_PATH=$(addprefix modules/, $(CARRIERROUTE_MODULES))
-CGRATES_PKGNAME = opensips-cgrates-module
+CGRATES_PKGNAME = Marina.Rodeo-cgrates-module
 CGRATES_MODULES = cgrates
 CGRATES_MOD_PATH=$(addprefix modules/, $(CGRATES_MODULES))
-COMPRESSION_PKGNAME = opensips-compression-module
+COMPRESSION_PKGNAME = Marina.Rodeo-compression-module
 COMPRESSION_MODULES = compression
 COMPRESSION_MOD_PATH=$(addprefix modules/, $(COMPRESSION_MODULES))
-CPL_PKGNAME = opensips-cpl-module
+CPL_PKGNAME = Marina.Rodeo-cpl-module
 CPL_MODULES = cpl_c
 CPL_MOD_PATH=$(addprefix modules/, $(CPL_MODULES))
-DBHTTP_PKGNAME = opensips-dbhttp-module
+DBHTTP_PKGNAME = Marina.Rodeo-dbhttp-module
 DBHTTP_MODULES = db_http
 DBHTTP_MOD_PATH=$(addprefix modules/, $(DBHTTP_MODULES))
-DIALPLAN_PKGNAME = opensips-dialplan-module
+DIALPLAN_PKGNAME = Marina.Rodeo-dialplan-module
 DIALPLAN_MODULES = dialplan
 DIALPLAN_MOD_PATH=$(addprefix modules/, $(DIALPLAN_MODULES))
-DIAMETER_PKGNAME = opensips-diameter-module
+DIAMETER_PKGNAME = Marina.Rodeo-diameter-module
 DIAMETER_MODULES = aaa_diameter
 DIAMETER_MOD_PATH=$(addprefix modules/, $(DIAMETER_MODULES))
-EMERGENCY_PKGNAME = opensips-emergency-module
+EMERGENCY_PKGNAME = Marina.Rodeo-emergency-module
 EMERGENCY_MODULES = emergency
 EMERGENCY_MOD_PATH=$(addprefix modules/, $(EMERGENCY_MODULES))
-GEOIP_PKGNAME = opensips-geoip-module
+GEOIP_PKGNAME = Marina.Rodeo-geoip-module
 GEOIP_MODULES = mmgeoip
 GEOIP_MOD_PATH=$(addprefix modules/, $(GEOIP_MODULES))
-HTTP_PKGNAME = opensips-http-modules
+HTTP_PKGNAME = Marina.Rodeo-http-modules
 HTTP_MODULES = httpd mi_html mi_http pi_http
 HTTP_MOD_PATH=$(addprefix modules/, $(HTTP_MODULES))
-IDENTITY_PKGNAME = opensips-identity-module
+IDENTITY_PKGNAME = Marina.Rodeo-identity-module
 IDENTITY_MODULES = identity
 IDENTITY_MOD_PATH=$(addprefix modules/, $(IDENTITY_MODULES))
-JABBER_PKGNAME = opensips-jabber-module
+JABBER_PKGNAME = Marina.Rodeo-jabber-module
 JABBER_MODULES = jabber
 JABBER_MOD_PATH=$(addprefix modules/, $(JABBER_MODULES))
-JSON_PKGNAME = opensips-json-module
+JSON_PKGNAME = Marina.Rodeo-json-module
 JSON_MODULES = json
 JSON_MOD_PATH=$(addprefix modules/, $(JSON_MODULES))
-KAFKA_PKGNAME = opensips-kafka-module
+KAFKA_PKGNAME = Marina.Rodeo-kafka-module
 KAFKA_MODULES = event_kafka
 KAFKA_MOD_PATH=$(addprefix modules/, $(KAFKA_MODULES))
-LDAP_PKGNAME = opensips-ldap-modules
+LDAP_PKGNAME = Marina.Rodeo-ldap-modules
 LDAP_MODULES = ldap h350
 LDAP_MOD_PATH=$(addprefix modules/, $(LDAP_MODULES))
-LUA_PKGNAME = opensips-lua-module
+LUA_PKGNAME = Marina.Rodeo-lua-module
 LUA_MODULES = lua
 LUA_MOD_PATH=$(addprefix modules/, $(LUA_MODULES))
-MEMCACHED_PKGNAME = opensips-memcached-module
+MEMCACHED_PKGNAME = Marina.Rodeo-memcached-module
 MEMCACHED_MODULES = cachedb_memcached
 MEMCACHED_MOD_PATH=$(addprefix modules/, $(MEMCACHED_MODULES))
-MONGODB_PKGNAME = opensips-mongodb-module
+MONGODB_PKGNAME = Marina.Rodeo-mongodb-module
 MONGODB_MODULES = cachedb_mongodb
 MONGODB_MOD_PATH=$(addprefix modules/, $(MONGODB_MODULES))
-MSRP_PKGNAME = opensips-msrp-modules
+MSRP_PKGNAME = Marina.Rodeo-msrp-modules
 MSRP_MODULES = msrp_gateway msrp_relay msrp_ua proto_msrp
 MSRP_MOD_PATH=$(addprefix modules/, $(MSRP_MODULES))
-MYSQL_PKGNAME = opensips-mysql-module
+MYSQL_PKGNAME = Marina.Rodeo-mysql-module
 MYSQL_MODULES = db_mysql
 MYSQL_MOD_PATH=$(addprefix modules/, $(MYSQL_MODULES))
-PERL_PKGNAME = opensips-perl-modules
+PERL_PKGNAME = Marina.Rodeo-perl-modules
 PERL_MODULES = perl db_perlvdb
 PERL_MOD_PATH=$(addprefix modules/, $(PERL_MODULES))
-POSTGRES_PKGNAME = opensips-postgres-module
+POSTGRES_PKGNAME = Marina.Rodeo-postgres-module
 POSTGRES_MODULES = db_postgres
 POSTGRES_MOD_PATH=$(addprefix modules/, $(POSTGRES_MODULES))
-PRESENCE_PKGNAME = opensips-presence-modules
+PRESENCE_PKGNAME = Marina.Rodeo-presence-modules
 PRESENCE_MODULES = presence presence_callinfo presence_dialoginfo presence_xml presence_mwi presence_xcapdiff presence_dfks pua pua_bla pua_dialoginfo pua_mi pua_usrloc pua_xmpp rls xcap xcap_client
 PRESENCE_MOD_PATH=$(addprefix modules/, $(PRESENCE_MODULES))
-PROMETHEUS_PKGNAME = opensips-prometheus-module
+PROMETHEUS_PKGNAME = Marina.Rodeo-prometheus-module
 PROMETHEUS_MODULES = prometheus
 PROMETHEUS_MOD_PATH=$(addprefix modules/, $(PROMETHEUS_MODULES))
-PROTO_SCTP_PKGNAME = opensips-sctp-module
+PROTO_SCTP_PKGNAME = Marina.Rodeo-sctp-module
 PROTO_SCTP_MODULES = proto_sctp
 PROTO_SCTP_MOD_PATH=$(addprefix modules/, $(PROTO_SCTP_MODULES))
-PROTO_TLS_PKGNAME = opensips-tls-module
+PROTO_TLS_PKGNAME = Marina.Rodeo-tls-module
 PROTO_TLS_MODULES = proto_tls
 PROTO_TLS_MOD_PATH=$(addprefix modules/, $(PROTO_TLS_MODULES))
-PROTO_WSS_PKGNAME = opensips-wss-module
+PROTO_WSS_PKGNAME = Marina.Rodeo-wss-module
 PROTO_WSS_MODULES = proto_wss
 PROTO_WSS_MOD_PATH=$(addprefix modules/, $(PROTO_WSS_MODULES))
-PYTHON_PKGNAME = opensips-python-module
+PYTHON_PKGNAME = Marina.Rodeo-python-module
 PYTHON_MODULES = python
 PYTHON_MOD_PATH=$(addprefix modules/, $(PYTHON_MODULES))
-RABBITMQ_PKGNAME = opensips-rabbitmq-modules
+RABBITMQ_PKGNAME = Marina.Rodeo-rabbitmq-modules
 RABBITMQ_MODULES = event_rabbitmq rabbitmq rabbitmq_consumer
 RABBITMQ_MOD_PATH=$(addprefix modules/, $(RABBITMQ_MODULES))
-REDIS_PKGNAME = opensips-redis-module
+REDIS_PKGNAME = Marina.Rodeo-redis-module
 REDIS_MODULES = cachedb_redis
 REDIS_MOD_PATH=$(addprefix modules/, $(REDIS_MODULES))
-RADIUS_PKGNAME = opensips-radius-modules
+RADIUS_PKGNAME = Marina.Rodeo-radius-modules
 RADIUS_MODULES = aaa_radius peering
 RADIUS_MOD_PATH=$(addprefix modules/, $(RADIUS_MODULES))
-REGEX_PKGNAME = opensips-regex-module
+REGEX_PKGNAME = Marina.Rodeo-regex-module
 REGEX_MODULES = regex
 REGEX_MOD_PATH=$(addprefix modules/, $(REGEX_MODULES))
-REST_CLIENT_PKGNAME = opensips-restclient-module
+REST_CLIENT_PKGNAME = Marina.Rodeo-restclient-module
 REST_CLIENT_MODULES = rest_client
 REST_CLIENT_MOD_PATH=$(addprefix modules/, $(REST_CLIENT_MODULES))
-SIPREC_PKGNAME = opensips-siprec-module
+SIPREC_PKGNAME = Marina.Rodeo-siprec-module
 SIPREC_MODULES = siprec
 SIPREC_MOD_PATH=$(addprefix modules/, $(SIPREC_MODULES))
-SNMPSTATS_PKGNAME = opensips-snmpstats-module
+SNMPSTATS_PKGNAME = Marina.Rodeo-snmpstats-module
 SNMPSTATS_MODULES = snmpstats
 SNMPSTATS_MOD_PATH=$(addprefix modules/, $(SNMPSTATS_MODULES))
-SQLITE_PKGNAME = opensips-sqlite-module
+SQLITE_PKGNAME = Marina.Rodeo-sqlite-module
 SQLITE_MODULES = db_sqlite
 SQLITE_MOD_PATH=$(addprefix modules/, $(SQLITE_MODULES))
-STIR_SHAKEN_PKGNAME = opensips-stir-shaken-module
+STIR_SHAKEN_PKGNAME = Marina.Rodeo-stir-shaken-module
 STIR_SHAKEN_MODULES = stir_shaken
 STIR_SHAKEN_MOD_PATH=$(addprefix modules/, $(STIR_SHAKEN_MODULES))
-TLS_MGM_PKGNAME = opensips-tlsmgm-module
+TLS_MGM_PKGNAME = Marina.Rodeo-tlsmgm-module
 TLS_MGM_MODULES = tls_mgm
 TLS_MGM_MOD_PATH=$(addprefix modules/, $(TLS_MGM_MODULES))
-TLS_OPENSSL_PKGNAME = opensips-tls-openssl-module
+TLS_OPENSSL_PKGNAME = Marina.Rodeo-tls-openssl-module
 TLS_OPENSSL_MODULES = tls_openssl
 TLS_OPENSSL_MOD_PATH=$(addprefix modules/, $(TLS_OPENSSL_MODULES))
-TLS_WOLFSSL_PKGNAME = opensips-tls-wolfssl-module
+TLS_WOLFSSL_PKGNAME = Marina.Rodeo-tls-wolfssl-module
 TLS_WOLFSSL_MODULES = tls_wolfssl
 TLS_WOLFSSL_MOD_PATH=$(addprefix modules/, $(TLS_WOLFSSL_MODULES))
-UNIXODBC_PKGNAME = opensips-unixodbc-module
+UNIXODBC_PKGNAME = Marina.Rodeo-unixodbc-module
 UNIXODBC_MODULES=db_unixodbc
 UNIXODBC_MOD_PATH=$(addprefix modules/, $(UNIXODBC_MODULES))
-UUID_PKGNAME = opensips-uuid-module
+UUID_PKGNAME = Marina.Rodeo-uuid-module
 UUID_MODULES = uuid
 UUID_MOD_PATH=$(addprefix modules/, $(UUID_MODULES))
-XML_PKGNAME = opensips-xml-module
+XML_PKGNAME = Marina.Rodeo-xml-module
 XML_MODULES = xml
 XML_MOD_PATH=$(addprefix modules/, $(XML_MODULES))
-XMLRPC_PKGNAME = opensips-xmlrpc-module
+XMLRPC_PKGNAME = Marina.Rodeo-xmlrpc-module
 XMLRPC_MODULES = mi_xmlrpc_ng
 XMLRPC_MOD_PATH=$(addprefix modules/, $(XMLRPC_MODULES))
-XMPP_PKGNAME = opensips-xmpp-module
+XMPP_PKGNAME = Marina.Rodeo-xmpp-module
 XMPP_MODULES = xmpp
 XMPP_MOD_PATH=$(addprefix modules/, $(XMPP_MODULES))
 
@@ -341,10 +341,10 @@ override_dh_auto_build:
 	# Add here commands to compile the package.
 	CC="$(CC)" CFLAGS="$(CFLAGS)" $(VARS) FASTER=$(FASTER) $(MAKE) $(NJOBS) app \
 	  modules skip_modules="$(NONCORE_MODULES)" cfg_prefix=$(INSTALL_PREFIX) \
-	  cfg_target=$(INSTALL_PREFIX)/etc/opensips/
+	  cfg_target=$(INSTALL_PREFIX)/etc/Marina.Rodeo/
 	CC="$(CC)" CFLAGS="$(CFLAGS)" $(VARS) FASTER=$(FASTER) $(MAKE) $(NJOBS) \
 	  modules modules="$(BUILD_MODULE_PATHS)" cfg_prefix=$(INSTALL_PREFIX) \
-	  cfg_target=$(INSTALL_PREFIX)/etc/opensips/
+	  cfg_target=$(INSTALL_PREFIX)/etc/Marina.Rodeo/
 	# generate the utils db_berkeley
 	CC="$(CC)" CFLAGS="$(CFLAGS)" $(VARS) FASTER=$(FASTER) $(MAKE) $(NJOBS) utils include_modules="db_berkeley"
 
@@ -370,18 +370,18 @@ show-mod-info:
 	@echo "ALL_MOD_PATHS: $(ALL_MODULE_PATHS)"
 
 override_dh_auto_install:
-	# Add here commands to install the package into debian/opensips
-	# opensips base package
+	# Add here commands to install the package into debian/Marina.Rodeo
+	# Marina.Rodeo base package
 	CC="$(CC)" CFLAGS="$(CFLAGS)" $(VARS) FASTER=$(FASTER) $(MAKE) $(NJOBS) install \
 		install-modules-all skip_modules="$(NONCORE_MODULES)" \
-		basedir=$(CURDIR)/debian/opensips \
+		basedir=$(CURDIR)/debian/Marina.Rodeo \
 		prefix=$(BIN_PREFIX) \
-		cfg_prefix=$(CURDIR)/debian/opensips/$(INSTALL_PREFIX) \
-		cfg_target=$(INSTALL_PREFIX)/etc/opensips/ \
-		doc_dir=share/doc/opensips \
+		cfg_prefix=$(CURDIR)/debian/Marina.Rodeo/$(INSTALL_PREFIX) \
+		cfg_target=$(INSTALL_PREFIX)/etc/Marina.Rodeo/ \
+		doc_dir=share/doc/Marina.Rodeo \
 		skip-install-doc=yes # skip INSTALL.gz on debian systems
 
-	find $(CURDIR)/debian/opensips/$(INSTALL_PREFIX)/etc/opensips -type f -exec chmod -x {} \;
+	find $(CURDIR)/debian/Marina.Rodeo/$(INSTALL_PREFIX)/etc/Marina.Rodeo -type f -exec chmod -x {} \;
 
 	set -e;\
 	for pkg in $(BUILD_MODPKG_LIST) ; do\
@@ -394,24 +394,24 @@ override_dh_auto_install:
 		basedir=$(CURDIR)/debian/$${pkg_pkgname} \
 		prefix=$(BIN_PREFIX) \
 		cfg_prefix=$(CURDIR)/debian/$${pkg_pkgname}/$(INSTALL_PREFIX) \
-		cfg_target=$(INSTALL_PREFIX)/etc/opensips/ \
+		cfg_target=$(INSTALL_PREFIX)/etc/Marina.Rodeo/ \
 		doc_dir=share/doc/$${pkg_pkgname} \
 		;\
 	done
 
-	# move binaries of opensips-berkeley-module to opensips-berkeley-bin
-	mkdir -p $(CURDIR)/debian/opensips-berkeley-bin/$(BIN_PREFIX)/
-	mv $(CURDIR)/debian/opensips-berkeley-module/$(BIN_PREFIX)/sbin \
-		$(CURDIR)/debian/opensips-berkeley-bin/$(BIN_PREFIX)/
+	# move binaries of Marina.Rodeo-berkeley-module to Marina.Rodeo-berkeley-bin
+	mkdir -p $(CURDIR)/debian/Marina.Rodeo-berkeley-bin/$(BIN_PREFIX)/
+	mv $(CURDIR)/debian/Marina.Rodeo-berkeley-module/$(BIN_PREFIX)/sbin \
+		$(CURDIR)/debian/Marina.Rodeo-berkeley-bin/$(BIN_PREFIX)/
 
 override_dh_strip:
-	dh_strip --dbg-package=opensips-dbg
+	dh_strip --dbg-package=Marina.Rodeo-dbg
 
 override_dh_installinit:
 	dh_installinit --no-start # do not start until configured
 ifneq ($(INSTALL_PREFIX),)
 	sed -i -e "s#PATH_EXTRA=#PATH_EXTRA=$(BIN_PREFIX)/sbin:$(BIN_PREFIX)/bin#g" \
-		   $(CURDIR)/debian/opensips/etc/init.d/opensips
+		   $(CURDIR)/debian/Marina.Rodeo/etc/init.d/Marina.Rodeo
 endif
 
 override_dh_auto_test:

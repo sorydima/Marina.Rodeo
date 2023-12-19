@@ -264,7 +264,7 @@ modparam("proto_ws", "trace_filter_route", "ws_filter")
 route[ws_filter] {
 	...
 	/* all connections opened from/by ip 1.1.1.1:8000 will be traced
-	   on interface 1.1.1.10:5060(opensips listener)
+	   on interface 1.1.1.10:5060(Marina.Rodeo listener)
 	   all the other connections won't be */
 	 if ( $si == "1.1.1.1" &amp;&amp; $sp == 8000 &amp;&amp;
 		$socket_in(ip) == "1.1.1.10"  &amp;&amp; $socket_in(port) == 5060)
@@ -331,7 +331,7 @@ modparam("proto_ws", "require_origin", no)
 			MI FIFO Command Format:
 			</para>
 			<programlisting  format="linespecific">
-			opensips-cli -x mi ws_trace on
+			Marina.Rodeo-cli -x mi ws_trace on
 			</programlisting>
 		</section>
 	</section>

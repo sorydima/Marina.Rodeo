@@ -14,7 +14,7 @@ permissions Module
 
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -111,7 +111,7 @@ Chapter 1. Admin Guide
    When allow_routing function is called it tries to find a rule
    that matches selected fields of the message.
 
-   OpenSIPS is a forking proxy and therefore a single message can
+   Marina.Rodeo is a forking proxy and therefore a single message can
    be sent to different destinations simultaneously. When checking
    permissions all the destinations must be checked and if one of
    them fails, the forwarding will fail.
@@ -194,7 +194,7 @@ Chapter 1. Admin Guide
 
    The module can be used to determine if an address (IP address
    and port) matches any of the IP subnets stored in cached
-   OpenSIPS database table. Port 0 in cached database table
+   Marina.Rodeo database table. Port 0 in cached database table
    matches any port. Group ID, IP address, port and transport
    protocol values to be matched can be either taken from the
    request (check_source_address) or given as pvar arguments or
@@ -211,15 +211,15 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules.
+     * No dependencies on other Marina.Rodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -351,7 +351,7 @@ modparam("permissions", "address_table", "pbx")
 ...
 modparam("permissions", "partition", "
         inbound:
-                db_url = postgres://opensips:opensipsrw@127.0.0.1/opensi
+                db_url = postgres://Marina.Rodeo:Marina.Rodeorw@127.0.0.1/opensi
 ps;
                 table_name = address")
 ...
@@ -732,7 +732,7 @@ if (allow_uri("basename", $avp(uri)) {  // Check URI stored in $avp(uri)
 1.5.4.  allow_uri
 
    Tests if (URI, Contact) pair is allowed according to allow/deny
-   files. The files must already have been loaded by OpenSIPS.
+   files. The files must already have been loaded by Marina.Rodeo.
 
    Parameters:
      * basename - Basename from which allow and deny filenames
@@ -776,7 +776,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -823,10 +823,10 @@ Chapter 3. Documentation
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Elena-Ramona Modroiu, Jan Janak (@janakj).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2009 Irina-Maria Stanescu
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2009 Irina-Maria Stanescu
 
-   Copyright © 2006-2008 Juha Heinanen
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006-2008 Juha Heinanen
 
-   Copyright © 2003 Miklos Tirpak
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 Miklos Tirpak

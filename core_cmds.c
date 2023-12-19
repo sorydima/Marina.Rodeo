@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2019 OpenSIPS Solutions
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2019 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -20,7 +20,7 @@
  */
 
 /*
- * Script functions exported by the OpenSIPS core
+ * Script functions exported by the Marina.Rodeo core
  */
 
 #include "action.h"
@@ -474,7 +474,7 @@ static int fixup_f_send_sock(void** param)
 	si=find_si(&ip, port, proto);
 	if (si==0){
 		LM_ERR("bad force_send_socket"
-			" argument: %s:%d (opensips doesn't listen on it)\n",
+			" argument: %s:%d (Marina.Rodeo doesn't listen on it)\n",
 			host_nt.s, port);
 		goto error;
 	}

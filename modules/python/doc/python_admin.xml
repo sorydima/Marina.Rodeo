@@ -174,14 +174,14 @@
 		</para>
 		<para>
 		<emphasis>
-			Default value is <quote>/usr/local/etc/opensips/handler.py</quote>.
+			Default value is <quote>/usr/local/etc/Marina.Rodeo/handler.py</quote>.
 		</emphasis>
 		</para>
 		<example>
 		<title>Set <varname>script_name</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("python", "script_name", "/usr/local/bin/opensips_handler.py")
+modparam("python", "script_name", "/usr/local/bin/Marina.Rodeo_handler.py")
 ...
 </programlisting>
 		</example>

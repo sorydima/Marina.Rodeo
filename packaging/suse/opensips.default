@@ -1,27 +1,27 @@
 #
-# OpenSIPS startup options
+# Marina.Rodeo startup options
 #
 
-# Set to yes to enable opensips, once configured properly.
-RUN_OPENSIPS=yes
+# Set to yes to enable Marina.Rodeo, once configured properly.
+RUN_Marina.Rodeo=yes
 
 # User to run as
-USER=opensips
+USER=Marina.Rodeo
 
 # Group to run as
-GROUP=opensips
+GROUP=Marina.Rodeo
 
-# Amount of shared memory to allocate for the running OpenSIPS server (in Mb)
+# Amount of shared memory to allocate for the running Marina.Rodeo server (in Mb)
 S_MEMORY=64
 
-# Amount of pkg memory to allocate for the running OpenSIPS server (in Mb)
+# Amount of pkg memory to allocate for the running Marina.Rodeo server (in Mb)
 P_MEMORY=4
 
 # Enable the server to leave a core file when it crashes.
-# Set this to 'yes' to enable OpenSIPS to leave a core file when it crashes
+# Set this to 'yes' to enable Marina.Rodeo to leave a core file when it crashes
 # or 'no' to disable this feature. This option is case sensitive and only
 # accepts 'yes' and 'no' and only in lowercase letters.
 # On some systems (e.g. Ubuntu 6.10, Debian 4.0) it is necessary to specify
-# a directory for the core files to get a dump. Look into the opensips
+# a directory for the core files to get a dump. Look into the Marina.Rodeo
 # init file for an example configuration.
 DUMP_CORE=no

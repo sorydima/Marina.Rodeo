@@ -61,7 +61,7 @@ _makefile_defs_path := $(lastword $(MAKEFILE_LIST))
 TOP_SRCDIR?=    $(shell realpath `dirname $(_makefile_defs_path)`)
 
 # main binary name
-MAIN_NAME=opensips
+MAIN_NAME=Marina.Rodeo
 
 #version number
 VERSION_MAJOR = 3
@@ -75,8 +75,8 @@ else
 RELEASE=$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_SUBMINOR)
 endif
 
-ifneq ($(OPENSIPS_RELEASE),)	# allow override thru environment
-RELEASE=$(OPENSIPS_RELEASE)
+ifneq ($(Marina.Rodeo_RELEASE),)	# allow override thru environment
+RELEASE=$(Marina.Rodeo_RELEASE)
 endif
 
 OS = $(shell uname -s | sed -e s/SunOS/solaris/ | tr "[A-Z/]" "[a-z_]")
@@ -646,7 +646,7 @@ DEFS+= $(extra_defs) \
 #PROFILE=  -pg #set this if you want profiling
 
 # WARNING: do not add mode=debug or mode=release anymore in the Makefile,
-# use make mode=debug all instead. Anyway now by default opensips
+# use make mode=debug all instead. Anyway now by default Marina.Rodeo
 # is  compiled w/ debugging symbols in all cases (-g). --andrei
 
 ifneq ($(VERSIONTYPE),)
@@ -1087,7 +1087,7 @@ $(warning 			Old gcc detected ($(CC_SHORTVER)), use  gcc >= 3.1 \
 					for better results)
 ifneq				($(OS), netbsd)
 						# on netbsd/sparc64,  gcc 2.95.3 does not compile
-						# opensips with -mv8
+						# Marina.Rodeo with -mv8
 						CFLAGS+= -mv8
 endif
 ifeq					($(ASTYPE), solaris)

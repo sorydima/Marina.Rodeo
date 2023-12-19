@@ -1,16 +1,16 @@
 /*
  * Convenience usrloc header file
  *
- * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -60,7 +60,7 @@ typedef struct usrloc_api {
 
 	enum ul_cluster_mode cluster_mode;
 
-	/* whether the user location caches contacts in OpenSIPS memory */
+	/* whether the user location caches contacts in Marina.Rodeo memory */
 	int (*have_mem_storage) (void);
 
 	/* whether the user location makes use of contact ownership tags */
@@ -327,7 +327,7 @@ typedef struct usrloc_api {
 	void (*free_ucontact_coords) (ucontact_coords coords);
 
 	/**
-	 * Check if an ucontact is logically owned by the current OpenSIPS node.
+	 * Check if an ucontact is logically owned by the current Marina.Rodeo node.
 	 * Always returns true in single node setups or if a contact does not have
 	 * an ownership tag attached.
 	 *

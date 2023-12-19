@@ -13,7 +13,7 @@
 	</para>
 	<para>
 	This driver can be seen as a centralized FreeSWITCH ESL connection manager.
-	OpenSIPS modules may use its API in order to easily establish, reference
+	Marina.Rodeo modules may use its API in order to easily establish, reference
 	and reuse ESL connections.
 	</para>
 	<para>
@@ -103,7 +103,7 @@ modparam("freeswitch", "esl_cmd_timeout", 3000)
 		<para>
 		The sleep interval used when polling for an ESL command response. Since the
 		value of this parameter imposes a minimal duration for any ESL command,
-		you should run OpenSIPS in debug mode in order to first determine an expected
+		you should run Marina.Rodeo in debug mode in order to first determine an expected
 		response time for an arbitrary ESL command, then tune this parameter accordingly.
 		</para>
 		<para>

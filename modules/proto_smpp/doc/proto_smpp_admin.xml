@@ -48,7 +48,7 @@
 		<title>SMPP to SIP bridging</title>
 		<para>
 			When bridging a message received over the SMPP interface,
-			OpenSIPS builds a SIP Message and sends it to the outbound
+			Marina.Rodeo builds a SIP Message and sends it to the outbound
 			proxy identified by the <xref linkend="param_smpp_outbound_uri"/>
 			module's parameter.
 		</para>
@@ -181,7 +181,7 @@
 	<section>
 		<title>&osips; Exported parameters</title>
 		<para>
-		All these parameters can be used from the opensips.cfg file,
+		All these parameters can be used from the Marina.Rodeo.cfg file,
 		to configure the behavior of &osips;-SMPP gateway.
 		</para>
 

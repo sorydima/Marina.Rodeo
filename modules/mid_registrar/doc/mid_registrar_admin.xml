@@ -704,7 +704,7 @@ modparam("mid_registrar", "case_sensitive", 0)
 		situations. It could, for example, happen when the
 		<emphasis><xref linkend="param_max_contacts"/></emphasis> parameter
 		is set and the processing of REGISTER request would exceed the limit.
-		In this case, OpenSIPS would respond with "503 Service Unavailable".
+		In this case, Marina.Rodeo would respond with "503 Service Unavailable".
 		</para>
 		<para>
 		If you want to add the Retry-After header field in 5xx replies, set
@@ -806,7 +806,7 @@ modparam("mid_registrar", "gruu_secret", "my_secret")
 						<listitem>
 							<para>
 								replace the "host:port" part of all Contact URIs of the
-								incoming REGISTER request with an OpenSIPS listening interface
+								incoming REGISTER request with an Marina.Rodeo listening interface
 							</para>
 						</listitem>
 						<listitem>

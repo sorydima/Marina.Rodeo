@@ -66,7 +66,7 @@
 		<para>
 		The following modules must be loaded before this module:
 			<para>
-				<emphasis>The OpenSIPS event modules which implement the transport protocols used by the subscribers</emphasis>.
+				<emphasis>The Marina.Rodeo event modules which implement the transport protocols used by the subscribers</emphasis>.
 			</para>
 		</para>
 	</section>
@@ -124,7 +124,7 @@ modparam("event_virtual", "failover_timeout", 5)
 		</para>
 		<programlisting format="linespecific">
 
-	virtual:PARALLEL rabbitmq:guest:guest@127.0.0.1:5672/pike flatstore:/var/log/opensips_proxy.log
+	virtual:PARALLEL rabbitmq:guest:guest@127.0.0.1:5672/pike flatstore:/var/log/Marina.Rodeo_proxy.log
 
 </programlisting>
 		</example>

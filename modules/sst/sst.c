@@ -2,17 +2,17 @@
  * SIP Session Timer (sst) module - support for tracking dialogs and
  * SIP Session Timers.
  *
- * Copyright (C) 2006 SOMA Networks, INC.
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 SOMA Networks, INC.
  * Written by: Ron Winacott (karwin)
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify it
+ * Marina.Rodeo is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful, but
+ * Marina.Rodeo is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
@@ -70,9 +70,9 @@ static int sst_flag = -1;
 static char *sst_flag_str = 0;
 
 /*
- * The sst minimum interval in Session-Expires header if OpenSIPS
+ * The sst minimum interval in Session-Expires header if Marina.Rodeo
  * request the use of session times. The used value will be the
- * maximum value between OpenSIPS minSE, UAS minSE and this value
+ * maximum value between Marina.Rodeo minSE, UAS minSE and this value
 */
 unsigned int sst_interval = 0;
 
@@ -113,7 +113,7 @@ static const stat_export_t mod_stats[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* OpenSIPS module dependencies */
+	{ /* Marina.Rodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "signaling", DEP_ABORT },
 		{ MOD_TYPE_DEFAULT, "dialog",    DEP_ABORT },
 		/*
@@ -134,7 +134,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* OpenSIPS module dependencies */
+	&deps,           /* Marina.Rodeo module dependencies */
 	cmds,         /* exported functions */
 	0,            /* exported async functions */
 	mod_params,   /* param exports */
@@ -158,8 +158,8 @@ struct module_exports exports= {
  * Bind to the dialog module and setup the callbacks. Also initialize
  * the shared memory to store our interninal information in.
  *
- * @return 0 to continue to load the OpenSIPS, -1 to stop the loading
- * and abort OpenSIPS.
+ * @return 0 to continue to load the Marina.Rodeo, -1 to stop the loading
+ * and abort Marina.Rodeo.
  */
 static int mod_init(void)
 {

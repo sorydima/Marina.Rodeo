@@ -8,7 +8,7 @@ pua dialoginfo
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -220,7 +220,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * dialog.
@@ -229,7 +229,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libxml.
 
 1.3. Exported Parameters
@@ -399,7 +399,7 @@ modparam("pua_dialoginfo", "nopublish_flag", "no_publish")
 
    Example 1.8. Set presence_server parameter
 ...
-modparam("pua_dialoginfo", "presence_server", "sip:ps@opensips.org:5060"
+modparam("pua_dialoginfo", "presence_server", "sip:ps@Marina.Rodeo.org:5060"
 )
 ...
 
@@ -434,9 +434,9 @@ modparam("pua_dialoginfo", "callee_spec_param", "$avp(11)")
 1.3.10. osips_ps (int)
 
    It is advisable to specify if you use a different presence
-   server than OpenSIPS presence server, by setting this parameter
+   server than Marina.Rodeo presence server, by setting this parameter
    to 0. By default, a trick (version in the Publish body is set
-   '0000000') is used when working with Opensips Presence Server
+   '0000000') is used when working with Marina.Rodeo Presence Server
    to make the processing faster and this might not be accepted by
    other presence servers.
 
@@ -463,7 +463,7 @@ modparam("pua_dialoginfo", "osips_ps", 0)
    Example 1.12. dialoginfo_set usage
 ...
         if(is_method("INVITE"))
-                if($ru =~ "opensips.org")
+                if($ru =~ "Marina.Rodeo.org")
                         dialoginfo_set();
 ...
 
@@ -489,7 +489,7 @@ branch_route[out]
 {
 ....
         #align the published info with the RURI of the branch
-        dialoginfo_set_branch_callee("sip:$rU@opensips.org");
+        dialoginfo_set_branch_callee("sip:$rU@Marina.Rodeo.org");
 ...
 }
 
@@ -544,7 +544,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -585,10 +585,10 @@ Chapter 3. Documentation
    Abdullah, Anca Vamanu, Walter Doekes (@wdoekes), Klaus
    Darilion.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2014 VoIP Embedded, Inc.
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2014 VoIP Embedded, Inc.
 
-   Copyright © 2008 Klaus Darilion IPCom
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2008 Klaus Darilion IPCom
 
-   Copyright © 2006 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006 Voice Sistem SRL

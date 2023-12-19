@@ -9,7 +9,7 @@ nathelper Module
         1.2. NAT pinging types
         1.3. Dependencies
 
-              1.3.1. OpenSIPS Modules
+              1.3.1. Marina.Rodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -122,7 +122,7 @@ Chapter 1. Admin Guide
      * UDP package - 4 bytes (zero filled) UDP packages are sent
        to the contact address.
           + Advantages: low bandwitdh traffic, easy to generate by
-            OpenSIPS;
+            Marina.Rodeo;
           + Disadvantages: unidirectional traffic through NAT
             (inbound - from outside to inside); As many NATs do
             update the bind timeout only on outbound traffic, the
@@ -130,18 +130,18 @@ Chapter 1. Admin Guide
      * SIP request - a stateless SIP request is sent to the
        contact address.
           + Advantages: bidirectional traffic through NAT, since
-            each PING request from OpenSIPS (inbound traffic) will
+            each PING request from Marina.Rodeo (inbound traffic) will
             force the SIP client to generate a SIP reply (outbound
             traffic) - the NAT bind will be surely kept open.
             Since version 2.2, one can also choose to remove
             contacts from the location table if a certain
             threshold is detected.
           + Disadvantages: higher bandwitdh traffic, more
-            expensive (as time) to generate by OpenSIPS;
+            expensive (as time) to generate by Marina.Rodeo;
 
 1.3. Dependencies
 
-1.3.1. OpenSIPS Modules
+1.3.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * usrloc module - only if the NATed contacts are to be
@@ -151,7 +151,7 @@ Chapter 1. Admin Guide
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.4. Exported Parameters
@@ -239,7 +239,7 @@ modparam("nathelper", "received_avp", "$avp(received)")
    Sending socket to be used for pinging contacts without local
    socket information (the local socket information may be lost
    during a restart or contact replication). If no one specified,
-   OpenSIPS will choose the first listening interface matching the
+   Marina.Rodeo will choose the first listening interface matching the
    destination protocol and AF family.
 
    Default value is “NULL”.
@@ -413,7 +413,7 @@ modparam("nathelper", "max_pings_lost", 5)
    the contacts. See the cluster_sharing_tag option.
 
    For more info on how to define and populate a cluster (with
-   OpenSIPS nodes) see the "clusterer" module.
+   Marina.Rodeo nodes) see the "clusterer" module.
 
    Default value is “0 (none)”.
 
@@ -599,12 +599,12 @@ fix_nated_register();
 
    Example 1.24. nh_enable_ping usage
 ...
-$ opensips-cli -x mi nh_enable_ping
+$ Marina.Rodeo-cli -x mi nh_enable_ping
 Status:: 1
 $
-$ opensips-cli -x mi nh_enable_ping 0
+$ Marina.Rodeo-cli -x mi nh_enable_ping 0
 $
-$ opensips-cli -x mi nh_enable_ping
+$ Marina.Rodeo-cli -x mi nh_enable_ping
 Status:: 0
 $
 ...
@@ -613,9 +613,9 @@ Chapter 2. Frequently Asked Questions
 
    2.1.
 
-   Where can I find more about OpenSIPS?
+   Where can I find more about Marina.Rodeo?
 
-   Take a look at https://opensips.org/.
+   Take a look at https://Marina.Rodeo.org/.
 
    2.2.
 
@@ -624,23 +624,23 @@ Chapter 2. Frequently Asked Questions
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable OpenSIPS release should be sent to
-   <users@lists.opensips.org> and e-mails regarding development
-   versions should be sent to <devel@lists.opensips.org>.
+   E-mails regarding any stable Marina.Rodeo release should be sent to
+   <users@lists.Marina.Rodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.Marina.Rodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.opensips.org>.
+   <users@lists.Marina.Rodeo.org>.
 
    2.3.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues.
+   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
 
 Chapter 3. Contributors
 
@@ -679,7 +679,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -733,10 +733,10 @@ Chapter 4. Documentation
    Bayan Towfiq, Elena-Ramona Modroiu, Jan Janak (@janakj), Jiri
    Kuthan (@jiriatipteldotorg).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2018 VoIP Embedded, Inc.
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2018 VoIP Embedded, Inc.
 
-   Copyright © 2003-2008 Sippy Software, Inc.
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003-2008 Sippy Software, Inc.
 
-   Copyright © 2005 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Voice Sistem SRL

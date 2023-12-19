@@ -8,7 +8,7 @@
 		<title>Overview</title>
 
 		<para>The SNMPStats module provides an SNMP management interface
-		to OpenSIPS.  Specifically, it provides general SNMP queryable
+		to Marina.Rodeo.  Specifically, it provides general SNMP queryable
 		scalar statistics, table representations of more complicated data
 		such as user and contact information, and alarm monitoring
 		capabilities.
@@ -91,7 +91,7 @@
 			<listitem>
 				<para>
 				The number of bytes waiting to be consumed across all of
-				OpenSIPS's listening ports has passed a minor or major
+				Marina.Rodeo's listening ports has passed a minor or major
 				threshold.  The idea is that a network operation centre can
 				be made aware that a machine hosting a SIP server may be
 				entering a degraded state, and to investigate why this is so.
@@ -119,7 +119,7 @@
 	<section>
 	<title>How the SNMPStats module gets its data</title>
 	<para>
-	The SNMPStats module uses OpenSIPSs internal statistic framework to
+	The SNMPStats module uses Marina.Rodeos internal statistic framework to
 	collect most of its data. However, there are two exceptions.
 	<orderedlist>
 		<listitem>
@@ -133,8 +133,8 @@
 		<listitem>
 			<para>
 			The SNMPStats modules openserSIPMsgQueueDepthMinorEvent and
-			openserSIPMsgQueueDepthMajorEvent alarms rely on the OpenSIPS
-			core to find out what interfaces, ports, and transports OpenSIPS
+			openserSIPMsgQueueDepthMajorEvent alarms rely on the Marina.Rodeo
+			core to find out what interfaces, ports, and transports Marina.Rodeo
 			is listening on.  However,the module will actually query the proc
 			file system to find out the number of bytes waiting to be consumed.
 			(Currently, this will only work on systems providing the proc file
@@ -154,12 +154,12 @@
 	<para>
 	The SNMPStats module expects to connect to a
 	<emphasis>Master Agent</emphasis>.  This would be a SNMP daemon running
-	either on the same system as the OpenSIPS instance, or on another system.
+	either on the same system as the Marina.Rodeo instance, or on another system.
 	(Communication can take place over TCP, so there is no restriction
-	that this daemon need be on the same system as OpenSIPS).
+	that this daemon need be on the same system as Marina.Rodeo).
 	</para>
 	<para>
-	If the master agent is unavailable when OpenSIPS first starts up, the
+	If the master agent is unavailable when Marina.Rodeo first starts up, the
 	SNMPStats module will continue to run.  However, you will not be able to
 	query it.  Thankfully, the SNMPStats module continually looks for its
 	master agent.  So even if the master agent is started late,
@@ -249,7 +249,7 @@
 		<title><varname>sipEntityType</varname> (String) </title>
 
 		<para>
-		This parameter describes the entity type for this OpenSIPS instance,
+		This parameter describes the entity type for this Marina.Rodeo instance,
 		and will be used in determining what is returned for the
 		openserSIPEntityType scalar. Valid parameters are:
 		</para>
@@ -272,7 +272,7 @@ modparam("snmpstats", "sipEntityType", "proxyServer")
 
 		<para>
 		Note that as the above example shows, you can define this parameter
-		more than once.  This is of course because a given OpenSIPS instance
+		more than once.  This is of course because a given Marina.Rodeo instance
 		can take on more than one role.
 		</para>
 	</section>
@@ -282,7 +282,7 @@ modparam("snmpstats", "sipEntityType", "proxyServer")
 
 		<para>
 		The SNMPStats module monitors the number of bytes waiting to be
-		consumed by OpenSIPS.  If the number of bytes waiting to be consumed
+		consumed by Marina.Rodeo.  If the number of bytes waiting to be consumed
 		exceeds a minor threshold, the SNMPStats module will send out an
 		openserMsgQueueDepthMinorEvent trap to signal that an alarm condition
 		has occurred.  The minor threshold is set with the
@@ -309,7 +309,7 @@ modparam("snmpstats", "MsgQueueMinorThreshold", 2000)
 
 		<para>
 		The SNMPStats module monitors the number of bytes waiting to be
-		consumed by OpenSIPS.  If the number of bytes waiting to be consumed
+		consumed by Marina.Rodeo.  If the number of bytes waiting to be consumed
 		exceeds a major threshold, the SNMPStats module will send out an
 		openserMsgQueueDepthMajorEvent trap to signal that an alarm condition
 		has occurred.  The major threshold is set with the
@@ -534,7 +534,7 @@ modparam("snmpstats", "snmpCommunity", "customCommunityString")
 	agent on the localhost, port 705.  The parameters should match up with
 	the snmpd process.
 	Note that the master agent (snmpd) does not need to be present on the same
-	machine as OpenSIPS. The localhost could be replaced with any other
+	machine as Marina.Rodeo. The localhost could be replaced with any other
 	machine.
 	</para>
 	</section>
@@ -561,7 +561,7 @@ modparam("snmpstats", "snmpCommunity", "customCommunityString")
     agentx/master: initializing...   DONE
     NET-SNMP version 5.3.1
 	</programlisting>
-	Now, start up OpenSIPS in another window.  In the snmpd window, you should
+	Now, start up Marina.Rodeo in another window.  In the snmpd window, you should
 	see a bunch of:
 	<programlisting format="linespecific">
     agentx/master: handle pdu (req=0x2c58ebd4,trans=0x0,sess=0x0)

@@ -1,17 +1,17 @@
 /*
  * QoS module - support for tracking dialogs and SDP
  *
- * Copyright (C) 2007 SOMA Networks, Inc.
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 SOMA Networks, Inc.
  * Written by: Ovidiu Sas (osas)
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify it
+ * Marina.Rodeo is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful, but
+ * Marina.Rodeo is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
@@ -66,7 +66,7 @@ static const param_export_t mod_params[]={
 };
 
 static const dep_export_t deps = {
-	{ /* OpenSIPS module dependencies */
+	{ /* Marina.Rodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "dialog", DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -81,7 +81,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* OpenSIPS module dependencies */
+	&deps,           /* Marina.Rodeo module dependencies */
 	cmds,            /* exported functions */
 	NULL,            /* exported async functions */
 	mod_params,      /* param exports */

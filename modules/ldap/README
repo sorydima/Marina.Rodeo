@@ -12,7 +12,7 @@ LDAP Module
 
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. LDAP Configuration File
@@ -113,9 +113,9 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The LDAP module implements an LDAP search interface for
-   OpenSIPS. It exports script functions to perform an LDAP search
-   operation and to store the search results as OpenSIPS AVPs.
-   This allows for using LDAP directory data in the OpenSIPS SIP
+   Marina.Rodeo. It exports script functions to perform an LDAP search
+   operation and to store the search results as Marina.Rodeo AVPs.
+   This allows for using LDAP directory data in the Marina.Rodeo SIP
    message routing script.
 
    The following features are offered by the LDAP module:
@@ -127,20 +127,20 @@ Chapter 1. Admin Guide
      * LDAP server failover and automatic reconnect
      * Configurable LDAP connection and bind timeouts
      * Module API for LDAP search operations that can be used by
-       other OpenSIPS modules
+       other Marina.Rodeo modules
      * StartTLS support
 
    The module implementation makes use of the open source OpenLDAP
    library available on most UNIX/Linux platforms. Besides LDAP
    server failover and automatic reconnect, this module can handle
    multiple LDAP sessions concurrently allowing to access data
-   stored on different LDAP servers. Each OpenSIPS worker process
+   stored on different LDAP servers. Each Marina.Rodeo worker process
    maintains one LDAP TCP connection per configured LDAP server.
    This enables parallel execution of LDAP requests and offloads
    LDAP concurrency control to the LDAP server(s).
 
    An LDAP search module API is provided that can be used by other
-   OpenSIPS modules. A module using this API does not have to
+   Marina.Rodeo modules. A module using this API does not have to
    implement LDAP connection management and configuration, while
    still having access to the full OpenLDAP API for searching and
    result handling.
@@ -149,7 +149,7 @@ Chapter 1. Admin Guide
    access they are a good choice to store SIP provisioning data.
    Performance tests have shown that this module achieves lower
    data access times and higher call rates than other database
-   modules like e.g. the OpenSIPS MYSQL module.
+   modules like e.g. the Marina.Rodeo MYSQL module.
 
 1.1.1. Usage Basics
 
@@ -159,7 +159,7 @@ Chapter 1. Admin Guide
    access parameters like server hostname or connection timeouts.
    Normally only a single LDAP session will be used unless there
    is a need to access more than one LDAP server. The LDAP session
-   name will then be used in the OpenSIPS configuration script to
+   name will then be used in the Marina.Rodeo configuration script to
    refer to a specific LDAP session.
 
    The ldap_search function (Section 1.5.1,
@@ -182,7 +182,7 @@ Chapter 1. Admin Guide
 
    All ldap_result* functions do always access the LDAP result set
    from the last ldap_search call. This should be kept in mind
-   when calling ldap_search more than once in the OpenSIPS
+   when calling ldap_search more than once in the Marina.Rodeo
    configuration script.
 
 1.1.2. LDAP URLs
@@ -245,16 +245,16 @@ Note
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The module depends on the following modules (the listed modules
    must be loaded before this module):
-     * No dependencies on other OpenSIPS modules.
+     * No dependencies on other Marina.Rodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * OpenLDAP library (libldap) v2.1 or greater, libldap header
        files (libldap-dev) are needed for compilation
 
@@ -280,7 +280,7 @@ key = value ; comment
    comments.
 
    Each section describes one LDAP session that can be referred to
-   in the OpenSIPS configuration script. Using the section name as
+   in the Marina.Rodeo configuration script. Using the section name as
    the host part of an LDAP URL tells the module to use the LDAP
    session specified in the respective section. An example LDAP
    session specification looks like:
@@ -457,10 +457,10 @@ ldap_client_bind_timeout = 500
 
    Full path to LDAP configuration file.
 
-   Default value: /usr/local/etc/opensips/ldap.cfg
+   Default value: /usr/local/etc/Marina.Rodeo/ldap.cfg
 
    Example 1.12. config_file parameter usage
-modparam("ldap", "config_file", "/etc/opensips/ldap.ini")
+modparam("ldap", "config_file", "/etc/Marina.Rodeo/ldap.ini")
 
 1.4.2. max_async_connections (int)
 
@@ -483,7 +483,7 @@ modparam("ldap", "max_async_connections", 50)
    stores result internally for later retrieval by ldap_result*
    functions. If one ore more LDAP entries are found the function
    returns the number of found entries which evaluates to TRUE in
-   the OpenSIPS configuration script. It returns -1 (FALSE) in
+   the Marina.Rodeo configuration script. It returns -1 (FALSE) in
    case no LDAP entry was found, and -2 (FALSE) if an internal
    error like e.g. an LDAP error occurred.
 
@@ -819,7 +819,7 @@ if (ldap_search(
    stores result internally for later retrieval by ldap_result*
    functions. If one ore more LDAP entries are found the function
    returns the number of found entries which evaluates to TRUE in
-   the OpenSIPS configuration script. It returns -1 (FALSE) in
+   the Marina.Rodeo configuration script. It returns -1 (FALSE) in
    case no LDAP entry was found, and -2 (FALSE) if an internal
    error like e.g. an LDAP error occurred.
 
@@ -917,7 +917,7 @@ Chapter 2. Developer Guide
 
 2.1. Overview
 
-   The LDAP module API can be used by other OpenSIPS modules to
+   The LDAP module API can be used by other Marina.Rodeo modules to
    implement LDAP search functionality. This frees the module
    implementer from having to care about LDAP connection
    management and configuration.
@@ -1182,7 +1182,7 @@ typedef int (*ldap_rfc4515_escape_t)(str *sin, str *sout, int url_encode
    Returns the OpenLDAP LDAP handle for a specific LDAP session.
    This allows a module implementor to use the OpenLDAP API
    functions directly, instead of using the API functions exported
-   by the OpenSIPS LDAP module. The LDAP structure is defined in
+   by the Marina.Rodeo LDAP module. The LDAP structure is defined in
    OpenLDAP's ldap.h, which has to be included.
 typedef int (*get_ldap_handle_t)(char* _lds_name, LDAP** _ldap_handle);
 
@@ -1369,7 +1369,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1411,6 +1411,6 @@ Chapter 4. Documentation
    (@miconda), Konstantin Bokarius, Edson Gellert Schubert,
    Christian Schlatter.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2007 University of North Carolina
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007 University of North Carolina

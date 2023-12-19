@@ -11,7 +11,7 @@ dialog Module
         1.4. Dialog clustering
         1.5. Dependencies
 
-              1.5.1. OpenSIPS Modules
+              1.5.1. Marina.Rodeo Modules
               1.5.2. External Libraries or Applications
 
         1.6. Exported Parameters
@@ -265,7 +265,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The dialog module provides dialog awareness to the OpenSIPS
+   The dialog module provides dialog awareness to the Marina.Rodeo
    proxy. Its functionality is to keep trace of the current
    dialogs, to offer information about them (like how many dialogs
    are active).
@@ -277,7 +277,7 @@ Chapter 1. Admin Guide
 
    The module, via an internal API, also provide the foundation to
    build on top of it more complex dialog-based functionalities
-   via other OpenSIPS modules.
+   via other Marina.Rodeo modules.
 
 1.2. How it works
 
@@ -327,10 +327,10 @@ Chapter 1. Admin Guide
    reply routes of the original request.
 
    Dialog profiles can also be used in distributed systems, using
-   the OpenSIPS CacheDB Interface or the clusterer module. This
+   the Marina.Rodeo CacheDB Interface or the clusterer module. This
    feature allows you to share dialog profile information with
-   multiple OpenSIPS instaces that use the same CacheDB backend or
-   are part of an OpenSIPS cluster. In order to do that, the
+   multiple Marina.Rodeo instaces that use the same CacheDB backend or
+   are part of an Marina.Rodeo cluster. In order to do that, the
    cachedb_url or profile_replication_cluster parameters must be
    defined. Also, the profile must be marked as shared, by adding
    one of the '/s' or '/b' suffixes to the name of the profile in
@@ -339,10 +339,10 @@ Chapter 1. Admin Guide
 1.4. Dialog clustering
 
    Dialog replication is a mechanism used to mirror all dialog
-   changes taking place in one OpenSIPS instance to one or
+   changes taking place in one Marina.Rodeo instance to one or
    multiple other instances. The process is simplified by using
    the clusterer module which facilitates the management of a
-   cluster of OpenSIPS nodes and the sending of
+   cluster of Marina.Rodeo nodes and the sending of
    replication-related BIN packets (binary-encoded, using
    proto_bin). This feature is useful in achieving High
    Availability and/or Load Balancing for ongoing calls.
@@ -366,7 +366,7 @@ Chapter 1. Admin Guide
      * counting the dialog in the profiles that it belongs; only
        if profile replication is also enabled
 
-   In addition to the event-driven replication, an OpenSIPS
+   In addition to the event-driven replication, an Marina.Rodeo
    instance will first try to learn all the dialog information
    from antoher node in the cluster at startup. The data
    synchronization mechanism requires defining one of the nodes in
@@ -400,7 +400,7 @@ Chapter 1. Admin Guide
 
 1.5. Dependencies
 
-1.5.1. OpenSIPS Modules
+1.5.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * TM - Transaction module
@@ -412,7 +412,7 @@ Chapter 1. Admin Guide
 1.5.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.6. Exported Parameters
@@ -441,7 +441,7 @@ modparam("dialog", "enable_stats", 0)
    database, a constant hash_size should be used, otherwise the
    restored process will not take place. If you really want to
    modify the hash_size you must delete all table's rows before
-   restarting OpenSIPS.
+   restarting Marina.Rodeo.
 
    Default value is “4096”.
 
@@ -519,8 +519,8 @@ modparam("dialog", "dlg_extra_hdrs", "Hint: credit expired\r\n")
 
    Default value is “1 (DID_FALLBACK)”.
 
-   NOTE that if you have call looping on your OpenSIPS server
-   (passing more than once through the same OpenSIPS instance), it
+   NOTE that if you have call looping on your Marina.Rodeo server
+   (passing more than once through the same Marina.Rodeo instance), it
    is strongly suggested to use only DID_ONLY mode, as the SIP
    based matching will have an undefined behavior - from SIP
    perspective, a sequential dialog will match all the loops of
@@ -555,7 +555,7 @@ modparam("dialog", "delete_delay", 10)
    database a database url must be specified.
 
    Default value is
-   “mysql://opensips:opensipsrw@localhost/opensips”.
+   “mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo”.
 
    Example 1.9. Set db_url parameter
 ...
@@ -600,7 +600,7 @@ modparam("dialog", "db_update_period", 120)
 
 1.6.12. options_ping_interval (integer)
 
-   The interval (seconds) at which OpenSIPS will generate
+   The interval (seconds) at which Marina.Rodeo will generate
    in-dialog OPTIONS pings for one or both of the involved
    parties.
 
@@ -613,7 +613,7 @@ modparam("dialog", "options_ping_interval", 20)
 
 1.6.13. reinvite_ping_interval (integer)
 
-   The interval (seconds) at which OpenSIPS will generate
+   The interval (seconds) at which Marina.Rodeo will generate
    in-dialog Re-INVITE pings for one or both of the involved
    parties.
 
@@ -910,7 +910,7 @@ modparam("dialog", "flags_column", "flags_c_name")
 1.6.37. profiles_with_value (string)
 
    List of names (alphanumerical) for profiles with values. Flags
-   /b or /s allow sharing profiles between OpenSIPS instances
+   /b or /s allow sharing profiles between Marina.Rodeo instances
    using the clusterer module or a CacheDB backend, respectively.
 
    Default value is “empty”.
@@ -924,7 +924,7 @@ annels/s; codecUsed/b;")
 1.6.38. profiles_no_value (string)
 
    List of names (alphanumerical) for profiles without values.
-   Flags /b or /s allow sharing profiles between OpenSIPS
+   Flags /b or /s allow sharing profiles between Marina.Rodeo
    instances using the clusterer module or a CacheDB backend,
    respectively.
 
@@ -1943,32 +1943,32 @@ event_route[E_RTPPROXY_DTMF] {
 1.8.6. create_sent
 
    Returns the number of replicated dialog create requests send to
-   other OpenSIPS instances.
+   other Marina.Rodeo instances.
 
 1.8.7. update_sent
 
    Returns the number of replicated dialog update requests send to
-   other OpenSIPS instances.
+   other Marina.Rodeo instances.
 
 1.8.8. delete_sent
 
    Returns the number of replicated dialog delete requests send to
-   other OpenSIPS instances.
+   other Marina.Rodeo instances.
 
 1.8.9. create_recv
 
    Returns the number of dialog create events received from other
-   OpenSIPS instances.
+   Marina.Rodeo instances.
 
 1.8.10. update_recv
 
    Returns the number of dialog update events received from other
-   OpenSIPS instances.
+   Marina.Rodeo instances.
 
 1.8.11. delete_recv
 
    Returns the number of dialog delete events received from other
-   OpenSIPS instances.
+   Marina.Rodeo instances.
 
 1.9. Exported MI Functions
 
@@ -1996,13 +1996,13 @@ event_route[E_RTPPROXY_DTMF] {
 
    MI FIFO Command Format:
                 ## list all ongoing dialogs
-                opensips-cli -x mi dlg_list
+                Marina.Rodeo-cli -x mi dlg_list
                 ## list the dialog by callid and From TAG
-                opensips-cli -x mi dlg_list callid=abcdrssfrs122444@192.
+                Marina.Rodeo-cli -x mi dlg_list callid=abcdrssfrs122444@192.
 168.1.1 from_tag=AAdfeEFF33
                 ## list 10 dialogs, starting from the position 40
                 ## (in the list of all ongoing dialogs)
-                opensips-cli -x mi dlg_list index=40 counter=10
+                Marina.Rodeo-cli -x mi dlg_list index=40 counter=10
 
 1.9.2. dlg_list_ctx
 
@@ -2017,7 +2017,7 @@ event_route[E_RTPPROXY_DTMF] {
    Parameters: see “dlg_list”
 
    MI FIFO Command Format:
-                opensips-cli -x mi dlg_list_ctx
+                Marina.Rodeo-cli -x mi dlg_list_ctx
 
 1.9.3. dlg_end_dlg
 
@@ -2040,9 +2040,9 @@ event_route[E_RTPPROXY_DTMF] {
 
    MI FIFO Command Format:
                 # terminate the dialog via the internal Dialog-ID
-                opensips-cli -x mi dlg_end_dlg 6ae.4b38d013
+                Marina.Rodeo-cli -x mi dlg_end_dlg 6ae.4b38d013
                 # terminate the dialog via its SIP Call-ID
-                opensips-cli -x mi dlg_end_dlg Y2IwYjQ2YmE2ZDg5MWVkNDNkZ
+                Marina.Rodeo-cli -x mi dlg_end_dlg Y2IwYjQ2YmE2ZDg5MWVkNDNkZ
 GIwZjAzNGM1ZDY
 
 1.9.4. profile_get_size
@@ -2062,7 +2062,7 @@ GIwZjAzNGM1ZDY
      * value (optional)- string value to toughen the check;
 
    MI FIFO Command Format:
-                opensips-cli -x mi profile_get_size inboundCalls
+                Marina.Rodeo-cli -x mi profile_get_size inboundCalls
 
 1.9.5. profile_list_dlgs
 
@@ -2083,7 +2083,7 @@ GIwZjAzNGM1ZDY
      * value (optional)- string value to toughen the check;
 
    MI FIFO Command Format:
-                opensips-cli -x mi profile_list_dlgs inboundCalls
+                Marina.Rodeo-cli -x mi profile_list_dlgs inboundCalls
 
 1.9.6. profile_get_values
 
@@ -2098,7 +2098,7 @@ GIwZjAzNGM1ZDY
      * profile - name of the profile to list the dialog for.
 
    MI FIFO Command Format:
-                opensips-cli -x mi profile_get_values inboundCalls
+                Marina.Rodeo-cli -x mi profile_get_values inboundCalls
 
 1.9.7. profile_end_dlgs
 
@@ -2115,12 +2115,12 @@ GIwZjAzNGM1ZDY
        only the dialogs with the specified value
 
    MI FIFO Command Format:
-                opensips-cli -x mi profile_end_dlgs inboundCalls
+                Marina.Rodeo-cli -x mi profile_end_dlgs inboundCalls
 
 1.9.8. dlg_db_sync
 
    Will load all the information about the dialogs from the
-   database in the OpenSIPS internal memory. If a dialog is
+   database in the Marina.Rodeo internal memory. If a dialog is
    already found in memory and has the same/an older state, it
    will be updated with the values from DB. Otherwise, the newer
    in-memory version will not be changed.
@@ -2130,7 +2130,7 @@ GIwZjAzNGM1ZDY
    It takes no parameters
 
    MI FIFO Command Format:
-                opensips-cli -x mi dlg_db_sync
+                Marina.Rodeo-cli -x mi dlg_db_sync
 
 1.9.9. dlg_cluster_sync
 
@@ -2151,7 +2151,7 @@ GIwZjAzNGM1ZDY
        be marked with in order to be synced
 
    MI FIFO Command Format:
-                opensips-cli -x mi dlg_cluster_sync vip1
+                Marina.Rodeo-cli -x mi dlg_cluster_sync vip1
 
 1.9.10. dlg_restore_db
 
@@ -2164,7 +2164,7 @@ GIwZjAzNGM1ZDY
    It takes no parameters
 
    MI FIFO Command Format:
-                opensips-cli -x mi dlg_restore_db
+                Marina.Rodeo-cli -x mi dlg_restore_db
 
 1.9.11. list_all_profiles
 
@@ -2176,7 +2176,7 @@ GIwZjAzNGM1ZDY
    Parameters: It takes no parameters
 
    MI FIFO Command Format:
-                opensips-cli -x mi list_all_profiles
+                Marina.Rodeo-cli -x mi list_all_profiles
 
 1.9.12. dlg_push_var
 
@@ -2193,7 +2193,7 @@ GIwZjAzNGM1ZDY
        actual Call-ID.
 
    MI FIFO Command Format:
-                opensips-cli -x mi dlg_push_var var_name var_value DID1
+                Marina.Rodeo-cli -x mi dlg_push_var var_name var_value DID1
 [ DID2 DID3 ...  DIDN ]
 
 1.9.13. dlg_send_sequential
@@ -2233,7 +2233,7 @@ GIwZjAzNGM1ZDY
           + inbound - advertises in the body of the sequential
             message generated the last body received from its
             pair. For example, if the mode=challenge-caller, the
-            message will contain the body sent to OpenSIPS by the
+            message will contain the body sent to Marina.Rodeo by the
             callee. This is useful when you need to alter the body
             previously sent to the caller, because you want to
             re-negotiate a different media proxy for the call.
@@ -2242,7 +2242,7 @@ GIwZjAzNGM1ZDY
           + outbound - advertises in the body of the sequential
             message generated the last body sent to that UAC. For
             example, if the mode=challenge-caller, the message
-            will contain the last body sent by OpenSIPS to the
+            will contain the last body sent by Marina.Rodeo to the
             caller. This is useful in a high availability scenario
             when trying to re-negotiate the contact of the server,
             but there is no need to alter the body sent earlier.
@@ -2255,18 +2255,18 @@ GIwZjAzNGM1ZDY
    or normal mode.
 
    MI Command Format:
-                        opensips-cli -x mi dlg_send_sequential \
+                        Marina.Rodeo-cli -x mi dlg_send_sequential \
                                 callid=5291231-testing@127.0.0.1
 
    MI Command used to trigger media re-negotiation:
-                        opensips-cli -x mi dlg_send_sequential \
+                        Marina.Rodeo-cli -x mi dlg_send_sequential \
                                 callid=5291231-testing@127.0.0.1 \
                                 mode=challenge \
                                 body=inbound
 
    MI Command used to UPDATE the callee's remote Contact after a
    server failover:
-                        opensips-cli -x mi dlg_send_sequential \
+                        Marina.Rodeo-cli -x mi dlg_send_sequential \
                                 callid=5291231-testing@127.0.0.1 \
                                 mode=challenge-callee \
                                 body=outbound \
@@ -2511,9 +2511,9 @@ Chapter 3. Frequently Asked Questions
 
    3.5.
 
-   Where can I find more about OpenSIPS?
+   Where can I find more about Marina.Rodeo?
 
-   Take a look at https://opensips.org/.
+   Take a look at https://Marina.Rodeo.org/.
 
    3.6.
 
@@ -2522,23 +2522,23 @@ Chapter 3. Frequently Asked Questions
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable OpenSIPS release should be sent to
-   <users@lists.opensips.org> and e-mails regarding development
-   versions should be sent to <devel@lists.opensips.org>.
+   E-mails regarding any stable Marina.Rodeo release should be sent to
+   <users@lists.Marina.Rodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.Marina.Rodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.opensips.org>.
+   <users@lists.Marina.Rodeo.org>.
 
    3.7.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues.
+   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
 
 Chapter 4. Contributors
 
@@ -2580,7 +2580,7 @@ Chapter 4. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -2637,6 +2637,6 @@ Chapter 5. Documentation
    Konstantin Bokarius, Edson Gellert Schubert, Michel Bensoussan,
    Andy Pyles, Elena-Ramona Modroiu.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2006-2009 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006-2009 Voice Sistem SRL

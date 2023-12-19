@@ -7,7 +7,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		This module offer the internal support for OpenSIPS to act as a 
+		This module offer the internal support for Marina.Rodeo to act as a 
 		Presence User Agent client, by sending Subscribe and Publish messages.
 	</para>
 	<para>
@@ -27,7 +27,7 @@
 		 The pua_dialoginfo provideds BLF support, by publishing the status of
 		 the participants into a call (like ringing, established, terminated).
 		 Through pua_bla , BRIDGED LINE APPEARANCE features are added to 
-		 OpenSIPs.
+		 Marina.Rodeo.
 		 The pua_xmpp module represents a gateway between SIP and XMPP, so 
 		 that jabber and SIP clients can exchange presence information.
 	</para>
@@ -45,13 +45,13 @@
 	<title>PUA clustering</title>
 	<para>
 	Starting 3.2, the module was extended with clustering support also. This 
-	means multiple OpenSIPS instance, configured with PUA module, may work 
+	means multiple Marina.Rodeo instance, configured with PUA module, may work 
 	together. For example, the publishing for a certain presentity may be done 
-	via different node (PUA OpenSIPS instance) in the cluster.
+	via different node (PUA Marina.Rodeo instance) in the cluster.
 	</para>
 	<para>
-	The clustering support is a mixture of DB sharing and OpenSIPS clustering.
-	The OpenSIPS clustering layer is used for broadcasting notifications with 
+	The clustering support is a mixture of DB sharing and Marina.Rodeo clustering.
+	The Marina.Rodeo clustering layer is used for broadcasting notifications with 
 	the cluster when a presentity is modified by one of the nodes (so that, 
 	the other nodes in cluster may refresh the presentity via DB.
 	</para>
@@ -71,7 +71,7 @@
 	module parameter, with recomanded values like 2-5 seconds.
 	</para>
 	<para>
-	On the OpenSIPS clustering layer, the PUA module use the sharing-tags
+	On the Marina.Rodeo clustering layer, the PUA module use the sharing-tags
 	mechanism in order to control (between all the nodes in the cluster) which
 	node is responsible for performing the expiring operation on the
 	presentity (like sending the PUBLISH with expires 0).
@@ -270,7 +270,7 @@ modparam("pua", "cluster_id", 10)
 		<para>
 		The clustering share-tag to be used by the PUA module when creating
 		any new presentity record. The tag will by used to decide which
-		OpenSIPS instance (owning the tag as active) will be responsible
+		Marina.Rodeo instance (owning the tag as active) will be responsible
 		for expiring this presentity.
 		This parameter is to be used only if clustering mode is needed.
 		In order to understand the concept of sharing TAG, please see the 
@@ -346,9 +346,9 @@ if($rm=="NOTIFY")
 <section>
 	<title>Installation</title>
 	<para>
-	The module requires 1 table in OpenSIPS database: pua. The SQL 
+	The module requires 1 table in Marina.Rodeo database: pua. The SQL 
 	syntax to create it can be found in presence_xml-create.sql     
-	script in the database directories in the opensips/scripts folder.
+	script in the database directories in the Marina.Rodeo/scripts folder.
 	You can also find the complete database documentation on the
 	project webpage, &osipsdbdocslink;.
 	</para>

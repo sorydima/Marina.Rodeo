@@ -140,9 +140,9 @@ modparam("exec", "setvars", 1)
 		<emphasis role='bold'>all</emphasis> job pids once the "time_to_kill"
 		expiration timeout hits. On a standard system, this should have no
 		side-effects, as pids are monotonically increasing in a slow manner,
-		and OpenSIPS should run under the "opensips" user, thus rendering it
+		and Marina.Rodeo should run under the "Marina.Rodeo" user, thus rendering it
 		unable to terminate non-child processes. If this is not the case on
-		your system, do not use the OpenSIPS "time_to_kill" feature -- rather
+		your system, do not use the Marina.Rodeo "time_to_kill" feature -- rather
 		implement it within your external app!
 		</para>
 		<para>
@@ -216,7 +216,7 @@ modparam("exec", "time_to_kill", 20)
 		receiving the last lines of each stream.
 		</para>
 		<para>
-		WARNING: any OpenSIPS pseudo-vars which may contain special bourne shell (sh/bash)
+		WARNING: any Marina.Rodeo pseudo-vars which may contain special bourne shell (sh/bash)
 		characters should be placed inside quotes, e.g.
 		exec("update-stats.sh '$(ct{re.subst,/'//g})'");
 		</para>
@@ -258,12 +258,12 @@ exec("/home/../myscript.sh", "this is my $var(input) for exec\n", , , $avp(env))
 		Executes an external command. This function does exactly the same as
 		<xref linkend="func_exec"/> (in terms of input, output and processing),
 		but in an asynchronous way. The script execution is suspended until
-		the external script provided all its output. OpenSIPS waits for the
+		the external script provided all its output. Marina.Rodeo waits for the
 		external script to close its output stream, not necessarily to
-		terminate (so the script may still be running when OpenSIPS
+		terminate (so the script may still be running when Marina.Rodeo
 		resumes the script execution on "seeing" EOF on the the output stream)
 		</para>
-		NOTE: if the stdout variable is missing, OpenSIPS will assume that the
+		NOTE: if the stdout variable is missing, Marina.Rodeo will assume that the
 		output of the external script is not needed and it will NOT WAIT at
 		all for the script. So, if triggered via "launch()", there will be no 
 		asynchronous waiting, so no resume route triggering!!
@@ -276,7 +276,7 @@ exec("/home/../myscript.sh", "this is my $var(input) for exec\n", , , $avp(env))
 		</para>
 		<para>
 		To read and understand more on the asynchronous functions, how to use
-		them and what are their advantages, please refer to the OpenSIPS 
+		them and what are their advantages, please refer to the Marina.Rodeo 
 		online Manual.
 		</para>
 		<example>

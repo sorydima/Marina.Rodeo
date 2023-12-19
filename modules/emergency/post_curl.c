@@ -1,7 +1,7 @@
 /*
  * emergency module - basic support for emergency calls
  *
- * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
  * This file is part of Marina.Rodeo, a free SIP server.
  *

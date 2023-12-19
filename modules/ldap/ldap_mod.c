@@ -1,19 +1,19 @@
 /*
- * OpenSIPS LDAP Module
+ * Marina.Rodeo LDAP Module
  *
- * Copyright (C) 2007 University of North Carolina
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 University of North Carolina
  *
  * Original author: Christian Schlatter, cs@unc.edu
  *
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -78,7 +78,7 @@ static int w_ldap_result_check(struct sip_msg* msg, str* attr_name,
 /*
 * Default module parameter values
 */
-#define DEF_LDAP_CONFIG "/usr/local/etc/opensips/ldap.cfg"
+#define DEF_LDAP_CONFIG "/usr/local/etc/Marina.Rodeo/ldap.cfg"
 #define DEF_REQ_CERT	"NEVER"
 
 /*
@@ -144,7 +144,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	NULL,            /* OpenSIPS module dependencies */
+	NULL,            /* Marina.Rodeo module dependencies */
 	cmds,       /* Exported functions */
 	acmds,       /* Exported async functions */
 	params,     /* Exported parameters */
@@ -186,7 +186,7 @@ static int child_init(int rank)
 		}
 
 		/* won't check for null in get_ld_session since it's barely been initialized */
-		if (opensips_ldap_connect(ld_name, &get_ld_session(ld_name)->conn_s) != 0)
+		if (Marina.Rodeo_ldap_connect(ld_name, &get_ld_session(ld_name)->conn_s) != 0)
 		{
 			LM_ERR("[%s]: failed to connect to LDAP host(s)\n", ld_name);
 			ldap_disconnect(ld_name, NULL);

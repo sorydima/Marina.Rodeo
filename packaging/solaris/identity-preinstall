@@ -1,15 +1,15 @@
 #!/sbin/sh
-# Script for checking prerequisites for OpenSIPS-identity
+# Script for checking prerequisites for Marina.Rodeo-identity
 
-BASE="OpenSIPS-base"
+BASE="Marina.Rodeo-base"
 LIBSSL="libssl.a"
-TMPLIST="/tmp/.opensipsssl"
+TMPLIST="/tmp/.Marina.Rodeossl"
 
 pkginfo | grep -i $BASE > /dev/null
 
 if [ $? -eq 1 ]
 then
-	echo "OpenSIPS-identity depends on package OpenSIPS-base which is not installed";
+	echo "Marina.Rodeo-identity depends on package Marina.Rodeo-base which is not installed";
 	exit 1;
 fi
 
@@ -18,7 +18,7 @@ lines=`wc -l $TMPLIST`
 
 if [ $lines = "0" ]
 then
-	echo "OpenSIPS-xmlrpc depends on OpenSSL Libraries, which cannot be found on system";
+	echo "Marina.Rodeo-xmlrpc depends on OpenSSL Libraries, which cannot be found on system";
 	exit 1;
 else
 	exit 0;

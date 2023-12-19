@@ -1,15 +1,15 @@
 /*
- * Copyright (C) 2001-2003 FhG Fokus
- * Copyright (C) 2005-2006 Voice Sistem S.R.L
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2006 Voice Sistem S.R.L
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -67,7 +67,7 @@ void handle_sigs(void)
 			else
 				LM_DBG("SIGTERM received, program terminates\n");
 
-			shutdown_opensips( 0/*status*/ );
+			shutdown_Marina.Rodeo( 0/*status*/ );
 			break;
 
 		case SIGCHLD:
@@ -87,7 +87,7 @@ void handle_sigs(void)
 				do_exit = 1;
 				/* process the signal */
 				overall_status |= chld_status;
-				LM_DBG("OpenSIPS exit status = %d\n",overall_status);
+				LM_DBG("Marina.Rodeo exit status = %d\n",overall_status);
 
 				if (WIFEXITED(chld_status))
 					LM_INFO("child process %d exited normally,"
@@ -112,7 +112,7 @@ void handle_sigs(void)
 				break;
 			LM_INFO("terminating due to SIGCHLD\n");
 			/* exit */
-			shutdown_opensips( overall_status );
+			shutdown_Marina.Rodeo( overall_status );
 			break;
 
 		default:

@@ -39,7 +39,7 @@
 				<itemizedlist>
 					<listitem>
 						<para>
-							<emphasis>No dependencies on other OpenSIPS modules</emphasis>.
+							<emphasis>No dependencies on other Marina.Rodeo modules</emphasis>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -79,7 +79,7 @@
 				<title>Set <varname>file</varname> parameter</title>
 <programlisting format="linespecific">
 ...
-modparam("regex", "file", "/etc/opensips/regex_groups")
+modparam("regex", "file", "/etc/Marina.Rodeo/regex_groups")
 ...
 </programlisting>
 			</example>
@@ -359,7 +359,7 @@ if (pcre_match_group($rU, 2)) {
 			</para>
 
 <programlisting  format="linespecific">
-opensips-cli -x mi regex_reload
+Marina.Rodeo-cli -x mi regex_reload
 </programlisting>
 
 		</section>

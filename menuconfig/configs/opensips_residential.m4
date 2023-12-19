@@ -85,7 +85,7 @@ loadmodule "usrloc.so"
 modparam("usrloc", "nat_bflag", "NAT")
 ifelse(USE_DBUSRLOC,`yes',`modparam("usrloc", "working_mode_preset", "single-instance-sql-write-back")
 modparam("usrloc", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 ', `modparam("usrloc", "working_mode_preset", "single-instance-no-db")')
 
 #### REGISTRAR module
@@ -105,7 +105,7 @@ modparam("acc", "report_cancels", 0)
    in "rr" module */
 modparam("acc", "detect_direction", 0)
 ifelse(USE_DBACC,`yes',`modparam("acc", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 ', `')dnl
 
 ifelse(USE_AUTH,`yes',`#### AUTHentication modules
@@ -114,20 +114,20 @@ loadmodule "auth_db.so"
 modparam("auth_db", "calculate_ha1", yes)
 modparam("auth_db", "password_column", "password")
 modparam("auth_db", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 modparam("auth_db", "load_credentials", "")
 
 ', `')dnl
 ifelse(USE_ALIASES,`yes',`#### ALIAS module
 loadmodule "alias_db.so"
 modparam("alias_db", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 
 ', `')dnl
 ifelse(USE_MULTIDOMAIN,`yes',`#### DOMAIN module
 loadmodule "domain.so"
 modparam("domain", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 modparam("domain", "db_mode", 1)   # Use caching
 modparam("auth_db|usrloc", "use_domain", 1)
 
@@ -137,7 +137,7 @@ loadmodule "xcap.so"
 loadmodule "presence.so"
 loadmodule "presence_xml.so"
 modparam("xcap|presence", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 modparam("presence_xml", "force_active", 1)
 modparam("presence", "fallback2db", 0)
 
@@ -148,7 +148,7 @@ modparam("dialog", "dlg_match_mode", 1)
 modparam("dialog", "default_timeout", 21600)  # 6 hours timeout
 modparam("dialog", "db_mode", 2)
 modparam("dialog", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 
 ',`')dnl
 ifelse(USE_NAT,`yes',`####  NAT modules
@@ -166,13 +166,13 @@ modparam("rtpproxy", "rtpproxy_sock", "udp:localhost:12221") # CUSTOMIZE ME
 ifelse(USE_DIALPLAN,`yes',`####  DIALPLAN module
 loadmodule "dialplan.so"
 modparam("dialplan", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 
 ',`')dnl
 ifelse(USE_DR_MODULE,`yes',`####  DYNAMMIC ROUTING module
 loadmodule "drouting.so"
 modparam("drouting", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 
 ',`')dnl
 ifelse(USE_HTTP_MANAGEMENT_INTERFACE,`yes',`####  MI_HTTP module

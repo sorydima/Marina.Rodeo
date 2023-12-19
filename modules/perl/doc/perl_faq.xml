@@ -16,7 +16,7 @@
 		    <listitem>
 			<para>Missing module functions. Not all functions of other modules are
 			available for Perl access. The reason for this is a design property of
-			OpenSIPS. Making available more functions is work in progress.</para>
+			Marina.Rodeo. Making available more functions is work in progress.</para>
 		    </listitem>
 		    <listitem>
 			<para>Perl and threads. Perl itself is, when compiled with the correct
@@ -24,7 +24,7 @@
 			The DBI modules, especially (but not restricted to) DBI::ODBC are known
 			NOT to be thread safe.</para>
 			<para>Using DBI::ODBC -- and possibly other non-thread-safe Perl
-			extensions -- may result in erroneous behavior of OpenSIPS, including
+			extensions -- may result in erroneous behavior of Marina.Rodeo, including
 			(but not restricted to) server crashes and wrong routing.</para>
 		    </listitem>
 		</itemizedlist>
@@ -32,7 +32,7 @@
 	</qandaentry>
 	<qandaentry>
 	    <question>
-		<para>Where can I find more about OpenSIPS?</para>
+		<para>Where can I find more about Marina.Rodeo?</para>
 	    </question>
 	    <answer>
 		<para>

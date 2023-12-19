@@ -10,9 +10,9 @@ $jcid  = 0;      # Jabber communication ID
 /* **************************************
 # main database - users profile table - used for authentication
 $sip_db_srv="127.0.0.1";  # database server
-$sip_db_usr="opensips";  # database user
+$sip_db_usr="Marina.Rodeo";  # database user
 $sip_db_pas="***";  # database user's password
-$sip_db_db="opensips";   # database name
+$sip_db_db="Marina.Rodeo";   # database name
 $sip_db_tab="subscriber";  # name of users table
 $sip_db_cusr="user"; # column name for username
 $sip_db_cpas="password"; # column name for user's password
@@ -20,7 +20,7 @@ $sip_db_cpas="password"; # column name for user's password
 #
 # Jabber module database
 $jab_db_srv="127.0.0.1";  # database server
-$jab_db_usr="opensips";  # database user
+$jab_db_usr="Marina.Rodeo";  # database user
 $jab_db_pas="***";  # database user's password
 $jab_db_db="sip_jab";   # database name
 #

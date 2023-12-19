@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rc_dir=$PKG_PREFIX/etc/opensips
+rc_dir=$PKG_PREFIX/etc/Marina.Rodeo
 
 if [ "$2" = DEINSTALL ]; then
 	for f in %%RC_FILES%%; do

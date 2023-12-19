@@ -23,7 +23,7 @@
 	<para>
 		The module performs several modifications in the SDP body of SIP INVITE,
 	200 OK and ACK messages. In all transcoding scenarios, the UAC performs early
-	SDP negotiation, while the UAS does late negotiation. This way, OpenSIPS
+	SDP negotiation, while the UAS does late negotiation. This way, Marina.Rodeo
 	becomes responsible for intersecting the codec offer and answer, together with
 	the management of transcoding sessions on the Sangoma cards.
 	</para>
@@ -49,7 +49,7 @@
 		Since the <emphasis>sngtc_node</emphasis> library performs several memory
 	allocations with each newly created transcoding session, the module uses a
 	dedicated process, responsible for the management of the above-mentioned sessions. The
-	<emphasis>sangoma_worker</emphasis> process communicates with the OpenSIPS
+	<emphasis>sangoma_worker</emphasis> process communicates with the Marina.Rodeo
 	UDP receivers through a series of pipes.
 	</para>
 	</section>

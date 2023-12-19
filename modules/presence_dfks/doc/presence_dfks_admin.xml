@@ -17,7 +17,7 @@
 	    <para>
 	    The module supports synchronization for the following features: Do Not Disturb,
 	    Call Forwarding Always, Call Forwarding Busy and Call Forwarding No Answer.
-	    Feature status can be changed either from the SIP phone or the OpenSIPS Server(
+	    Feature status can be changed either from the SIP phone or the Marina.Rodeo Server(
 	    by running an MI command).
 	    </para>
 	    <para>
@@ -25,7 +25,7 @@
 	    route for each feature, that will be used to retrieve the current status of that
 	    feature. Conversely, a SUBSCRIBE with a body will trigger a script route where the
 	    updated status of a specific feature is available. This route might also be run
-	    if the feature update was triggered from OpenSIPS via MI.
+	    if the feature update was triggered from Marina.Rodeo via MI.
 	    </para>
 	    <para>
 	    Note that the module does not automatically cache or persist any feature information
@@ -193,7 +193,7 @@ modparam("presence_dfks", "set_route", "dfks_set")
 		MI FIFO Command Format:
 		</para>
 <programlisting  format="linespecific">
-opensips-cli -x mi dfks_set_feature sip:alice@10.0.0.11 CallForwardingNoAnswer 1 1 \
+Marina.Rodeo-cli -x mi dfks_set_feature sip:alice@10.0.0.11 CallForwardingNoAnswer 1 1 \
 ringCount/4 forwardTo/sip:bob@10.0.0.11
 </programlisting>
 		</section>

@@ -701,9 +701,9 @@ modparam("tm", "enable_stats", 0)
 		( before t_relay() ).
 		</para>
 		<para>
-		A minor branch is a branch OpenSIPS will not wait to complete during
+		A minor branch is a branch Marina.Rodeo will not wait to complete during
 		parallel forking. So, if the rest of the branches are negativly replied
-		OpenSIPS will not wait for a final answer from the minor branch, but
+		Marina.Rodeo will not wait for a final answer from the minor branch, but
 		it will simply cancel it.
 		</para>
 		<para>
@@ -925,7 +925,7 @@ modparam("tm", "cluster_auto_cancel", no)
 			</listitem>
 			<listitem>
 				<para><emphasis>allow-no-cancel</emphasis> - (old
-				<emphasis>0x10</emphasis> flag) Allows OpenSIPS to inspect
+				<emphasis>0x10</emphasis> flag) Allows Marina.Rodeo to inspect
 				and follow the Content-Disposition "no-cancel" indication (if
 				present). As per RFC3841, section 9.1, the TM module may be 
 				instructed not to cancel all ongoing branches when a 2xx reply
@@ -1085,7 +1085,7 @@ t_reply(404, "Use $rU not found");
 		Trying reply will be immediately sent, unless
 		<xref linkend="param_auto_100trying"/> is disabled.  Once a SIP
 		transaction is created, calling <xref linkend="func_t_newtran"/> for
-		retransmitted requests will end the OpenSIPS script execution, with the
+		retransmitted requests will end the Marina.Rodeo script execution, with the
 		lastly sent reply being retransmitted upstream.
 		</para>
 		<para>
@@ -1465,8 +1465,8 @@ failure_route[1] {
 		<programlisting format="linespecific">
 ...
 route {
-	seturi("sip:bob@opensips.org");  # first branch
-	append_branch("sip:alice@opensips.org"); # second branch
+	seturi("sip:bob@Marina.Rodeo.org");  # first branch
+	append_branch("sip:alice@Marina.Rodeo.org"); # second branch
 
 	t_on_reply("global"); # the "global" reply route 
 	                      # is set the whole transaction
@@ -1887,9 +1887,9 @@ if (is_method("ACK|CANCEL") &amp;&amp; !t_check_trans()) {
 		</title>
 		<para>
 		This function is used to send a reply to an existing INVITE
-		transaction. The usual use case is when OpenSIPS is used as an UAS
+		transaction. The usual use case is when Marina.Rodeo is used as an UAS
 		and when an INVITE is receveid, it is "parked" locally on
-		OpenSIPS by replying to it with
+		Marina.Rodeo by replying to it with
 		<quote>t_reply(180, "Ringing")</quote> or 
 		<quote>t_reply(183, "Session Progress")</quote>
 		and later we need to handle CANCEL or BYE for it and send
@@ -2082,7 +2082,7 @@ route{
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi t_uac_dlg method=INVITE ruri="sip:alice@127.0.0.1:7050" headers="From: sip:bobster@127.0.0.1:1337\r\nTo: sip:alice@127.0.0.1:7050\r\nContact: sip:bobster@127.0.0.1:1337\r\n"
+		Marina.Rodeo-cli -x mi t_uac_dlg method=INVITE ruri="sip:alice@127.0.0.1:7050" headers="From: sip:bobster@127.0.0.1:1337\r\nTo: sip:alice@127.0.0.1:7050\r\nContact: sip:bobster@127.0.0.1:1337\r\n"
 		</programlisting>
 	</section>
 
@@ -2108,7 +2108,7 @@ route{
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi t_uac_cancel "1-23454@127.0.0.1" "1 INVITE"
+		Marina.Rodeo-cli -x mi t_uac_cancel "1-23454@127.0.0.1" "1 INVITE"
 		</programlisting>
 	</section>
 
@@ -2129,7 +2129,7 @@ route{
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi t_hash
+		Marina.Rodeo-cli -x mi t_hash
 		</programlisting>
 	</section>
 
@@ -2169,7 +2169,7 @@ route{
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi t_reply 403 Forbidden 46961:1279687637 abcde .
+		Marina.Rodeo-cli -x mi t_reply 403 Forbidden 46961:1279687637 abcde .
 		</programlisting>
 	</section>
 

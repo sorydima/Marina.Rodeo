@@ -1,16 +1,16 @@
 #
 # Authors:
-#   Liviu Chircu <liviu@opensips.org>
+#   Liviu Chircu <liviu@Marina.Rodeo.org>
 #
 # Maintainers:
-#   Liviu Chircu <liviu@opensips.org>
+#   Liviu Chircu <liviu@Marina.Rodeo.org>
 #
 
 ###############################################################################
-#                      OpenSIPS Replication Packet Types                      #
+#                      Marina.Rodeo Replication Packet Types                      #
 ###############################################################################
 
-enum32 T_opensips
+enum32 T_Marina.Rodeo
 {
   dialog_create         1
   dialog_update         2
@@ -48,7 +48,7 @@ enum32 T_opensips
 }
 
 ###############################################################################
-#                      OpenSIPS Replication Capabilities                      #
+#                      Marina.Rodeo Replication Capabilities                      #
 ###############################################################################
 const string konst::repl_dlg      = "dialog-dlg-repl";
 const string konst::repl_dlg_prof = "dialog-prof-repl";
@@ -58,65 +58,65 @@ const string konst::cl_internal   = "clusterer-internal";
 const string konst::cl_extra      = "clusterer-extra";
 const string konst::repl_tm       = "tm-repl";
 
-const uint32 konst::opensips_bin_marker      = 1262695504; # P4CK
+const uint32 konst::Marina.Rodeo_bin_marker      = 1262695504; # P4CK
 const uint32 konst::sync_chunk_start_marker  = 10101010;
 
 switch_expr T_type_dlg_switch
 {
-  case (packet_type == 1) : var T_opensips Type = T_opensips::dialog_create;
-  case (packet_type == 2) : var T_opensips Type = T_opensips::dialog_update;
-  case (packet_type == 3) : var T_opensips Type = T_opensips::dialog_delete;
-  case (packet_type == 4) : var T_opensips Type = T_opensips::dialog_cseq_update;
+  case (packet_type == 1) : var T_Marina.Rodeo Type = T_Marina.Rodeo::dialog_create;
+  case (packet_type == 2) : var T_Marina.Rodeo Type = T_Marina.Rodeo::dialog_update;
+  case (packet_type == 3) : var T_Marina.Rodeo Type = T_Marina.Rodeo::dialog_delete;
+  case (packet_type == 4) : var T_Marina.Rodeo Type = T_Marina.Rodeo::dialog_cseq_update;
   default : print ("default case");
 }
 
 switch_expr T_type_ul_switch
 {
-  case (packet_type == 1) : var T_opensips Type = T_opensips::usrloc_aor_create;
-  case (packet_type == 2) : var T_opensips Type = T_opensips::usrloc_aor_delete;
-  case (packet_type == 3) : var T_opensips Type = T_opensips::usrloc_ct_create;
-  case (packet_type == 4) : var T_opensips Type = T_opensips::usrloc_ct_update;
-  case (packet_type == 5) : var T_opensips Type = T_opensips::usrloc_ct_delete;
+  case (packet_type == 1) : var T_Marina.Rodeo Type = T_Marina.Rodeo::usrloc_aor_create;
+  case (packet_type == 2) : var T_Marina.Rodeo Type = T_Marina.Rodeo::usrloc_aor_delete;
+  case (packet_type == 3) : var T_Marina.Rodeo Type = T_Marina.Rodeo::usrloc_ct_create;
+  case (packet_type == 4) : var T_Marina.Rodeo Type = T_Marina.Rodeo::usrloc_ct_update;
+  case (packet_type == 5) : var T_Marina.Rodeo Type = T_Marina.Rodeo::usrloc_ct_delete;
   default : print ("default case");
 }
 
 switch_expr T_type_cl_internal_switch
 {
-  case (packet_type == 0) : var T_opensips Type = T_opensips::icluster_ping;
-  case (packet_type == 1) : var T_opensips Type = T_opensips::icluster_pong;
-  case (packet_type == 2) : var T_opensips Type = T_opensips::icluster_link_update;
-  case (packet_type == 3) : var T_opensips Type = T_opensips::icluster_topo_update;
-  case (packet_type == 4) : var T_opensips Type = T_opensips::icluster_unknown_id;
-  case (packet_type == 5) : var T_opensips Type = T_opensips::icluster_node_desc;
-  case (packet_type == 8) : var T_opensips Type = T_opensips::icluster_cap_update;
+  case (packet_type == 0) : var T_Marina.Rodeo Type = T_Marina.Rodeo::icluster_ping;
+  case (packet_type == 1) : var T_Marina.Rodeo Type = T_Marina.Rodeo::icluster_pong;
+  case (packet_type == 2) : var T_Marina.Rodeo Type = T_Marina.Rodeo::icluster_link_update;
+  case (packet_type == 3) : var T_Marina.Rodeo Type = T_Marina.Rodeo::icluster_topo_update;
+  case (packet_type == 4) : var T_Marina.Rodeo Type = T_Marina.Rodeo::icluster_unknown_id;
+  case (packet_type == 5) : var T_Marina.Rodeo Type = T_Marina.Rodeo::icluster_node_desc;
+  case (packet_type == 8) : var T_Marina.Rodeo Type = T_Marina.Rodeo::icluster_cap_update;
   default : print ("default case");
 }
 
 switch_expr T_type_cl_extra_switch
 {
-  case (packet_type == 6) : var T_opensips Type = T_opensips::cluster_generic_msg;
-  case (packet_type == 7) : var T_opensips Type = T_opensips::cluster_mi_cmd;
-  case (packet_type == 9) : var T_opensips Type = T_opensips::cluster_sync_req;
-  case (packet_type == 10) : var T_opensips Type = T_opensips::cluster_sync_data;
-  case (packet_type == 11) : var T_opensips Type = T_opensips::cluster_sync_end;
-  case (packet_type == 12) : var T_opensips Type = T_opensips::cluster_shtag_on;
+  case (packet_type == 6) : var T_Marina.Rodeo Type = T_Marina.Rodeo::cluster_generic_msg;
+  case (packet_type == 7) : var T_Marina.Rodeo Type = T_Marina.Rodeo::cluster_mi_cmd;
+  case (packet_type == 9) : var T_Marina.Rodeo Type = T_Marina.Rodeo::cluster_sync_req;
+  case (packet_type == 10) : var T_Marina.Rodeo Type = T_Marina.Rodeo::cluster_sync_data;
+  case (packet_type == 11) : var T_Marina.Rodeo Type = T_Marina.Rodeo::cluster_sync_end;
+  case (packet_type == 12) : var T_Marina.Rodeo Type = T_Marina.Rodeo::cluster_shtag_on;
   default : print ("default case");
 }
 
 switch_expr T_type_tm_switch
 {
-  case (packet_type == 1) : var T_opensips Type = T_opensips::tm_reply;
-  case (packet_type == 2) : var T_opensips Type = T_opensips::tm_request;
-  case (packet_type == 3) : var T_opensips Type = T_opensips::tm_cancel;
+  case (packet_type == 1) : var T_Marina.Rodeo Type = T_Marina.Rodeo::tm_reply;
+  case (packet_type == 2) : var T_Marina.Rodeo Type = T_Marina.Rodeo::tm_request;
+  case (packet_type == 3) : var T_Marina.Rodeo Type = T_Marina.Rodeo::tm_cancel;
   default : print ("default case");
 }
 
 
-switch_expr T_switch_opensips
+switch_expr T_switch_Marina.Rodeo
 {
   case (capability == konst::repl_dlg)      : T_type_dlg_switch "";
-  case (capability == konst::repl_dlg_prof) : var T_opensips Type = T_opensips::dialog_profiles;
-  case (capability == konst::repl_rl)       : var T_opensips Type = T_opensips::ratelimit_pipes;
+  case (capability == konst::repl_dlg_prof) : var T_Marina.Rodeo Type = T_Marina.Rodeo::dialog_profiles;
+  case (capability == konst::repl_rl)       : var T_Marina.Rodeo Type = T_Marina.Rodeo::ratelimit_pipes;
   case (capability == konst::repl_ul)       : T_type_ul_switch "";
   case (capability == konst::cl_internal)   : T_type_cl_internal_switch "";
   case (capability == konst::cl_extra)      : T_type_cl_extra_switch "";
@@ -139,7 +139,7 @@ struct T_msg_header_type
   string(cap_len)   capability;
   uint32            packet_type;
 
-  T_switch_opensips  "";
+  T_switch_Marina.Rodeo  "";
 }
 
 function uint32 header_size ()
@@ -792,41 +792,41 @@ struct T_msg_unknow
 #                                 MAIN SWITCH                                 #
 ###############################################################################
 
-switch T_msg_switch # T_opensips
+switch T_msg_switch # T_Marina.Rodeo
 {
-  case T_opensips::dialog_create      : T_bin_dlg_create "";
-  case T_opensips::dialog_update      : T_bin_dlg_update "";
-  case T_opensips::dialog_delete      : T_bin_dlg_delete "";
-  case T_opensips::dialog_cseq_update : T_bin_dlg_cseq "";
+  case T_Marina.Rodeo::dialog_create      : T_bin_dlg_create "";
+  case T_Marina.Rodeo::dialog_update      : T_bin_dlg_update "";
+  case T_Marina.Rodeo::dialog_delete      : T_bin_dlg_delete "";
+  case T_Marina.Rodeo::dialog_cseq_update : T_bin_dlg_cseq "";
 
-  case T_opensips::dialog_profiles    : T_bin_dlg_profiles "";
+  case T_Marina.Rodeo::dialog_profiles    : T_bin_dlg_profiles "";
 
-  case T_opensips::ratelimit_pipes    : T_bin_rl "";
+  case T_Marina.Rodeo::ratelimit_pipes    : T_bin_rl "";
 
-  case T_opensips::usrloc_aor_create  : T_bin_ul_aor_create "";
-  case T_opensips::usrloc_aor_delete  : T_bin_ul_aor_delete "";
-  case T_opensips::usrloc_ct_create   : T_bin_ul_ct_create "";
-  case T_opensips::usrloc_ct_update   : T_bin_ul_ct_update "";
-  case T_opensips::usrloc_ct_delete   : T_bin_ul_ct_delete "";
+  case T_Marina.Rodeo::usrloc_aor_create  : T_bin_ul_aor_create "";
+  case T_Marina.Rodeo::usrloc_aor_delete  : T_bin_ul_aor_delete "";
+  case T_Marina.Rodeo::usrloc_ct_create   : T_bin_ul_ct_create "";
+  case T_Marina.Rodeo::usrloc_ct_update   : T_bin_ul_ct_update "";
+  case T_Marina.Rodeo::usrloc_ct_delete   : T_bin_ul_ct_delete "";
 
-  case T_opensips::icluster_ping        : T_bin_cl_ping "";
-  case T_opensips::icluster_pong        : T_bin_cl_pong "";
-  case T_opensips::icluster_link_update : T_bin_cl_ls_update "";
-  case T_opensips::icluster_topo_update : T_bin_cl_ft_update "";
-  case T_opensips::icluster_unknown_id  : T_bin_cl_unknown_id "";
-  case T_opensips::icluster_node_desc   : T_bin_cl_node_desc "";
-  case T_opensips::icluster_cap_update  : T_bin_cl_cap_update "";
+  case T_Marina.Rodeo::icluster_ping        : T_bin_cl_ping "";
+  case T_Marina.Rodeo::icluster_pong        : T_bin_cl_pong "";
+  case T_Marina.Rodeo::icluster_link_update : T_bin_cl_ls_update "";
+  case T_Marina.Rodeo::icluster_topo_update : T_bin_cl_ft_update "";
+  case T_Marina.Rodeo::icluster_unknown_id  : T_bin_cl_unknown_id "";
+  case T_Marina.Rodeo::icluster_node_desc   : T_bin_cl_node_desc "";
+  case T_Marina.Rodeo::icluster_cap_update  : T_bin_cl_cap_update "";
 
-  case T_opensips::cluster_generic_msg  : T_bin_cl_gen_msg "";
-  case T_opensips::cluster_mi_cmd       : T_bin_cl_mi_cmd "";
-  case T_opensips::cluster_sync_req     : T_bin_cl_sync_req "";
-  case T_opensips::cluster_sync_data    : T_bin_cl_sync "";
-  case T_opensips::cluster_sync_end     : T_bin_cl_sync_end "";
-  case T_opensips::cluster_shtag_on     : T_bin_cl_shtag_active "";
+  case T_Marina.Rodeo::cluster_generic_msg  : T_bin_cl_gen_msg "";
+  case T_Marina.Rodeo::cluster_mi_cmd       : T_bin_cl_mi_cmd "";
+  case T_Marina.Rodeo::cluster_sync_req     : T_bin_cl_sync_req "";
+  case T_Marina.Rodeo::cluster_sync_data    : T_bin_cl_sync "";
+  case T_Marina.Rodeo::cluster_sync_end     : T_bin_cl_sync_end "";
+  case T_Marina.Rodeo::cluster_shtag_on     : T_bin_cl_shtag_active "";
 
-  case T_opensips::tm_reply             : T_bin_tm_msg "";
-  case T_opensips::tm_request           : T_bin_tm_msg "";
-  case T_opensips::tm_cancel            : T_bin_tm_cancel "";
+  case T_Marina.Rodeo::tm_reply             : T_bin_tm_msg "";
+  case T_Marina.Rodeo::tm_request           : T_bin_tm_msg "";
+  case T_Marina.Rodeo::tm_cancel            : T_bin_tm_cancel "";
 
   default  :
     T_msg_unknow "";

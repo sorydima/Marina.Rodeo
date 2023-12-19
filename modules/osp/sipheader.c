@@ -1,7 +1,7 @@
 /*
- * opensips osp module.
+ * Marina.Rodeo osp module.
  *
- * This module enables opensips to communicate with an Open Settlement
+ * This module enables Marina.Rodeo to communicate with an Open Settlement
  * Protocol (OSP) server.  The Open Settlement Protocol is an ETSI
  * defined standard for Inter-Domain VoIP pricing, authorization
  * and usage exchange.  The technical specifications for OSP
@@ -9,16 +9,16 @@
  *
  * Uli Abend was the original contributor to this module.
  *
- * Copyright (C) 2001-2005 Fhg Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2005 Fhg Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -1371,7 +1371,7 @@ int ospRebuildDestUri(
         uriparamsize);
 
     /* "sip:" + called + NP + "@" + host + ";user=phone" + ";_osp_dnid_param=" + dnid + " + ";_osp_swid_param=" + swid + " SIP/2.0" etc. */
-    /* OpenSIPS will add "<>" for the Contact headers of SIP 3xx messages */
+    /* Marina.Rodeo will add "<>" for the Contact headers of SIP 3xx messages */
     if (newuri->len < (4 + calledsize + userparamsize + 1 + hostsize + uriparamsize + dnidsize + swidsize + paramstrsize + 1 + 7 + TRANS.len)) {
         LM_ERR("new uri buffer is too small\n");
         newuri->len = 0;

@@ -90,7 +90,7 @@ Chapter 1. Admin Guide
    Database URL.
 
    Default value is
-   “mysql://opensipsro:opensipsro@localhost/opensips”.
+   “mysql://Marina.Rodeoro:Marina.Rodeoro@localhost/Marina.Rodeo”.
 
    Example 1.1. Set db_url parameter
 ...
@@ -329,6 +329,6 @@ Chapter 4. Documentation
    (@henningw), Elena-Ramona Modroiu, Daniel-Constantin Mierla
    (@miconda), Konstantin Bokarius, Edson Gellert Schubert.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2005-2009 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005-2009 Voice Sistem SRL

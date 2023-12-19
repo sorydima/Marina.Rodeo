@@ -114,7 +114,7 @@
 		<title>Set <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/opensips_sql")
+modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/Marina.Rodeo_sql")
 ...
 	</programlisting>
 		</example>
@@ -123,8 +123,8 @@ modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/open
 		<title>Usage example </title>
 		<programlisting format="linespecific">
 ...
-modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/opensips_sql")
-modparam("cachedb_sql", "cachedb_url", "sql:2nd-postgres://root:vlad@localhost/opensips_pg")
+modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/Marina.Rodeo_sql")
+modparam("cachedb_sql", "cachedb_url", "sql:2nd-postgres://root:vlad@localhost/Marina.Rodeo_pg")
 ...
 ...
 cache_store("sql:1st-mysql","key","$ru value");

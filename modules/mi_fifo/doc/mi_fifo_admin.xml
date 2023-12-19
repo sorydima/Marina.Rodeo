@@ -99,26 +99,26 @@
 			processes can no longer read from FIFO files that are saved
 			in directories with sticky bits (such as <emphasis>/tmp</emphasis>)
 			and are not owned by the same user the process runs with. This
-			prevents external tools (such as <emphasis>opensips-cli</emphasis>)
+			prevents external tools (such as <emphasis>Marina.Rodeo-cli</emphasis>)
 			from running MI commands using a different user (a
 			<emphasis>Permissions denied</emphasis> error is triggered). If
 			you are getting this error while trying to use
-			<emphasis>opensips-cli</emphasis>, you can fix it by either store
+			<emphasis>Marina.Rodeo-cli</emphasis>, you can fix it by either store
 			the fifo file in a non-sticky bit directory (such as
-			<emphasis>/run/opensips</emphasis>), or disable the fifo
+			<emphasis>/run/Marina.Rodeo</emphasis>), or disable the fifo
 			protection using <emphasis>sysctl fs.protected_fifos = 0</emphasis>
 			(NOT RECOMMENDED).
 		</para>
 		<para>
 		<emphasis>
-			Default value is "/tmp/opensips_fifo".
+			Default value is "/tmp/Marina.Rodeo_fifo".
 		</emphasis>
 		</para>
 		<example>
 		<title>Set <varname>fifo_name</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("mi_fifo", "fifo_name", "/tmp/opensips_b2b_fifo")
+modparam("mi_fifo", "fifo_name", "/tmp/Marina.Rodeo_b2b_fifo")
 ...
 </programlisting>
 		</example>
@@ -203,7 +203,7 @@ modparam("mi_fifo", "fifo_user", "root")
 		<title>Set <varname>reply_dir</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("mi_fifo", "reply_dir", "/home/opensips/tmp/")
+modparam("mi_fifo", "reply_dir", "/home/Marina.Rodeo/tmp/")
 ...
 </programlisting>
 		</example>

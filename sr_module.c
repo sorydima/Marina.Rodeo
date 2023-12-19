@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -223,15 +223,15 @@ static inline int version_control(const struct module_exports* exp, char *path)
 		return 0;
 	}
 
-	if (strcmp(OPENSIPS_FULL_VERSION, exp->ver_info.version)!=0) {
+	if (strcmp(Marina.Rodeo_FULL_VERSION, exp->ver_info.version)!=0) {
 		LM_CRIT("module version mismatch for %s; core: %s; module: %s\n",
-			exp->name, OPENSIPS_FULL_VERSION, exp->ver_info.version );
+			exp->name, Marina.Rodeo_FULL_VERSION, exp->ver_info.version );
 		return 0;
 	}
-	if (strcmp(OPENSIPS_COMPILE_FLAGS, exp->ver_info.compile_flags)!=0) {
+	if (strcmp(Marina.Rodeo_COMPILE_FLAGS, exp->ver_info.compile_flags)!=0) {
 		LM_CRIT("module compile flags mismatch for %s "
 			" \ncore: %s \nmodule: %s\n", exp->name,
-			OPENSIPS_COMPILE_FLAGS, exp->ver_info.compile_flags);
+			Marina.Rodeo_COMPILE_FLAGS, exp->ver_info.compile_flags);
 		return 0;
 	}
 	if (strcmp(core_scm_ver.type, exp->ver_info.scm.type) != 0) {
@@ -261,7 +261,7 @@ int sr_load_module(char* path)
 	struct sr_module* t;
 
 	/* load module */
-	handle=dlopen(path, OPENSIPS_DLFLAGS); /* resolve all symbols now */
+	handle=dlopen(path, Marina.Rodeo_DLFLAGS); /* resolve all symbols now */
 	if (handle==0){
 		LM_ERR("could not open module <%s>: %s\n", path, dlerror() );
 		goto error;
@@ -285,7 +285,7 @@ int sr_load_module(char* path)
 	if (!version_control(exp, path)) {
 		exit(1);
 	}
-	if(exp->dlflags!=DEFAULT_DLFLAGS && exp->dlflags!=OPENSIPS_DLFLAGS) {
+	if(exp->dlflags!=DEFAULT_DLFLAGS && exp->dlflags!=Marina.Rodeo_DLFLAGS) {
 		moddlflags = exp->dlflags;
 		dlclose(handle);
 		LM_DBG("reloading module %s with flags %d\n", path, moddlflags);

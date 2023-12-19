@@ -11,7 +11,7 @@
 		manage and provide access to SIP registration bindings (contacts) for
 		other modules (e.g. registrar, mid-registrar, nathelper, etc.). The
 		module exports no functions that could be directly used from the
-		OpenSIPS script.
+		Marina.Rodeo script.
 	</para>
 	<para>
 		At runtime, the contacts may reside in memory, in an SQL database or in
@@ -25,9 +25,9 @@
 		module.
 	</para>
 	<para>
-		The OpenSIPS user location implementation is cluster-enabled. On top of
+		The Marina.Rodeo user location implementation is cluster-enabled. On top of
 		supporting traditional "single instance" setups, it also allows multiple
-		OpenSIPS user location nodes to form a single, global user location cluster.
+		Marina.Rodeo user location nodes to form a single, global user location cluster.
 		This allows high-level features such as startup synchronization (data
 		tunneling) from a random, healthy "donor" node and evenly distributed
 		NAT pinging workloads.
@@ -38,9 +38,9 @@
 			 xreflabel="Distributed SIP User Location">
 	<title>Distributed SIP User Location</title>
 	<para>
-	Starting with OpenSIPS 2.4, the user location module offers several optional
+	Starting with Marina.Rodeo 2.4, the user location module offers several optional
 	data distribution models, each tailoring to specific real-life production use cases.
-	Built on top of the OpenSIPS clustering module, these models take into
+	Built on top of the Marina.Rodeo clustering module, these models take into
 	account service concerns such as <emphasis>high availability, geographical
 	distribution, horizontal scalability and NAT traversal</emphasis>.
 	</para>
@@ -52,9 +52,9 @@
 		<title>"Federation" Topology</title>
 		<para>
 		A <emphasis>federated</emphasis> user location keeps contact data local
-		to the original OpenSIPS node the contact initially registered to. In
+		to the original Marina.Rodeo node the contact initially registered to. In
 		order to share the reachability of these contacts with the global
-		OpenSIPS user location cluster, registrar nodes will only publish some
+		Marina.Rodeo user location cluster, registrar nodes will only publish some
 		light "metadata" entries for any new Addresses-of-Record which are
 		reachable from them. These entries will cause other nodes to also fork
 		additional SIP branches pointing to the publisher registrar upon
@@ -69,7 +69,7 @@
 			<emphasis role='bold'>IP address restrictions</emphasis> - In some
 			cases, calls routed towards registered contacts must necessarily
 			pass through the original registration nodes of these contacts. A
-			classic example of this situation is when an OpenSIPS registrar
+			classic example of this situation is when an Marina.Rodeo registrar
 			sitting at the edge of the platform is directly facing a NAT device
 			on the way to the contact. Unless calls are sent out from this
 			exact registrar, they will not be able to traverse the NAT device
@@ -96,7 +96,7 @@
 		MongoDB and Cassandra.
 		</para>
 		<para>
-		The <ulink url="https://opensips.org/Documentation/Tutorials-Distributed-User-Location-Federation">
+		The <ulink url="https://Marina.Rodeo.org/Documentation/Tutorials-Distributed-User-Location-Federation">
 			<citetitle>federated user location tutorial</citetitle></ulink>
 		contains precise details on how to achieve this setup (including High
 		Availability support).
@@ -106,21 +106,21 @@
 		<title>"Full Sharing" Topology</title>
 		<para>
 		A <emphasis>fully sharing</emphasis> user location broadcasts contact
-		information to all data nodes (OpenSIPS or NoSQL).
+		information to all data nodes (Marina.Rodeo or NoSQL).
 		The main assumption behind this mode is that any routing
 		restrictions have been alleviated beforehand. Consequently, either SIP
 		traffic egressing from a "full sharing"
-		OpenSIPS user location topology is being intermediated by an
+		Marina.Rodeo user location topology is being intermediated by an
 		additional SIP edge endpoint of our platform, or there are no egress IP
 		restrictions at all (for example, if all SIP UAs have public IPs). In
-		this setup, all OpenSIPS user location nodes are
+		this setup, all Marina.Rodeo user location nodes are
 		<emphasis>equivalent</emphasis> to one another, as they each have
 		access to the same dataset and have no routing restrictions.
 		</para>
 		<para>
 		The <emphasis role='bold'>full sharing</emphasis> topology is
 		an appropriate solution for multi-layer VoIP platforms, where the
-		OpenSIPS registrar nodes do not directly interact with external SIP
+		Marina.Rodeo registrar nodes do not directly interact with external SIP
 		endpoints. Moreover, it can be configured to fully store contact data
 		within a NoSQL cluster (zero in-memory storage), thus taking full
 		advantage of the data sharing, sharding, migration and other
@@ -138,7 +138,7 @@
 		and Apache Cassandra.
 		</para>
 		<para>
-		The <ulink url="https://opensips.org/Documentation/Tutorials-Distributed-User-Location-Full-Sharing">
+		The <ulink url="https://Marina.Rodeo.org/Documentation/Tutorials-Distributed-User-Location-Full-Sharing">
 			<citetitle>"full sharing" user location tutorial</citetitle></ulink>
 		contains precise details on how to achieve this setup (including full
 		NoSQL storage support).
@@ -158,7 +158,7 @@
 		bandwidth, both on the service and client side.
 		</para>
 		<para>
-		This problem is solved with the help of the OpenSIPS cluster layer,
+		This problem is solved with the help of the Marina.Rodeo cluster layer,
 		which makes all nodes aware of each others' presence. Thus, the
 		distributed user location node topologies are able to collectively
 		partition the pinging workload and spread it evenly across the current
@@ -693,9 +693,9 @@ modparam("usrloc", "desc_time_order", 1)
 		</para>
 		<warning>
 		<para>
-		In case of an OpenSIPS shutdown or even a crash, contacts which are in
+		In case of an Marina.Rodeo shutdown or even a crash, contacts which are in
 		memory only and have not been flushed yet to disk will NOT get lost!
-		OpenSIPS will try its best to do a last-minute sync to DB right before
+		Marina.Rodeo will try its best to do a last-minute sync to DB right before
 		shutting down.
 		</para>
 		</warning>
@@ -857,11 +857,11 @@ modparam("usrloc", "db_mode", 2)
 		<listitem>
 			<para>
 			<emphasis role="bold">"federation-cachedb-cluster"</emphasis> -
-			OpenSIPS will run with a "federation-cachedb"
+			Marina.Rodeo will run with a "federation-cachedb"
 			<xref linkend="param_cluster_mode"/> and
 			"sync-from-cluster" <xref linkend="param_restart_persistency"/>.
 			This will require the configuration of multiple "seed" nodes in
-			the cluster. Refer to the <ulink url="https://opensips.org/Documentation/Tutorials-Distributed-User-Location-Federation">
+			the cluster. Refer to the <ulink url="https://Marina.Rodeo.org/Documentation/Tutorials-Distributed-User-Location-Federation">
 			<citetitle>federated user location tutorial</citetitle></ulink> for more
 			details.
 			</para>
@@ -869,7 +869,7 @@ modparam("usrloc", "db_mode", 2)
 		<listitem>
 			<para>
 			<emphasis role="bold">"full-sharing-cluster"</emphasis> -
-			OpenSIPS will run with a "full-sharing"
+			Marina.Rodeo will run with a "full-sharing"
 			<xref linkend="param_cluster_mode"/> and
 			"sync-from-cluster" <xref linkend="param_restart_persistency"/>.
 			This will require the configuration of one of the nodes in the cluster
@@ -879,7 +879,7 @@ modparam("usrloc", "db_mode", 2)
 		<listitem>
 			<para>
 			<emphasis role="bold">"full-sharing-cachedb-cluster"</emphasis> -
-			OpenSIPS will run with a "full-sharing-cachedb"
+			Marina.Rodeo will run with a "full-sharing-cachedb"
 			<xref linkend="param_cluster_mode"/>, where all location data strictly
 			resides in a NoSQL database, thus it will have natural restart
 			persistency.
@@ -915,7 +915,7 @@ modparam("usrloc", "working_mode_preset", "full-sharing-cachedb-cluster")
 			<xref linkend='param_db_mode'/> is set.</emphasis>
 		</para>
 		<para>
-		The behavior of the global OpenSIPS user location cluster. Refer to
+		The behavior of the global Marina.Rodeo user location cluster. Refer to
 		section <xref linkend="distributed-sip-user-location"/> for details.
 		</para>
 		<para>
@@ -938,7 +938,7 @@ modparam("usrloc", "working_mode_preset", "full-sharing-cachedb-cluster")
 			<listitem>
 				<para><emphasis>"full-sharing"</emphasis> -
 				Broadcast contact updates (full-mesh mirroring) to all other
-				OpenSIPS cluster participants.  Each node will hold the entire
+				Marina.Rodeo cluster participants.  Each node will hold the entire
 				user location dataset.  Consequently, the
 				<xref linkend="param_location_cluster"/> parameter is mandatory.
 				</para>
@@ -949,14 +949,14 @@ modparam("usrloc", "working_mode_preset", "full-sharing-cachedb-cluster")
 				database (somewhat resembling the "sql-only" preset).
 				The cluster layer is still required in order to
 				be able to partition and spread the pinging workload evenly
-				among participating OpenSIPS nodes. Consequently, the
+				among participating Marina.Rodeo nodes. Consequently, the
 				<xref linkend="param_location_cluster"/> and
 				<xref linkend="param_cachedb_url"/> parameters are mandatory.
 				</para>
 			</listitem>
 			<listitem>
 				<para><emphasis>"sql-only"</emphasis> -
-				Multiple OpenSIPS boxes using a common
+				Multiple Marina.Rodeo boxes using a common
 				<xref linkend="param_db_url"/> without necessarily being aware
 				of each other.
 				</para>
@@ -985,7 +985,7 @@ modparam("usrloc", "cluster_mode", "federation-cachedb")
 			<xref linkend='param_db_mode'/> are set.</emphasis>
 		</para>
 		<para>
-		Controls the behavior of the OpenSIPS user location following a
+		Controls the behavior of the Marina.Rodeo user location following a
 		restart. This parameter has no effect in some database-only working
 		mode presets, where restart persistency is naturally ensured.
 		</para>
@@ -1013,7 +1013,7 @@ modparam("usrloc", "cluster_mode", "federation-cachedb")
 			<listitem>
 				<para><emphasis>"sync-from-cluster"</emphasis> - enable
 				cluster-based restart persistency. Following a restart,
-				an OpenSIPS cluster node will search for a healthy "donor" node
+				an Marina.Rodeo cluster node will search for a healthy "donor" node
 				from which to mirror the entire user location dataset via
 				direct cluster sync (TCP-based, binary-encoded data transfer). 
 				Depending on the clustering mode and cluster topology, this will
@@ -1048,7 +1048,7 @@ modparam("usrloc", "restart_persistency", "sync-from-cluster")
 		</para>
 		<para>
 		Only valid if <xref linkend="param_restart_persistency"/> is enabled.
-		Controls the runtime behavior of OpenSIPS writes to the SQL database.
+		Controls the runtime behavior of Marina.Rodeo writes to the SQL database.
 		</para>
 		<para>
 		This parameter may take the following values:
@@ -1794,7 +1794,7 @@ modparam("usrloc", "contact_refresh_timer", true)
 			</para></listitem>
 			<listitem><para>
 				<emphasis>socket</emphasis> - The SIP socket/listener
-				(as string) used by OpenSIPS to receive the contact
+				(as string) used by Marina.Rodeo to receive the contact
 				registations.
 			</para></listitem>
 			<listitem><para>
@@ -1904,7 +1904,7 @@ modparam("usrloc", "contact_refresh_timer", true)
 			</para></listitem>
 			<listitem><para>
 				<emphasis>socket</emphasis> - The SIP socket/listener
-				(as string) used by OpenSIPS to receive the contact
+				(as string) used by Marina.Rodeo to receive the contact
 				registations.
 			</para></listitem>
 			<listitem><para>
@@ -1937,7 +1937,7 @@ modparam("usrloc", "contact_refresh_timer", true)
 				event was triggered.  Possible values:
 				<itemizedlist>
 					<listitem><para>
-						"reg-refresh" - periodic refresh triggered by OpenSIPS
+						"reg-refresh" - periodic refresh triggered by Marina.Rodeo
 					</para></listitem>
 
 					<listitem><para>

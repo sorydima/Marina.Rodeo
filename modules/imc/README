@@ -8,7 +8,7 @@ imc Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -84,7 +84,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * mysql.
@@ -93,7 +93,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -103,7 +103,7 @@ Chapter 1. Admin Guide
    The database url.
 
    The default value is
-   “mysql://opensips:opensipsrw@localhost/opensips”.
+   “mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo”.
 
    Example 1.1. Set db_url parameter
 ...
@@ -159,8 +159,8 @@ modparam("imc", "imc_cmd_start_char", "#")
 1.3.6. outbound_proxy (str)
 
    The SIP address used as next hop when sending the message. Very
-   useful when using OpenSIPS with a domain name not in DNS, or
-   when using a separate OpenSIPS instance for imc processing. If
+   useful when using Marina.Rodeo with a domain name not in DNS, or
+   when using a separate Marina.Rodeo instance for imc processing. If
    not set, the message will be sent to the address in destination
    URI.
 
@@ -168,7 +168,7 @@ modparam("imc", "imc_cmd_start_char", "#")
 
    Example 1.6. Set outbound_proxy parameter
 ...
-modparam("imc", "outbound_proxy", "sip:opensips.org;transport=tcp")
+modparam("imc", "outbound_proxy", "sip:Marina.Rodeo.org;transport=tcp")
 ...
 
 1.4. Exported Functions
@@ -201,7 +201,7 @@ if(is_method("MESSAGE)
    Parameters: none
 
    MI FIFO Command Format:
-                opensips-cli -x mi imc_list_rooms
+                Marina.Rodeo-cli -x mi imc_list_rooms
 
 1.5.2.  imc_list_members
 
@@ -213,7 +213,7 @@ if(is_method("MESSAGE)
      * room : the room for which you want to list the members
 
    MI FIFO Command Format:
-                opensips-cli -x mi imc_list_members sip:chat-000@opensip
+                Marina.Rodeo-cli -x mi imc_list_members sip:chat-000@opensip
 s.org
 
 1.6. Exported Statistics
@@ -249,8 +249,8 @@ s.org
     present it will be considered to be the address in the To
     header of the message
   -if the room does not exist the command is treated as create
-  -eg:join sip:chat-000@opensips.org,
-      or just, #join, sent to sip:chat-000@opensips.org
+  -eg:join sip:chat-000@Marina.Rodeo.org,
+      or just, #join, sent to sip:chat-000@Marina.Rodeo.org
 
 3.invite
   -invites a user to become a member of a room
@@ -260,15 +260,15 @@ s.org
            to be the address in the To header of the message
   -only certain users have the right to invite other user: the owner
     and the administrators
-  -eg: #invite sip:john@opensips.org sip:chat-000@opensips.org
-    or  #invite john@opensips.org sent to sip:chat-000@opensips.org
+  -eg: #invite sip:john@Marina.Rodeo.org sip:chat-000@Marina.Rodeo.org
+    or  #invite john@Marina.Rodeo.org sent to sip:chat-000@Marina.Rodeo.org
 
 4.accept
   -accepting an invitation
   -takes one optional parameter - the address of the room - if not
     present it will be considered to be the address in the To header
     of the message
-  -eg: #accept sip:john@opensips.org
+  -eg: #accept sip:john@Marina.Rodeo.org
 
 5.deny
   -rejects an invitation
@@ -281,7 +281,7 @@ s.org
     2)the address of the room -if not present it will be considered
           to be the address in the To header of the message
   -only certain members have the right to remove other members
-  -eg: #remove sip:john@opensips.org, sent to sip:chat-000@opensips.org
+  -eg: #remove sip:john@Marina.Rodeo.org, sent to sip:chat-000@Marina.Rodeo.org
 
 7.exit
   -leaving a room
@@ -302,14 +302,14 @@ s.org
 
 1.8. Installation
 
-   Before running OpenSIPS with IMC, you have to setup the
+   Before running Marina.Rodeo with IMC, you have to setup the
    database tables where the module will store the data. For that,
    if the tables were not created by the installation script or
    you choose to install everything by yourself you can use the
    imc-create.sql SQL script in the database directories in the
-   opensips/scripts folder as template. You can also find the
+   Marina.Rodeo/scripts folder as template. You can also find the
    complete database documentation on the project webpage,
-   https://opensips.org/docs/db/db-schema-devel.html.
+   https://Marina.Rodeo.org/docs/db/db-schema-devel.html.
 
 Chapter 2. Contributors
 
@@ -341,7 +341,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -382,6 +382,6 @@ Chapter 3. Documentation
    Gellert Schubert, Anca Vamanu, Henning Westerholt (@henningw),
    Elena-Ramona Modroiu.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2006-2008 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006-2008 Voice Sistem SRL

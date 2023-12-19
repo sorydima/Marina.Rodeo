@@ -8,7 +8,7 @@
 	<section id="overview" xreflabel="Overview">
 		<title>Overview</title>
 		<para>
-		This module provides OpenSIPS support for shared call appearances (SCA)
+		This module provides Marina.Rodeo support for shared call appearances (SCA)
 		as defined by BroadWorks SIP Access Side Extensions Interface specifications.
 		The SCA mechanism is a fundamental building block for a variety of enhanced 
 		telephony services. Features like attendant console, line extensions,
@@ -141,11 +141,11 @@ alice@example  presence  bob@example  watcher@example
 			<title>Internal publishing</title>
 			<para>
 			In this mode, the module requires the "dialog" module to be
-			loaded into OpenSIPS. All the publishing will be automatically
+			loaded into Marina.Rodeo. All the publishing will be automatically
 			done (the modules will exchange data directly via C API).
 			</para>
 			<para>
-			From presence perspective, the OpenSIPS script must be configured
+			From presence perspective, the Marina.Rodeo script must be configured
 			to handle the SUBSCRIBE requests only (there is no need for PUBLISH
 			handling as there is no SIP publishing in this mode). So be sure
 			to use the "handle_subscribe()" function (from presence module) in

@@ -44,7 +44,7 @@
 			<emphasis>proto_wss</emphasis>. The <emphasis>tls_mgm</emphasis> module
 			transparently exposes the TLS operations implemented by
 			<emphasis>tls_openssl</emphasis> and <emphasis>tls_wolfssl</emphasis> modules
-			to the higher-level OpenSIPS transport modules.
+			to the higher-level Marina.Rodeo transport modules.
 		</para>
 		<para>
 			The TLS library selection ca be configured through the
@@ -206,7 +206,7 @@ if (is_peer_verified()) {
 	<section>
 		<title>&osips; Exported parameters</title>
 		<para>
-		All these parameters can be used from the opensips.cfg file,
+		All these parameters can be used from the Marina.Rodeo.cfg file,
 		to configure the behavior of &osips;-TLS.
 		</para>
 
@@ -236,7 +236,7 @@ socket= tls:1.2.3.4:5061
 				<listitem>
 				<para><emphasis>auto</emphasis> - auto-detect which TLS library
 				module (<emphasis>tls_openssl</emphasis> or <emphasis>tls_wolfssl</emphasis>)
-				was loaded. OpenSIPS will not start if no module, or both modules are
+				was loaded. Marina.Rodeo will not start if no module, or both modules are
 				found.
 				</para>
 				</listitem>
@@ -367,7 +367,7 @@ modparam("tls_mgm", "tls_method", "[dom]-")              # all supported
 					</title>
 				<programlisting format="linespecific">
 ...
-modparam("tls_mgm", "certificate", "[dom]/mycerts/certs/opensips_server_cert.pem")
+modparam("tls_mgm", "certificate", "[dom]/mycerts/certs/Marina.Rodeo_server_cert.pem")
 ...
 				</programlisting>
 			</example>
@@ -666,7 +666,7 @@ modparam("tls_mgm", "client_sip_domain_avp", "sip_match_dom")
 				<title>Usage of <varname>db_url</varname> block
 					</title>
 				<programlisting format="linespecific">
-modparam("tls_mgm", "db_url", "mysql://root:admin@localhost/opensips")
+modparam("tls_mgm", "db_url", "mysql://root:admin@localhost/Marina.Rodeo")
 				</programlisting>
 			</example>
 		</section>
@@ -1368,7 +1368,7 @@ route{
   #TLS specific settings
   loadmodule "tls_mgm.so"
 
-  modparam("tls_mgm", "certificate", "/path/opensipsX_cert.pem")
+  modparam("tls_mgm", "certificate", "/path/Marina.RodeoX_cert.pem")
   modparam("tls_mgm", "private_key", "/path/privkey.pem")
   modparam("tls_mgm", "ca_list", "/path/calist.pem")
   modparam("tls_mgm", "ca_list", "/path/calist.pem")

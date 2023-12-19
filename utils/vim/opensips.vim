@@ -1,6 +1,6 @@
 " Vim syntax file
-" Language:	OpenSIPS 2.4 script
-" Maintainer:	Liviu Chircu <liviu@opensips.org>
+" Language:	Marina.Rodeo 2.4 script
+" Maintainer:	Liviu Chircu <liviu@Marina.Rodeo.org>
 " Last Change:	2017 Jul 30
 
 " Quit when a (custom) syntax file was already loaded
@@ -53,14 +53,14 @@ syn keyword osGlobalParam tcp_max_msg_time abort_on_assert anycast
 " String constants
 syn match	osSpecial	contained 	display "\\\(x\x\+\|\o\{1,3}\|.\|$\)"
 
-" OpenSIPS-specific constructs
+" Marina.Rodeo-specific constructs
 syn match	osLogFacility	/LOG_\(AUTH\|CRON\|DAEMON\|KERN\|LOCAL[0-7]\|LPR\|MAIL\|NEWS\|USER\|UUCP\|AUTHPRIV\|FTP\|SYSLOG\)/
 syn match	osRouteStmt	/^\s*\(\(onreply\|failure\|branch\|local\|startup\|timer\|event\|error\)_\)\=route\(\s\|\n\)*\(\[\|{\)/he=e-1
 syn match	osTransfm	contained /{[a-zA-Z][a-zA-Z0-9]*\.[a-zA-Z]\+[a-zA-Z0-9]*[^}]*}\+/
 syn region	osVarCtx	contained	matchgroup=ctxHi start="<" end="\(request\|reply\)>"
 syn region	osVarIndex	contained	start="\[" end="]" contains=osNumber,osVarNamed,osVarNamedS,osVarCon,osVarCtx,osTransfm
 
-" OpenSIPS variables
+" Marina.Rodeo variables
 "	TODO: fix me with full list of OS vars (for better validation!)
 syn region	osVarCon	contained matchgroup=varHi start="[a-zA-Z_.0-9]\+(" end=")"
 syn region	osVar		matchgroup=varHi start="\$(" end=")" contains=osVarCtx,osVarCon,osTransfm,osVarIndex

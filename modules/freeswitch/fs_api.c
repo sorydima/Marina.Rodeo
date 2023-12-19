@@ -1,16 +1,16 @@
 /*
  * FreeSWITCH API
  *
- * Copyright (C) 2017 OpenSIPS Solutions
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -45,7 +45,7 @@ unsigned int *conn_mgr_process_no;
 
 /*
  * Any FreeSWITCH socket which is still referenced at least once
- * Both FS proc and random OpenSIPS MI reloaders may write to this list
+ * Both FS proc and random Marina.Rodeo MI reloaders may write to this list
  */
 struct list_head *fs_sockets;
 rw_lock_t *sockets_lock;
@@ -104,7 +104,7 @@ int fs_api_set_proc_no(void)
 }
 
 /* TODO: rework this specific "PID advertising" hack
- * as part of a more reusable OpenSIPS mechanism */
+ * as part of a more reusable Marina.Rodeo mechanism */
 int fs_api_wait_init(void)
 {
 	int i;
@@ -580,7 +580,7 @@ void put_evs(fs_evs *sock)
 {
 	/* prevents deadlocks on shutdown.
 	 *
-	 * For the FreeSWITCH OpenSIPS module, "graceful shutdowns" are not
+	 * For the FreeSWITCH Marina.Rodeo module, "graceful shutdowns" are not
 	 * possible, since the main process brutally murders the FS connection
 	 * manager before it gets a chance to gracefully EOF its TCP connections.
 	 */
@@ -641,7 +641,7 @@ void put_stats_evs(fs_evs *sock, str *tag)
 
 	/* prevents deadlocks on shutdown.
 	 *
-	 * For the FreeSWITCH OpenSIPS module, "graceful shutdowns" are not
+	 * For the FreeSWITCH Marina.Rodeo module, "graceful shutdowns" are not
 	 * possible, since the main process brutally murders the FS connection
 	 * manager before it gets a chance to gracefully EOF its TCP connections.
 	 */
@@ -652,10 +652,10 @@ void put_stats_evs(fs_evs *sock, str *tag)
 	put_evs(sock);
 }
 
-/* This function assumes that the FS worker process _cannot_ reach the OpenSIPS
+/* This function assumes that the FS worker process _cannot_ reach the Marina.Rodeo
  * script, thus never being in a position to call fs_api->fs_esl(). Otherwise,
  * it would immediately deadlock itself. Should the FS worker need to raise
- * script events, it should do it via IPC dispatch to other OpenSIPS procs */
+ * script events, it should do it via IPC dispatch to other Marina.Rodeo procs */
 int fs_esl(fs_evs *sock, const str *fs_cmd, str *reply_txt)
 {
 	struct list_head *_, *__;

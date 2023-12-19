@@ -1,6 +1,6 @@
 # $Id$
 #
-# XCAP client for OpenSIPs
+# XCAP client for Marina.Rodeo
 #
 # 
 # WARNING: do not run this directly, it should be run by the master Makefile

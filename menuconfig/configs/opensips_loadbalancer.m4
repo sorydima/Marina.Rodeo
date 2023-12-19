@@ -90,7 +90,7 @@ modparam("acc", "report_cancels", 0)
    in "rr" module */
 modparam("acc", "detect_direction", 0)
 ifelse(USE_DBACC,`yes',`modparam("acc", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 ', `')
 
 ifelse(USE_DISPATCHER,`no',`#### DIALOG module
@@ -99,13 +99,13 @@ modparam("dialog", "dlg_match_mode", 1)
 modparam("dialog", "default_timeout", 21600)  # 6 hours timeout
 modparam("dialog", "db_mode", 2)
 modparam("dialog", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 ',`')
 
 ifelse(USE_DISPATCHER,`yes',`#### DISPATCHER module
 loadmodule "dispatcher.so"
 modparam("dispatcher", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 modparam("dispatcher", "ds_ping_method", "OPTIONS")
 modparam("dispatcher", "ds_probing_mode", 0)
 ifelse(DISABLE_PROBING,`yes',`
@@ -116,7 +116,7 @@ modparam("dispatcher", "ds_ping_interval", 30)
 ', `#### LOAD BALANCER module
 loadmodule "load_balancer.so"
 modparam("load_balancer", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 modparam("load_balancer", "probing_method", "OPTIONS")
 ifelse(DISABLE_PROBING,`yes',`
 modparam("load_balancer", "probing_interval", 0)

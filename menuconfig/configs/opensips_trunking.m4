@@ -83,12 +83,12 @@ loadmodule "avpops.so"
 ####  DYNAMIC ROUTING module
 loadmodule "drouting.so"
 modparam("drouting", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 
 ####  PERMISSIONS module
 loadmodule "permissions.so"
 modparam("permissions", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 
 #### ACCounting module
 loadmodule "acc.so"
@@ -100,7 +100,7 @@ modparam("acc", "report_cancels", 0)
    in "rr" module */
 modparam("acc", "detect_direction", 0)
 ifelse(USE_DBACC,`yes',`modparam("acc", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 ', `')
 
 ifelse(USE_DIALOG,`yes',`#### DIALOG module
@@ -109,7 +109,7 @@ modparam("dialog", "dlg_match_mode", 1)
 modparam("dialog", "default_timeout", 21600)  # 6 hours timeout
 modparam("dialog", "db_mode", 2)
 modparam("dialog", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 ifelse(DO_CALL_LIMITATION,`yes',`
 modparam("dialog", "profiles_with_value", "trunkCalls")
 ',`')
@@ -118,7 +118,7 @@ modparam("dialog", "profiles_with_value", "trunkCalls")
 ifelse(USE_DIALPLAN,`yes',`####  DIALPLAN module
 loadmodule "dialplan.so"
 modparam("dialplan", "db_url",
-	"mysql://opensips:opensipsrw@localhost/opensips") # CUSTOMIZE ME
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
 ',`')
 
 ifelse(USE_HTTP_MANAGEMENT_INTERFACE,`yes',`####  MI_HTTP module

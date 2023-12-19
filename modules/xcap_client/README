@@ -8,7 +8,7 @@ XCAP_Client Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -53,7 +53,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The modules is an XCAP client for OpenSIPS that can be used by
+   The modules is an XCAP client for Marina.Rodeo that can be used by
    other modules. It fetches XCAP elements, either documents or
    part of them, by sending HTTP GET requests. It also offers
    support for conditional queries. It uses libcurl library as a
@@ -78,7 +78,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * xcap.
@@ -86,7 +86,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libxml-dev.
      * libcurl-dev.
 
@@ -97,7 +97,7 @@ Chapter 1. Admin Guide
    A flag to disable periodical query as an update method for the
    documents the module is responsible for. It could be disabled
    when the xcap server is capable to send the exported MI command
-   when a change occurs or when another module in OpenSIPS handles
+   when a change occurs or when another module in Marina.Rodeo handles
    updates.
 
    To disable it set this parameter to 0.
@@ -143,7 +143,7 @@ modparam("xcap_client", "query_period", 50)
 
    MI FIFO Command Format:
 ...
-opensips-cli -x mi refreshXcapDoc /xcap-root/resource-lists/users/eyebea
+Marina.Rodeo-cli -x mi refreshXcapDoc /xcap-root/resource-lists/users/eyebea
 m/buddies-resource-list.xml 8000
 ...
 
@@ -294,7 +294,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -336,6 +336,6 @@ Chapter 4. Documentation
    (@henningw), Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2007 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007 Voice Sistem SRL

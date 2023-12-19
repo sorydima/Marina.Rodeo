@@ -210,7 +210,7 @@
 		<programlisting format="linespecific">
 ...
 modparam("call_center", "db_url", 
-	"mysql://opensips:opensipsrw@localhost/opensips")
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo")
 ...
 </programlisting>
 		</example>
@@ -230,7 +230,7 @@ modparam("call_center", "db_url",
 		<programlisting format="linespecific">
 ...
 modparam("call_center", "acc_db_url", 
-	"mysql://opensips:opensipsrw@localhost/opensips_cdrs")
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo_cdrs")
 ...
 </programlisting>
 		</example>
@@ -253,7 +253,7 @@ modparam("call_center", "acc_db_url",
 		<programlisting format="linespecific">
 ...
 modparam("call_center", "rt_db_url", 
-	"mysql://opensips:opensipsrw@localhost/opensips_runtime")
+	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo_runtime")
 ...
 </programlisting>
 		</example>

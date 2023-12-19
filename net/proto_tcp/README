@@ -1,12 +1,12 @@
 proto_tcp Module
 
-OpenSIPS Project
+Marina.Rodeo Project
 
 Edited by
 
 Razvan Crainea
 
-   Copyright © 2015 OpenSIPS Project
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2015 Marina.Rodeo Project
      __________________________________________________________
 
    Table of Contents
@@ -16,7 +16,7 @@ Razvan Crainea
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -77,7 +77,7 @@ socket=tcp:127.0.0.1:5080       # change with the listening IP and port
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * None.
@@ -85,7 +85,7 @@ socket=tcp:127.0.0.1:5080       # change with the listening IP and port
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -111,7 +111,7 @@ modparam("proto_tcp", "tcp_port", 5065)
 
    Time in milliseconds after a TCP connection will be closed if
    it is not available for blocking writing in this interval (and
-   OpenSIPS wants to send something on it).
+   Marina.Rodeo wants to send something on it).
 
    Default value is 100 ms.
 
@@ -166,7 +166,7 @@ modparam("proto_tcp", "tcp_crlf_drop", 1)
 
    If the TCP connect and write operations should be done in an
    asynchronous mode (non-blocking connect and write). If
-   disabled, OpenSIPS will block and wait for TCP operations like
+   disabled, Marina.Rodeo will block and wait for TCP operations like
    connect and write.
 
    Default value is 1 (enabled).
@@ -281,10 +281,10 @@ modparam("proto_tcp", "trace_on", 1)
 
    IMPORTANT Filtering on ip addresses and ports can be made using
    $si and $sp for matching either the entity that is connecting
-   to OpenSIPS or the entity to which OpenSIPS is connecting. The
+   to Marina.Rodeo or the entity to which Marina.Rodeo is connecting. The
    name might be misleading ( $si meaning the source ip if you
    read the docs) but in reality it is simply the socket other
-   than the OpenSIPS socket. In order to match OpenSIPS interface
+   than the Marina.Rodeo socket. In order to match Marina.Rodeo interface
    (either the one that accepted the connection or the one that
    initiated a connection) $socket_in(ip) (ip) and
    $socket_in(port) (port) can be used.
@@ -304,7 +304,7 @@ d
 route[tcp_filter] {
         ...
         /* all connections opened from/by ip 1.1.1.1:8000 will be traced
-           on interface 1.1.1.10:5060(opensips listener)
+           on interface 1.1.1.10:5060(Marina.Rodeo listener)
            all the other connections won't be */
          if ( $si == "1.1.1.1" && $sp == 8000 &&
                 $socket_in(ip) == "1.1.1.10"  && $socket_in(port) == 506
@@ -338,7 +338,7 @@ Chapter 2. Frequently Asked Questions
 
    2.1.
 
-   After switching to OpenSIPS 2.1, I'm getting this error:
+   After switching to Marina.Rodeo 2.1, I'm getting this error:
    "listeners found for protocol tcp, but no module can handle it"
 
    You need to load the "proto_tcp" module. In your script, make
@@ -350,6 +350,6 @@ Chapter 2. Frequently Asked Questions
    I cannot locate "proto_tcp.so". Where is it?
 
    The "proto_udp" and "proto_tcp" modules are simply built into
-   the opensips binary by default. They are not available as
+   the Marina.Rodeo binary by default. They are not available as
    shared libraries, but look like modules for code consistency
    reasons.

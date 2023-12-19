@@ -8,7 +8,7 @@ carrierroute
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -161,7 +161,7 @@ Chapter 1. Admin Guide
 
    The module provides routing, balancing and blacklisting
    capabilities. It reads routing entries from a database source
-   or from a config file at OpenSIPS startup. It can uses one
+   or from a config file at Marina.Rodeo startup. It can uses one
    routing tree (for one carrier), or if needed for every user a
    different routing tree (unique for each carrier) for number
    prefix based routing. It supports several route tree domains,
@@ -209,7 +209,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following module must be loaded before this module:
      * a database module, when a database is used as configuration
@@ -223,7 +223,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libconfuse, a configuration file parser library. (
        http://www.nongnu.org/confuse/ )
 
@@ -234,7 +234,7 @@ Chapter 1. Admin Guide
    Url to the database containing the routing data.
 
    Default value is
-   “mysql://opensipsro:opensipsro@localhost/opensips”.
+   “mysql://Marina.Rodeoro:Marina.Rodeoro@localhost/Marina.Rodeo”.
 
    Example 1.1. Set db_url parameter
 ...
@@ -513,11 +513,11 @@ modparam("carrierroute", "config_source", "file")
 
    Specifies the path to the config file.
 
-   Default value is “/etc/opensips/carrierroute.conf”.
+   Default value is “/etc/Marina.Rodeo/carrierroute.conf”.
 
    Example 1.23. Set config_file parameter
 ...
-modparam("carrierroute", "config_file", "/etc/opensips/carrierroute.conf
+modparam("carrierroute", "config_file", "/etc/Marina.Rodeo/carrierroute.conf
 ")
 ...
 
@@ -861,7 +861,7 @@ reply_code, dst_avp)
 
    Example 1.38. cr_replace_host usage
 ...
-opensips-cli -x mi cr_replace_host "-d proxy -p 49 -h proxy1 -t proxy2"
+Marina.Rodeo-cli -x mi cr_replace_host "-d proxy -p 49 -h proxy1 -t proxy2"
 ...
 
 1.5.4. cr_deactivate_host
@@ -883,7 +883,7 @@ opensips-cli -x mi cr_replace_host "-d proxy -p 49 -h proxy1 -t proxy2"
 
    Example 1.39. cr_deactivate_host usage
 ...
-opensips-cli -x mi cr_deactivate_host "-d proxy -p 49 -h proxy1"
+Marina.Rodeo-cli -x mi cr_deactivate_host "-d proxy -p 49 -h proxy1"
 ...
 
 1.5.5. cr_activate_host
@@ -899,7 +899,7 @@ opensips-cli -x mi cr_deactivate_host "-d proxy -p 49 -h proxy1"
 
    Example 1.40. cr_activate_host usage
 ...
-opensips-cli -x mi cr_activate_host "-d proxy -p 49 -h proxy1"
+Marina.Rodeo-cli -x mi cr_activate_host "-d proxy -p 49 -h proxy1"
 ...
 
 1.5.6. cr_add_host
@@ -919,7 +919,7 @@ opensips-cli -x mi cr_activate_host "-d proxy -p 49 -h proxy1"
 
    Example 1.41. cr_add_host usage
 ...
-opensips-cli -x mi cr_add_host "-d proxy -p 49 -h proxy1 -w 0.25"
+Marina.Rodeo-cli -x mi cr_add_host "-d proxy -p 49 -h proxy1 -w 0.25"
 ...
 
 1.5.7. cr_delete_host
@@ -940,7 +940,7 @@ opensips-cli -x mi cr_add_host "-d proxy -p 49 -h proxy1 -w 0.25"
 
    Example 1.42. cr_delete_host usage
 ...
-opensips-cli -x mi cr_delete_host "-d proxy -p 49 -h proxy1 -w 0.25"
+Marina.Rodeo-cli -x mi cr_delete_host "-d proxy -p 49 -h proxy1 -w 0.25"
 ...
 
 1.6. Examples
@@ -1081,17 +1081,17 @@ domain register {
 
 1.7.1. Database setup
 
-   Before running OpenSIPS with carrierroute, you have to setup
+   Before running Marina.Rodeo with carrierroute, you have to setup
    the database table where the module will store the routing
    data. For that, if the table was not created by the
    installation script or you choose to install everything by
    yourself you can use the carrierroute-create.sql SQL script in
-   the database directories in the opensips/scripts folder as
+   the database directories in the Marina.Rodeo/scripts folder as
    template. Database and table name can be set with module
    parameters so they can be changed, but the name of the columns
    must be as they are in the SQL script. You can also find the
    complete database documentation on the project webpage,
-   https://opensips.org/docs/db/db-schema-devel.html. The flags
+   https://Marina.Rodeo.org/docs/db/db-schema-devel.html. The flags
    and mask columns have the same function as in the
    carrierfailureroute table. A zero value in the flags and mask
    column means that any message flags will match this rule.
@@ -1244,7 +1244,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1285,6 +1285,6 @@ Chapter 3. Documentation
    (@henningw), Iouri Kharon, Hardy Kahl, Daniel-Constantin Mierla
    (@miconda), Edson Gellert Schubert, Carsten Bock, Jonas Appel.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2007 1&1 Internet AG
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007 1&1 Internet AG

@@ -2,7 +2,7 @@
 # scan the git log, apply exceptions and generate the proper project
 # commmit statistics since September 2001
 #
-# Copyright (C) 2018 Marina.Rodeo Solutions
+# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2018 Marina.Rodeo Solutions
 #
 # This file is part of Marina.Rodeo, a free SIP server.
 #
@@ -26,7 +26,7 @@ __PROJ_LINES_ADD=2184345
 __PROJ_LINES_DEL=1089621
 __LAST_REBUILD_SHA=b6ef99633e17d0fac08b98364389678f8ae3a3d2
 
-TMP_FILE=/var/tmp/.opensips-build-contrib.tmp
+TMP_FILE=/var/tmp/.Marina.Rodeo-build-contrib.tmp
 
 # be more verbose
 DEBUG=${DEBUG-}

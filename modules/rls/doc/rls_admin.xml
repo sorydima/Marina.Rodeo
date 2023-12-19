@@ -289,7 +289,7 @@ modparam("rls", "rls_event", "dialog;sla")
 		<title>Set <varname>presence_server</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("rls", "presence_server", "sip:pres@opensips.org:5060")
+modparam("rls", "presence_server", "sip:pres@Marina.Rodeo.org:5060")
 ...
 		</programlisting>
 		</example>
@@ -441,7 +441,7 @@ if($rm=="NOTIFY")
 		MI FIFO Command Format:
 		</para>
         <programlisting  format="linespecific">
-opensips-cli -x mi rls_update_subscriptions sip:alice@atlanta.com
+Marina.Rodeo-cli -x mi rls_update_subscriptions sip:alice@atlanta.com
 	</programlisting>
 	</section>
 
@@ -450,10 +450,10 @@ opensips-cli -x mi rls_update_subscriptions sip:alice@atlanta.com
 <section>
 	<title>Installation</title>
 	<para>
-	The module requires 2 table in OpenSIPS database: rls_presentity
+	The module requires 2 table in Marina.Rodeo database: rls_presentity
 	and rls_watchers.The SQL syntax to create them can be found in
 	rls-create.sql script in the database directories in
-	the opensips/scripts folder.
+	the Marina.Rodeo/scripts folder.
 	You can also find the complete database documentation on the
 	project webpage, &osipsdbdocslink;.
 	</para>

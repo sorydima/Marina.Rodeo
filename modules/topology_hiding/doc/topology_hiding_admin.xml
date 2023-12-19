@@ -59,7 +59,7 @@
 		</para>
 		<para>
 		<emphasis>
-			Default value is <quote>"OpenSIPS"</quote>
+			Default value is <quote>"Marina.Rodeo"</quote>
 		</emphasis>
 		</para>
 		<example>
@@ -75,7 +75,7 @@ modparam("topology_hiding", "th_callid_passwd", "my_topo_hiding_secret")
 	<section id="param_th_callid_prefix" xreflabel="th_callid_prefix">
 		<title><varname>th_callid_prefix</varname> (string)</title>
 		<para>
-			The prefix that will be used for detecting callids which have been encoded by the dialog topology hiding. Make sure to change this value in case your SIP path contains multiple OpenSIPS boxes with topology hiding.
+			The prefix that will be used for detecting callids which have been encoded by the dialog topology hiding. Make sure to change this value in case your SIP path contains multiple Marina.Rodeo boxes with topology hiding.
 		</para>
 		<para>
 		<emphasis>
@@ -235,13 +235,13 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
 			for these dialogs on which topology hiding is applied, is not done automatically.
 			Without topology hiding and only normal dialog, the detection was
 			done when loose_route was called. But now, for this dialogs where topology
-			hiding is applied, the in dialog requests reaching OpenSIPS won't have any Route headers
-			and the RURI will point to OpenSIPS machine.
+			hiding is applied, the in dialog requests reaching Marina.Rodeo won't have any Route headers
+			and the RURI will point to Marina.Rodeo machine.
 			So, to be able to match the in-dialog requests to the corresponding dialog, a script
 			function must be called. It's name is <emphasis>topology_hiding_match</emphasis> and you can read
 			it's description above.
 			The in-dialog topology requests are requests with a to tag,
-			RURI pointing to opensips and with a method specific to a
+			RURI pointing to Marina.Rodeo and with a method specific to a
 			Invite dialog. For this kind of requests you should call
 			topology_hiding_match() function. If the request is successfully matched and fixed as according to the topology hiding logic,the function returns success.
 		</para>
@@ -276,7 +276,7 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
 					There are many cases where propagating the callid towards the callee side is not a good idea, since sometimes the callid contains the IP of the actual caller side, thus revealing part of the network topology.
 					</para>
 					<para>
-					When using the "C" flag, the callid will be automatically encoded / decoded, transparent for the script writer - inside OpenSIPS (script,MI functions, etc ) all the variables related to the callid will represent the callid value for the caller side. If the callid for the callee side is needed, refer to the $TH_callee_callid pvar.
+					When using the "C" flag, the callid will be automatically encoded / decoded, transparent for the script writer - inside Marina.Rodeo (script,MI functions, etc ) all the variables related to the callid will represent the callid value for the caller side. If the callid for the callee side is needed, refer to the $TH_callee_callid pvar.
 					</para>
 					<para>
 						<emphasis>Note:</emphasis> Changing the callid of the call using the "C" flag is only

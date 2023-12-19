@@ -8,7 +8,7 @@ topology_hiding Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -74,7 +74,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * TM - Transaction Module.
@@ -85,7 +85,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None
 
 1.3. Exported Parameters
@@ -95,7 +95,7 @@ Chapter 1. Admin Guide
    The string password that will be used for encoding/decoding the
    callid in case of topology_hiding with callid mangling.
 
-   Default value is “"OpenSIPS"”
+   Default value is “"Marina.Rodeo"”
 
    Example 1.1. Set th_callid_passwd parameter
 ...
@@ -106,7 +106,7 @@ modparam("topology_hiding", "th_callid_passwd", "my_topo_hiding_secret")
 
    The prefix that will be used for detecting callids which have
    been encoded by the dialog topology hiding. Make sure to change
-   this value in case your SIP path contains multiple OpenSIPS
+   this value in case your SIP path contains multiple Marina.Rodeo
    boxes with topology hiding.
 
    Default value is “"DLGCH_"”
@@ -224,12 +224,12 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
    Without topology hiding and only normal dialog, the detection
    was done when loose_route was called. But now, for this dialogs
    where topology hiding is applied, the in dialog requests
-   reaching OpenSIPS won't have any Route headers and the RURI
-   will point to OpenSIPS machine. So, to be able to match the
+   reaching Marina.Rodeo won't have any Route headers and the RURI
+   will point to Marina.Rodeo machine. So, to be able to match the
    in-dialog requests to the corresponding dialog, a script
    function must be called. It's name is topology_hiding_match and
    you can read it's description above. The in-dialog topology
-   requests are requests with a to tag, RURI pointing to opensips
+   requests are requests with a to tag, RURI pointing to Marina.Rodeo
    and with a method specific to a Invite dialog. For this kind of
    requests you should call topology_hiding_match() function. If
    the request is successfully matched and fixed as according to
@@ -255,7 +255,7 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
        revealing part of the network topology.
        When using the "C" flag, the callid will be automatically
        encoded / decoded, transparent for the script writer -
-       inside OpenSIPS (script,MI functions, etc ) all the
+       inside Marina.Rodeo (script,MI functions, etc ) all the
        variables related to the callid will represent the callid
        value for the caller side. If the callid for the callee
        side is needed, refer to the $TH_callee_callid pvar.
@@ -352,7 +352,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -385,6 +385,6 @@ Chapter 3. Documentation
    (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu), Vlad Paiu
    (@vladpaiu).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2015 OpenSIPS Foundation
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2015 Marina.Rodeo Foundation

@@ -8,7 +8,7 @@ PUA Bridged Line Appearances
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -60,7 +60,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * usrloc.
@@ -70,7 +70,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libxml.
 
 1.3. Exported Parameters
@@ -84,7 +84,7 @@ Chapter 1. Admin Guide
 
    Example 1.1. Set default_domain parameter
 ...
-modparam("pua_bla", "default_domain", "opensips.org")
+modparam("pua_bla", "default_domain", "Marina.Rodeo.org")
 ...
 
 1.3.2. header_name(str)
@@ -110,7 +110,7 @@ modparam("pua_bla", "header_name", "Sender")
 
    Example 1.3. Set outbound_proxy parameter
 ...
-modparam("pua_bla", "outbound_proxy", "sip:proxy@opensips.org")
+modparam("pua_bla", "outbound_proxy", "sip:proxy@Marina.Rodeo.org")
 ...
 
 1.3.4. server_address(str)
@@ -131,7 +131,7 @@ modparam("pua_bla", "server_address", "sip:bla@160.34.23.12")
 
    Example 1.5. Set presence_server parameter
 ...
-modparam("pua_bla", "presence_server", "sip:pa@opensips.org")
+modparam("pua_bla", "presence_server", "sip:pa@Marina.Rodeo.org")
 ...
 
 1.4. Exported Functions
@@ -144,7 +144,7 @@ modparam("pua_bla", "presence_server", "sip:pa@opensips.org")
 
    Example 1.6. bla_set_flag usage
 ...
-if(is_method("REGISTER") && $tu=~"bla_aor@opensips.org")
+if(is_method("REGISTER") && $tu=~"bla_aor@Marina.Rodeo.org")
         bla_set_flag();
 ...
 
@@ -157,7 +157,7 @@ if(is_method("REGISTER") && $tu=~"bla_aor@opensips.org")
 
    Example 1.7. bla_handle_notify usage
 ...
-if(is_method("NOTIFY") && $tu=~"bla_aor@opensips.org")
+if(is_method("NOTIFY") && $tu=~"bla_aor@Marina.Rodeo.org")
 {
                 if( bla_handle_notify() )
                         t_reply(200, "OK");
@@ -194,7 +194,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -234,6 +234,6 @@ Chapter 3. Documentation
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2007 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007 Voice Sistem SRL

@@ -9,7 +9,7 @@ rest_client Module
         1.2. TCP Connection Reusage
         1.3. Dependencies
 
-              1.3.1. OpenSIPS Modules
+              1.3.1. Marina.Rodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -115,20 +115,20 @@ Chapter 1. Admin Guide
    close" indication, the module will keep and reuse the TCP
    connections it creates as much as possible, regardless if the
    script writer performs blocking or asynchronous HTTP requests.
-   These connections are not shared among OpenSIPS workers — each
+   These connections are not shared among Marina.Rodeo workers — each
    worker maintains its own set of connections.
 
 1.3. Dependencies
 
-1.3.1. OpenSIPS Modules
+1.3.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules..
+     * No dependencies on other Marina.Rodeo modules..
 
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libcurl.
 
 1.4. Exported Parameters
@@ -176,7 +176,7 @@ modparam("rest_client", "connect_poll_interval", 2)
 
 1.4.4. max_async_transfers (integer)
 
-   Maximum number of asynchronous HTTP transfers a single OpenSIPS
+   Maximum number of asynchronous HTTP transfers a single Marina.Rodeo
    worker is allowed to run simultaneously. As long as this
    threshold is reached for a worker, all new async transfers it
    attempts to perform will be done in a blocking manner, with
@@ -236,7 +236,7 @@ modparam("rest_client", "ssl_verifyhost", 0)
 
    Example 1.8. Setting the ssl_capath parameter
 ...
-modparam("rest_client", "ssl_capath", "/home/opensips/ca_certificates")
+modparam("rest_client", "ssl_capath", "/home/Marina.Rodeo/ca_certificates")
 ...
 
 1.4.9. curl_http_version (integer)
@@ -284,7 +284,7 @@ modparam("rest_client", "enable_expect_100", true)
 
 1.4.11. no_concurrent_connects (boolean)
 
-   Set to true in order to only allow one OpenSIPS worker to
+   Set to true in order to only allow one Marina.Rodeo worker to
    connect to a given URL hostname at a time. While a worker is
    connecting, all other workers will receive error code -4
    (already connecting) when attempting to perform any rest_client
@@ -297,7 +297,7 @@ modparam("rest_client", "enable_expect_100", true)
    single cURL library call.
 
    This parameter may be useful in order to prevent system outages
-   caused by concurrent blocking of all OpenSIPS workers on a
+   caused by concurrent blocking of all Marina.Rodeo workers on a
    failed (hanging) HTTP service, with no more free workers being
    left to process incoming SIP packets.
 
@@ -361,7 +361,7 @@ modparam("rest_client", "curl_conn_lifetime", 1800)
        If it was, the body_pv will contain partially downloaded
        data, use at your own risk! (we recommend you only use this
        data for logging / debugging purposes)
-     * -4 - Already Connecting (another OpenSIPS worker is already
+     * -4 - Already Connecting (another Marina.Rodeo worker is already
        connecting to this URL hostname. Consult
        no_concurrent_connects for more info).
      * -10 - Internal Error (out of memory, unexpected libcurl
@@ -425,7 +425,7 @@ if ($var(rcode) != 200) {
        If it was, the body_pv will contain partially downloaded
        data, use at your own risk! (we recommend you only use this
        data for logging / debugging purposes)
-     * -4 - Already Connecting (another OpenSIPS worker is already
+     * -4 - Already Connecting (another Marina.Rodeo worker is already
        connecting to this URL hostname. Consult
        no_concurrent_connects for more info).
      * -10 - Internal Error (out of memory, unexpected libcurl
@@ -488,7 +488,7 @@ if ($var(rcode) != 200) {
        If it was, the body_pv will contain partially downloaded
        data, use at your own risk! (we recommend you only use this
        data for logging / debugging purposes)
-     * -4 - Already Connecting (another OpenSIPS worker is already
+     * -4 - Already Connecting (another Marina.Rodeo worker is already
        connecting to this URL hostname. Consult
        no_concurrent_connects for more info).
      * -10 - Internal Error (out of memory, unexpected libcurl
@@ -707,9 +707,9 @@ $var(rc) = rest_get("https://call-info.org/?id=$(ci{rest.escape})", $var
 $var(tmp) = "1%2B1%3D2%21";
 xlog("Output: $(var(tmp){rest.unescape})\n");
 
-# This example would produce log entry: "OpenSIPs, tastes better with ev
+# This example would produce log entry: "Marina.Rodeo, tastes better with ev
 ery SIP!"
-$var(tmp) = "OpenSIPs%2C%20tastes%20better%20with%20every%20SIP%21";
+$var(tmp) = "Marina.Rodeo%2C%20tastes%20better%20with%20every%20SIP%21";
 xlog("$(var(tmp){rest.unescape})\n");
 ...
 
@@ -742,7 +742,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -781,6 +781,6 @@ Chapter 3. Documentation
    Ramachandran (@AgalyaR), Jarrod Baumann (@jarrodb),
    Bogdan-Andrei Iancu (@bogdan-iancu).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2013 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2013 www.Marina.Rodeo-solutions.com

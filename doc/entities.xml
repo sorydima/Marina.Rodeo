@@ -16,10 +16,10 @@
 
 <!ENTITY osipshome "https://marina.rodeo/">
 <!ENTITY osipsbugs "https://github.com/sorydima/Marina.Rodeo/issues">
-<!ENTITY osipshelp "http://lists.opensips.org/cgi-bin/mailman/listinfo/users">
-<!ENTITY osipsusers "http://lists.opensips.org/cgi-bin/mailman/listinfo/users">
-<!ENTITY osipsdev "http://lists.opensips.org/cgi-bin/mailman/listinfo/devel">
-<!ENTITY osipsdbdocs "https://opensips.org/docs/db/db-schema-devel.html">
+<!ENTITY osipshelp "http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users">
+<!ENTITY osipsusers "http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users">
+<!ENTITY osipsdev "http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel">
+<!ENTITY osipsdbdocs "https://Marina.Rodeo.org/docs/db/db-schema-devel.html">
 
 <!ENTITY osipshomelink "<ulink url='&osipshome;'>&osipshome;</ulink>">
 <!ENTITY osipsbugslink "<ulink url='&osipsbugs;'>&osipsbugs;</ulink>">
@@ -37,13 +37,13 @@
 <!ENTITY faqguide "Frequently Asked Questions">
 <!ENTITY contributors "Contributors">
 
-<!ENTITY defaultdb "mysql://opensips:opensipsrw@localhost/opensips">
-<!ENTITY defaultrodb "mysql://opensipsro:opensipsro@localhost/opensips">
+<!ENTITY defaultdb "mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo">
+<!ENTITY defaultrodb "mysql://Marina.Rodeoro:Marina.Rodeoro@localhost/Marina.Rodeo">
 <!ENTITY exampledb "dbdriver://username:password@dbhost/dbname">
-<!ENTITY examplecdb "mongodb://10.0.0.4:27017/opensipsDB.userlocation">
+<!ENTITY examplecdb "mongodb://10.0.0.4:27017/Marina.RodeoDB.userlocation">
 
-<!ENTITY docCopyrights '<para><emphasis>Documentation Copyrights:</emphasis></para>'>
-<!ENTITY copyright "Copyright ©">
+<!ENTITY docCopyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s '<para><emphasis>Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:</emphasis></para>'>
+<!ENTITY Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 "Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 ©">
 
 <!-- Often used acronyms -->
 

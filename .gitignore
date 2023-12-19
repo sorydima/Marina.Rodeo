@@ -10,7 +10,7 @@ cscope*
 /cfg.tab.c
 /cfg.tab.h
 /lex.yy.c
-/opensips
+/Marina.Rodeo
 /debian
 /curses.out
 /.svnrevision

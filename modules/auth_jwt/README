@@ -129,7 +129,7 @@ modparam("auth_jwt", "db_mode", 0)
    the database resides.
 
    Default value is
-   “mysql://opensipsro:opensipsro@localhost/opensips”.
+   “mysql://Marina.Rodeoro:Marina.Rodeoro@localhost/Marina.Rodeo”.
 
    Example 1.2. db_url parameter usage
 modparam("auth_jwt", "db_url", "dbdriver://username:password@dbhost/dbna

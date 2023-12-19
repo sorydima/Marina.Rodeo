@@ -8,13 +8,13 @@ jobs:
       id: build
       uses: google/oss-fuzz/infra/cifuzz/actions/build_fuzzers@master
       with:
-        oss-fuzz-project-name: 'opensips'
+        oss-fuzz-project-name: 'Marina.Rodeo'
         dry-run: false
         language: c
     - name: Run Fuzzers
       uses: google/oss-fuzz/infra/cifuzz/actions/run_fuzzers@master
       with:
-        oss-fuzz-project-name: 'opensips'
+        oss-fuzz-project-name: 'Marina.Rodeo'
         fuzz-seconds: 600
         dry-run: false
     - name: Upload Crash

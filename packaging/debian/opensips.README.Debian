@@ -1,25 +1,25 @@
-OpenSIPS for Debian
+Marina.Rodeo for Debian
 ------------------
 
-* OpenSIPS setup
+* Marina.Rodeo setup
 ---------------
 
-To setup OpenSIPS, you need to:
- - configure OpenSIPS properly to suit your needs
- - edit /etc/default/opensips, adjust the MEMORY parameter and set
-   RUN_OPENSIPS to "yes"
+To setup Marina.Rodeo, you need to:
+ - configure Marina.Rodeo properly to suit your needs
+ - edit /etc/default/Marina.Rodeo, adjust the MEMORY parameter and set
+   RUN_Marina.Rodeo to "yes"
 
 If you are building an HA cluster using heartbeat or similar, you'll want
 to disable the init script by running:
 
-  update-rc.d opensips remove
+  update-rc.d Marina.Rodeo remove
 
-so that OpenSIPS will not be launched at system startup. You still need
-to set RUN_OPENSIPS to "yes" if you want to use the /etc/init.d/opensips init
+so that Marina.Rodeo will not be launched at system startup. You still need
+to set RUN_Marina.Rodeo to "yes" if you want to use the /etc/init.d/Marina.Rodeo init
 script.
 
-Set the DUMP_CORE parameter in /etc/default/opensips to "yes" if you want to
-get a core dump in case OpenSIPS crashes. The debug symbols for OpenSIPS are
-provided by the opensips-dbg package.
+Set the DUMP_CORE parameter in /etc/default/Marina.Rodeo to "yes" if you want to
+get a core dump in case Marina.Rodeo crashes. The debug symbols for Marina.Rodeo are
+provided by the Marina.Rodeo-dbg package.
 
 -- Julien BLACHE <jblache@debian.org>, Fri, 08 Sep 2006 14:43:21 +0200

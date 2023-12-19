@@ -147,9 +147,9 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The OSP module enables OpenSIPS to support secure,
+   The OSP module enables Marina.Rodeo to support secure,
    multi-lateral peering using the OSP standard defined by ETSI
-   (TS 101 321 V4.1.1). This module will enable your OpenSIPS to:
+   (TS 101 321 V4.1.1). This module will enable your Marina.Rodeo to:
      * Send a peering authorization request to a peering server.
      * Validate a digitally signed peering authorization token
        received in a SIP INVITE message.
@@ -177,11 +177,11 @@ Chapter 1. Admin Guide
      * usrloc -- User location implementation module
      * OSP Toolkit -- The OSP Toolkit, available from
        https://github.com/TransNexus/osptoolkit, must be built
-       before building OpenSIPS with the OSP module. For
-       instructions on building OpenSIPS with the OSP Toolkit, see
+       before building Marina.Rodeo with the OSP module. For
+       instructions on building Marina.Rodeo with the OSP Toolkit, see
        http://www.http://transnexus.com/wp-content/uploads/OSP-Rou
-       ting-and-CDR-Collection-Server-with-OpenSIPS-1.7.2.pdf. For
-       OpenSIPS 2.4.0, OSP Toolkit 4.16.0 or later versions should
+       ting-and-CDR-Collection-Server-with-Marina.Rodeo-1.7.2.pdf. For
+       Marina.Rodeo 2.4.0, OSP Toolkit 4.16.0 or later versions should
        be used.
 
 1.3. Exported Parameters
@@ -221,13 +221,13 @@ modparam("osp","service_type",0)
        communicating with the peering server. Both HTTP and HTTP
        secured with SSL/TLS are supported and are indicated by
        "http://" and "https://" respectively. If the protocol is
-       not explicitly indicated, the OpenSIPS defaults to HTTP
+       not explicitly indicated, the Marina.Rodeo defaults to HTTP
        secured with SSL.
      * The Internet domain name for the peering server. An IP
        address may also be used, provided it is enclosed in square
        brackets such as [172.16.1.1].
      * An optional TCP port number for communicating with the
-       peering server. If the port number is omitted, the OpenSIPS
+       peering server. If the port number is omitted, the Marina.Rodeo
        defaults to port 5045 (for HTTP) or port 1443 (for HTTP
        secured with SSL).
        The uniform resource identifier for requests to the peering
@@ -257,7 +257,7 @@ modparam("osp","sp1_weight",1000)
 1.3.5. device_ip
 
    The device_ip (string) is a recommended parameter that
-   explicitly defines the IP address of OpenSIPS in a peering
+   explicitly defines the IP address of Marina.Rodeo in a peering
    request message (as SourceAlternate type=transport). The
    dotted-decimal IP address must be in brackets as shown in the
    example below.
@@ -279,11 +279,11 @@ modparam("osp","use_security_features",0)
 
 1.3.7. token_format
 
-   When OpenSIPS receives a SIP INVITE with a peering token, the
+   When Marina.Rodeo receives a SIP INVITE with a peering token, the
    OSP module will validate the token to determine whether or not
    the call has been authorized by a peering server. Peering
    tokens may, or may not, be digitally signed. The token_format
-   (integer) parameter defines if OpenSIPS will validate signed or
+   (integer) parameter defines if Marina.Rodeo will validate signed or
    unsigned tokens or both. The values for token format are
    defined below. The default value is 2.
 
@@ -306,12 +306,12 @@ modparam("osp","token_format",2)
 
    These parameters identify files are used for validating peering
    authorization tokens and establishing a secure channel between
-   OpenSIPS and a peering server using SSL. The files are
+   Marina.Rodeo and a peering server using SSL. The files are
    generated using the 'Enroll' utility from the OSP Toolkit. By
    default, the proxy will look for pkey.pem, localcert.pem, and
    cacart_0.pem in the default configuration directory. The
    default config directory is set at compile time using CFG_DIR
-   and defaults to /usr/local/etc/opensips/. The files may be
+   and defaults to /usr/local/etc/Marina.Rodeo/. The files may be
    copied to the expected file location or the parameters below
    may be changed.
 
@@ -322,10 +322,10 @@ modparam("osp","token_format",2)
 
    If the default CFG_DIR value was used at compile time, the
    files will be loaded from:
-modparam("osp","private_key","/usr/local/etc/opensips/pkey.pem")
-modparam("osp","local_certificate","/usr/local/etc/opensips/localcert.pe
+modparam("osp","private_key","/usr/local/etc/Marina.Rodeo/pkey.pem")
+modparam("osp","local_certificate","/usr/local/etc/Marina.Rodeo/localcert.pe
 m")
-modparam("osp","ca_certificates","/usr/local/etc/opensips/cacert.pem")
+modparam("osp","ca_certificates","/usr/local/etc/Marina.Rodeo/cacert.pem")
 
 1.3.9. enable_crypto_hardware_support
 
@@ -410,7 +410,7 @@ modparam("osp","support_nonsip_protocol",0)
 1.3.16. max_destinations
 
    The max_destinations (integer) parameter defines the maximum
-   number of destinations that OpenSIPS requests the peering
+   number of destinations that Marina.Rodeo requests the peering
    server to return in a peering response. The OSP module supports
    up to 12 destinations. The default value is 12.
 
@@ -550,7 +550,7 @@ modparam("osp","parameterstring_value","")
    "$avp(_osp_source_device_)". Then the source device IP can be
    set by "$avp(_osp_source_device_) = pseudo-variables". All
    pseudo variables are described in
-   https://opensips.org/Resources/DocsCoreVar.
+   https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.27. Setting the source device IP AVP
 modparam("osp","source_device_avp","$avp(srcdev)")
@@ -563,7 +563,7 @@ modparam("osp","source_device_avp","$avp(srcdev)")
    Then the source network ID can be set by
    "$avp(_osp_source_networkid_) = pseudo-variables". All pseudo
    variables are described in
-   https://opensips.org/Resources/DocsCoreVar.
+   https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.28. Setting the source network ID AVP
 modparam("osp","source_networkid_avp","$avp(snid)")
@@ -575,7 +575,7 @@ modparam("osp","source_networkid_avp","$avp(snid)")
    value. The default value is "$avp(_osp_source_switchid_)". Then
    the source switch ID can be set by "$avp(_osp_source_switchid_)
    = pseudo-variables". All pseudo variables are described in
-   https://opensips.org/Resources/DocsCoreVar.
+   https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.29. Setting the source switch ID AVP
 modparam("osp","source_switchid_avp","$avp(swid)")
@@ -587,7 +587,7 @@ modparam("osp","source_switchid_avp","$avp(swid)")
    The default value is "$avp(_osp_custom_info_)". Then the custom
    information can be set by "$avp(_osp_custom_info_) =
    pseudo-variables". All pseudo variables are described in
-   https://opensips.org/Resources/DocsCoreVar.
+   https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.30. Setting the custom info AVP
 modparam("osp","custom_info_avp","$avp(cinfo)")
@@ -598,7 +598,7 @@ modparam("osp","custom_info_avp","$avp(cinfo)")
    the defined AVP to pass the CNAM values. The default value is
    "$avp(_osp_cnam_)". Then the CNAM can be used by
    "$avp(_osp_cnam_)". All pseudo variables are described in
-   https://opensips.org/Resources/DocsCoreVar.
+   https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.31. Setting the CNAM AVP
 modparam("osp","cnam_avp","$avp(cnam)")
@@ -618,7 +618,7 @@ modparam("osp", "extraheaders_value", "Source: N")
    used to store media addresses. The default values are
    "$avp(_osp_source_media_address_)" and
    "$avp(_osp_destination_media_address_)". All pseudo variables
-   are described in https://opensips.org/Resources/DocsCoreVar.
+   are described in https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.33. Setting the media address AVPs
 modparam("osp", "source_media_avp", "$avp(srcmedia)")
@@ -631,7 +631,7 @@ modparam("osp", "destination_media_avp", "$avp(destmedia)")
    header values. The default value is "$avp(_osp_request_date_)".
    Then the request date can be used by
    "$avp(_osp_request_date_)". All pseudo variables are described
-   in https://opensips.org/Resources/DocsCoreVar.
+   in https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.34. Setting the request date AVP
 modparam("osp","request_date_avp","$avp(reqdate)")
@@ -644,7 +644,7 @@ modparam("osp","request_date_avp","$avp(reqdate)")
    "$avp(_osp_sdp_fingerprint_)". Then the SDP finger print
    attributes can be used by "$avp(_osp_sdp_fingerprint_)". All
    pseudo variables are described in
-   https://opensips.org/Resources/DocsCoreVar.
+   https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.35. Setting the SDP finger print AVP
 modparam("osp","sdp_fingerprint_avp","$avp(sdpfp)")
@@ -660,7 +660,7 @@ identity_information_avp, identity_type_avp, identity_canon_avp
    "$avp(_osp_identity_type_)", "$avp(_osp_identity_canon_)". Then
    the indentity related values can be used by these AVPs. All
    pseudo variables are described in
-   https://opensips.org/Resources/DocsCoreVar.
+   https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.36. Setting the Identity related AVPs
 modparam("osp","identity_signature_avp","$avp(idsign)")
@@ -674,7 +674,7 @@ modparam("osp","identity_canon_avp","$avp(idcanon)")
    These parameter is used to tell the OSP module which AVP is
    used to store source service provider information. The default
    value is "$avp(_osp_service_provider_)". All pseudo variables
-   are described in https://opensips.org/Resources/DocsCoreVar.
+   are described in https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.37. Setting the source service provider AVP
 modparam("osp", "service_provider_avp", "$avp(sp)")
@@ -684,7 +684,7 @@ modparam("osp", "service_provider_avp", "$avp(sp)")
    These parameter is used to tell the OSP module which AVP is
    used to store source user group information. The default value
    is "$avp(_osp_user_group_)". All pseudo variables are described
-   in https://opensips.org/Resources/DocsCoreVar.
+   in https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.38. Setting the source user group AVP
 modparam("osp", "user_group_avp", "$avp(groupid)")
@@ -694,7 +694,7 @@ modparam("osp", "user_group_avp", "$avp(groupid)")
    These parameter is used to tell the OSP module which AVP is
    used to store source user ID information. The default value is
    "$avp(_osp_user_id_)". All pseudo variables are described in
-   https://opensips.org/Resources/DocsCoreVar.
+   https://Marina.Rodeo.org/Resources/DocsCoreVar.
 
    Example 1.39. Setting the source user ID AVP
 modparam("osp", "user_id_avp", "$avp(userid)")
@@ -960,7 +960,7 @@ if (is_method("SUBSCRIBE")) {
 
 Chapter 2. Developer Guide
 
-   The functions of the OSP modules are not used by other OpenSIPS
+   The functions of the OSP modules are not used by other Marina.Rodeo
    modules.
 
 Chapter 3. Contributors
@@ -996,7 +996,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1040,6 +1040,6 @@ Chapter 4. Documentation
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Dmitry Isakbayev.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2003 FhG FOKUS
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS

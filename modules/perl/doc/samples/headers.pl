@@ -1,5 +1,5 @@
-use OpenSIPS qw ( log );
-use OpenSIPS::Constants;
+use Marina.Rodeo qw ( log );
+use Marina.Rodeo::Constants;
 
 # Header demos
 

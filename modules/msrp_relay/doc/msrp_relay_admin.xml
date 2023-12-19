@@ -284,7 +284,7 @@ route[msrp_routing] {
 		<example>
 		<title><varname>auth_realm</varname> parameter usage</title>
 		<programlisting format="linespecific">
-modparam("msrp_relay", "auth_realm", "opensips.org")
+modparam("msrp_relay", "auth_realm", "Marina.Rodeo.org")
 </programlisting>
 		</example>
 		</section>
@@ -396,7 +396,7 @@ modparam("msrp_relay", "nonce_expire", 15)   # Set nonce_expire to 15s
 		<example>
 		<title><varname>my_uri</varname> parameter usage</title>
 		<programlisting format="linespecific">
-modparam("msrp_relay", "my_uri", "msrp://opensips.org:2855;tcp")
+modparam("msrp_relay", "my_uri", "msrp://Marina.Rodeo.org:2855;tcp")
 </programlisting>
 		</example>
 		</section>

@@ -180,7 +180,7 @@ modparam("proto_tcp", "tcp_crlf_drop", 1)
 		<para>
 			If the TCP connect and write operations should be done in an
 			asynchronous mode (non-blocking connect and
-			write). If disabled, OpenSIPS will block and wait for TCP
+			write). If disabled, Marina.Rodeo will block and wait for TCP
 			operations like connect and write.
 		</para>
 		<para>
@@ -380,7 +380,7 @@ modparam("proto_tcp", "trace_filter_route", "tcp_filter")
 route[tcp_filter] {
 	...
 	/* all connections opened from/by ip 1.1.1.1:8000 will be traced
-	   on interface 1.1.1.10:5060(opensips listener)
+	   on interface 1.1.1.10:5060(Marina.Rodeo listener)
 	   all the other connections won't be */
 	 if ( $si == "1.1.1.1" &amp;&amp; $sp == 8000 &amp;&amp;
 		$socket_in(ip) == "1.1.1.10"  &amp;&amp; $socket_in(port) == 5060)

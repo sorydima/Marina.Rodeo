@@ -1,15 +1,15 @@
 /*
- * Copyright (C) 2001-2003 FhG Fokus
- * Copyright (C) 2005-2006 Voice Sistem S.R.L
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2006 Voice Sistem S.R.L
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -168,8 +168,8 @@ static const char compiled[] =  __TIME__ " " __DATE__ ;
 static int own_pgid = 0; /* whether or not we have our own pgid (and it's ok
 			    to use kill(0, sig) */
 
-static char* version=OPENSIPS_FULL_VERSION;
-static char* flags=OPENSIPS_COMPILE_FLAGS;
+static char* version=Marina.Rodeo_FULL_VERSION;
+static char* flags=Marina.Rodeo_COMPILE_FLAGS;
 
 static int user_id = 0;
 static int group_id = 0;
@@ -330,7 +330,7 @@ static int main_loop(void)
 		}
 
 		rc = run_unit_tests();
-		shutdown_opensips(rc);
+		shutdown_Marina.Rodeo(rc);
 	}
 
 	report_conditional_status( (!no_daemon_mode), 0);
@@ -627,7 +627,7 @@ int main(int argc, char** argv)
 					testing_module = optarg;
 					if (strcmp(testing_module, "core")) {
 						cfg_file = malloc(100);
-						snprintf(cfg_file, 100, "modules/%s/test/opensips.cfg",
+						snprintf(cfg_file, 100, "modules/%s/test/Marina.Rodeo.cfg",
 						         testing_module);
 					}
 					break;
@@ -702,7 +702,7 @@ try_again:
 	sr_add_core_report( MI_SSTR("initializing") );
 
 	if ((!testing_framework || strcmp(testing_module, "core"))
-	        && parse_opensips_cfg(cfg_file, preproc, NULL) < 0) {
+	        && parse_Marina.Rodeo_cfg(cfg_file, preproc, NULL) < 0) {
 		LM_ERR("failed to parse config file %s\n", cfg_file);
 		goto error00;
 	}
@@ -860,7 +860,7 @@ try_again:
 		}
 	}
 
-	/* print OpenSIPS version to log for history tracking */
+	/* print Marina.Rodeo version to log for history tracking */
 	LM_NOTICE("version: %s\n", version);
 
 	/* print some data about the configuration */

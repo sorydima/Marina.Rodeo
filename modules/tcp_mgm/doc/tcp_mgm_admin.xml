@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		This module provides optional, SQL-based support for fine-grained
-		management of all TCP connections taking place on OpenSIPS.
+		management of all TCP connections taking place on Marina.Rodeo.
 	</para>
 
 	</section>
@@ -42,7 +42,7 @@
 		<title>Setting the <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 
-modparam("tcp_mgm", "db_url", "mysql://opensips:opensipsrw@localhost/opensips")
+modparam("tcp_mgm", "db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo")
 
 </programlisting>
 		</example>
@@ -103,7 +103,7 @@ modparam("tcp_mgm", "connect_timeout_col", "connect_to")
 		<programlisting  format="linespecific">
 
 # reload all TCP paths
-$ opensips-cli -x mi tcp_reload
+$ Marina.Rodeo-cli -x mi tcp_reload
 $ "OK"
 		</programlisting>
 		</section>

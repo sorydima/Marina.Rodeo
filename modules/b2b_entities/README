@@ -201,8 +201,8 @@ modparam("b2b_entities", "script_reply_route", "b2b_reply")
 
    Example 1.5. Set db_url parameter
 ...
-modparam("b2b_entities", "db_url", "mysql://opensips:opensipsrw@127.0.0.
-1/opensips")
+modparam("b2b_entities", "db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@127.0.0.
+1/Marina.Rodeo")
 ...
 
 1.3.6. cachedb_url (str)
@@ -859,8 +859,8 @@ Chapter 4. Documentation
    (@bogdan-iancu), Vlad Paiu (@vladpaiu), Ovidiu Sas
    (@ovidiusas), Anca Vamanu.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2009 Anca-Maria Vamanu
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2009 Anca-Maria Vamanu
 
-   Copyright © 2022 ng-voice GmbH
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2022 ng-voice GmbH

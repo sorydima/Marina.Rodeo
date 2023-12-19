@@ -441,7 +441,7 @@ $json(object/array) := $json(array) ;
 			<para>
 			WARNING: You should be careful when using references.
 			If you accidentally create a circular reference and try
-			to get the value from the object you will crash OPENSIPS.
+			to get the value from the object you will crash Marina.Rodeo.
 			</para>
 
 			<example>
@@ -505,7 +505,7 @@ json_link($json(b[0]), $json(b)); # replace 1 with a reference to b
 
 xlog("\nTest link :\n$json(stub)\n$json(b)\n\n");
 
-/* this will cause OPENSIPS to crash because it will continuously try
+/* this will cause Marina.Rodeo to crash because it will continuously try
  to get b, then b[0], then b ... */
 
 

@@ -84,7 +84,7 @@ modparam("tls_mgm", "require_cert", "1")
 	<section id="exported_parameters" xreflabel="Exported Parameters">
 	<title>Exported Parameters</title>
 		<para>
-		All these parameters can be used from the opensips.cfg file,
+		All these parameters can be used from the Marina.Rodeo.cfg file,
 		to configure the behavior of &osips;-WSS.
 		</para>
 
@@ -207,7 +207,7 @@ modparam("proto_wss", "wss_handshake_timeout", 300)
 		<para>
 		This checking is done only when comes to send SIP traffic via TLS and
 		it is applied only against connections that were created / initiated 
-		by OpenSIPS (as TLS client). Any accepte connection (as TLS server) will
+		by Marina.Rodeo (as TLS client). Any accepte connection (as TLS server) will
 		automatically match (the extra test will be skipped).
 		</para>
 		<para>
@@ -323,7 +323,7 @@ modparam("proto_wss", "trace_filter_route", "wss_filter")
 route[wss_filter] {
 	...
 	/* all connections opened from/by ip 1.1.1.1:8000 will be traced
-	   on interface 1.1.1.10:5060(opensips listener)
+	   on interface 1.1.1.10:5060(Marina.Rodeo listener)
 	   all the other connections won't be */
 	 if ( $si == "1.1.1.1" &amp;&amp; $sp == 8000 &amp;&amp;
 		$socket_in(ip) == "1.1.1.10"  &amp;&amp; $socket_in(port) == 5060)
@@ -436,7 +436,7 @@ modparam("proto_wss", "require_origin", no)
 			MI FIFO Command Format:
 			</para>
 			<programlisting  format="linespecific">
-			opensips-cli -x mi wss_trace on
+			Marina.Rodeo-cli -x mi wss_trace on
 			</programlisting>
 		</section>
 	</section>

@@ -1,16 +1,16 @@
 /*
  * sipcapture module - helper module to capture sip messages
  *
- * Copyright (C) 2011 Alexandr Dubovikov (QSC AG) (alexandr.dubovikov@gmail.com)
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Alexandr Dubovikov (QSC AG) (alexandr.dubovikov@gmail.com)
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -153,7 +153,7 @@ tz_table_t tz_table;
 tz_table_t rc_table;
 
 /* list of script used tables - we use this list to hold async queries;
- * when opensips is closed we need to run all queries for all the tables
+ * when Marina.Rodeo is closed we need to run all queries for all the tables
  * in case max_async_queries is used */
 struct tz_table_list* tz_list=NULL;
 struct tz_table_list* rc_list=NULL;
@@ -640,7 +640,7 @@ static module_dependency_t *get_deps_hep(const param_export_t *param)
 
 
 static const dep_export_t deps = {
-	{ /* OpenSIPS module dependencies */
+	{ /* Marina.Rodeo module dependencies */
 		{ MOD_TYPE_SQLDB, NULL, DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -668,7 +668,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /*!< dlopen flags */
 	0,				 /*!< load function */
-	&deps,           /* OpenSIPS module dependencies */
+	&deps,           /* Marina.Rodeo module dependencies */
 	cmds,       /*!< Exported functions */
 	acmds,          /*!< Exported async functions */
 	params,     /*!< Exported parameters */
@@ -3464,7 +3464,7 @@ static int w_sip_capture(struct sip_msg *msg, void *table_name,
 	}
 
 	/* we change to internal proto id only for version 3; for version
-	 * 1/2 we don't change the buffer inside opensips so we don't need
+	 * 1/2 we don't change the buffer inside Marina.Rodeo so we don't need
 	 * internal protocol id */
 	if (h && h->version == 3) {
 		if(sco.proto == PROTO_UDP) sco.proto=IPPROTO_UDP;
@@ -3673,7 +3673,7 @@ static int w_set_hep(struct sip_msg* msg, void *id, str *data_s,
 {
 	int data_len;
 	int data_type = TYPE_UTF8;
-	int vendor_id = HEP_OPENSIPS_VENDOR_ID;
+	int vendor_id = HEP_Marina.Rodeo_VENDOR_ID;
 	unsigned int chunk_id = (unsigned int)(unsigned long)id;
 
 	unsigned int idata;

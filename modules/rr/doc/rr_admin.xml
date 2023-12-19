@@ -58,7 +58,7 @@
 		<title>Dialog support in RR module</title>
 		<programlisting format="linespecific">
   
-UAC                       OpenSIPS PROXY                          UAS
+UAC                       Marina.Rodeo PROXY                          UAS
 
 ---- INVITE ------&gt;       record_route()          ----- INVITE ----&gt;
                      add_rr_param(";foo=true")
@@ -239,10 +239,10 @@ modparam("rr", "enable_socket_mismatch_warning", 0)
 		The function is able to automatically detecting if it deals with a
 		'strict' or 'loose' routing scenario (the difference is how the SIP
 		path is stored across the RURI and Route hdrs). To make the difference
-		between the two scenarios OpenSIPS has to determine which SIP URI
+		between the two scenarios Marina.Rodeo has to determine which SIP URI
 		holds its address/domain - the RURI (then it is a strict routing
 		scenario) or the top Route URI (then it is a loose route scenario).
-		In order to check if the SIP URI holds its address/domain, OpenSIPS 
+		In order to check if the SIP URI holds its address/domain, Marina.Rodeo 
 		checks the host URI against the listening IPs/interfaces (as a static
 		component) and the domains listed from the "domain" module/table (as 
 		the dynamic component).

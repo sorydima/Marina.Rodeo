@@ -1,18 +1,18 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: opensips
-Source: https://github.com/OpenSIPS/opensips
+Format: http://www.debian.org/doc/packaging-manuals/Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌-format/1.0/
+Upstream-Name: Marina.Rodeo
+Source: https://github.com/Marina.Rodeo/Marina.Rodeo
 
 Files: *
-Copyright: 2001-2007, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2007, FhG Fokus
 License: GPL-2+
 
 Files: aaa/*
-Copyright: 2009, Voice System
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice System
   2009, Irina Stanescu
 License: GPL-2+
 
 Files: action.c
-Copyright: 2010-2014, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, Marina.Rodeo Solutions
   2005, 2006, Voice Sistem S.R.L
   2001-2003, FhG Fokus
 License: GPL-2+
@@ -28,11 +28,11 @@ Files: async.c
   reactor_defs.h
   sr_module_deps.c
   sr_module_deps.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: atomic.h
-Copyright: 2006, kernel.org
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, kernel.org
 License: GPL-2+
 
 Files: blacklists.c
@@ -43,26 +43,26 @@ Files: blacklists.c
   errinfo.h
   pt.c
   statistics.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: cachedb/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: crc.c
-Copyright: 2001-2003, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2003, FhG Fokus
   1986, Gary S. Brown.
 License: GPL-2+
 
 Files: data_lump.c
   receive.c
-Copyright: 2008-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008-2015, Marina.Rodeo Solutions
   2001-2004, FhG Fokus
 License: GPL-2+
 
 Files: db/*
-Copyright: 2001-2004, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2004, FhG Fokus
   2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
@@ -70,95 +70,95 @@ Files: db/db_async.c
   db/db_async.h
   db/db_insertq.c
   db/db_insertq.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: db/db_id.c
   db/db_id.h
   db/db_pool.c
   db/db_pool.h
-Copyright: 2001-2005, iptel.org
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2005, iptel.org
   2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: db/db_ps.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: db/db_query.c
   db/db_query.h
-Copyright: 2007, 2008, 1&1 Internet AG
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: db/example/*
-Copyright: 2001-2007, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2007, FhG Fokus
 License: GPL-2+
 
 Files: debian/*
-Copyright: 2002 Andrei Pelinescu-Onciul <pelinescu-onciul@fokus.fraunhofer.de>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2002 Andrei Pelinescu-Onciul <pelinescu-onciul@fokus.fraunhofer.de>
   2006 Julien Blache <jblache@debian.org>
   2009 Bjoern Boschman <bjoern@boschman.de>
   2009 Bogdan Iancu <bogan@voice-system.ro>
   2014-2017 Julián Moreno Patiño <julian@debian.org>
   2011 Daniel Echeverry <epsilon77@gmail.com>
   2011 Alejandro Rios P. <alerios@debian.org>
-  2015-2017 Răzvan Crainea <razvan@opensips.org>
+  2015-2017 Răzvan Crainea <razvan@Marina.Rodeo.org>
 License: GPL-2+
 
 Files: doc/dbschema/xsl/pi_framework_mod.xsl
   doc/dbschema/xsl/pi_framework_table.xsl
-Copyright: 2010-2014, VoIP Embedded, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, VoIP Embedded, Inc
 License: GPL-2+
 
 Files: dset.c
   dset.h
   qvalue.c
   qvalue.h
-Copyright: 2001-2004, FhG FOKUS
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2004, FhG FOKUS
 License: GPL-2+
 
 Files: evi/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: flags.c
   forward.c
   name_alias.c
   name_alias.h
-Copyright: 2005-2010, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2010, Voice Sistem SRL
   2001-2005, FhG Fokus
 License: GPL-2+
 
 Files: futex_lock.h
-Copyright: 2012, 2013, Ryan Bullock
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2012, 2013, Ryan Bullock
 License: GPL-2+
 
 Files: io_wait.c
   poll_types.h
-Copyright: 2005, iptelorg GmbH
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005, iptelorg GmbH
 License: GPL-2+
 
 Files: io_wait.h
   io_wait_loop.h
-Copyright: 2014, 2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, 2015, Marina.Rodeo Solutions
   2005, iptelorg GmbH
 License: GPL-2+
 
 Files: main.c
   resolve.c
   route.c
-Copyright: 2005-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2009, Voice Sistem S.R.L
   2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: map.c
   map.h
-Copyright: 2005-2009, Voice System SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2009, Voice System SRL
 License: GPL-2+
 
 Files: md5utils.c
   md5utils.h
-Copyright: 2001-2004, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2004, FhG Fokus
   2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
@@ -167,29 +167,29 @@ Files: mem/common.h
   mem/hp_malloc.h
   mem/hp_malloc_stats.c
   mem/hp_malloc_stats.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: menuconfig/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: mi/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: mi/mi_core.c
-Copyright: 2008-2014, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008-2014, Marina.Rodeo Solutions
   2006, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/aaa_radius/*
-Copyright: 2009, Voice System
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice System
   2009, Irina Stanescu
 License: GPL-2+
 
 Files: modules/acc/acc.c
-Copyright: 2006, Voice System SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Voice System SRL
   2001-2003, FhG Fokus
 License: GPL-2+
 
@@ -197,235 +197,235 @@ Files: modules/acc/acc.h
   modules/acc/acc_logic.c
   modules/acc/acc_mod.c
   modules/acc/acc_mod.h
-Copyright: 2005-2010, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2010, Voice Sistem SRL
   2001-2005, FhG Fokus
 License: GPL-2+
 
 Files: modules/acc/acc_extra.c
   modules/acc/acc_extra.h
   modules/acc/acc_logic.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/alias_db/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/alias_db/alias_db.h
-Copyright: 2004, 2006, Voice Sistem
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004, 2006, Voice Sistem
 License: GPL-2+
 
 Files: modules/auth/index.c
   modules/auth/index.h
-Copyright: 2008, Voice System S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, Voice System S.R.L
 License: GPL-2+
 
 Files: modules/auth_aaa/*
-Copyright: 2009, Voice Systems
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Systems
   2009, Irina Stanescu
   2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: modules/auth_db/aaa_avps.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/auth_db/checks.h
-Copyright: 2009, Voice System
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice System
   2009, Irina Stanescu
   2001-2004, FhG FOKUS
 License: GPL-2+
 
 Files: modules/avpops/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/b2b_entities/*
-Copyright: 2009, 2011, Free Software Fundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, 2011, Free Software Fundation
 License: GPL-2+
 
 Files: modules/b2b_logic/*
-Copyright: 2009, 2011, Free Software Fundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, 2011, Free Software Fundation
 License: GPL-2+
 
 Files: modules/b2b_sca/*
-Copyright: 2010-2014, VoIP Embedded, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, VoIP Embedded, Inc
 License: GPL-2+
 
 Files: modules/benchmark/*
-Copyright: 2007, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, Voice Sistem SRL
   2007, Collax GmbH
 License: GPL-2+
 
 Files: modules/cachedb_cassandra/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/cachedb_couchbase/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/cachedb_local/*
-Copyright: 2009, Anca Vamanu
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Anca Vamanu
 License: GPL-2+
 
 Files: modules/cachedb_memcached/cachedb_memcached.c
-Copyright: 2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Sistem SRL
   2009, Andrei Dragus
 License: GPL-2+
 
 Files: modules/cachedb_mongodb/*
-Copyright: 2011-2017, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2017, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/cachedb_redis/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/cachedb_sql/cachedb_sql.c
-Copyright: 2013, Steve Frécinaux
-  2013, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2013, Steve Frécinaux
+  2013, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/call_center/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/call_control/call_control.c
-Copyright: 2004-2009, Dan Pascu
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Dan Pascu
 License: GPL-2+
 
 Files: modules/carrierroute/*
-Copyright: 2007, 2008, 1&1 Internet AG
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/cgrates/*
-Copyright: 2017, Răzvan Crainea
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2017, Răzvan Crainea
 License: GPL-2+
 
 Files: modules/cfgutils/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/cfgutils/cfgutils.c
-Copyright: 2007, BASIS AudioNet GmbH
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, BASIS AudioNet GmbH
   2007, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/cfgutils/shvar.c
   modules/cfgutils/shvar.h
-Copyright: 2007, Elena-Ramona Modroiu
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, Elena-Ramona Modroiu
 License: GPL-2+
 
 Files: modules/clusterer/*
-Copyright: 2011-2016, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2016, Marina.Rodeo Project
 License: GPL-2+
 
 Files: modules/compression/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/cpl_c/cpl_loader.c
-Copyright: 2006, Voice-Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Voice-Sistem SRL
   2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: modules/db_berkeley/*
-Copyright: 2007, Cisco Systems
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, Cisco Systems
 License: GPL-2+
 
 Files: modules/db_cachedb/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/db_flatstore/flat_mi.c
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/db_flatstore/flat_mi.h
-Copyright: 2006, Voice Sistem RL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Voice Sistem RL
 License: GPL-2+
 
 Files: modules/db_http/*
-Copyright: 2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Sistem SRL
   2009, Andrei Dragus
 License: GPL-2+
 
 Files: modules/db_http/db_http.h
-Copyright: 2012, Guillaume Bour (Orange-Vallee)
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2012, Guillaume Bour (Orange-Vallee)
 License: GPL-2+
 
 Files: modules/db_mysql/*
-Copyright: 2001-2004, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2004, FhG Fokus
   2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/db_mysql/dbase.c
-Copyright: 2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Sistem SRL
   2001-2003, FhG Fokus
   2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/db_mysql/my_con.c
-Copyright: 2001-2005, iptel.org
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2005, iptel.org
   2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/db_oracle/*
-Copyright: 2007, 2008, TRUNK MOBILE
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, 2008, TRUNK MOBILE
 License: GPL-2+
 
 Files: modules/db_perlvdb/*
-Copyright: 2006, 2007, Collax GmbH
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, 2007, Collax GmbH
 License: GPL-2+
 
 Files: modules/db_postgres/*
-Copyright: 2003, August.Net Services, LLC
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2003, August.Net Services, LLC
   2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/db_postgres/db_postgres.c
-Copyright: 2001-2004, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2004, FhG Fokus
   2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/db_postgres/dbase.c
   modules/db_postgres/res.c
-Copyright: 2006, Norman Brandinger
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Norman Brandinger
   2003, August.Net Services, LLC
   2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/db_postgres/pg_con.c
-Copyright: 2001-2005, iptel.org
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2005, iptel.org
   2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/db_postgres/pg_con.h
-Copyright: 2003, August.Net Services, LLC
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2003, August.Net Services, LLC
 License: GPL-2+
 
 Files: modules/db_postgres/res.h
   modules/db_postgres/val.h
-Copyright: 2007, 2008, 1&1 Internet AG
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/db_unixodbc/*
-Copyright: 2005, 2006, Marco Lorrai
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005, 2006, Marco Lorrai
   2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/db_virtual/*
-Copyright: 2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Sistem SRL
   2009, Razvan
 License: GPL-2+
 
 Files: modules/dialog/*
-Copyright: 2005-2009, Voice System SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2009, Voice System SRL
 License: GPL-2+
 
 Files: modules/dialog/dialog.c
-Copyright: 2008-2014, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008-2014, Marina.Rodeo Solutions
   2006, Voice Sistem SRL
 License: GPL-2+
 
@@ -433,11 +433,11 @@ Files: modules/dialog/dlg_cb.c
   modules/dialog/dlg_load.h
   modules/dialog/dlg_vals.c
   modules/dialog/dlg_vals.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/dialog/dlg_cb.h
-Copyright: 2006, Voice Sistem SRLs
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Voice Sistem SRLs
 License: GPL-2+
 
 Files: modules/dialog/dlg_db_handler.c
@@ -445,174 +445,174 @@ Files: modules/dialog/dlg_db_handler.c
   modules/dialog/dlg_hash.h
   modules/dialog/dlg_profile.c
   modules/dialog/dlg_profile.h
-Copyright: 2009-2014, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009-2014, Marina.Rodeo Solutions
   2006-2009, Voice System SRL
 License: GPL-2+
 
 Files: modules/dialog/dlg_replication.c
   modules/dialog/dlg_replication.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/dialplan/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/dispatcher/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/dispatcher/dispatch.c
-Copyright: 2010-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2015, Marina.Rodeo Solutions
   2005-2010, Voice-System.ro
   2004-2006, FhG Fokus
 License: GPL-2+
 
 Files: modules/dispatcher/dispatch.h
-Copyright: 2001-2007, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2007, FhG Fokus
 License: GPL-2+
 
 Files: modules/dispatcher/dispatcher.c
-Copyright: 2005-2010, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2010, Voice Sistem SRL
   2001-2005, FhG Fokus
 License: GPL-2+
 
 Files: modules/dispatcher/ds_fixups.c
   modules/dispatcher/ds_fixups.h
-Copyright: 2014, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, Marina.Rodeo Foundation
   2006-2010, Voice Sistem SRL
   2004, 2005, FhG Fokus
 License: GPL-2+
 
 Files: modules/dns_cache/dns_cache.c
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/domain/*
-Copyright: 2001-2008, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2008, Juha Heinanen
 License: GPL-2+
 
 Files: modules/domain/mi.c
   modules/domain/mi.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/domainpolicy/*
-Copyright: 2001-2008, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2008, Juha Heinanen
 License: GPL-2+
 
 Files: modules/domainpolicy/domainpolicy.c
   modules/domainpolicy/domainpolicy_mod.c
-Copyright: 2006, Otmar Lendl & Klaus Darilion
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Otmar Lendl & Klaus Darilion
 License: GPL-2+
 
 Files: modules/drouting/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/drouting/dr_api.h
   modules/drouting/dr_api_internal.c
   modules/drouting/dr_api_internal.h
-Copyright: 2014, 2015, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, 2015, Marina.Rodeo Foundation
 License: GPL-2+
 
 Files: modules/drouting/dr_db_def.c
   modules/drouting/dr_db_def.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/drouting/dr_partitions.h
-Copyright: 2014, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, Marina.Rodeo Foundation
   2006-2010, Voice Sistem SRL
   2004, 2005, FhG Fokus
 License: GPL-2+
 
 Files: modules/emergency/*
-Copyright: 2014, 2015, Robison Tesini & Evandro Villaron
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, 2015, Robison Tesini & Evandro Villaron
 License: GPL-2+
 
 Files: modules/enum/*
-Copyright: 2001-2008, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2008, Juha Heinanen
 License: GPL-2+
 
 Files: modules/event_datagram/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/event_flatstore/*
-Copyright: 2011-2016, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2016, Marina.Rodeo Project
 License: GPL-2+
 
 Files: modules/event_rabbitmq/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/event_route/*
-Copyright: 2010-2014, VoIP Embedded, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, VoIP Embedded, Inc
 License: GPL-2+
 
 Files: modules/event_route/event_route.c
   modules/event_route/event_route.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/event_virtual/*
-Copyright: 2011-2016, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2016, Marina.Rodeo Project
 License: GPL-2+
 
 Files: modules/event_xmlrpc/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/fraud_detection/*
-Copyright: 2014, 2015, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, 2015, Marina.Rodeo Foundation
 License: GPL-2+
 
 Files: modules/gflags/gflags.c
-Copyright: 2005, 2006, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005, 2006, Voice Sistem S.R.L
   2004, FhG
 License: GPL-2+
 
 Files: modules/group/*
-Copyright: 2009, Voice Systems
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Systems
   2009, Irina Stanescu
   2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: modules/group/re_group.c
   modules/group/re_group.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/h350/*
-Copyright: 2007, University of North Carolina
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, University of North Carolina
 License: GPL-2+
 
 Files: modules/httpd/*
-Copyright: 2011-2013, VoIP Embedded Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2013, VoIP Embedded Inc
 License: GPL-2+
 
 Files: modules/identity/identity.c
-Copyright: 2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Sistem SRL
   2007, Alexander Christ
 License: GPL-2+ with OpenSSL exception
 
 Files: modules/identity/identity.h
-Copyright: 2007, Alexander Christ
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, Alexander Christ
 License: GPL-2+ with OpenSSL exception
 
 Files: modules/imc/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/jabber/sha.c
-Copyright: 1999, Scott G. Miller
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 1999, Scott G. Miller
   1999, 2000, Dave Smith & Julian Missig
 License: GPL-2+
 
 Files: modules/jabber/tree234.c
   modules/jabber/tree234.h
-Copyright: 1999-2001, Simon Tatham
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 1999-2001, Simon Tatham
 License: Expat
 
 Files: modules/jabber/xode.c
@@ -621,130 +621,130 @@ Files: modules/jabber/xode.c
   modules/jabber/xode_str.c
   modules/jabber/xpool.c
   modules/jabber/xstream.c
-Copyright: 1998, 1999, The Jabber Team http:jabber.org
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 1998, 1999, The Jabber Team http:jabber.org
 License: GPL-2+
 
 Files: modules/json/*
-Copyright: 2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Sistem SRL
   2009, Andrei Dragus
 License: GPL-2+
 
 Files: modules/ldap/*
-Copyright: 2007, University of North Carolina
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, University of North Carolina
 License: GPL-2+
 
 Files: modules/ldap/iniparser.c
   modules/ldap/iniparser.h
-Copyright: 2007, University of North Carolina
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, University of North Carolina
   2000, Nicolas Devillard (ndevilla AT free DOT fr)
 License: GPL-2+
 
 Files: modules/load_balancer/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/load_balancer/lb_bl.c
   modules/load_balancer/lb_bl.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/lua/*
-Copyright: 2008,2009: Eric Gouyer
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008,2009: Eric Gouyer
  2008-2011: Arnaud Chong
 License: ISC
 
 Files: modules/lua/crc32.c
   modules/lua/crc32.h
-Copyright: 2003, Markus Friedl.
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2003, Markus Friedl.
 License: BSD-2-clause
 
 Files: modules/mathops/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/mediaproxy/mediaproxy.c
-Copyright: 2004-2009, Dan Pascu
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Dan Pascu
 License: GPL-2+
 
 Files: modules/mi_datagram/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/mi_fifo/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/mi_fifo/fifo_fnc.c
-Copyright: 2005-2010, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2010, Voice Sistem SRL
   2001-2005, FhG Fokus
 License: GPL-2+
 
 Files: modules/mi_http/*
-Copyright: 2011-2013, VoIP Embedded Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2013, VoIP Embedded Inc
 License: GPL-2+
 
 Files: modules/mi_http/http_fnc.c
-Copyright: 2010-2014, VoIP Embedded, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, VoIP Embedded, Inc
 License: GPL-2+
 
 Files: modules/mi_xmlrpc_ng/*
-Copyright: 2011-2013, VoIP Embedded Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2013, VoIP Embedded Inc
 License: GPL-2+
 
 Files: modules/mi_xmlrpc_ng/http_fnc.c
-Copyright: 2010-2014, VoIP Embedded, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, VoIP Embedded, Inc
 License: GPL-2+
 
 Files: modules/mmgeoip/*
-Copyright: 2008 SightSpeed, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008 SightSpeed, Inc
 License: GPL-2+
 
 Files: modules/nat_traversal/nat_traversal.c
-Copyright: 2004-2009, Dan Pascu
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Dan Pascu
 License: GPL-2+
 
 Files: modules/nathelper/nathelper.c
-Copyright: 2003-2010, Sippy Software, Inc., http:www.sippysoft.com
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2003-2010, Sippy Software, Inc., http:www.sippysoft.com
 License: GPL-2+
 
 Files: modules/nathelper/sip_pinger.h
-Copyright: 2005-2009, Voice System SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2009, Voice System SRL
 License: GPL-2+
 
 Files: modules/osp/*
-Copyright: 2001-2005, Fhg Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2005, Fhg Fokus
 License: GPL-2+
 
 Files: modules/path/*
-Copyright: 2006 Inode GmbH
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006 Inode GmbH
 License: GPL-2+
 
 Files: modules/peering/*
-Copyright: 2001-2008, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2008, Juha Heinanen
 License: GPL-2+
 
 Files: modules/peering/peering.c
-Copyright: 2009, Voice System
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice System
   2009, Irina Stanescu
   2003, 2008, Juha Heinanen
 License: GPL-2+
 
 Files: modules/peering/verify.c
-Copyright: 2009, Voice System
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice System
   2009, Irina-Maria Stanescu
   2008, Juha Heinanen
 License: GPL-2+
 
 Files: modules/perl/*
-Copyright: 2006 Collax GmbH
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006 Collax GmbH
 License: GPL-2+
 
 Files: modules/permissions/*
-Copyright: 2003, Miklós Tirpák (mtirpak@sztaki.hu)
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2003, Miklós Tirpák (mtirpak@sztaki.hu)
 License: GPL-2+
 
 Files: modules/permissions/address.c
-Copyright: 2009, Voice System
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice System
   2009, Irina Stanescu
   2003, 2008, Juha Heinanen
 License: GPL-2+
@@ -752,50 +752,50 @@ License: GPL-2+
 Files: modules/permissions/address.h
   modules/permissions/mi.c
   modules/permissions/mi.h
-Copyright: 2001-2008, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2008, Juha Heinanen
 License: GPL-2+
 
 Files: modules/permissions/hash.c
   modules/permissions/hash.h
-Copyright: 2009, Voice System
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice System
   2009, Irina Stanescu
 License: GPL-2+
 
 Files: modules/permissions/permissions.c
-Copyright: 2003-2007, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2003-2007, Juha Heinanen
   2003, iptel.org
   2003, Miklós Tirpák (mtirpak@sztaki.hu)
 License: GPL-2+
 
 Files: modules/permissions/permissions.h
-Copyright: 2006, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Juha Heinanen
   2003, Miklós Tirpák (mtirpak@sztaki.hu)
 License: GPL-2+
 
 Files: modules/pi_http/*
-Copyright: 2011-2013, VoIP Embedded Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2013, VoIP Embedded Inc
 License: GPL-2+
 
 Files: modules/pi_http/http_db_handler.c
   modules/pi_http/http_db_handler.h
-Copyright: 2010-2014, VoIP Embedded, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, VoIP Embedded, Inc
 License: GPL-2+
 
 Files: modules/pike/pike_mi.c
   modules/pike/pike_mi.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/presence/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/presence/presence.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/presence_callinfo/*
-Copyright: 2013, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2013, Marina.Rodeo Solutions
   2010, Ovidiu Sas
 License: GPL-2+
 
@@ -803,185 +803,185 @@ Files: modules/presence_callinfo/sca_dialog.c
   modules/presence_callinfo/sca_dialog.h
   modules/presence_callinfo/sca_hash.c
   modules/presence_callinfo/sca_hash.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/presence_dialoginfo/*
-Copyright: 2008, Klaus Darilion, IPCom
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, Klaus Darilion, IPCom
   2007, Juha Heinanen
 License: GPL-2+
 
 Files: modules/presence_dialoginfo/notify_body.c
   modules/presence_dialoginfo/notify_body.h
-Copyright: 2008, Klaus Darilion, IPCom
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, Klaus Darilion, IPCom
   2006, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/presence_dialoginfo/pidf.c
   modules/presence_dialoginfo/pidf.h
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/presence_dialoginfo/presence_dialoginfo.h
-Copyright: 2008, Klaus Darilion IPCom
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, Klaus Darilion IPCom
   2007, Juha Heinanen
 License: GPL-2+
 
 Files: modules/presence_mwi/*
-Copyright: 2001-2008, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2008, Juha Heinanen
 License: GPL-2+
 
 Files: modules/presence_xcapdiff/presence_xcapdiff.c
-Copyright: 2008, 2012, AG Projects
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, 2012, AG Projects
 License: GPL-2+
 
 Files: modules/presence_xml/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/proto_bin/*
-Copyright: 2015, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, Marina.Rodeo Foundation
   2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: modules/proto_hep/*
-Copyright: 2015, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, Marina.Rodeo Foundation
   2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: modules/proto_sctp/*
-Copyright: 2008-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008-2015, Marina.Rodeo Solutions
   2001-2004, FhG Fokus
 License: GPL-2+
 
 Files: modules/proto_sctp/proto_sctp.c
-Copyright: 2014, 2015, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, 2015, Marina.Rodeo Foundation
 License: GPL-2+
 
 Files: modules/proto_tls/*
-Copyright: 2005 Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005 Voice Sistem SRL
   2005 Cesc Santasusana
   2006 enum.at
   2013 Secusmart GmbH
-  2014, 2015, OpenSIPS Foundation
+  2014, 2015, Marina.Rodeo Foundation
   2001-2003, FhG Fokus
   2004, 2005, Free Software Foundation, Inc
   2005, 2006, iptelorg GmbH
 License: GPL-2+ with OpenSSL exception
 
 Files: modules/proto_ws/*
-Copyright: 2015, - OpenSIPS Foundation / 2001-2003, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, - Marina.Rodeo Foundation / 2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: modules/proto_ws/proto_ws.h
-Copyright: 2015, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, Marina.Rodeo Project
 License: GPL-2+
 
 Files: modules/proto_wss/*
-Copyright: 2016, - OpenSIPS Foundation / 2001-2003, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2016, - Marina.Rodeo Foundation / 2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: modules/proto_wss/proto_wss.h
-Copyright: 2016, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2016, Marina.Rodeo Project
 License: GPL-2+
 
 Files: modules/pua/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/pua_bla/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/pua_dialoginfo/dialog_publish.c
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/pua_dialoginfo/pua_dialoginfo.c
-Copyright: 2008, Klaus Darilion IPCom
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, Klaus Darilion IPCom
   2007, 2008, Dan Pascu
   2006, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/pua_dialoginfo/pua_dialoginfo.h
-Copyright: 2008, Klaus Darilion IPCom
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, Klaus Darilion IPCom
   2006, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/pua_mi/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/pua_usrloc/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/pua_xmpp/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/python/*
-Copyright: 2009 Sippy Software, Inc., http://www.sippysoft.com
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009 Sippy Software, Inc., http://www.sippysoft.com
 License: GPL-2+
 
 Files: modules/qos/*
-Copyright: 2006-2008, SOMA Networks, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2008, SOMA Networks, Inc
 License: GPL-2+
 
 Files: modules/qos/qos_ctx_helpers.h
-Copyright: 2006-2008, SOMA Networks, INC
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2008, SOMA Networks, INC
 License: GPL-2+
 
 Files: modules/rabbitmq/*
-Copyright: 2017, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2017, Marina.Rodeo Project
 License: GPL-2+
 
 Files: modules/ratelimit/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/ratelimit/ratelimit.c
-Copyright: 2008, Ovidiu Sas <osas@voipembedded.com>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, Ovidiu Sas <osas@voipembedded.com>
   2006, Hendrik Scholz <hscholz@raisdorf.net>
 License: GPL-2+
 
 Files: modules/regex/regex_mod.c
-Copyright: 2008, Iñaki Baz Castillo
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, Iñaki Baz Castillo
 License: GPL-2+
 
 Files: modules/registrar/path.c
   modules/registrar/path.h
-Copyright: 2006, Andreas Granig <agranig@linguin.org>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Andreas Granig <agranig@linguin.org>
 License: GPL-2+
 
 Files: modules/registrar/save.c
-Copyright: 2005-2010, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2010, Voice Sistem SRL
   2001-2005, FhG Fokus
 License: GPL-2+
 
 Files: modules/rest_client/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/rls/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/rr/api.c
   modules/rr/api.h
   modules/rr/rr_cb.c
   modules/rr/rr_cb.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/rr/loose.c
   modules/rr/rr_mod.c
-Copyright: 2008-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008-2015, Marina.Rodeo Solutions
   2001-2004, FhG Fokus
 License: GPL-2+
 
 Files: modules/rtpengine/*
-Copyright: 2003-2010 Sippy Software, Inc.
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2003-2010 Sippy Software, Inc.
   2005 Voice Sistem S.R.L
   2009-2014 TuTPro Inc.
   2010 VoIPEmbedded Inc.
@@ -991,106 +991,106 @@ Copyright: 2003-2010 Sippy Software, Inc.
 License: GPL-2+
 
 Files: modules/rtpproxy/*
-Copyright: 2003-2010 Sippy Software, Inc., http://www.sippysoft.com
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2003-2010 Sippy Software, Inc., http://www.sippysoft.com
 License: GPL-2+
 
 Files: modules/rtpproxy/nhelpr_funcs.c
   modules/rtpproxy/nhelpr_funcs.h
-Copyright: 2001-2007, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2007, FhG Fokus
 License: GPL-2+
 
 Files: modules/rtpproxy/timeout_process.c
-Copyright: 2008, 2010, Voice System
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, 2010, Voice System
 License: GPL-2+
 
 Files: modules/script_helper/script_helper.c
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/signaling/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/sipcapture/*
-Copyright: 2011, Alexandr Dubovikov (QSC AG) (alexandr.dubovikov@gmail.com)
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011, Alexandr Dubovikov (QSC AG) (alexandr.dubovikov@gmail.com)
 License: GPL-2+
 
 Files: modules/sipmsgops/*
-Copyright: 2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Sistem SRL
   2009, Andrei Dragus
 License: GPL-2+
 
 Files: modules/sipmsgops/sipmsgops.c
-Copyright: 2001-2007, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2007, FhG Fokus
 License: GPL-2+
 
 Files: modules/sipmsgops/uri.c
-Copyright: 2001-2003, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: modules/tracer/tracer.c
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/sl/sl.h
-Copyright: 2004, 2006, Voice Sistem
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004, 2006, Voice Sistem
 License: GPL-2+
 
 Files: modules/sl/sl_api.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: sl_cb.c sl_cb.h
-Copyright: 2016, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2016, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/sngtc/*
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/snmpstats/*
-Copyright: 2006 SOMA Networks, Inc.
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006 SOMA Networks, Inc.
 License: GPL-2+
 
 Files: modules/speeddial/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/sql_cacher/*
-Copyright: 2015, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, Marina.Rodeo Foundation
 License: GPL-2+
 
 Files: modules/db_sqlite/*
-Copyright: 2015, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, Marina.Rodeo Foundation
 License: GPL-2+
 
 Files: modules/siprec/*
-Copyright: 2017, Răzvan Crainea
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2017, Răzvan Crainea
 License: GPL-2+
 
 Files: modules/sst/*
-Copyright: 2006-2008, SOMA Networks, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2008, SOMA Networks, Inc
 License: GPL-2+
 
 Files: modules/sst/sst.c
-Copyright: 2006-2008, SOMA Networks, INC
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2008, SOMA Networks, INC
 License: GPL-2+
 
 Files: modules/statistics/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/stun/*
-Copyright: 2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2009, Voice Sistem SRL
   2009, Razvan
 License: GPL-2+
 
 Files: modules/tls_mgm/*
-Copyright: 2005 Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005 Voice Sistem SRL
   2005 Cesc Santasusana
   2006 enum.at
   2013 Secusmart GmbH
-  2014, 2015, OpenSIPS Foundation
+  2014, 2015, Marina.Rodeo Foundation
   2001-2003, FhG Fokus
   2004, 2005, Free Software Foundation, Inc
   2005, 2006, iptelorg GmbH
@@ -1100,17 +1100,17 @@ Files: modules/tm/async.c
   modules/tm/async.h
   modules/tm/t_ctx.c
   modules/tm/t_ctx.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/tm/mi.c
   modules/tm/timer.c
-Copyright: 2005-2010, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2010, Voice Sistem SRL
   2001-2005, FhG Fokus
 License: GPL-2+
 
 Files: modules/tm/mi.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/tm/sip_msg.c
@@ -1118,84 +1118,84 @@ Files: modules/tm/sip_msg.c
   modules/tm/t_msgbuilder.h
   modules/tm/t_reply.c
   modules/tm/uac.c
-Copyright: 2008-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008-2015, Marina.Rodeo Solutions
   2001-2004, FhG Fokus
 License: GPL-2+
 
 Files: modules/tm/t_stats.h
-Copyright: 2004, 2006, Voice Sistem
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004, 2006, Voice Sistem
 License: GPL-2+
 
 Files: modules/topology_hiding/*
-Copyright: 2014, 2015, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, 2015, Marina.Rodeo Foundation
 License: GPL-2+
 
 Files: modules/uac/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/uac/auth.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/uac_auth/*
-Copyright: 2013, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2013, Marina.Rodeo Solutions
   2011, VoIP Embedded Inc
 License: GPL-2+
 
 Files: modules/uac_auth/uac_auth.h
-Copyright: 2011-2013, VoIP Embedded Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2013, VoIP Embedded Inc
 License: GPL-2+
 
 Files: modules/uac_redirect/*
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/uac_registrant/*
-Copyright: 2011-2013, VoIP Embedded Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2013, VoIP Embedded Inc
 License: GPL-2+
 
 Files: modules/uac_registrant/reg_db_handler.c
   modules/uac_registrant/reg_db_handler.h
-Copyright: 2010-2014, VoIP Embedded, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, VoIP Embedded, Inc
 License: GPL-2+
 
 Files: modules/userblacklist/*
-Copyright: 2007, 2008, 1&1 Internet AG
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: modules/usrloc/ul_mi.c
   modules/usrloc/ul_mi.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: modules/usrloc/ureplication.c
   modules/usrloc/ureplication.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/uuid/uuid.c
-Copyright: 2019, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2019, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/xcap/*
-Copyright: 2008, 2012, AG Projects
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, 2012, AG Projects
 License: GPL-2+
 
 Files: modules/xcap_client/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/xml/*
-Copyright: 2017, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2017, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: modules/xmpp/*
-Copyright: 2006-2009, Voice Sistem S.R.L
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2009, Voice Sistem S.R.L
 License: GPL-2+
 
 Files: modules/xmpp/sha.c
-Copyright: 1999, Scott G. Miller
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 1999, Scott G. Miller
   1999, 2000, Dave Smith & Julian Missig
 License: GPL-2+
 
@@ -1205,75 +1205,75 @@ Files: modules/xmpp/xode.c
   modules/xmpp/xode_str.c
   modules/xmpp/xpool.c
   modules/xmpp/xstream.c
-Copyright: 1998, 1999, The Jabber Team http:jabber.org
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 1998, 1999, The Jabber Team http:jabber.org
 License: GPL-2+
 
 Files: modules/xmpp/xsnprintf.c
-Copyright: 1995-1998, The Apache Group.
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 1995-1998, The Apache Group.
 License: Apache
 
 Files: msg_callbacks.c
   msg_callbacks.h
-Copyright: 2003-2010, Sippy Software, Inc., http:www.sippysoft.com
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2003-2010, Sippy Software, Inc., http:www.sippysoft.com
 License: GPL-2+
 
 Files: msg_translator.c
-Copyright: 2006, Andreas Granig <agranig@linguin.org>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Andreas Granig <agranig@linguin.org>
   2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: net/*
-Copyright: 2015, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, Marina.Rodeo Project
 License: GPL-2+
 
 Files: net/net_tcp.c
-Copyright: 2014, 2015, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, 2015, Marina.Rodeo Project
   2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: net/net_tcp_proc.c
-Copyright: 2008-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008-2015, Marina.Rodeo Solutions
   2001-2004, FhG Fokus
 License: GPL-2+
 
 Files: net/net_udp.c
-Copyright: 2014, 2015, OpenSIPS Foundation
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2014, 2015, Marina.Rodeo Foundation
   2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: net/proto_tcp/*
-Copyright: 2015, - OpenSIPS Foundation / 2001-2003, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, - Marina.Rodeo Foundation / 2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: net/proto_tcp/proto_tcp_handler.h
-Copyright: 2015, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, Marina.Rodeo Project
 License: GPL-2+
 
 Files: net/proto_udp/proto_udp.c
-Copyright: 2015, - OpenSIPS Foundation / 2001-2003, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, - Marina.Rodeo Foundation / 2001-2003, FhG Fokus
 License: GPL-2+
 
 Files: net/proto_udp/proto_udp.h
-Copyright: 2011-2015, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011-2015, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: net/proto_udp/proto_udp_handler.h
-Copyright: 2015, OpenSIPS Project
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2015, Marina.Rodeo Project
 License: GPL-2+
 
 Files: net/tcp_conn.h
   net/tcp_conn_defs.h
   net/tcp_passfd.c
   net/tcp_passfd.h
-Copyright: 2001-2007, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2007, FhG Fokus
 License: GPL-2+
 
 Files: obsolete_modules/*
-Copyright: 2000, Moez Mahfoudh <mmoez@bigfoot.com>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2000, Moez Mahfoudh <mmoez@bigfoot.com>
 License: BSD-3-clause
 
 Files: obsolete_modules/auth_diameter/*
-Copyright: 2001-2007, FhG Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2007, FhG Fokus
 License: GPL-2+
 
 Files: obsolete_modules/mi_xmlrpc/mi_xmlrpc.c
@@ -1284,11 +1284,11 @@ Files: obsolete_modules/mi_xmlrpc/mi_xmlrpc.c
   obsolete_modules/mi_xmlrpc/xr_server.h
   obsolete_modules/mi_xmlrpc/xr_writer.c
   obsolete_modules/mi_xmlrpc/xr_writer.h
-Copyright: 2004-2009, Voice Sistem SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
 License: GPL-2+
 
 Files: obsolete_modules/mi_xmlrpc/xr_parser_lib.h
-Copyright: 2001, First Peer, Inc.
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001, First Peer, Inc.
   2001, Eric Kidd.
 License: BSD-3-clause
 
@@ -1296,7 +1296,7 @@ Files: parser/case_min_.h
   parser/case_sess.h
   parser/parse_sst.c
   parser/parse_sst.h
-Copyright: 2006, SOMA Networks, Inc. <http:www.somanetworks.com/>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, SOMA Networks, Inc. <http:www.somanetworks.com/>
 License: GPL-2+
 
 Files: parser/case_p_as.h
@@ -1317,64 +1317,64 @@ Files: parser/case_p_as.h
   parser/parse_refer_to.h
   parser/parse_rpid.c
   parser/parse_rpid.h
-Copyright: 2001-2008, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2008, Juha Heinanen
 License: GPL-2+
 
 Files: parser/case_path.h
   parser/parse_supported.c
   parser/parse_supported.h
-Copyright: 2006, Andreas Granig <agranig@linguin.org>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, Andreas Granig <agranig@linguin.org>
 License: GPL-2+
 
 Files: parser/case_retr.h
-Copyright: 2005-2009, Voice System SRL
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2005-2009, Voice System SRL
 License: GPL-2+
 
 Files: parser/parse_authenticate.c
   parser/parse_authenticate.h
   parser/parse_call_info.c
   parser/parse_call_info.h
-Copyright: 2010, 2011, VoIP Embedded Inc. <http:www.voipembedded.com/>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010, 2011, VoIP Embedded Inc. <http:www.voipembedded.com/>
 License: GPL-2+
 
 Files: parser/parse_min_expires.c
   parser/parse_min_expires.h
-Copyright: 2011, VoIP Embedded, Inc. <http:www.voipembedded.com/>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2011, VoIP Embedded, Inc. <http:www.voipembedded.com/>
 License: GPL-2+
 
 Files: parser/parse_body.c
   parser/parse_body.h
-Copyright: 2004-2009, Voice Sistem SRL
-  2016, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2004-2009, Voice Sistem SRL
+  2016, Marina.Rodeo Solutions
 License: GPL-2+
 
 Files: parser/parse_replaces.c
   parser/parse_replaces.h
-Copyright: 2010-2014, VoIP Embedded, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, VoIP Embedded, Inc
 License: GPL-2+
 
 Files: parser/parse_sipifmatch.h
-Copyright: 2001-2004, FhG FOKUS
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2004, FhG FOKUS
 License: GPL-2+
 
 Files: parser/parse_to.c
   parser/parse_to.h
-Copyright: 2001-2005, Fhg Fokus
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2005, Fhg Fokus
 License: GPL-2+
 
 Files: parser/sdp/*
-Copyright: 2006-2008, SOMA Networks, INC
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2008, SOMA Networks, INC
 License: GPL-2+
 
 Files: prime_hash.c
   prime_hash.h
-Copyright: 2007, 2008, 1&1 Internet AG
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: pvar.c
   timer.c
   timer.h
-Copyright: 2010-2014, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2010-2014, Marina.Rodeo Solutions
   2005-2009, Voice Sistem SRL
   2001-2003, FhG Fokus
 License: GPL-2+
@@ -1383,7 +1383,7 @@ Files: regexp.c
   regexp.h
   serialize.c
   serialize.h
-Copyright: 2001-2008, Juha Heinanen
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2008, Juha Heinanen
 License: GPL-2+
 
 Files: script_var.c
@@ -1392,58 +1392,58 @@ Files: script_var.c
   strcommon.h
   transformations.c
   transformations.h
-Copyright: 2006, 2007, voice-system.ro
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006, 2007, voice-system.ro
 License: GPL-2+
 
 Files: sha1.c
   sha1.h
-Copyright: 2006-2014, ARM Limited
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2006-2014, ARM Limited
 License: GPL-2+
 
 Files: sliblist.c
   sliblist.h
-Copyright: 2013, VoIP Embedded, Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2013, VoIP Embedded, Inc
 License: GPL-3+
 
 Files: statistics.c
-Copyright: 2008-2014, OpenSIPS Solutions
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008-2014, Marina.Rodeo Solutions
   2006, Voice Sistem SRL
 License: GPL-2+
 
 Files: test/*
-Copyright: 2007, 2008, 1&1 Internet AG
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, 2008, 1&1 Internet AG
 License: GPL-2+
 
 Files: test/27.sh
-Copyright: 2008, 2010, Voice System
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008, 2010, Voice System
 License: GPL-2+
 
 Files: utils/*
-Copyright: 2001-2004, FhG FOKUS
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2001-2004, FhG FOKUS
 License: GPL-2+
 
 Files: utils/db_berkeley/*
-Copyright: 2007, Cisco Systems
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2007, Cisco Systems
 License: GPL-2+
 
 Files: scripts/dbtextdb/*
-Copyright: 2008 Google Inc
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2008 Google Inc
 License: GPL-2+
 
 Files: packaging/debian/*
-Copyright: 2002 Andrei Pelinescu-Onciul <pelinescu-onciul@fokus.fraunhofer.de>
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 2002 Andrei Pelinescu-Onciul <pelinescu-onciul@fokus.fraunhofer.de>
  2006 Julien Blache <jblache@debian.org>
  2009 Bjoern Boschman <bjoern@boschman.de>
  2009 Bogdan Iancu <bogan@voice-system.ro>
  2011 JuliÃ¡n Moreno PatiÃ±o <darkjunix@gmail.com>
  2011 Daniel Echeverry <epsilon77@gmail.com>
  2011 Alejandro Rios P. <alerios@debian.org>
- 2015 Razvan Crainea <razvan@opensips.org>
+ 2015 Razvan Crainea <razvan@Marina.Rodeo.org>
  2015 Steve Frécinaux <sfrecinaux@beip.be>
 License: GPL-2+
 
-Files: packaging/gentoo/opensips-*.ebuild
-Copyright: 1999-2005 Gentoo Foundation
+Files: packaging/gentoo/Marina.Rodeo-*.ebuild
+Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌: 1999-2005 Gentoo Foundation
 License: GPL-2
 
 License: Apache
@@ -1451,10 +1451,10 @@ License: Apache
  modification, are permitted provided that the following conditions
  are met:
  .
-   1. Redistributions of source code must retain the above copyright
+   1. Redistributions of source code must retain the above Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
       notice, this list of conditions and the following disclaimer.
  .
-   2. Redistributions in binary form must reproduce the above copyright
+   2. Redistributions in binary form must reproduce the above Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
       notice, this list of conditions and the following disclaimer in
       the documentation and/or other materials provided with the
       distribution.
@@ -1498,15 +1498,15 @@ License: Apache
  <panos@alumni.cs.colorado.edu> for xinetd.
 
 License: BSD-3-clause
- Copyright (c) The Regents of the University of California.
+ Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) The Regents of the University of California.
  All rights reserved.
  .
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
- 1. Redistributions of source code must retain the above copyright
+ 1. Redistributions of source code must retain the above Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
     notice, this list of conditions and the following disclaimer.
- 2. Redistributions in binary form must reproduce the above copyright
+ 2. Redistributions in binary form must reproduce the above Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
     notice, this list of conditions and the following disclaimer in the
     documentation and/or other materials provided with the distribution.
  3. Neither the name of the University nor the names of its contributors
@@ -1529,9 +1529,9 @@ License: BSD-2-clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
- 1. Redistributions of source code must retain the above copyright
+ 1. Redistributions of source code must retain the above Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
     notice, this list of conditions and the following disclaimer.
- 2. Redistributions in binary form must reproduce the above copyright
+ 2. Redistributions in binary form must reproduce the above Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
     notice, this list of conditions and the following disclaimer in the
     documentation and/or other materials provided with the distribution.
  .
@@ -1559,7 +1559,7 @@ License: Expat
  whom the Software is furnished to do so, subject to the
  following conditions:
  .
- The above copyright notice and this permission notice shall
+ The above Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice and this permission notice shall
  be included in all copies or substantial portions of the
  Software.
  .
@@ -1568,7 +1568,7 @@ License: Expat
  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  MERCHANTABILITY, FITNESS FOR A PARTICULAR
  PURPOSE AND NONINFRINGEMENT. IN NO EVENT
- SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ SHALL THE AUTHORS OR Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 HOLDERS BE
  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
@@ -1656,7 +1656,7 @@ License: GPL-3+
 License: ISC
  Permission to use, copy, modify, and distribute this software for any
  purpose with or without fee is hereby granted, provided that the above
- copyright notice and this permission notice appear in all copies.
+ Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice and this permission notice appear in all copies.
  .
  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF

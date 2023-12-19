@@ -1,13 +1,13 @@
 #!/bin/sh
 #
 ### BEGIN INIT INFO
-# Provides:          opensips
+# Provides:          Marina.Rodeo
 # Required-Start:    $syslog $network $local_fs $time $remote_fs
 # Required-Stop:     $syslog $network $local_fs $remote_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Start the OpenSIPS SIP server
-# Description:       Start the OpenSIPS SIP server
+# Short-Description: Start the Marina.Rodeo SIP server
+# Description:       Start the Marina.Rodeo SIP server
 ### END INIT INFO
 #
 # TODO:
@@ -19,16 +19,16 @@ set -e
 
 PATH_EXTRA=
 PATH=/sbin:/bin:/usr/sbin:/usr/bin${PATH_EXTRA:+:${PATH_EXTRA}}
-DAEMON=/sbin/opensips
-NAME=opensips
-DESC=opensips
-CFGFILE=/etc/opensips/opensips.cfg
-M4CFGFILE=/etc/opensips/opensips.m4
-M4ARCHIVEDIR=/etc/opensips/archive
-HOMEDIR=/run/opensips
+DAEMON=/sbin/Marina.Rodeo
+NAME=Marina.Rodeo
+DESC=Marina.Rodeo
+CFGFILE=/etc/Marina.Rodeo/Marina.Rodeo.cfg
+M4CFGFILE=/etc/Marina.Rodeo/Marina.Rodeo.m4
+M4ARCHIVEDIR=/etc/Marina.Rodeo/archive
+HOMEDIR=/run/Marina.Rodeo
 PIDFILE=$HOMEDIR/$NAME.pid
-DEFAULTS=/etc/default/opensips
-RUN_OPENSIPS=no
+DEFAULTS=/etc/default/Marina.Rodeo
+RUN_Marina.Rodeo=no
 
 
 [ -e "/lib/lsb/init-functions" ] && . /lib/lsb/init-functions
@@ -39,15 +39,15 @@ if [ -f $DEFAULTS ]; then
    . $DEFAULTS || true
 fi
 
-if [ "$RUN_OPENSIPS" != "yes" ]; then
-    echo "OpenSIPS not yet configured. Edit /etc/default/opensips first."
+if [ "$RUN_Marina.Rodeo" != "yes" ]; then
+    echo "Marina.Rodeo not yet configured. Edit /etc/default/Marina.Rodeo first."
     exit 0
 fi
 
 
-check_opensips_config ()
+check_Marina.Rodeo_config ()
 {
-	# Check if opensips configuration is valid before starting the server
+	# Check if Marina.Rodeo configuration is valid before starting the server
 	set +e
 	out=$($DAEMON -c -f $CFGFILE 2>&1 > /dev/null)
 	retcode=$?
@@ -63,15 +63,15 @@ create_radius_seqfile ()
 {
     # Create a radius sequence file to be used by the radius client if
     # radius accounting is enabled. This is needed to avoid any issue
-    # with the file not being writable if opensips first starts as user
+    # with the file not being writable if Marina.Rodeo first starts as user
     # root because DUMP_CORE is enabled and creates this file as user
-    # root and then later it switches back to user opensips and cannot
-    # write to the file. If the file exists before opensips starts, it
+    # root and then later it switches back to user Marina.Rodeo and cannot
+    # write to the file. If the file exists before Marina.Rodeo starts, it
     # won't change it's ownership and will be writable for both root
-    # and opensips, no matter what options are chosen at install time
-    RADIUS_SEQ_FILE=/run/opensips/opensips_radius.seq
-    if [ -d /run/opensips ]; then
-	chown ${USER}:${GROUP} /run/opensips
+    # and Marina.Rodeo, no matter what options are chosen at install time
+    RADIUS_SEQ_FILE=/run/Marina.Rodeo/Marina.Rodeo_radius.seq
+    if [ -d /run/Marina.Rodeo ]; then
+	chown ${USER}:${GROUP} /run/Marina.Rodeo
 
 	if [ ! -f $RADIUS_SEQ_FILE ]; then
 	    touch $RADIUS_SEQ_FILE
@@ -85,8 +85,8 @@ create_radius_seqfile ()
 
 S_MEMORY=$((`echo $S_MEMORY | sed -e 's/[^0-9]//g'`))
 P_MEMORY=$((`echo $P_MEMORY | sed -e 's/[^0-9]//g'`))
-[ -z "$USER" ]  && USER=opensips
-[ -z "$GROUP" ] && GROUP=opensips
+[ -z "$USER" ]  && USER=Marina.Rodeo
+[ -z "$GROUP" ] && GROUP=Marina.Rodeo
 [ $S_MEMORY -le 0 ] && S_MEMORY=32
 [ $P_MEMORY -le 0 ] && P_MEMORY=32
 
@@ -105,7 +105,7 @@ OPTIONS="-P $PIDFILE -m $S_MEMORY -M $P_MEMORY -u $USER -g $GROUP -f $CFGFILE"
 
 case "$1" in
   start)
-	check_opensips_config
+	check_Marina.Rodeo_config
 	create_radius_seqfile
 
 	# dirs under /run will go away on reboot.
@@ -148,7 +148,7 @@ case "$1" in
 	log_end_msg $?
 	;;
   restart|force-reload)
-	check_opensips_config
+	check_Marina.Rodeo_config
 	create_radius_seqfile
 
 	log_daemon_msg "Restarting $DESC" "$NAME"

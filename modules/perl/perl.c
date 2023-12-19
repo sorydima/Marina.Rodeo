@@ -1,17 +1,17 @@
 /*
- * Perl module for OpenSIPS
+ * Perl module for Marina.Rodeo
  *
- * Copyright (C) 2006 Collax GmbH
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Collax GmbH
  *                    (Bastian Friedrich <bastian.friedrich@collax.com>)
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -22,7 +22,7 @@
  *
  */
 
-#define DEFAULTMODULE "OpenSIPS"
+#define DEFAULTMODULE "Marina.Rodeo"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,7 +50,7 @@
 /* Full path to the script including executed functions */
 char *filename = NULL;
 
-/* Path to an arbitrary directory where the OpenSIPS Perl modules are
+/* Path to an arbitrary directory where the Marina.Rodeo Perl modules are
  * installed */
 char *modpath = NULL;
 
@@ -123,7 +123,7 @@ static const mi_export_t mi_cmds[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* OpenSIPS module dependencies */
+	{ /* Marina.Rodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "signaling", DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -155,7 +155,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	RTLD_NOW | RTLD_GLOBAL,
 	0,          /* load function */
-	&deps,      /* OpenSIPS module dependencies */
+	&deps,      /* Marina.Rodeo module dependencies */
 	cmds,       /* Exported functions */
 	0,          /* Exported async functions */
 	params,     /* Exported parameters */
@@ -180,18 +180,18 @@ static int child_init(int rank)
 
 
 EXTERN_C void boot_DynaLoader (pTHX_ CV* cv);
-EXTERN_C void boot_OpenSIPS(pTHX_ CV* cv);
+EXTERN_C void boot_Marina.Rodeo(pTHX_ CV* cv);
 
 
 /*
  * This is output by perl -MExtUtils::Embed -e xsinit
- * and complemented by the OpenSIPS bootstrapping
+ * and complemented by the Marina.Rodeo bootstrapping
  */
 EXTERN_C void xs_init(pTHX) {
         char *file = __FILE__;
         dXSUB_SYS;
 
-        newXS("OpenSIPS::bootstrap", boot_OpenSIPS, file);
+        newXS("Marina.Rodeo::bootstrap", boot_Marina.Rodeo, file);
 
         newXS("DynaLoader::boot_DynaLoader", boot_DynaLoader, file);
 }
@@ -227,7 +227,7 @@ PerlInterpreter *parser_init(void) {
 		argc++;
 	}
 
-	argv[argc] = "-M"DEFAULTMODULE; argc++; /* Always "use" Opensips.pm */
+	argv[argc] = "-M"DEFAULTMODULE; argc++; /* Always "use" Marina.Rodeo.pm */
 
 	argv[argc] = filename; /* The script itself */
 	argc++;
@@ -304,13 +304,13 @@ mi_response_t *perl_mi_reload(const mi_params_t *params,
 
 /*
  * mod_init
- * Called by opensips at init time
+ * Called by Marina.Rodeo at init time
  */
 static int mod_init(void) {
 
 	int ret = 0;
 	static int argc = 1;
-	static char *argv_name = "opensips";
+	static char *argv_name = "Marina.Rodeo";
 	static char **argv = { &argv_name };
 
 	LM_INFO("initializing...\n");
@@ -350,7 +350,7 @@ static int mod_init(void) {
 
 /*
  * destroy
- * called by opensips at exit time
+ * called by Marina.Rodeo at exit time
  */
 static void destroy(void)
 {

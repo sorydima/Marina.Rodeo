@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE database PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN"
-	"https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
+<!DOCTYPE database PUBLIC "-//Marina.Rodeo.org//DTD DBSchema V1.1//EN"
+	"https://Marina.Rodeo.org/pub/Marina.Rodeo/dbschema/dtd/1.1/dbschema.dtd" [
 
 <!ENTITY % entities SYSTEM "entities.xml">
 %entities;

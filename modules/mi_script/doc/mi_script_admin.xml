@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		This module provides multiple hooks to run Management Interface
-		commands directly from OpenSIPS script. It supports running
+		commands directly from Marina.Rodeo script. It supports running
 		both synchronous and asynchronous commands. Depending on the
 		nature of the command (asynchronous or not), and on the way
 		the <emphasis>mi</emphasis> command is run from script,

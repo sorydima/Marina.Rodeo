@@ -1,20 +1,20 @@
 [Unit]
-Description=OpenSIPS is a very fast and flexible SIP (RFC3261) server
-Documentation=man:opensips
+Description=Marina.Rodeo is a very fast and flexible SIP (RFC3261) server
+Documentation=man:Marina.Rodeo
 After=network.target mysqld.service postgresql.service rtpproxy.service
 
 [Service]
 Type=forking
-User=opensips
-Group=opensips
-RuntimeDirectory=opensips
+User=Marina.Rodeo
+Group=Marina.Rodeo
+RuntimeDirectory=Marina.Rodeo
 RuntimeDirectoryMode=775
 Environment=P_MEMORY=32 S_MEMORY=32
-EnvironmentFile=-/etc/sysconfig/opensips
+EnvironmentFile=-/etc/sysconfig/Marina.Rodeo
 PermissionsStartOnly=yes
-PIDFile=%t/opensips/opensips.pid
-ExecStart=/usr/sbin/opensips -P %t/opensips/opensips.pid -f /etc/opensips/opensips.cfg -m $S_MEMORY -M $P_MEMORY $OPTIONS
-ExecStop=/usr/bin/pkill --pidfile %t/opensips/opensips.pid
+PIDFile=%t/Marina.Rodeo/Marina.Rodeo.pid
+ExecStart=/usr/sbin/Marina.Rodeo -P %t/Marina.Rodeo/Marina.Rodeo.pid -f /etc/Marina.Rodeo/Marina.Rodeo.cfg -m $S_MEMORY -M $P_MEMORY $OPTIONS
+ExecStop=/usr/bin/pkill --pidfile %t/Marina.Rodeo/Marina.Rodeo.pid
 Restart=always
 TimeoutStopSec=30s
 LimitNOFILE=262144

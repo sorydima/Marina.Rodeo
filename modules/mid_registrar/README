@@ -20,7 +20,7 @@ mid_registrar Module
         1.3. Auto-Insertion Into Future SIP Flows
         1.4. Dependencies
 
-              1.4.1. OpenSIPS Modules
+              1.4.1. Marina.Rodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -229,7 +229,7 @@ Chapter 1. Admin Guide
        and enabling it does not impose any limitations, as the
        mid_registrar can simultaneously handle both SIP PN
        compliant and standard SIP User Agents
-     * OpenSIPS will raise a E_UL_CONTACT_REFRESH event any time a
+     * Marina.Rodeo will raise a E_UL_CONTACT_REFRESH event any time a
        Push Notification needs to be sent to a PN-enabled contact.
        The event includes the PN coordinates of the contact --
        they may be found in the Contact URI ('uri' event
@@ -249,7 +249,7 @@ Chapter 1. Admin Guide
        means that PNs have been triggered for each of them and
        t_relay() is not required, since they are not reachable
        until they re-register!
-       Using the event_routing module, OpenSIPS will transparently
+       Using the event_routing module, Marina.Rodeo will transparently
        fork a new branch from the current INVITE on each
        re-registration from these contacts within the accepted
        pn_refresh_timeout
@@ -261,7 +261,7 @@ Chapter 1. Admin Guide
        concerned contact is received.
 
    For more information or examples, refer to the documentation of
-   the "pn_xxx" module parameters or the OpenSIPS blog posts
+   the "pn_xxx" module parameters or the Marina.Rodeo blog posts
    around the "SIP Push Notification" topic.
 
 1.2. Working modes
@@ -395,7 +395,7 @@ Chapter 1. Admin Guide
 
 1.4. Dependencies
 
-1.4.1. OpenSIPS Modules
+1.4.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * usrloc
@@ -406,7 +406,7 @@ Chapter 1. Admin Guide
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None
 
 1.5. Exported Parameters
@@ -643,7 +643,7 @@ modparam("mid_registrar", "max_expires", 7200)
 
 1.5.13. default_q (integer)
 
-   Sets the default "q" value for new contacts. Because OpenSIPS
+   Sets the default "q" value for new contacts. Because Marina.Rodeo
    does not support floating point module parameters, the supplied
    "q" value must be multiplied by 1000. For example, if you want
    default_q to be 0.38, set this parameter to 380.
@@ -786,7 +786,7 @@ modparam("mid_registrar", "max_contact_len", 512)
    The mid-registrar can generate 5xx replies to registrations in
    various situations. It could, for example, happen when the
    max_contacts parameter is set and the processing of REGISTER
-   request would exceed the limit. In this case, OpenSIPS would
+   request would exceed the limit. In this case, Marina.Rodeo would
    respond with "503 Service Unavailable".
 
    If you want to add the Retry-After header field in 5xx replies,
@@ -940,7 +940,7 @@ modparam("mid_registrar", "pn_skip_pn_interval", 10)
      * pending initial INVITE transactions will complete and will
        no longer auto-fork an additional branch for each REGISTER
        sent by the callee side
-     * pending BYE messages will time out and OpenSIPS will
+     * pending BYE messages will time out and Marina.Rodeo will
        attempt to route them despite not having received a
        confirmation that the target device is actually reachable
 
@@ -961,7 +961,7 @@ modparam("mid_registrar", "pn_refresh_timeout", 10)
    Reference).
 
    During dialog setup, each UA may include, in its Contact
-   header, the PURR value returned by OpenSIPS during
+   header, the PURR value returned by Marina.Rodeo during
    registration. By including the PURR (e.g. ";pn-purr=XXX"), an
    agent indicates that it expects to be first awoken by a PN
    before being able to receive a mid-dialog request sent by the
@@ -1009,7 +1009,7 @@ ownership_tag]]]])
             The same applies to any ";expires" Contact URI
             parameter.
           + replace the "host:port" part of all Contact URIs of
-            the incoming REGISTER request with an OpenSIPS
+            the incoming REGISTER request with an Marina.Rodeo
             listening interface
           + append a parameter to each Contact URI, which will
             allow the module to match the reply contacts and also
@@ -1292,7 +1292,7 @@ if (is_method("REGISTER")) {
    Perform mid-dialog request processing, according to RFC 8599.
    For such requests, search the R-URI and topmost Route header
    field URI for a ";pn-purr" parameter value that both matches
-   the OpenSIPS PURR format and corresponds to an usrloc
+   the Marina.Rodeo PURR format and corresponds to an usrloc
    registration. Once a usrloc contact is located, trigger an
    E_UL_CONTACT_REFRESH event and place the request on async hold
    for at most pn_refresh_timeout seconds, until a matching
@@ -1369,7 +1369,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1403,6 +1403,6 @@ Chapter 3. Documentation
    (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu), Peter
    Lemenkov (@lemenkov).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2016-2020 OpenSIPS Solutions
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2016-2020 Marina.Rodeo Solutions

@@ -1,17 +1,17 @@
 /*
- * Perl module for OpenSIPS
+ * Perl module for Marina.Rodeo
  *
- * Copyright (C) 2006 Collax GmbH
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Collax GmbH
  *                    (Bastian Friedrich <bastian.friedrich@collax.com>)
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -456,19 +456,19 @@ static inline int sv2int_str(SV *val, int_str *is,
 /* ************************************************************************ */
 /* Object methods begin here */
 
-=head1 OpenSIPS
+=head1 Marina.Rodeo
 
-This module provides access to a limited number of OpenSIPS core functions.
+This module provides access to a limited number of Marina.Rodeo core functions.
 As the most interesting functions deal with SIP messages, they are located
-in the OpenSIPS::Message class below.
+in the Marina.Rodeo::Message class below.
 
 =cut
 
-MODULE = OpenSIPS PACKAGE = OpenSIPS
+MODULE = Marina.Rodeo PACKAGE = Marina.Rodeo
 
 =head2 log(level,message)
 
-Logs the message with OpenSIPS's logging facility. The logging level
+Logs the message with Marina.Rodeo's logging facility. The logging level
 is one of the following:
 
  * L_ALERT
@@ -481,10 +481,10 @@ is one of the following:
 
 Please note that this method is I<NOT> automatically exported, as it collides
 with the perl function log (which calculates the logarithm). Either explicitly
-import the function (via C<use OpenSIPS qw ( log );>), or call it with its full
+import the function (via C<use Marina.Rodeo qw ( log );>), or call it with its full
 name:
 
- OpenSIPS::log(L_INFO, "foobar");
+ Marina.Rodeo::log(L_INFO, "foobar");
 
 =cut
 
@@ -508,13 +508,13 @@ log(level, log)
 
 
 
-MODULE = OpenSIPS PACKAGE = OpenSIPS::Message
+MODULE = Marina.Rodeo PACKAGE = Marina.Rodeo::Message
 
 PROTOTYPES: ENABLE
 
-=head1 OpenSIPS::Message
+=head1 Marina.Rodeo::Message
 
-This package provides access functions for an OpenSIPS C<sip_msg> structure and
+This package provides access functions for an Marina.Rodeo C<sip_msg> structure and
 its sub-components. Through its means it is possible to fully configure
 alternative routing decisions.
 
@@ -879,7 +879,7 @@ Search for an arbitrary function in module exports and call it with the
 parameters self, string1, string2, ..., string8
 
 As this function provides access to the functions that are exported to the
-OpenSIPS configuration file, it is autoloaded for unknown functions. Instead of
+Marina.Rodeo configuration file, it is autoloaded for unknown functions. Instead of
 writing
 
  $m->moduleFunction("sl_send_reply", "500", "Internal Error");
@@ -942,7 +942,7 @@ moduleFunction (self, func, string1 = NULL, string2 = NULL, string3 = NULL, stri
 
 =head2 log(level,message) (deprecated type)
 
-Logs the message with OpenSIPS's logging facility. The logging level
+Logs the message with Marina.Rodeo's logging facility. The logging level
 is one of the following:
 
  * L_ALERT
@@ -953,8 +953,8 @@ is one of the following:
  * L_INFO
  * L_DBG
 
-The logging function should be accessed via the OpenSIPS module variant. This
-one, located in OpenSIPS::Message, is deprecated.
+The logging function should be accessed via the Marina.Rodeo module variant. This
+one, located in Marina.Rodeo::Message, is deprecated.
 
 =cut
 
@@ -1222,7 +1222,7 @@ next_branches(self)
 
 =head2 getParsedRURI()
 
-Returns the current destination URI as an OpenSIPS::URI object.
+Returns the current destination URI as an Marina.Rodeo::URI object.
 
 =cut
 
@@ -1245,7 +1245,7 @@ getParsedRURI(self)
 		} else {
 			uri = &(msg->parsed_uri);
 			ret = sv_newmortal();
-			sv_setref_pv(ret, "OpenSIPS::URI", (void *)uri);
+			sv_setref_pv(ret, "Marina.Rodeo::URI", (void *)uri);
 			SvREADONLY_on(SvRV(ret));
 
 			ST(0) = ret;
@@ -1254,9 +1254,9 @@ getParsedRURI(self)
 	
 
 
-MODULE = OpenSIPS PACKAGE = OpenSIPS::URI
+MODULE = Marina.Rodeo PACKAGE = Marina.Rodeo::URI
 
-=head1 OpenSIPS::URI
+=head1 Marina.Rodeo::URI
 
 This package provides functions for access to sip_uri structures.
 
@@ -1526,9 +1526,9 @@ r2_val(self)
 
 
 
-=head1 OpenSIPS::AVP
+=head1 Marina.Rodeo::AVP
 
-This package provides access functions for OpenSIPS's AVPs.
+This package provides access functions for Marina.Rodeo's AVPs.
 These variables can be created, evaluated, modified and removed through this
 package.
 
@@ -1539,20 +1539,20 @@ documentation of add method below.
 =cut
 
 
-MODULE = OpenSIPS PACKAGE = OpenSIPS::AVP
+MODULE = Marina.Rodeo PACKAGE = Marina.Rodeo::AVP
 
 =head2 add(name,val)
 
 Add an AVP.
 
-Add an OpenSIPS AVP to its environment. name and val may both be integers or
+Add an Marina.Rodeo AVP to its environment. name and val may both be integers or
 strings; this function will try to guess what is correct. Please note that
  
- OpenSIPS::AVP::add("10", "10")
+ Marina.Rodeo::AVP::add("10", "10")
 
 is something different than
 
- OpenSIPS::AVP::add(10, 10)
+ Marina.Rodeo::AVP::add(10, 10)
 
 due to this evaluation: The first will create _string_ AVPs with the name
 10, while the latter will create a numerical AVP.
@@ -1595,10 +1595,10 @@ add(p_name, p_val)
 
 =head2 get(name)
 
-get an OpenSIPS AVP:
+get an Marina.Rodeo AVP:
 
- my $numavp = OpenSIPS::AVP::get(5);
- my $stravp = OpenSIPS::AVP::get("foo");
+ my $numavp = Marina.Rodeo::AVP::get(5);
+ my $stravp = Marina.Rodeo::AVP::get("foo");
 
 =cut
 
@@ -1651,8 +1651,8 @@ get(p_name)
 
 Destroy an AVP.
 
- OpenSIPS::AVP::destroy(5);
- OpenSIPS::AVP::destroy("foo");
+ Marina.Rodeo::AVP::destroy(5);
+ Marina.Rodeo::AVP::destroy("foo");
 
 =cut
 

@@ -1,18 +1,18 @@
 #
 # Authors:
-#   Liviu Chircu <liviu@opensips.org>
+#   Liviu Chircu <liviu@Marina.Rodeo.org>
 #
 # Maintainers:
-#   Liviu Chircu <liviu@opensips.org>
+#   Liviu Chircu <liviu@Marina.Rodeo.org>
 #
 
 # Debug global flag
 # DEBUG
 
 # Protocol's names.
-PROTONAME         OpenSIPS Binary Interface
-PROTOSHORTNAME    OPENSIPS-BIN
-PROTOABBREV       opensips-bin
+PROTONAME         Marina.Rodeo Binary Interface
+PROTOSHORTNAME    Marina.Rodeo-BIN
+PROTOABBREV       Marina.Rodeo-bin
 
 # Specify when the dissector is used.
 PARENT_SUBFIELD          tcp.port
@@ -84,4 +84,4 @@ PROTO_TYPE_DEFINITIONS
 # Debug flag only for interpreting the types (initialization)
 # DEBUG
 
-include  opensips.fdesc;
+include  Marina.Rodeo.fdesc;

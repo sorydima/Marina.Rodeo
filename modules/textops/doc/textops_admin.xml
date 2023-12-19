@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		The module implements text based operations over the SIP message
-		processed by OpenSIPS. SIP is a text based protocol and the module
+		processed by Marina.Rodeo. SIP is a text based protocol and the module
 		provides a large set of very useful functions to manipulate the
 		message at text level, e.g., regular expression search and replace,
 		Perl-like substitutions, etc.
@@ -214,7 +214,7 @@ search_append_body("[Oo]pen[Ss]er", " SIP Proxy");
 		<title><function>replace</function> usage</title>
 		<programlisting format="linespecific">
 ...
-replace("opensips", "Open SIP Server");
+replace("Marina.Rodeo", "Open SIP Server");
 ...
 </programlisting>
 		</example>
@@ -247,7 +247,7 @@ replace("opensips", "Open SIP Server");
 		<title><function>replace_body</function> usage</title>
 		<programlisting format="linespecific">
 ...
-replace_body("opensips", "Open SIP Server");
+replace_body("Marina.Rodeo", "Open SIP Server");
 ...
 </programlisting>
 		</example>
@@ -279,7 +279,7 @@ replace_body("opensips", "Open SIP Server");
 		<title><function>replace_all</function> usage</title>
 		<programlisting format="linespecific">
 ...
-replace_all("opensips", "Open SIP Server");
+replace_all("Marina.Rodeo", "Open SIP Server");
 ...
 </programlisting>
 		</example>
@@ -312,7 +312,7 @@ replace_all("opensips", "Open SIP Server");
 		<title><function>replace_body_all</function> usage</title>
 		<programlisting format="linespecific">
 ...
-replace_body_all("opensips", "Open SIP Server");
+replace_body_all("Marina.Rodeo", "Open SIP Server");
 ...
 </programlisting>
 		</example>

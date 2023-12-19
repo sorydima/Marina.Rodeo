@@ -133,7 +133,7 @@ send_reply($err.rcode, $err.rreason);
 	<section id="pv_sig_local_totag" xreflabel="$sig_local_totag">
 		<title>$sig_local_totag</title>
 		<para>This variable returns the local To-tag that will be used
-		by OpenSIPS for locally sending replies to the current SIP request.
+		by Marina.Rodeo for locally sending replies to the current SIP request.
 		Yes, this variable should be used only in the context of a SIP
 		request and it should be used only in conjunction with the 
 		using <xref linkend="func_send_reply"/>.
@@ -144,9 +144,9 @@ send_reply($err.rcode, $err.rreason);
 		Otherwise you may get different values for the To-tag!!
 		</para>
 		<para>
-		NOTE: the variable returns the To-Tag that will be used by OpenSIPS
+		NOTE: the variable returns the To-Tag that will be used by Marina.Rodeo
 		in the locally generated reply. This may be completly different from
-		the To-tag in the replies received and forwarded by OpenSIPS.
+		the To-tag in the replies received and forwarded by Marina.Rodeo.
 		</para>
 		<example>
 		<title>Usage of <varname>$sig_local_totag</varname> variable</title>

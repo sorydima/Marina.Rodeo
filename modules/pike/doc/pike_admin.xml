@@ -288,7 +288,7 @@ if (!pike_check_req()) { exit; };
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi pike_list
+		Marina.Rodeo-cli -x mi pike_list
 		</programlisting>
 	</section>
 	<section id="mi_pike_rm" xreflabel="pike_rm">
@@ -311,7 +311,7 @@ if (!pike_check_req()) { exit; };
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi pike_rm 10.0.0.106
+		Marina.Rodeo-cli -x mi pike_rm 10.0.0.106
 		</programlisting>
 	</section>
 	</section>
@@ -356,7 +356,7 @@ if (!pike_check_req()) { exit; };
 
 	<para>
 	For how to access and use the Status/Report information, please see
-	<ulink url='>https://www.opensips.org/Documentation/Interface-StatusReport-3-3'>https://www.opensips.org/Documentation/Interface-StatusReport-3-3</ulink>.
+	<ulink url='>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3'>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3</ulink>.
 	</para>
 
 </section>

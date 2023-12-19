@@ -132,7 +132,7 @@ modparam("proto_bin", "bin_max_msg_chunks", 8)
 		<para>
 			Specifies whether the TCP connect and write operations should be
 			done in an asynchronous mode (non-blocking connect and
-			write) or not. If disabled, OpenSIPS will block and wait for TCP
+			write) or not. If disabled, Marina.Rodeo will block and wait for TCP
 			operations like connect and write.
 		</para>
 		<para>

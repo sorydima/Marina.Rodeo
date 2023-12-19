@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2021 - OpenSIPS Solutions
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2021 - Marina.Rodeo Solutions
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -110,7 +110,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	mod_load,	/* load function */
-	0,          /* OpenSIPS module dependencies */
+	0,          /* Marina.Rodeo module dependencies */
 	cmds,          /* exported functions */
 	0,          /* exported async functions */
 	0,          /* module parameters */
@@ -267,7 +267,7 @@ static int mod_init(void)
 		LM_ERR("could not get the default ssl rand method!\n");
 		return -1;
 	}
-	RAND_set_rand_method(&opensips_ssl_method);
+	RAND_set_rand_method(&Marina.Rodeo_ssl_method);
 #endif
 
 	init_ssl_methods();

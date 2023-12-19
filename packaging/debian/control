@@ -1,7 +1,7 @@
-Source: opensips
+Source: Marina.Rodeo
 Section: net
 Priority: optional
-Maintainer: Răzvan Crainea <razvan@opensips.org>
+Maintainer: Răzvan Crainea <razvan@Marina.Rodeo.org>
 Build-Depends: bison,
                debhelper (>= 9),
                default-libmysqlclient-dev | libmysqlclient-dev,
@@ -46,63 +46,63 @@ Build-Depends: bison,
                xsltproc,
                zlib1g-dev
 Standards-Version: 3.9.8
-Homepage: https://opensips.org/
+Homepage: https://Marina.Rodeo.org/
 
-Package: opensips
+Package: Marina.Rodeo
 Architecture: any
 Multi-Arch: foreign
 Depends: adduser, python | python-is-python3, ${misc:Depends}, ${shlibs:Depends}
-Suggests: opensips-auth-jwt-module,
-          opensips-auth-modules,
-          opensips-berkeley-module,
-          opensips-carrierroute-module,
-          opensips-cgrates-module,
-          opensips-compression-module,
-          opensips-cpl-module,
-          opensips-dbhttp-module,
-          opensips-dialplan-module,
-          opensips-diameter-module,
-          opensips-emergency-module,
-          opensips-geoip-module,
-          opensips-http-modules,
-          opensips-identity-module,
-          opensips-jabber-module,
-          opensips-json-module,
-          opensips-kafka-module,
-          opensips-ldap-modules,
-          opensips-lua-module,
-          opensips-memcached-module,
-          opensips-mongodb-module,
-          opensips-msrp-modules,
-          opensips-mysql-module,
-          opensips-perl-modules,
-          opensips-postgres-module,
-          opensips-presence-modules,
-          opensips-prometheus-module,
-          opensips-python-module,
-          opensips-rabbitmq-modules,
-          opensips-radius-modules,
-          opensips-redis-module,
-          opensips-regex-module,
-          opensips-restclient-module,
-          opensips-sctp-module [linux-any],
-          opensips-siprec-module,
-          opensips-snmpstats-module,
-          opensips-sqlite-module,
-          opensips-stir-shaken-module,
-          opensips-tls-module,
-          opensips-tls-openssl-module,
-          opensips-tls-wolfssl-module,
-          opensips-tlsmgm-module,
-          opensips-unixodbc-module,
-          opensips-uuid-module,
-          opensips-wss-module,
-          opensips-xml-module,
-          opensips-xmlrpc-module,
-          opensips-xmpp-module
+Suggests: Marina.Rodeo-auth-jwt-module,
+          Marina.Rodeo-auth-modules,
+          Marina.Rodeo-berkeley-module,
+          Marina.Rodeo-carrierroute-module,
+          Marina.Rodeo-cgrates-module,
+          Marina.Rodeo-compression-module,
+          Marina.Rodeo-cpl-module,
+          Marina.Rodeo-dbhttp-module,
+          Marina.Rodeo-dialplan-module,
+          Marina.Rodeo-diameter-module,
+          Marina.Rodeo-emergency-module,
+          Marina.Rodeo-geoip-module,
+          Marina.Rodeo-http-modules,
+          Marina.Rodeo-identity-module,
+          Marina.Rodeo-jabber-module,
+          Marina.Rodeo-json-module,
+          Marina.Rodeo-kafka-module,
+          Marina.Rodeo-ldap-modules,
+          Marina.Rodeo-lua-module,
+          Marina.Rodeo-memcached-module,
+          Marina.Rodeo-mongodb-module,
+          Marina.Rodeo-msrp-modules,
+          Marina.Rodeo-mysql-module,
+          Marina.Rodeo-perl-modules,
+          Marina.Rodeo-postgres-module,
+          Marina.Rodeo-presence-modules,
+          Marina.Rodeo-prometheus-module,
+          Marina.Rodeo-python-module,
+          Marina.Rodeo-rabbitmq-modules,
+          Marina.Rodeo-radius-modules,
+          Marina.Rodeo-redis-module,
+          Marina.Rodeo-regex-module,
+          Marina.Rodeo-restclient-module,
+          Marina.Rodeo-sctp-module [linux-any],
+          Marina.Rodeo-siprec-module,
+          Marina.Rodeo-snmpstats-module,
+          Marina.Rodeo-sqlite-module,
+          Marina.Rodeo-stir-shaken-module,
+          Marina.Rodeo-tls-module,
+          Marina.Rodeo-tls-openssl-module,
+          Marina.Rodeo-tls-wolfssl-module,
+          Marina.Rodeo-tlsmgm-module,
+          Marina.Rodeo-unixodbc-module,
+          Marina.Rodeo-uuid-module,
+          Marina.Rodeo-wss-module,
+          Marina.Rodeo-xml-module,
+          Marina.Rodeo-xmlrpc-module,
+          Marina.Rodeo-xmpp-module
 Description: very fast and configurable SIP server
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  C Shell-like scripting language provides full control over the server's
@@ -115,18 +115,18 @@ Description: very fast and configurable SIP server
  Module, Registrar and User Location, Load Balaning/Dispatching/LCR,
  XMLRPC Interface.
  .
- This package contains the main OpenSIPS binary along with the principal modules
- and support binaries including opensipsmc configuration tool.
+ This package contains the main Marina.Rodeo binary along with the principal modules
+ and support binaries including Marina.Rodeomc configuration tool.
 
-Package: opensips-auth-jwt-module
+Package: Marina.Rodeo-auth-jwt-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: JSON Web Tokens authentication module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: JSON Web Tokens authentication module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  The module implements authentication over JSON Web Tokens. In
@@ -134,7 +134,7 @@ Description: JSON Web Tokens authentication module for OpenSIPS
  layer ( other than SIP ), so it makes no sense to
  double-authenticate it on the SIP layer. Thus, the SIP client
  will simply present the JWT auth token it received from the
- server, and pass it on to OpenSIPS which will use that for
+ server, and pass it on to Marina.Rodeo which will use that for
  authentication purposes. It relies on two DB tables, one
  containing JWT profiles ( a profile name and it's SIP username
  associated to it ) and one containing JWT secrets. Each secret
@@ -142,224 +142,224 @@ Description: JSON Web Tokens authentication module for OpenSIPS
  and two timestamps describing a validation interval. Multiple
  JWT secrets can point to the same JWT profile.
 
-Package: opensips-auth-modules
+Package: Marina.Rodeo-auth-modules
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: Authentication interfaces for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: Authentication interfaces for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides the modules that are being used to provide
- SIP authentication in OpenSIPS. It consists of both the
+ SIP authentication in Marina.Rodeo. It consists of both the
  authentication interface (the auth module), as well as the UAC
  authentication module (uac_auth).
 
-Package: opensips-berkeley-bin
+Package: Marina.Rodeo-berkeley-bin
 Architecture: any
 Multi-Arch: foreign
-Depends: opensips (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: Berkeley Database module for OpenSIPS - helper program
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: Berkeley Database module for Marina.Rodeo - helper program
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the berkeley database module for OpenSIPS, a
+ This package provides the berkeley database module for Marina.Rodeo, a
  high-performance embedded DB kernel. You should normally install
- opensips-berkeley-module and not this package directly.
+ Marina.Rodeo-berkeley-module and not this package directly.
 
-Package: opensips-berkeley-module
+Package: Marina.Rodeo-berkeley-module
 Architecture: any
 Multi-Arch: same
 Depends: db-util (>= 4.6.19),
-         opensips (= ${binary:Version}),
+         Marina.Rodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: Berkeley Database module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: Berkeley Database module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the berkeley database module for OpenSIPS, a
+ This package provides the berkeley database module for Marina.Rodeo, a
  high-performance embedded DB kernel. All database tables are stored
  in files, no additional server is necessary.
 
-Package: opensips-carrierroute-module
+Package: Marina.Rodeo-carrierroute-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Carrierroute module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Carrierroute module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the carrierroute module for OpenSIPS, an integrated
+ This package provides the carrierroute module for Marina.Rodeo, an integrated
  solution for routing, balancing and blacklisting.
 
-Package: opensips-cgrates-module
+Package: Marina.Rodeo-cgrates-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: CGRateS connector for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: CGRateS connector for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides a connnector to the CGRateS rating/billing engine.
 
-Package: opensips-compression-module
+Package: Marina.Rodeo-compression-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
          zlib1g,
          ${misc:Depends},
          ${shlibs:Depends}
-Description: Headers and body compression module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: Headers and body compression module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides the compression module, that is able to compress
  SIP headers and body, as  well as shrink the size of a SIP package.
 
-Package: opensips-cpl-module
+Package: Marina.Rodeo-cpl-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: CPL module (CPL interpreter engine) for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: CPL module (CPL interpreter engine) for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides a CPL (Call Processing Language) interpreter for
- OpenSIPS, turning OpenSIPS into a CPL server (storage and interpreter).
+ Marina.Rodeo, turning Marina.Rodeo into a CPL server (storage and interpreter).
 
-Package: opensips-dbg
+Package: Marina.Rodeo-dbg
 Architecture: any
 Multi-Arch: same
 Section: debug
-Depends: opensips (= ${binary:Version}), ${misc:Depends}
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}
 Description: very fast and configurable SIP server [debug symbols]
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package contains the debugging symbols for the OpenSIPS binaries and
- modules. You only need to install it if you need to debug OpenSIPS.
+ This package contains the debugging symbols for the Marina.Rodeo binaries and
+ modules. You only need to install it if you need to debug Marina.Rodeo.
 
-Package: opensips-dbhttp-module
+Package: Marina.Rodeo-dbhttp-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: HTTP database connectivity module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: HTTP database connectivity module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the HTTP-based database driver for OpenSIPS
+ This package provides the HTTP-based database driver for Marina.Rodeo
 
-Package: opensips-dialplan-module
+Package: Marina.Rodeo-dialplan-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Generic string translation module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Generic string translation module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides dialplan module that implements generic string
  translations based on matching and replacement rules. It can be used to
  manipulate R-URI or a PV and to translated to a new format/value.
 
-Package: opensips-diameter-module
+Package: Marina.Rodeo-diameter-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Diameter module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Diameter module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides a DIAMETER driver for the AAA API from OpenSIPS.
+ This package provides a DIAMETER driver for the AAA API from Marina.Rodeo.
 
-Package: opensips-emergency-module
+Package: Marina.Rodeo-emergency-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Emergency call module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Emergency call module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- The emergency module provides emergency call treatment for OpenSIPS, following
+ The emergency module provides emergency call treatment for Marina.Rodeo, following
  the architecture i2 specification of the American entity NENA. (National
  Emergency Number Association).
 
-Package: opensips-geoip-module
+Package: Marina.Rodeo-geoip-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: IP address-to-location looku (MaxMind GeoIP API) for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: IP address-to-location looku (MaxMind GeoIP API) for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module is a lightweight wrapper for the MaxMind GeoIP API.
- It adds IP address-to-location lookup capability to OpenSIPS
+ It adds IP address-to-location lookup capability to Marina.Rodeo
  scripts. Lookups are executed against the freely-available GeoLite City
  database; and the non-free GeoIP City database is drop-in
  compatible   Lookups are executed against the freely-available GeoLite City
  database; and the non-free GeoIP City database is drop-in compatible
 
-Package: opensips-http-modules
+Package: Marina.Rodeo-http-modules
 Architecture: any
 Multi-Arch: same
 Depends: libmicrohttpd10|libmicrohttpd12,
-         opensips (= ${binary:Version}),
+         Marina.Rodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: HTTP transport layer and Management Interface for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: HTTP transport layer and Management Interface for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides an HTTP transport layer and Management Interface for
- OpenSIPS.
+ Marina.Rodeo.
 
-Package: opensips-identity-module
+Package: Marina.Rodeo-identity-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: SIP Identity module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: SIP Identity module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides support for SIP Identity (see RFC 4474).
 
-Package: opensips-jabber-module
+Package: Marina.Rodeo-jabber-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Jabber gateway module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Jabber gateway module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the SIP to Jabber translator module for OpenSIPS.
+ This package provides the SIP to Jabber translator module for Marina.Rodeo.
 
-Package: opensips-json-module
+Package: Marina.Rodeo-json-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Support for JSON handling in OpenSIPS script
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Support for JSON handling in Marina.Rodeo script
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package introduces a new type of variable that provides both
@@ -367,51 +367,51 @@ Description: Support for JSON handling in OpenSIPS script
  provides ways to access (from script) objects and arrays to add,replace or
  delete values from the script.
 
-Package: opensips-kafka-module
+Package: Marina.Rodeo-kafka-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Implementation of an Apache Kafka producer
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module is an implementation of an Apache Kafka producer.
  It serves as a transport backend for the Event Interface and
  also provides a stand-alone connector to be used from the
- OpenSIPS script in order to publish messages to Kafka brokers.
+ Marina.Rodeo script in order to publish messages to Kafka brokers.
 
-Package: opensips-ldap-modules
+Package: Marina.Rodeo-ldap-modules
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: LDAP modules for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: LDAP modules for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the ldap and h350 modules for OpenSIPS, enabling LDAP
- queries from the OpenSIPS config and storage of SIP account data in an LDAP
+ This package provides the ldap and h350 modules for Marina.Rodeo, enabling LDAP
+ queries from the Marina.Rodeo config and storage of SIP account data in an LDAP
  directory.
 
-Package: opensips-lua-module
+Package: Marina.Rodeo-lua-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Lua extensions for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Lua extensions for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides an interface for OpenSIPS to utilize Lua extensions.
+ This package provides an interface for Marina.Rodeo to utilize Lua extensions.
 
-Package: opensips-memcached-module
+Package: Marina.Rodeo-memcached-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Interface module to interact with a memcached server
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides an implementation of a cache system designed to work
@@ -420,116 +420,116 @@ Description: Interface module to interact with a memcached server
  storing, fetching and removing a value to the core memcache management
  interface.
 
-Package: opensips-mongodb-module
+Package: Marina.Rodeo-mongodb-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Interface module to interact with a MongoDB server
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module is an implementation of a cache system designed to work with
  MongoDB servers.
 
-Package: opensips-msrp-modules
+Package: Marina.Rodeo-msrp-modules
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
-         opensips-auth-modules (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
+         Marina.Rodeo-auth-modules (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Description: Implementation of the MSRP protocol
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the MSRP protocol support for OpenSIPS.
+ This package provides the MSRP protocol support for Marina.Rodeo.
 
-Package: opensips-mysql-module
+Package: Marina.Rodeo-mysql-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: MySQL database connectivity module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: MySQL database connectivity module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the MySQL database driver for OpenSIPS.
+ This package provides the MySQL database driver for Marina.Rodeo.
 
-Package: opensips-perl-modules
+Package: Marina.Rodeo-perl-modules
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Perl extensions and database driver for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Perl extensions and database driver for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides an interface for OpenSIPS to write Perl extensions and
- the db_perlvdb database driver for OpenSIPS.
+ This package provides an interface for Marina.Rodeo to write Perl extensions and
+ the db_perlvdb database driver for Marina.Rodeo.
 
-Package: opensips-postgres-module
+Package: Marina.Rodeo-postgres-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
          postgresql-client,
          ${misc:Depends},
          ${shlibs:Depends}
-Description: PostgreSQL database connectivity module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: PostgreSQL database connectivity module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the PostgreSQL database driver for OpenSIPS.
+ This package provides the PostgreSQL database driver for Marina.Rodeo.
 
-Package: opensips-presence-modules
+Package: Marina.Rodeo-presence-modules
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: SIMPLE presence modules for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: SIMPLE presence modules for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides several OpenSIPS modules for implementing presence
+ This package provides several Marina.Rodeo modules for implementing presence
  server and presence user agent for RICH presence, registrar-based presence,
  external triggered presence and XCAP support.
 
-Package: opensips-prometheus-module
+Package: Marina.Rodeo-prometheus-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
-         opensips-http-modules (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
+         Marina.Rodeo-http-modules (= ${binary:Version}),
          ${shlibs:Depends}, ${misc:Depends}
-Description: Prometheus Monitoring support for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: Prometheus Monitoring support for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This module provides support in OpenSIPS for the Prometheus
+ This module provides support in Marina.Rodeo for the Prometheus
  (https://prometheus.io/) monitoring tool.
 
-Package: opensips-python-module
+Package: Marina.Rodeo-python-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Python scripting support
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module provides a Python interface to implement your scripting logic.
 
-Package: opensips-rabbitmq-modules
+Package: Marina.Rodeo-rabbitmq-modules
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Interface module to interact with a RabbitMQ server
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides the implementation of a RabbitMQ client for the Event
@@ -537,24 +537,24 @@ Description: Interface module to interact with a RabbitMQ server
  the Event Interface triggers an event subscribed for. It also provides a
  module to publish RabbitMQ messages to a RabbitMQ server.
 
-Package: opensips-radius-modules
+Package: Marina.Rodeo-radius-modules
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Radius modules for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Radius modules for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the RADIUS driver for the AAA API from OpenSIPS.
+ This package provides the RADIUS driver for the AAA API from Marina.Rodeo.
 
-Package: opensips-redis-module
+Package: Marina.Rodeo-redis-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Interface module to interact with a Redis server
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides an implementation of a cache system designed to
@@ -562,191 +562,191 @@ Description: Interface module to interact with a Redis server
  to either a single Redis server instance, or to a Redis Server inside
  a Redis Cluster. It uses the Key-Value interface exported from the core.
 
-Package: opensips-regex-module
+Package: Marina.Rodeo-regex-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: PCRE regexp modules for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: PCRE regexp modules for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides a module for matching operations against regular
- expressions using the powerful PCRE library. By default, OpenSIPS support
+ expressions using the powerful PCRE library. By default, Marina.Rodeo support
  sed-like regular expressions; PCRE library brings perl-like regular
  expressions.
 
-Package: opensips-restclient-module
+Package: Marina.Rodeo-restclient-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: REST client module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: REST client module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the REST client support for OpenSIPS.
+ This package provides the REST client support for Marina.Rodeo.
 
-Package: opensips-sctp-module
+Package: Marina.Rodeo-sctp-module
 Architecture: linux-any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: SCTP transport module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: SCTP transport module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the SCTP support for OpenSIPS.
+ This package provides the SCTP support for Marina.Rodeo.
 
-Package: opensips-siprec-module
+Package: Marina.Rodeo-siprec-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: SIP Call Recording Implementation for the SIPREC Protocol
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module provides the means to Record Calls using the SIPREC protocol.
 
-Package: opensips-snmpstats-module
+Package: Marina.Rodeo-snmpstats-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
          snmpd,
          ${misc:Depends},
          ${shlibs:Depends}
-Description: SNMP AgentX subagent module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: SNMP AgentX subagent module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the snmpstats module for OpenSIPS. This module acts
+ This package provides the snmpstats module for Marina.Rodeo. This module acts
  as an AgentX subagent which connects to a master agent.
 
-Package: opensips-sqlite-module
+Package: Marina.Rodeo-sqlite-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: SQLite database connectivity module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: SQLite database connectivity module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the SQLite database driver for OpenSIPS.
+ This package provides the SQLite database driver for Marina.Rodeo.
 
-Package: opensips-stir-shaken-module
+Package: Marina.Rodeo-stir-shaken-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: STIR/SHAKEN support for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: STIR/SHAKEN support for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module adds support for implementing STIR/SHAKEN (RFC 8224, RFC 8588)
- Authentication and Verification services in OpenSIPS.
+ Authentication and Verification services in Marina.Rodeo.
 
-Package: opensips-tls-module
+Package: Marina.Rodeo-tls-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
-         opensips-tlsmgm-module (= ${binary:Version}),
-         opensips-tls-openssl-module (= ${binary:Version}) | opensips-tls-wolfssl-module (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
+         Marina.Rodeo-tlsmgm-module (= ${binary:Version}),
+         Marina.Rodeo-tls-openssl-module (= ${binary:Version}) | Marina.Rodeo-tls-wolfssl-module (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: TLS transport module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: TLS transport module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the TLS support for OpenSIPS.
+ This package provides the TLS support for Marina.Rodeo.
 
-Package: opensips-tls-openssl-module
+Package: Marina.Rodeo-tls-openssl-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
-         opensips-tlsmgm-module (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
+         Marina.Rodeo-tlsmgm-module (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: TLS transport module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: TLS transport module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the OpenSSL implementation for TLS in OpenSIPS.
+ This package provides the OpenSSL implementation for TLS in Marina.Rodeo.
 
-Package: opensips-tls-wolfssl-module
+Package: Marina.Rodeo-tls-wolfssl-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
-         opensips-tlsmgm-module (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
+         Marina.Rodeo-tlsmgm-module (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: TLS transport module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: TLS transport module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the wolfSSL implementation for TLS in OpenSIPS.
+ This package provides the wolfSSL implementation for TLS in Marina.Rodeo.
 
-Package: opensips-tlsmgm-module
+Package: Marina.Rodeo-tlsmgm-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: TLS management module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: TLS management module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides support for TLS management for OpenSIPS.
+ This package provides support for TLS management for Marina.Rodeo.
 
-Package: opensips-unixodbc-module
+Package: Marina.Rodeo-unixodbc-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: unixODBC database connectivity module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: unixODBC database connectivity module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the unixODBC database driver for OpenSIPS.
+ This package provides the unixODBC database driver for Marina.Rodeo.
 
-Package: opensips-uuid-module
+Package: Marina.Rodeo-uuid-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: UUID (Universally Unique Identifier) generator for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: UUID (Universally Unique Identifier) generator for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides a UUID generator for the OpenSIPS script.
+ This package provides a UUID generator for the Marina.Rodeo script.
 
-Package: opensips-wss-module
+Package: Marina.Rodeo-wss-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}),
-         opensips-tlsmgm-module (= ${binary:Version}),
-         opensips-tls-openssl-module (= ${binary:Version}) | opensips-tls-wolfssl-module (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
+         Marina.Rodeo-tlsmgm-module (= ${binary:Version}),
+         Marina.Rodeo-tls-openssl-module (= ${binary:Version}) | Marina.Rodeo-tls-wolfssl-module (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: WebSocket Secure (WSS) transport module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: WebSocket Secure (WSS) transport module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the WebSocket Secure (WSS) support for OpenSIPS.
+ This package provides the WebSocket Secure (WSS) support for Marina.Rodeo.
 
-Package: opensips-xml-module
+Package: Marina.Rodeo-xml-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Support for XML documents handling in OpenSIPS script
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Support for XML documents handling in Marina.Rodeo script
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package introduces a new type of variable that provides both
@@ -754,27 +754,27 @@ Description: Support for XML documents handling in OpenSIPS script
  provides ways to access (from script) objects and arrays to add, replace or
  delete values from the script.
 
-Package: opensips-xmlrpc-module
+Package: Marina.Rodeo-xmlrpc-module
 Architecture: any
-Depends: opensips (= ${binary:Version}),
-         opensips-http-modules (= ${binary:Version}),
+Depends: Marina.Rodeo (= ${binary:Version}),
+         Marina.Rodeo-http-modules (= ${binary:Version}),
          ${shlibs:Depends}, ${misc:Depends}
 Multi-Arch: same
-Description: XMLRPC support for OpenSIPS's Management Interface
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Description: XMLRPC support for Marina.Rodeo's Management Interface
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the XMLRPC transport implementation for OpenSIPS's
+ This package provides the XMLRPC transport implementation for Marina.Rodeo's
  Management Interface.
 
-Package: opensips-xmpp-module
+Package: Marina.Rodeo-xmpp-module
 Architecture: any
 Multi-Arch: same
-Depends: opensips (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: XMPP gateway module for OpenSIPS
- OpenSIPS is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, OpenSIPS can handle thousands calls
+Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: XMPP gateway module for Marina.Rodeo
+ Marina.Rodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Marina.Rodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the SIP to XMPP IM translator module for OpenSIPS.
+ This package provides the SIP to XMPP IM translator module for Marina.Rodeo.

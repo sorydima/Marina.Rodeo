@@ -8,7 +8,7 @@ sl Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -58,14 +58,14 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The SL module allows OpenSIPS to act as a stateless UA server
+   The SL module allows Marina.Rodeo to act as a stateless UA server
    and generate replies to SIP requests without keeping state.
    That is beneficial in many scenarios, in which you wish not to
    burden server's memory and scale well.
 
    The SL module needs to filter ACKs sent after a local stateless
    reply to an INVITE was generated. To recognize such ACKs,
-   OpenSIPS adds a special "signature" in to-tags. This signature
+   Marina.Rodeo adds a special "signature" in to-tags. This signature
    is sought for in incoming ACKs, and if included, the ACKs are
    absorbed.
 
@@ -80,22 +80,22 @@ Chapter 1. Admin Guide
    these matter to you, better use stateful processing (tm module)
    for INVITE processing. Particularly, the problem happens when a
    UA sends an INVITE which already has a to-tag in it (e.g., a
-   re-INVITE) and OpenSIPS want to reply to it. Than, it will keep
-   the current to-tag, which will be mirrored in ACK. OpenSIPS
+   re-INVITE) and Marina.Rodeo want to reply to it. Than, it will keep
+   the current to-tag, which will be mirrored in ACK. Marina.Rodeo
    will not see its signature and forward the ACK downstream.
    Caused harm is not bad--just a useless ACK is forwarded.
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules.
+     * No dependencies on other Marina.Rodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -219,7 +219,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -261,6 +261,6 @@ Chapter 3. Documentation
    Konstantin Bokarius, Edson Gellert Schubert, Elena-Ramona
    Modroiu, Jan Janak (@janakj).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2003 FhG FOKUS
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS

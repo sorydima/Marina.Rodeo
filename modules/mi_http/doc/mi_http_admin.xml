@@ -38,7 +38,7 @@
 		<title><varname>root</varname>(string)</title>
 		<para>
 		Specifies the root path for HTTP requests:
-		http://[opensips_IP]:[opensips_httpd_port]/[root]
+		http://[Marina.Rodeo_IP]:[Marina.Rodeo_httpd_port]/[root]
 		</para>
 		<para>
 		<emphasis>The default value is "mi".</emphasis>
@@ -47,7 +47,7 @@
 		<title>Set <varname>root</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("mi_http", "root", "opensips_mi")
+modparam("mi_http", "root", "Marina.Rodeo_mi")
 ...
 </programlisting>
 		</example>

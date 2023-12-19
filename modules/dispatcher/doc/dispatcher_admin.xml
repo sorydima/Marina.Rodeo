@@ -125,7 +125,7 @@ modparam("dispatcher", "db_url", "mysql://user:passwb@localhost/database")
 		The name of the avp to contain the attributes string of the current
 		destination. When a destination is selected, automatically, this AVP
 		will provide the attributes string - this is an opaque string (from
-		OpenSIPS point of view) : it is loaded from destination definition (
+		Marina.Rodeo point of view) : it is loaded from destination definition (
 		via DB) and blindly provided in the script.
 		Setting this parameter will only change the default partition's
 		attrs_avp. Use the partition parameter to create and alter
@@ -154,7 +154,7 @@ modparam("dispatcher", "attrs_avp", "$avp(272)")
 		Name of the avp to contain the script attributes string of the current
 		destination. When a destination is selected, automatically, this AVP
 		will provide the attributes string - this is an opaque string (from
-		OpenSIPS point of view) : it is provided via the ds_push_script_attrs
+		Marina.Rodeo point of view) : it is provided via the ds_push_script_attrs
 		MI or SCRIPT function.
 		</para>
 		<note>
@@ -369,7 +369,7 @@ modparam("dispatcher", "ds_ping_maxfwd", 2)
 		<title><varname>ds_probing_sock</varname> (str)</title>
 		<para>
 		A socket description [proto:]host[:port] of the local socket (which
-		is used by OpenSIPS for SIP traffic) to be used (if multiple) for
+		is used by Marina.Rodeo for SIP traffic) to be used (if multiple) for
 		sending the probing messages from.
 		</para>
 		<para>
@@ -683,7 +683,7 @@ modparam("dispatcher", "persistent_state", 0)
 		<para>
 		If clustering enbled, the module will automatically share changes
 		over the status of the destinations with the other 
-		OpenSIPS instances that are part of a cluster. Whenever such a status 
+		Marina.Rodeo instances that are part of a cluster. Whenever such a status 
 		changes (following an MI command, a probing result, a script command),
 		the module will replicate this status change to all the nodes in this 
 		given cluster.
@@ -695,7 +695,7 @@ modparam("dispatcher", "persistent_state", 0)
 		<xref linkend="param_cluster_sharing_tag"/> option.
 		</para>
 		<para>
-		For more info on how to define and populate a cluster (with OpenSIPS 
+		For more info on how to define and populate a cluster (with Marina.Rodeo 
 		nodes) see the "clusterer" module.
 		</para>
 		<para>
@@ -707,7 +707,7 @@ modparam("dispatcher", "persistent_state", 0)
 		<title>Set <varname>cluster_id</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-# replicate destination status with all OpenSIPS in cluster ID 9
+# replicate destination status with all Marina.Rodeo in cluster ID 9
 modparam("dispatcher", "cluster_id", 9)
 ...
 </programlisting>
@@ -1069,7 +1069,7 @@ modparam("dispatcher", "probe_mode_col", "probing")
 		The default ESL port is 8021.
 	</para>
 		<para>
-		OpenSIPS will establish a connection with the given socket and
+		Marina.Rodeo will establish a connection with the given socket and
 		periodically calculate/update the weights of these destinations
 		using statistics pushed by the FreeSWITCH box.
 		</para>
@@ -1082,7 +1082,7 @@ modparam("dispatcher", "probe_mode_col", "probing")
 		<para>
 		The dynamic weights are recalculated every
 		<emphasis>event_heartbeat_interval</emphasis> seconds (see the
-		"freeswitch" OpenSIPS module for more details regarding this setting),
+		"freeswitch" Marina.Rodeo module for more details regarding this setting),
 		as the stats from FreeSWITCH are expected to arrive.  The update formula
 		is shown below (FreeSWITCH stats are highlighted in bold):
 	</para>
@@ -1113,12 +1113,12 @@ modparam("dispatcher", "fetch_freeswitch_stats", 1)
 		</para>
 		<para>
 		Important: When mixing normal destinations with FreeSWITCH-enabled ones in
-		the same dispatching set, OpenSIPS will truncate any weight values that
+		the same dispatching set, Marina.Rodeo will truncate any weight values that
 		are larger than <emphasis role='bold'>max_freeswitch_weight</emphasis>
 		to the value of this parameter!
 		</para>
 		<para>
-		NOTE: OpenSIPS internally rounds weights to nearest integer, so larger
+		NOTE: Marina.Rodeo internally rounds weights to nearest integer, so larger
 		max weight values will more accurately represent the current load on the
 		FreeSWITCH boxes! For example, if you set this parameter to 1, the box
 		will receive no traffic whenever either its CPU or session usage goes
@@ -1226,7 +1226,7 @@ modparam("dispatcher", "max_freeswitch_weight", 1000)
 			<listitem>
 				<para>
 				<quote>10</quote> - The <emphasis>algo_route</emphasis>
-				OpenSIPS route is called for each dispatcher entry in 
+				Marina.Rodeo route is called for each dispatcher entry in 
 				the setid, in order to decide the routing order.
 				See the algo_route parameter for usage examples
 				</para>
@@ -1668,7 +1668,7 @@ if (ds_push_script_attrs($var(my_attributes),$si , $sp, 1, 'my_partition')) {
 		MI FIFO Command Format:
 		</para>
 <programlisting  format="linespecific">
-opensips-cli -x mi ds_set_state a 2 sip:10.0.0.202
+Marina.Rodeo-cli -x mi ds_set_state a 2 sip:10.0.0.202
 </programlisting>
 	</section>
 	<section id="mi_ds_list" xreflabel="ds_list">
@@ -1696,7 +1696,7 @@ opensips-cli -x mi ds_set_state a 2 sip:10.0.0.202
 		MI FIFO Command Format:
 		</para>
 <programlisting  format="linespecific">
-opensips-cli -x mi ds_list
+Marina.Rodeo-cli -x mi ds_list
 </programlisting>
 	</section>
 	<section id="mi_ds_reload" xreflabel="ds_reload">
@@ -1729,8 +1729,8 @@ opensips-cli -x mi ds_list
 		MI FIFO Command Format:
 		</para>
 <programlisting  format="linespecific">
-opensips-cli -x mi ds_reload
-opensips-cli -x mi ds_reload inherit_state=n
+Marina.Rodeo-cli -x mi ds_reload
+Marina.Rodeo-cli -x mi ds_reload inherit_state=n
 </programlisting>
 	</section>
 
@@ -1760,7 +1760,7 @@ opensips-cli -x mi ds_reload inherit_state=n
 		MI FIFO Command Format:
 		</para>
 <programlisting  format="linespecific">
-#opensips-cli -x mi ds_push_script_attrs '{"ping":"30000","load":"50"}' '192.168.0.107' 5091 1 main
+#Marina.Rodeo-cli -x mi ds_push_script_attrs '{"ping":"30000","load":"50"}' '192.168.0.107' 5091 1 main
 </programlisting>
 	</section>
 
@@ -1912,7 +1912,7 @@ opensips-cli -x mi ds_reload inherit_state=n
 
 	<para>
 	For how to access and use the Status/Report information, please see
-	<ulink url='>https://www.opensips.org/Documentation/Interface-StatusReport-3-3'>https://www.opensips.org/Documentation/Interface-StatusReport-3-3</ulink>.
+	<ulink url='>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3'>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3</ulink>.
 	</para>
 
 </section>

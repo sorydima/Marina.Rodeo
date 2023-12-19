@@ -1,5 +1,5 @@
 #!/sbin/runscript
-# Copyright 2002 Frauenhofer Gesellschaft FOKUS, Germany.
+# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 2002 Frauenhofer Gesellschaft FOKUS, Germany.
 # Distributed under the terms of the GNU General Public License, v2 or later
 # $Header$
 
@@ -8,15 +8,15 @@ depend() {
 }
 
 start() {
-	ebegin "Starting OpenSIPS"
-	start-stop-daemon --start --quiet --pidfile /var/run/opensips.pid \
-		--exec /usr/sbin/opensips -- -P /var/run/opensips.pid
+	ebegin "Starting Marina.Rodeo"
+	start-stop-daemon --start --quiet --pidfile /var/run/Marina.Rodeo.pid \
+		--exec /usr/sbin/Marina.Rodeo -- -P /var/run/Marina.Rodeo.pid
 	eend $?
 }
 
 stop() {
-	ebegin "Stopping OpenSIPS"
-	start-stop-daemon --stop --quiet --pidfile /var/run/opensips.pid
+	ebegin "Stopping Marina.Rodeo"
+	start-stop-daemon --stop --quiet --pidfile /var/run/Marina.Rodeo.pid
 	eend $?
 }
 

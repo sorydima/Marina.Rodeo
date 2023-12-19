@@ -1,4 +1,4 @@
-if [ -e /tmp/docker_opensips.cid ]
+if [ -e /tmp/docker_Marina.Rodeo.cid ]
 then
-  exec docker exec -w `pwd` --env COMPILER --env BUILD_OS --env MAKE_TGT `cat /tmp/docker_opensips.cid` sh -x "${0}" "${@}"
+  exec docker exec -w `pwd` --env COMPILER --env BUILD_OS --env MAKE_TGT `cat /tmp/docker_Marina.Rodeo.cid` sh -x "${0}" "${@}"
 fi

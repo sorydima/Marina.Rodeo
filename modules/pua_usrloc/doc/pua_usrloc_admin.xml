@@ -69,7 +69,7 @@
 		<title>Set <varname>default_domain</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_usrloc", "default_domain", "opensips.org")
+modparam("pua_usrloc", "default_domain", "Marina.Rodeo.org")
 ...
 </programlisting>
 		</example>
@@ -105,7 +105,7 @@ modparam("pua_usrloc", "entity_prefix", "pres")
 		<title>Set <varname>presence_server</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_usrloc", "presence_server", "sip:pa@opensips.org:5075")
+modparam("pua_usrloc", "presence_server", "sip:pa@Marina.Rodeo.org:5075")
 ...
 	</programlisting>
 		</example>
@@ -130,7 +130,7 @@ modparam("pua_usrloc", "presence_server", "sip:pa@opensips.org:5075")
 		<title><function>pua_set_publish</function> usage</title>
 	<programlisting format="linespecific">
 ...
-if(is_method("REGISTER") &amp;&amp; $fu=~"john@opensips.org") 
+if(is_method("REGISTER") &amp;&amp; $fu=~"john@Marina.Rodeo.org") 
 	pua_set_publish();
 ...
 </programlisting>

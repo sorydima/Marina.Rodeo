@@ -8,7 +8,7 @@ exec Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -56,9 +56,9 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The Exec module enables the execution of external commands from
-   the OpenSIPS script. Any valid shell commands are accepted. The
+   the Marina.Rodeo script. Any valid shell commands are accepted. The
    final input string is evaluated and executed using the
-   "/bin/sh" symlink/binary. OpenSIPS may additionally pass a lot
+   "/bin/sh" symlink/binary. Marina.Rodeo may additionally pass a lot
    more information about the request using environment variables:
      * SIP_HF_<hf_name> contains value of each header field in
        request. If a header field occurred multiple times, values
@@ -80,19 +80,19 @@ Chapter 1. Admin Guide
    NOTE: Any environment variables which are given to the exec
    module functions must be specified using the '$$' delimiter
    (e.g., $$SIP_OUSER), otherwise they will be evaluated as
-   OpenSIPS pseudo-variables, throwing scripting errors.
+   Marina.Rodeo pseudo-variables, throwing scripting errors.
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules.
+     * No dependencies on other Marina.Rodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -122,9 +122,9 @@ modparam("exec", "setvars", 1)
    sent to all job pids once the "time_to_kill" expiration timeout
    hits. On a standard system, this should have no side-effects,
    as pids are monotonically increasing in a slow manner, and
-   OpenSIPS should run under the "opensips" user, thus rendering
+   Marina.Rodeo should run under the "Marina.Rodeo" user, thus rendering
    it unable to terminate non-child processes. If this is not the
-   case on your system, do not use the OpenSIPS "time_to_kill"
+   case on your system, do not use the Marina.Rodeo "time_to_kill"
    feature -- rather implement it within your external app!
 
    Default value is 0 (disabled).
@@ -168,7 +168,7 @@ modparam("exec", "time_to_kill", 20)
    use $avp variables for the "stdout" and "stderr" parameters, to
    avoid only receiving the last lines of each stream.
 
-   WARNING: any OpenSIPS pseudo-vars which may contain special
+   WARNING: any Marina.Rodeo pseudo-vars which may contain special
    bourne shell (sh/bash) characters should be placed inside
    quotes, e.g. exec("update-stats.sh '$(ct{re.subst,/'//g})'");
 
@@ -201,12 +201,12 @@ vp(env));
    Executes an external command. This function does exactly the
    same as exec() (in terms of input, output and processing), but
    in an asynchronous way. The script execution is suspended until
-   the external script provided all its output. OpenSIPS waits for
+   the external script provided all its output. Marina.Rodeo waits for
    the external script to close its output stream, not necessarily
-   to terminate (so the script may still be running when OpenSIPS
+   to terminate (so the script may still be running when Marina.Rodeo
    resumes the script execution on "seeing" EOF on the the output
    stream)
-   NOTE: if the stdout variable is missing, OpenSIPS will assume
+   NOTE: if the stdout variable is missing, Marina.Rodeo will assume
    that the output of the external script is not needed and it
    will NOT WAIT at all for the script. So, if triggered via
    "launch()", there will be no asynchronous waiting, so no resume
@@ -218,7 +218,7 @@ vp(env));
 
    To read and understand more on the asynchronous functions, how
    to use them and what are their advantages, please refer to the
-   OpenSIPS online Manual.
+   Marina.Rodeo online Manual.
 
    Example 1.4. async exec usage
 {
@@ -272,7 +272,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -317,6 +317,6 @@ Chapter 3. Documentation
    Bokarius, Edson Gellert Schubert, Elena-Ramona Modroiu, Jan
    Janak (@janakj).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2003 FhG FOKUS
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS

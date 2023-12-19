@@ -9,7 +9,7 @@ event_stream Module
         1.2. Stream socket syntax
         1.3. Dependencies
 
-              1.3.1. OpenSIPS Modules
+              1.3.1. Marina.Rodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -69,9 +69,9 @@ Chapter 1. Admin Guide
    application server.
 
    In order to be notified, a JSON-RPC server has to subscribe for
-   a certain event provided by OpenSIPS. This can be done using
+   a certain event provided by Marina.Rodeo. This can be done using
    the generic MI Interface (event_subscribe function) or from
-   OpenSIPS script (subscribe_event core function).
+   Marina.Rodeo script (subscribe_event core function).
 
 1.2. Stream socket syntax
 
@@ -103,7 +103,7 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. OpenSIPS Modules
+1.3.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * none.
@@ -111,7 +111,7 @@ Chapter 1. Admin Guide
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * none
 
 1.4. Exported Parameters
@@ -143,7 +143,7 @@ modparam("event_stream", "reliable_mode", yes)
    Specified the amount of milliseconds the module waits for a
    command to complete. In reliable_mode, it specifies the time
    module waits the request to be sent and a reply received. In
-   non-reliable_mode, it represents only the time opensips takes
+   non-reliable_mode, it represents only the time Marina.Rodeo takes
    to send the JSON-RPC notification.
 
    NOTE that if the event is not using names for its parameters,
@@ -169,8 +169,8 @@ modparam("event_stream", "timeout", 200)
 
    Example 1.3. Set event_param parameter
 ...
-modparam("event_stream", "event_param", "opensips_event")
-# json resulted will contain the "opensips_event": EVENT token
+modparam("event_stream", "event_param", "Marina.Rodeo_event")
+# json resulted will contain the "Marina.Rodeo_event": EVENT token
 ...
 
 1.5. Exported Functions
@@ -233,13 +233,13 @@ _BLOCKED event
 
 1.6.4. JSON-RPC Notification with Event's name
 
-   when having the event_param set to opensips_event, the event
+   when having the event_param set to Marina.Rodeo_event, the event
    raised by the pike module will look like the following:
 
    Example 1.7. E_PIKE_BLOCKED notification with event name
 
 # module configuration
-modparam("event_stream", "event_param", "opensips_event")
+modparam("event_stream", "event_param", "Marina.Rodeo_event")
 
 # Stream socket: tcp:HOST:PORT/handle_cmd
 
@@ -248,7 +248,7 @@ modparam("event_stream", "event_param", "opensips_event")
         "jsonrpc": "2.0",
         "method": "handle_cmd",
         "params": {
-                "opensips_event": "E_PIKE_BLOCKED"
+                "Marina.Rodeo_event": "E_PIKE_BLOCKED"
                 "ip": "192.168.2.11"
         }
 }
@@ -307,7 +307,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -337,6 +337,6 @@ Chapter 3. Documentation
    (@lemenkov), Liviu Chircu (@liviuchircu), Razvan Crainea
    (@razvancrainea).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2018 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2018 www.Marina.Rodeo-solutions.com

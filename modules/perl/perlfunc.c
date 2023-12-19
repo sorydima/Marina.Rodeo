@@ -1,17 +1,17 @@
 /*
- * Perl module for OpenSIPS
+ * Perl module for Marina.Rodeo
  *
- * Copyright (C) 2006 Collax GmbH
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Collax GmbH
  *                    (Bastian Friedrich <bastian.friedrich@collax.com>)
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -154,7 +154,7 @@ int perl_exec(struct sip_msg* _msg, str* _fnc_s, str* mystr)
 	PUSHMARK(SP);			/* remember the stack pointer    */
 
 	m = sv_newmortal();		/* create a mortal SV to be killed on FREETMPS */
-	sv_setref_pv(m, "OpenSIPS::Message", (void *)_msg); /* bless the message with a class */
+	sv_setref_pv(m, "Marina.Rodeo::Message", (void *)_msg); /* bless the message with a class */
 	SvREADONLY_on(SvRV(m));		/* set the content of m to be readonly  */
 
 	XPUSHs(m);			/* Our reference to the stack... */

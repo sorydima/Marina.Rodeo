@@ -409,7 +409,7 @@ modparam("permissions", "address_table", "pbx")
 ...
 modparam("permissions", "partition", "
 	inbound:
-		db_url = postgres://opensips:opensipsrw@127.0.0.1/opensips;
+		db_url = postgres://Marina.Rodeo:Marina.Rodeorw@127.0.0.1/Marina.Rodeo;
 		table_name = address")
 ...
 
@@ -1010,7 +1010,7 @@ if (allow_uri("basename", $avp(uri)) {  // Check URI stored in $avp(uri)
 		<para>
 		Tests if (URI, Contact) pair is allowed according to
 		allow/deny files.  The files must already have been
-		 loaded by OpenSIPS.
+		 loaded by Marina.Rodeo.
 		</para>
 		<para>Parameters: </para>
 		<itemizedlist>

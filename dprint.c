@@ -1,16 +1,16 @@
 /*
  * debug print
  *
- * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -22,7 +22,7 @@
 
 /*!
  * \file
- * \brief OpenSIPS Debug console print functions
+ * \brief Marina.Rodeo Debug console print functions
  */
 
 #include "dprint.h"
@@ -223,7 +223,7 @@ int init_log_cee_hostname(void)
 #define DP_JSON_CEE_MSG_B_KEY    "\"}, \"msg\": \""
 #define DP_JSON_CEE_MSG_KEY      "\", \"msg\": \""
 #define DP_JSON_CEE_PNAME_KEY    "\", \"pname\": \""
-#define DP_JSON_CEE_PNAME_VAL    "opensips"
+#define DP_JSON_CEE_PNAME_VAL    "Marina.Rodeo"
 #define DP_JSON_CEE_HOST_KEY     "\", \"hostname\": \""
 
 #define DP_JSON_MSG_END       "\"}"
@@ -947,7 +947,7 @@ void __set_proc_default_log_level(int proc_idx, int level)
 	pt[proc_idx].default_log_level = level;
 }
 
-/* set the current and default log levels for all OpenSIPS processes */
+/* set the current and default log levels for all Marina.Rodeo processes */
 void set_global_log_level(int level)
 {
 	int i;

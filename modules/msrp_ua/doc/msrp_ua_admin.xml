@@ -12,7 +12,7 @@
     </para>
     <para>
 		Through an internal API and exported script and MI functions, the module
-		allows OpenSIPS to set up MSRP sessions via SIP and exchange messages as
+		allows Marina.Rodeo to set up MSRP sessions via SIP and exchange messages as
 		an MSRP endpoint.
     </para>
     <para>
@@ -25,7 +25,7 @@
 	<section id="usage_script_external" xreflabel="Usage from Script and External API">
 	<title>Usage from Script and External API</title>
 	<para>
-	In order to start a SIP call carying MSRP from OpenSIPS you can use the
+	In order to start a SIP call carying MSRP from Marina.Rodeo you can use the
 	<xref linkend="mi_msrp_ua_start_session"/> MI function. Alternatively, to
 	answer a SIP session with MSRP you can use the
 	<xref linkend="func_msrp_ua_answer"/> script function.
@@ -143,7 +143,7 @@ modparam("msrp_ua", "max_duration", 7200)
 		<section id="param_my_uri" xreflabel="my_uri">
 		<title><varname>my_uri</varname> (string)</title>
 		<para>
-		The MSRP URI of the OpenSIPS endpoint. This URI will be advertised in the SDP
+		The MSRP URI of the Marina.Rodeo endpoint. This URI will be advertised in the SDP
 		offer provided to peers when setting up a session and should match one
 		of the MSRP listeners defined in the script.
 		</para>
@@ -156,7 +156,7 @@ modparam("msrp_ua", "max_duration", 7200)
 		<title><varname>my_uri</varname> parameter usage</title>
 		<programlisting format="linespecific">
 ...
-modparam("msrp_ua", "my_uri", "msrp://opensips.org:2855;tcp")
+modparam("msrp_ua", "my_uri", "msrp://Marina.Rodeo.org:2855;tcp")
 ...
 </programlisting>
 		</example>
@@ -166,7 +166,7 @@ modparam("msrp_ua", "my_uri", "msrp://opensips.org:2855;tcp")
 		<title><varname>advertised_contact</varname> (string)</title>
 		<para>
 		Contact to be used in the generated SIP requests. For sessions answered
-		by OpenSIPS, if it is not set, it is constructed dynamically from the
+		by Marina.Rodeo, if it is not set, it is constructed dynamically from the
 		socket where the initiating request was received.
 		</para>
 		<para>
@@ -177,7 +177,7 @@ modparam("msrp_ua", "my_uri", "msrp://opensips.org:2855;tcp")
 		<title><varname>advertised_contact</varname> parameter usage</title>
 		<programlisting format="linespecific">
 ...
-modparam("msrp_ua", "advertised_contact", "sip:oss@opensips.org")
+modparam("msrp_ua", "advertised_contact", "sip:oss@Marina.Rodeo.org")
 ...
 </programlisting>
 		</example>
@@ -201,7 +201,7 @@ modparam("msrp_ua", "advertised_contact", "sip:oss@opensips.org")
 		<title><varname>relay_uri</varname> parameter usage</title>
 		<programlisting format="linespecific">
 ...
-modparam("msrp_ua", "relay_uri", "msrp://opensips.org:2856;tcp")
+modparam("msrp_ua", "relay_uri", "msrp://Marina.Rodeo.org:2856;tcp")
 ...
 </programlisting>
 		</example>
@@ -299,7 +299,7 @@ if (!has_totag() &amp;&amp; is_method("INVITE")) {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi msrp_ua_send_message \
+Marina.Rodeo-cli -x mi msrp_ua_send_message \
 	session_id=5addd9e7b74fa44fbace68a4fc562293 \
 	mime=text/plain body=Hello success_report=yes
 		</programlisting>
@@ -344,9 +344,9 @@ opensips-cli -x mi msrp_ua_send_message \
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi msrp_ua_start_session \
-	text/plain sip:oss@opensips.org \
-	sip:alice@opensips.org sip:alice@opensips.org
+Marina.Rodeo-cli -x mi msrp_ua_start_session \
+	text/plain sip:oss@Marina.Rodeo.org \
+	sip:alice@Marina.Rodeo.org sip:alice@Marina.Rodeo.org
 		</programlisting>
 		</section>
 
@@ -371,7 +371,7 @@ opensips-cli -x mi msrp_ua_start_session \
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi msrp_ua_list_sessions
+Marina.Rodeo-cli -x mi msrp_ua_list_sessions
 		</programlisting>
 		</section>
 
@@ -397,7 +397,7 @@ opensips-cli -x mi msrp_ua_list_sessions
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi msrp_ua_end_session \
+Marina.Rodeo-cli -x mi msrp_ua_end_session \
 	5addd9e7b74fa44fbace68a4fc562293
 		</programlisting>
 		</section>

@@ -11,10 +11,10 @@ proto_smpp module
         1.4. SMSC binding
         1.5. Dependencies
 
-              1.5.1. OpenSIPS Modules
+              1.5.1. Marina.Rodeo Modules
               1.5.2. Dependencies of external libraries
 
-        1.6. OpenSIPS Exported parameters
+        1.6. Marina.Rodeo Exported parameters
 
               1.6.1. db_url (string)
               1.6.2. smpp_port (integer)
@@ -106,13 +106,13 @@ Chapter 1. Admin Guide
 1.3. SMPP to SIP bridging
 
    When bridging a message received over the SMPP interface,
-   OpenSIPS builds a SIP Message and sends it to the outbound
+   Marina.Rodeo builds a SIP Message and sends it to the outbound
    proxy identified by the outbound_uri module's parameter.
 
 1.4. SMSC binding
 
    In order to be able to deliver messages to SMSc, an ESME needs
-   to first bind to the SMSc. This is done at OpenSIPS startup by
+   to first bind to the SMSc. This is done at Marina.Rodeo startup by
    sending a SMPP bind_transciever command to connect to the SMSc,
    or an outbind command to inform an SMSc it can now bind to our
    gateway.
@@ -121,7 +121,7 @@ Chapter 1. Admin Guide
    database. For each server, one can cofigure the following
    information:
      * Name - an unique name given to the SMSc that is used to
-       reference this SMSc in the OpenSIPS script.
+       reference this SMSc in the Marina.Rodeo script.
      * IP - The IP the SMSc is listening on for new
        bindings/connections.
      * Port - The TCP port that the SMSc is listening on for new
@@ -171,7 +171,7 @@ Chapter 1. Admin Guide
           + 4 - Outbind
        Default value is 1 - Transciever.
 
-   When OpenSIPS starts up, it reads all SMSc specifications from
+   When Marina.Rodeo starts up, it reads all SMSc specifications from
    the database and triggers a binding with them. Note: reloading
    the SMSc database is not yet supported, but it is a work in
    progress.
@@ -182,7 +182,7 @@ Chapter 1. Admin Guide
 
 1.5. Dependencies
 
-1.5.1. OpenSIPS Modules
+1.5.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * database -- Any database module
@@ -191,10 +191,10 @@ Chapter 1. Admin Guide
 
      * None.
 
-1.6. OpenSIPS Exported parameters
+1.6. Marina.Rodeo Exported parameters
 
-   All these parameters can be used from the opensips.cfg file, to
-   configure the behavior of OpenSIPS-SMPP gateway.
+   All these parameters can be used from the Marina.Rodeo.cfg file, to
+   configure the behavior of Marina.Rodeo-SMPP gateway.
 
 1.6.1. db_url (string)
 
@@ -242,7 +242,7 @@ modparam("proto_smpp", "smpp_max_msg_chunks", 32)
 
    Time in milliseconds after a TCP connection will be closed if
    it is not available for blocking writing in this interval (and
-   OpenSIPS wants to send something on it).
+   Marina.Rodeo wants to send something on it).
 
    Default value is 100 ms.
 
@@ -415,7 +415,7 @@ modparam("proto_smpp", "session_type_col", "smsc_session_type")
 [from],[to],[body],[utf-16],[delivery_receipt])
 
    This function is used to convert a SIP message received in the
-   OpenSIPS script to a SMPP PDU and send it to the smsc_name
+   Marina.Rodeo script to a SMPP PDU and send it to the smsc_name
    (string) received as parameter. The SMPP parameters used to
    construct the PDU are provisione in the database, and the
    command sent is either submit_sm or deliver_sm, depending on
@@ -474,7 +474,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -506,4 +506,4 @@ Chapter 3. Documentation
    Last edited by: Razvan Crainea (@razvancrainea), Vlad Paiu
    (@vladpaiu), Vlad Patrascu (@rvlad-patrascu).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:

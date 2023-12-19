@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE table PUBLIC "-//opensips.org//DTD DBSchema V1.1//EN" 
-  "https://opensips.org/pub/opensips/dbschema/dtd/1.1/dbschema.dtd" [
+<!DOCTYPE table PUBLIC "-//Marina.Rodeo.org//DTD DBSchema V1.1//EN" 
+  "https://Marina.Rodeo.org/pub/Marina.Rodeo/dbschema/dtd/1.1/dbschema.dtd" [
 
 <!ENTITY % entities SYSTEM "entities.xml">
 %entities;
@@ -12,7 +12,7 @@
     <version>2</version>
     <type db="mysql">&MYSQL_TABLE_TYPE;</type>
     <description>
-        <db:para>Table for the call processing language "cpl" module. More information is available at: &OPENSIPS_MOD_DOC;cpl_c.html</db:para>
+        <db:para>Table for the call processing language "cpl" module. More information is available at: &Marina.Rodeo_MOD_DOC;cpl_c.html</db:para>
     </description>
 
     <column id="id">

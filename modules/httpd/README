@@ -9,7 +9,7 @@ httpd Module
         1.2. Overview
         1.3. Dependencies
 
-              1.3.1. OpenSIPS Modules
+              1.3.1. Marina.Rodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -67,7 +67,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   This module provides an HTTP transport layer for OpenSIPS.
+   This module provides an HTTP transport layer for Marina.Rodeo.
 
    Implementation of httpd module's http server is based on
    libmicrohttpd library.
@@ -80,24 +80,24 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. OpenSIPS Modules
+1.3.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules.
+     * No dependencies on other Marina.Rodeo modules.
 
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * libmicrohttpd, with EPOLL support. This typically means a
        version newer than 0.9.50.
 
    WARNING! Please be aware about an EPOLL support regression in
    the libmicrohttpd library and packaging which affects the
-   OpenSIPS httpd module, which was fixed according to the below
+   Marina.Rodeo httpd module, which was fixed according to the below
    timeline. The effect of the regression is that the HTTP reply
    body is sometimes never written by the library, causing the
-   client (e.g. opensips-cli) to hang indefinitely waiting for it:
+   client (e.g. Marina.Rodeo-cli) to hang indefinitely waiting for it:
      * versions 0.9.51 - 0.9.52 have been tested and work
        correctly
      * regression introduced in 0.9.53 (Apr 2017), lasting until
@@ -169,7 +169,7 @@ modparam("httpd", "post_buf_size", 4096)
 
    Example 1.5. Set tls_cert_file parameter
 ...
-modparam("httpd", "tls_cert_file", "/etc/opensips/tls/server.pem")
+modparam("httpd", "tls_cert_file", "/etc/Marina.Rodeo/tls/server.pem")
 ...
 
 1.4.6. tls_key_file (string)
@@ -181,7 +181,7 @@ modparam("httpd", "tls_cert_file", "/etc/opensips/tls/server.pem")
 
    Example 1.6. Set tls_key_file parameter
 ...
-modparam("httpd", "tls_key_file", "/etc/opensips/tls/server.key")
+modparam("httpd", "tls_key_file", "/etc/Marina.Rodeo/tls/server.key")
 ...
 
 1.4.7. tls_ciphers (string)
@@ -217,7 +217,7 @@ LS1.2")
    Parameters: none
 
    MI FIFO Command Format:
-opensips-cli -x mi httpd_list_root_path
+Marina.Rodeo-cli -x mi httpd_list_root_path
 
 1.6. Exported Functions
 
@@ -225,10 +225,10 @@ opensips-cli -x mi httpd_list_root_path
 
 1.7. Known issues
 
-   Due to the fact that OpenSIPS is a multiprocess application,
+   Due to the fact that Marina.Rodeo is a multiprocess application,
    the microhttpd library is used in "external select" mode. This
    ensures that the library is not running in multithread mode and
-   the library is entirely controled by OpenSIPS. Due to this
+   the library is entirely controled by Marina.Rodeo. Due to this
    particular mode of operations, for now, the entire http
    response is built in a pre-allocated buffer (see buf_size
    parameter).
@@ -238,8 +238,8 @@ opensips-cli -x mi httpd_list_root_path
    Running the http daemon as non root on ports below 1024 is
    forbidden by default in linux (kernel>=2.6.24). To allow the
    port binding, one can use setcap to give extra privilleges to
-   opensips binary:
-setcap 'cap_net_bind_service=+ep' /usr/local/sbin/opensips
+   Marina.Rodeo binary:
+setcap 'cap_net_bind_service=+ep' /usr/local/sbin/Marina.Rodeo
 
 Chapter 2. Developer Guide
 
@@ -291,7 +291,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -328,6 +328,6 @@ Chapter 4. Documentation
    (@razvancrainea), Peter Lemenkov (@lemenkov), Vlad Patrascu
    (@rvlad-patrascu), Ovidiu Sas (@ovidiusas).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2012-2013 VoIP Embedded, Inc.
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2012-2013 VoIP Embedded, Inc.

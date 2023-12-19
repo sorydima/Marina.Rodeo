@@ -8,17 +8,17 @@
 	    <question>
 		<para>Why do I get the following error when compiling the module?</para>
 		<programlisting format="linespecific">
-    make[1]: Entering directory '/usr/local/src/opensips/modules/tls_wolfssl'
+    make[1]: Entering directory '/usr/local/src/Marina.Rodeo/modules/tls_wolfssl'
     /bin/sh: 3: ./autogen.sh: not found
     env: './configure': No such file or directory
     make[1]: *** [Makefile:15: lib/lib/libwolfssl.a] Error 127
-    make[1]: Leaving directory '/usr/local/src/opensips/modules/tls_wolfssl'
+    make[1]: Leaving directory '/usr/local/src/Marina.Rodeo/modules/tls_wolfssl'
     make: *** [Makefile:197: modules] Error 2
 		</programlisting>
 	    </question>
 	    <answer>
 		<para>
-		If you obtained the OpenSIPS sources by cloning the repository from Github,
+		If you obtained the Marina.Rodeo sources by cloning the repository from Github,
 		without using the <emphasis>--recursive</emphasis> option for the
 		<emphasis>git clone</emphasis> command, you did not properly fetch the
 		<emphasis>wolfSSL</emphasis> library code, which is included as a git submodule

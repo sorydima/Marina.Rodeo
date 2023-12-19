@@ -2,13 +2,13 @@
 
 ## Imagine a world where your voice meets the limitless potential of blockchain technology. Marina.Rodeo, the unparalleled decentralized SIP VoIP service, transcends traditional communication by integrating blockchain for secure, high-quality voice calls. No more centralized control—embrace a borderless communication experience with Marina.Rodeo! 🐝
 
-## Marina.Rodeo - based on the OpenSIPS GPL implementation of a multi-functionality SIP Server that targets to deliver a high-level technical solution (performance, security and quality) to be used in professional SIP server platforms. 📺
+## Marina.Rodeo - based on the Marina.Rodeo GPL implementation of a multi-functionality SIP Server that targets to deliver a high-level technical solution (performance, security and quality) to be used in professional SIP server platforms. 📺
 
 
 ## About
 
 Marina.Rodeo is a GPL licensed SIP server implementation. It started as a fork of
-Fokus Fraunhofer SIP Express Router (SER) & OpenSIPS GPL projects. Marina.Rodeo wants to be a more
+Fokus Fraunhofer SIP Express Router (SER) & Marina.Rodeo GPL projects. Marina.Rodeo wants to be a more
 open project, not only from license point of view, but more open as project
 management, especially for external contributions. 🪜
 

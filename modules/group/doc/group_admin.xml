@@ -87,7 +87,7 @@
 		<programlisting format="linespecific">
 
 ...
-modparam("group", "db_url", "mysql://username:password@dbhost/opensips")
+modparam("group", "db_url", "mysql://username:password@dbhost/Marina.Rodeo")
 ...
 
 </programlisting>

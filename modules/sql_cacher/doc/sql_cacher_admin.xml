@@ -136,7 +136,7 @@
    
 modparam("sql_cacher", "cache_table",
 "id=caching_name
-db_url=mysql://root:opensips@localhost/opensips_2_2
+db_url=mysql://root:Marina.Rodeo@localhost/Marina.Rodeo_2_2
 cachedb_url=mongodb:mycluster://127.0.0.1:27017/db.col
 table=table_name
 key=column_name_0
@@ -298,9 +298,9 @@ modparam("sql_cacher", "reload_interval", 5)
 			<title><function moreinfo="none">sql_cacher_reload</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ opensips-cli -x mi sql_cacher_reload subs_caching
+$ Marina.Rodeo-cli -x mi sql_cacher_reload subs_caching
 ...
-$ opensips-cli -x mi sql_cacher_reload subs_caching alice@domain.com
+$ Marina.Rodeo-cli -x mi sql_cacher_reload subs_caching alice@domain.com
 ...
 </programlisting>
 			</example>	
@@ -376,7 +376,7 @@ $avp(a) = $sql_cached_value(caching_name:column_name_1:key1);
 		<programlisting format="linespecific">
 modparam("sql_cacher", "cache_table",
 "id=carrier_fr_caching
-db_url=mysql://root:opensips@localhost/opensips
+db_url=mysql://root:Marina.Rodeo@localhost/Marina.Rodeo
 cachedb_url=mongodb:mycluster://127.0.0.1:27017/my_db.col
 table=carrierfailureroute
 key=id
@@ -453,7 +453,7 @@ xlog("host name is: $sql_cached_value(carrier_fr_caching:host_name:2)");
 
 	<para>
 	For how to access and use the Status/Report information, please see
-	<ulink url='>https://www.opensips.org/Documentation/Interface-StatusReport-3-3'>https://www.opensips.org/Documentation/Interface-StatusReport-3-3</ulink>.
+	<ulink url='>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3'>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3</ulink>.
 	</para>
 	</section>
 

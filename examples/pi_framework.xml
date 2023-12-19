@@ -15,7 +15,7 @@
 		 * unixodbc
 		 * virtual
 	-->
-	<db_url id="mysql">mysql://opensips:opensipsrw@localhost/opensips</db_url>
+	<db_url id="mysql">mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo</db_url>
 	<!--
 	<db_url id="dbtext">text:///usr/local/etc/Marina.Rodeo/dbtext</db_url>
 	-->

@@ -8,7 +8,7 @@ proto_wss Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. Dependencies of external libraries
 
         1.3. Exported Parameters
@@ -99,7 +99,7 @@ modparam("tls_mgm", "require_cert", "1")
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * tls_openssl or tls_wolfssl, depending on the desired TLS
@@ -109,13 +109,13 @@ modparam("tls_mgm", "require_cert", "1")
 1.2.2. Dependencies of external libraries
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
 
-   All these parameters can be used from the opensips.cfg file, to
-   configure the behavior of OpenSIPS-WSS.
+   All these parameters can be used from the Marina.Rodeo.cfg file, to
+   configure the behavior of Marina.Rodeo-WSS.
 
 1.3.1. listen=interface
 
@@ -197,7 +197,7 @@ modparam("proto_wss", "wss_handshake_timeout", 300)
 
    This checking is done only when comes to send SIP traffic via
    TLS and it is applied only against connections that were
-   created / initiated by OpenSIPS (as TLS client). Any accepte
+   created / initiated by Marina.Rodeo (as TLS client). Any accepte
    connection (as TLS server) will automatically match (the extra
    test will be skipped).
 
@@ -258,10 +258,10 @@ modparam("proto_wss", "trace_on", 1)
 
    IMPORTANT Filtering on ip addresses and ports can be made using
    $si and $sp for matching either the entity that is connecting
-   to OpenSIPS or the entity to which OpenSIPS is connecting. The
+   to Marina.Rodeo or the entity to which Marina.Rodeo is connecting. The
    name might be misleading ( $si meaning the source ip if you
    read the docs) but in reality it is simply the socket other
-   than the OpenSIPS socket. In order to match OpenSIPS interface
+   than the Marina.Rodeo socket. In order to match Marina.Rodeo interface
    (either the one that accepted the connection or the one that
    initiated a connection) $socket_in(ip) (ip) and
    $socket_in(port) (port) can be used.
@@ -280,7 +280,7 @@ d
 route[wss_filter] {
         ...
         /* all connections opened from/by ip 1.1.1.1:8000 will be traced
-           on interface 1.1.1.10:5060(opensips listener)
+           on interface 1.1.1.10:5060(Marina.Rodeo listener)
            all the other connections won't be */
          if ( $si == "1.1.1.1" && $sp == 8000 &&
                 $socket_in(ip) == "1.1.1.10"  && $socket_in(port) == 506
@@ -352,13 +352,13 @@ modparam("proto_wss", "require_origin", no)
           + off
 
    MI FIFO Command Format:
-                        opensips-cli -x mi wss_trace on
+                        Marina.Rodeo-cli -x mi wss_trace on
 
 Chapter 2. Frequently Asked Questions
 
    2.1.
 
-   Does OpenSIPS support fragmented Secure WebSocket messages?
+   Does Marina.Rodeo support fragmented Secure WebSocket messages?
 
    No, the WebSocket fragmentation mechanism is not supported.
 
@@ -387,7 +387,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -421,6 +421,6 @@ Chapter 4. Documentation
    Lemenkov (@lemenkov), Liviu Chircu (@liviuchircu), Ionut Ionita
    (@ionutrazvanionita).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2015 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2015 www.Marina.Rodeo-solutions.com

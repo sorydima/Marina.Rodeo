@@ -1,5 +1,5 @@
 #
-# OpenSIPS makefile
+# Marina.Rodeo makefile
 #
 # WARNING: requires gmake (GNU Make)
 #  Arch supported: Linux, FreeBSD, SunOS (tested on Solaris 8), OpenBSD (3.2),
@@ -8,7 +8,7 @@
 #  History:
 #  --------
 #              created by andrei
-#  2003-02-24  make install no longer overwrites opensips.cfg  - patch provided
+#  2003-02-24  make install no longer overwrites Marina.Rodeo.cfg  - patch provided
 #               by Maxim Sobolev   <sobomax@FreeBSD.org> and
 #                  Tomas Bjoerklund <tomas@webservices.se>
 #  2003-03-11  PREFIX & LOCALBASE must also be exported (andrei)
@@ -20,9 +20,9 @@
 #               calls -- see comment (andrei)
 #  2003-06-02  make tar changes -- unpacks in $NAME-$RELEASE  (andrei)
 #  2003-06-03  make install-cfg will properly replace the module path
-#               in the cfg (re: /usr/.*lib/opensips/modules)
-#              opensips.cfg.default is installed only if there is a previous
-#               cfg. -- fixes packages containing opensips.cfg.default (andrei)
+#               in the cfg (re: /usr/.*lib/Marina.Rodeo/modules)
+#              Marina.Rodeo.cfg.default is installed only if there is a previous
+#               cfg. -- fixes packages containing Marina.Rodeo.cfg.default (andrei)
 #  2003-08-29  install-modules-doc split from install-doc, added
 #               install-modules-all, removed README.cfg (andrei)
 #              added skip_cfg_install (andrei)
@@ -35,8 +35,8 @@
 NICER?=1
 auto_gen=lex.yy.c cfg.tab.c   #lexx, yacc etc
 
-# whether or not to install opensips.cfg or just opensips.cfg.default
-# (opensips.cfg will never be overwritten by make install, this is useful
+# whether or not to install Marina.Rodeo.cfg or just Marina.Rodeo.cfg.default
+# (Marina.Rodeo.cfg will never be overwritten by make install, this is useful
 #  when creating packages)
 skip_cfg_install?=
 
@@ -465,7 +465,7 @@ sunpkg:
 	cd ../..)
 	cat /dev/null > ../$(NAME)-$(RELEASE)-$(OS)-$(ARCH)-local
 	pkgtrans -s tmp/$(NAME)_sun_pkg/ ../$(NAME)-$(RELEASE)-$(OS)-$(ARCH)-local \
-		OpenSIPS
+		Marina.Rodeo
 	gzip -9 ../$(NAME)-$(RELEASE)-$(OS)-$(ARCH)-local
 	rm -rf tmp/$(NAME)
 	rm -rf tmp/$(NAME)_sun_pkg
@@ -482,7 +482,7 @@ install-modules-all: install-modules install-modules-doc
 # Install everything (except modules-docbook?)
 install: install-app install-modules-all
 
-opensipsmc: $(cfg_prefix)/$(cfg_dir) $(data_prefix)/$(data_dir)
+Marina.Rodeomc: $(cfg_prefix)/$(cfg_dir) $(data_prefix)/$(data_dir)
 	$(MAKE) -C menuconfig proper
 	$(MAKE) -C menuconfig \
 		MENUCONFIG_CFG_PATH=$(data_target)/menuconfig_templates/ \
@@ -519,11 +519,11 @@ install-cfg: $(cfg_prefix)/$(cfg_dir)
 				$(cfg_prefix)/$(cfg_dir)$(NAME).cfg; \
 		fi
 
-install-bin: app $(bin_prefix)/$(bin_dir) opensipsmc utils
-		# install opensips binary
+install-bin: app $(bin_prefix)/$(bin_dir) Marina.Rodeomc utils
+		# install Marina.Rodeo binary
 		$(INSTALL_TOUCH) $(bin_prefix)/$(bin_dir)/$(NAME)
 		$(INSTALL_BIN) $(NAME) $(bin_prefix)/$(bin_dir)
-		# install opensips menuconfig
+		# install Marina.Rodeo menuconfig
 		$(INSTALL_TOUCH) $(bin_prefix)/$(bin_dir)/osipsconfig
 		$(INSTALL_BIN) menuconfig/configure $(bin_prefix)/$(bin_dir)/osipsconfig
 
@@ -615,7 +615,7 @@ install-modules-docbook: $(doc_prefix)/$(doc_dir)
 doxygen:
 	-@echo "Create Doxygen documentation"
 	# disable call graphes, because of the DOT dependencies
-	(cat doc/doxygen/opensips-doxygen; \
+	(cat doc/doxygen/Marina.Rodeo-doxygen; \
 	echo "HAVE_DOT=no" ;\
 	echo "PROJECT_NUMBER=$(NAME)-$(RELEASE)" )| doxygen -
 	-@echo "Doxygen documentation created"

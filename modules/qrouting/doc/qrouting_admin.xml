@@ -77,7 +77,7 @@
 
 <section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
-	<section id="deps_modules" xreflabel="OpenSIPS Module Dependencies">
+	<section id="deps_modules" xreflabel="Marina.Rodeo Module Dependencies">
 		<title>&osips; Modules</title>
 		<para>
 		The following modules must be loaded for this module to work:
@@ -109,7 +109,7 @@
 		<title>Setting the <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 
-modparam("qrouting", "db_url", "mysql://opensips:opensipsrw@localhost/opensips")
+modparam("qrouting", "db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo")
 	</programlisting>
 		</example>
 	</section>
@@ -513,7 +513,7 @@ qr_set_xstat($var(rule_id), $var(gw_name), "mos", $var(mos_score));
 		Within a given routing rule, temporarily remove the given gateway or
 		carrier from routing, until they are re-enabled via
 		<xref linkend="func_qr_enable_dst"/> or <xref linkend="mi_qr_enable_dst"/>.
-		The removal effect will be lost on an OpenSIPS restart.
+		The removal effect will be lost on an Marina.Rodeo restart.
 		</para>
 		<para>Parameters:</para>
 		<itemizedlist>
@@ -599,7 +599,7 @@ qr_enable_dst($param(rule_id), $param(dst_name), $param(partition));
 
 		<programlisting  format="linespecific">
 
-opensips-cli -x mi qr_reload
+Marina.Rodeo-cli -x mi qr_reload
 		</programlisting>
 	</section>
 
@@ -632,10 +632,10 @@ opensips-cli -x mi qr_reload
 
 		<programlisting  format="linespecific">
 
-opensips-cli -x mi qr_status
-opensips-cli -x mi qr_status pstn
-opensips-cli -x mi qr_status pstn 11 MY-GW-3
-opensips-cli -x mi qr_status pstn 17 MY-CARR-7
+Marina.Rodeo-cli -x mi qr_status
+Marina.Rodeo-cli -x mi qr_status pstn
+Marina.Rodeo-cli -x mi qr_status pstn 11 MY-GW-3
+Marina.Rodeo-cli -x mi qr_status pstn 17 MY-CARR-7
 		</programlisting>
 	</section>
 
@@ -645,7 +645,7 @@ opensips-cli -x mi qr_status pstn 17 MY-CARR-7
 		<para>
 		Within a given routing rule, temporarily remove the given gateway or
 		carrier from routing, until they are re-enabled manually.  The removal
-		effect will be lost on an OpenSIPS restart.
+		effect will be lost on an Marina.Rodeo restart.
 		</para>
 		<para>Parameters:</para>
 		<itemizedlist>
@@ -665,8 +665,8 @@ opensips-cli -x mi qr_status pstn 17 MY-CARR-7
 
 		<programlisting  format="linespecific">
 
-opensips-cli -x mi qr_disable_dst 14 MY-CARR-7
-opensips-cli -x mi qr_disable_dst pstn 81 MY-GW-3
+Marina.Rodeo-cli -x mi qr_disable_dst 14 MY-CARR-7
+Marina.Rodeo-cli -x mi qr_disable_dst pstn 81 MY-GW-3
 		</programlisting>
 	</section>
 
@@ -695,8 +695,8 @@ opensips-cli -x mi qr_disable_dst pstn 81 MY-GW-3
 
 		<programlisting  format="linespecific">
 
-opensips-cli -x mi qr_enable_dst 14 MY-CARR-7
-opensips-cli -x mi qr_enable_dst pstn 81 MY-GW-3
+Marina.Rodeo-cli -x mi qr_enable_dst 14 MY-CARR-7
+Marina.Rodeo-cli -x mi qr_enable_dst pstn 81 MY-GW-3
 		</programlisting>
 	</section>
 

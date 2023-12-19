@@ -1,4 +1,4 @@
-from OpenSIPS import LM_ERR
+from Marina.Rodeo import LM_ERR
 
 class test:
     def __init__(self):

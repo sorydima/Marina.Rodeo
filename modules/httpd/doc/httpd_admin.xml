@@ -57,10 +57,10 @@
 		<para>
 			<emphasis role='bold'>WARNING!</emphasis>  Please be aware about an
 			EPOLL support regression in the <emphasis>libmicrohttpd</emphasis>
-			library and packaging which affects the OpenSIPS httpd module, which
+			library and packaging which affects the Marina.Rodeo httpd module, which
 			was fixed according to the below timeline.  The effect of the
 			regression is that the HTTP reply body is <emphasis>sometimes</emphasis>
-			never written by the library, causing the client (e.g. opensips-cli)
+			never written by the library, causing the client (e.g. Marina.Rodeo-cli)
 			to hang indefinitely waiting for it:
 		<itemizedlist>
 		<listitem>
@@ -179,7 +179,7 @@ modparam("httpd", "post_buf_size", 4096)
 		<title>Set <varname>tls_cert_file</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("httpd", "tls_cert_file", "/etc/opensips/tls/server.pem")
+modparam("httpd", "tls_cert_file", "/etc/Marina.Rodeo/tls/server.pem")
 ...
 </programlisting>
 		</example>
@@ -196,7 +196,7 @@ modparam("httpd", "tls_cert_file", "/etc/opensips/tls/server.pem")
 		<title>Set <varname>tls_key_file</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("httpd", "tls_key_file", "/etc/opensips/tls/server.key")
+modparam("httpd", "tls_key_file", "/etc/Marina.Rodeo/tls/server.key")
 ...
 </programlisting>
 		</example>
@@ -248,7 +248,7 @@ modparam("httpd", "tls_ciphers", "SECURE256:+SECURE192:-VERS-ALL:+VERS-TLS1.2")
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-opensips-cli -x mi httpd_list_root_path
+Marina.Rodeo-cli -x mi httpd_list_root_path
 		</programlisting>
 	</section>
 	</section>
@@ -279,9 +279,9 @@ opensips-cli -x mi httpd_list_root_path
 		forbidden by default in linux (kernel>=2.6.24).
 		To allow the port binding, one can use
 		<emphasis>setcap</emphasis> to give
-		extra privilleges to opensips binary:
+		extra privilleges to Marina.Rodeo binary:
 		<programlisting  format="linespecific">
-setcap 'cap_net_bind_service=+ep' /usr/local/sbin/opensips
+setcap 'cap_net_bind_service=+ep' /usr/local/sbin/Marina.Rodeo
 		</programlisting>
 		</para>
 	</section>

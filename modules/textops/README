@@ -11,7 +11,7 @@ textops Module
 
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Functions
@@ -67,7 +67,7 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The module implements text based operations over the SIP
-   message processed by OpenSIPS. SIP is a text based protocol and
+   message processed by Marina.Rodeo. SIP is a text based protocol and
    the module provides a large set of very useful functions to
    manipulate the message at text level, e.g., regular expression
    search and replace, Perl-like substitutions, etc.
@@ -85,15 +85,15 @@ From: medabeda
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules.
+     * No dependencies on other Marina.Rodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Functions
@@ -174,7 +174,7 @@ search_append_body("[Oo]pen[Ss]er", " SIP Proxy");
 
    Example 1.5. replace usage
 ...
-replace("opensips", "Open SIP Server");
+replace("Marina.Rodeo", "Open SIP Server");
 ...
 
 1.3.6.  replace_body(re, txt)
@@ -191,7 +191,7 @@ replace("opensips", "Open SIP Server");
 
    Example 1.6. replace_body usage
 ...
-replace_body("opensips", "Open SIP Server");
+replace_body("Marina.Rodeo", "Open SIP Server");
 ...
 
 1.3.7.  replace_all(re, txt)
@@ -207,7 +207,7 @@ replace_body("opensips", "Open SIP Server");
 
    Example 1.7. replace_all usage
 ...
-replace_all("opensips", "Open SIP Server");
+replace_all("Marina.Rodeo", "Open SIP Server");
 ...
 
 1.3.8.  replace_body_all(re, txt)
@@ -224,7 +224,7 @@ replace_all("opensips", "Open SIP Server");
 
    Example 1.8. replace_body_all usage
 ...
-replace_body_all("opensips", "Open SIP Server");
+replace_body_all("Marina.Rodeo", "Open SIP Server");
 ...
 
 1.3.9.  replace_body_atonce(re, txt)
@@ -395,7 +395,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -443,6 +443,6 @@ Chapter 3. Documentation
    Sobolyev (@sobomax), Jiri Kuthan (@jiriatipteldotorg), Andrei
    Pelinescu-Onciul.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2003 FhG FOKUS
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS

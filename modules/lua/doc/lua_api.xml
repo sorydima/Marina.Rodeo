@@ -1,9 +1,9 @@
 <chapter>
-  <title>OpenSIPS Lua API</title>
+  <title>Marina.Rodeo Lua API</title>
   <section>
     <title>Available functions</title>
     <para>
-    This module provides access to a limited number of OpenSIPS
+    This module provides access to a limited number of Marina.Rodeo
     core functions. 
     </para>
     <section>
@@ -15,7 +15,7 @@
     <section>
       <title>xlog([level],message)</title>
       <para>
-      Logs the message with OpenSIPS's logging facility. The logging
+      Logs the message with Marina.Rodeo's logging facility. The logging
       level is one of the following:
         <itemizedlist>
           <listitem><para>ALERT</para></listitem>
@@ -68,7 +68,7 @@
       <title>isMyself(host, port)</title>
       <para>
       Test if the host and optionally the port represent one of the addresses
-      that OpenSIPS listens on.
+      that Marina.Rodeo listens on.
       </para>
     </section>
     <section>

@@ -204,10 +204,10 @@ if (is_method("INVITE") &amp;&amp; !has_totag()) {
 			<programlisting format="linespecific">
 ...
 ## list all sessions
-$ opensips-cli -x mi rtp_relay_list
+$ Marina.Rodeo-cli -x mi rtp_relay_list
 
 ## list all sessions going through a specific RTP node
-$ opensips-cli -x mi rtp_relay_list rtpproxy udp:127.0.0.1:2222
+$ Marina.Rodeo-cli -x mi rtp_relay_list rtpproxy udp:127.0.0.1:2222
 ...
 			</programlisting>
 			</example>
@@ -276,7 +276,7 @@ $ opensips-cli -x mi rtp_relay_list rtpproxy udp:127.0.0.1:2222
 			<programlisting format="linespecific">
 ...
 ## update all sessions that are using rtpproxy
-$ opensips-cli -x mi rtp_relay_update rtpproxy
+$ Marina.Rodeo-cli -x mi rtp_relay_update rtpproxy
 ...
 			</programlisting>
 			</example>
@@ -331,10 +331,10 @@ $ opensips-cli -x mi rtp_relay_update rtpproxy
 			<programlisting format="linespecific">
 ...
 ## update a call with a working RTPproxy node
-$ opensips-cli -x mi rtp_relay_update_callid 1-3758963@127.0.0.1 rtpproxy
+$ Marina.Rodeo-cli -x mi rtp_relay_update_callid 1-3758963@127.0.0.1 rtpproxy
 
 ## update a call to use RTPEngine with a SRTP SDP for caller
-$ opensips-cli -x mi rtp_relay_update_callid callid=1-3758963@127.0.0.1 \
+$ Marina.Rodeo-cli -x mi rtp_relay_update_callid callid=1-3758963@127.0.0.1 \
 	flags='{ "caller":{"type":"SRTP", "flags":"replace-origin"},
 		"callee":{"type":"RTP", "flags"="replace-origin"}}'
 ...

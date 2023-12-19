@@ -1,16 +1,16 @@
 /*
  * modules/plug-in structures declarations
  *
- * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -82,24 +82,24 @@ typedef void (*mod_proc)(int no);
 typedef int (*mod_proc_wrapper)();
 
 /* Macros - used as rank in child_init function */
-#define PROC_MAIN      0  /* Main opensips process */
+#define PROC_MAIN      0  /* Main Marina.Rodeo process */
 #define PROC_TIMER    -1  /* Timer attendant process */
 #define PROC_MODULE   -2  /* Extra process requested by modules */
 #define PROC_TCP_MAIN -4  /* TCP main process */
 #define is_worker_proc(rank) (rank >= 1)
 
 #define DEFAULT_DLFLAGS	0 /* value that signals to module loader to
-							use default dlopen flags in opensips */
+							use default dlopen flags in Marina.Rodeo */
 #ifndef RTLD_NOW
 /* for openbsd */
 #define RTLD_NOW DL_LAZY
 #endif
 
-#define OPENSIPS_DLFLAGS	RTLD_NOW
+#define Marina.Rodeo_DLFLAGS	RTLD_NOW
 
 #define MODULE_VERSION { \
-	.version = OPENSIPS_FULL_VERSION, \
-	.compile_flags = OPENSIPS_COMPILE_FLAGS, \
+	.version = Marina.Rodeo_FULL_VERSION, \
+	.compile_flags = Marina.Rodeo_COMPILE_FLAGS, \
 	.scm.type = VERSIONTYPE, \
 	.scm.rev = THISREVISION \
 }
@@ -193,7 +193,7 @@ struct module_exports{
 	response_function response_f;   /*!< function used for responses,
 	                                   returns yes or no; can be null */
 	destroy_function destroy_f;     /*!< function called when the module should
-	                                   be "destroyed", e.g: on opensips exit */
+	                                   be "destroyed", e.g: on Marina.Rodeo exit */
 	child_init_function init_child_f;/*!< function called by all processes
 	                                    after the fork */
 	reload_confirm_function reload_ack_f;/*!< function called during a script

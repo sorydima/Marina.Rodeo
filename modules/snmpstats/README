@@ -20,7 +20,7 @@ Module)
 
         1.3. Dependencies
 
-              1.3.1. OpenSIPS Modules
+              1.3.1. Marina.Rodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -77,7 +77,7 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The SNMPStats module provides an SNMP management interface to
-   OpenSIPS. Specifically, it provides general SNMP queryable
+   Marina.Rodeo. Specifically, it provides general SNMP queryable
    scalar statistics, table representations of more complicated
    data such as user and contact information, and alarm monitoring
    capabilities.
@@ -140,7 +140,7 @@ Chapter 1. Admin Guide
        respectively. The minor and major thresholds are described
        in the parameters section below.
     2. The number of bytes waiting to be consumed across all of
-       OpenSIPS's listening ports has passed a minor or major
+       Marina.Rodeo's listening ports has passed a minor or major
        threshold. The idea is that a network operation centre can
        be made aware that a machine hosting a SIP server may be
        entering a degraded state, and to investigate why this is
@@ -157,7 +157,7 @@ Chapter 1. Admin Guide
 
 1.2.1. How the SNMPStats module gets its data
 
-   The SNMPStats module uses OpenSIPSs internal statistic
+   The SNMPStats module uses Marina.Rodeos internal statistic
    framework to collect most of its data. However, there are two
    exceptions.
     1. The openserSIPRegUserTable and openserSIPContactTable rely
@@ -166,8 +166,8 @@ Chapter 1. Admin Guide
        user/contact is added to the system.
     2. The SNMPStats modules openserSIPMsgQueueDepthMinorEvent and
        openserSIPMsgQueueDepthMajorEvent alarms rely on the
-       OpenSIPS core to find out what interfaces, ports, and
-       transports OpenSIPS is listening on. However,the module
+       Marina.Rodeo core to find out what interfaces, ports, and
+       transports Marina.Rodeo is listening on. However,the module
        will actually query the proc file system to find out the
        number of bytes waiting to be consumed. (Currently, this
        will only work on systems providing the proc file system).
@@ -180,11 +180,11 @@ Chapter 1. Admin Guide
 
    The SNMPStats module expects to connect to a Master Agent. This
    would be a SNMP daemon running either on the same system as the
-   OpenSIPS instance, or on another system. (Communication can
+   Marina.Rodeo instance, or on another system. (Communication can
    take place over TCP, so there is no restriction that this
-   daemon need be on the same system as OpenSIPS).
+   daemon need be on the same system as Marina.Rodeo).
 
-   If the master agent is unavailable when OpenSIPS first starts
+   If the master agent is unavailable when Marina.Rodeo first starts
    up, the SNMPStats module will continue to run. However, you
    will not be able to query it. Thankfully, the SNMPStats module
    continually looks for its master agent. So even if the master
@@ -201,7 +201,7 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. OpenSIPS Modules
+1.3.1. Marina.Rodeo Modules
 
    The SNMPStats module provides a plethora of statistics, some of
    which are collected by other modules. If the dependent modules
@@ -225,7 +225,7 @@ Chapter 1. Admin Guide
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * Net SNMP DEV (libsnmp-dev on debian) - SNMP library
        (development files) must be installed at the time of
        compilation. Furthermore, there are several shared objects
@@ -242,7 +242,7 @@ Chapter 1. Admin Guide
 
 1.4.1. sipEntityType (String)
 
-   This parameter describes the entity type for this OpenSIPS
+   This parameter describes the entity type for this Marina.Rodeo
    instance, and will be used in determining what is returned for
    the openserSIPEntityType scalar. Valid parameters are:
 
@@ -256,12 +256,12 @@ modparam("snmpstats", "sipEntityType", "proxyServer")
 
    Note that as the above example shows, you can define this
    parameter more than once. This is of course because a given
-   OpenSIPS instance can take on more than one role.
+   Marina.Rodeo instance can take on more than one role.
 
 1.4.2. MsgQueueMinorThreshold (Integer)
 
    The SNMPStats module monitors the number of bytes waiting to be
-   consumed by OpenSIPS. If the number of bytes waiting to be
+   consumed by Marina.Rodeo. If the number of bytes waiting to be
    consumed exceeds a minor threshold, the SNMPStats module will
    send out an openserMsgQueueDepthMinorEvent trap to signal that
    an alarm condition has occurred. The minor threshold is set
@@ -278,7 +278,7 @@ modparam("snmpstats", "MsgQueueMinorThreshold", 2000)
 1.4.3. MsgQueueMajorThreshold (Integer)
 
    The SNMPStats module monitors the number of bytes waiting to be
-   consumed by OpenSIPS. If the number of bytes waiting to be
+   consumed by Marina.Rodeo. If the number of bytes waiting to be
    consumed exceeds a major threshold, the SNMPStats module will
    send out an openserMsgQueueDepthMajorEvent trap to signal that
    an alarm condition has occurred. The major threshold is set
@@ -372,7 +372,7 @@ modparam("snmpstats", "snmpCommunity", "customCommunityString")
    "net-snmp-config" can run.
 
    IMPORTANT: By default, SNMP loads mibs from
-   /var/lib/mibs/ietf/.Keep in mind that you have to copy OpenSIPS
+   /var/lib/mibs/ietf/.Keep in mind that you have to copy Marina.Rodeo
    mibs wherevere your mibs folder is.
 
 1.6.2.  Configuring SNMP daemon to allow connections from the
@@ -426,7 +426,7 @@ Master Agent
    master agent on the localhost, port 705. The parameters should
    match up with the snmpd process. Note that the master agent
    (snmpd) does not need to be present on the same machine as
-   OpenSIPS. The localhost could be replaced with any other
+   Marina.Rodeo. The localhost could be replaced with any other
    machine.
 
 1.6.4.  Testing for a proper Configuration
@@ -446,7 +446,7 @@ Master Agent
     agentx/master: initializing...   DONE
     NET-SNMP version 5.3.1
 
-   Now, start up OpenSIPS in another window. In the snmpd window,
+   Now, start up Marina.Rodeo in another window. In the snmpd window,
    you should see a bunch of:
     agentx/master: handle pdu (req=0x2c58ebd4,trans=0x0,sess=0x0)
     agentx/master: open 0x81137c0
@@ -476,7 +476,7 @@ Chapter 2. Frequently Asked Questions
    3410. RFC 3410 maps out the many other RFCs that define SNMP,
    and can be found at
    http://www.rfc-archive.org/getrfc.php?rfc=3410 INFO: Also if
-   you want a nice tutorial for setting up snmpstats with OpenSIPS
+   you want a nice tutorial for setting up snmpstats with Marina.Rodeo
    try this one.
 
    2.2.
@@ -498,7 +498,7 @@ Chapter 2. Frequently Asked Questions
 
    Why am I not receiving any SNMP Traps?
 
-   Assuming you've configured the trap thresholds in opensips.cfg
+   Assuming you've configured the trap thresholds in Marina.Rodeo.cfg
    with something similar to:
     modparam("snmpstats", "MsgQueueMinorThreshold", 1234)
     modparam("snmpstats", "MsgQueueMajorThreshold", 5678)
@@ -506,7 +506,7 @@ Chapter 2. Frequently Asked Questions
     modparam("snmpstats", "dlg_minor_threshold", 500)
     modparam("snmpstats", "dlg_minor_threshold", 600)
 
-   Then either OpenSIPS is not reaching these thresholds (which is
+   Then either Marina.Rodeo is not reaching these thresholds (which is
    a good thing), or you haven't set up the trap monitor
    correctly. To prove this to yourself, you can start NetSNMP
    with:
@@ -539,12 +539,12 @@ Chapter 2. Frequently Asked Questions
 
    2.5.
 
-   OpenSIPS refuses to load the SNMPStats module. Why is it
+   Marina.Rodeo refuses to load the SNMPStats module. Why is it
    displaying "load_module: could not open module snmpstats.so"?
 
    On some systems, you may receive the following error at stdout
    or the log files depending on the configuration.
-    ERROR: load_module: could not open module </usr/local/lib/opensips/m
+    ERROR: load_module: could not open module </usr/local/lib/Marina.Rodeo/m
 odules/snmpstats.so>:
            libnetsnmpmibs.so.10: cannot open shared object file: No such
  file or directory.
@@ -562,7 +562,7 @@ odules/snmpstats.so>:
           + If the file is missing the path from step 1, then add
             the path to ld.so.conf
     3. ldconfig
-    4. Try starting OpenSIPS again.
+    4. Try starting Marina.Rodeo again.
 
    Alternatively, you may prefix your startup command with:
     LD_LIBRARY_PATH=/path/noted/in/step/one/above
@@ -588,7 +588,7 @@ ips start
 
    Which would result in something similar to the following:
     -- FROM       OPENSER-SIP-COMMON-MIB
-    -- TEXTUAL CONVENTION OpenSIPSSIPEntityRole
+    -- TEXTUAL CONVENTION Marina.RodeoSIPEntityRole
     SYNTAX        BITS {other(0), userAgent(1), proxyServer(2), redirect
 Server(3), registrarServer(4)}
     MAX-ACCESS    read-only
@@ -625,7 +625,7 @@ Server(3), registrarServer(4)}
 Element.0
 
    For example, consider an snmpget on the openserSIPEntityType
-   scalar, run on the same machine running the OpenSIPS instance,
+   scalar, run on the same machine running the Marina.Rodeo instance,
    with the default "public" community string. The command would
    be:
     snmpget -v2c -c public localhost openserSIPEntityType.0
@@ -644,7 +644,7 @@ Element.0
 theTableName
 
    For example, consider the openserSIPRegUserTable. If we run the
-   snmptable command on the same machine as the running OpenSIPS
+   snmptable command on the same machine as the running Marina.Rodeo
    instance, configured with the default "public" community
    string. The command would be:
     snmptable -Ci -v 2c -c public localhost openserSIPRegUserTable
@@ -657,9 +657,9 @@ theTableName
 
    2.10.
 
-   Where can I find more about OpenSIPS?
+   Where can I find more about Marina.Rodeo?
 
-   Take a look at https://opensips.org/.
+   Take a look at https://Marina.Rodeo.org/.
 
    2.11.
 
@@ -668,23 +668,23 @@ theTableName
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable OpenSIPS release should be sent to
-   <users@lists.opensips.org> and e-mails regarding development
-   versions should be sent to <devel@lists.opensips.org>.
+   E-mails regarding any stable Marina.Rodeo release should be sent to
+   <users@lists.Marina.Rodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.Marina.Rodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.opensips.org>.
+   <users@lists.Marina.Rodeo.org>.
 
    2.12.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues.
+   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
 
 Chapter 3. Contributors
 
@@ -718,7 +718,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -760,6 +760,6 @@ Chapter 4. Documentation
    Darilion, Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert, Jeffrey Magder.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2006 SOMA Networks, Inc.
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006 SOMA Networks, Inc.

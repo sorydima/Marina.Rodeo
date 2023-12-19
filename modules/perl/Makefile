@@ -8,7 +8,7 @@ NAME=perl.so
 
 include ../../lib/modules.mk/perl.mk
 
-PODFILES=opensipsxs.xs
+PODFILES=Marina.Rodeoxs.xs
 PODFILES+=$(shell find lib/perl -name *.pm)
 
 ifeq ($(TYPEMAP),)
@@ -18,44 +18,44 @@ ifeq ($(TYPEMAP),)
 	TYPEMAP=$(PERLLIBPATH)/ExtUtils/typemap
 endif
 
-perl.d: opensipsxs.o
-perl.o: perl.c opensipsxs.o
+perl.d: Marina.Rodeoxs.o
+perl.o: perl.c Marina.Rodeoxs.o
 
-opensipsxs.o: opensipsxs.c opensipsxs.d
-	$(Q)$(CC) $(MOD_CFLAGS) $(DEFS) -c -o opensipsxs.o opensipsxs.c
+Marina.Rodeoxs.o: Marina.Rodeoxs.c Marina.Rodeoxs.d
+	$(Q)$(CC) $(MOD_CFLAGS) $(DEFS) -c -o Marina.Rodeoxs.o Marina.Rodeoxs.c
 
-opensipsxs.c: opensipsxs.xs typemap
-	$(Q)$(PERLBINDIR)xsubpp -typemap $(TYPEMAP) -typemap typemap opensipsxs.xs > opensipsxs.c
+Marina.Rodeoxs.c: Marina.Rodeoxs.xs typemap
+	$(Q)$(PERLBINDIR)xsubpp -typemap $(TYPEMAP) -typemap typemap Marina.Rodeoxs.xs > Marina.Rodeoxs.c
 
 clean:	clean-special
 
 .PHONY: clean-special
 clean-special:
-	-$(Q)rm -f opensipsxs.c opensipsxs.o opensipsxs.d
+	-$(Q)rm -f Marina.Rodeoxs.c Marina.Rodeoxs.o Marina.Rodeoxs.d
 
 .PHONY: perlpod
 perlpod: doc/perl_pod.sgml
 
-doc/perl_pod.sgml: opensipsxs.xs
-	cat $(PODFILES) | pod2docbook --doctype=chapter --title='OpenSIPS Perl API' --no-header - doc/perl_pod.sgml
+doc/perl_pod.sgml: Marina.Rodeoxs.xs
+	cat $(PODFILES) | pod2docbook --doctype=chapter --title='Marina.Rodeo Perl API' --no-header - doc/perl_pod.sgml
 
 install_module_custom:
-	echo "installing Perl OpenSIPS packages ..."
+	echo "installing Perl Marina.Rodeo packages ..."
 	mkdir -p $(modules_prefix)/$(lib_dir)/perl
 	$(INSTALL_CFG) lib/perl/*.pm $(modules_prefix)/$(lib_dir)/perl
-	mkdir -p $(modules_prefix)/$(lib_dir)/perl/OpenSIPS
-	$(INSTALL_CFG) lib/perl/OpenSIPS/*.pm \
-		$(modules_prefix)/$(lib_dir)/perl/OpenSIPS
-	mkdir -p $(modules_prefix)/$(lib_dir)/perl/OpenSIPS/LDAPUtils
-	$(INSTALL_CFG) lib/perl/OpenSIPS/LDAPUtils/*.pm \
-		$(modules_prefix)/$(lib_dir)/perl/OpenSIPS/LDAPUtils
-	mkdir -p $(modules_prefix)/$(lib_dir)/perl/OpenSIPS/Utils
-	$(INSTALL_CFG) lib/perl/OpenSIPS/Utils/*.pm \
-		$(modules_prefix)/$(lib_dir)/perl/OpenSIPS/Utils
-	mkdir -p $(modules_prefix)/$(lib_dir)/perl/OpenSIPS/VDB
-	$(INSTALL_CFG) lib/perl/OpenSIPS/VDB/*.pm \
-		$(modules_prefix)/$(lib_dir)/perl/OpenSIPS/VDB
-	mkdir -p $(modules_prefix)/$(lib_dir)/perl/OpenSIPS/VDB/Adapter
-	$(INSTALL_CFG) lib/perl/OpenSIPS/VDB/Adapter/*.pm \
-		$(modules_prefix)/$(lib_dir)/perl/OpenSIPS/VDB/Adapter
+	mkdir -p $(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo
+	$(INSTALL_CFG) lib/perl/Marina.Rodeo/*.pm \
+		$(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo
+	mkdir -p $(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo/LDAPUtils
+	$(INSTALL_CFG) lib/perl/Marina.Rodeo/LDAPUtils/*.pm \
+		$(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo/LDAPUtils
+	mkdir -p $(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo/Utils
+	$(INSTALL_CFG) lib/perl/Marina.Rodeo/Utils/*.pm \
+		$(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo/Utils
+	mkdir -p $(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo/VDB
+	$(INSTALL_CFG) lib/perl/Marina.Rodeo/VDB/*.pm \
+		$(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo/VDB
+	mkdir -p $(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo/VDB/Adapter
+	$(INSTALL_CFG) lib/perl/Marina.Rodeo/VDB/Adapter/*.pm \
+		$(modules_prefix)/$(lib_dir)/perl/Marina.Rodeo/VDB/Adapter
 

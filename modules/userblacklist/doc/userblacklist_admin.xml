@@ -4,7 +4,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-	The userblacklist module allows OpenSIPS to handle blacklists
+	The userblacklist module allows Marina.Rodeo to handle blacklists
 	on a per user basis. This information is stored in a database
 	table, which is queried to decide if the number (more exactly,
 	the request URI user) is blacklisted or not.
@@ -204,7 +204,7 @@ if (!check_blacklist("global_blacklist")))
 		<title><function>reload_blacklists</function> usage</title>
 		<programlisting format="linespecific">
 ...
-opensips-cli -x mi reload_blacklist
+Marina.Rodeo-cli -x mi reload_blacklist
 ...
 		</programlisting>
 	    </example>
@@ -220,7 +220,7 @@ opensips-cli -x mi reload_blacklist
 			the table was not created by the installation script or you choose
 			to install everything by yourself you can use the userblacklist-create.sql
 			<acronym>SQL</acronym> script in the database directories in the 
-			opensips/scripts folder as template. 
+			Marina.Rodeo/scripts folder as template. 
 			Database and table name can be set with module parameters so they 
 			can be changed, but the name of the columns must be as they are 
 			in the <acronym>SQL</acronym> script.

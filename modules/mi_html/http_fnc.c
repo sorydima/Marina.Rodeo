@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2011-2013 VoIP Embedded, Inc.
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011-2013 VoIP Embedded, Inc.
  *
- * This file is part of Open SIP Server (opensips).
+ * This file is part of Open SIP Server (Marina.Rodeo).
  *
- * opensips is free software; you can redistribute it and/or
+ * Marina.Rodeo is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -204,7 +204,7 @@ static const str MI_HTTP_METHOD[] = {
 };
 
 static const str MI_HTTP_Response_Head_1 = str_init("<html><head><title>"\
-	"OpenSIPS Management Interface</title>"\
+	"Marina.Rodeo Management Interface</title>"\
 	"<style type=\"text/css\">"\
 		"body{margin:0;}body,p,div,td,th,tr,form,ol,ul,li,input,textarea,select,"\
 		"a{font-family:\"lucida grande\",verdana,geneva,arial,helvetica,sans-serif;font-size:14px;}"\
@@ -218,7 +218,7 @@ static const str MI_HTTP_Response_Head_1 = str_init("<html><head><title>"\
 
 
 static const str MI_HTTP_Response_Head_2 = str_init(\
-"<link rel=\"icon\" type=\"image/png\" href=\"https://opensips.org/favicon.png\">"\
+"<link rel=\"icon\" type=\"image/png\" href=\"https://Marina.Rodeo.org/favicon.png\">"\
 "</head>\n"\
 "<body alink=\"#000000\" bgcolor=\"#ffffff\" link=\"#000000\" text=\"#000000\" vlink=\"#000000\">");
 
@@ -226,7 +226,7 @@ static const str MI_HTTP_Response_Title_Table_1 = str_init(\
 "<table cellspacing=\"0\" cellpadding=\"5\" width=\"100%%\" border=\"0\">"\
 	"<tr bgcolor=\"#BBDDFF\">"\
 	"<td colspan=2 valign=\"top\" align=\"left\" bgcolor=\"#EFF7FF\" width=\"100%%\">"\
-	"<br/><h2 align=\"center\">OpenSIPS MI HTML Interface</h2>"\
+	"<br/><h2 align=\"center\">Marina.Rodeo MI HTML Interface</h2>"\
 	"<p align=\"center\">");
 static const str MI_HTTP_Response_Title_Table_2 = str_init(" is running since <i>");
 static const str MI_HTTP_Response_Title_Table_3 = str_init("</i></p><br/></td></tr></table>\n<center>\n");
@@ -270,8 +270,8 @@ static const str MI_HTTP_Post_2 = str_init("\">\n"\
 static const str MI_HTTP_Response_Foot = str_init(\
 "\n</center>\n<div align=\"center\" class=\"foot\" style=\"margin:20px auto\">"\
 	"<span style='margin-left:5px;'></span>"\
-	"<a href=\"https://opensips.org\">OpenSIPS web site</a><br/>"\
-	"Copyright &copy; 2011-2015 <a href=\"http://www.voipembedded.com/\">VoIP Embedded, Inc.</a>"\
+	"<a href=\"https://Marina.Rodeo.org\">Marina.Rodeo web site</a><br/>"\
+	"Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 &copy; 2011-2015 <a href=\"http://www.voipembedded.com/\">VoIP Embedded, Inc.</a>"\
 								". All rights reserved."\
 "</div></body></html>");
 

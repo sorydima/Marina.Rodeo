@@ -10,7 +10,7 @@ rtpproxy Module
         1.3. RTPProxy timeout notifications
         1.4. Dependencies
 
-              1.4.1. OpenSIPS Modules
+              1.4.1. Marina.Rodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -126,7 +126,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   This module is used by OpenSIPS to communicate with RTPProxy, a
+   This module is used by Marina.Rodeo to communicate with RTPProxy, a
    media relay proxy used to make the communication between user
    agents behind NAT possible.
 
@@ -152,7 +152,7 @@ Chapter 1. Admin Guide
    rtpproxies (with a different weight value than 0) respond.
    Default weight is 1.
 
-   Starting with OpenSIPS 2.1, engage_rtp_proxy(),
+   Starting with Marina.Rodeo 2.1, engage_rtp_proxy(),
    unforce_rtp_proxy() and start_recording() functions have been
    fully replaced by rtpproxy_engage(), rtpproxy_unforce() and
    rtpproxy_start_recording().
@@ -188,7 +188,7 @@ Chapter 1. Admin Guide
    To enable timeout notification there are several steps that you
    must follow:
 
-   Start OpenSIPS timeout detection by setting the
+   Start Marina.Rodeo timeout detection by setting the
    “rtpp_notify_socket” module parameter in your configuration
    script. This is the socket where further notification will be
    received from rtpproxies. This socket must be a TCP or UNIX
@@ -200,7 +200,7 @@ Chapter 1. Admin Guide
    following command line parameters:
      * “ -n timeout_socket” - specifies where the notifications
        will be sent. This socket must be the same as
-       “rtpp_notify_socket” OpenSIPS module parameter. This
+       “rtpp_notify_socket” Marina.Rodeo module parameter. This
        parameter is mandatory.
      * “ -T ttl” - limits the rtp session timeout to “ttl”. This
        parameter is optional and the default value is 60 seconds.
@@ -223,11 +223,11 @@ Chapter 1. Admin Guide
      * Patch RTPProxy: “patch < path_to_rtpproxy_patch”
 
    The patched version can also be found at:
-   https://opensips.org/pub/rtpproxy/
+   https://Marina.Rodeo.org/pub/rtpproxy/
 
 1.4. Dependencies
 
-1.4.1. OpenSIPS Modules
+1.4.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * a database module - only if you want to load use a database
@@ -238,7 +238,7 @@ Chapter 1. Admin Guide
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.5. Exported Parameters
@@ -374,7 +374,7 @@ modparam("rtpproxy", "nortpproxy_str", "a=sdpmangled:yes\r\n")
    Example 1.8. Set db_url parameter
 ...
 modparam("rtpproxy", "db_url",
-                "mysql://opensips:opensipsrw@192.168.2.132/opensips")
+                "mysql://Marina.Rodeo:Marina.Rodeorw@192.168.2.132/Marina.Rodeo")
 ...
 
 
@@ -417,8 +417,8 @@ modparam("rtpproxy", "set_id_col", "rtpp_set_id")
 
 1.5.12. rtpp_notify_socket (string)
 
-   The socket OpenSIPS listens for notifications from RTPProxy.
-   Currently OpenSIPS can receive RTP timeout and DTMF events.
+   The socket Marina.Rodeo listens for notifications from RTPProxy.
+   Currently Marina.Rodeo can receive RTP timeout and DTMF events.
 
    Default value is “NULL” - no notifications are received.
 
@@ -480,7 +480,7 @@ modparam("rtpproxy", "generated_sdp_media_ip", "10.0.0.1")
    called for the initial INVITE and internally takes care of
    rewriting the body of 200 OKs and ACKs. Note that when used in
    bridge mode, this function might advertise wrong interfaces in
-   SDP (due to the fact that OpenSIPS is not aware of the RTPProxy
+   SDP (due to the fact that Marina.Rodeo is not aware of the RTPProxy
    configuration), so you might face an undefined behavior.
 
    Meaning of the parameters is as follows:
@@ -762,7 +762,7 @@ rtpproxy_stop_stream2uas([[set_id][, sock_var]])
      * mediastream(int, optional) - this parameter is only used if
        the destination is specified, and represents the index of
        media stream to record/copy, starting from 1. If this
-       parameter is missing, OpenSIPS instructs RTPProxy to copy
+       parameter is missing, Marina.Rodeo instructs RTPProxy to copy
        all the streams.
 
    This function can be used from REQUEST_ROUTE and ONREPLY_ROUTE.
@@ -865,9 +865,9 @@ xlog("RTP statistics for $ci: dropped=$(avp(stats)[4])\n");
    Example 1.24.  rtpproxy_enable usage
 ...
 ## disable a RTPProxy by URL only
-$ opensips-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0
+$ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0
 ## disable a RTPProxy by URL and set ID (3)
-$ opensips-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
+$ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
 ...
 
 1.7.2. rtpproxy_show
@@ -879,7 +879,7 @@ $ opensips-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
 
    Example 1.25.  rtpproxy_show usage
 ...
-$ opensips-cli -x mi rtpproxy_show
+$ Marina.Rodeo-cli -x mi rtpproxy_show
 ...
 
 1.7.3. rtpproxy_reload
@@ -893,7 +893,7 @@ $ opensips-cli -x mi rtpproxy_show
 
    Example 1.26.  rtpproxy_reload usage
 ...
-$ opensips-cli -x mi rtpproxy_reload
+$ Marina.Rodeo-cli -x mi rtpproxy_reload
 ...
 
 1.8. Exported Events
@@ -911,7 +911,7 @@ $ opensips-cli -x mi rtpproxy_reload
 1.8.2.  E_RTPPROXY_DTMF
 
    This event is raised when a RTPProxy server sends a DTMF
-   notification to OpenSIPS. In order to catch RFC 2833/4733 DTMF
+   notification to Marina.Rodeo. In order to catch RFC 2833/4733 DTMF
    events, you need to provide the d flag to rtpproxy_offer()/
    rtpproxy_answer().
 
@@ -938,9 +938,9 @@ Chapter 2. Frequently Asked Questions
 
    2.2.
 
-   Where can I find more about OpenSIPS?
+   Where can I find more about Marina.Rodeo?
 
-   Take a look at https://opensips.org/.
+   Take a look at https://Marina.Rodeo.org/.
 
    2.3.
 
@@ -949,23 +949,23 @@ Chapter 2. Frequently Asked Questions
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable OpenSIPS release should be sent to
-   <users@lists.opensips.org> and e-mails regarding development
-   versions should be sent to <devel@lists.opensips.org>.
+   E-mails regarding any stable Marina.Rodeo release should be sent to
+   <users@lists.Marina.Rodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.Marina.Rodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.opensips.org>.
+   <users@lists.Marina.Rodeo.org>.
 
    2.4.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues.
+   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
 
 Chapter 3. Contributors
 
@@ -999,7 +999,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1042,8 +1042,8 @@ Chapter 4. Documentation
    (@bogdan-iancu), Mikko Lehto, Ryan Bullock (@rrb3942), Ovidiu
    Sas (@ovidiusas).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2005 Voice Sistem SRL
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Voice Sistem SRL
 
-   Copyright © 2003-2008 Sippy Software, Inc.
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003-2008 Sippy Software, Inc.

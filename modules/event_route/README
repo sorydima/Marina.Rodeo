@@ -11,7 +11,7 @@ event_route Module
         1.4. EVENT_ROUTE socket syntax
         1.5. Dependencies
 
-              1.5.1. OpenSIPS Modules
+              1.5.1. Marina.Rodeo Modules
               1.5.2. External Libraries or Applications
 
         1.6. Exported Parameters
@@ -43,14 +43,14 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    This module provides a simple way for capturing and handling
-   directly in the OpenSIPS script of different events triggered
-   through the OpenSIPS Event Interface
+   directly in the Marina.Rodeo script of different events triggered
+   through the Marina.Rodeo Event Interface
 
    If you want to capture and handle a certian event, you need to
-   define a dedicated route (event_route) into the OpenSIPS
+   define a dedicated route (event_route) into the Marina.Rodeo
    script, route having as name the name/code of the desired
    event. The route is triggered (and executed) by the module when
-   the corresponding event is raised by the OpenSIPS
+   the corresponding event is raised by the Marina.Rodeo
 
    NOTE that the triggered event_route is run asyncronus (and in a
    different process) in regards to the code or process that
@@ -92,7 +92,7 @@ xlog("Pike Blocking IP is $param(ip)\n");
 
 1.4. EVENT_ROUTE socket syntax
 
-   As the OpenSIPS Event Interface requires, the event_route
+   As the Marina.Rodeo Event Interface requires, the event_route
    module uses a specific socket syntax:
 
    'route:' event_name
@@ -103,15 +103,15 @@ xlog("Pike Blocking IP is $param(ip)\n");
 
 1.5. Dependencies
 
-1.5.1. OpenSIPS Modules
+1.5.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules.
+     * No dependencies on other Marina.Rodeo modules.
 
 1.5.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * none
 
 1.6. Exported Parameters
@@ -136,14 +136,14 @@ Chapter 2. Frequently Asked Questions
 
    What happened with the “fetch_event_params()” function?
 
-   This function has been dropped starting with OpenSIPS 3.0. Its
+   This function has been dropped starting with Marina.Rodeo 3.0. Its
    functionality has been replaced by the “$param(name)” variable.
 
    2.3.
 
-   Where can I find more about OpenSIPS?
+   Where can I find more about Marina.Rodeo?
 
-   Take a look at https://opensips.org/.
+   Take a look at https://Marina.Rodeo.org/.
 
    2.4.
 
@@ -152,23 +152,23 @@ Chapter 2. Frequently Asked Questions
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable OpenSIPS release should be sent to
-   <users@lists.opensips.org> and e-mails regarding development
-   versions should be sent to <devel@lists.opensips.org>.
+   E-mails regarding any stable Marina.Rodeo release should be sent to
+   <users@lists.Marina.Rodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.Marina.Rodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.opensips.org>.
+   <users@lists.Marina.Rodeo.org>.
 
    2.5.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues.
+   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
 
 Chapter 3. Contributors
 
@@ -198,7 +198,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -235,6 +235,6 @@ Chapter 4. Documentation
    (@liviuchircu), Ionut Ionita (@ionutrazvanionita), Ovidiu Sas
    (@ovidiusas).
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2012 www.opensips-solutions.com
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2012 www.Marina.Rodeo-solutions.com

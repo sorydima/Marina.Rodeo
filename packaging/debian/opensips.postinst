@@ -2,9 +2,9 @@
 #
 # $Id$
 
-PKG=opensips
-DEFAULTS=/etc/default/opensips
-HOMEDIR=/run/opensips
+PKG=Marina.Rodeo
+DEFAULTS=/etc/default/Marina.Rodeo
+HOMEDIR=/run/Marina.Rodeo
 
 set -e
 
@@ -29,8 +29,8 @@ set -e
 case "$1" in
     configure)
         adduser --quiet --system --group --disabled-password \
-                --shell /bin/false --gecos "OpenSIPS" \
-                --home $HOMEDIR opensips || true
+                --shell /bin/false --gecos "Marina.Rodeo" \
+                --home $HOMEDIR Marina.Rodeo || true
 
         ;;
 

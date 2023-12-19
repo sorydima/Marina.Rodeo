@@ -21,9 +21,9 @@
 
 	<para>
 		In order to be notified, a JSON-RPC server has to subscribe for a
-		certain event provided by OpenSIPS. This can be done using the generic
+		certain event provided by Marina.Rodeo. This can be done using the generic
 		MI Interface (<emphasis>event_subscribe</emphasis> function) or from
-		OpenSIPS script (<emphasis>subscribe_event</emphasis> core function).
+		Marina.Rodeo script (<emphasis>subscribe_event</emphasis> core function).
 	</para>
 	</section>
 
@@ -161,7 +161,7 @@ modparam("event_stream", "reliable_mode", yes)
 			<emphasis>reliable_mode</emphasis>, it specifies the time
 			module waits the request to be sent and a reply received.
 			In non-<emphasis>reliable_mode</emphasis>, it represents
-			only the time opensips takes to send the JSON-RPC
+			only the time Marina.Rodeo takes to send the JSON-RPC
 			notification.
 		</para>
 		<para>
@@ -201,8 +201,8 @@ modparam("event_stream", "timeout", 200)
 		<title>Set <varname>event_param</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("event_stream", "event_param", "opensips_event")
-# json resulted will contain the "opensips_event": EVENT token
+modparam("event_stream", "event_param", "Marina.Rodeo_event")
+# json resulted will contain the "Marina.Rodeo_event": EVENT token
 ...
 </programlisting>
 		</example>
@@ -292,7 +292,7 @@ modparam("event_stream", "event_param", "opensips_event")
 	<title>JSON-RPC Notification with Event's name</title>
 		<para>
 			when having the <emphasis>event_param</emphasis> set to
-			<emphasis>opensips_event</emphasis>, the event raised by
+			<emphasis>Marina.Rodeo_event</emphasis>, the event raised by
 			the pike module will look like the following:
 		</para>
 		<example>
@@ -300,7 +300,7 @@ modparam("event_stream", "event_param", "opensips_event")
 		<programlisting format="linespecific">
 <![CDATA[
 # module configuration
-modparam("event_stream", "event_param", "opensips_event")
+modparam("event_stream", "event_param", "Marina.Rodeo_event")
 
 # Stream socket: tcp:HOST:PORT/handle_cmd
 
@@ -309,7 +309,7 @@ modparam("event_stream", "event_param", "opensips_event")
 	"jsonrpc": "2.0",
 	"method": "handle_cmd",
 	"params": {
-		"opensips_event": "E_PIKE_BLOCKED"
+		"Marina.Rodeo_event": "E_PIKE_BLOCKED"
 		"ip": "192.168.2.11"
 	}
 }

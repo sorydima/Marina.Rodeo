@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2009 Sippy Software, Inc., http://www.sippysoft.com
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Sippy Software, Inc., http://www.sippysoft.com
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -36,7 +36,7 @@ static int mod_init(void);
 static int child_init(int rank);
 static void mod_destroy(void);
 
-static str script_name = str_init("/usr/local/etc/opensips/handler.py");
+static str script_name = str_init("/usr/local/etc/Marina.Rodeo/handler.py");
 static str mod_init_fname = str_init("mod_init");
 static str child_init_mname = str_init("child_init");
 PyObject *handler_obj;
@@ -70,7 +70,7 @@ struct module_exports exports = {
     MODULE_VERSION,
     RTLD_NOW | RTLD_GLOBAL,         /* dlopen flags */
     0,                              /* load function */
-    NULL,                           /* OpenSIPS module dependencies */
+    NULL,                           /* Marina.Rodeo module dependencies */
     cmds,                           /* exported functions */
     0,                              /* exported async functions */
     params,                         /* exported parameters */
@@ -114,8 +114,8 @@ mod_init(void)
     if (strlen(dname) == 0)
         dname = ".";
 
-    if (PyImport_AppendInittab("OpenSIPS", &PyInit_OpenSIPS) < 0) {
-        LM_ERR("could not append init tab for OpenSIPS!\n");
+    if (PyImport_AppendInittab("Marina.Rodeo", &PyInit_Marina.Rodeo) < 0) {
+        LM_ERR("could not append init tab for Marina.Rodeo!\n");
         return -1;
     }
 
@@ -303,15 +303,15 @@ mod_destroy(void)
 }
 
 #if PY_MAJOR_VERSION >= 3
-PyMODINIT_FUNC PyInit_OpenSIPS(void)
+PyMODINIT_FUNC PyInit_Marina.Rodeo(void)
 {
     PyObject *m;
     static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
-        "OpenSIPS",          /* m_name */
+        "Marina.Rodeo",          /* m_name */
         NULL,                /* m_doc */
         -1,                  /* m_size */
-        OpenSIPSMethods,     /* m_methods */
+        Marina.RodeoMethods,     /* m_methods */
         NULL,                /* m_reload */
         NULL,                /* m_traverse */
         NULL,                /* m_clear */
@@ -319,14 +319,14 @@ PyMODINIT_FUNC PyInit_OpenSIPS(void)
     };
     m = PyModule_Create(&moduledef);
     if (!m) {
-        LM_ERR("could not create OpenSIPS module!\n");
+        LM_ERR("could not create Marina.Rodeo module!\n");
         return NULL;
     }
     return m;
 }
 #else
-void initOpenSIPS(void)
+void initMarina.Rodeo(void)
 {
-    Py_InitModule("OpenSIPS", OpenSIPSMethods);
+    Py_InitModule("Marina.Rodeo", Marina.RodeoMethods);
 }
 #endif

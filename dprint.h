@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
  *
- * This file is part of opensips, a free SIP server.
+ * This file is part of Marina.Rodeo, a free SIP server.
  *
- * opensips is free software; you can redistribute it and/or modify
+ * Marina.Rodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * opensips is distributed in the hope that it will be useful,
+ * Marina.Rodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -21,7 +21,7 @@
 
 /*!
  * \file
- * \brief OpenSIPS Debug console print functions
+ * \brief Marina.Rodeo Debug console print functions
  * \see syslog.h
  */
 
@@ -140,7 +140,7 @@ extern str log_cee_hostname;
 
 /*
  * must be called after init_multi_proc_support()
- * must be called once for each OpenSIPS process
+ * must be called once for each Marina.Rodeo process
  */
 int init_log_level(void);
 
@@ -180,7 +180,7 @@ void __set_proc_log_level(int proc_idx, int level);
 
 void __set_proc_default_log_level(int proc_idx, int level);
 
-/* set the current and default log levels for all OpenSIPS processes */
+/* set the current and default log levels for all Marina.Rodeo processes */
 void set_global_log_level(int level);
 
 /* set the log level of the current process */
@@ -609,8 +609,8 @@ static inline char *dp_log_level_str(int log_level)
 #define LM_BUG(format, args...) \
 	do { \
 		LM_CRIT("\n>>> " format"\nIt seems you have hit a programming bug.\n" \
-				"Please help us make OpenSIPS better by reporting it at " \
-				"https://github.com/OpenSIPS/opensips/issues\n\n", ##args); \
+				"Please help us make Marina.Rodeo better by reporting it at " \
+				"https://github.com/Marina.Rodeo/Marina.Rodeo/issues\n\n", ##args); \
 	} while (0)
 
 #define CASE_PRINTENUM(em) \

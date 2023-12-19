@@ -10,7 +10,7 @@ perl Module
         1.3. Using the module
         1.4. Dependencies
 
-              1.4.1. OpenSIPS Modules
+              1.4.1. Marina.Rodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -23,13 +23,13 @@ perl Module
               1.6.1. perl_exec_simple(func, [param])
               1.6.2. perl_exec(func, [param])
 
-   2. OpenSIPS Perl API
+   2. Marina.Rodeo Perl API
 
-        2.1. OpenSIPS
+        2.1. Marina.Rodeo
 
               2.1.1. log(level,message)
 
-        2.2. OpenSIPS::Message
+        2.2. Marina.Rodeo::Message
 
               2.2.1. getType()
               2.2.2. getStatus()
@@ -54,7 +54,7 @@ perl Module
               2.2.21. next_branches()
               2.2.22. getParsedRURI()
 
-        2.3. OpenSIPS::URI
+        2.3. Marina.Rodeo::URI
 
               2.3.1. user()
               2.3.2. host()
@@ -77,13 +77,13 @@ perl Module
               2.3.19. lr_val()
               2.3.20. r2_val()
 
-        2.4. OpenSIPS::AVP
+        2.4. Marina.Rodeo::AVP
 
               2.4.1. add(name,val)
               2.4.2. get(name)
               2.4.3. destroy(name)
 
-        2.5. OpenSIPS::Utils::PhoneNumbers
+        2.5. Marina.Rodeo::Utils::PhoneNumbers
 
               2.5.1.
                       new(publicAccessPrefix,internationalPrefix,lon
@@ -93,7 +93,7 @@ perl Module
               2.5.2. canonicalForm( number [, context] )
               2.5.3. dialNumber( number [, context] )
 
-        2.6. OpenSIPS::LDAPUtils::LDAPConf
+        2.6. Marina.Rodeo::LDAPUtils::LDAPConf
 
               2.6.1. Constructor new()
               2.6.2. Method base()
@@ -105,51 +105,51 @@ perl Module
               2.6.8. Method binddn()
               2.6.9. Method bindpw()
 
-        2.7. OpenSIPS::LDAPUtils::LDAPConnection
+        2.7. Marina.Rodeo::LDAPUtils::LDAPConnection
 
               2.7.1. Constructor new( [config, [authenticated]] )
               2.7.2. Function/Method search( conf, filter, base,
                       [requested_attributes ...])
 
-        2.8. OpenSIPS::VDB
-        2.9. OpenSIPS::Constants
-        2.10. OpenSIPS::VDB::Adapter::Speeddial
-        2.11. OpenSIPS::VDB::Adapter::Alias
+        2.8. Marina.Rodeo::VDB
+        2.9. Marina.Rodeo::Constants
+        2.10. Marina.Rodeo::VDB::Adapter::Speeddial
+        2.11. Marina.Rodeo::VDB::Adapter::Alias
 
               2.11.1. query(conds,retkeys,order)
 
-        2.12. OpenSIPS::VDB::Adapter::AccountingSIPtrace
-        2.13. OpenSIPS::VDB::Adapter::Describe
-        2.14. OpenSIPS::VDB::Adapter::Auth
-        2.15. OpenSIPS::VDB::ReqCond
+        2.12. Marina.Rodeo::VDB::Adapter::AccountingSIPtrace
+        2.13. Marina.Rodeo::VDB::Adapter::Describe
+        2.14. Marina.Rodeo::VDB::Adapter::Auth
+        2.15. Marina.Rodeo::VDB::ReqCond
 
               2.15.1. new(key,op,type,name)
               2.15.2. op()
 
-        2.16. OpenSIPS::VDB::Pair
+        2.16. Marina.Rodeo::VDB::Pair
 
               2.16.1. new(key,type,name)
               2.16.2. key()
 
-        2.17. OpenSIPS::VDB::VTab
+        2.17. Marina.Rodeo::VDB::VTab
 
               2.17.1. new()
               2.17.2. call(op,[args])
 
-        2.18. OpenSIPS::VDB::Value
+        2.18. Marina.Rodeo::VDB::Value
 
               2.18.1. stringification
               2.18.2. new(type,data)
               2.18.3. type()
               2.18.4. data()
 
-        2.19. OpenSIPS::VDB::Column
+        2.19. Marina.Rodeo::VDB::Column
 
               2.19.1. Stringification
               2.19.2. new(type,name)
               2.19.3. type( )
               2.19.4. name()
-              2.19.5. OpenSIPS::VDB::Result
+              2.19.5. Marina.Rodeo::VDB::Result
               2.19.6. new(coldefs,[row, row, ...])
               2.19.7. coldefs()
               2.19.8. rows()
@@ -188,13 +188,13 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The time needed when writing a new OpenSIPS module
+   The time needed when writing a new Marina.Rodeo module
    unfortunately is quite high, while the options provided by the
    configuration file are limited to the features implemented in
    the modules.
 
    With this Perl module, you can easily implement your own
-   OpenSIPS extensions in Perl. This allows for simple access to
+   Marina.Rodeo extensions in Perl. This allows for simple access to
    the full world of CPAN modules. SIP URI rewriting could be
    implemented based on regular expressions; accessing arbitrary
    data backends, e.g. LDAP or Berkeley DB files, is now extremely
@@ -202,7 +202,7 @@ Chapter 1. Admin Guide
 
 1.2. Installing the module
 
-   This Perl module is loaded in opensips.cfg (just like all the
+   This Perl module is loaded in Marina.Rodeo.cfg (just like all the
    other modules) with loadmodule("/path/to/perl.so");.
 
    For the Perl module to compile, you need a reasonably recent
@@ -225,9 +225,9 @@ Utils/typemap"
 1.3. Using the module
 
    The Perl module has two interfaces: The perl side, and the
-   OpenSIPS side. Once a Perl function is defined and loaded via
+   Marina.Rodeo side. Once a Perl function is defined and loaded via
    the module parameters (see below), it may be called in
-   OpenSIPS's configuration at an arbitary point. E.g., you could
+   Marina.Rodeo's configuration at an arbitary point. E.g., you could
    write a function "ldap_alias" in Perl, and then execute
 ...
 if (perl_exec("ldap_alias")) {
@@ -247,7 +247,7 @@ if (perl_exec("ldap_alias")) {
 
 1.4. Dependencies
 
-1.4.1. OpenSIPS Modules
+1.4.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
      * The "sl" module is needed for sending replies uppon fatal
@@ -257,11 +257,11 @@ if (perl_exec("ldap_alias")) {
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * Perl 5.8.x or later
 
    Additionally, a number of perl modules should be installed. The
-   OpenSIPS::LDAPUtils package relies on Net::LDAP to be
+   Marina.Rodeo::LDAPUtils package relies on Net::LDAP to be
    installed. One of the sample scripts needs IPC::Shareable
 
    This module has been developed and tested with Perl 5.8.8, but
@@ -305,12 +305,12 @@ if (perl_exec("ldap_alias")) {
 
    Example 1.1. Set filename parameter
 ...
-modparam("perl", "filename", "/home/john/opensips/myperl.pl")
+modparam("perl", "filename", "/home/john/Marina.Rodeo/myperl.pl")
 ...
 
 1.5.2. modpath (string)
 
-   The path to the Perl modules included (OpenSIPS.pm et.al). It
+   The path to the Perl modules included (Marina.Rodeo.pm et.al). It
    is not absolutely crucial to set this path, as you may install
    the Modules in Perl's standard path, or update the “%INC”
    variable from within your script. Using this module parameter
@@ -318,7 +318,7 @@ modparam("perl", "filename", "/home/john/opensips/myperl.pl")
 
    Example 1.2. Set modpath parameter
 ...
-modparam("perl", "modpath", "/usr/local/lib/opensips/perl/")
+modparam("perl", "modpath", "/usr/local/lib/Marina.Rodeo/perl/")
 ...
 
 1.6. Exported Functions
@@ -352,12 +352,12 @@ if ($rm=="INVITE") {
    Calls a perl function with passing it the current SIP message.
    The SIP message is reflected by a Perl module that gives you
    access to the information in the current SIP message
-   (OpenSIPS::Message).
+   (Marina.Rodeo::Message).
 
    The first parameter is the function to be called. An arbitrary
    string may be passed as a parameter.
 
-   The function returns back to the OpenSIPS script the value
+   The function returns back to the Marina.Rodeo script the value
    returned by the perl function. Note that if this value is 0 the
    script execution will be stoped, similarly to calling exit.
 
@@ -371,18 +371,18 @@ if (perl_exec("ldapalias")) {
 };
 ...
 
-Chapter 2. OpenSIPS Perl API
+Chapter 2. Marina.Rodeo Perl API
 
-2.1. OpenSIPS
+2.1. Marina.Rodeo
 
-   This module provides access to a limited number of OpenSIPS
+   This module provides access to a limited number of Marina.Rodeo
    core functions. As the most interesting functions deal with SIP
-   messages, they are located in the OpenSIPS::Message class
+   messages, they are located in the Marina.Rodeo::Message class
    below.
 
 2.1.1. log(level,message)
 
-   Logs the message with OpenSIPS's logging facility. The logging
+   Logs the message with Marina.Rodeo's logging facility. The logging
    level is one of the following:
 * L_ALERT
 * L_CRIT
@@ -395,12 +395,12 @@ Chapter 2. OpenSIPS Perl API
    Please note that this method is NOT automatically exported, as
    it collides with the perl function log (which calculates the
    logarithm). Either explicitly import the function (via use
-   OpenSIPS qw ( log );), or call it with its full name:
-OpenSIPS::log(L_INFO, "foobar");
+   Marina.Rodeo qw ( log );), or call it with its full name:
+Marina.Rodeo::log(L_INFO, "foobar");
 
-2.2. OpenSIPS::Message
+2.2. Marina.Rodeo::Message
 
-   This package provides access functions for an OpenSIPS sip_msg
+   This package provides access functions for an Marina.Rodeo sip_msg
    structure and its sub-components. Through its means it is
    possible to fully configure alternative routing decisions.
 
@@ -480,7 +480,7 @@ OpenSIPS::log(L_INFO, "foobar");
    string1 and/or string2 may be omitted.
 
    As this function provides access to the functions that are
-   exported to the OpenSIPS configuration file, it is autoloaded
+   exported to the Marina.Rodeo configuration file, it is autoloaded
    for unknown functions. Instead of writing
 $m->moduleFunction("sl_send_reply", "500", "Internal Error");
 $m->moduleFunction("xlog", "L_INFO", "foo");
@@ -491,7 +491,7 @@ $m->xlog("L_INFO", "foo");
 
    WARNING
 
-   In OpenSIPS 1.2, only a limited subset of module functions is
+   In Marina.Rodeo 1.2, only a limited subset of module functions is
    available. This restriction will be removed in a later version.
 
    Here is a list of functions that are expected to be working
@@ -586,7 +586,7 @@ $m->xlog("L_INFO", "foo");
 
 2.2.13. log(level,message) (deprecated type)
 
-   Logs the message with OpenSIPS's logging facility. The logging
+   Logs the message with Marina.Rodeo's logging facility. The logging
    level is one of the following:
 * L_ALERT
 * L_CRIT
@@ -596,8 +596,8 @@ $m->xlog("L_INFO", "foo");
 * L_INFO
 * L_DBG
 
-   The logging function should be accessed via the OpenSIPS module
-   variant. This one, located in OpenSIPS::Message, is deprecated.
+   The logging function should be accessed via the Marina.Rodeo module
+   variant. This one, located in Marina.Rodeo::Message, is deprecated.
 
 2.2.14. rewrite_ruri(newruri)
 
@@ -643,9 +643,9 @@ if ($m->getRURI() =~ m/\@somedomain.net/) {
 
 2.2.22. getParsedRURI()
 
-   Returns the current destination URI as an OpenSIPS::URI object.
+   Returns the current destination URI as an Marina.Rodeo::URI object.
 
-2.3. OpenSIPS::URI
+2.3. Marina.Rodeo::URI
 
    This package provides functions for access to sip_uri
    structures.
@@ -730,9 +730,9 @@ if ($m->getRURI() =~ m/\@somedomain.net/) {
 
    Returns the r2_val part of this URI.
 
-2.4. OpenSIPS::AVP
+2.4. Marina.Rodeo::AVP
 
-   This package provides access functions for OpenSIPS's AVPs.
+   This package provides access functions for Marina.Rodeo's AVPs.
    These variables can be created, evaluated, modified and removed
    through this package.
 
@@ -744,13 +744,13 @@ if ($m->getRURI() =~ m/\@somedomain.net/) {
 
    Add an AVP.
 
-   Add an OpenSIPS AVP to its environment. name and val may both
+   Add an Marina.Rodeo AVP to its environment. name and val may both
    be integers or strings; this function will try to guess what is
    correct. Please note that
-OpenSIPS::AVP::add("10", "10")
+Marina.Rodeo::AVP::add("10", "10")
 
    is something different than
-OpenSIPS::AVP::add(10, 10)
+Marina.Rodeo::AVP::add(10, 10)
 
    due to this evaluation: The first will create _string_ AVPs
    with the name 10, while the latter will create a numerical AVP.
@@ -759,23 +759,23 @@ OpenSIPS::AVP::add(10, 10)
 
 2.4.2. get(name)
 
-   get an OpenSIPS AVP:
-my $numavp = OpenSIPS::AVP::get(5);
-my $stravp = OpenSIPS::AVP::get("foo");
+   get an Marina.Rodeo AVP:
+my $numavp = Marina.Rodeo::AVP::get(5);
+my $stravp = Marina.Rodeo::AVP::get("foo");
 
 2.4.3. destroy(name)
 
    Destroy an AVP.
-OpenSIPS::AVP::destroy(5);
-OpenSIPS::AVP::destroy("foo");
+Marina.Rodeo::AVP::destroy(5);
+Marina.Rodeo::AVP::destroy("foo");
 
-2.5. OpenSIPS::Utils::PhoneNumbers
+2.5. Marina.Rodeo::Utils::PhoneNumbers
 
-   OpenSIPS::Utils::PhoneNumbers - Functions for canonical forms
+   Marina.Rodeo::Utils::PhoneNumbers - Functions for canonical forms
    of phone numbers.
-use OpenSIPS::Utils::PhoneNumbers;
+use Marina.Rodeo::Utils::PhoneNumbers;
 
-my $phonenumbers = new OpenSIPS::Utils::PhoneNumbers(
+my $phonenumbers = new Marina.Rodeo::Utils::PhoneNumbers(
      publicAccessPrefix => "0",
      internationalPrefix => "+",
      longDistancePrefix => "0",
@@ -828,7 +828,7 @@ countryCode,areaCode,pbxCode)
 
    The new operator returns an object of this type and sets its
    locational context according to the passed parameters. See
-   OpenSIPS::Utils::PhoneNumbers above.
+   Marina.Rodeo::Utils::PhoneNumbers above.
 
 2.5.2. canonicalForm( number [, context] )
 
@@ -844,12 +844,12 @@ countryCode,areaCode,pbxCode)
    second argument, a default context from the systems
    configuration is used.
 
-2.6. OpenSIPS::LDAPUtils::LDAPConf
+2.6. Marina.Rodeo::LDAPUtils::LDAPConf
 
-   OpenSIPS::LDAPUtils::LDAPConf - Read openldap config from
+   Marina.Rodeo::LDAPUtils::LDAPConf - Read openldap config from
    standard config files.
-use OpenSIPS::LDAPUtils::LDAPConf;
-my $conf = new OpenSIPS::LDAPUtils::LDAPConf();
+use Marina.Rodeo::LDAPUtils::LDAPConf;
+my $conf = new Marina.Rodeo::LDAPUtils::LDAPConf();
 
    This module may be used to retrieve the global LDAP
    configuration as used by other LDAP software, such as
@@ -861,7 +861,7 @@ my $conf = new OpenSIPS::LDAPUtils::LDAPConf();
 
 2.6.1. Constructor new()
 
-   Returns a new, initialized OpenSIPS::LDAPUtils::LDAPConf
+   Returns a new, initialized Marina.Rodeo::LDAPUtils::LDAPConf
    object.
 
 2.6.2. Method base()
@@ -906,20 +906,20 @@ my $conf = new OpenSIPS::LDAPUtils::LDAPConf();
    server. When no bind password has been specified, returns the
    rootbindpw if any.
 
-2.7. OpenSIPS::LDAPUtils::LDAPConnection
+2.7. Marina.Rodeo::LDAPUtils::LDAPConnection
 
-   OpenSIPS::LDAPUtils::LDAPConnection - Perl module to perform
+   Marina.Rodeo::LDAPUtils::LDAPConnection - Perl module to perform
    simple LDAP queries.
 
    OO-Style interface:
-use OpenSIPS::LDAPUtils::LDAPConnection;
-my $ldap = new OpenSIPS::LDAPUtils::LDAPConnection;
+use Marina.Rodeo::LDAPUtils::LDAPConnection;
+my $ldap = new Marina.Rodeo::LDAPUtils::LDAPConnection;
 my @rows = $ldap-search("uid=andi","ou=people,ou=coreworks,ou=de");
 
    Procedural interface:
-use OpenSIPS::LDAPUtils::LDAPConnection;
+use Marina.Rodeo::LDAPUtils::LDAPConnection;
 my @rows = $ldap->search(
-      new OpenSIPS::LDAPUtils::LDAPConfig(), "uid=andi","ou=people,ou=co
+      new Marina.Rodeo::LDAPUtils::LDAPConfig(), "uid=andi","ou=people,ou=co
 reworks,ou=de");
 
    This perl module offers a somewhat simplified interface to the
@@ -933,9 +933,9 @@ reworks,ou=de");
 
    The first argument, when given, should be a hash reference
    pointing to to the connection parameters, possibly an
-   OpenSIPS::LDAPUtils::LDAPConfig object. This argument may be
+   Marina.Rodeo::LDAPUtils::LDAPConfig object. This argument may be
    undef in which case a new (default)
-   OpenSIPS::LDAPUtils::LDAPConfig object is used.
+   Marina.Rodeo::LDAPUtils::LDAPConfig object is used.
 
    When the optional second argument is a true value, the
    connection will be authenticated. Otherwise an anonymous bind
@@ -953,14 +953,14 @@ reworks,ou=de");
    returned.
 
    When the first argument (conf) is a
-   OpenSIPS::LDAPUtils::LDAPConnection, it will be used to perform
+   Marina.Rodeo::LDAPUtils::LDAPConnection, it will be used to perform
    the queries. You can pass the first argument implicitly by
    using the "method" syntax.
 
    Otherwise the conf argument should be a reference to a hash
    containing the connection setup parameters as contained in a
-   OpenSIPS::LDAPUtils::LDAPConf object. In this mode, the
-   OpenSIPS::LDAPUtils::LDAPConnection from previous queries will
+   Marina.Rodeo::LDAPUtils::LDAPConf object. In this mode, the
+   Marina.Rodeo::LDAPUtils::LDAPConnection from previous queries will
    be reused.
 
 2.7.2.1. Arguments:
@@ -990,27 +990,27 @@ reworks,ou=de");
    those attibutes. When multiple entries match the query, the
    attribute lists are concatenated.
 
-2.8. OpenSIPS::VDB
+2.8. Marina.Rodeo::VDB
 
    This package is an (abstract) base class for all virtual
    databases. Derived packages can be configured to be used by
-   OpenSIPS as a database.
+   Marina.Rodeo as a database.
 
    The base class itself should NOT be used in this context, as it
    does not provide any functionality.
 
-2.9. OpenSIPS::Constants
+2.9. Marina.Rodeo::Constants
 
    This package provides a number of constants taken from enums
-   and defines of OpenSIPS header files. Unfortunately, there is
+   and defines of Marina.Rodeo header files. Unfortunately, there is
    no mechanism for updating the constants automatically, so check
    the values if you are in doubt.
 
-2.10. OpenSIPS::VDB::Adapter::Speeddial
+2.10. Marina.Rodeo::VDB::Adapter::Speeddial
 
    This adapter can be used with the speeddial module.
 
-2.11. OpenSIPS::VDB::Adapter::Alias
+2.11. Marina.Rodeo::VDB::Adapter::Alias
 
    This package is intended for usage with the alias_db module.
    The query VTab has to take two arguments and return an array of
@@ -1021,12 +1021,12 @@ reworks,ou=de");
    Queries the vtab with the given arguments for request
    conditions, keys to return and sort order column name.
 
-2.12. OpenSIPS::VDB::Adapter::AccountingSIPtrace
+2.12. Marina.Rodeo::VDB::Adapter::AccountingSIPtrace
 
    This package is an Adapter for the acc and tracer modules,
    featuring only an insert operation.
 
-2.13. OpenSIPS::VDB::Adapter::Describe
+2.13. Marina.Rodeo::VDB::Adapter::Describe
 
    This package is intended for debug usage. It will print
    information about requested functions and operations of a
@@ -1035,19 +1035,19 @@ reworks,ou=de");
    Use this module to request schema information when creating new
    adapters.
 
-2.14. OpenSIPS::VDB::Adapter::Auth
+2.14. Marina.Rodeo::VDB::Adapter::Auth
 
    This adapter is intended for usage with the auth_db module. The
    VTab should take a username as an argument and return a (plain
    text!) password.
 
-2.15. OpenSIPS::VDB::ReqCond
+2.15. Marina.Rodeo::VDB::ReqCond
 
    This package represents a request condition for database
    access, consisting of a column name, an operator (=, <, >,
    ...), a data type and a value.
 
-   This package inherits from OpenSIPS::VDB::Pair and thus
+   This package inherits from Marina.Rodeo::VDB::Pair and thus
    includes its methods.
 
 2.15.1. new(key,op,type,name)
@@ -1058,12 +1058,12 @@ reworks,ou=de");
 
    Returns or sets the current operator.
 
-2.16. OpenSIPS::VDB::Pair
+2.16. Marina.Rodeo::VDB::Pair
 
    This package represents database key/value pairs, consisting of
    a key, a value type, and the value.
 
-   This package inherits from OpenSIPS::VDB::Value and thus has
+   This package inherits from Marina.Rodeo::VDB::Value and thus has
    the same methods.
 
 2.16.1. new(key,type,name)
@@ -1074,10 +1074,10 @@ reworks,ou=de");
 
    Returns or sets the current key.
 
-2.17. OpenSIPS::VDB::VTab
+2.17. Marina.Rodeo::VDB::VTab
 
    This package handles virtual tables and is used by the
-   OpenSIPS::VDB class to store information about valid tables.
+   Marina.Rodeo::VDB class to store information about valid tables.
    The package is not inteded for end user access.
 
 2.17.1. new()
@@ -1089,27 +1089,27 @@ Constructs a new VTab object
    Invokes an operation on the table (insert, update, ...) with
    the given arguments.
 
-2.18. OpenSIPS::VDB::Value
+2.18. Marina.Rodeo::VDB::Value
 
    This package represents a database value. Additional to the
    data itself, information about its type is stored.
 
 2.18.1. stringification
 
-   When accessing a OpenSIPS::VDB::Value object as a string, it
+   When accessing a Marina.Rodeo::VDB::Value object as a string, it
    simply returns its data regardless of its type. =cut
 
    use strict;
 
-   package OpenSIPS::VDB::Value;
+   package Marina.Rodeo::VDB::Value;
 
    use overload '""' => \&stringify;
 
    sub stringify { shift->{data} }
 
-   use OpenSIPS; use OpenSIPS::Constants;
+   use Marina.Rodeo; use Marina.Rodeo::Constants;
 
-   our @ISA = qw ( OpenSIPS::Utils::Debug );
+   our @ISA = qw ( Marina.Rodeo::Utils::Debug );
 
 2.18.2. new(type,data)
 
@@ -1119,31 +1119,31 @@ Constructs a new VTab object
 2.18.3. type()
 
    Returns or sets the current data type. Please consider using
-   the constants from OpenSIPS::Constants
+   the constants from Marina.Rodeo::Constants
 
 2.18.4. data()
 
    Returns or sets the current data.
 
-2.19. OpenSIPS::VDB::Column
+2.19. Marina.Rodeo::VDB::Column
 
    This package represents database column definition, consisting
    of a column name and its data type.
 
 2.19.1. Stringification
 
-   When accessing a OpenSIPS::VDB::Column object as a string, it
+   When accessing a Marina.Rodeo::VDB::Column object as a string, it
    simply returns its column name regardless of its type. =cut
 
-   package OpenSIPS::VDB::Column;
+   package Marina.Rodeo::VDB::Column;
 
    use overload '""' => \&stringify;
 
    sub stringify { shift->{name} }
 
-   use OpenSIPS; use OpenSIPS::Constants;
+   use Marina.Rodeo; use Marina.Rodeo::Constants;
 
-   our @ISA = qw ( OpenSIPS::Utils::Debug );
+   our @ISA = qw ( Marina.Rodeo::Utils::Debug );
 
 2.19.2. new(type,name)
 
@@ -1153,13 +1153,13 @@ Constructs a new VTab object
 2.19.3. type( )
 
    Returns or sets the current type. Please consider using the
-   constants from OpenSIPS::Constants
+   constants from Marina.Rodeo::Constants
 
 2.19.4. name()
 
    Returns or sets the current column name.
 
-2.19.5. OpenSIPS::VDB::Result
+2.19.5. Marina.Rodeo::VDB::Result
 
    This class represents a VDB result set. It contains a column
    definition, plus an array of rows. Rows themselves are simply
@@ -1168,7 +1168,7 @@ Constructs a new VTab object
 2.19.6. new(coldefs,[row, row, ...])
 
    The constructor creates a new Result object. Its first
-   parameter is a reference to an array of OpenSIPS::VDB::Column
+   parameter is a reference to an array of Marina.Rodeo::VDB::Column
    objects. Additional parameters may be passed to provide initial
    rows, which are references to arrays of scalars.
 
@@ -1204,7 +1204,7 @@ Chapter 3. Perl samples
    The minimal function in branches.pl demonstrates that you can
    access the "append_branch" function from within perl, just as
    you would have done from your normal configuration file. You'll
-   find documentation on the concepts of branching in the OpenSIPS
+   find documentation on the concepts of branching in the Marina.Rodeo
    documentation.
 
 3.1.1.2. firstline.pl
@@ -1216,9 +1216,9 @@ Chapter 3. Perl samples
 
 3.1.1.3. flags.pl
 
-   The perl module provides access to OpenSIPS's flagging
-   mechanism. The flag names available for OpenSIPS modules are
-   made available through the OpenSIPS::Constants package, so you
+   The perl module provides access to Marina.Rodeo's flagging
+   mechanism. The flag names available for Marina.Rodeo modules are
+   made available through the Marina.Rodeo::Constants package, so you
    can flag messages as "green", "magenta" etc.
 
    The first function, setflag, demonstrates how the "green" flag
@@ -1229,7 +1229,7 @@ Chapter 3. Perl samples
 
    This sample script demonstrates different things related to
    calling functions from within perl, and the different types of
-   functions you can offer for OpenSIPS access.
+   functions you can offer for Marina.Rodeo access.
 
    “exportedfuncs” simply demonstrates that you can use the
    moduleFunction method to call functions offered by other
@@ -1240,20 +1240,20 @@ Chapter 3. Perl samples
    addresses are passed to the alias_db module.
 
    Please note that the moduleFunction method is not fully
-   available in OpenSIPS 1.2. See the method's documentation for
+   available in Marina.Rodeo 1.2. See the method's documentation for
    details.
 
    “paramfunc” shows that you can pass arbitrary strings to perl
    functions. Do with them whatever you want :)
 
    “autotest” demonstrates that unknown functions in
-   OpenSIPS::Message objects are automatically transformed into
+   Marina.Rodeo::Message objects are automatically transformed into
    calls to module functions.
 
    The “diefunc”s show that dying perl scripts - by "manual"
    dying, or because of script errors - are handled by the
-   OpenSIPS package. The error message is logged through
-   OpenSIPS's logging mechanism. Please note that this only works
+   Marina.Rodeo package. The error message is logged through
+   Marina.Rodeo's logging mechanism. Please note that this only works
    correctly if you do NOT overwrite the default die handler. Oh,
    yes, that works for warnings, too.
 
@@ -1274,15 +1274,15 @@ Chapter 3. Perl samples
 
    For debugging purposes, you probably want to write messages to
    the syslog. The “logdemo” shows three ways to access the
-   OpenSIPS log function: it is available through the OpenSIPS
-   class as well as through the OpenSIPS::Message class.
+   Marina.Rodeo log function: it is available through the Marina.Rodeo
+   class as well as through the Marina.Rodeo::Message class.
 
    Remember that you can use exported functions from other
    modules. You may thus as well use the “xlog” module and it's
    xlog function.
 
    The L_INFO, L_DBG, L_ERR, L_CRIT... constants are available
-   through the OpenSIPS::Constants package.
+   through the Marina.Rodeo::Constants package.
 
 3.1.1.7. messagedump.pl
 
@@ -1297,13 +1297,13 @@ Chapter 3. Perl samples
    data across multiple calls to your Perl functions. Your first
    option is to use global variables in your script.
    Unfortunately, these globals are not visible from the mulitple
-   instances of OpenSIPS. You may want to use a mechanism such as
+   instances of Marina.Rodeo. You may want to use a mechanism such as
    the IPC::Shareable shared memory access package to correct
    this.
 
 3.1.1.9. phonenumbers.pl
 
-   The OpenSIPS::Utils::PhoneNumbers package provides two methods
+   The Marina.Rodeo::Utils::PhoneNumbers package provides two methods
    for the transformation of local to canonical telephone numbers,
    and vice versa. This script demonstrates it's use.
 
@@ -1327,22 +1327,22 @@ Chapter 4. Frequently Asked Questions
    regarded as bugs.
      * Missing module functions. Not all functions of other
        modules are available for Perl access. The reason for this
-       is a design property of OpenSIPS. Making available more
+       is a design property of Marina.Rodeo. Making available more
        functions is work in progress.
      * Perl and threads. Perl itself is, when compiled with the
        correct parameters, thread safe; unfortunately, not all
        Perl modules are. The DBI modules, especially (but not
        restricted to) DBI::ODBC are known NOT to be thread safe.
        Using DBI::ODBC -- and possibly other non-thread-safe Perl
-       extensions -- may result in erroneous behavior of OpenSIPS,
+       extensions -- may result in erroneous behavior of Marina.Rodeo,
        including (but not restricted to) server crashes and wrong
        routing.
 
    4.2.
 
-   Where can I find more about OpenSIPS?
+   Where can I find more about Marina.Rodeo?
 
-   Take a look at https://opensips.org/.
+   Take a look at https://Marina.Rodeo.org/.
 
    4.3.
 
@@ -1351,23 +1351,23 @@ Chapter 4. Frequently Asked Questions
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/users
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.opensips.org/cgi-bin/mailman/listinfo/devel
+       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable OpenSIPS release should be sent to
-   <users@lists.opensips.org> and e-mails regarding development
-   versions should be sent to <devel@lists.opensips.org>.
+   E-mails regarding any stable Marina.Rodeo release should be sent to
+   <users@lists.Marina.Rodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.Marina.Rodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.opensips.org>.
+   <users@lists.Marina.Rodeo.org>.
 
    4.4.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/OpenSIPS/opensips/issues.
+   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
 
 Chapter 5. Contributors
 
@@ -1400,7 +1400,7 @@ Chapter 5. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1442,6 +1442,6 @@ Chapter 6. Documentation
    (@miconda), Konstantin Bokarius, Edson Gellert Schubert,
    Bastian Friedrich.
 
-   Documentation Copyrights:
+   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
 
-   Copyright © 2007 Collax GmbH
+   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007 Collax GmbH

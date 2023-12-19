@@ -40,7 +40,7 @@ gcc)
 gcc-i386-cross)
 	export CC="gcc"
 	CC_EXTRA_OPTS="-Werror -m32"
-	MAKE_TGT="opensips"
+	MAKE_TGT="Marina.Rodeo"
 	DOCKR_BASE="ubuntu:18.04"
 	DOCKR_PLATFORM="x86_64"
 	export BUILD_OS="ubuntu-18.04"
@@ -48,7 +48,7 @@ gcc-i386-cross)
 	PKGS="`exclude_pkgs 2.3.7` gcc g++ libc6-dev:i386 libstdc++6:i386 lib32gcc-7-dev"
 	;;
 gcc-mips64-cross)
-	MAKE_TGT="opensips"
+	MAKE_TGT="Marina.Rodeo"
 	DOCKR_BASE="ubuntu:18.04"
 	DOCKR_PLATFORM="x86_64"
 	export BUILD_OS="ubuntu-18.04"
@@ -59,7 +59,7 @@ gcc-mips64-cross)
 	PKGS="`exclude_pkgs 2.3.7` gcc-mips64-linux-gnuabi64 libc-dev-mips64-cross qemu-user-static"
 	;;
 gcc-arm32-cross)
-	MAKE_TGT="opensips"
+	MAKE_TGT="Marina.Rodeo"
 	export CC="arm-linux-gnueabihf-gcc"
 	export AR="arm-linux-gnueabihf-ar"
 	export RANLIB="arm-linux-gnueabihf-ranlib"
@@ -70,7 +70,7 @@ gcc-arm32-cross)
 	PKGS="`exclude_pkgs 2.3.7` gcc-arm-linux-gnueabihf libc-dev-armhf-cross qemu-user-static"
 	;;
 gcc-arm64-cross)
-	MAKE_TGT="opensips"
+	MAKE_TGT="Marina.Rodeo"
 	export CC="aarch64-linux-gnu-gcc"
 	export AR="aarch64-linux-gnu-ar"
 	export RANLIB="aarch64-linux-gnu-ranlib"
@@ -122,7 +122,7 @@ clang)
 clang-i386-cross)
 	export CC="clang"
 	CC_EXTRA_OPTS="-Werror -m32"
-	MAKE_TGT="opensips"
+	MAKE_TGT="Marina.Rodeo"
 	DOCKR_BASE="ubuntu:18.04"
 	DOCKR_PLATFORM="x86_64"
 	export BUILD_OS="ubuntu-18.04"

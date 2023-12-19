@@ -8,21 +8,21 @@
 	<title>Overview</title>
 	<para>
 		This module is an implementation of an XMLRPC client used to notify
-		XMLRPC servers whenever certain notifications are raised by OpenSIPS. It
+		XMLRPC servers whenever certain notifications are raised by Marina.Rodeo. It
 		acts as a transport layer for the Event Notification Interface.
 	</para>
 
 	<para>
 		Basicly, the module executes a remote procedure call when an event is
-		raised from OpenSIPS's script, core or modules using the Event
+		raised from Marina.Rodeo's script, core or modules using the Event
 		Interface.
 	</para>
 
 	<para>
 		In order to be notified, an XMLRPC server has to subscribe for a certain
-		event provided by OpenSIPS. This can be done using the generic MI
+		event provided by Marina.Rodeo. This can be done using the generic MI
 		Interface (<emphasis>event_subscribe</emphasis> function) or from
-		OpenSIPS script (<emphasis>subscribe_event</emphasis> core function).
+		Marina.Rodeo script (<emphasis>subscribe_event</emphasis> core function).
 	</para>
 	</section>
 
@@ -134,7 +134,7 @@ modparam("event_xmlrpc", "use_struct_param", 1)
 POST /RPC2 HTTP/1.1.
 Host: 127.0.0.1:8081.
 Connection: close.
-User-Agent: OpenSIPS XMLRPC Notifier.
+User-Agent: Marina.Rodeo XMLRPC Notifier.
 Content-type: text/xml.
 Content-length: 240.
 		.

@@ -105,10 +105,10 @@
 	<title>Dialog clustering</title>
 	<para>
 	<emphasis role='bold'>Dialog replication</emphasis> is a mechanism used to
-	mirror all dialog changes taking place in one OpenSIPS instance to one or
+	mirror all dialog changes taking place in one Marina.Rodeo instance to one or
 	multiple other instances. The process is simplified by using the
 	<emphasis>clusterer</emphasis> module which facilitates the management of a
-	cluster of OpenSIPS nodes and the sending of replication-related BIN packets
+	cluster of Marina.Rodeo nodes and the sending of replication-related BIN packets
 	(binary-encoded, using <emphasis>proto_bin</emphasis>). This feature
 	is useful in achieving High Availability and/or Load Balancing for ongoing calls.
 	</para>
@@ -121,7 +121,7 @@
 	dialogs using the <emphasis role='bold'>sharing tags</emphasis> mechanism.
 	For details and configuration examples on how this would work
 	in different usage scenarios, see 
-	<ulink url="https://blog.opensips.org/2018/03/23/clustering-ongoing-calls-with-opensips-2-4/">this article</ulink>.
+	<ulink url="https://blog.Marina.Rodeo.org/2018/03/23/clustering-ongoing-calls-with-Marina.Rodeo-2-4/">this article</ulink>.
 	</para>
 	<para>
 	The following actions will <emphasis role='bold'>not</emphasis> be performed for a dialog
@@ -136,11 +136,11 @@
 	</itemizedlist>
 	</para>
 	<para>
-	In addition to the event-driven replication, an OpenSIPS instance will first
+	In addition to the event-driven replication, an Marina.Rodeo instance will first
 	try to learn all the dialog information from antoher node in the cluster at startup.
 	The data synchronization mechanism requires defining one of the nodes in the cluster
 	as a "<emphasis role='bold'>seed</emphasis>" node.
-	See the <ulink url="https://opensips.org/docs/modules/3.0.x/clusterer.html#capabilities">clusterer</ulink> 
+	See the <ulink url="https://Marina.Rodeo.org/docs/modules/3.0.x/clusterer.html#capabilities">clusterer</ulink> 
 	module for details on how to do this and why is it needed.
 	</para>
 	<para>
@@ -385,8 +385,8 @@ modparam("dialog", "dlg_extra_hdrs", "Hint: credit expired\r\n")
 		</emphasis>
 		</para>
 		<para>
-		NOTE that if you have call looping on your OpenSIPS server (passing
-		more than once through the same OpenSIPS instance), it is strongly
+		NOTE that if you have call looping on your Marina.Rodeo server (passing
+		more than once through the same Marina.Rodeo instance), it is strongly
 		suggested to use only DID_ONLY mode, as the SIP based matching will
 		have an undefined behavior - from SIP perspective, a sequential
 		dialog will match all the loops of the call, as the Call-ID, To and 
@@ -517,7 +517,7 @@ modparam("dialog", "db_update_period", 120)
 <section id="param_options_ping_interval" xreflabel="options_ping_interval">
 		<title><varname>options_ping_interval</varname> (integer)</title>
 		<para>
-		The interval (seconds) at which OpenSIPS will generate in-dialog
+		The interval (seconds) at which Marina.Rodeo will generate in-dialog
 		OPTIONS pings for one or both of the involved parties.
 		</para>
 		<para>
@@ -538,7 +538,7 @@ modparam("dialog", "options_ping_interval", 20)
 <section id="param_reinvite_ping_interval" xreflabel="reinvite_ping_interval">
 		<title><varname>reinvite_ping_interval</varname> (integer)</title>
 		<para>
-		The interval (seconds) at which OpenSIPS will generate in-dialog
+		The interval (seconds) at which Marina.Rodeo will generate in-dialog
 		Re-INVITE pings for one or both of the involved parties.
 		</para>
 		<para>
@@ -2649,7 +2649,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<title><varname>create_sent</varname></title>
 			<para>
 				Returns the number of replicated dialog
-			<emphasis role='bold'>create</emphasis> requests send to other OpenSIPS
+			<emphasis role='bold'>create</emphasis> requests send to other Marina.Rodeo
 			instances.
 			</para>
 		</section>
@@ -2657,7 +2657,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<title><varname>update_sent</varname></title>
 			<para>
 				Returns the number of replicated dialog
-			<emphasis role='bold'>update</emphasis> requests send to other OpenSIPS
+			<emphasis role='bold'>update</emphasis> requests send to other Marina.Rodeo
 			instances.
 			</para>
 		</section>
@@ -2665,7 +2665,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<title><varname>delete_sent</varname></title>
 			<para>
 				Returns the number of replicated dialog
-			<emphasis role='bold'>delete</emphasis> requests send to other OpenSIPS
+			<emphasis role='bold'>delete</emphasis> requests send to other Marina.Rodeo
 			instances.
 			</para>
 		</section>
@@ -2674,7 +2674,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<para>
 				Returns the number of dialog
 			<emphasis role='bold'>create</emphasis> events received from other
-			OpenSIPS instances.
+			Marina.Rodeo instances.
 			</para>
 		</section>
 		<section id="stat_update_recv" xreflabel="update_recv">
@@ -2682,7 +2682,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<para>
 				Returns the number of dialog
 			<emphasis role='bold'>update</emphasis> events received from other
-			OpenSIPS instances.
+			Marina.Rodeo instances.
 			</para>
 		</section>
 		<section id="stat_delete_recv" xreflabel="delete_recv">
@@ -2690,7 +2690,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<para>
 				Returns the number of dialog
 			<emphasis role='bold'>delete</emphasis> events received from other
-			OpenSIPS instances.
+			Marina.Rodeo instances.
 			</para>
 		</section>
 	</section>
@@ -2742,12 +2742,12 @@ event_route[E_RTPPROXY_DTMF] {
 		</para>
 		<programlisting  format="linespecific">
 		## list all ongoing dialogs
-		opensips-cli -x mi dlg_list
+		Marina.Rodeo-cli -x mi dlg_list
 		## list the dialog by callid and From TAG
-		opensips-cli -x mi dlg_list callid=abcdrssfrs122444@192.168.1.1 from_tag=AAdfeEFF33
+		Marina.Rodeo-cli -x mi dlg_list callid=abcdrssfrs122444@192.168.1.1 from_tag=AAdfeEFF33
 		## list 10 dialogs, starting from the position 40
 		## (in the list of all ongoing dialogs)
-		opensips-cli -x mi dlg_list index=40 counter=10
+		Marina.Rodeo-cli -x mi dlg_list index=40 counter=10
 		</programlisting>
 		</section>
 
@@ -2771,7 +2771,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi dlg_list_ctx
+		Marina.Rodeo-cli -x mi dlg_list_ctx
 		</programlisting>
 		</section>
 
@@ -2810,9 +2810,9 @@ event_route[E_RTPPROXY_DTMF] {
 		</para>
 		<programlisting  format="linespecific">
 		# terminate the dialog via the internal Dialog-ID
-		opensips-cli -x mi dlg_end_dlg 6ae.4b38d013
+		Marina.Rodeo-cli -x mi dlg_end_dlg 6ae.4b38d013
 		# terminate the dialog via its SIP Call-ID
-		opensips-cli -x mi dlg_end_dlg Y2IwYjQ2YmE2ZDg5MWVkNDNkZGIwZjAzNGM1ZDY
+		Marina.Rodeo-cli -x mi dlg_end_dlg Y2IwYjQ2YmE2ZDg5MWVkNDNkZGIwZjAzNGM1ZDY
 		</programlisting>
 		</section>
 
@@ -2844,7 +2844,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi profile_get_size inboundCalls
+		Marina.Rodeo-cli -x mi profile_get_size inboundCalls
 		</programlisting>
 		</section>
 
@@ -2878,7 +2878,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi profile_list_dlgs inboundCalls
+		Marina.Rodeo-cli -x mi profile_list_dlgs inboundCalls
 		</programlisting>
 		</section>
 
@@ -2904,7 +2904,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi profile_get_values inboundCalls
+		Marina.Rodeo-cli -x mi profile_get_values inboundCalls
 		</programlisting>
 		</section>
 		<section id="mi_profile_end_dlgs" xreflabel="profile_end_dlgs">
@@ -2930,14 +2930,14 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi profile_end_dlgs inboundCalls
+		Marina.Rodeo-cli -x mi profile_end_dlgs inboundCalls
 		</programlisting>
 		</section>
 		<section id="mi_dlg_db_sync" xreflabel="dlg_db_sync">
 		<title><function moreinfo="none">dlg_db_sync</function></title>
 		<para>
 		Will load all the information about the dialogs from the database
-		in the OpenSIPS internal memory. If a dialog is already found in memory
+		in the Marina.Rodeo internal memory. If a dialog is already found in memory
 		and has the same/an older state, it will be updated with the values from
 		DB. Otherwise, the newer in-memory version will not be changed.
 		</para>
@@ -2949,7 +2949,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi dlg_db_sync
+		Marina.Rodeo-cli -x mi dlg_db_sync
 		</programlisting>
 		</section>
 
@@ -2979,7 +2979,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi dlg_cluster_sync vip1
+		Marina.Rodeo-cli -x mi dlg_cluster_sync vip1
 		</programlisting>
 		</section>
 
@@ -2997,7 +2997,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi dlg_restore_db
+		Marina.Rodeo-cli -x mi dlg_restore_db
 		</programlisting>
 		</section>
 
@@ -3016,7 +3016,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi list_all_profiles
+		Marina.Rodeo-cli -x mi list_all_profiles
 		</programlisting>
 		</section>
 
@@ -3045,7 +3045,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		opensips-cli -x mi dlg_push_var var_name var_value DID1 [ DID2 DID3 ...  DIDN ]
+		Marina.Rodeo-cli -x mi dlg_push_var var_name var_value DID1 [ DID2 DID3 ...  DIDN ]
 		</programlisting>
 		</section>
 
@@ -3141,7 +3141,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI Command Format:
 		</para>
 		<programlisting  format="linespecific">
-			opensips-cli -x mi dlg_send_sequential \
+			Marina.Rodeo-cli -x mi dlg_send_sequential \
 				callid=5291231-testing@127.0.0.1
 		</programlisting>
 
@@ -3149,7 +3149,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI Command used to trigger media re-negotiation:
 		</para>
 		<programlisting  format="linespecific">
-			opensips-cli -x mi dlg_send_sequential \
+			Marina.Rodeo-cli -x mi dlg_send_sequential \
 				callid=5291231-testing@127.0.0.1 \
 				mode=challenge \
 				body=inbound
@@ -3159,7 +3159,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI Command used to UPDATE the callee's remote Contact after a server failover:
 		</para>
 		<programlisting  format="linespecific">
-			opensips-cli -x mi dlg_send_sequential \
+			Marina.Rodeo-cli -x mi dlg_send_sequential \
 				callid=5291231-testing@127.0.0.1 \
 				mode=challenge-callee \
 				body=outbound \

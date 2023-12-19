@@ -8,7 +8,7 @@ RATE_CACHER Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. OpenSIPS Modules
+              1.2.1. Marina.Rodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -99,15 +99,15 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. OpenSIPS Modules
+1.2.1. Marina.Rodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other OpenSIPS modules..
+     * No dependencies on other Marina.Rodeo modules..
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running OpenSIPS with this module loaded:
+   before running Marina.Rodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -120,8 +120,8 @@ Chapter 1. Admin Guide
 
    Example 1.1. Setting the vendors_db_url parameter
 ...
-modparam("rate_cacher", "vendors_db_url", "mysql://opensips:opensipsrw@l
-ocalhost/opensips")
+modparam("rate_cacher", "vendors_db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@l
+ocalhost/Marina.Rodeo")
 ...
 
 1.3.2. vendors_db_table (str)
@@ -156,8 +156,8 @@ modparam("rate_cacher", "vendors_hash_size", 1024)
 
    Example 1.4. Setting the clients_db_url parameter
 ...
-modparam("rate_cacher", "clients_db_url", "mysql://opensips:opensipsrw@l
-ocalhost/opensips")
+modparam("rate_cacher", "clients_db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@l
+ocalhost/Marina.Rodeo")
 ...
 
 1.3.5. clients_db_table (str)
@@ -192,8 +192,8 @@ modparam("rate_cacher", "clients_hash_size", 1024)
 
    Example 1.7. Setting the rates_db_url parameter
 ...
-modparam("rate_cacher", "rates_db_url", "mysql://opensips:opensipsrw@loc
-alhost/opensips")
+modparam("rate_cacher", "rates_db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@loc
+alhost/Marina.Rodeo")
 ...
 
 1.3.8. rates_db_table (str)
@@ -455,7 +455,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
 
    MI FIFO Command Format:
 ## Add a new Vendor
-# opensips-cli -x mi rc_addVendor myNewVendor
+# Marina.Rodeo-cli -x mi rc_addVendor myNewVendor
 
 1.5.2.  rc_deleteVendor
 
@@ -469,7 +469,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
 
    MI FIFO Command Format:
 ## Delete a Vendor
-# opensipss-cli -x mi rc_deleteVendor myNewVendor
+# Marina.Rodeos-cli -x mi rc_deleteVendor myNewVendor
 
 1.5.3.  rc_reloadVendorRate
 
@@ -484,7 +484,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
 
    MI FIFO Command Format:
 ## Reloads a Vendor Ratesheet
-# opensips-cli -x mi rc_reloadVendorRate myVendor 3
+# Marina.Rodeo-cli -x mi rc_reloadVendorRate myVendor 3
 
 1.5.4.  rc_deleteVendorRate
 
@@ -497,7 +497,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
 
    MI FIFO Command Format:
 ## Reloads a Vendor Ratesheet
-# opensips-cli -x mi rc_deleteVendorRate myVendor
+# Marina.Rodeo-cli -x mi rc_deleteVendorRate myVendor
 
 1.5.5.  rc_getVendorPrice
 
@@ -514,7 +514,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
 
    MI FIFO Command Format:
 ## Query for the price of myVendor for the 4072731825 number
-#/usr/local/bin/opensips-cli -x mi rc_getVendorPrice myVendor 4072731825
+#/usr/local/bin/Marina.Rodeo-cli -x mi rc_getVendorPrice myVendor 4072731825
 {
     "prefix": "40727",
     "destination": "ROMANIA MOBILE VODAFONE",
@@ -535,7 +535,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
 
    MI FIFO Command Format:
 ## Add a new Client
-# opensips-cli -x mi fifo rc_addClient myNewClient
+# Marina.Rodeo-cli -x mi fifo rc_addClient myNewClient
 
 1.5.7.  rc_deleteClient
 
@@ -549,7 +549,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
 
    MI FIFO Command Format:
 ## Delete a Client
-# opensips-cli -x mi rc_deleteClient myClient
+# Marina.Rodeo-cli -x mi rc_deleteClient myClient
 
 1.5.8.  rc_reloadClientRate
 
@@ -566,7 +566,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
 
    MI FIFO Command Format:
 ## Reloads the Client's wholesale Ratesheet, assigning it rate id 3
-# opensips-cli -x mi rc_reloadClientRate myClient 1 3
+# Marina.Rodeo-cli -x mi rc_reloadClientRate myClient 1 3
 
 1.5.9.  rc_deleteClientRate
 
@@ -580,7 +580,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
 
    MI FIFO Command Format:
 ## Reloads a Vendor Ratesheet
-# opensips-cli -x mi rc_deleteVendorRate myVendor
+# Marina.Rodeo-cli -x mi rc_deleteVendorRate myVendor
 
 1.5.10.  rc_getClientPrice
 
@@ -599,7 +599,7 @@ y use $avp(out_vendor_result) , in the provided order\n");
    MI FIFO Command Format:
 ## Query for the price of myClient, on the retail quality, for the 40727
 31825 number
-#/usr/local/bin/opensips-cli -x mi rc_getClientPrice myClient 0 40727318
+#/usr/local/bin/Marina.Rodeo-cli -x mi rc_getClientPrice myClient 0 40727318
 25
 {
     "prefix": "40727",
@@ -632,7 +632,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   opensips/doc/build-contrib.sh. If you identify any
+   Marina.Rodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".

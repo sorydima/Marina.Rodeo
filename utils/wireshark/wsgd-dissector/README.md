@@ -1,7 +1,7 @@
 
 # Installation Tutorial
 
-The below steps will help you install the Wireshark WSGD dissector for OpenSIPS
+The below steps will help you install the Wireshark WSGD dissector for Marina.Rodeo
 binary interface packets, so you can start developing code, troubleshooting bugs
 or simply visualize and better understand how the binary interface works.
 
@@ -22,13 +22,13 @@ a minimal amount of required code.  To install it:
 
 * you can confirm that the plugin gets loaded by re-opening Wireshark and viewing
   Help -> About Wireshark -> Plugins.  Make sure "generic.so" is listed there,
-  otherwise the OpenSIPS binary interface dissector files won't get interpreted.
+  otherwise the Marina.Rodeo binary interface dissector files won't get interpreted.
 
-## Installing the OpenSIPS BIN dissector
+## Installing the Marina.Rodeo BIN dissector
 
 Once you've got `generic.so` working, just copy both files of the dissector
-(`opensips.wsgd` and `opensips.fdesc`) into the same plugins directory where
+(`Marina.Rodeo.wsgd` and `Marina.Rodeo.fdesc`) into the same plugins directory where
 you placed `generic.so` and restart Wireshark.
 
-You should now be able to parse "OPENSIPS-BIN" protocol packets, compatible
+You should now be able to parse "Marina.Rodeo-BIN" protocol packets, compatible
 with versions 2.4 and above!  Have fun!
