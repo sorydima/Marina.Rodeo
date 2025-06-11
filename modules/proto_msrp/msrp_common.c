@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2022 - Marina.Rodeo Solutions
+ * Copyright (C) 2022 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -30,6 +30,7 @@
 #include "../../ut.h"
 #include "../../net/trans_trace.h"
 #include "../../net/tcp_common.h"
+#include "../../timer.h"
 #include "msrp_handler.h"
 #include "msrp_plain.h"
 #include "msrp_common.h"
@@ -555,9 +556,9 @@ error:
 /**************  SEND related functions ***************/
 
 /*! \brief Finds a tcpconn & sends on it */
-int proto_msrp_send(struct socket_info* send_sock,
+int proto_msrp_send(const struct socket_info* send_sock,
 		char* buf, unsigned int len,
-		union sockaddr_union* to, unsigned int id)
+		const union sockaddr_union* to, unsigned int id)
 {
 	struct tcp_connection *c;
 	struct tcp_conn_profile prof;
@@ -689,8 +690,8 @@ send_it:
 
 	/* mark the ID of the used connection (tracing purposes) */
 	last_outgoing_tcp_id = c->id;
-	send_sock->last_local_real_port = c->rcv.dst_port;
-	send_sock->last_remote_real_port = c->rcv.src_port;
+	send_sock->last_real_ports->local = c->rcv.dst_port;
+	send_sock->last_real_ports->remote = c->rcv.src_port;
 
 	tcp_conn_release(c, 0);
 	return n;

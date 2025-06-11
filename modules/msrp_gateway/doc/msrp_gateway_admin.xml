@@ -19,7 +19,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 		<title>Dependencies</title>
 		<section>
-			<title>&osips; Modules</title>
+			<title>&oMarinkaRodeo; Modules</title>
 			<para>
 			The following modules must be loaded before this module:
 			<itemizedlist>
@@ -36,7 +36,7 @@
 			<title>External Libraries or Applications</title>
 			<para>
 			The following libraries or applications must be installed 
-			before running &osips; with this module loaded:
+			before running &oMarinkaRodeo; with this module loaded:
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -260,7 +260,7 @@ if (is_method("MESSAGE")) {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi msrp_gw_list_sessions
+openMarinkaRodeo-cli -x mi msrp_gw_list_sessions
 		</programlisting>
 		</section>
 
@@ -285,7 +285,7 @@ Marina.Rodeo-cli -x mi msrp_gw_list_sessions
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi msrp_gw_end_session alice@Marina.Rodeo.org-bob@Marina.Rodeo.org
+openMarinkaRodeo-cli -x mi msrp_gw_end_session alice@openMarinkaRodeo.org-bob@openMarinkaRodeo.org
 		</programlisting>
 		</section>
 

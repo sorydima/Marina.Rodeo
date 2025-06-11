@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007-2008 1&1 Internet AG
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2007-2008 1&1 Internet AG
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -46,7 +46,10 @@
 #include "db_cap.h"
 #include "db_row.h"
 #include "db_ps.h"
+#include "db_pool.h"
 #include "../globals.h"
+
+struct pool_con;
 
 extern stat_var *sql_total_queries;
 extern stat_var *sql_slow_queries;
@@ -407,7 +410,7 @@ int db_bind_mod(const str* mod, db_func_t* dbf);
  * \return returns a pointer to the db_con_t representing the connection if it was
    successful, otherwise 0 is returned.
  */
-db_con_t* db_do_init(const str* url, void* (*new_connection)());
+db_con_t* db_do_init(const str* url, void* (*new_connection)(const struct db_id *));
 
 
 /**
@@ -418,7 +421,7 @@ db_con_t* db_do_init(const str* url, void* (*new_connection)());
  * \param _h database connection handle
  * \param (*free_connection) Pointer to the db specifc free_connection method
  */
-void db_do_close(db_con_t* _h, void (*free_connection)());
+void db_do_close(db_con_t* _h, void (*free_connection)(struct pool_con*));
 
 
 /**

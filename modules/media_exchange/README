@@ -8,26 +8,30 @@ Media Exchange Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Functions
 
-              1.3.1. media_fork_to_uri(URI[, leg[, headers[,
-                      medianum]]])
+              1.3.1. media_fork_to_uri(URI[, leg][, headers][,
+                      medianum][, instance])
 
-              1.3.2. media_fork_from_call(callid[, leg[,
-                      medianum]])
+              1.3.2. media_fork_from_call(callid[, leg][,
+                      medianum][, instance])
 
-              1.3.3. media_fork_pause([leg[, medianum]])
-              1.3.4. media_fork_resume([leg[, medianum]])
-              1.3.5. media_exchange_from_uri(URI[, leg[, body[,
-                      headers[, nohold]]]])
+              1.3.3. media_fork_pause([leg][, medianum][,
+                      instance])
 
-              1.3.6. media_exchange_to_call(callid[, leg[,
-                      nohold]])
+              1.3.4. media_fork_resume([leg][, medianum][,
+                      instance])
 
-              1.3.7. media_terminate([leg[, nohold]])
+              1.3.5. media_exchange_from_uri(URI[, leg][, body][,
+                      headers][, nohold])
+
+              1.3.6. media_exchange_to_call(callid[, leg][,
+                      nohold])
+
+              1.3.7. media_terminate([leg][, nohold][, instance])
               1.3.8. media_handle_indialog()
 
         1.4. Exported MI Functions
@@ -97,7 +101,7 @@ Chapter 1. Admin Guide
    as well as take the SDP of a new call and inject the SDP into
    an existing, proxied sip call. In order to manipulate the new
    calls, either generated, or terminated, the module behaves as a
-   back-to-back user agent with the aim of the Marina.Rodeo B2B
+   back-to-back user agent with the aim of the OpenMarinkaRodeo B2B
    entities module.
 
    In terms of the SDP media exchanged, the module can have two
@@ -120,17 +124,17 @@ Chapter 1. Admin Guide
 
    This module can provide different functionalities and can be
    used in various use cases, such as:
-     * Call Recording - similar to the Marina.Rodeo SIPREC module, it
+     * Call Recording - similar to the OpenMarinkaRodeo SIPREC module, it
        can be used to fork the RTP media to a new SIP destination,
        but without the SIPREC payload.
-     * Call Listening - one might want to call into Marina.Rodeo and
+     * Call Listening - one might want to call into OpenMarinkaRodeo and
        start listening an existing call.
      * Call Announcements - inject an announcement from a Media
        Server to the participants of an ongoing call.
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * TM - Transaction module.
@@ -144,16 +148,21 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Functions
 
-1.3.1.  media_fork_to_uri(URI[, leg[, headers[, medianum]]])
+1.3.1.  media_fork_to_uri(URI[, leg][, headers][, medianum][,
+instance])
 
    Behaves as a B2B user agent client to initiate a call to a SIP
    URI and then stream the media to the SDP received in the 200 OK
    response.
+
+   Can be called multiple times, and will create a new call for
+   each invocation. The generated calls can be identified using
+   the instance parameter.
 
    Parameters:
      * URI (string) - destination where to push the current call's
@@ -166,6 +175,9 @@ Chapter 1. Admin Guide
      * medianum (integer, optional) - the media stream that will
        be forked within the call. First index is 0. If missing,
        all media streams of that leg(s) are streamed.
+     * instance (string, optional) - a unique name for identifying
+       the forking instance. If missing, the default name is
+       assumed.
 
    This function can be used from any route.
 
@@ -176,11 +188,15 @@ if (!has_totag() && is_method("INVITE"))
         media_fork_to_uri("sip:record@127.0.0.1:5080");
 ...
 
-1.3.2.  media_fork_from_call(callid[, leg[, medianum]])
+1.3.2.  media_fork_from_call(callid[, leg][, medianum][, instance])
 
    Starts streaming the media of an existing proxied call,
    identified by the callid parameter to the SDP in the request's
    body.
+
+   Can be called multiple times, and will accept a new call for
+   each invocation. The calls can be identified using the instance
+   parameter.
 
    Parameters:
      * callid (string) - the identifier of the callid to
@@ -195,6 +211,9 @@ if (!has_totag() && is_method("INVITE"))
        Note: RTPProxy does not do any media mixing, therefore you
        need to make sure that the INVITE has enough SDP streams to
        handle all the media streams selected to fork.
+     * instance (string, optional) - a unique name for identifying
+       the forking instance. If missing, the default name is
+       assumed.
 
    This function can be used from REQUEST_ROUTE, BRANCH_ROUTE,
    FAILURE_ROUTE and ONREPLY_ROUTE.
@@ -219,7 +238,7 @@ if (!has_totag() && is_method("INVITE") && $hdr(X-CallID) != NULL)
         media_fork_from_call($hdr(X-CallID), "caller", 0);
 ...
 
-1.3.3.  media_fork_pause([leg[, medianum]])
+1.3.3.  media_fork_pause([leg][, medianum][, instance])
 
    Pauses an existing RTP media streaming session. This function
    does not terminate the forking call, but only stops sending the
@@ -233,6 +252,8 @@ if (!has_totag() && is_method("INVITE") && $hdr(X-CallID) != NULL)
      * medianum (integer, optional) - the media stream to be
        paused. First index is 0. If missing, all ongoing media
        streams associated to the selected leg will be paused.
+     * instance (string, optional) - the forking instance to be
+       paused. If missing, all instances are paused.
 
    This function can be used from any route.
 
@@ -243,7 +264,7 @@ if (has_totag() && is_method("INVITE"))
         media_fork_pause();
 ...
 
-1.3.4.  media_fork_resume([leg[, medianum]])
+1.3.4.  media_fork_resume([leg][, medianum][, instance])
 
    Resumes the RTP media stream of an existing session/call. This
    function relies on the fact that a media fork session has been
@@ -256,6 +277,8 @@ if (has_totag() && is_method("INVITE"))
      * medianum (integer, optional) - the media stream to be
        paused. First index is 0. If missing, all ongoing media
        streams associated to the selected leg will be paused.
+     * instance (string, optional) - the forking instance to be
+       resumed. If missing, all instances are resumed.
 
    This function can be used from any route.
 
@@ -266,8 +289,8 @@ if (has_totag() && is_method("INVITE"))
         media_fork_resume();
 ...
 
-1.3.5.  media_exchange_from_uri(URI[, leg[, body[, headers[,
-nohold]]]])
+1.3.5.  media_exchange_from_uri(URI[, leg][, body][, headers][,
+nohold])
 
    Originates a call to the specified URI. The SDP in the response
    is fetched and pushed towards one of the call's legs, resulting
@@ -303,7 +326,7 @@ if (has_totag() && is_method("INVITE") && is_audio_on_hold())
         media_exchange_from_uri("sip:moh@127.0.0.1:5080");
 ...
 
-1.3.6.  media_exchange_to_call(callid[, leg[, nohold]])
+1.3.6.  media_exchange_to_call(callid[, leg][, nohold])
 
    Pushes the SDP of a new call received in an existing proxied
    call, resulting in two-way audio between a Media Server that
@@ -335,7 +358,7 @@ if (!has_totag() && is_method("INVITE") && $hdr(X-CallID) != NULL)
         media_exchange_to_call($hdr(X-CallID), "caller");
 ...
 
-1.3.7.  media_terminate([leg[, nohold]])
+1.3.7.  media_terminate([leg][, nohold][, instance])
 
    Terminates an ongoing media session exchange, whether the media
    is only streamed, or two way audio is flowing. If the
@@ -354,6 +377,13 @@ if (!has_totag() && is_method("INVITE") && $hdr(X-CallID) != NULL)
        as the re-INVITE itself should be relayed further to do
        that. This behavior can be changed by explicitly setting
        the nohold parameter
+     * instance (string, optional) - should only be used when
+       terminating a forking instance, and represents the instance
+       to terminate. It must be ommitted when terminating an
+       streaming session. However, for fallback compatibility, if
+       the parameter is missing, and no streaming session is
+       found, the command terminates the default forking instance,
+       if it exists.
 
    This function can be used from any route.
 
@@ -427,10 +457,12 @@ if (has_totag() && loose_route()) {
      * medianum (integer, optional) - the media stream that will
        be forked within the call. First index is 0. If missing,
        all media streams of that leg(s) are streamed.
+     * instance (string, optional) - the unique name of the
+       forking instance. If missing, the default name is assumed.
 
    MI FIFO Command Format:
 # start streaming a callid to record media server
-Marina.Rodeo-cli -x mi media_fork_from_call_to_uri \
+openMarinkaRodeo-cli -x mi media_fork_from_call_to_uri \
         callid=c6fdb0f9-47dc-495d-8d38-0f37e836a531 \
         uri=sip:record@127.0.0.1:5080
 
@@ -458,7 +490,7 @@ Marina.Rodeo-cli -x mi media_fork_from_call_to_uri \
 
    MI FIFO Command Format:
 # start playing back an annoucement to caller
-Marina.Rodeo-cli -x mi media_exchange_from_call_to_uri \
+openMarinkaRodeo-cli -x mi media_exchange_from_call_to_uri \
         callid=c6fdb0f9-47dc-495d-8d38-0f37e836a531 \
         uri=sip:announcement@127.0.0.1:5080 \
         leg=caller
@@ -488,10 +520,17 @@ Marina.Rodeo-cli -x mi media_exchange_from_call_to_uri \
        non-zero value, the leg that is being terminated is not put
        on hold if the other participant still has an ongoing media
        session.
+     * instance (string, optional) - should only be used when
+       terminating a forking instance, and represents the instance
+       to terminate. It must be ommitted when terminating an
+       streaming session. However, for fallback compatibility, if
+       the parameter is missing, and no streaming session is
+       found, the command terminates the default forking instance,
+       if it exists.
 
    MI FIFO Command Format:
 # terminate a caller announcement
-Marina.Rodeo-cli -x mi media_terminate \
+openMarinkaRodeo-cli -x mi media_terminate \
         callid=c6fdb0f9-47dc-495d-8d38-0f37e836a531 \
         leg=caller
 
@@ -502,12 +541,14 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Razvan Crainea (@razvancrainea) 151 61 6052 2429
+   1. Razvan Crainea (@razvancrainea) 170 71 6539 2618
    2. Vlad Patrascu (@rvlad-patrascu) 6 4 19 11
-   3. Bogdan-Andrei Iancu (@bogdan-iancu) 3 1 4 4
-   4. Maksym Sobolyev (@sobomax) 3 1 4 4
-   5. Liviu Chircu (@liviuchircu) 3 1 4 1
-   6. Zero King (@l2dy) 3 1 1 1
+   3. Maksym Sobolyev (@sobomax) 4 2 12 12
+   4. Alexandra Titoc 4 2 6 4
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 4 2 6 3
+   6. Bogdan-Andrei Iancu (@bogdan-iancu) 3 1 4 4
+   7. Norman Brandinger (@NormB) 3 1 1 1
+   8. Zero King (@l2dy) 3 1 1 1
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -517,7 +558,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -529,12 +570,14 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
-   1. Razvan Crainea (@razvancrainea)     Feb 2020 - Feb 2023
-   2. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   3. Liviu Chircu (@liviuchircu)         Jul 2022 - Jul 2022
-   4. Vlad Patrascu (@rvlad-patrascu)     Mar 2020 - Jul 2021
-   5. Bogdan-Andrei Iancu (@bogdan-iancu) Apr 2021 - Apr 2021
-   6. Zero King (@l2dy)                   Mar 2020 - Mar 2020
+   1. Razvan Crainea (@razvancrainea)     Feb 2020 - May 2025
+   2. Alexandra Titoc                     Sep 2024 - Sep 2024
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jul 2022 - Jul 2024
+   4. Norman Brandinger (@NormB)          Jun 2024 - Jun 2024
+   5. Maksym Sobolyev (@sobomax)          Feb 2023 - Nov 2023
+   6. Vlad Patrascu (@rvlad-patrascu)     Mar 2020 - Jul 2021
+   7. Bogdan-Andrei Iancu (@bogdan-iancu) Apr 2021 - Apr 2021
+   8. Zero King (@l2dy)                   Mar 2020 - Mar 2020
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -545,6 +588,6 @@ Chapter 3. Documentation
 
    Last edited by: Razvan Crainea (@razvancrainea).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2020 www.Marina.Rodeo-solutions.com
+   Copyright © 2020 www.openMarinkaRodeo-solutions.com

@@ -15,7 +15,7 @@ db_virtual Module
 
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -134,7 +134,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * At least one real DB module.
@@ -142,7 +142,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -158,13 +158,13 @@ modparam("group","db_url","virtual://set1")
 modparam("presence|presence_xml", "db_url","virtual://set2")
 
 modparam("db_virtual", "db_urls", "define set1 PARALLEL")
-modparam("db_virtual", "db_urls", "mysql://Marina.Rodeo:Marina.Rodeo@localhost
+modparam("db_virtual", "db_urls", "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost
 /testa")
-modparam("db_virtual", "db_urls", "postgres://Marina.Rodeo:Marina.Rodeo@localh
-ost/Marina.Rodeo")
+modparam("db_virtual", "db_urls", "postgres://openMarinkaRodeo:openMarinkaRodeorw@localh
+ost/openMarinkaRodeo")
 
 modparam("db_virtual", "db_urls", "define set2 FAILOVER")
-modparam("db_virtual", "db_urls", "mysql://Marina.Rodeo:Marina.Rodeo@localhost
+modparam("db_virtual", "db_urls", "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost
 /testa")
 ...
 
@@ -211,7 +211,7 @@ modparam("db_virtual", "db_max_consec_retrys", 20)
      * None.
 
    MI FIFO Command Format:
-                                Marina.Rodeo-cli -x mi db_get
+                                openMarinkaRodeo-cli -x mi db_get
 
 1.4.2.  db_set
 
@@ -234,7 +234,7 @@ modparam("db_virtual", "db_max_consec_retrys", 20)
      * 1 - reset and suppress db_max_consec_retrys
 
    MI FIFO Command Format:
-                                Marina.Rodeo-cli -x mi db_set 3 2 0 1
+                                openMarinkaRodeo-cli -x mi db_set 3 2 0 1
 
 Chapter 2. Contributors
 
@@ -245,7 +245,7 @@ Chapter 2. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Razvan Pistolea 31 7 2244 297
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 22 18 104 128
-   3. Liviu Chircu (@liviuchircu) 16 12 105 140
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 16 12 105 140
    4. Razvan Crainea (@razvancrainea) 14 12 21 19
    5. Vlad Patrascu (@rvlad-patrascu) 9 5 85 145
    6. Ionut Ionita (@ionutrazvanionita) 6 3 232 9
@@ -265,7 +265,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -283,7 +283,7 @@ Chapter 2. Contributors
    4.  Zero King (@l2dy)                   Mar 2020 - Mar 2020
    5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
    6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   7.  Liviu Chircu (@liviuchircu)         Oct 2013 - Jun 2018
+   7.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Oct 2013 - Jun 2018
    8.  Ionut Ionita (@ionutrazvanionita)   Feb 2016 - Mar 2017
    9.  Julián Moreno Patiño                Feb 2016 - Feb 2016
    10. Walter Doekes (@wdoekes)            Jun 2014 - Jun 2014
@@ -299,10 +299,10 @@ Chapter 3. Documentation
 
    Last edited by: Razvan Crainea (@razvancrainea), Vlad Patrascu
    (@rvlad-patrascu), Bogdan-Andrei Iancu (@bogdan-iancu), Peter
-   Lemenkov (@lemenkov), Liviu Chircu (@liviuchircu), Julián
+   Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Julián
    Moreno Patiño, Ionut Ionita (@ionutrazvanionita), Razvan
    Pistolea.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2009 Voice Sistem SRL
+   Copyright © 2009 Voice Sistem SRL

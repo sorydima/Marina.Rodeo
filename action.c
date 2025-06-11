@@ -1,16 +1,16 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2010-2014 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2006 Voice Sistem S.R.L.
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2010-2014 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2005-2006 Voice Sistem S.R.L.
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -42,7 +42,7 @@
 
 /*!
  * \file
- * \brief Marina.Rodeo Generic functions
+ * \brief OpenMarinkaRodeo Generic functions
  */
 
 #include "action.h"
@@ -114,7 +114,7 @@ static int route_param_get(struct sip_msg *msg,  pv_param_t *ip,
 /* (0 if drop or break encountered, 1 if not ) */
 static inline int run_actions(struct action* a, struct sip_msg* msg)
 {
-	int ret, _;
+	int ret, _, ret_lvl;
 	str top_route;
 
 	if (route_stack_size > ROUTE_MAX_REC_LEV) {
@@ -133,11 +133,15 @@ static inline int run_actions(struct action* a, struct sip_msg* msg)
 		goto error;
 	}
 
+	ret_lvl=script_return_push();
+
 	ret=run_action_list(a, msg);
 
 	/* if 'return', reset the flag */
 	if(action_flags&ACT_FL_RETURN)
 		action_flags &= ~ACT_FL_RETURN;
+
+	script_return_pop(ret_lvl);
 
 	return ret;
 
@@ -658,7 +662,12 @@ int do_action(struct action* a, struct sip_msg* msg)
 						if (v<=0) {
 							ret=0;
 
-							LM_CRIT("ASSERTION FAILED - %s\n", a->elem[1].u.string);
+							if (a->elem[1].u.string)
+								LM_CRIT("ASSERTION FAILED (%s) at %s:%d\n",
+								        a->elem[1].u.string, a->file, a->line);
+							else
+								LM_CRIT("ASSERTION FAILED at %s:%d\n",
+								        a->file, a->line);
 
 							if (abort_on_assert) {
 								abort();
@@ -682,6 +691,10 @@ int do_action(struct action* a, struct sip_msg* msg)
 				action_flags |= ACT_FL_EXIT;
 			break;
 		case RETURN_T:
+				if (a->elem[1].type == EXPR_ST)
+					script_return_set(msg, a->elem[1].u.data);
+				else
+					script_return_set(msg, NULL);
 				script_trace("core", "return", msg, a->file, a->line) ;
 				if (a->elem[0].type == SCRIPTVAR_ST)
 				{
@@ -1167,6 +1180,7 @@ error:
 
 static int for_each_handler(struct sip_msg *msg, struct action *a)
 {
+	struct sip_msg *msg_src = msg;
 	pv_spec_p iter, spec;
 	pv_param_t pvp;
 	pv_value_t val;
@@ -1189,6 +1203,13 @@ static int for_each_handler(struct sip_msg *msg, struct action *a)
 		memset(&pvp, 0, sizeof pvp);
 		pvp.pvi.type = PV_IDX_INT;
 		pvp.pvn = spec->pvp.pvn;
+		if (spec->pvc && spec->pvc->contextf) {
+			msg_src = spec->pvc->contextf(msg);
+			if (!msg_src || msg_src == FAKED_REPLY) {
+				LM_BUG("Invalid pv context message: %p\n", msg_src);
+				return E_BUG;
+			}
+		}
 
 		/*
 		 * for $json iterators, better to assume script writer
@@ -1199,7 +1220,7 @@ static int for_each_handler(struct sip_msg *msg, struct action *a)
 			op = COLONEQ_T;
 
 		for (;;) {
-			if (spec->getf(msg, &pvp, &val) != 0) {
+			if (spec->getf(msg_src, &pvp, &val) != 0) {
 				LM_ERR("failed to get spec value\n");
 				return E_BUG;
 			}
@@ -1229,7 +1250,7 @@ static int for_each_handler(struct sip_msg *msg, struct action *a)
 }
 
 /**
- * prints the current point of execution in the Marina.Rodeo script
+ * prints the current point of execution in the OpenMarinkaRodeo script
  *
  * @class - optional, string to be printed meaning the class of action (if any)
  * @action - mandatory, string with the name of action

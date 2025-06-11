@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -18,14 +18,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef __OSIPS_HASH__
-#define __OSIPS_HASH__
+#ifndef __OMarinkaRodeo_HASH__
+#define __OMarinkaRodeo_HASH__
 
 #include "../map.h"
 #include "../locking.h"
 
+#define HASH_MAP_SHARED  (1 << 0)
+#define HASH_MAP_PERSIST (1 << 1)
+
 typedef struct gen_hash {
-	unsigned int size, locks_no;
+	unsigned int size, locks_no, flags;
 	map_t *entries;
 	gen_lock_set_t *locks;
 } gen_hash_t;
@@ -37,13 +40,20 @@ typedef void (*hash_destroy_func)(void *);
  * - a non-sero return code will cause processing to stop */
 typedef  int (*hash_entry_func)(void *param, str key, void *value);
 
-/* initializes a hash of specified size */
-gen_hash_t *hash_init(unsigned int size);
+/* initializes a hash of specified size with certain flags */
+gen_hash_t *hash_init_flags(unsigned int size, unsigned int flags);
+
+#define hash_init(size) hash_init_flags(size, HASH_MAP_SHARED)
 
 /* destroyes an allocated hash
  * - uses the destroy func to call for each value found in hash */
 void hash_destroy(gen_hash_t *hash, hash_destroy_func destroy);
 
+/* initializes hash locks */
+int hash_init_locks(gen_hash_t *h);
+
+/* releases the hash's locks */
+void hash_destroy_locks(gen_hash_t *hash);
 
 /* returns the size of the hash map */
 #define hash_size(_h) ((_h)->size)
@@ -121,4 +131,4 @@ void hash_destroy(gen_hash_t *hash, hash_destroy_func destroy);
 			hash_for_each_entry_locked(_h, (__hi), _f, _p); \
 	} while(0)
 
-#endif /* __OSIPS_HASH__ */
+#endif /* __OMarinkaRodeo_HASH__ */

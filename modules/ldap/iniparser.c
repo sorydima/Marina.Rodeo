@@ -1,19 +1,19 @@
 /*
-* Marina.Rodeo LDAP Module
+* OpenMarinkaRodeo LDAP Module
 *
-* Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 University of North Carolina
+* Copyright (C) 2007 University of North Carolina
 *
 * Original author: Christian Schlatter, cs@unc.edu
 *
 *
-* This file is part of Marina.Rodeo, a free SIP server.
+* This file is part of openMarinkaRodeo, a free SIP server.
 *
-* Marina.Rodeo is free software; you can redistribute it and/or modify
+* openMarinkaRodeo is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation; either version 2 of the License, or
 * (at your option) any later version
 *
-* Marina.Rodeo is distributed in the hope that it will be useful,
+* openMarinkaRodeo is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
@@ -36,7 +36,7 @@ Original terms following:
 
 -- -
 
-Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2000 by Nicolas Devillard (ndevilla AT free DOT fr).
+Copyright (c) 2000 by Nicolas Devillard (ndevilla AT free DOT fr).
 
 Written by Nicolas Devillard. Not derived from licensed software.
 
@@ -316,6 +316,9 @@ dictionary, give size=0.
 		if (size<DICTMINSZ) size=DICTMINSZ ;
 
 		d = (dictionary *)calloc(1, sizeof(dictionary));
+		if (!d)
+			return NULL;
+
 		d->size = size ;
 		d->val  = (char **)calloc(size, sizeof(char*));
 		d->key  = (char **)calloc(size, sizeof(char*));

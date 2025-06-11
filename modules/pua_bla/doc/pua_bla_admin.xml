@@ -14,7 +14,7 @@
 		<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -40,7 +40,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -67,7 +67,7 @@
 		<title>Set <varname>default_domain</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_bla", "default_domain", "Marina.Rodeo.org")
+modparam("pua_bla", "default_domain", "openMarinkaRodeo.org")
 ...
 </programlisting>
 		</example>
@@ -107,7 +107,7 @@ modparam("pua_bla", "header_name", "Sender")
 		<title>Set <varname>outbound_proxy</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_bla", "outbound_proxy", "sip:proxy@Marina.Rodeo.org")
+modparam("pua_bla", "outbound_proxy", "sip:proxy@openMarinkaRodeo.org")
 ...
 </programlisting>
 		</example>
@@ -142,7 +142,7 @@ modparam("pua_bla", "server_address", "sip:bla@160.34.23.12")
 		<title>Set <varname>presence_server</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_bla", "presence_server", "sip:pa@Marina.Rodeo.org")
+modparam("pua_bla", "presence_server", "sip:pa@openMarinkaRodeo.org")
 ...
 </programlisting>
 		</example>
@@ -168,7 +168,7 @@ modparam("pua_bla", "presence_server", "sip:pa@Marina.Rodeo.org")
 		<title><function>bla_set_flag</function> usage</title>
 	<programlisting format="linespecific">
 ...
-if(is_method("REGISTER") &amp;&amp; $tu=~"bla_aor@Marina.Rodeo.org") 
+if(is_method("REGISTER") &amp;&amp; $tu=~"bla_aor@openMarinkaRodeo.org") 
 	bla_set_flag();		
 ...
 </programlisting>
@@ -191,7 +191,7 @@ if(is_method("REGISTER") &amp;&amp; $tu=~"bla_aor@Marina.Rodeo.org")
 		<title><function>bla_handle_notify</function> usage</title>
 	<programlisting format="linespecific">
 ...
-if(is_method("NOTIFY") &amp;&amp; $tu=~"bla_aor@Marina.Rodeo.org") 
+if(is_method("NOTIFY") &amp;&amp; $tu=~"bla_aor@openMarinkaRodeo.org") 
 {
 		if( bla_handle_notify() ) 
 			t_reply(200, "OK");

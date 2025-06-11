@@ -1,16 +1,16 @@
 /*
  * common contact lookup code
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -53,9 +53,7 @@ lookup_rc lookup(struct sip_msg *req, udomain_t *d,
 {
 	static char urimem[MAX_BRANCHES-1][MAX_URI_SIZE];
 	static str branch_uris[MAX_BRANCHES-1];
-	int idx = 0, nbranches = 0, tlen;
-	char *turi;
-	qvalue_t tq;
+	int idx = 0, nbranches = 0;
 	urecord_t* r;
 	str aor;
 	ucontact_t *ct, **ptr, **pn_cts, **cts;
@@ -64,6 +62,7 @@ lookup_rc lookup(struct sip_msg *req, udomain_t *d,
 	int rc, ret = LOOKUP_NO_RESULTS, have_pn_cts = 0, single_branch = 0;
 	str sip_instance = STR_NULL, call_id = STR_NULL;
 	regex_t *ua_re = NULL;
+	struct msg_branch *branch;
 
 	if (!req->callid) {
 		LM_ERR("bad %.*s request (missing Call-ID header)\n",
@@ -73,7 +72,7 @@ lookup_rc lookup(struct sip_msg *req, udomain_t *d,
 
 	if (lookup_flags) {
 		flags = lookup_flags->flags;
-		if (lookup_flags->ua_re_is_set)
+		if (flags & REG_LOOKUP_UAFILTER_FLAG)
 			ua_re = &lookup_flags->ua_re;
 		max_latency = lookup_flags->max_latency;
 	}
@@ -82,14 +81,12 @@ lookup_rc lookup(struct sip_msg *req, udomain_t *d,
 
 	if (flags & REG_BRANCH_AOR_LOOKUP_FLAG) {
 		/* extract all the branches for further usage */
-		while (
-			(turi=get_branch(nbranches, &tlen, &tq, NULL, NULL, NULL, NULL))
-				) {
+		while ( (branch=get_msg_branch(nbranches))!=NULL ) {
 			/* copy uri */
 			branch_uris[nbranches].s = urimem[nbranches];
-			if (tlen) {
-				memcpy(branch_uris[nbranches].s, turi, tlen);
-				branch_uris[nbranches].len = tlen;
+			if (branch->uri.len) {
+				memcpy(branch_uris[nbranches].s,branch->uri.s,branch->uri.len);
+				branch_uris[nbranches].len = branch->uri.len;
 			} else {
 				*branch_uris[nbranches].s  = '\0';
 				branch_uris[nbranches].len = 0;
@@ -97,7 +94,7 @@ lookup_rc lookup(struct sip_msg *req, udomain_t *d,
 
 			nbranches++;
 		}
-		clear_branches();
+		clear_dset();
 	}
 
 	if (!aor_uri)
@@ -208,8 +205,6 @@ done:
 		ul.unlock_udomain(d, &aor);
 	}
 out_cleanup:
-	if (flags & REG_LOOKUP_UAFILTER_FLAG)
-		regfree(ua_re);
 	return ret;
 }
 
@@ -342,84 +337,6 @@ skip_remaining:
 }
 
 
-int parse_lookup_flags(const str *input, unsigned int *flags, regex_t *ua_re,
-                       int *regexp_flags, int *max_latency)
-{
-	char *ua = NULL, *re_end = NULL;
-	int i, re_len = 0;
-
-	*flags = 0;
-	if (ZSTRP(input))
-		return 0;
-
-	for (i = 0; i < input->len; i++) {
-		switch (input->s[i]) {
-		case 'm': *flags |= REG_LOOKUP_METHODFILTER_FLAG; break;
-		case 'b': *flags |= REG_LOOKUP_NOBRANCH_FLAG; break;
-		case 'g': *flags |= REG_LOOKUP_GLOBAL_FLAG; break;
-		case 'r': *flags |= REG_BRANCH_AOR_LOOKUP_FLAG; break;
-		case 'B': *flags |= REG_LOOKUP_NO_RURI_FLAG; break;
-		case 'u':
-			if (input->s[i+1] != '/') {
-				LM_ERR("no regexp start after 'u' flag\n");
-				break;
-			}
-			i++;
-			re_end = q_memchr(input->s + i + 1, '/', input->len - i - 1);
-			if (!re_end) {
-				LM_ERR("no regexp end after 'u' flag\n");
-				break;
-			}
-			i++;
-			re_len = re_end - input->s - i;
-			if (re_len == 0) {
-				LM_ERR("empty regexp\n");
-				break;
-			}
-			ua = input->s + i;
-			*flags |= REG_LOOKUP_UAFILTER_FLAG;
-			LM_DBG("found regexp /%.*s/", re_len, ua);
-
-			i += re_len;
-			break;
-
-		case 'i': *regexp_flags |= REG_ICASE; break;
-		case 'e': *regexp_flags |= REG_EXTENDED; break;
-		case 'y':
-			*max_latency = 0;
-			while (i<input->len-1 && isdigit(input->s[i+1])) {
-				*max_latency = *max_latency*10 + input->s[i+1] - '0';
-				i++;
-			}
-
-			if (*max_latency)
-				*flags |= REG_LOOKUP_MAX_LATENCY_FLAG;
-			else
-				*flags &= ~REG_LOOKUP_MAX_LATENCY_FLAG;
-			break;
-
-		case 'Y': *flags |= REG_LOOKUP_LATENCY_SORT_FLAG; break;
-
-		default:
-			LM_WARN("unsupported flag %c \n", input->s[i]);
-		}
-	}
-
-	LM_DBG("final flags: %d\n", *flags);
-
-	if (*flags & REG_LOOKUP_UAFILTER_FLAG) {
-		ua[re_len] = '\0';
-		if (regcomp(ua_re, ua, *regexp_flags) != 0) {
-			LM_ERR("bad regexp '%s'\n", ua);
-			ua[re_len] = '/';
-			return -1;
-		}
-		ua[re_len] = '/';
-	}
-
-	return 0;
-}
-
 #define REG_LOOKUP_TMP_REG_ICASE    (1<<6)
 #define REG_LOOKUP_TMP_REG_EXTENDED (1<<7)
 
@@ -466,7 +383,7 @@ int reg_fixup_lookup_flags(void** param)
 		return -1;
 	}
 
-	lookup_flags->flags = (unsigned int)(unsigned long)(void*)*param;
+	lookup_flags->flags = (unsigned int)(unsigned long)*param;
 	*param = (void*)lookup_flags;
 
 	/* "temporary" flags */
@@ -508,8 +425,6 @@ int reg_fixup_lookup_flags(void** param)
 			return -1;
 		}
 		*(p + re_len) = '/';
-
-		lookup_flags->ua_re_is_set = 1;
 	}
 
 	/* max-ping-latency */
@@ -529,8 +444,13 @@ int reg_fixup_lookup_flags(void** param)
 
 int reg_fixup_free_lookup_flags(void** param)
 {
-	if (*param)
-		pkg_free(*param);
+	struct lookup_flags *lookup_flags = (struct lookup_flags *)*param;
+
+	if (lookup_flags) {
+		if (lookup_flags->flags & REG_LOOKUP_UAFILTER_FLAG)
+			regfree(&lookup_flags->ua_re);
+		pkg_free(lookup_flags);
+	}
 	return 0;
 }
 
@@ -538,32 +458,33 @@ int push_branch(struct sip_msg *msg, ucontact_t *ct, int *ruri_is_pushed)
 {
 	str path_dst;
 	int_str istr;
-	str *ct_uri, _ct_uri;
 	struct sip_uri puri;
+	struct msg_branch branch;
+	int br_idx;
 
 	if (!ct)
 		return 1;
+
+	memset( &branch, 0, sizeof branch);
 
 	if (pn_enable && pn_on(ct) && pn_has_uri_params(&ct->c, &puri)) {
 		if (pn_required(ct))
 			return 2;
 
-		if (pn_remove_uri_params(&puri, ct->c.len, &_ct_uri) != 0) {
+		if (pn_remove_uri_params(&puri, ct->c.len, &branch.uri) != 0) {
 			LM_ERR("failed to remove PN URI params\n");
 			return *ruri_is_pushed ? -1 : -2;
 		}
-
-		ct_uri = &_ct_uri;
 	} else {
-		ct_uri = &ct->c;
+		branch.uri = ct->c;
 	}
 
 	if (*ruri_is_pushed)
 		goto append_branch;
 
-	LM_DBG("setting msg R-URI <%.*s>\n", ct_uri->len, ct_uri->s);
+	LM_DBG("setting msg R-URI <%.*s>\n", branch.uri.len, branch.uri.s);
 
-	if (set_ruri(msg, ct_uri) < 0) {
+	if (set_ruri(msg, &branch.uri) < 0) {
 		LM_ERR("unable to rewrite Request-URI\n");
 		return -2;
 	}
@@ -599,15 +520,19 @@ int push_branch(struct sip_msg *msg, ucontact_t *ct, int *ruri_is_pushed)
 	}
 
 	*ruri_is_pushed = 1;
+	br_idx = 0;
 	goto add_attr_avp;
 
 append_branch:
-	LM_DBG("setting branch R-URI <%.*s>\n", ct_uri->len, ct_uri->s);
+	LM_DBG("setting branch R-URI <%.*s>\n", branch.uri.len, branch.uri.s);
 
 	if (ct->flags & FL_EXTRA_HOP) {
-		if (append_branch(msg, ct_uri, &ct->received, &msg->path_vec,
-		                  get_ruri_q(msg), getb0flags(msg),
-		                  msg->force_send_socket) == -1) {
+		branch.dst_uri = ct->received;
+		branch.path = msg->path_vec;
+		branch.q = msg->ruri_q;
+		branch.force_send_socket = msg->force_send_socket;
+		branch.bflags = msg->ruri_bflags;
+		if (append_msg_branch( &branch) == -1) {
 			LM_ERR("failed to append a branch\n");
 			return -1;
 		}
@@ -621,18 +546,24 @@ append_branch:
 
 		/* The same as for the first contact applies for branches
 		 * regarding path vs. received. */
-		if (append_branch(msg, ct_uri,
-		           path_dst.len ? &path_dst : &ct->received,
-		           &ct->path, ct->q, ct->cflags, ct->sock) == -1) {
+		branch.dst_uri = path_dst.len ? path_dst : ct->received;
+		branch.path = ct->path;
+		branch.q = ct->q;
+		branch.force_send_socket = ct->sock;
+		branch.bflags = ct->cflags;
+		if (append_msg_branch(&branch) == -1) {
 			LM_ERR("failed to append a branch\n");
 			return -1;
 		}
 	}
+	br_idx = get_dset_size(); /*last inserted branch*/
+	/* it should be `-1` to covert form size to index, but we also need to 
+	 * do a `+1` due to re-indexing with RURI branch as first */
 
 add_attr_avp:
 	if (attr_avp_name != -1) {
 		istr.s = ct->attr;
-		if (add_avp_last(AVP_VAL_STR, attr_avp_name, istr) != 0)
+		if (set_msg_branch_attr(br_idx, attr_avp_name, AVP_VAL_STR, istr)<0)
 			LM_ERR("Failed to populate attr avp!\n");
 	}
 

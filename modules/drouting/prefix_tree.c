@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2008 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2005-2008 Voice Sistem SRL
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
  * This file is part of Open SIP Server.
  *
- * DROUTING Marina.Rodeo-module is free software; you can redistribute it and/or
+ * DROUTING OpenMarinkaRodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * DROUTING Marina.Rodeo-module is distributed in the hope that it will be useful,
+ * DROUTING OpenMarinkaRodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -84,7 +84,7 @@ static inline rt_info_t*
 internal_check_rt(
 		ptree_node_t *ptn,
 		unsigned int rgid,
-		unsigned int *rgidx
+		int *rgidx
 		)
 {
 	int i,j;
@@ -126,8 +126,18 @@ check_rt(
 	unsigned int rgid
 	)
 {
-	unsigned int rgidx = 0;
+	int rgidx = 0;
 	return internal_check_rt( ptn, rgid, &rgidx);
+}
+
+rt_info_t*
+_check_rt(
+	ptree_node_t *ptn,
+	unsigned int rgid,
+	int *rgidx
+	)
+{
+	return internal_check_rt( ptn, rgid, rgidx);
 }
 
 
@@ -137,7 +147,7 @@ get_prefix(
 	str* prefix,
 	unsigned int rgid,
 	unsigned int *matched_len,
-	unsigned int *rgidx
+	int *rgidx
 	)
 {
 	rt_info_t *rt = NULL;
@@ -147,7 +157,7 @@ get_prefix(
 
 	if(NULL == ptree)
 		goto err_exit;
-	if(NULL == prefix)
+	if(NULL == prefix || prefix->len == 0)
 		goto err_exit;
 	tmp = prefix->s;
 	if (tmp == NULL)
@@ -248,8 +258,8 @@ add_prefix(
 	str* prefix,
 	rt_info_t *r,
 	unsigned int rg,
-	osips_malloc_f malloc_f,
-	osips_free_f free_f
+	oMarinkaRodeo_malloc_f malloc_f,
+	oMarinkaRodeo_free_f free_f
 )
 {
 	char* tmp=NULL;
@@ -305,7 +315,7 @@ err_exit:
 int
 del_tree(
 		ptree_t* t,
-		osips_free_f free_f
+		oMarinkaRodeo_free_f free_f
 		)
 {
 	int i,j;
@@ -334,7 +344,7 @@ exit:
 void
 del_rt_list(
 		rt_info_wrp_t *rwl,
-		osips_free_f f
+		oMarinkaRodeo_free_f f
 		)
 {
 	rt_info_wrp_t* t=rwl;
@@ -350,7 +360,7 @@ del_rt_list(
 void
 free_rt_info(
 		rt_info_t *rl,
-		osips_free_f f
+		oMarinkaRodeo_free_f f
 		)
 {
 	if(NULL == rl)

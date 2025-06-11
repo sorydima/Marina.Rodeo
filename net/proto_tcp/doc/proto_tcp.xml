@@ -15,27 +15,27 @@
 <book>
 	<bookinfo>
 	<title>proto_tcp Module</title>
-	<productname class="trade">&osipsname;</productname>
+	<productname class="trade">&oMarinkaRodeoname;</productname>
 	<authorgroup>
 		<author>
-		<firstname>&osips;</firstname>
+		<firstname>&oMarinkaRodeo;</firstname>
 		<surname>Project</surname>
 		<address>
-			<email>support@Marina.Rodeo.org</email>
+			<email>support@openMarinkaRodeo.org</email>
 		</address>
 		</author>
 		<editor>
 		<firstname>Razvan</firstname>
 		<surname>Crainea</surname>
 		<address>
-			<email>razvan@Marina.Rodeo.org</email>
+			<email>razvan@openMarinkaRodeo.org</email>
 		</address>
 		</editor>
 	</authorgroup>
-	<Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌>
+	<copyright>
 		<year>2015</year>
-		<holder>&osips; Project</holder>
-	</Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌>
+		<holder>&oMarinkaRodeo; Project</holder>
+	</copyright>
 	</bookinfo>
 	<toc></toc>
 

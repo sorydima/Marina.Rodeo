@@ -57,13 +57,13 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
 			<listitem>
 			<para>
-				<emphasis>No dependencies on other &osips; modules</emphasis>.
+				<emphasis>No dependencies on other &oMarinkaRodeo; modules</emphasis>.
 			</para>
 			</listitem>
 			</itemizedlist>
@@ -73,7 +73,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -146,7 +146,7 @@ modparam("pike", "reqs_density_per_unit", 30)
 		value is lower than <emphasis>sampling_time_unit</emphasis> value,
 		nodes might expire before being unblocked, therefore losing some
 		UNBLOCK events. In order to prevent this, if the
-		<emphasis>remove_latency</emphasis> is lower, &osips; internally
+		<emphasis>remove_latency</emphasis> is lower, &oMarinkaRodeo; internally
 		forces its value to <emphasis>sampling_time_unit + 1</emphasis>.
 		</para>
 		<para>
@@ -288,7 +288,7 @@ if (!pike_check_req()) { exit; };
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi pike_list
+		openMarinkaRodeo-cli -x mi pike_list
 		</programlisting>
 	</section>
 	<section id="mi_pike_rm" xreflabel="pike_rm">
@@ -311,7 +311,7 @@ if (!pike_check_req()) { exit; };
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi pike_rm 10.0.0.106
+		openMarinkaRodeo-cli -x mi pike_rm 10.0.0.106
 		</programlisting>
 	</section>
 	</section>
@@ -356,7 +356,7 @@ if (!pike_check_req()) { exit; };
 
 	<para>
 	For how to access and use the Status/Report information, please see
-	<ulink url='>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3'>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3</ulink>.
+	<ulink url='>https://www.openMarinkaRodeo.org/Documentation/Interface-StatusReport-3-3'>https://www.openMarinkaRodeo.org/Documentation/Interface-StatusReport-3-3</ulink>.
 	</para>
 
 </section>

@@ -10,7 +10,7 @@ event_datagram Module
         1.3. DATAGRAM socket syntax
         1.4. Dependencies
 
-              1.4.1. Marina.Rodeo Modules
+              1.4.1. OpenMarinkaRodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -66,15 +66,15 @@ Chapter 1. Admin Guide
 
 1.4. Dependencies
 
-1.4.1. Marina.Rodeo Modules
+1.4.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other Marina.Rodeo modules.
+     * No dependencies on other OpenMarinkaRodeo modules.
 
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * none
 
 1.5. Exported Parameters
@@ -103,7 +103,7 @@ Chapter 1. Admin Guide
 
    Example 1.2. UNIX socket
 
-unix:/tmp/Marina.Rodeo_event.sock
+unix:/tmp/openMarinkaRodeo_event.sock
 
 
    Example 1.3. UDP socket
@@ -128,27 +128,34 @@ Chapter 2. Frequently Asked Questions
 
    2.3.
 
-   Where can I find more about Marina.Rodeo?
+   Where can I find more about OpenMarinkaRodeo?
 
-   Take a look at https://Marina.Rodeo/.
+   Take a look at https://openMarinkaRodeo.org/.
 
    2.4.
 
    Where can I post a question about this module?
 
-   E-mails regarding any stable Marina.Rodeo release should be sent to
-   <sip@rechain.email> and e-mails regarding development
-   versions should be sent to <support@rechain.email>.
+   First at all check if your question was already answered on one
+   of our mailing lists:
+     * User Mailing List -
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users
+     * Developer Mailing List -
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/devel
+
+   E-mails regarding any stable OpenMarinkaRodeo release should be sent to
+   <users@lists.openMarinkaRodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.openMarinkaRodeo.org>.
 
    If you want to keep the mail private, send it to
-   <anti@rechain.email>.
+   <users@lists.openMarinkaRodeo.org>.
 
    2.5.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/sorydima/Marina.Rodeo/issues.
+   https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues.
 
 Chapter 3. Contributors
 
@@ -157,8 +164,8 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Razvan Crainea (@razvancrainea) 24 16 854 37
-   2. Liviu Chircu (@liviuchircu) 8 6 12 29
+   1. Razvan Crainea (@razvancrainea) 25 16 854 37
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 8 6 12 29
    3. Vlad Patrascu (@rvlad-patrascu) 8 4 27 140
    4. Bogdan-Andrei Iancu (@bogdan-iancu) 4 2 3 1
    5. Maksym Sobolyev (@sobomax) 4 2 2 3
@@ -172,7 +179,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -189,7 +196,7 @@ Chapter 3. Contributors
    3. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jul 2020
    4. Razvan Crainea (@razvancrainea)     May 2011 - Sep 2019
    5. Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Apr 2019
-   6. Liviu Chircu (@liviuchircu)         Mar 2014 - Nov 2018
+   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - Nov 2018
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -199,9 +206,9 @@ Chapter 4. Documentation
 4.1. Contributors
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Peter Lemenkov
-   (@lemenkov), Liviu Chircu (@liviuchircu), Razvan Crainea
+   (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Razvan Crainea
    (@razvancrainea).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
+   Copyright © 2011 www.openMarinkaRodeo-solutions.com

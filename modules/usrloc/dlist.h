@@ -1,16 +1,16 @@
 /*
  * List of registered domains
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -110,7 +110,7 @@ udomain_t* get_next_udomain(udomain_t *_d);
 
 /*contact label may not be higher than 14 bits*/
 #define CLABEL_MASK ((1<<14)-1)
-#define CLABEL_INC_AND_TEST(_clabel_) ((_clabel_+1)&CLABEL_MASK)
+#define CLABEL_NEXT(_clabel_) ((_clabel_+1)&CLABEL_MASK)
 #define CID_GET_CLABEL(_cid) (_cid&CLABEL_MASK)
 #define CID_NEXT_RLABEL(_dom, _sl) (_dom->table[_sl].next_label++)
 
@@ -123,7 +123,7 @@ static inline void init_urecord_labels(urecord_t *r, udomain_t *d)
 static inline uint64_t
 pack_indexes(unsigned short aorhash, unsigned int rlabel, unsigned short clabel)
 {
-	return (clabel & CLABEL_MASK) +
+	return ((uint64_t)clabel & CLABEL_MASK) +
 		((uint64_t)rlabel << 14) + ((uint64_t)aorhash << 46);
 }
 

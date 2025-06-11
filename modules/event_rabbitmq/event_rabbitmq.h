@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Marina.Rodeo Solutions
+ * Copyright (C) 2011 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -36,6 +36,7 @@
 #endif
 
 #include "../tls_mgm/api.h"
+#include "rmq_servers.h"
 
 /* transport protocols name */
 #define RMQ_NAME	"rabbitmq"
@@ -52,14 +53,10 @@
 #define RMQ_DEFAULT_PORT	5672
 #define RMQ_DEFAULT_TLS_PORT 5671
 
-#define RMQ_PARAM_RKEY	(1 << 1)
-#define RMQ_PARAM_CONN	(1 << 2)
-#define RMQ_PARAM_CHAN	(1 << 3)
 #define RMQ_PARAM_USER	(1 << 4)
 #define RMQ_PARAM_PASS	(1 << 5)
 #define RMQ_PARAM_EKEY	(1 << 6)
 #define RMQ_PARAM_TLS	(1 << 7)
-#define RMQ_PARAM_PERS	(1 << 8)
 
 #define RMQ_EXCHANGE_S		"exchange="
 #define RMQ_EXCHANGE_LEN	(sizeof(RMQ_EXCHANGE_S)-1)
@@ -68,21 +65,27 @@
 #define RMQ_PERSISTENT_S		"persistent"
 #define RMQ_PERSISTENT_LEN		(sizeof(RMQ_PERSISTENT_S)-1)
 
+#define RMQ_DEFAULT_CHANNEL 1
+
 typedef struct _rmq_params {
 	str routing_key;
-	str exchange;
-	str user;
-	str pass;
-	str tls_dom_name;
-	struct tls_domain *tls_dom;
-	amqp_connection_state_t conn;
-	int channel;
-	int flags;
-	int heartbeat;
+	rmq_connection_t conn;
 } rmq_params_t;
 
 extern int use_tls;
 extern struct tls_mgm_binds tls_api;
+extern struct timeval conn_timeout_tv;
+#if defined AMQP_VERSION && AMQP_VERSION >= 0x00090000
+extern struct timeval rpc_timeout_tv;
 
+int rmq_error(char const *context, amqp_rpc_reply_t x);
+void rmq_destroy_connection(rmq_connection_t *conn);
+int rmq_reconnect(rmq_connection_t *conn, int max_frames, str cid);
+int amqp_check_status(rmq_connection_t *conn, int r, int* retry, str cid);
+int rmq_basic_publish(rmq_connection_t *conn, int max_frames,
+							 str *cid, amqp_bytes_t akey, amqp_bytes_t abody,
+							 amqp_basic_properties_t *props, int retries);
+
+#endif
 #endif
 

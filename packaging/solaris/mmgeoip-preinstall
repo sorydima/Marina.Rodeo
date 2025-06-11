@@ -1,7 +1,7 @@
 #!/sbin/sh
-# Script for checking prerequisites for Marina.Rodeo-geoip
+# Script for checking prerequisites for OpenMarinkaRodeo-geoip
 
-BASE="Marina.Rodeo-base"
+BASE="OpenMarinkaRodeo-base"
 LIBGEOIP="libGeoIP.a"
 TMPLIST="/tmp/.opensipgeoip"
 
@@ -9,7 +9,7 @@ pkginfo | grep -i $BASE > /dev/null
 
 if [ $? -eq 1 ]
 then
-	echo "Marina.Rodeo-geoip depends on package Marina.Rodeo-base which is not installed";
+	echo "OpenMarinkaRodeo-geoip depends on package OpenMarinkaRodeo-base which is not installed";
 	exit 1;
 fi
 
@@ -18,7 +18,7 @@ lines=`wc -l $TMPLIST`
 
 if [ $lines = "0" ]
 then
-	echo "Marina.Rodeo-carrierroute depends on Max Mind Geo IP library, which cannot be found on system";
+	echo "OpenMarinkaRodeo-carrierroute depends on Max Mind Geo IP library, which cannot be found on system";
 	exit 1;
 else
 	exit 0;

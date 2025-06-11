@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Solutions
+ * Copyright (C) 2017 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -323,6 +323,7 @@ int add_ebr_subscription( struct sip_msg *msg, ebr_event *ev,
 		sub->tm.hash = 0;
 		sub->tm.label = 0;
 	}
+
 	LM_DBG("transaction reference is %X:%X\n",sub->tm.hash,sub->tm.label);
 
 	/* link subscription to the event */
@@ -332,7 +333,7 @@ int add_ebr_subscription( struct sip_msg *msg, ebr_event *ev,
 	lock_release( &(ev->lock) );
 
 	LM_DBG("new subscription [%s] on event %.*s/%d successfully added from "
-		"process %d\n", (flags&EBR_SUBS_TYPE_WAIT)?"WAIT":"NOTIFY",
+		"process %d\n", EBR_SUBS_TYPE(sub),
 		ev->event_name.len, ev->event_name.s, ev->event_id, process_no);
 
 	return 0;
@@ -475,15 +476,13 @@ int notify_ebr_subscriptions( ebr_event *ev, evi_params_t *params)
 
 	/* check the EBR subscription on this event and apply the filters */
 	sub_prev = NULL;
-	sub_next = NULL;
-	for ( sub=ev->subs ; sub ; sub_prev=sub,
-								sub=sub_next?sub_next:(sub?sub->next:NULL) ) {
+	for ( sub=ev->subs ; sub ; sub_prev=sub, sub=sub_next) {
+		sub_next = sub->next;
 
 		/* discard expired subscriptions */
 		if (sub->expire<my_time) {
 			LM_DBG("subscription type [%s] from process %d(pid %d) on "
-				"event <%.*s> expired at %d\n",
-				(sub->flags&EBR_SUBS_TYPE_WAIT)?"WAIT":"NOTIFY",
+				"event <%.*s> expired at %d\n", EBR_SUBS_TYPE(sub),
 				sub->proc_no, pt[sub->proc_no].pid,
 				sub->event->event_name.len, sub->event->event_name.s,
 				sub->expire );
@@ -506,9 +505,22 @@ int notify_ebr_subscriptions( ebr_event *ev, evi_params_t *params)
 					shm_free(job);
 					continue; /* keep it and try next time */
 				}
+			} else
+			/* resume if an sync/blocking WAIT */
+			if (sub->flags&EBR_SUBS_TYPE_SWAIT) {
+				struct swait_pack *swait_data = (struct swait_pack*)sub->data;
+				cond_lock(&swait_data->cond);
+				cond_signal(&swait_data->cond);
+				cond_unlock(&swait_data->cond);
+				/* the "swait_data" will be freed by the waiting proc, 
+				 * we will free here only the subcription (without the
+				 * data field) */
+				sub->data = NULL; /*just to avod earlier free*/
+				/* setting swait_data->ret_avps to -1 serves as an 
+				 * indication of a timeout */
+				swait_data->ret_avps = ((void*)(long)-1);
 			}
-			/* remove the subscription */
-			sub_next = sub->next;
+
 			/* unlink it */
 			if (sub_prev) sub_prev->next = sub_next;
 			else ev->subs = sub_next;
@@ -521,7 +533,6 @@ int notify_ebr_subscriptions( ebr_event *ev, evi_params_t *params)
 
 		/* run the filters */
 		matches = 1;
-		sub_next = NULL;
 		for ( filter=sub->filters ; matches && filter ; filter=filter->next ) {
 
 			/* look for the evi param with the same name */
@@ -544,8 +555,7 @@ int notify_ebr_subscriptions( ebr_event *ev, evi_params_t *params)
 		if (matches) {
 
 			LM_DBG("subscription type [%s]from process %d(pid %d) matched "
-				"event, generating notification via IPC\n",
-				(sub->flags&EBR_SUBS_TYPE_WAIT)?"WAIT":"NOTIFY",
+				"event, generating notification via IPC\n", EBR_SUBS_TYPE(sub),
 				sub->proc_no, pt[sub->proc_no].pid);
 
 			/* convert the EVI params into AVP (only once) */
@@ -585,16 +595,34 @@ int notify_ebr_subscriptions( ebr_event *ev, evi_params_t *params)
 					if (job->data) shm_free(job->data);
 					shm_free(job);
 				}
-			} else {
+			} else
+			if (sub->flags&EBR_SUBS_TYPE_WAIT) {
 				/* sent the event notification via IPC to resume on the
 				 * subscribing process */
 				if (ipc_send_job( sub->proc_no, ebr_ipc_type , (void*)job)<0) {
 					LM_ERR("failed to send job via IPC, skipping...\n");
 					shm_free(job);
 				}
-				/* remove the subscription, as it can be triggered only 
-				 * one time */
-				sub_next = sub->next;
+
+				/* unlink it */
+				if (sub_prev) sub_prev->next = sub_next;
+				else ev->subs = sub_next;
+				/* free it */
+				free_ebr_subscription(sub);
+				/* do not count us as prev, as we are removed */
+				sub = sub_prev;
+			} else
+			/* resume if an sync/blocking WAIT */
+			if (sub->flags&EBR_SUBS_TYPE_SWAIT) {
+				struct swait_pack *swait_data = (struct swait_pack*)sub->data;
+				swait_data->ret_avps = job->avps;
+				shm_free(job); /* we need only the AVPs in this scenario */
+				cond_lock(&swait_data->cond);
+				cond_signal(&swait_data->cond);
+				cond_unlock(&swait_data->cond);
+				/* and destroy the subscription as it is only one time
+				 * triggering */
+				sub->data = NULL; /* just to be sure it is not freed here */
 				/* unlink it */
 				if (sub_prev) sub_prev->next = sub_next;
 				else ev->subs = sub_next;
@@ -648,17 +676,15 @@ void ebr_timeout(unsigned int ticks, void* param)
 
 		/* check the EBR subscriptions on this event */
 		sub_prev = NULL;
-		sub_next = NULL;
-		for ( sub=ev->subs ; sub ; sub_prev=sub,
-								sub=sub_next?sub_next:(sub?sub->next:NULL) ) {
+		for ( sub=ev->subs ; sub ; sub_prev=sub, sub=sub_next ) {
+			sub_next = sub->next;
 
 			/* skip valid and non WAIT subscriptions */
 			if ( (sub->flags&EBR_SUBS_TYPE_WAIT)==0 || sub->expire>my_time )
 				continue;
 
 			LM_DBG("subscription type [%s] from process %d(pid %d) on "
-				"event <%.*s> expired at %d, now %d\n",
-				(sub->flags&EBR_SUBS_TYPE_WAIT)?"WAIT":"NOTIFY",
+				"event <%.*s> expired at %d, now %d\n", EBR_SUBS_TYPE(sub),
 				sub->proc_no, pt[sub->proc_no].pid,
 				sub->event->event_name.len, sub->event->event_name.s,
 				sub->expire, my_time );
@@ -682,8 +708,6 @@ void ebr_timeout(unsigned int ticks, void* param)
 				continue; /* with the next subscription */
 			}
 
-			/* remove the subscription */
-			sub_next = sub->next;
 			/* unlink it */
 			if (sub_prev) sub_prev->next = sub_next;
 			else ev->subs = sub_next;

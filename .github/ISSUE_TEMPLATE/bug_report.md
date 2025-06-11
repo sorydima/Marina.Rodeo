@@ -8,13 +8,13 @@ assignees: ''
 ---
 
 <!--
-Thank you for reporting a bug in Marina.Rodeo!
+Thank you for reporting a bug in OpenMarinkaRodeo!
 
 In order for us to understand better the issue you are facing, kindly provide all the available information you have about this bug, according to the template below
 -->
 
-**Marina.Rodeo version you are running**
-<!-- paste below, inside the ticks block,  the output of the `marinarodeo -V` command -->
+**OpenMarinkaRodeo version you are running**
+<!-- paste below, inside the ticks block,  the output of the `openMarinkaRodeo -V` command -->
 
 ```
 ```
@@ -28,7 +28,7 @@ A clear and concise description of what the issue you are experiencing.
 <!--
 Steps to reproduce the behavior:
 Example:
-1. Start Marina.Rodeo
+1. Start OpenMarinkaRodeo
 2. Start traffic with special headers
 3. Inspect traces
 4. Notice the `X-Custom-Header` has wrong format
@@ -47,7 +47,7 @@ Please provide, in ticks block, relevant information from the system logs
 
 **OS/environment information**
  - Operating System: <!-- (example: `Debian 9`) -->
- - Marina.Rodeo installation: <!-- (example: `git`/`source`/`debs`/`manual packages`) -->
+ - OpenMarinkaRodeo installation: <!-- (example: `git`/`source`/`debs`/`manual packages`) -->
  - other relevant information:
 
 **Additional context**

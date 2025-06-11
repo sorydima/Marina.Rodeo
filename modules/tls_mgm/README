@@ -12,7 +12,7 @@ TLS_MGM module
         1.5. Defining TLS domains
         1.6. Dependencies
 
-              1.6.1. Marina.Rodeo Modules
+              1.6.1. OpenMarinkaRodeo Modules
               1.6.2. Dependencies of external libraries
 
         1.7. Exported Functions
@@ -24,7 +24,7 @@ TLS_MGM module
               1.8.1. tls_list
               1.8.2. tls_reload
 
-        1.9. Marina.Rodeo Exported parameters
+        1.9. OpenMarinkaRodeo Exported parameters
 
               1.9.1. listen=interface
               1.9.2. tls_library (string)
@@ -91,7 +91,7 @@ TLS_MGM module
               1.10.22. $tls_peer_notBefore
               1.10.23. $tls_peer_notAfter
 
-        1.11. Marina.Rodeo with TLS - script example
+        1.11. OpenMarinkaRodeo with TLS - script example
         1.12. Debug TLS connections
 
    2. Developer Guide
@@ -207,7 +207,7 @@ Chapter 1. Admin Guide
    module parameters (script level) and via an SQL table.
 
    A script example which details this module's usage can be found
-   in Section 1.11, “Marina.Rodeo with TLS - script example”.
+   in Section 1.11, “OpenMarinkaRodeo with TLS - script example”.
 
 1.3. TLS libraries
 
@@ -216,7 +216,7 @@ Chapter 1. Admin Guide
    by openSSL or wolfSSL libraries) and transport protocol modules
    like proto_tls or proto_wss. The tls_mgm module transparently
    exposes the TLS operations implemented by tls_openssl and
-   tls_wolfssl modules to the higher-level Marina.Rodeo transport
+   tls_wolfssl modules to the higher-level OpenMarinkaRodeo transport
    modules.
 
    The TLS library selection ca be configured through the
@@ -237,7 +237,7 @@ Chapter 1. Admin Guide
    multiple socket=tls:ip:port entries in the config file).
 
    For example, TLS domains can be used in virtual hosting
-   scenarios with TLS. Marina.Rodeo offers SIP service for multiple
+   scenarios with TLS. OpenMarinkaRodeo offers SIP service for multiple
    domains, e.g. atlanta.com and biloxi.com. Altough both domains
    will be hosted on a single SIP proxy, the SIP proxy needs 2
    certificates: One for atlanta.com and one for biloxi.com. For
@@ -293,7 +293,7 @@ Chapter 1. Admin Guide
 
 1.6. Dependencies
 
-1.6.1. Marina.Rodeo Modules
+1.6.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * tls_openssl or tls_wolfssl, unless tls_library is set to
@@ -302,7 +302,7 @@ Chapter 1. Admin Guide
 1.6.2. Dependencies of external libraries
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.7. Exported Functions
@@ -336,10 +336,10 @@ if (is_peer_verified()) {
    previous DB defined domains are discarded but the script
    defined domains are preserved.
 
-1.9. Marina.Rodeo Exported parameters
+1.9. OpenMarinkaRodeo Exported parameters
 
-   All these parameters can be used from the Marina.Rodeo.cfg file, to
-   configure the behavior of Marina.Rodeo-TLS.
+   All these parameters can be used from the openMarinkaRodeo.cfg file, to
+   configure the behavior of OpenMarinkaRodeo-TLS.
 
 1.9.1. listen=interface
 
@@ -356,7 +356,7 @@ socket= tls:1.2.3.4:5061
 
    Selects which TLS library to use. Possible values are:
      * auto - auto-detect which TLS library module (tls_openssl or
-       tls_wolfssl) was loaded. Marina.Rodeo will not start if no
+       tls_wolfssl) was loaded. OpenMarinkaRodeo will not start if no
        module, or both modules are found.
      * none - do not use any TLS library; this is useful when the
        tls_mgm module is required only for the management of TLS
@@ -379,14 +379,14 @@ modparam("tls_mgm", "tls_library", "none")
 
    Sets the TLS protocol. The domain part represents the name of
    the TLS domain. The supported TLS methods are:
-     * TLSv1_3 - means Marina.Rodeo will accept only TLSv1.3
+     * TLSv1_3 - means OpenMarinkaRodeo will accept only TLSv1.3
        connections. This version is only available starting with
        OpenSSL 1.1.1 version.
-     * TLSv1_2 - means Marina.Rodeo will accept only TLSv1.2
+     * TLSv1_2 - means OpenMarinkaRodeo will accept only TLSv1.2
        connections (rfc3261 conformant).
-     * TLSv1 - means Marina.Rodeo will accept only TLSv1 connections
+     * TLSv1 - means OpenMarinkaRodeo will accept only TLSv1 connections
        (rfc3261 conformant).
-     * SSLv23 - means Marina.Rodeo will accept any of the above
+     * SSLv23 - means OpenMarinkaRodeo will accept any of the above
        methods, but the initial SSL hello must be v2 (in the
        initial hello all the supported protocols are advertised
        enabling switching to a higher and more secure version).
@@ -410,7 +410,7 @@ Warning
 
    If you want RFC3261 conformance and all your clients support
    TLSv1 (or you are planning to use encrypted "tunnels" only
-   between different Marina.Rodeo proxies) use TLSv1. If you want to
+   between different OpenMarinkaRodeo proxies) use TLSv1. If you want to
    support older clients use SSLv23 (in fact most of the
    applications with SSL support use the SSLv23 method).
 
@@ -430,7 +430,7 @@ modparam("tls_mgm", "tls_method", "[dom]-")              # all supported
 
 1.9.4. certificate ([domain](string)
 
-   Public certificate file for Marina.Rodeo. It will be used as
+   Public certificate file for OpenMarinkaRodeo. It will be used as
    server-side certificate for incoming TLS connections, and as a
    client-side certificate for outgoing TLS connections. The
    domain part represents the name of the TLS domain.
@@ -439,7 +439,7 @@ modparam("tls_mgm", "tls_method", "[dom]-")              # all supported
 
    Example 1.6. Set certificate variable
 ...
-modparam("tls_mgm", "certificate", "[dom]/mycerts/certs/Marina.Rodeo_server_
+modparam("tls_mgm", "certificate", "[dom]/mycerts/certs/openMarinkaRodeo_server_
 cert.pem")
 ...
 
@@ -639,7 +639,7 @@ modparam("tls_mgm", "client_sip_domain_avp", "sip_match_dom")
    TLS connection to the database for the tls_mgm module itself.
 
    Example 1.18. Usage of db_url block
-modparam("tls_mgm", "db_url", "mysql://root:admin@localhost/Marina.Rodeo")
+modparam("tls_mgm", "db_url", "mysql://root:admin@localhost/openMarinkaRodeo")
 
 1.9.18.  db_table (string)
 
@@ -1068,14 +1068,14 @@ route{
    $tls_peer_notAfter - Returns the notAfter validity date of the
    peer's certificate. String type.
 
-1.11. Marina.Rodeo with TLS - script example
+1.11. OpenMarinkaRodeo with TLS - script example
 
    IMPORTANT: The TLS support is based on TCP, and for allowing
-   Marina.Rodeo to use TCP, it must be started in multi-process mode.
+   OpenMarinkaRodeo to use TCP, it must be started in multi-process mode.
    So, there is a must to have the "fork" parameter set to "yes":
 
    NOTE: Since the TLS engine is quite memory consuming, increase
-   the used memory by the run time parameter "-m" (see Marina.Rodeo -h
+   the used memory by the run time parameter "-m" (see OpenMarinkaRodeo -h
    for more details).
      * fork = yes
 
@@ -1100,7 +1100,7 @@ route{
   #TLS specific settings
   loadmodule "tls_mgm.so"
 
-  modparam("tls_mgm", "certificate", "/path/Marina.RodeoX_cert.pem")
+  modparam("tls_mgm", "certificate", "/path/openMarinkaRodeoX_cert.pem")
   modparam("tls_mgm", "private_key", "/path/privkey.pem")
   modparam("tls_mgm", "ca_list", "/path/calist.pem")
   modparam("tls_mgm", "ca_list", "/path/calist.pem")
@@ -1254,7 +1254,7 @@ route{
 1.12. Debug TLS connections
 
    If you want to debug TLS connections, put the following log
-   statements into your Marina.Rodeo.cfg. This will dump all available
+   statements into your OpenMarinkaRodeo.cfg. This will dump all available
    TLS pseudo variables.
 
    Example 1.40. Example of TLS logging
@@ -1383,7 +1383,7 @@ Chapter 2. Developer Guide
 
 2.2. TLS_CONFIG
 
-   It contains configuration variables for Marina.Rodeo's TLS
+   It contains configuration variables for OpenMarinkaRodeo's TLS
    (timeouts, file paths, etc).
 
 2.3. TLS_INIT
@@ -1428,7 +1428,7 @@ Chapter 2. Developer Guide
 
    Wrapper functions around the shm_* functions. OpenSSL uses
    non-shared memory to create its objects, thus it would not work
-   in Marina.Rodeo. By creating these wrappers and configuring OpenSSL
+   in OpenMarinkaRodeo. By creating these wrappers and configuring OpenSSL
    to use them instead of its default memory functions, we have
    all OpenSSL objects in shared memory, ready to use.
 
@@ -1524,20 +1524,21 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Vlad Patrascu (@rvlad-patrascu) 178 58 4821 4882
+   1. Vlad Patrascu (@rvlad-patrascu) 180 58 4821 4882
    2. Razvan Crainea (@razvancrainea) 81 57 1415 724
-   3. Eseanu Marius Cristian (@eseanucristian) 52 11 4268 321
-   4. Liviu Chircu (@liviuchircu) 26 20 175 236
+   3. Eseanu Marius Cristian (@eseanucristian) 53 11 4268 321
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 26 20 175 236
    5. Bogdan-Andrei Iancu (@bogdan-iancu) 24 13 291 460
    6. Dan Pascu (@danpascu) 17 13 90 176
    7. Ionut Ionita (@ionutrazvanionita) 16 9 383 169
    8. Ionel Cerghit (@ionel-cerghit) 8 1 494 109
-   9. Maksym Sobolyev (@sobomax) 5 3 9 23
+   9. Maksym Sobolyev (@sobomax) 7 4 61 75
    10. Alexey Vasilyev (@vasilevalex) 4 2 33 19
 
    All remaining contributors: Callum Guy (@spacetourist), Aleksei
-   Vasilev, Fabian Gast (@fgast), Nick Altmann (@nikbyte), Ovidiu
-   Sas (@ovidiusas), Peter Lemenkov (@lemenkov).
+   Vasilev, jupiter, Fabian Gast (@fgast), Nick Altmann
+   (@nikbyte), Ovidiu Sas (@ovidiusas), Peter Lemenkov
+   (@lemenkov).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -1547,7 +1548,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1559,21 +1560,22 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Liviu Chircu (@liviuchircu)         Oct 2015 - May 2023
-   2.  Vlad Patrascu (@rvlad-patrascu)     Apr 2017 - May 2023
-   3.  Maksym Sobolyev (@sobomax)          Mar 2016 - Feb 2023
-   4.  Razvan Crainea (@razvancrainea)     Sep 2015 - Apr 2022
-   5.  Nick Altmann (@nikbyte)             May 2021 - May 2021
-   6.  Aleksei Vasilev                     Apr 2021 - Apr 2021
-   7.  Bogdan-Andrei Iancu (@bogdan-iancu) Mar 2016 - Apr 2020
-   8.  Dan Pascu (@danpascu)               Jun 2019 - Feb 2020
-   9.  Fabian Gast (@fgast)                Jan 2020 - Jan 2020
-   10. Alexey Vasilyev (@vasilevalex)      Nov 2018 - May 2019
+   1.  jupiter                             Apr 2025 - Apr 2025
+   2.  Maksym Sobolyev (@sobomax)          Mar 2016 - Nov 2023
+   3.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Oct 2015 - May 2023
+   4.  Vlad Patrascu (@rvlad-patrascu)     Apr 2017 - May 2023
+   5.  Razvan Crainea (@razvancrainea)     Sep 2015 - Apr 2022
+   6.  Nick Altmann (@nikbyte)             May 2021 - May 2021
+   7.  Aleksei Vasilev                     Apr 2021 - Apr 2021
+   8.  Bogdan-Andrei Iancu (@bogdan-iancu) Mar 2016 - Apr 2020
+   9.  Dan Pascu (@danpascu)               Jun 2019 - Feb 2020
+   10. Fabian Gast (@fgast)                Jan 2020 - Jan 2020
 
-   All remaining contributors: Callum Guy (@spacetourist), Peter
-   Lemenkov (@lemenkov), Ovidiu Sas (@ovidiusas), Ionut Ionita
-   (@ionutrazvanionita), Ionel Cerghit (@ionel-cerghit), Eseanu
-   Marius Cristian (@eseanucristian).
+   All remaining contributors: Alexey Vasilyev (@vasilevalex),
+   Callum Guy (@spacetourist), Peter Lemenkov (@lemenkov), Ovidiu
+   Sas (@ovidiusas), Ionut Ionita (@ionutrazvanionita), Ionel
+   Cerghit (@ionel-cerghit), Eseanu Marius Cristian
+   (@eseanucristian).
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -1582,20 +1584,20 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Vlad Patrascu (@rvlad-patrascu), Liviu Chircu
+   Last edited by: Vlad Patrascu (@rvlad-patrascu), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
    (@liviuchircu), Razvan Crainea (@razvancrainea), Bogdan-Andrei
    Iancu (@bogdan-iancu), Dan Pascu (@danpascu), Callum Guy
    (@spacetourist), Peter Lemenkov (@lemenkov), Eseanu Marius
    Cristian (@eseanucristian).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2015 www.Marina.Rodeo-solutions.com
+   Copyright © 2015 www.openMarinkaRodeo-solutions.com
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2013 Secusmart GmbH
+   Copyright © 2013 Secusmart GmbH
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006 enum.at
+   Copyright © 2006 enum.at
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Cesc Santasusana
+   Copyright © 2005 Cesc Santasusana
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Voice Sistem SRL
+   Copyright © 2005 Voice Sistem SRL

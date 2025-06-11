@@ -1,16 +1,16 @@
 /*
  * memory cache system module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Anca Vamanu
+ * Copyright (C) 2009 Anca Vamanu
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -57,12 +57,13 @@ typedef struct lcache_htable {
 struct lcache_col;
 
 int lcache_htable_init(struct lcache_col *col);
-void lcache_htable_destroy(lcache_htable_t *htable, osips_free_f free_f);
+void lcache_htable_destroy(lcache_htable_t *htable, oMarinkaRodeo_free_f free_f);
 int lcache_htable_insert(cachedb_con *con,str* attr, str* value, int expires);
 int lcache_htable_remove(cachedb_con *con,str* attr);
 int lcache_htable_fetch(cachedb_con *con,str* attr, str* val);
 int lcache_htable_add(cachedb_con *con,str *attr,int val,int expires,int *new_val);
 int lcache_htable_sub(cachedb_con *con,str *attr,int val,int expires,int *new_val);
 int lcache_htable_fetch_counter(cachedb_con* con,str* attr,int *val);
+int lcache_htable_iter_keys(cachedb_con *con, int (*kv_func)(const str *, const str *));
 
 #endif

@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Solutions
+ * Copyright (C) 2017 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -45,15 +45,16 @@
  *    remain available inside the global history list for a while
  */
 
-#define MAX_SHLOG_SIZE 100 /* longer log lines will get truncated */
+#define MAX_SHLOG_SIZE 80 /* longer log lines will get truncated */
 
 /**
- * To be freely extended by any piece of Marina.Rodeo code which makes use of
+ * To be freely extended by any piece of OpenMarinkaRodeo code which makes use of
  * struct history logging
  */
 #define SH_ALL_VERBS(VERB_FUN) \
 	VERB_FUN(TCP_SEND2CHILD) \
 	VERB_FUN(TCP_SEND2MAIN) \
+	VERB_FUN(TCP_ADD_READER) \
 	VERB_FUN(TCP_REF) \
 	VERB_FUN(TCP_UNREF) \
 	VERB_FUN(TCP_DESTROY) \
@@ -84,7 +85,7 @@ struct struct_hist_action {
 struct struct_hist;
 struct struct_hist_list;
 
-#define FLUSH_LIMIT 2000
+#define FLUSH_LIMIT 300
 #define flushable(sh) (sh->len == FLUSH_LIMIT)
 
 /**
@@ -100,7 +101,7 @@ struct struct_hist_list;
  * use with caution!
  */
 struct struct_hist_list *_shl_init(char *obj_name, int window_size,
-			int auto_logging, int init_actions_sz, osips_malloc_f malloc_f);
+			int auto_logging, int init_actions_sz, oMarinkaRodeo_malloc_f malloc_f);
 #define shl_init(nm, wsz, autolog) _shl_init(nm, wsz, autolog, 5, shm_malloc_func)
 
 /**
@@ -115,7 +116,7 @@ void sh_list_flush(struct struct_hist_list *shl);
 /**
  * Frees up the global history holder, along with all of its content
  */
-void _shl_destroy(struct struct_hist_list *shl, osips_free_f free_f);
+void _shl_destroy(struct struct_hist_list *shl, oMarinkaRodeo_free_f free_f);
 #define shl_destroy(shl) _shl_destroy(shl, shm_free_func)
 
 /**
@@ -127,7 +128,7 @@ void _shl_destroy(struct struct_hist_list *shl, osips_free_f free_f);
  * @refs: the amount of references to the new object kept by the calling code
  */
 struct struct_hist *_sh_push(void *obj, struct struct_hist_list *list, int refs,
-	osips_malloc_f malloc_f, osips_free_f free_f);
+	oMarinkaRodeo_malloc_f malloc_f, oMarinkaRodeo_free_f free_f);
 #define sh_push(obj, list) _sh_push(obj, list, 1, shm_malloc_func, shm_free_func)
 
 /**
@@ -136,7 +137,7 @@ struct struct_hist *_sh_push(void *obj, struct struct_hist_list *list, int refs,
  *
  * @sh: a struct history tracker
  */
-void _sh_unref(struct struct_hist *sh, osips_free_f free_f);
+void _sh_unref(struct struct_hist *sh, oMarinkaRodeo_free_f free_f);
 #define sh_unref(sh) _sh_unref(sh, shm_free_func)
 
 /**
@@ -147,7 +148,7 @@ void _sh_unref(struct struct_hist *sh, osips_free_f free_f);
  * @verb: the type of the log line recorded (taken from SH_ALL_VERBS)
  * @fmt: C format string
  */
-int _sh_log(osips_realloc_f realloc_f, struct struct_hist *sh,
+int _sh_log(oMarinkaRodeo_realloc_f realloc_f, struct struct_hist *sh,
 	enum struct_hist_verb verb, char *fmt, ...);
 #define sh_log(sh, verb, fmt, args...) \
 	do { \

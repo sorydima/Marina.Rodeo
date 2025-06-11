@@ -1,16 +1,16 @@
 /*
  * MAXFWD module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -52,7 +52,7 @@ static int max_limit = MAXFWD_UPPER_LIMIT;
 
 static int fixup_maxfwd_header(void** param);
 static int w_process_maxfwd_header(struct sip_msg* msg, int* mval);
-static int is_maxfwd_lt(struct sip_msg *msg, char *slimit, char *foo);
+static int is_maxfwd_lt(struct sip_msg *msg, int *limit);
 static int mod_init(void);
 
 
@@ -83,7 +83,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	cmds,
 	0,
 	params,
@@ -169,20 +169,19 @@ error:
 
 
 
-static int is_maxfwd_lt(struct sip_msg *msg, char *slimit, char *foo)
+static int is_maxfwd_lt(struct sip_msg *msg, int *limit)
 {
 	str mf_value;
-	int limit;
 	int val;
 
-	limit = (int)(long)slimit;
 	val = is_maxfwd_present( msg, &mf_value);
-	LM_DBG("value = %d \n",val);
+	LM_DBG("value = %d, limit = %d\n", val, *limit);
 
 	if ( val<0 ) {
 		/* error or not found */
+		/* coverity[return_overflow: FALSE] */
 		return val-1;
-	} else if ( val>=limit ) {
+	} else if ( val >= *limit ) {
 		/* greater or equal than/to limit */
 		return -1;
 	}

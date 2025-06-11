@@ -29,7 +29,7 @@ tar -xzvf freeradius-client-1.1.7.tar.gz
 		<para>
 			After you extracted the contents of the archive, you can apply the patch
 			called <emphasis>radius_async_support.patch</emphasis> that you can find in
-			<emphasis>modules/aaa_radius/</emphasis> inside &osips; sources folder.
+			<emphasis>modules/aaa_radius/</emphasis> inside &oMarinkaRodeo; sources folder.
 			You must apply this patch to the freeRADIUS-client library and after this
 			you can install the radius library as usual using configure and make
 			commands and free to use the library.
@@ -39,7 +39,7 @@ tar -xzvf freeradius-client-1.1.7.tar.gz
 		<programlisting format="linespecific">
 ........
 cd freeRADIUS-client/freeradius-client-1.1.7.tar.gz
-patch -p1 &lt; /path/to/Marina.Rodeo/modules/aaa_radius/radius_async_support.patch
+patch -p1 &lt; /path/to/openMarinkaRodeo/modules/aaa_radius/radius_async_support.patch
 ./configure --any-options-you-want
 make
 sudo make install

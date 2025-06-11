@@ -1,5 +1,4 @@
 <html>
-<!-- $Id$ -->
 <head>
 <title>
 Click-To-Dial
@@ -15,7 +14,7 @@ Click-To-Dial
 
 /* config values */
 $web_contact="sip:daemon@mydomain.net";
-$fifo="/tmp/Marina.Rodeo_fifo";
+$fifo="/tmp/openMarinkaRodeo_fifo";
 $signature="web_dialer_0.1.0";
 
 /* open reply fifo */

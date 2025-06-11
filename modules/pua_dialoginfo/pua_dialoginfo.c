@@ -1,18 +1,18 @@
 /*
  * pua_dialoginfo module - publish dialog-info from dialog module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem S.R.L.
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007-2008 Dan Pascu
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008 Klaus Darilion IPCom
+ * Copyright (C) 2006 Voice Sistem S.R.L.
+ * Copyright (C) 2007-2008 Dan Pascu
+ * Copyright (C) 2008 Klaus Darilion IPCom
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -79,7 +79,7 @@ static str caller_spec_param= {0, 0};
 static str callee_spec_param= {0, 0};
 static pv_spec_t caller_spec;
 static pv_spec_t callee_spec;
-static int osips_ps = 1;
+static int oMarinkaRodeo_ps = 1;
 static int publish_on_trying = 0;
 static int nopublish_flag = -1;
 static char *nopublish_flag_str = 0;
@@ -131,13 +131,13 @@ static const param_export_t params[]={
 	{"presence_server",     STR_PARAM, &presence_server.s },
 	{"caller_spec_param",   STR_PARAM, &caller_spec_param.s },
 	{"callee_spec_param",   STR_PARAM, &callee_spec_param.s },
-	{"osips_ps",            INT_PARAM, &osips_ps },
+	{"oMarinkaRodeo_ps",            INT_PARAM, &oMarinkaRodeo_ps },
 	{"nopublish_flag",      STR_PARAM, &nopublish_flag_str },
 	{0, 0, 0 }
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "pua",    DEP_ABORT },
 		{ MOD_TYPE_DEFAULT, "dialog", DEP_ABORT },
 		{ MOD_TYPE_DEFAULT, "tm",     DEP_ABORT },
@@ -155,7 +155,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,		/* dlopen flags */
 	0,						/* load function */
-	&deps,                  /* Marina.Rodeo module dependencies */
+	&deps,                  /* OpenMarinkaRodeo module dependencies */
 	cmds,					/* exported functions */
 	0,						/* exported async functions */
 	params,					/* exported parameters */
@@ -697,7 +697,7 @@ static int mod_init(void)
 	nopublish_flag = get_flag_id_by_name(FLAG_TYPE_MSG, nopublish_flag_str, 0);
 	nopublish_flag = (nopublish_flag>=0)?(1<<nopublish_flag):0;
 
-	if(!osips_ps)
+	if(!oMarinkaRodeo_ps)
 		evp = dialoginfo_process_body;
 
 	/* add event in pua module */

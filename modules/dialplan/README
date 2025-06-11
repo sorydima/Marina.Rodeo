@@ -14,7 +14,7 @@ dialplan Module
 
         1.5. Dependencies
 
-              1.5.1. Marina.Rodeo Modules
+              1.5.1. OpenMarinkaRodeo Modules
               1.5.2. External Libraries or Applications
 
         1.6. Exported Parameters
@@ -166,6 +166,10 @@ Chapter 1. Admin Guide
    you want to do with the module, you need to populate the
    appropriate DB records.
 
+   The definition of the tables used by the dialplan module can be
+   found at
+   https://openMarinkaRodeo.org/docs/db/db-schema-devel.html#AEN1501
+
 1.4.1. What to place in table
 
 1.4.1.1. String translation (regexp detection, subst translation)
@@ -214,7 +218,7 @@ Chapter 1. Admin Guide
      * subst_exp = NULL ; no translation
      * repl_exp = NULL ; no translation
      * attrs = "serviceX" ; whatever string you will get into
-       Marina.Rodeo script and it will provide you more information
+       OpenMarinkaRodeo script and it will provide you more information
        (totally custom)
 
 1.4.1.4. String conversion (equal detection, replacement)
@@ -226,11 +230,11 @@ Chapter 1. Admin Guide
      * match_flags = 0 (0 - case sensitive, 1 - case insensitive
        matching)
      * subst_exp = NULL ; no subst translation
-     * repl_exp = "Marina.Rodeo" ; output string
+     * repl_exp = "OpenMarinkaRodeo" ; output string
 
 1.5. Dependencies
 
-1.5.1. Marina.Rodeo Modules
+1.5.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * None
@@ -238,7 +242,7 @@ Chapter 1. Admin Guide
 1.5.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * libpcre-dev - the development libraries of PCRE.
 
 1.6. Exported Parameters
@@ -251,7 +255,7 @@ Chapter 1. Admin Guide
    be inherited from db_url, db_default_url or table_name,
    respectively. The name of the default partition is 'default'.
 
-   Note: Marina.Rodeo will validate each partition, so make sure to
+   Note: OpenMarinkaRodeo will validate each partition, so make sure to
    add any required entries in the "version" table of each
    database defined through the 'db_url' property.
 
@@ -260,14 +264,14 @@ Chapter 1. Admin Guide
 modparam("dialplan", "partition", "
         pstn:
                 table_name = dialplan;
-                db_url = mysql://Marina.Rodeo:Marina.Rodeo@127.0.0.1/Marina.Rodeo"
+                db_url = mysql://openMarinkaRodeo:openMarinkaRodeorw@127.0.0.1/openMarinkaRodeo"
 )
 ...
 
    Example 1.2.  Define the 'pstn' partition and make it the
    'default' partition, so we avoid loading the 'dialplan' table
 ...
-db_default_url = "mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo"
+db_default_url = "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo"
 
 loadmodule "dialplan.so"
 modparam("dialplan", "partition", "
@@ -489,7 +493,7 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
        specified, all partitions will be reloaded.
 
    MI DATAGRAM Command Format:
-                Marina.Rodeo-cli -x mi dp_reload
+                openMarinkaRodeo-cli -x mi dp_reload
 
 1.8.2. dp_translate
 
@@ -506,7 +510,7 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
        dpid is located
 
    MI DATAGRAM Command Format:
-        Marina.Rodeo-cli -x mi dp_translate 10 +40123456789
+        openMarinkaRodeo-cli -x mi dp_translate 10 +40123456789
 
 1.8.3. dp_show_partiton
 
@@ -519,7 +523,7 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
        is specified, all known partitions will be listed.
 
    MI DATAGRAM Command Format:
-        Marina.Rodeo-cli -x mi dp_translate default
+        openMarinkaRodeo-cli -x mi dp_translate default
 
 1.9. Exported Status/Report Identifiers
 
@@ -579,20 +583,26 @@ xlog("'$var(in)' matched against partition '$var(part)'\n")
         ]
     }
 
+   For how to access and use the Status/Report information, please
+   see
+   https://www.openMarinkaRodeo.org/Documentation/Interface-StatusReport-3
+   -3.
+
 1.10. Installation
 
-   The modules requires one table in Marina.Rodeo database:
+   The modules requires one table in OpenMarinkaRodeo database:
    dialplan.The SQL syntax to create them can be found in
    dialplan-create.sql script in the database directories in the
-   Marina.Rodeo/scripts folder. You can also find the complete
-   database documentation on the project webpage.
+   openMarinkaRodeo/scripts folder. You can also find the complete
+   database documentation on the project webpage,
+   https://openMarinkaRodeo.org/docs/db/db-schema-devel.html.
 
 Chapter 2. Developer's Guide
 
    Revision History
    Revision $Revision: 5895 $ $Date$
 
-   The module does not provide any API to use in other Marina.Rodeo
+   The module does not provide any API to use in other OpenMarinkaRodeo
    modules.
 
 Chapter 3. Contributors
@@ -602,12 +612,12 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Bogdan-Andrei Iancu (@bogdan-iancu) 71 46 910 983
-   2. Liviu Chircu (@liviuchircu) 69 45 980 941
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 73 48 986 949
+   2. Bogdan-Andrei Iancu (@bogdan-iancu) 71 46 910 983
    3. Ionut Ionita (@ionutrazvanionita) 40 20 1149 579
-   4. Anca Vamanu 33 5 3263 19
+   4. Anca Vamanu 34 5 3263 19
    5. Andrei Dragus 24 3 382 1029
-   6. Razvan Crainea (@razvancrainea) 21 17 92 132
+   6. Razvan Crainea (@razvancrainea) 23 19 98 162
    7. Ovidiu Sas (@ovidiusas) 16 13 144 37
    8. Vlad Patrascu (@rvlad-patrascu) 10 6 157 115
    9. Maksym Sobolyev (@sobomax) 6 4 10 10
@@ -627,7 +637,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -639,12 +649,12 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Jan 2021 - Feb 2023
-   2.  Bogdan-Andrei Iancu (@bogdan-iancu) Jun 2008 - Sep 2022
-   3.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jul 2022
-   4.  Liviu Chircu (@liviuchircu)         Jul 2012 - Mar 2022
-   5.  Zero King (@l2dy)                   Mar 2020 - Mar 2020
-   6.  Razvan Crainea (@razvancrainea)     Dec 2010 - Sep 2019
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jul 2012 - Feb 2025
+   2.  Razvan Crainea (@razvancrainea)     Dec 2010 - Sep 2024
+   3.  Maksym Sobolyev (@sobomax)          Jan 2021 - Feb 2023
+   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Jun 2008 - Sep 2022
+   5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jul 2022
+   6.  Zero King (@l2dy)                   Mar 2020 - Mar 2020
    7.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
    8.  Ovidiu Sas (@ovidiusas)             Sep 2008 - Nov 2015
    9.  Ionut Ionita (@ionutrazvanionita)   Jul 2014 - Nov 2015
@@ -664,11 +674,11 @@ Chapter 4. Documentation
 4.1. Contributors
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Bogdan-Andrei
-   Iancu (@bogdan-iancu), Liviu Chircu (@liviuchircu), Zero King
+   Iancu (@bogdan-iancu), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Zero King
    (@l2dy), Razvan Crainea (@razvancrainea), Peter Lemenkov
    (@lemenkov), Ovidiu Sas (@ovidiusas), Ionut Ionita
    (@ionutrazvanionita), Andrei Dragus, Anca Vamanu.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007-2008 Voice Sistem SRL
+   Copyright © 2007-2008 Voice Sistem SRL

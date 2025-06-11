@@ -43,7 +43,7 @@
 			<itemizedlist>
 				<listitem>
 				<para><emphasis>Advantages:</emphasis> low bandwitdh traffic,
-				easy to generate by &osips;;
+				easy to generate by &oMarinkaRodeo;;
 				</para>
 				</listitem>
 				<listitem>
@@ -63,7 +63,7 @@
 			<itemizedlist>
 				<listitem>
 				<para><emphasis>Advantages:</emphasis> bidirectional traffic
-				through NAT, since each PING request from &osips; (inbound
+				through NAT, since each PING request from &oMarinkaRodeo; (inbound
 				traffic) will force the SIP client to generate a SIP reply
 				(outbound traffic) - the NAT bind will be surely kept open.
 				Since version 2.2, one can also choose to remove contacts
@@ -72,7 +72,7 @@
 				</listitem>
 				<listitem>
 				<para><emphasis>Disadvantages:</emphasis> higher bandwitdh
-				traffic, more expensive (as time) to generate by &osips;;
+				traffic, more expensive (as time) to generate by &oMarinkaRodeo;;
 				</para>
 				</listitem>
 			</itemizedlist>
@@ -83,7 +83,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -106,7 +106,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -218,17 +218,19 @@ modparam("nathelper", "natping_socket", "192.168.1.1:5006")
 		<title><varname>received_avp</varname> (str)</title>
 		<para>
 		The name of the Attribute-Value-Pair (AVP) used to store the URI
-		containing the received IP, port, and protocol. The URI is created
-		by fix_nated_register function of nathelper module and the attribute
-		is then used by the registrar to store the received parameters. Do
-		not forget to change the value of corresponding parameter in
-		registrar module if you change the value of this parameter.
+		containing the received IP, port and protocol. The URI is created
+		by the <xref linkend="func_fix_nated_register"/> function and this data
+		may then be also picked up by the registrar module, which will attach a
+		"Received=" attribute to the registration.  Do not forget to change the
+		value of corresponding parameter in the <ulink url='registrar'>registrar</ulink>
+		module whenever you change the value of this parameter.
 		</para>
 		<note>
 		<para>
-		You must set this parameter if you use "fix_nated_register". In such
-		case you must set the parameter with same name of "registrar"
-		module to same value.
+		You must set this parameter if you use <xref linkend="func_fix_nated_register"/>.
+		Additionally, if you are using registrar, you must also set its symmetric
+		<ulink url='registrar#received_avp'>received_avp</ulink> module parameter
+		to the <emphasis role='bold'>same value</emphasis>.
 		</para>
 		</note>
 		<para>
@@ -251,7 +253,7 @@ modparam("nathelper", "received_avp", "$avp(received)")
 		<para>
 		Sending socket to be used for pinging contacts without local socket
 		information (the local socket information may be lost during a restart 
-		or contact replication). If no one specified, Marina.Rodeo will choose the
+		or contact replication). If no one specified, OpenMarinkaRodeo will choose the
 		first listening interface matching the destination protocol and
 		AF family.
 		</para>
@@ -533,7 +535,7 @@ modparam("nathelper", "max_pings_lost", 5)
 		<xref linkend="param_cluster_sharing_tag"/> option.
 		</para>
 		<para>
-		For more info on how to define and populate a cluster (with Marina.Rodeo 
+		For more info on how to define and populate a cluster (with OpenMarinkaRodeo 
 		nodes) see the "clusterer" module.
 		</para>
 		<para>
@@ -750,10 +752,11 @@ add_rcv_param(1); # add the parameter to the Contact URI
 		<function moreinfo="none">fix_nated_register()</function>
 		</title>
 		<para>
-		The function creates a URI consisting of the source IP, port, and
-		protocol and stores the URI in an Attribute-Value-Pair. The URI will
+		The function creates a URI consisting of the source IP, port and
+		protocol and stores it in the <xref linkend="param_received_avp"/> AVP. The URI will
 		be appended as "received" parameter to Contact in 200 OK and
-		registrar will store it in the user location database.
+		may also be stored in the user location database if the same AVP
+		is also configured for the <ulink url='registrar'>registrar</ulink> module.
 		</para>
 		<para>
 		This function can be used from REQUEST_ROUTE.
@@ -772,16 +775,16 @@ fix_nated_register();
 			<function>nat_uac_test(flags)</function>
 		</title>
 		<para>
-			Tries to guess if client's request originated behind a nat.
-			The parameter determines what heuristics is used.
+			Determines whether the received SIP message originated behind a NAT,
+			using one or more pre-defined checks.
 		</para>
-		<para>Meaning of the <emphasis>flags (string)</emphasis> parameter
-		is as follows:</para>
+		<para>The <emphasis>flags</emphasis> (string) parameter denotes a
+			comma-separated list of checks to be performed, as follows:</para>
 		<itemizedlist>
 			<listitem><para>
 			<emphasis>private-contact</emphasis> - (old <emphasis>1</emphasis> flag)
 			Contact header field is searched for occurrence of RFC1918 / RFC6598
-			addresses.
+			addresses
 			</para></listitem>
 			<listitem><para>
 			<emphasis>diff-ip-src-via</emphasis> - (old <emphasis>2</emphasis> flag)
@@ -812,17 +815,26 @@ fix_nated_register();
 			<listitem><para>
 			<emphasis>carrier-grade-nat</emphasis> - (old <emphasis>128</emphasis>
 			flag) also include RFC 6333 addresses in the checks for
-			<emphasis>ct</emphasis>, <emphasis>via</emphasis> and
-			<emphasis>sdp</emphasis> flags.
+			<emphasis>Contact</emphasis>, <emphasis>Via</emphasis> and
+			<emphasis>SDP</emphasis>
 			</para></listitem>
 		</itemizedlist>
 		<para>
-		A CSV of the above flags can be provided, the test returns true if any of
-		the tests identified a NAT.
+			<emphasis role='bold'>Returns true if any of the tests passed</emphasis>.
 		</para>
 		<para>
 		This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE, FAILURE_ROUTE, BRANCH_ROUTE.
 		</para>
+		<example>
+		<title><function>nat_uac_test</function> usage</title>
+		<programlisting format="linespecific">
+...
+# check for private Contact or SDP media IP addresses
+if (nat_uac_test("private-contact,private-sdp"))
+	xlog("SIP message is NAT'ed (Call-ID: $ci)\n");
+...
+</programlisting>
+		</example>
 	</section>
 	</section>
 
@@ -845,12 +857,12 @@ fix_nated_register();
 			<title><function moreinfo="none">nh_enable_ping</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ Marina.Rodeo-cli -x mi nh_enable_ping
+$ openMarinkaRodeo-cli -x mi nh_enable_ping
 Status:: 1
 $
-$ Marina.Rodeo-cli -x mi nh_enable_ping 0
+$ openMarinkaRodeo-cli -x mi nh_enable_ping 0
 $
-$ Marina.Rodeo-cli -x mi nh_enable_ping
+$ openMarinkaRodeo-cli -x mi nh_enable_ping
 Status:: 0
 $
 ...

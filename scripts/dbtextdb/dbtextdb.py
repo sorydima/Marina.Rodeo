@@ -1,10 +1,10 @@
 #!/usr/bin/python2
 #
-# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 2008 Google Inc. All Rights Reserved.
+# Copyright 2008 Google Inc. All Rights Reserved.
 
 """SQL-like access layer for dbtext.
 
-This module provides the glue for Marina.Rodeo-cli to interact with dbtext files
+This module provides the glue for openMarinkaRodeo-cli to interact with dbtext files
 using basic SQL syntax thus avoiding special case handling of dbtext.
 
 """

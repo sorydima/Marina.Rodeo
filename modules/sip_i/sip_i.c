@@ -1,15 +1,15 @@
 /**
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2016 Marina.Rodeo Foundation
+ * Copyright (C) 2016 OpenMarinkaRodeo Foundation
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -65,11 +65,11 @@ static const trans_export_t trans[] = {
 };
 
 static const pv_export_t mod_items[] = {
-	{{"isup_msg_type", sizeof("isup_msg_type") - 1}, 1000, pv_get_isup_msg_type,
+	{str_const_init("isup_msg_type"), 1000, pv_get_isup_msg_type,
 		0, 0, 0, 0, 0},
-	{{"isup_param", sizeof("isup_param") - 1}, 1000, pv_get_isup_param,
+	{str_const_init("isup_param"), 1000, pv_get_isup_param,
 		pv_set_isup_param, pv_parse_isup_param_name, pv_parse_isup_param_index, 0, 0},
-	{{"isup_param_str", sizeof("isup_param_str") - 1}, 1000, pv_get_isup_param_str,
+	{str_const_init("isup_param_str"), 1000, pv_get_isup_param_str,
 		0, pv_parse_isup_param_name, 0, 0, 0},
 	{ {0, 0}, 0, 0, 0, 0, 0, 0, 0 }
 };
@@ -101,7 +101,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, 	/* dlopen flags */
 	0,				 	/* load function */
-	0,           		/* Marina.Rodeo module dependencies */
+	0,           		/* OpenMarinkaRodeo module dependencies */
 	cmds,            	/* exported functions */
 	0,               	/* exported async functions */
 	params,      			/* param exports */
@@ -294,7 +294,7 @@ int pv_parse_isup_param_index(pv_spec_p sp, const str* in)
 	return 0;
 }
 
-void free_isup_parsed(void *parsed, osips_free_f free_f)
+void free_isup_parsed(void *parsed, oMarinkaRodeo_free_f free_f)
 {
 	struct opt_param *it, *tmp;
 
@@ -309,7 +309,7 @@ void free_isup_parsed(void *parsed, osips_free_f free_f)
 }
 
 void *clone_isup_parsed(struct body_part *old_part, struct body_part *new_part,
-			struct sip_msg *src_msg, struct sip_msg *dst_msg, osips_malloc_f malloc_f)
+			struct sip_msg *src_msg, struct sip_msg *dst_msg, oMarinkaRodeo_malloc_f malloc_f)
 {
 	struct isup_parsed_struct *new_ps, *old_ps;
 	struct opt_param *optp_it, *optp_new = NULL, *optp_prev = NULL;
@@ -1320,7 +1320,7 @@ set_cgpn:
 		goto cgpn_err;
 	}
 	pai = get_pai(sip_msg);
-	if (parse_uri(pai->uri.s, pai->uri.len, &pai->parsed_uri) < 0) {
+	if (parse_to_body_uri(pai) < 0) {
 		LM_ERR("Unable to parse P-Asserted-Identity URI\n");
 		goto cgpn_err;
 	}

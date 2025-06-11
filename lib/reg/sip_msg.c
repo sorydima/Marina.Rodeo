@@ -1,17 +1,17 @@
 /*
  * Registrar specific SIP message processing
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2016-2020 Marina.Rodeo Solutions
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2016-2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -358,6 +358,25 @@ static void __reset_first_contact(struct hdr_field **act_contact)
 contact_t* get_first_contact(struct sip_msg* _m)
 {
 	return __get_first_contact(_m, &act_contact_1);
+}
+
+contact_t* get_first_contact_matching(struct sip_msg* _m, const str *uri_chunk)
+{
+	contact_t *ct;
+
+	ct = __get_first_contact(_m, &act_contact_1);
+	if (!ct)
+		return NULL;
+	if (ZSTRP(uri_chunk))
+		return ct;
+
+	while (!str_strstr(&ct->uri, uri_chunk)) {
+		ct = __get_next_contact(ct, &act_contact_1);
+		if (!ct)
+			return NULL;
+	}
+
+	return ct;
 }
 
 contact_t* get_next_contact(contact_t* _c)

@@ -4,16 +4,16 @@
  *	> dialog creation, matching and message validation
  *	> sequential request routing
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014 Marina.Rodeo Solutions
+ * Copyright (C) 2014 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -69,7 +69,7 @@ static module_dependency_t *get_deps_use_dialog(const param_export_t *param)
 }
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "rr", DEP_ABORT },
 		{ MOD_TYPE_DEFAULT, "sl", DEP_ABORT },
 		{ MOD_TYPE_DEFAULT, "tm", DEP_ABORT },
@@ -88,7 +88,7 @@ struct module_exports exports =
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,
 	0,
-	&deps,            /* Marina.Rodeo module dependencies */
+	&deps,            /* OpenMarinkaRodeo module dependencies */
 	NULL,
 	NULL,
 	params,
@@ -182,9 +182,9 @@ int run_helper_logic(struct sip_msg *msg, void *param)
 				       msg->callid->body.len, msg->callid->body.s);
 
 			if (msg->REQ_METHOD == METHOD_ACK) {
-				rc = tm_api.t_check_trans(msg, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+				rc = tm_api.t_check_trans(msg);
 				if (rc > 0)
-					tm_api.t_relay(msg, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+					tm_api.t_relay(msg, NULL, NULL);
 
 				return SCB_RUN_POST_CBS;
 			}
@@ -197,14 +197,14 @@ int run_helper_logic(struct sip_msg *msg, void *param)
 	if (msg->REQ_METHOD == METHOD_CANCEL) {
 		seq_request = 1;
 
-		rc = tm_api.t_check_trans(msg, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+		rc = tm_api.t_check_trans(msg);
 		if (rc > 0)
-			tm_api.t_relay(msg, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+			tm_api.t_relay(msg, NULL, NULL);
 
 		return SCB_RUN_POST_CBS;
 	}
 
-	if (tm_api.t_check_trans(msg, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) == 0)
+	if (tm_api.t_check_trans(msg) == 0)
 		return SCB_RUN_POST_CBS;
 
 	/**
@@ -222,7 +222,7 @@ int run_helper_logic(struct sip_msg *msg, void *param)
 			}
 		}
 
-		if (tm_api.t_relay(msg, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) < 0)
+		if (tm_api.t_relay(msg, NULL, NULL) < 0)
 			sl_api.reply(msg, 500, &status_500, NULL);
 
 		return SCB_RUN_POST_CBS;

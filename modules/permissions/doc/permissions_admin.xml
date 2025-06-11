@@ -21,7 +21,7 @@
 		message.
 		</para>
 		<para>
-		&osips; is a forking proxy and therefore a single message can be sent
+		&oMarinkaRodeo; is a forking proxy and therefore a single message can be sent
 		to different destinations simultaneously. When checking permissions
 		all the destinations must be checked and if one of them fails, the
 		forwarding will fail.
@@ -161,7 +161,7 @@
 		<para>
 		The module can be used to determine if an address (IP
 		address and port) matches any of the IP subnets
-		stored in cached &osips; database table.
+		stored in cached &oMarinkaRodeo; database table.
 		Port 0 in cached database table matches any port.  Group ID, IP
 		address, port and transport protocol values to be matched can be either taken from
 		the request (<function moreinfo="none">check_source_address</function>) or given as pvar
@@ -186,13 +186,13 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
 			<listitem>
 			<para>
-				<emphasis>No dependencies on other &osips; modules</emphasis>.
+				<emphasis>No dependencies on other &oMarinkaRodeo; modules</emphasis>.
 			</para>
 			</listitem>
 			</itemizedlist>
@@ -202,7 +202,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -409,7 +409,7 @@ modparam("permissions", "address_table", "pbx")
 ...
 modparam("permissions", "partition", "
 	inbound:
-		db_url = postgres://Marina.Rodeo:Marina.Rodeorw@127.0.0.1/Marina.Rodeo;
+		db_url = postgres://openMarinkaRodeo:openMarinkaRodeorw@127.0.0.1/openMarinkaRodeo;
 		table_name = address")
 ...
 
@@ -1010,7 +1010,7 @@ if (allow_uri("basename", $avp(uri)) {  // Check URI stored in $avp(uri)
 		<para>
 		Tests if (URI, Contact) pair is allowed according to
 		allow/deny files.  The files must already have been
-		 loaded by Marina.Rodeo.
+		 loaded by OpenMarinkaRodeo.
 		</para>
 		<para>Parameters: </para>
 		<itemizedlist>

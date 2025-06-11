@@ -1,16 +1,16 @@
 /*
  * emergency module - basic support for emergency calls
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2015 Robison Tesini & Evandro Villaron
+ * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -103,8 +103,8 @@ int create_subscriber_cell(struct sip_msg* reply, struct parms_cb* params_cb){
 	vsp_addr_len = strlen(vsp_addr);
 
 	time(&rawtime);
-	time_now = (int)rawtime;
-	LM_DBG("TIME : %d \n", (int)rawtime );
+	time_now = (int)(unsigned long)rawtime;
+	LM_DBG("TIME : %d \n", (int)(unsigned long)rawtime );
 
 	/* build subscriber cell */
 	size_subs_cell = sizeof (struct sm_subscriber) + (2 * sizeof(struct dialog_id))
@@ -477,7 +477,7 @@ int get_uris_to_subscribe(struct sip_msg* msg, str* contact, str* notifier, str*
 
 
 	/* build subscriber uri to use in From header */
-	// get ip address of Marina.Rodeo server in port that receive INVITE
+	// get ip address of openMarinkaRodeo server in port that receive INVITE
 	if (get_ip_socket(msg, &rp_addr) == -1){
 		pkg_free(contact_aux);
 		pkg_free(notifier_aux);
@@ -495,7 +495,7 @@ int get_uris_to_subscribe(struct sip_msg* msg, str* contact, str* notifier, str*
 	memset(subscriber_aux, 0, size_subscriber + 1);
 	subscriber->s = subscriber_aux;
 	subscriber->len = size_subscriber;
-	memcpy(subscriber_aux, "sip:Marina.Rodeo_redirect", 21);
+	memcpy(subscriber_aux, "sip:openMarinkaRodeo_redirect", 21);
 	subscriber_aux += 21;
 	memcpy(subscriber_aux, rp_addr, rp_addr_len);
 	LM_DBG("****** subscriber: %.*s\n", subscriber->len, subscriber->s);
@@ -883,7 +883,7 @@ int treat_notify(struct sip_msg *msg) {
 	LM_DBG("SUBS_EXPIRES: %s\n ", subs_expires);
 
 	time(&rawtime);
-	time_now = (int)rawtime;
+	time_now = (int)(unsigned long)rawtime;
 
 	/* analise state value*/
 	if (strcmp(subs_state, "active") == 0){

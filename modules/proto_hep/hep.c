@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015 - Marina.Rodeo Solutions
+ * Copyright (C) 2015 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -51,6 +51,8 @@
 #define HEP_PROTO_SIP  0x01
 
 static int control_id = -1;
+atomic_t *hep_failed_retries;
+atomic_t *hep_last_attempt;
 
 struct hep_message_id {
 	char* proto;
@@ -71,6 +73,8 @@ static hid_list_p hid_list=NULL;
 static hid_list_p *hid_dyn_list=NULL;
 static gen_lock_t *hid_dyn_lock=NULL;
 
+extern int hep_max_retries;
+extern int hep_retry_cooldown;
 extern int hep_capture_id;
 extern int payload_compression;
 extern int homer5_on;
@@ -866,7 +870,7 @@ int parse_hep_id(unsigned int type, void *val)
 /**
  *
  */
-static trace_message create_hep12_message(union sockaddr_union* from_su, union sockaddr_union* to_su,
+static trace_message create_hep12_message(const union sockaddr_union* from_su, const union sockaddr_union* to_su,
 		int net_proto, str* payload, int version)
 {
 	unsigned int totlen=0;
@@ -949,7 +953,7 @@ static trace_message create_hep12_message(union sockaddr_union* from_su, union s
 }
 
 
-static trace_message create_hep3_message(union sockaddr_union* from_su, union sockaddr_union* to_su,
+static trace_message create_hep3_message(const union sockaddr_union* from_su, const union sockaddr_union* to_su,
 		int net_proto, str* payload, int proto)
 {
 	int rc;
@@ -1441,7 +1445,7 @@ out_err:
 /*
  * create message function
  * */
-trace_message create_hep_message(union sockaddr_union* from_su, union sockaddr_union* to_su,
+trace_message create_hep_message(const union sockaddr_union* from_su, const union sockaddr_union* to_su,
 		int net_proto, str* payload, int pld_proto, trace_dest dest)
 {
 	hid_list_p hep_dest = (hid_list_p) dest;
@@ -1677,8 +1681,22 @@ int add_hep_payload(trace_message message, char* pld_name, str* pld_value)
 	return 0;
 }
 
+static void free_hep_send_resources(struct proxy_l *p, union sockaddr_union *to, char *buf) {
+	if (p) {
+		free_proxy(p);
+		pkg_free(p);
+	}
+	if (to) {
+		pkg_free(to);
+	}
+	if (buf) {
+		pkg_free(buf);
+	}
+}
 
-int send_hep_message(trace_message message, trace_dest dest, struct socket_info* send_sock)
+
+
+int send_hep_message(trace_message message, trace_dest dest, const struct socket_info* send_sock)
 {
 	int len, ret=-1;
 	char* buf=0;
@@ -1710,35 +1728,46 @@ int send_hep_message(trace_message message, trace_dest dest, struct socket_info*
 	/* */
 	p=mk_proxy( &hep_dest->ip, hep_dest->port_no ? hep_dest->port_no : HEP_PORT, hep_dest->transport, 0);
 	if (p == NULL) {
-		pkg_free(buf);
 		LM_ERR("bad hep host name!\n");
+		free_hep_send_resources(NULL, NULL, buf);
 		goto end;
 	}
 
 	to=(union sockaddr_union *)pkg_malloc(sizeof(union sockaddr_union));
 	if (to == 0) {
 		LM_ERR("no more pkg mem!\n");
-		pkg_free(buf);
-		free_proxy(p);
-		pkg_free(p);
+		free_hep_send_resources(p, NULL, buf);
 		goto end;
 	}
 
 	hostent2su(to, &p->host, p->addr_idx, p->port?p->port:HEP_PORT);
 
+	time_t now = time(NULL);
+
+	// Check cooldown logic
+	if (atomic_load(hep_failed_retries) >= (long)hep_max_retries && (long)(now - atomic_load(hep_last_attempt)) < (long)hep_retry_cooldown) {
+		LM_ERR("HEP send suppressed: too many failures (%ld), in cooldown (%ld seconds left)\n", atomic_load(hep_failed_retries), hep_retry_cooldown - (now - atomic_load(hep_last_attempt)));
+		free_hep_send_resources(p, to, buf);
+		goto end;
+	}
+
+	atomic_store(hep_last_attempt, now);
+
 	do {
 		if (msg_send(send_sock, hep_dest->transport, to, 0, buf, len, NULL) < 0) {
-			LM_ERR("Cannot send hep message!\n");
+			LM_ERR("Cannot send HEP message!\n");
+			atomic_fetch_add(hep_failed_retries, 1);
 			continue;
 		}
-		ret=0;
-		break;
-	} while ( get_next_su( p, to, 0)==0);
 
-	free_proxy(p);
-	pkg_free(p);
-	pkg_free(to);
-	pkg_free(buf);
+		// Success: reset retry state
+		atomic_store(hep_failed_retries, 0);
+		ret = 0;
+		break;
+	} while (get_next_su(p, to, 0) == 0);
+
+
+	free_hep_send_resources(p, to, buf);
 
 end:
 	return ret;

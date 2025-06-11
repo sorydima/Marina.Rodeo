@@ -1,17 +1,17 @@
 <!-- SQL Cacher Module User's Guide -->
 
 <chapter>
-    
+
     <title>&adminguide;</title>
 
     <section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
 	The sql_cacher module introduces the possibility to cache data from a
-	SQL-based database (using different &osips; modules which implement the DB API)
-	into a cache system implemented in &osips; through the CacheDB Interface.
+	SQL-based database (using different &oMarinkaRodeo; modules which implement the DB API)
+	into a cache system implemented in &oMarinkaRodeo; through the CacheDB Interface.
 	This is done by specifying the databases URLs, SQL table to be used, desired
-	columns to be cached and other details in the &osips; configuration script.
+	columns to be cached and other details in the &oMarinkaRodeo; configuration script.
 	</para>
 	<para>
 	The cached data is available in the script through the read-only pseudovariable
@@ -25,7 +25,7 @@
 	<itemizedlist>
 		<listitem><para>
 		<emphasis>full caching</emphasis> - the entire SQL table (all the rows) is loaded
-		into the cache at &osips; startup;
+		into the cache at &oMarinkaRodeo; startup;
 		</para></listitem>
 		<listitem><para>
 		<emphasis>on demand</emphasis> - the rows of the SQL table are loaded at runtime
@@ -48,7 +48,7 @@
 	    The following modules must be loaded before this module:
 	    <itemizedlist>
 		<listitem>
-		    <para><emphasis>The &osips; modules that offer actual database back-end
+		    <para><emphasis>The &oMarinkaRodeo; modules that offer actual database back-end
 		    	connection</emphasis></para>
 		</listitem>
 	    </itemizedlist>
@@ -133,16 +133,16 @@
 		<example>
 		<title><varname>cache_table</varname> parameter usage</title>
 		<programlisting format="linespecific">
-   
+
 modparam("sql_cacher", "cache_table",
 "id=caching_name
-db_url=mysql://root:Marina.Rodeo@localhost/Marina.Rodeo_2_2
+db_url=mysql://root:openMarinkaRodeo@localhost/openMarinkaRodeo_2_2
 cachedb_url=mongodb:mycluster://127.0.0.1:27017/db.col
 table=table_name
 key=column_name_0
 columns=column_name_1 column_name_2 column_name_3
 on_demand=0")
-   
+
 </programlisting>
 	    </example>
 	</section>
@@ -160,9 +160,9 @@ on_demand=0")
 		<example>
 		<title><varname>spec_delimiter</varname> parameter usage</title>
 		<programlisting format="linespecific">
-   
+
 modparam("sql_cacher", "spec_delimiter", "\n")
-   
+
 </programlisting>
 	    </example>
 	</section>
@@ -180,9 +180,9 @@ modparam("sql_cacher", "spec_delimiter", "\n")
 		<example>
 		<title><varname>pvar_delimiter</varname> parameter usage</title>
 		<programlisting format="linespecific">
-   
+
 modparam("sql_cacher", "pvar_delimiter", " ")
-   
+
 </programlisting>
 	    </example>
 	</section>
@@ -200,9 +200,9 @@ modparam("sql_cacher", "pvar_delimiter", " ")
 		<example>
 		<title><varname>columns_delimiter</varname> parameter usage</title>
 		<programlisting format="linespecific">
-   
+
 modparam("sql_cacher", "columns_delimiter", ",")
-   
+
 </programlisting>
 	    </example>
 	</section>
@@ -210,9 +210,9 @@ modparam("sql_cacher", "columns_delimiter", ",")
 	<section id="param_sql_fetch_nr_rows" xreflabel="sql_fetch_nr_rows">
 		<title><varname>sql_fetch_nr_rows</varname> (integer)</title>
 		<para>
-		The number of rows to be fetched into &osips; private memory in one chunk from
+		The number of rows to be fetched into &oMarinkaRodeo; private memory in one chunk from
 		the SQL database driver. When querying large tables, adjust this parameter
-		accordingly to avoid the filling of &osips; private memory. 
+		accordingly to avoid the filling of &oMarinkaRodeo; private memory.
 		</para>
 		<para>
 		The default value is <quote>100</quote>.
@@ -220,9 +220,9 @@ modparam("sql_cacher", "columns_delimiter", ",")
 		<example>
 		<title><varname>sql_fetch_nr_rows</varname> parameter usage</title>
 		<programlisting format="linespecific">
-   
+
 modparam("sql_cacher", "sql_fetch_nr_rows", 1000)
-   
+
 </programlisting>
 	    </example>
 	</section>
@@ -240,9 +240,9 @@ modparam("sql_cacher", "sql_fetch_nr_rows", 1000)
 		<example>
 		<title><varname>full_caching_expire</varname> parameter usage</title>
 		<programlisting format="linespecific">
-   
+
 modparam("sql_cacher", "full_caching_expire", 3600)
-   
+
 </programlisting>
 	    </example>
 	</section>
@@ -259,19 +259,96 @@ modparam("sql_cacher", "full_caching_expire", 3600)
 		<example>
 		<title><varname>reload_interval</varname> parameter usage</title>
 		<programlisting format="linespecific">
-   
+
 modparam("sql_cacher", "reload_interval", 5)
-   
+
 </programlisting>
 	    </example>
 	</section>
+
+	<section id="param_bigint_to_str" xreflabel="bigint_to_str">
+		<title><varname>bigint_to_str</varname> (integer)</title>
+		<para>
+		Controls bigint conversion.
+		By default bigint values are returned as int.
+		If the value stored in bigint is out of the int range,
+		by enabling bigint to string conversion,
+		the bigint value will be returned as string.
+		</para>
+		<para>
+		The default value is <quote>0</quote> (disabled).
+		</para>
+		<example>
+		<title><varname>bigint_to_str</varname> parameter usage</title>
+		<programlisting format="linespecific">
+
+modparam("sql_cacher", "bigint_to_str", 1)
+
+</programlisting>
+	    </example>
+	</section>
+
 </section>
 
 <section id="exported_functions" xreflabel="exported_functions">
-	<title>Exported Functions</title>
-		<para>
-		No function exported to be used from configuration file.
-		</para>
+<title>Exported Functions</title>
+<section id="func_sql_cache_dump" xreflabel="sql_cache_dump()">
+	<title>
+	<function moreinfo="none">sql_cache_dump(caching_id, columns, result_avps)</function>
+	</title>
+	<para>
+	Dump all <emphasis>columns</emphasis> cached within the given <emphasis>caching_id</emphasis>,
+	and write them to their respective <emphasis>result_avps</emphasis>.
+	</para>
+
+	<para>Parameters:</para>
+	<itemizedlist>
+		<listitem><para>
+			<emphasis>caching_id</emphasis> (string) - Identifier for the SQL cache
+		</para></listitem>
+		<listitem><para>
+			<emphasis>columns</emphasis> (string) - the desired SQL columns to be dumped,
+				specified as comma-separated values
+		</para></listitem>
+		<listitem><para>
+			<emphasis>result_avps</emphasis> (string) - comma-separated list of AVPs where
+				the results will be written to
+		</para></listitem>
+	</itemizedlist>
+
+	<para>Return Codes:</para>
+	<itemizedlist>
+		<listitem><para>
+			<emphasis role='bold'>-1</emphasis> - Internal Error
+		</para></listitem>
+		<listitem><para>
+			<emphasis role='bold'>-2</emphasis> - Zero Results Returned
+		</para></listitem>
+		<listitem><para>
+			<emphasis role='bold'>1, 2, 3, ...</emphasis> - Number of results returned into each output AVP
+		</para></listitem>
+	</itemizedlist>
+
+
+	<para>
+	This function can be used from any route.
+	</para>
+	<example>
+	<title><function moreinfo="none">sql_cache_dump</function> usage</title>
+	<programlisting format="linespecific">
+...
+# Example of pulling all cached CNAM records
+$var(n) = sql_cache_dump("cnam", "caller,callee,calling_name,fraud_score",
+                "$avp(caller),$avp(callee),$avp(cnam),$avp(fraud)");
+$var(i) = 0;
+while ($var(i) &lt; $var(n)) {
+	xlog("Caller $(avp(caller)[$var(i)]) has CNAM $(avp(cnam)[$var(i)])\n");
+	$var(i) += 1;
+}
+...
+</programlisting>
+		</example>
+	</section>
 </section>
 
 <section id="exported_mi_functions" xreflabel="Exported MI Functions">
@@ -298,9 +375,9 @@ modparam("sql_cacher", "reload_interval", 5)
 			<title><function moreinfo="none">sql_cacher_reload</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ Marina.Rodeo-cli -x mi sql_cacher_reload subs_caching
+$ openMarinkaRodeo-cli -x mi sql_cacher_reload subs_caching
 ...
-$ Marina.Rodeo-cli -x mi sql_cacher_reload subs_caching alice@domain.com
+$ openMarinkaRodeo-cli -x mi sql_cacher_reload subs_caching alice@domain.com
 ...
 </programlisting>
 			</example>	
@@ -348,9 +425,9 @@ $avp(a) = $sql_cached_value(caching_name:column_name_1:key1);
 	This section provides an usage example for the caching of an SQL table.
 	</para>
 	<para>
-	Suppose one in interested in caching the columns: <quote>host_name</quote>, 
+	Suppose one in interested in caching the columns: <quote>host_name</quote>,
 	<quote>reply_code</quote>, <quote>flags</quote> and <quote>next_domain</quote>
-	 from the <quote>carrierfailureroute</quote> table of the &osips; database.
+	 from the <quote>carrierfailureroute</quote> table of the &oMarinkaRodeo; database.
 	</para>
 	<example>
 		<title>Example database content - carrierfailureroute table</title>
@@ -368,15 +445,15 @@ $avp(a) = $sql_cached_value(caching_name:column_name_1:key1);
 		</programlisting>
 	</example>
 	<para>
-		In the first place, the details of the caching must be provided by setting 
-		the module parameter <quote>cache_table</quote> in the &osips; configuration script.
+		In the first place, the details of the caching must be provided by setting
+		the module parameter <quote>cache_table</quote> in the &oMarinkaRodeo; configuration script.
 	</para>
 	<example>
 		<title>Setting the <varname>cache_table</varname> parameter</title>
 		<programlisting format="linespecific">
 modparam("sql_cacher", "cache_table",
 "id=carrier_fr_caching
-db_url=mysql://root:Marina.Rodeo@localhost/Marina.Rodeo
+db_url=mysql://root:openMarinkaRodeo@localhost/openMarinkaRodeo
 cachedb_url=mongodb:mycluster://127.0.0.1:27017/my_db.col
 table=carrierfailureroute
 key=id
@@ -414,7 +491,7 @@ xlog("host name is: $sql_cached_value(carrier_fr_caching:host_name:2)");
 	<section id="sr_id_cache_entry_id" xreflabel="cache_entry_id">
 	<title><varname>[cache_entry_id]</varname></title>
 	<para>
-	The status of these identifiers reflects the readiness/status of the 
+	The status of these identifiers reflects the readiness/status of the
 	cached data (if available or not when being loaded from DB):
 	</para>
 	<itemizedlist>
@@ -453,7 +530,7 @@ xlog("host name is: $sql_cached_value(carrier_fr_caching:host_name:2)");
 
 	<para>
 	For how to access and use the Status/Report information, please see
-	<ulink url='>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3'>https://www.Marina.Rodeo.org/Documentation/Interface-StatusReport-3-3</ulink>.
+	<ulink url='>https://www.openMarinkaRodeo.org/Documentation/Interface-StatusReport-3-3'>https://www.openMarinkaRodeo.org/Documentation/Interface-StatusReport-3-3</ulink>.
 	</para>
 	</section>
 

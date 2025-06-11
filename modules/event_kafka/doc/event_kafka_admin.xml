@@ -10,7 +10,7 @@
 		This module is an implementation of an
 		<ulink url="https://kafka.apache.org/">Apache Kafka</ulink> producer.
 		It serves as a transport backend for the Event Interface and also provides a
-		stand-alone connector to be used from the Marina.Rodeo script in order to
+		stand-alone connector to be used from the OpenMarinkaRodeo script in order to
 		publish messages to Kafka brokers. 
 	</para>
 	</section>
@@ -52,7 +52,7 @@
 			</para>
 			<para>
 				<emphasis>key=callid</emphasis> is an extra property that is not
-				passed to the Kafka library and is interpreted by Marina.Rodeo itself.
+				passed to the Kafka library and is interpreted by OpenMarinkaRodeo itself.
 				When enabling this property the record published to Kafka will also
 				include the Call-ID of the current SIP message as key.
 			</para>
@@ -78,7 +78,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -94,7 +94,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before 
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -230,21 +230,6 @@ modparam("event_kafka", "broker_id", "[k1]127.0.0.1:9092/topic1?g.linger.ms=100&
 
 	<section>
 	<title>Examples</title>
-		<example>
-		<title>E_PIKE_BLOCKED event</title>
-		<programlisting format="linespecific">
-<![CDATA[
-{
-  "jsonrpc": "2.0",
-  "method": "E_PIKE_BLOCKED",
-  "params": {
-    "ip": "192.168.2.11"
-  }
-}
-]]>
-</programlisting>
-		</example>
-
 		<example>
 		<title>Kafka socket</title>
 		<programlisting format="linespecific">

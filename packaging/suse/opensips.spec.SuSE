@@ -1,4 +1,4 @@
-%define name    Marina.Rodeo
+%define name    openMarinkaRodeo
 %define ver     3.1
 %define rel     dev
 
@@ -13,26 +13,26 @@
 %define RADIUS_MODULES		modules/aaa_radius
 %define B2BUA_MODULES		modules/b2b_entities modules/b2b_logic
 
-Summary:      Marina.Rodeo, very fast and flexible SIP server
+Summary:      OpenMarinkaRodeo, very fast and flexible SIP server
 Name:         %name
 Version:      %ver
 Release:      %rel
 
-Packager:     Bogdan-Andrei Iancu <bogdan@Marina.Rodeo.org>
-Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌:    GPL
+Packager:     Bogdan-Andrei Iancu <bogdan@openMarinkaRodeo.org>
+Copyright:    GPL
 Group:        Networking/Daemons
-Source:       https://Marina.Rodeo.org/pub/Marina.Rodeo/stable/%{name}-%{ver}_src.tar.gz
-Source2:      Marina.Rodeo.init.SuSE
-URL:          https://Marina.Rodeo.org/
-Vendor:       Marina.Rodeo.org
+Source:       https://openMarinkaRodeo.org/pub/openMarinkaRodeo/stable/%{name}-%{ver}_src.tar.gz
+Source2:      openMarinkaRodeo.init.SuSE
+URL:          https://openMarinkaRodeo.org/
+Vendor:       openMarinkaRodeo.org
 BuildRoot:    /var/tmp/%{name}-%{ver}-root
-Conflicts:    Marina.Rodeo < %ver, Marina.Rodeo-mysql < %ver, Marina.Rodeo-xmpp < %ver, Marina.Rodeo-radius < %ver, Marina.Rodeo-postgres < %ver, Marina.Rodeo-unixodbc < %ver, Marina.Rodeo-presence < %ver
+Conflicts:    openMarinkaRodeo < %ver, openMarinkaRodeo-mysql < %ver, openMarinkaRodeo-xmpp < %ver, openMarinkaRodeo-radius < %ver, openMarinkaRodeo-postgres < %ver, openMarinkaRodeo-unixodbc < %ver, openMarinkaRodeo-presence < %ver
 BuildPrereq:  make flex bison 
 
 
 %description
-Marina.Rodeo is a very fast and flexible SIP (RFC3261)
-server. Written entirely in C, Marina.Rodeo can handle thousands calls
+OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
 per second even on low-budget hardware. A C Shell like scripting language
 provides full control over the server's behaviour. It's modular
 architecture allows only required functionality to be loaded.
@@ -43,88 +43,88 @@ transaction and dialog module, OSP module, statistics support,
 registrar and user location.
 
 %package  mysql
-Summary:  MySQL connectivity for the Marina.Rodeo.
+Summary:  MySQL connectivity for the OpenMarinkaRodeo.
 Group:    System Environment/Daemons
-Requires: Marina.Rodeo = %ver
+Requires: openMarinkaRodeo = %ver
 BuildPrereq: mysql-devel zlib-devel
 
 %description mysql
-The Marina.Rodeo-mysql package contains MySQL database connectivity that you
+The openMarinkaRodeo-mysql package contains MySQL database connectivity that you
 need to use digest authentication module or persistent user location
 entries.
 
 %package  postgres
-Summary:  MPOSTGRES connectivity for the Marina.Rodeo.
+Summary:  MPOSTGRES connectivity for the OpenMarinkaRodeo.
 Group:    System Environment/Daemons
-Requires: Marina.Rodeo = %ver
+Requires: openMarinkaRodeo = %ver
 BuildPrereq:  postgresql-devel
 
 %description postgres
-The Marina.Rodeo-postgres package contains Postgres database connectivity that you
+The openMarinkaRodeo-postgres package contains Postgres database connectivity that you
 need to use digest authentication module or persistent user location
 entries.
 
 %package  unixodbc
-Summary:  UNIXODBC connectivity for Marina.Rodeo.
+Summary:  UNIXODBC connectivity for OpenMarinkaRodeo.
 Group:    System Environment/Daemons
-Requires: Marina.Rodeo = %ver
+Requires: openMarinkaRodeo = %ver
 BuildPrereq:  unixodbc-dev
 
 %description unixodbc
-The Marina.Rodeo-unixodbc package contains UNIXODBC database connectivity support
+The openMarinkaRodeo-unixodbc package contains UNIXODBC database connectivity support
 that is required by other modules with database dependencies.
 
 
 %package  xmpp
-Summary:  sip 2 xmpp/jabber message translation support for the Marina.Rodeo.
+Summary:  sip 2 xmpp/jabber message translation support for the OpenMarinkaRodeo.
 Group:    System Environment/Daemons
-Requires: Marina.Rodeo = %ver
+Requires: openMarinkaRodeo = %ver
 BuildPrereq: expat
 
 %description xmpp
-The Marina.Rodeo-xmpp package contains a sip to jabber message translator.
+The openMarinkaRodeo-xmpp package contains a sip to jabber message translator.
 
 %package  cpl
-Summary:  CPL interpreter engine for the Marina.Rodeo.
+Summary:  CPL interpreter engine for the OpenMarinkaRodeo.
 Group:    System Environment/Daemons
-Requires: Marina.Rodeo = %ver
+Requires: openMarinkaRodeo = %ver
 BuildPrereq: libxml2-dev
 
 %description cpl
-The Marina.Rodeo-cpl package contains a CPL interpreter engine.
+The openMarinkaRodeo-cpl package contains a CPL interpreter engine.
 
 %package  presence
-Summary:  sip presence agent support for the Marina.Rodeo.
+Summary:  sip presence agent support for the OpenMarinkaRodeo.
 Group:    System Environment/Daemons
-Requires: Marina.Rodeo = %ver
+Requires: openMarinkaRodeo = %ver
 BuildPrereq:  libxml2-dev
 
 %description presence
-The Marina.Rodeo-presence package contains a sip Presence Agent.
+The openMarinkaRodeo-presence package contains a sip Presence Agent.
 
 %package  radius
-Summary:  Marina.Rodeo radius support for AAA API.
+Summary:  openMarinkaRodeo radius support for AAA API.
 Group:    System Environment/Daemons
-Requires: Marina.Rodeo = %ver
+Requires: openMarinkaRodeo = %ver
 BuildPrereq:  radiusclient
 
 %description radius
-The Marina.Rodeo-radius package contains modules for radius authentication, group
+The openMarinkaRodeo-radius package contains modules for radius authentication, group
  membership and uri checking.
 
 %prep
 %setup
 
 %build
-make all skip_modules="%EXCLUDED_MODULES" cfg_target=/%{_sysconfdir}/Marina.Rodeo/
-make modules modules="%MYSQL_MODULES"     cfg_target=/%{_sysconfdir}/Marina.Rodeo/
-make modules modules="%POSTGRES_MODULES"  cfg_target=/%{_sysconfdir}/Marina.Rodeo/
-make modules modules="%UNIXODBC_MODULES"  cfg_target=/%{_sysconfdir}/Marina.Rodeo/
-make modules modules="%XMPP_MODULES"      cfg_target=/%{_sysconfdir}/Marina.Rodeo/
-make modules modules="%CPL_MODULES"       cfg_target=/%{_sysconfdir}/Marina.Rodeo/
-make modules modules="%PRESENCE_MODULES"  cfg_target=/%{_sysconfdir}/Marina.Rodeo/
-make modules modules="%RADIUS_MODULES"    cfg_target=/%{_sysconfdir}/Marina.Rodeo/
-make modules modules="%B2BUA_MODULES"     cfg_target=/%{_sysconfdir}/Marina.Rodeo/
+make all skip_modules="%EXCLUDED_MODULES" cfg_target=/%{_sysconfdir}/openMarinkaRodeo/
+make modules modules="%MYSQL_MODULES"     cfg_target=/%{_sysconfdir}/openMarinkaRodeo/
+make modules modules="%POSTGRES_MODULES"  cfg_target=/%{_sysconfdir}/openMarinkaRodeo/
+make modules modules="%UNIXODBC_MODULES"  cfg_target=/%{_sysconfdir}/openMarinkaRodeo/
+make modules modules="%XMPP_MODULES"      cfg_target=/%{_sysconfdir}/openMarinkaRodeo/
+make modules modules="%CPL_MODULES"       cfg_target=/%{_sysconfdir}/openMarinkaRodeo/
+make modules modules="%PRESENCE_MODULES"  cfg_target=/%{_sysconfdir}/openMarinkaRodeo/
+make modules modules="%RADIUS_MODULES"    cfg_target=/%{_sysconfdir}/openMarinkaRodeo/
+make modules modules="%B2BUA_MODULES"     cfg_target=/%{_sysconfdir}/openMarinkaRodeo/
 
 %install
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf "$RPM_BUILD_ROOT"
@@ -133,85 +133,85 @@ make install skip_modules="%EXCLUDED_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		cfg_prefix=$RPM_BUILD_ROOT \
-		cfg_target=/%{_sysconfdir}/Marina.Rodeo/ \
+		cfg_target=/%{_sysconfdir}/openMarinkaRodeo/ \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 make install-modules modules="%MYSQL_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		cfg_prefix=$RPM_BUILD_ROOT \
-		cfg_target=/%{_sysconfdir}/Marina.Rodeo/ \
+		cfg_target=/%{_sysconfdir}/openMarinkaRodeo/ \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 make install-modules modules="%POSTGRES_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		cfg_prefix=$RPM_BUILD_ROOT \
-		cfg_target=/%{_sysconfdir}/Marina.Rodeo/ \
+		cfg_target=/%{_sysconfdir}/openMarinkaRodeo/ \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 make install-modules modules="%UNIXODBC_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		cfg_prefix=$RPM_BUILD_ROOT \
-		cfg_target=/%{_sysconfdir}/Marina.Rodeo/ \
+		cfg_target=/%{_sysconfdir}/openMarinkaRodeo/ \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 make install-modules modules="%XMPP_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		cfg_prefix=$RPM_BUILD_ROOT \
-		cfg_target=/%{_sysconfdir}/Marina.Rodeo/ \
+		cfg_target=/%{_sysconfdir}/openMarinkaRodeo/ \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 make install-modules modules="%CPL_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		cfg_prefix=$RPM_BUILD_ROOT \
-		cfg_target=/%{_sysconfdir}/Marina.Rodeo/ \
+		cfg_target=/%{_sysconfdir}/openMarinkaRodeo/ \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 make install-modules modules="%PRESENCE_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		cfg_prefix=$RPM_BUILD_ROOT \
-		cfg_target=/%{_sysconfdir}/Marina.Rodeo/ \
+		cfg_target=/%{_sysconfdir}/openMarinkaRodeo/ \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 make install-modules modules="%RADIUS_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		cfg_prefix=$RPM_BUILD_ROOT \
-		cfg_target=/%{_sysconfdir}/Marina.Rodeo/ \
+		cfg_target=/%{_sysconfdir}/openMarinkaRodeo/ \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 make install-modules modules="%B2BUA_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		cfg_prefix=$RPM_BUILD_ROOT \
-		cfg_target=/%{_sysconfdir}/Marina.Rodeo/ \
+		cfg_target=/%{_sysconfdir}/openMarinkaRodeo/ \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 make install-doc modules="XMPP_MODULES %RADIUS_MODULES %MYSQL_MODULES %POSTGRES_MODULES %UNIXODBC_MODULES %CPL_MODULES %PRESENCE_MODULES %B2BUA_MODULES" \
 		basedir=$RPM_BUILD_ROOT \
 		prefix=/usr \
 		doc_prefix=$RPM_BUILD_ROOT \
-		doc_dir=/%{_docdir}/Marina.Rodeo/
+		doc_dir=/%{_docdir}/openMarinkaRodeo/
 
 
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/init.d
-install -m755 $RPM_SOURCE_DIR/Marina.Rodeo.init.SuSE \
-              $RPM_BUILD_ROOT/%{_sysconfdir}/init.d/Marina.Rodeo
+install -m755 $RPM_SOURCE_DIR/openMarinkaRodeo.init.SuSE \
+              $RPM_BUILD_ROOT/%{_sysconfdir}/init.d/openMarinkaRodeo
 
 %clean
 rm -rf "$RPM_BUILD_ROOT"
 
 %post
-sbin/insserv etc/init.d/Marina.Rodeo
+sbin/insserv etc/init.d/openMarinkaRodeo
 
 %preun
 if [ $1 = 0 ]; then
-    etc/init.d/Marina.Rodeo stop > /dev/null 2>&1
+    etc/init.d/openMarinkaRodeo stop > /dev/null 2>&1
 fi
 
 %postun
@@ -219,137 +219,136 @@ sbin/insserv etc/init.d/
 
 %files
 %defattr(-,root,root)
-%dir %{_docdir}/Marina.Rodeo
-%doc %{_docdir}/Marina.Rodeo/AUTHORS
-%doc %{_docdir}/Marina.Rodeo/INSTALL
-%doc %{_docdir}/Marina.Rodeo/READE
-%doc %{_docdir}/Marina.Rodeo/NEWS
-%doc %{_docdir}/Marina.Rodeo/README-MODULES
-%doc %{_docdir}/Marina.Rodeo/README.acc
-%doc %{_docdir}/Marina.Rodeo/README.alias_db
-%doc %{_docdir}/Marina.Rodeo/README.auth
-%doc %{_docdir}/Marina.Rodeo/README.auth_aaa
-%doc %{_docdir}/Marina.Rodeo/README.auth_db
-%doc %{_docdir}/Marina.Rodeo/README.auth_diameter
-%doc %{_docdir}/Marina.Rodeo/README.avpops
-%doc %{_docdir}/Marina.Rodeo/README.benchmark
-%doc %{_docdir}/Marina.Rodeo/README.call_control
-%doc %{_docdir}/Marina.Rodeo/README.cfgutils
-%doc %{_docdir}/Marina.Rodeo/README.closeddial
-%doc %{_docdir}/Marina.Rodeo/README.db_flatstore
-%doc %{_docdir}/Marina.Rodeo/README.db_text
-%doc %{_docdir}/Marina.Rodeo/README.db_virtual
-%doc %{_docdir}/Marina.Rodeo/README.dialog
-%doc %{_docdir}/Marina.Rodeo/README.dialplan
-%doc %{_docdir}/Marina.Rodeo/README.dispatcher
-%doc %{_docdir}/Marina.Rodeo/README.diversion
-%doc %{_docdir}/Marina.Rodeo/README.domain
-%doc %{_docdir}/Marina.Rodeo/README.domainpolicy
-%doc %{_docdir}/Marina.Rodeo/README.drouting
-%doc %{_docdir}/Marina.Rodeo/README.enum
-%doc %{_docdir}/Marina.Rodeo/README.exec
-%doc %{_docdir}/Marina.Rodeo/README.gflags
-%doc %{_docdir}/Marina.Rodeo/README.group
-%doc %{_docdir}/Marina.Rodeo/README.imc
-%doc %{_docdir}/Marina.Rodeo/README.load_balancer
-%doc %{_docdir}/Marina.Rodeo/README.localcache
-%doc %{_docdir}/Marina.Rodeo/README.mangler
-%doc %{_docdir}/Marina.Rodeo/README.maxfwd
-%doc %{_docdir}/Marina.Rodeo/README.mediaproxy
-%doc %{_docdir}/Marina.Rodeo/README.mi_datagram
-%doc %{_docdir}/Marina.Rodeo/README.mi_fifo
-%doc %{_docdir}/Marina.Rodeo/README.msilo
-%doc %{_docdir}/Marina.Rodeo/README.nat_traversal
-%doc %{_docdir}/Marina.Rodeo/README.nathelper
-%doc %{_docdir}/Marina.Rodeo/README.options
-%doc %{_docdir}/Marina.Rodeo/README.path
-%doc %{_docdir}/Marina.Rodeo/README.permissions
-%doc %{_docdir}/Marina.Rodeo/README.pike
-%doc %{_docdir}/Marina.Rodeo/README.qos
-%doc %{_docdir}/Marina.Rodeo/README.ratelimit
-%doc %{_docdir}/Marina.Rodeo/README.registrar
-%doc %{_docdir}/Marina.Rodeo/README.rr
-%doc %{_docdir}/Marina.Rodeo/README.signaling
-%doc %{_docdir}/Marina.Rodeo/README.tracer
-%doc %{_docdir}/Marina.Rodeo/README.sl
-%doc %{_docdir}/Marina.Rodeo/README.speeddial
-%doc %{_docdir}/Marina.Rodeo/README.sst
-%doc %{_docdir}/Marina.Rodeo/README.statistics
-%doc %{_docdir}/Marina.Rodeo/README.stun
-%doc %{_docdir}/Marina.Rodeo/README.textops
-%doc %{_docdir}/Marina.Rodeo/README.tm
-%doc %{_docdir}/Marina.Rodeo/README.uac
-%doc %{_docdir}/Marina.Rodeo/README.uac_redirect
-%doc %{_docdir}/Marina.Rodeo/README.userblacklist
-%doc %{_docdir}/Marina.Rodeo/README.usrloc
-%doc %{_docdir}/Marina.Rodeo/README.xlog
+%dir %{_docdir}/openMarinkaRodeo
+%doc %{_docdir}/openMarinkaRodeo/AUTHORS
+%doc %{_docdir}/openMarinkaRodeo/INSTALL
+%doc %{_docdir}/openMarinkaRodeo/READE
+%doc %{_docdir}/openMarinkaRodeo/NEWS
+%doc %{_docdir}/openMarinkaRodeo/README.acc
+%doc %{_docdir}/openMarinkaRodeo/README.alias_db
+%doc %{_docdir}/openMarinkaRodeo/README.auth
+%doc %{_docdir}/openMarinkaRodeo/README.auth_aaa
+%doc %{_docdir}/openMarinkaRodeo/README.auth_db
+%doc %{_docdir}/openMarinkaRodeo/README.auth_diameter
+%doc %{_docdir}/openMarinkaRodeo/README.sqlops
+%doc %{_docdir}/openMarinkaRodeo/README.benchmark
+%doc %{_docdir}/openMarinkaRodeo/README.call_control
+%doc %{_docdir}/openMarinkaRodeo/README.cfgutils
+%doc %{_docdir}/openMarinkaRodeo/README.closeddial
+%doc %{_docdir}/openMarinkaRodeo/README.db_flatstore
+%doc %{_docdir}/openMarinkaRodeo/README.db_text
+%doc %{_docdir}/openMarinkaRodeo/README.db_virtual
+%doc %{_docdir}/openMarinkaRodeo/README.dialog
+%doc %{_docdir}/openMarinkaRodeo/README.dialplan
+%doc %{_docdir}/openMarinkaRodeo/README.dispatcher
+%doc %{_docdir}/openMarinkaRodeo/README.diversion
+%doc %{_docdir}/openMarinkaRodeo/README.domain
+%doc %{_docdir}/openMarinkaRodeo/README.domainpolicy
+%doc %{_docdir}/openMarinkaRodeo/README.drouting
+%doc %{_docdir}/openMarinkaRodeo/README.enum
+%doc %{_docdir}/openMarinkaRodeo/README.exec
+%doc %{_docdir}/openMarinkaRodeo/README.gflags
+%doc %{_docdir}/openMarinkaRodeo/README.group
+%doc %{_docdir}/openMarinkaRodeo/README.imc
+%doc %{_docdir}/openMarinkaRodeo/README.load_balancer
+%doc %{_docdir}/openMarinkaRodeo/README.localcache
+%doc %{_docdir}/openMarinkaRodeo/README.mangler
+%doc %{_docdir}/openMarinkaRodeo/README.maxfwd
+%doc %{_docdir}/openMarinkaRodeo/README.mediaproxy
+%doc %{_docdir}/openMarinkaRodeo/README.mi_datagram
+%doc %{_docdir}/openMarinkaRodeo/README.mi_fifo
+%doc %{_docdir}/openMarinkaRodeo/README.msilo
+%doc %{_docdir}/openMarinkaRodeo/README.nat_traversal
+%doc %{_docdir}/openMarinkaRodeo/README.nathelper
+%doc %{_docdir}/openMarinkaRodeo/README.options
+%doc %{_docdir}/openMarinkaRodeo/README.path
+%doc %{_docdir}/openMarinkaRodeo/README.permissions
+%doc %{_docdir}/openMarinkaRodeo/README.pike
+%doc %{_docdir}/openMarinkaRodeo/README.qos
+%doc %{_docdir}/openMarinkaRodeo/README.ratelimit
+%doc %{_docdir}/openMarinkaRodeo/README.registrar
+%doc %{_docdir}/openMarinkaRodeo/README.rr
+%doc %{_docdir}/openMarinkaRodeo/README.signaling
+%doc %{_docdir}/openMarinkaRodeo/README.tracer
+%doc %{_docdir}/openMarinkaRodeo/README.sl
+%doc %{_docdir}/openMarinkaRodeo/README.speeddial
+%doc %{_docdir}/openMarinkaRodeo/README.sst
+%doc %{_docdir}/openMarinkaRodeo/README.statistics
+%doc %{_docdir}/openMarinkaRodeo/README.stun
+%doc %{_docdir}/openMarinkaRodeo/README.textops
+%doc %{_docdir}/openMarinkaRodeo/README.tm
+%doc %{_docdir}/openMarinkaRodeo/README.uac
+%doc %{_docdir}/openMarinkaRodeo/README.uac_redirect
+%doc %{_docdir}/openMarinkaRodeo/README.userblacklist
+%doc %{_docdir}/openMarinkaRodeo/README.usrloc
+%doc %{_docdir}/openMarinkaRodeo/README.xlog
 
-%dir %{_sysconfdir}/Marina.Rodeo
-%config(noreplace) %{_sysconfdir}/Marina.Rodeo/*
+%dir %{_sysconfdir}/openMarinkaRodeo
+%config(noreplace) %{_sysconfdir}/openMarinkaRodeo/*
 %config %{_sysconfdir}/init.d/*
 
-%dir %{_libdir}/Marina.Rodeo
-%dir %{_libdir}/Marina.Rodeo/modules
-%{_libdir}/Marina.Rodeo/modules/acc.so
-%{_libdir}/Marina.Rodeo/modules/alias_db.so
-%{_libdir}/Marina.Rodeo/modules/auth.so
-%{_libdir}/Marina.Rodeo/modules/auth_aaa.so
-%{_libdir}/Marina.Rodeo/modules/auth_db.so
-%{_libdir}/Marina.Rodeo/modules/auth_diameter.so
-%{_libdir}/Marina.Rodeo/modules/avpops.so
-%{_libdir}/Marina.Rodeo/modules/benchmark.so
-%{_libdir}/Marina.Rodeo/modules/call_control.so
-%{_libdir}/Marina.Rodeo/modules/cfgutils.so
-%{_libdir}/Marina.Rodeo/modules/closeddial.so
-%{_libdir}/Marina.Rodeo/modules/db_flatstore.so
-%{_libdir}/Marina.Rodeo/modules/db_text.so
-%{_libdir}/Marina.Rodeo/modules/db_virtual.so
-%{_libdir}/Marina.Rodeo/modules/dialog.so
-%{_libdir}/Marina.Rodeo/modules/dialplan.so
-%{_libdir}/Marina.Rodeo/modules/dispatcher.so
-%{_libdir}/Marina.Rodeo/modules/diversion.so
-%{_libdir}/Marina.Rodeo/modules/domain.so
-%{_libdir}/Marina.Rodeo/modules/domainpolicy.so
-%{_libdir}/Marina.Rodeo/modules/drouting.so
-%{_libdir}/Marina.Rodeo/modules/enum.so
-%{_libdir}/Marina.Rodeo/modules/exec.so
-%{_libdir}/Marina.Rodeo/modules/gflags.so
-%{_libdir}/Marina.Rodeo/modules/group.so
-%{_libdir}/Marina.Rodeo/modules/imc.so
-%{_libdir}/Marina.Rodeo/modules/load_balancer.so
-%{_libdir}/Marina.Rodeo/modules/localcache.so
-%{_libdir}/Marina.Rodeo/modules/mangler.so
-%{_libdir}/Marina.Rodeo/modules/maxfwd.so
-%{_libdir}/Marina.Rodeo/modules/mediaproxy.so
-%{_libdir}/Marina.Rodeo/modules/mi_datagram.so
-%{_libdir}/Marina.Rodeo/modules/mi_fifo.so
-%{_libdir}/Marina.Rodeo/modules/msilo.so
-%{_libdir}/Marina.Rodeo/modules/nat_traversal.so
-%{_libdir}/Marina.Rodeo/modules/nathelper.so
-%{_libdir}/Marina.Rodeo/modules/options.so
-%{_libdir}/Marina.Rodeo/modules/path.so
-%{_libdir}/Marina.Rodeo/modules/permissions.so
-%{_libdir}/Marina.Rodeo/modules/pike.so
-%{_libdir}/Marina.Rodeo/modules/qos.so
-%{_libdir}/Marina.Rodeo/modules/ratelimit.so
-%{_libdir}/Marina.Rodeo/modules/registrar.so
-%{_libdir}/Marina.Rodeo/modules/rr.so
-%{_libdir}/Marina.Rodeo/modules/signaling.so
-%{_libdir}/Marina.Rodeo/modules/tracer.so
-%{_libdir}/Marina.Rodeo/modules/sl.so
-%{_libdir}/Marina.Rodeo/modules/speeddial.so
-%{_libdir}/Marina.Rodeo/modules/sst.so
-%{_libdir}/Marina.Rodeo/modules/statistics.so
-%{_libdir}/Marina.Rodeo/modules/stun.so
-%{_libdir}/Marina.Rodeo/modules/textops.so
-%{_libdir}/Marina.Rodeo/modules/tm.so
-%{_libdir}/Marina.Rodeo/modules/uac.so
-%{_libdir}/Marina.Rodeo/modules/uac_redirect.so
-%{_libdir}/Marina.Rodeo/modules/userblacklist.so
-%{_libdir}/Marina.Rodeo/modules/usrloc.so
-%{_libdir}/Marina.Rodeo/modules/xlog.so
+%dir %{_libdir}/openMarinkaRodeo
+%dir %{_libdir}/openMarinkaRodeo/modules
+%{_libdir}/openMarinkaRodeo/modules/acc.so
+%{_libdir}/openMarinkaRodeo/modules/alias_db.so
+%{_libdir}/openMarinkaRodeo/modules/auth.so
+%{_libdir}/openMarinkaRodeo/modules/auth_aaa.so
+%{_libdir}/openMarinkaRodeo/modules/auth_db.so
+%{_libdir}/openMarinkaRodeo/modules/auth_diameter.so
+%{_libdir}/openMarinkaRodeo/modules/sqlops.so
+%{_libdir}/openMarinkaRodeo/modules/benchmark.so
+%{_libdir}/openMarinkaRodeo/modules/call_control.so
+%{_libdir}/openMarinkaRodeo/modules/cfgutils.so
+%{_libdir}/openMarinkaRodeo/modules/closeddial.so
+%{_libdir}/openMarinkaRodeo/modules/db_flatstore.so
+%{_libdir}/openMarinkaRodeo/modules/db_text.so
+%{_libdir}/openMarinkaRodeo/modules/db_virtual.so
+%{_libdir}/openMarinkaRodeo/modules/dialog.so
+%{_libdir}/openMarinkaRodeo/modules/dialplan.so
+%{_libdir}/openMarinkaRodeo/modules/dispatcher.so
+%{_libdir}/openMarinkaRodeo/modules/diversion.so
+%{_libdir}/openMarinkaRodeo/modules/domain.so
+%{_libdir}/openMarinkaRodeo/modules/domainpolicy.so
+%{_libdir}/openMarinkaRodeo/modules/drouting.so
+%{_libdir}/openMarinkaRodeo/modules/enum.so
+%{_libdir}/openMarinkaRodeo/modules/exec.so
+%{_libdir}/openMarinkaRodeo/modules/gflags.so
+%{_libdir}/openMarinkaRodeo/modules/group.so
+%{_libdir}/openMarinkaRodeo/modules/imc.so
+%{_libdir}/openMarinkaRodeo/modules/load_balancer.so
+%{_libdir}/openMarinkaRodeo/modules/localcache.so
+%{_libdir}/openMarinkaRodeo/modules/mangler.so
+%{_libdir}/openMarinkaRodeo/modules/maxfwd.so
+%{_libdir}/openMarinkaRodeo/modules/mediaproxy.so
+%{_libdir}/openMarinkaRodeo/modules/mi_datagram.so
+%{_libdir}/openMarinkaRodeo/modules/mi_fifo.so
+%{_libdir}/openMarinkaRodeo/modules/msilo.so
+%{_libdir}/openMarinkaRodeo/modules/nat_traversal.so
+%{_libdir}/openMarinkaRodeo/modules/nathelper.so
+%{_libdir}/openMarinkaRodeo/modules/options.so
+%{_libdir}/openMarinkaRodeo/modules/path.so
+%{_libdir}/openMarinkaRodeo/modules/permissions.so
+%{_libdir}/openMarinkaRodeo/modules/pike.so
+%{_libdir}/openMarinkaRodeo/modules/qos.so
+%{_libdir}/openMarinkaRodeo/modules/ratelimit.so
+%{_libdir}/openMarinkaRodeo/modules/registrar.so
+%{_libdir}/openMarinkaRodeo/modules/rr.so
+%{_libdir}/openMarinkaRodeo/modules/signaling.so
+%{_libdir}/openMarinkaRodeo/modules/tracer.so
+%{_libdir}/openMarinkaRodeo/modules/sl.so
+%{_libdir}/openMarinkaRodeo/modules/speeddial.so
+%{_libdir}/openMarinkaRodeo/modules/sst.so
+%{_libdir}/openMarinkaRodeo/modules/statistics.so
+%{_libdir}/openMarinkaRodeo/modules/stun.so
+%{_libdir}/openMarinkaRodeo/modules/textops.so
+%{_libdir}/openMarinkaRodeo/modules/tm.so
+%{_libdir}/openMarinkaRodeo/modules/uac.so
+%{_libdir}/openMarinkaRodeo/modules/uac_redirect.so
+%{_libdir}/openMarinkaRodeo/modules/userblacklist.so
+%{_libdir}/openMarinkaRodeo/modules/usrloc.so
+%{_libdir}/openMarinkaRodeo/modules/xlog.so
 
-%{_sbindir}/Marina.Rodeo
+%{_sbindir}/openMarinkaRodeo
 
 %{_mandir}/man5/*
 %{_mandir}/man8/*
@@ -357,85 +356,85 @@ sbin/insserv etc/init.d/
 
 %files mysql
 %defattr(-,root,root)
-%doc %{_docdir}/Marina.Rodeo/README.mysql
+%doc %{_docdir}/openMarinkaRodeo/README.mysql
 
-%{_libdir}/Marina.Rodeo/modules/db_mysql.so
+%{_libdir}/openMarinkaRodeo/modules/db_mysql.so
 
 %files postgres
 %defattr(-,root,root)
-%doc %{_docdir}/Marina.Rodeo/README.postgres
+%doc %{_docdir}/openMarinkaRodeo/README.postgres
 
-%{_libdir}/Marina.Rodeo/modules/db_postgres.so
+%{_libdir}/openMarinkaRodeo/modules/db_postgres.so
 
 %files unixodbc
 %defattr(-,root,root)
-%doc %{_docdir}/Marina.Rodeo/README.unixodbc
+%doc %{_docdir}/openMarinkaRodeo/README.unixodbc
 
-%{_libdir}/Marina.Rodeo/modules/db_unixodbc.so
+%{_libdir}/openMarinkaRodeo/modules/db_unixodbc.so
 
 %files xmpp
 %defattr(-,root,root)
-%{_libdir}/Marina.Rodeo/modules/jabber.so
-%{_libdir}/Marina.Rodeo/modules/xmpp.so
-%doc %{_docdir}/Marina.Rodeo/README.jabber
-%doc %{_docdir}/Marina.Rodeo/README.xmpp
+%{_libdir}/openMarinkaRodeo/modules/jabber.so
+%{_libdir}/openMarinkaRodeo/modules/xmpp.so
+%doc %{_docdir}/openMarinkaRodeo/README.jabber
+%doc %{_docdir}/openMarinkaRodeo/README.xmpp
 
 %files cpl
 %defattr(-,root,root)
-%{_libdir}/Marina.Rodeo/modules/cpl_c.so
-%doc %{_docdir}/Marina.Rodeo/README.cpl_c
+%{_libdir}/openMarinkaRodeo/modules/cpl_c.so
+%doc %{_docdir}/openMarinkaRodeo/README.cpl_c
 
 %files presence
 %defattr(-,root,root)
-%doc %{_docdir}/Marina.Rodeo/README.presence
-%doc %{_docdir}/Marina.Rodeo/README.presence_dialoginfo
-%doc %{_docdir}/Marina.Rodeo/README.presence_mwi
-%doc %{_docdir}/Marina.Rodeo/README.presence_xcapdiff
-%doc %{_docdir}/Marina.Rodeo/README.presence_xml
-%doc %{_docdir}/Marina.Rodeo/README.pua
-%doc %{_docdir}/Marina.Rodeo/README.pua_bla
-%doc %{_docdir}/Marina.Rodeo/README.pua_dialoginfo
-%doc %{_docdir}/Marina.Rodeo/README.pua_mi
-%doc %{_docdir}/Marina.Rodeo/README.pua_usrloc
-%doc %{_docdir}/Marina.Rodeo/README.pua_xmpp
-%doc %{_docdir}/Marina.Rodeo/README.rls
-%doc %{_docdir}/Marina.Rodeo/README.xcap_client
+%doc %{_docdir}/openMarinkaRodeo/README.presence
+%doc %{_docdir}/openMarinkaRodeo/README.presence_dialoginfo
+%doc %{_docdir}/openMarinkaRodeo/README.presence_mwi
+%doc %{_docdir}/openMarinkaRodeo/README.presence_xcapdiff
+%doc %{_docdir}/openMarinkaRodeo/README.presence_xml
+%doc %{_docdir}/openMarinkaRodeo/README.pua
+%doc %{_docdir}/openMarinkaRodeo/README.pua_bla
+%doc %{_docdir}/openMarinkaRodeo/README.pua_dialoginfo
+%doc %{_docdir}/openMarinkaRodeo/README.pua_mi
+%doc %{_docdir}/openMarinkaRodeo/README.pua_usrloc
+%doc %{_docdir}/openMarinkaRodeo/README.pua_xmpp
+%doc %{_docdir}/openMarinkaRodeo/README.rls
+%doc %{_docdir}/openMarinkaRodeo/README.xcap_client
 
-%{_libdir}/Marina.Rodeo/modules/presence.so
-%{_libdir}/Marina.Rodeo/modules/presence_dialoginfo.so
-%{_libdir}/Marina.Rodeo/modules/presence_mwi.so
-%{_libdir}/Marina.Rodeo/modules/presence_xcapdiff.so
-%{_libdir}/Marina.Rodeo/modules/presence_xml.so
-%{_libdir}/Marina.Rodeo/modules/pua.so
-%{_libdir}/Marina.Rodeo/modules/pua_bla.so
-%{_libdir}/Marina.Rodeo/modules/pua_dialoginfo.so
-%{_libdir}/Marina.Rodeo/modules/pua_mi.so
-%{_libdir}/Marina.Rodeo/modules/pua_usrloc.so
-%{_libdir}/Marina.Rodeo/modules/pua_xmpp.so
-%{_libdir}/Marina.Rodeo/modules/rls.so
-%{_libdir}/Marina.Rodeo/modules/xcap_client.so
+%{_libdir}/openMarinkaRodeo/modules/presence.so
+%{_libdir}/openMarinkaRodeo/modules/presence_dialoginfo.so
+%{_libdir}/openMarinkaRodeo/modules/presence_mwi.so
+%{_libdir}/openMarinkaRodeo/modules/presence_xcapdiff.so
+%{_libdir}/openMarinkaRodeo/modules/presence_xml.so
+%{_libdir}/openMarinkaRodeo/modules/pua.so
+%{_libdir}/openMarinkaRodeo/modules/pua_bla.so
+%{_libdir}/openMarinkaRodeo/modules/pua_dialoginfo.so
+%{_libdir}/openMarinkaRodeo/modules/pua_mi.so
+%{_libdir}/openMarinkaRodeo/modules/pua_usrloc.so
+%{_libdir}/openMarinkaRodeo/modules/pua_xmpp.so
+%{_libdir}/openMarinkaRodeo/modules/rls.so
+%{_libdir}/openMarinkaRodeo/modules/xcap_client.so
 
 %files radius
 %defattr(-,root,root)
-%{_libdir}/Marina.Rodeo/modules/aaa_radius.so
-%{_libdir}/Marina.Rodeo/modules/peering.so
-%doc %{_docdir}/Marina.Rodeo/README.aaa_radius
-%doc %{_docdir}/Marina.Rodeo/README.peering
+%{_libdir}/openMarinkaRodeo/modules/aaa_radius.so
+%{_libdir}/openMarinkaRodeo/modules/peering.so
+%doc %{_docdir}/openMarinkaRodeo/README.aaa_radius
+%doc %{_docdir}/openMarinkaRodeo/README.peering
 
 %files b2bua
 %defattr(-,root,root)
-%{_libdir}/Marina.Rodeo/modules/b2b_entities.so
-%{_libdir}/Marina.Rodeo/modules/b2b_logic.so
-%doc %{_docdir}/Marina.Rodeo/README.b2b_entities
-%doc %{_docdir}/Marina.Rodeo/README.b2b_logic
+%{_libdir}/openMarinkaRodeo/modules/b2b_entities.so
+%{_libdir}/openMarinkaRodeo/modules/b2b_logic.so
+%doc %{_docdir}/openMarinkaRodeo/README.b2b_entities
+%doc %{_docdir}/openMarinkaRodeo/README.b2b_logic
 
 
 %changelog
-* Mon Oct 12 2009 Bogdan-Andrei Iancu <bogdan@Marina.Rodeo.org>
-- Update spec to Marina.Rodeo version 1.6.0.
+* Mon Oct 12 2009 Bogdan-Andrei Iancu <bogdan@openMarinkaRodeo.org>
+- Update spec to OpenMarinkaRodeo version 1.6.0.
 
-* Mon Mar 23 2009 Bogdan-Andrei Iancu <bogdan@Marina.Rodeo.org>
-- Update spec to Marina.Rodeo version 1.5.0.
+* Mon Mar 23 2009 Bogdan-Andrei Iancu <bogdan@openMarinkaRodeo.org>
+- Update spec to OpenMarinkaRodeo version 1.5.0.
 
-* Mon Jul 21 2008 Bogdan-Andrei Iancu <bogdan@Marina.Rodeo.org>
+* Mon Jul 21 2008 Bogdan-Andrei Iancu <bogdan@openMarinkaRodeo.org>
 - First version of the spec file.

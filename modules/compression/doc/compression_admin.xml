@@ -53,7 +53,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 		<title>Dependencies</title>
 		<section>
-			<title>&osips; Modules</title>
+			<title>&oMarinkaRodeo; Modules</title>
 			<para>
 			The following modules must be loaded before this module:
 				<itemizedlist>
@@ -71,7 +71,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>

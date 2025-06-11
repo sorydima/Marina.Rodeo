@@ -1,16 +1,16 @@
 /*
  * SNMPStats Module
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 SOMA Networks, INC.
+ * Copyright (C) 2006 SOMA Networks, INC.
  * Written by: Jeffrey Magder (jmagder@somanetworks.com)
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify it
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful, but
+ * openMarinkaRodeo is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
@@ -54,8 +54,8 @@
  *
  * - The interprocess buffer was necessary, because NetSNMP's containers can be
  *   very inefficient at adding large amounts of data at a time, such as when
- *   Marina.Rodeo first starts up.  It was decided its better to make an SNMP manager
- *   wait for data, instead of slowing down the rest of Marina.Rodeo while the
+ *   OpenMarinkaRodeo first starts up.  It was decided its better to make an SNMP manager
+ *   wait for data, instead of slowing down the rest of OpenMarinkaRodeo while the
  *   sub-agent processes the data.
  *
  * - It is important to send periodic SNMP requests to this table (or the user

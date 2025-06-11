@@ -52,7 +52,7 @@
 	<section>
 		<title>TLS_CONFIG</title>
 		<para>
-		It contains configuration variables for &osips;'s TLS (timeouts,
+		It contains configuration variables for &oMarinkaRodeo;'s TLS (timeouts,
 		file paths, etc).
 		</para>
 	</section>
@@ -115,7 +115,7 @@
 			<para>
 			Wrapper functions around the shm_* functions. OpenSSL uses
 			non-shared memory to create its objects, thus it would not
-			work in &osips;. By creating these wrappers and configuring
+			work in &oMarinkaRodeo;. By creating these wrappers and configuring
 			OpenSSL to use them instead of its default memory functions,
 			we have all OpenSSL objects in shared memory, ready to use.
 			</para>

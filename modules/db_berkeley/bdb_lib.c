@@ -2,16 +2,16 @@
  * db_berkeley module, portions of this code were templated using
  * the dbtext and postgres modules.
 
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 Cisco Systems
+ * Copyright (C) 2007 Cisco Systems
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -299,7 +299,7 @@ int bdblib_create_dbenv(DB_ENV **_dbenv, char* _home)
 	char *progname;
 	int rc, flags;
 
-	progname = "Marina.Rodeo";
+	progname = "openMarinkaRodeo";
 
 	/* Create an environment and initialize it for additional error * reporting. */
 	if ((rc = db_env_create(&env, 0)) != 0)
@@ -547,14 +547,14 @@ void bdblib_log(int op, table_p _tp, char* _msg, int len)
  * Instead it is done on first-use (lazy-initialized) to only create handles to
  * files (db) that we require.
  *
- * There is one db file per Marina.Rodeo table (eg. acc), and they should exist
- * in your DB_PATH (refer to Marina.Rodeo-cli) directory.
+ * There is one db file per openMarinkaRodeo table (eg. acc), and they should exist
+ * in your DB_PATH (refer to openMarinkaRodeo-cli) directory.
  *
  * This function does _not_ create the underlying binary db tables.
  * Creating the tables MUST be manually performed before
- * Marina.Rodeo startup by 'Marina.Rodeo-dbctl create'
+ * openMarinkaRodeo startup by 'openMarinkaRodeodbctl create'
  *
- * Function returns NULL on error, which will cause Marina.Rodeo to exit.
+ * Function returns NULL on error, which will cause openMarinkaRodeo to exit.
  *
  */
 table_p bdblib_create_table(database_p _db, str *_s)
@@ -724,7 +724,7 @@ int bdblib_create_journal(table_p _tp)
 
 	if(! _db_p || ! _tp) return -1;
 	if(! _db_parms->log_enable) return 0;
-	/* journal filename ; e.g. '/var/Marina.Rodeo/db/location-YYYYMMDDhhmmss.jnl' */
+	/* journal filename ; e.g. '/var/openMarinkaRodeo/db/location-YYYYMMDDhhmmss.jnl' */
 	s=fn;
 	memcpy(s, _db_p->name.s, _db_p->name.len);
 	s+=_db_p->name.len;

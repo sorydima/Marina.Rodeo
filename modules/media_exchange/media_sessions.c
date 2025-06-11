@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -22,15 +22,36 @@
 #include "media_utils.h"
 
 static int media_session_dlg_idx;
+static void media_session_end_all(struct media_session *ms);
 
-void media_session_unref(void *param)
+#define MEDIA_SESSION_DETACHED(ms) (ms->dlg == NULL)
+#define MEDIA_SESSION_HAS_LEGS(ms) (ms->legs != NULL)
+
+static void media_session_detach(struct media_session *ms)
+{
+	if (MEDIA_SESSION_DETACHED(ms))
+		return;
+	media_dlg.dlg_ctx_put_ptr(ms->dlg, media_session_dlg_idx, NULL);
+	media_dlg.dlg_unref(ms->dlg, 1);
+	ms->dlg = NULL;
+}
+
+static void media_session_unref_locked(struct media_session *ms)
+{
+	media_session_detach(ms);
+	if (MEDIA_SESSION_HAS_LEGS(ms)) {
+		LM_WARN("media session %p still in use %p!\n", ms, ms->legs);
+		MEDIA_SESSION_UNLOCK(ms);
+	} else {
+		media_session_release(ms, 1);
+	}
+}
+
+static void media_session_unref(void *param)
 {
 	struct media_session *ms = (struct media_session *)param;
 	MEDIA_SESSION_LOCK(ms);
-	if (ms->legs)
-		LM_WARN("media session %p still in use %p!\n", ms, ms->legs);
-	else
-		media_session_release(ms, 1);
+	media_session_unref_locked(ms);
 }
 
 int init_media_sessions(void)
@@ -44,12 +65,39 @@ int init_media_sessions(void)
 	return 0;
 }
 
+int media_session_match_leg(struct media_session_leg *msl, int leg, int type, str *instance)
+{
+	if (type != MEDIA_SESSION_TYPE_ANY && msl->type != type)
+		return 0;
+	if (msl->leg != leg && msl->leg != MEDIA_LEG_BOTH)
+		return 0;
+	if (msl->type != MEDIA_SESSION_TYPE_FORK)
+		return 1;
+	if (!instance)
+		return 1; /* no instance specified matches anything */
+	return str_match(instance, &msl->instance);
+}
+
 struct media_session_leg *media_session_get_leg(struct media_session *ms,
-		int leg)
+		int leg, int type, str *instance)
 {
 	struct media_session_leg *msl;
 	for (msl = ms->legs; msl; msl = msl->next)
-		if (msl->leg == leg || msl->leg == MEDIA_LEG_BOTH)
+		if (media_session_match_leg(msl, leg, type, instance))
+			return msl;
+	return NULL;
+}
+
+struct media_session_leg *media_session_get_next_leg(struct media_session_leg *msl,
+		int leg, int type, str *instance)
+{
+	if (instance) {
+		/* we have an instance - if we match the mleg, then there's no other
+		 * instance to match this one */
+		return msl;
+	}
+	for (msl = msl->next; msl; msl = msl->next)
+		if (media_session_match_leg(msl, leg, type, instance))
 			return msl;
 	return NULL;
 }
@@ -88,7 +136,7 @@ void media_session_leg_free(struct media_session_leg *msl)
 
 void media_session_release(struct media_session *ms, int unlock)
 {
-	int existing_legs = (ms->legs != NULL);
+	int existing_legs = MEDIA_SESSION_HAS_LEGS(ms);
 
 	if (unlock)
 		MEDIA_SESSION_UNLOCK(ms);
@@ -96,16 +144,13 @@ void media_session_release(struct media_session *ms, int unlock)
 		LM_DBG("media session %p has onhoing legs!\n", ms);
 		return;
 	}
-	media_session_free(ms);
+	/* release only if detached from the dialog */
+	if (MEDIA_SESSION_DETACHED(ms))
+		media_session_free(ms);
 }
 
 void media_session_free(struct media_session *ms)
 {
-
-	if (ms->dlg) {
-		media_dlg.dlg_ctx_put_ptr(ms->dlg, media_session_dlg_idx, NULL);
-		media_dlg.dlg_unref(ms->dlg, 1);
-	}
 	lock_destroy(&ms->lock);
 	LM_DBG("releasing media_session=%p\n", ms);
 	shm_free(ms);
@@ -125,7 +170,7 @@ static void media_session_dlg_end(struct dlg_cell *dlg, int type, struct dlg_cb_
 	if (!ms)
 		return;
 
-	media_session_end(ms, MEDIA_LEG_BOTH, 0, 0);
+	media_session_end_all(ms);
 }
 
 struct media_session *media_session_create(struct dlg_cell *dlg)
@@ -149,6 +194,7 @@ struct media_session *media_session_create(struct dlg_cell *dlg)
 		/* we are not storing media session in the dialog, as it might
 		 * dissapear along the way, if the playback ends */
 		LM_ERR("could not register media_session_termination!\n");
+		media_session_detach(ms);
 		media_session_free(ms);
 		return NULL;
 	}
@@ -158,7 +204,7 @@ struct media_session *media_session_create(struct dlg_cell *dlg)
 }
 
 struct media_session_leg *media_session_new_leg(struct dlg_cell *dlg,
-		int type, int leg, int nohold)
+		int type, int leg, int nohold, str *instance)
 {
 	struct media_session *ms;
 	struct media_session_leg *msl;
@@ -174,13 +220,13 @@ struct media_session_leg *media_session_new_leg(struct dlg_cell *dlg,
 		MEDIA_SESSION_LOCK(ms);
 	} else {
 		MEDIA_SESSION_LOCK(ms);
-		if (media_session_get_leg(ms, leg)) {
+		if (media_session_get_leg(ms, leg, type, instance)) {
 			LM_WARN("media session already engaged for leg %d\n", leg);
 			MEDIA_SESSION_UNLOCK(ms);
 			return NULL;
 		}
 	}
-	msl = shm_malloc(sizeof *msl);
+	msl = shm_malloc(sizeof *msl + (instance?instance->len:0));
 	if (!msl) {
 		LM_ERR("could not allocate new media session leg for %d\n", leg);
 		media_session_release(ms, 1);
@@ -198,6 +244,11 @@ struct media_session_leg *media_session_new_leg(struct dlg_cell *dlg,
 	/* link it to the session */
 	msl->next = ms->legs;
 	ms->legs = msl;
+	if (instance) {
+		msl->instance.s = (char *)(msl + 1);
+		msl->instance.len = instance->len;
+		memcpy(msl->instance.s, instance->s, instance->len);
+	}
 	MEDIA_SESSION_UNLOCK(ms);
 	LM_DBG(" creating media_session_leg=%p\n", msl);
 	return msl;
@@ -229,17 +280,64 @@ int media_session_resume_dlg(struct media_session_leg *msl)
 	return 0;
 }
 
-int media_session_reinvite(struct media_session_leg *msl, int leg, str *pbody)
+struct media_session_reinvite_p {
+	struct media_session_leg *msl;
+	int leg;
+};
+
+static int media_session_reinvite_reply(struct sip_msg *msg, int statuscode, void *param)
+{
+	struct media_session_reinvite_p *p = param;
+	str body, *pbody;
+	int release;
+
+	if (statuscode < 200)
+		return 0;
+	if (statuscode < 300) {
+		/* successfully completed the transaction */
+		if (get_body(msg, &body) >= 0 && body.len > 0) {
+			pbody = media_exchange_get_answer_sdp(p->msl->ms->rtp, p->msl->ms->dlg,
+					&body, p->leg, &release);
+			if (pbody && release)
+				pkg_free(pbody->s);
+		}
+	}
+	MSL_UNREF(p->msl);
+	shm_free(p);
+	return 0;
+}
+
+int media_session_reinvite(struct media_session_leg *msl, int leg, str *body)
 {
 	static str inv = str_init("INVITE");
+	int ret, release = 0;
+	struct media_session_reinvite_p *p = NULL;
 
-	str body;
-	if (pbody)
-		body = *pbody;
-	else
-		body = dlg_get_out_sdp(msl->ms->dlg, leg);
-	return media_dlg.send_indialog_request(msl->ms->dlg,
-			&inv, leg, &body, &content_type_sdp, NULL, NULL, NULL);
+	if (!body) {
+		body = media_exchange_get_offer_sdp(msl->ms->rtp, msl->ms->dlg,
+				other_leg(msl->ms->dlg, leg), &release);
+		if (release) {
+			/* here we've got a body that has been offered by the media-server
+			 * we need to answer it on its way back */
+			p = shm_malloc(sizeof *p);
+			if (p) {
+				MSL_REF(msl);
+				p->msl = msl;
+				p->leg = leg;
+			} else {
+				LM_ERR("could not allocate reinvite parameter!\n");
+			}
+		}
+	}
+	ret = media_dlg.send_indialog_request(msl->ms->dlg, &inv, leg, body, &content_type_sdp, NULL,
+			(p?media_session_reinvite_reply:NULL),p, NULL);
+	if (p && ret < 0) {
+		MSL_UNREF(msl);
+		shm_free(p);
+	}
+	if (release)
+		pkg_free(body->s);
+	return ret;
 }
 
 int media_session_req(struct media_session_leg *msl, const char *method, str *body)
@@ -327,33 +425,46 @@ unref:
 	return ret;
 }
 
-int media_session_end(struct media_session *ms, int leg, int nohold, int proxied)
+int media_session_end(struct media_session *ms,
+		int leg, int nohold, int proxied, str *instance)
 {
+	int type;
 	int ret = 0;
 	struct media_session_leg *msl, *nmsl;
 
+	if (instance)
+		type = MEDIA_SESSION_TYPE_FORK;
+	else
+		type = MEDIA_SESSION_TYPE_EXCHANGE;
+
 	MEDIA_SESSION_LOCK(ms);
-	if (leg == MEDIA_LEG_BOTH) {
-		msl = ms->legs;
-		nmsl = msl->next;
-		if (nmsl) {
-			/* we will end both legs, so there's no reason to put the other
-			 * one on hold, if we're going to resume the sessions for both
-			 */
-			nohold = 1;
-		} else if (proxied) {
-			/* if there's no other session on the other leg, do not put this
-			 * one on hold, as it is going to be resumed */
-			nohold = 1;
+	if (leg == MEDIA_LEG_BOTH && type == MEDIA_SESSION_TYPE_EXCHANGE) {
+		msl = media_session_get_leg(ms, MEDIA_LEG_CALLER, type, NULL);
+		nmsl = media_session_get_leg(ms, MEDIA_LEG_CALLEE, type, NULL);
+		if (msl || nmsl) {
+			if (msl && nmsl) {
+				/* we will end both legs, so there's no reason to put the other
+				 * one on hold, if we're going to resume the sessions for both
+				 */
+				nohold = 1;
+			} else if (proxied) {
+				/* if there's no other session on the other leg, do not put this
+				 * one on hold, as it is going to be resumed */
+				nohold = 1;
+			}
+			if (msl && media_session_leg_end(msl, nohold, proxied) < 0)
+				ret = -1;
+			if (nmsl && media_session_leg_end(nmsl, nohold, proxied) < 0)
+				ret = -1;
+			goto release;
+		} else {
+			/* no forking found - fallback to default forking */
+			type = MEDIA_SESSION_TYPE_FORK;
+			instance = &media_default_instance;
 		}
-		if (media_session_leg_end(msl, nohold, proxied) < 0)
-			ret = -1;
-		if (nmsl && media_session_leg_end(nmsl, nohold, proxied) < 0)
-			ret = -1;
-		goto release;
 	}
 	/* only one leg - search for it */
-	msl = media_session_get_leg(ms, leg);
+	msl = media_session_get_leg(ms, leg, type, instance);
 	if (!msl) {
 		MEDIA_SESSION_UNLOCK(ms);
 		LM_DBG("could not find the %d leg!\n", leg);
@@ -364,4 +475,15 @@ int media_session_end(struct media_session *ms, int leg, int nohold, int proxied
 release:
 	media_session_release(ms, 1/* unlock */);
 	return ret;
+}
+
+static void media_session_end_all(struct media_session *ms)
+{
+	struct media_session_leg *msl;
+
+	MEDIA_SESSION_LOCK(ms);
+	for (msl = ms->legs; msl; msl = msl->next) {
+		media_session_leg_end(msl, 0, 0);
+	}
+	media_session_unref_locked(ms);
 }

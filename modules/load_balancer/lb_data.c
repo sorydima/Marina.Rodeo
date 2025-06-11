@@ -1,16 +1,16 @@
 /*
  * load balancer module - complex call load balancing
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Voice Sistem SRL
+ * Copyright (C) 2009 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -315,7 +315,7 @@ int add_lb_dsturi( struct lb_data *data, int id, int group, char *uri,
 
 	/* Do a SIP wise DNS-Lookup for the domain part */
 	proxy = mk_proxy( &puri.host, puri.port_no, puri.proto,
-		(puri.type==SIPS_URI_T));
+		(puri.type==MarinkaRodeo_URI_T));
 	if (proxy==NULL) {
 		LM_ERR("could not resolve %.*s\n", puri.host.len, puri.host.s);
 		goto error;

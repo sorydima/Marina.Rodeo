@@ -1,16 +1,16 @@
 /*
  * utilities
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -26,7 +26,7 @@
  *  2003-04-14  added get_proto to determine protocol from uri unless
  *              specified explicitly (jiri)
  *  2003-07-07  get_proto takes now two protos as arguments (andrei)
- *              tls/sips support for get_proto & uri2proxy (andrei)
+ *              tls/MarinkaRodeo support for get_proto & uri2proxy (andrei)
  */
 
 
@@ -81,9 +81,9 @@ inline static struct proxy_l *uri2proxy( str *uri, int forced_proto )
 		return 0;
 	}
 
-	if (parsed_uri.type==SIPS_URI_T && ((parsed_uri.proto!=PROTO_WSS) &&
+	if (parsed_uri.type==MarinkaRodeo_URI_T && ((parsed_uri.proto!=PROTO_WSS) &&
 	(parsed_uri.proto!=PROTO_TLS) && (parsed_uri.proto!=PROTO_NONE)) ) {
-		LM_ERR("bad transport for sips uri: %d\n", parsed_uri.proto);
+		LM_ERR("bad transport for MarinkaRodeo uri: %d\n", parsed_uri.proto);
 		return 0;
 	}
 	proto=parsed_uri.proto;
@@ -92,7 +92,7 @@ inline static struct proxy_l *uri2proxy( str *uri, int forced_proto )
 
 	p = mk_proxy(
 		parsed_uri.maddr_val.len?&parsed_uri.maddr_val:&parsed_uri.host,
-		parsed_uri.port_no, proto, (parsed_uri.type==SIPS_URI_T)?1:0 );
+		parsed_uri.port_no, proto, (parsed_uri.type==MarinkaRodeo_URI_T)?1:0 );
 	if (p == 0) {
 		LM_ERR("bad host name in URI <%.*s>\n", uri->len, ZSW(uri->s));
 		return 0;
@@ -127,10 +127,10 @@ static inline int uri2su(str *uri, union sockaddr_union *to_su, int proto)
 /*
  * Convert a URI into socket_info
  */
-static inline struct socket_info *uri2sock(struct sip_msg* msg, str *uri,
+static inline const struct socket_info *uri2sock(struct sip_msg* msg, str *uri,
 									union sockaddr_union *to_su, int proto)
 {
-	struct socket_info* send_sock;
+	const struct socket_info* send_sock;
 
 	if ( (proto=uri2su(uri, to_su, proto))==-1 )
 		return 0;

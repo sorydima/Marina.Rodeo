@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2010-2014 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2010-2014 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -160,7 +160,7 @@ static inline int fix_fake_req_headers(struct sip_msg *req)
 		for (c = ((contact_body_t *)hdr->parsed)->contacts; c; c = c->next) {
 			/* search for the lump */
 			for (ld = req->add_rm; ld; ld = ld->next) {
-				if (ld->op != LUMP_DEL)
+				if (ld->op != LUMP_DEL && ld->op != LUMP_NOP)
 					continue;
 				for (la = ld->after; la; la = la->after) {
 					/* LM_DBG("matching contact lump op=%d type=%d offset=%d"
@@ -211,42 +211,29 @@ static inline int fake_req(struct sip_msg *faked_req, struct sip_msg *shm_msg,
 	faked_req->msg_flags |= FL_TM_FAKE_REQ;
 
 	if (uac) {
-
-		/* duplicate some values into private mem
-		 * so that they can be visible and changed at script level */
-		/* RURI / new URI */
-		faked_req->new_uri.s=pkg_malloc( uac->uri.len+1 );
-		if (!faked_req->new_uri.s) {
+		/* duplicate all URI values into private mem
+		 * so they are visible and change-able at script level */
+		if (pkg_nt_str_dup(&faked_req->new_uri, &uac->uri) != 0) {
 			LM_ERR("no uri/pkg mem\n");
 			goto out0;
 		}
-		faked_req->new_uri.len = uac->uri.len;
-		memcpy( faked_req->new_uri.s, uac->uri.s, uac->uri.len);
-		faked_req->new_uri.s[faked_req->new_uri.len]=0;
 
-		/* duplicate the dst_uri and path_vec into private mem
-		 * so that they can be visible and changed at script level */
 		if (uac->duri.s) {
-			faked_req->dst_uri.s = pkg_malloc(uac->duri.len);
-			if (!faked_req->dst_uri.s) {
+			if (pkg_nt_str_dup(&faked_req->dst_uri, &uac->duri) != 0) {
 				LM_ERR("out of pkg mem\n");
 				goto out1;
 			}
-			memcpy(faked_req->dst_uri.s, uac->duri.s, uac->duri.len);
 		} else {
-			faked_req->dst_uri.s = NULL;
-			faked_req->dst_uri.len = 0;
+			faked_req->dst_uri = STR_NULL;
 		}
+
 		if (uac->path_vec.s) {
-			faked_req->path_vec.s = pkg_malloc(uac->path_vec.len);
-			if (!faked_req->path_vec.s) {
+			if (pkg_nt_str_dup(&faked_req->path_vec, &uac->path_vec) != 0) {
 				LM_ERR("out of pkg mem\n");
 				goto out2;
 			}
-			memcpy(faked_req->path_vec.s, uac->path_vec.s, uac->path_vec.len);
 		} else {
-			faked_req->path_vec.s = NULL;
-			faked_req->path_vec.len = 0;
+			faked_req->path_vec = STR_NULL;
 		}
 
 		/* set the branch flags from the elected branch */
@@ -257,28 +244,21 @@ static inline int fake_req(struct sip_msg *faked_req, struct sip_msg *shm_msg,
 		/* duplicate advertised address and port from UAC into
 		 * private mem so that they can be changed at script level */
 		if (uac->adv_address.s) {
-			faked_req->set_global_address.s = pkg_malloc(uac->adv_address.len);
-			if (!faked_req->set_global_address.s) {
+			if (pkg_nt_str_dup(&faked_req->set_global_address, &uac->adv_address) != 0) {
 				LM_ERR("out of pkg mem\n");
 				goto out3;
 			}
-			memcpy(faked_req->set_global_address.s,
-				uac->adv_address.s, uac->adv_address.len);
 		} else {
-			faked_req->set_global_address.s = NULL;
-			faked_req->set_global_address.len = 0;
+			faked_req->set_global_address = STR_NULL;
 		}
+
 		if (uac->adv_port.s) {
-			faked_req->set_global_port.s=pkg_malloc(uac->adv_port.len);
-			if (!faked_req->set_global_port.s) {
+			if (pkg_nt_str_dup(&faked_req->set_global_port, &uac->adv_port) != 0) {
 				LM_ERR("out of pkg mem\n");
 				goto out4;
 			}
-			memcpy(faked_req->set_global_port.s,
-				uac->adv_port.s, uac->adv_port.len);
 		} else {
-			faked_req->set_global_port.s = NULL;
-			faked_req->set_global_port.len = 0;
+			faked_req->set_global_port = STR_NULL;
 		}
 
 	} else {

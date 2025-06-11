@@ -1,4 +1,3 @@
-# $Id$
 #
 #  db_orasel Makefile
 # 
@@ -6,7 +5,7 @@
 include ../../Makefile.defs
 
 auto_gen=
-NAME=Marina.Rodeo_orasel
+NAME=openMarinkaRodeo_orasel
 
 include ../../Makefile.sources
 

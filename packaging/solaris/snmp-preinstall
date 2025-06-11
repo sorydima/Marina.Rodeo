@@ -1,24 +1,24 @@
 #!/sbin/sh
-# Script for checking prerequisites for Marina.Rodeo-snmp
+# Script for checking prerequisites for OpenMarinkaRodeo-snmp
 
-BASE="Marina.Rodeo-base"
+BASE="OpenMarinkaRodeo-base"
 LIBSNMP="libnetsnmp.so.15"
-TMPLIST="/tmp/.Marina.Rodeosnmp"
+TMPLIST="/tmp/.openMarinkaRodeosnmp"
 
 pkginfo | grep -i $BASE > /dev/null
 
 if [ $? -eq 1 ]
 then
-	echo "Marina.Rodeo-snmp depends on package Marina.Rodeo-base which is not installed";
+	echo "OpenMarinkaRodeo-snmp depends on package OpenMarinkaRodeo-base which is not installed";
 	exit 1;
 fi
 
 find / -name $LIBSNMP > $TMPLIST 2>&1
-lines=`wc -l /tmp/.Marina.Rodeosnmp`
+lines=`wc -l /tmp/.openMarinkaRodeosnmp`
 
 if [ $lines = "0" ]
 then
-	echo "Marina.Rodeo-snmp depends on NET-SNMP Libraries, which cannot be found on system";
+	echo "OpenMarinkaRodeo-snmp depends on NET-SNMP Libraries, which cannot be found on system";
 	exit 1;
 else
 	exit 0;

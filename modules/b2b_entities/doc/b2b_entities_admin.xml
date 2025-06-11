@@ -7,7 +7,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		The B2BUA implementation in Marina.Rodeo is separated in two layers:
+		The B2BUA implementation in OpenMarinkaRodeo is separated in two layers:
 			<itemizedlist>
 			<listitem>
 		a lower one(coded in this module)- which implements the basic functions of a UAS and UAC
@@ -40,7 +40,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -65,7 +65,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 		</para>
 			<itemizedlist>
 			<listitem>
@@ -163,7 +163,7 @@ modparam("b2b_entities", "script_reply_route", "b2b_reply")
 		<title>Set <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("b2b_entities", "db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@127.0.0.1/Marina.Rodeo")
+modparam("b2b_entities", "db_url", "mysql://openMarinkaRodeo:openMarinkaRodeorw@127.0.0.1/openMarinkaRodeo")
 ...
 	</programlisting>
 		</example>
@@ -228,8 +228,8 @@ modparam("b2b_entities", "update_period", 60)
 		<para>
 			The string to use when generating the key ( it is inserted
 			in the SIP messages as callid or to tag. It is useful to set
-			this prefix if you use more instances of Marina.Rodeo B2BUA cascaded
-			in the same architecture. Sometimes Marina.Rodeo B2BUA looks at the
+			this prefix if you use more instances of openMarinkaRodeo B2BUA cascaded
+			in the same architecture. Sometimes openMarinkaRodeo B2BUA looks at the
 			callid or totag to see if it has the format it uses to determine
 			if the request was sent by it.
 		</para>
@@ -292,11 +292,14 @@ modparam("b2b_entities", "db_table", "some table name")
 		<title><varname>cluster_id</varname> (int)</title>
 		<para>
 		The ID of the cluster this instance belongs to. Setting this parameter
-		enables clustering support for the Marina.Rodeo B2BUA by replicating the
+		enables clustering support for the OpenMarinkaRodeo B2BUA by replicating the
 		B2B entities (B2B dialogs) between instances. This also ensures restart
 		persistency through the <emphasis>clusterer</emphasis> module's
 		data "sync" mechanism.
 		</para>
+
+			&clusterer_sync_cap_para;
+
 		<para>
 		<emphasis>Default value is <quote>0</quote> (clustering disabled)</emphasis>
 		</para>
@@ -339,7 +342,7 @@ modparam("b2b_entities", "passthru_prack", 1)
 		<title>Set <varname>advertised_contact</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("b2b_entities", "advertised_contact", "Marina.Rodeo@10.10.10.10:5077")
+modparam("b2b_entities", "advertised_contact", "openMarinkaRodeo@10.10.10.10:5060")
 ...
 	</programlisting>
 		</example>
@@ -372,7 +375,7 @@ modparam("b2b_entities", "ua_default_timeout", 7200)
 		<title>Exported Functions</title>
 	<section id="func_ua_session_server_init" xreflabel="ua_session_server_init()">
 		<title>
-		<function moreinfo="none">ua_session_server_init([key], [flags])</function>
+		<function moreinfo="none">ua_session_server_init([key], [flags], [extra_params])</function>
 		</title>
 		<para>
 		This function initializes a new UA session by processing an initial INVITE.
@@ -425,6 +428,11 @@ modparam("b2b_entities", "ua_default_timeout", 7200)
 					handled with this function.
 					</para></listitem>
 				</itemizedlist>
+			</para></listitem>
+			<listitem><para>
+				<emphasis>extra_params (string, optional)</emphasis> - An arbitrary
+				value to be passed to the <emphasis>extra_params</emphasis> parameter
+				in the <xref linkend="event_E_UA_SESSION"/> event.
 			</para></listitem>
 		</itemizedlist>
 		<para>
@@ -592,7 +600,7 @@ ua_session_terminate($var(b2b_key));
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 	<programlisting  format="linespecific">
-	Marina.Rodeo-cli -x mi b2be_list
+	openMarinkaRodeo-cli -x mi b2be_list
 	</programlisting>
 	</section>
 
@@ -616,12 +624,12 @@ ua_session_terminate($var(b2b_key));
 			<listitem>
 				<para><emphasis>to</emphasis> - To URI; can also be specified as:
 				<emphasis>display_name,uri</emphasis> in order to set a Display Name,
-				eg. <emphasis>Alice,sip:sip@rechain.email</emphasis>.</para>
+				eg. <emphasis>Alice,sip:alice@openMarinkaRodeo.org</emphasis>.</para>
 			</listitem>
 			<listitem>
 				<para><emphasis>from</emphasis> - From URI; can also be specified as:
 				<emphasis>display_name,uri</emphasis> in order to set a Display Name,
-				eg. <emphasis>Alice,sip:sip@rechain.email</emphasis></para>
+				eg. <emphasis>Alice,sip:alice@openMarinkaRodeo.org</emphasis></para>
 			</listitem>
 			<listitem>
 				<para><emphasis>proxy (optional)</emphasis> - URI of the
@@ -644,13 +652,13 @@ ua_session_terminate($var(b2b_key));
 				<xref linkend="func_ua_session_server_init"/>.</para>
 			</listitem>
 			<listitem>
-				<para><emphasis>socket (optional)</emphasis> - Marina.Rodeo sending socket</para>
+				<para><emphasis>socket (optional)</emphasis> - OpenMarinkaRodeo sending socket</para>
 			</listitem>
 		</itemizedlist>
-		<para>Marina.Rodeo-cli Command Format:</para>
+		<para>openMarinkaRodeo-cli Command Format:</para>
 <programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi ua_session_client_start ruri=sip:sip@rechain.email \
-to=sip:sip@rechain.email from=sip:sip@rechain.email flags=arhb
+openMarinkaRodeo-cli -x mi ua_session_client_start ruri=sip:bob@openMarinkaRodeo.org \
+to=sip:bob@openMarinkaRodeo.org from=sip:alice@openMarinkaRodeo.org flags=arhb
 </programlisting>
 	</section>
 
@@ -689,9 +697,9 @@ to=sip:sip@rechain.email from=sip:sip@rechain.email flags=arhb
 				"Content-Type: application/sdp" will be used.
 			</para></listitem>
 		</itemizedlist>
-		<para>Marina.Rodeo-cli Command Format:</para>
+		<para>openMarinkaRodeo-cli Command Format:</para>
 <programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi ua_session_update key=B2B.436.1925389.1649338095 method=OPTIONS
+openMarinkaRodeo-cli -x mi ua_session_update key=B2B.436.1925389.1649338095 method=OPTIONS
 </programlisting>
 	</section>
 
@@ -736,9 +744,9 @@ Marina.Rodeo-cli -x mi ua_session_update key=B2B.436.1925389.1649338095 method=O
 				"Content-Type: application/sdp" will be used.
 			</para></listitem>
 		</itemizedlist>
-		<para>Marina.Rodeo-cli Command Format:</para>
+		<para>openMarinkaRodeo-cli Command Format:</para>
 <programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi ua_session_reply key=B2B.436.1925389.1649338095 method=OPTIONS code=200 reason=OK
+openMarinkaRodeo-cli -x mi ua_session_reply key=B2B.436.1925389.1649338095 method=OPTIONS code=200 reason=OK
 </programlisting>
 	</section>
 
@@ -764,9 +772,9 @@ Marina.Rodeo-cli -x mi ua_session_reply key=B2B.436.1925389.1649338095 method=OP
 				to include in the SIP message
 			</para></listitem>
 		</itemizedlist>
-		<para>Marina.Rodeo-cli Command Format:</para>
+		<para>openMarinkaRodeo-cli Command Format:</para>
 <programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
+openMarinkaRodeo-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
 </programlisting>
 	</section>
 
@@ -791,7 +799,7 @@ Marina.Rodeo-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
 		</itemizedlist>
 		<para>MI FIFO Command Format:</para>
 	<programlisting  format="linespecific">
-	Marina.Rodeo-cli -x mi ua_session_list
+	openMarinkaRodeo-cli -x mi ua_session_list
 	</programlisting>
 	</section>
 
@@ -871,6 +879,12 @@ Marina.Rodeo-cli -x mi ua_session_terminate key=B2B.436.1925389.1649338095
 			<listitem><para>
 				<emphasis>headers</emphasis> - full list of all SIP headers in the
 				message.
+			</para></listitem>
+			<listitem><para>
+				<emphasis>extra_params</emphasis> - an arbitrary value. Currently only
+				the <xref linkend="func_ua_session_server_init"/> function passes this
+				if the <emphasis>extra_params</emphasis> argument is used, and it only
+				appears in the <emphasis>NEW</emphasis> event_type.
 			</para></listitem>
 		</itemizedlist>
 	</section>

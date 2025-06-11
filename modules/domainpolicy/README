@@ -98,7 +98,7 @@ Chapter 1. Admin Guide
    This is URL of the database to be used.
 
    Default value is
-   “mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo”
+   “mysql://openMarinkaRodeoro:openMarinkaRodeoro@localhost/openMarinkaRodeo”
 
    Example 1.1. Setting db_url parameter
 modparam("domainpolicy", "db_url", "postgresql://user:pass@db_host/opens
@@ -510,13 +510,13 @@ Chapter 2. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 22 16 178 217
-   2. Klaus Darilion 21 1 2456 0
+   2. Klaus Darilion 22 1 2456 0
    3. Razvan Crainea (@razvancrainea) 13 9 60 180
-   4. Liviu Chircu (@liviuchircu) 12 9 39 64
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 12 9 39 64
    5. Daniel-Constantin Mierla (@miconda) 10 8 19 21
    6. Henning Westerholt (@henningw) 6 4 25 25
-   7. Vlad Patrascu (@rvlad-patrascu) 4 2 6 4
-   8. Maksym Sobolyev (@sobomax) 4 2 3 4
+   7. Maksym Sobolyev (@sobomax) 5 3 4 5
+   8. Vlad Patrascu (@rvlad-patrascu) 4 2 6 4
    9. Konstantin Bokarius 3 1 2 5
    10. Peter Lemenkov (@lemenkov) 3 1 1 1
 
@@ -530,7 +530,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -542,8 +542,8 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Liviu Chircu (@liviuchircu)         Mar 2014 - May 2023
-   2.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Nov 2023
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2023
    3.  Razvan Crainea (@razvancrainea)     Jun 2011 - Nov 2021
    4.  Bogdan-Andrei Iancu (@bogdan-iancu) Dec 2006 - Mar 2020
    5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
@@ -563,12 +563,12 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Peter Lemenkov
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Peter Lemenkov
    (@lemenkov), Bogdan-Andrei Iancu (@bogdan-iancu),
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Klaus Darilion.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2002,2003,2006 Juha Heinanen, Otmar Lendl, Klaus
+   Copyright © 2002,2003,2006 Juha Heinanen, Otmar Lendl, Klaus
    Darilion

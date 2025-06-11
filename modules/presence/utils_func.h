@@ -1,16 +1,16 @@
 /*
  * presence module - presence server implementation
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem S.R.L.
+ * Copyright (C) 2006 Voice Sistem S.R.L.
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -42,7 +42,7 @@ static inline int uandd_to_uri(str user,  str domain, str *out)
 {
 	int size;
 
-	if(out==0)
+	if(out==0 || (user.len+domain.len==0))
 		return -1;
 
 	size = user.len + domain.len+7;
@@ -53,18 +53,26 @@ static inline int uandd_to_uri(str user,  str domain, str *out)
 		LM_ERR("no more memory\n");
 		return -1;
 	}
-	strcpy(out->s,"sip:");
-	out->len = 4;
-	if( user.len != 0)
-	{
+
+	if (domain.len != 0) {
+		strcpy(out->s,"sip:");
+		out->len = 4;
+		if( user.len != 0) {
+			memcpy(out->s+out->len, user.s, user.len);
+			out->len += user.len;
+			out->s[out->len++] = '@';
+		}
+		memcpy(out->s + out->len, domain.s, domain.len);
+		out->len += domain.len;
+	} else {
+		strcpy(out->s,"tel:");
+		out->len = 4;
 		memcpy(out->s+out->len, user.s, user.len);
 		out->len += user.len;
-		out->s[out->len++] = '@';
 	}
 
-	memcpy(out->s + out->len, domain.s, domain.len);
-	out->len += domain.len;
 	out->s[out->len] = '\0';
+
 
 	return 0;
 }
@@ -75,7 +83,7 @@ static inline int uandd_to_uri(str user,  str domain, str *out)
 
 
 /* Build a contact URI using the provided username and the socket's ip:port:protocol */
-static inline int get_local_contact(struct socket_info *sock, str *username, str *contact)
+static inline int get_local_contact(const struct socket_info *sock, str *username, str *contact)
 {
 	static char buf[MAX_URI_SIZE];
 	char *ptr = buf;

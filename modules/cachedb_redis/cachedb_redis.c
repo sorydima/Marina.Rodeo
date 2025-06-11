@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Marina.Rodeo Solutions
+ * Copyright (C) 2011 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -58,6 +58,10 @@ static const param_export_t params[]={
 	{ "shutdown_on_error",           INT_PARAM,                &shutdown_on_error     },
 	{ "cachedb_url",                 STR_PARAM|USE_FUNC_PARAM, (void *)&set_connection},
 	{ "use_tls",                     INT_PARAM,                &use_tls},
+	{ "ftsearch_index_name",         STR_PARAM,                &fts_index_name.s},
+	{ "ftsearch_json_prefix",        STR_PARAM,                &fts_json_prefix.s},
+	{ "ftsearch_max_results",        INT_PARAM,                &fts_max_results},
+	{ "ftsearch_json_mset_expire",   INT_PARAM,                &fts_json_mset_expire},
 	{0,0,0}
 };
 
@@ -95,7 +99,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,			/* dlopen flags */
 	0,							/* load function */
-	&deps,                      /* Marina.Rodeo module dependencies */
+	&deps,                      /* OpenMarinkaRodeo module dependencies */
 	0,						/* exported functions */
 	0,						/* exported async functions */
 	params,						/* exported parameters */
@@ -121,6 +125,16 @@ static int mod_init(void)
 	cachedb_engine cde;
 
 	LM_NOTICE("initializing module cachedb_redis ...\n");
+
+	/* quick validations */
+	if (fts_max_results > 10000) {
+		LM_INFO("lowering 'fts_max_results' to 10000 (max value allowed)\n");
+		fts_max_results = 10000;
+	}
+
+	fts_index_name.len = strlen(fts_index_name.s);
+	fts_json_prefix.len = strlen(fts_json_prefix.s);
+
 	memset(&cde,0,sizeof(cachedb_engine));
 
 	cde.name = cache_mod_name;
@@ -131,8 +145,11 @@ static int mod_init(void)
 	cde.cdb_func.get_counter = redis_get_counter;
 	cde.cdb_func.set = redis_set;
 	cde.cdb_func.remove = redis_remove;
+	cde.cdb_func._remove = _redis_remove;
 	cde.cdb_func.add = redis_add;
 	cde.cdb_func.sub = redis_sub;
+	cde.cdb_func.query = redis_query;
+	cde.cdb_func.update = redis_update;
 	cde.cdb_func.raw_query = redis_raw_query;
 	cde.cdb_func.map_get = redis_map_get;
 	cde.cdb_func.map_set = redis_map_set;

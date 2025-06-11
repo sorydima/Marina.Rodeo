@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Răzvan Crainea <razvan@Marina.Rodeo.org>
+ * Copyright (C) 2017 Răzvan Crainea <razvan@openMarinkaRodeo.org>
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -80,7 +80,7 @@ static int pv_parse_idx_cgr(pv_spec_p sp, const str *in);
 static int pv_get_cgr_reply(struct sip_msg *msg, pv_param_t *param,
 		pv_value_t *val);
 
-OSIPS_LIST_HEAD(cgrates_engines);
+OMarinkaRodeo_LIST_HEAD(cgrates_engines);
 
 static const cmd_export_t cmds[] = {
 	{"cgrates_acc", (cmd_function)w_cgr_acc, {
@@ -102,11 +102,11 @@ static const cmd_export_t cmds[] = {
 };
 
 static const pv_export_t pvars[] = {
-	{ str_init("cgr"), 2003, w_pv_get_cgr, w_pv_set_cgr,
+	{ str_const_init("cgr"), 2003, w_pv_get_cgr, w_pv_set_cgr,
 		pv_parse_cgr, pv_parse_idx_cgr, 0, 0},
-	{ str_init("cgr_opt"), 2004, w_pv_get_cgr_opt, w_pv_set_cgr_opt,
+	{ str_const_init("cgr_opt"), 2004, w_pv_get_cgr_opt, w_pv_set_cgr_opt,
 		w_pv_parse_cgr, pv_parse_idx_cgr, 0, 0},
-	{ str_init("cgr_ret"), 2005, pv_get_cgr_reply, 0,
+	{ str_const_init("cgr_ret"), 2005, pv_get_cgr_reply, 0,
 		pv_parse_cgr, 0, 0, 0},
 	{ {0, 0}, 0, 0, 0, 0, 0, 0, 0 }
 };
@@ -133,7 +133,7 @@ static const param_export_t params[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "dialog", DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -147,7 +147,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,
 	acmds,
 	params,

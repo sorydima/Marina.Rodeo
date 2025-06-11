@@ -1,19 +1,19 @@
 /*********************************************************************************************************
 * Software License Agreement (BSD License)                                                               *
-* Author: Liviu Chircu <sip@rechain.email>								 *
+* Author: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  <sorydima@rechain.work>								 *
 *													 *
-* Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2021, Marina.Rodeo Solutions								 *
+* Copyright (c) 2021, OpenMarinkaRodeo Solutions								 *
 * All rights reserved.											 *
 * 													 *
 * Redistribution and use of this software in source and binary forms, with or without modification, are  *
 * permitted provided that the following conditions are met:						 *
 * 													 *
 * * Redistributions of source code must retain the above 						 *
-*   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice, this list of conditions and the 							 *
+*   copyright notice, this list of conditions and the 							 *
 *   following disclaimer.										 *
 *    													 *
 * * Redistributions in binary form must reproduce the above 						 *
-*   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice, this list of conditions and the 							 *
+*   copyright notice, this list of conditions and the 							 *
 *   following disclaimer in the documentation and/or other						 *
 *   materials provided with the distribution.								 *
 * 													 *
@@ -23,9 +23,9 @@
 *   specific prior written permission of WIDE Project and 						 *
 *   NICT.												 *
 * 													 *
-* THIS SOFTWARE IS PROVIDED BY THE Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED *
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED *
 * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A *
-* PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 OWNER OR CONTRIBUTORS BE LIABLE FOR *
+* PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR *
 * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 	 *
 * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 	 *
 * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR *
@@ -33,8 +33,8 @@
 * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.								 *
 *********************************************************************************************************/
 
-#ifndef _APP_Marina.Rodeo_AVPS_H
-#define _APP_Marina.Rodeo_AVPS_H
+#ifndef _APP_OPENMarinkaRodeo_AVPS_H
+#define _APP_OPENMarinkaRodeo_AVPS_H
 
 #ifndef FD_CHECK
 #define __FD_CHECK(__call__, __retok__, __retval__) \
@@ -65,7 +65,7 @@
 				(criteria), (what), (result), ENOENT))
 #endif
 
-int register_osips_avps(void);
+int register_oMarinkaRodeo_avps(void);
 int parse_extra_avps(const char *extra_avps_file);
 
 struct _app_defs {
@@ -76,4 +76,29 @@ struct _app_defs {
 extern struct _app_defs app_defs[];
 extern unsigned int n_app_ids;
 
-#endif /* _APP_Marina.Rodeo_AVPS_H */
+#ifdef PKG_MALLOC
+enum dict_avp_enc_type {
+	AVP_ENC_TYPE_IP = 0,
+	AVP_ENC_TYPE_HEX = 1,
+	AVP_ENC_TYPE_NONE
+};
+
+#define enc_type2str(t) ( \
+		t == AVP_ENC_TYPE_IP ? "ip" : \
+		t == AVP_ENC_TYPE_HEX ? "hexstring" : \
+		t == AVP_ENC_TYPE_NONE ? "none" : \
+		("unknown?? "#t))
+
+int dm_enc_add(int vendor, int code, enum dict_avp_enc_type enc);
+#else
+enum dict_avp_enc_type {
+	AVP_ENC_TYPE_IP = 0,
+	AVP_ENC_TYPE_HEX = 0,
+	AVP_ENC_TYPE_NONE = 0
+};
+#define dm_enc_add(_v, _c, _e) 0
+#define enc_type2str(_t) "unsupported"
+#endif
+
+
+#endif /* _APP_OPENMarinkaRodeo_AVPS_H */

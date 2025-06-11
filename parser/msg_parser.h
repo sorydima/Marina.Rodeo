@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -30,7 +30,7 @@
  *  2003-04-12  added msg_flags to sip_msg (andrei)
  *  2003-11-02  added diversion header field to sip_msg (jh)
  *  2004-11-08  added force_send_socket (andrei)
- *  2005-02-25  uri types added (sip, sips & tel)  (andrei)
+ *  2005-02-25  uri types added (sip, MarinkaRodeo & tel)  (andrei)
  *  2006-02-17  Session-Expires, Min-SE (dhsueh@somanetworks.com)
  *  2007-09-09  added sdp structure (osas)
  *  2011-04-20  added support for URI unknown parameters (osas)
@@ -88,7 +88,7 @@ enum request_method {
 };
 
 #define FL_FORCE_RPORT       (1<<0)  /* force rport (top via) */
-#define FL_FORCE_ACTIVE      (1<<1)  /* force active SDP */
+#define FL_REPLY_TO_VIA      (1<<1)  /* force replying to VIA ip:port */
 #define FL_FORCE_LOCAL_RPORT (1<<2)  /* force local rport (local via) */
 #define FL_SDP_IP_AFS        (1<<3)  /* SDP IP rewritten */
 #define FL_SDP_PORT_AFS      (1<<4)  /* SDP port rewritten */
@@ -126,6 +126,11 @@ enum request_method {
 #define FL_BODY_NO_SDP       (1<<20) /* message does not have an SDP body */
 #define FL_IS_LOCAL          (1<<21) /* the message is a locally generated
                                       * one, not received */
+#define FL_HAS_ROUTE_LUMP    (1<<22) /* the message had Route headers added
+                                      * as lumps */
+#define FL_USE_SIPTRACE_B2B  (1<<23) /* used by tracer to check if the b2b
+                                      * tracing was enabled */
+#define FL_ACK_WITH_BODY     (1<<24) /* ACK message has SDP body */
 
 /* define the # of unknown URI parameters to parse */
 #define URI_MAX_U_PARAMS 10
@@ -163,7 +168,7 @@ if (  (*tmp==(firstchar) || *tmp==((firstchar) | 32)) &&                  \
 (((m)->new_uri.s && (m)->new_uri.len) ? (&(m)->new_uri) : (&(m)->first_line.u.request.uri))
 
 
-enum _uri_type{ERROR_URI_T=0, SIP_URI_T, SIPS_URI_T, TEL_URI_T, TELS_URI_T, URN_SERVICE_URI_T, URN_NENA_SERVICE_URI_T};
+enum _uri_type{ERROR_URI_T=0, SIP_URI_T, MarinkaRodeo_URI_T, TEL_URI_T, TELS_URI_T, URN_SERVICE_URI_T, URN_NENA_SERVICE_URI_T};
 typedef enum _uri_type uri_type;
 
 struct sip_uri {
@@ -204,6 +209,9 @@ struct sip_uri {
 	str pn_prid_val;
 	str pn_param_val;
 	str pn_purr_val;
+	/* XXX - in the future when adding params as special links
+	 * in the list above, make sure to also update compare_uris() function
+	 * to explicitly compare these here */
 
 	/* unknown params */
 	str u_name[URI_MAX_U_PARAMS]; /* Unknown param names */
@@ -232,7 +240,6 @@ struct sip_msg {
 	 * (WARNING: do not deallocate them twice!)*/
 
 	struct hdr_field* h_via1;
-	struct hdr_field* h_via2;
 	struct hdr_field* callid;
 	struct hdr_field* to;
 	struct hdr_field* cseq;
@@ -274,8 +281,13 @@ struct sip_msg {
 	struct hdr_field* min_expires;
 	struct hdr_field* feature_caps;
 	struct hdr_field* replaces;
+	struct hdr_field* security_client;
+	struct hdr_field* security_server;
+	struct hdr_field* security_verify;
 
 	struct sip_msg_body *body;
+	/* optional, real-time changes performed on the first SDP body part */
+	struct sdp_body_part_ops *sdp_ops;
 
 	char* eoh;        /* pointer to the end of header (if found) or null */
 	char* unparsed;   /* here we stopped parsing*/
@@ -296,7 +308,7 @@ struct sip_msg {
 	unsigned int ruri_bflags; /* per-branch flags for RURI*/
 
 	/* force sending on this socket */
-	struct socket_info* force_send_socket;
+	const struct socket_info* force_send_socket;
 
 	/* path vector to generate Route hdrs */
 	str path_vec;
@@ -329,7 +341,7 @@ struct sip_msg {
 
 	/* flags used by core - allows to set various flags on the message; may
 	 * be used for simple inter-module communication or remembering
-	 * processing state reached */
+	 * processing state reached, e.g. FL_FORCE_RPORT */
 	unsigned int msg_flags;
 
 	str set_global_address;
@@ -352,12 +364,24 @@ struct sip_msg {
 #define FAKED_REPLY     ((struct sip_msg *) -1)
 
 extern int via_cnt;
+extern int sdp_get_custom_body(struct sip_msg *msg, str *body);
 
-int parse_msg(char* buf, unsigned int len, struct sip_msg* msg);
+#define parse_msg( _buf, _len, _msg) \
+	parse_msg_opt( _buf, _len, _msg, 1)
 
-int parse_headers(struct sip_msg* msg, hdr_flags_t flags, int next);
+int parse_msg_opt(char* buf, unsigned int len, struct sip_msg* msg,
+		int free_on_err);
 
-char* get_hdr_field(char* buf, char* end, struct hdr_field* hdr);
+#define parse_headers(msg, flags,next) 	parse_headers_aux(msg,flags,next, 1)
+
+int parse_headers_aux(struct sip_msg* msg, hdr_flags_t flags, int next, int sip_well_known_parse);
+
+#define get_hdr_field(buf,end,hdr)	get_hdr_field_aux(buf,end,hdr,1)
+
+char* get_hdr_field_aux(char* buf, char* end, struct hdr_field* hdr, int sip_well_known_parse);
+
+/* add DEL lumps for all headers matching the given @hdr */
+int delete_headers(struct sip_msg *msg, struct hdr_field *hdr);
 
 void free_sip_msg(struct sip_msg* msg);
 
@@ -408,6 +432,11 @@ inline static int get_body(struct sip_msg *msg, str *body)
 {
 	unsigned int hdrs_len;
 	int ct_len;
+
+	if (sdp_get_custom_body(msg, body) == 0) {
+		LM_DBG("found custom 'SDP ops' body, len: %d\n", body->len);
+		return 0;
+	}
 
 	if ( parse_headers(msg,HDR_EOH_F, 0)==-1 )
 		return -1;
@@ -490,6 +519,23 @@ inline static struct hdr_field *get_header_by_name( struct sip_msg *msg,
 	}
 	return NULL;
 }
+
+
+#define get_next_header_by_static_name(_hdr, _name) \
+		get_next_header_by_name(_hdr, _name, sizeof(_name)-1)
+inline static struct hdr_field *get_next_header_by_name(
+						struct hdr_field *first, char *s, unsigned int len)
+{
+	struct hdr_field *hdr;
+
+	for( hdr=first->next ; hdr ; hdr=hdr->next ) {
+		if(len==hdr->name.len && strncasecmp(hdr->name.s,s,len)==0)
+			return hdr;
+	}
+	return NULL;
+}
+
+
 
 
 /*

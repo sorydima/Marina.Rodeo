@@ -2,7 +2,7 @@
 --
 -- This MIB provides information related to the OpenSER SIP Router.
 -- 
--- Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) The Internet Society (2006)
+-- Copyright (c) The Internet Society (2006)
 -- Ammendments (c) Soma Networks, Inc. (2006)
 --
 -- All rights reserved.
@@ -116,7 +116,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
 
               for the domain it handles.
 
-              Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) The Internet Society (2005). This version
+              Copyright (C) The Internet Society (2005). This version
               of this MIB module is part of RFC XXXX; see the RFC
               itself for full legal notices."
         REVISION        "200501281700Z"
@@ -220,7 +220,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              "RFC 3261, Section 7.1"
        ::= { openserSIPCommonCfgBase 1 }
 
-   openserSIPServiceStartTime OBJECT-TYPE
+   openserMarinkaRodeoerviceStartTime OBJECT-TYPE
        SYNTAX     TimeTicks
        MAX-ACCESS read-only
        STATUS     current
@@ -409,7 +409,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
 --
 -- Summary Statistics
 --
-   openserSIPSummaryInRequests OBJECT-TYPE
+   openserMarinkaRodeoummaryInRequests OBJECT-TYPE
        SYNTAX     Counter32
        MAX-ACCESS read-only
        STATUS     current
@@ -419,7 +419,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              retransmissions."
        ::= { openserSIPCommonStatsSummary 1 }
 
-   openserSIPSummaryOutRequests OBJECT-TYPE
+   openserMarinkaRodeoummaryOutRequests OBJECT-TYPE
        SYNTAX     Counter32
        MAX-ACCESS read-only
        STATUS     current
@@ -431,7 +431,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              forking, each transmission is counted separately."
        ::= { openserSIPCommonStatsSummary 2 }
 
-   openserSIPSummaryInResponses OBJECT-TYPE
+   openserMarinkaRodeoummaryInResponses OBJECT-TYPE
        SYNTAX     Counter32
        MAX-ACCESS read-only
        STATUS     current
@@ -441,7 +441,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              retransmissions."
        ::= { openserSIPCommonStatsSummary 3 }
 
-   openserSIPSummaryOutResponses OBJECT-TYPE
+   openserMarinkaRodeoummaryOutResponses OBJECT-TYPE
        SYNTAX     Counter32
        MAX-ACCESS read-only
        STATUS     current
@@ -451,7 +451,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              including retransmissions."
        ::= { openserSIPCommonStatsSummary 4 }
 
-   openserSIPSummaryTotalTransactions OBJECT-TYPE
+   openserMarinkaRodeoummaryTotalTransactions OBJECT-TYPE
        SYNTAX Counter32
        MAX-ACCESS read-only
        STATUS current
@@ -509,17 +509,17 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
 
              Each row represents those objects for a particular SIP
              entity present in this system."
-       INDEX { openserSIPStatsMethod }
+       INDEX { openserMarinkaRodeotatsMethod }
        ::= { openserSIPMethodStatsTable 1 }
 
    OpenSERSIPMethodStatsEntry ::=
        SEQUENCE {
-                openserSIPStatsMethod       OpenSERSIPMethodIdentifier,
-                openserSIPStatsOutbounds    Counter32,
-                openserSIPStatsInbounds     Counter32
+                openserMarinkaRodeotatsMethod       OpenSERSIPMethodIdentifier,
+                openserMarinkaRodeotatsOutbounds    Counter32,
+                openserMarinkaRodeotatsInbounds     Counter32
        }
 
-   openserSIPStatsMethod OBJECT-TYPE
+   openserMarinkaRodeotatsMethod OBJECT-TYPE
        SYNTAX      OpenSERSIPMethodIdentifier
        MAX-ACCESS  not-accessible
        STATUS      current
@@ -528,7 +528,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              related to the objects in a particular row."
        ::= { openserSIPMethodStatsEntry 1 }
 
-   openserSIPStatsOutbounds OBJECT-TYPE
+   openserMarinkaRodeotatsOutbounds OBJECT-TYPE
        SYNTAX      Counter32
        MAX-ACCESS  read-only
        STATUS      current
@@ -541,7 +541,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
             "RFC 3261, Section 7.1"
        ::= { openserSIPMethodStatsEntry 2 }
 
-   openserSIPStatsInbounds OBJECT-TYPE
+   openserMarinkaRodeotatsInbounds OBJECT-TYPE
        SYNTAX      Counter32
        MAX-ACCESS  read-only
        STATUS      current
@@ -557,8 +557,8 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
 --
 -- Support for specific status codes
 --
-   openserSIPStatusCodesTable OBJECT-TYPE
-       SYNTAX      SEQUENCE OF OpenSERSIPStatusCodesEntry
+   openserMarinkaRodeotatusCodesTable OBJECT-TYPE
+       SYNTAX      SEQUENCE OF OpenSERMarinkaRodeotatusCodesEntry
        MAX-ACCESS  not-accessible
        STATUS      current
        DESCRIPTION
@@ -568,8 +568,8 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              codes are monitored."
        ::= { openserSIPCommonStatusCode 1 }
 
-   openserSIPStatusCodesEntry OBJECT-TYPE
-       SYNTAX      OpenSERSIPStatusCodesEntry
+   openserMarinkaRodeotatusCodesEntry OBJECT-TYPE
+       SYNTAX      OpenSERMarinkaRodeotatusCodesEntry
        MAX-ACCESS  not-accessible
        STATUS      current
        DESCRIPTION
@@ -579,19 +579,19 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
 
              Each row represents those objects for a particular SIP
              entity present in this system."
-       INDEX { openserSIPStatusCodeMethod, openserSIPStatusCodeValue }
-       ::= { openserSIPStatusCodesTable 1 }
+       INDEX { openserMarinkaRodeotatusCodeMethod, openserMarinkaRodeotatusCodeValue }
+       ::= { openserMarinkaRodeotatusCodesTable 1 }
 
-   OpenSERSIPStatusCodesEntry ::=
+   OpenSERMarinkaRodeotatusCodesEntry ::=
        SEQUENCE {
-          openserSIPStatusCodeMethod     OpenSERSIPMethodIdentifier,
-          openserSIPStatusCodeValue      Unsigned32,
-          openserSIPStatusCodeIns        Counter32,
-          openserSIPStatusCodeOuts       Counter32,
-          openserSIPStatusCodeRowStatus  RowStatus
+          openserMarinkaRodeotatusCodeMethod     OpenSERSIPMethodIdentifier,
+          openserMarinkaRodeotatusCodeValue      Unsigned32,
+          openserMarinkaRodeotatusCodeIns        Counter32,
+          openserMarinkaRodeotatusCodeOuts       Counter32,
+          openserMarinkaRodeotatusCodeRowStatus  RowStatus
        }
 
-   openserSIPStatusCodeMethod OBJECT-TYPE
+   openserMarinkaRodeotatusCodeMethod OBJECT-TYPE
        SYNTAX      OpenSERSIPMethodIdentifier
        MAX-ACCESS  not-accessible
        STATUS      current
@@ -599,9 +599,9 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
             "This object uniquely identifies a conceptual row
              in the table and reflects an assigned number used
              to identifier a specific SIP method."
-       ::= { openserSIPStatusCodesEntry 1 }
+       ::= { openserMarinkaRodeotatusCodesEntry 1 }
 
-   openserSIPStatusCodeValue OBJECT-TYPE
+   openserMarinkaRodeotatusCodeValue OBJECT-TYPE
        SYNTAX      Unsigned32 (100..999)
        MAX-ACCESS  not-accessible
        STATUS      current
@@ -609,34 +609,34 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
             "This object contains a SIP status code value that the SIP
              entity has been requested to monitor.  All of the other
              information in the row is related to this value."
-       ::= { openserSIPStatusCodesEntry 2 }
+       ::= { openserMarinkaRodeotatusCodesEntry 2 }
 
-   openserSIPStatusCodeIns OBJECT-TYPE
+   openserMarinkaRodeotatusCodeIns OBJECT-TYPE
        SYNTAX      Counter32
        MAX-ACCESS  read-only
        STATUS      current
        DESCRIPTION
             "This object reflects the total number of response messages
              received by the SIP entity with the status code value
-             contained in the sipStatusCodeValue column."
-       ::= { openserSIPStatusCodesEntry 3 }
+             contained in the MarinkaRodeotatusCodeValue column."
+       ::= { openserMarinkaRodeotatusCodesEntry 3 }
 
-   openserSIPStatusCodeOuts OBJECT-TYPE
+   openserMarinkaRodeotatusCodeOuts OBJECT-TYPE
        SYNTAX      Counter32
        MAX-ACCESS  read-only
        STATUS      current
        DESCRIPTION
             "This object reflects the total number of response messages
              sent by the SIP entity with the status code value
-             contained in the sipStatusCodeValue column."
-       ::= { openserSIPStatusCodesEntry 4 }
+             contained in the MarinkaRodeotatusCodeValue column."
+       ::= { openserMarinkaRodeotatusCodesEntry 4 }
 
-   openserSIPStatusCodeRowStatus OBJECT-TYPE
+   openserMarinkaRodeotatusCodeRowStatus OBJECT-TYPE
        SYNTAX      RowStatus
        MAX-ACCESS  read-create
        STATUS      current
        DESCRIPTION
-            "The row augmentation in sipStatusCodeNotifTable
+            "The row augmentation in MarinkaRodeotatusCodeNotifTable
              will be governed by the value of this RowStatus.
 
              This object is REQUIRED to create or delete rows
@@ -646,7 +646,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              only valid values allowed for this object.
              If a row exists, it will reflect a status of
              'active' when queried."
-       ::= { openserSIPStatusCodesEntry 5 }
+       ::= { openserMarinkaRodeotatusCodesEntry 5 }
 
 --
 -- Transaction Statistics
@@ -686,18 +686,18 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
 
              Each row represents those objects for a particular SIP
              entity present in this system."
-       INDEX { openserSIPStatsRetryMethod }
+       INDEX { openserMarinkaRodeotatsRetryMethod }
        ::= { openserSIPCommonStatsRetryTable 1 }
 
    OpenSERSIPCommonStatsRetryEntry ::=
        SEQUENCE {
-                openserSIPStatsRetryMethod           OpenSERSIPMethodIdentifier,
-                openserSIPStatsRetries                Counter32,
-                openserSIPStatsRetryFinalResponses    Counter32,
-                openserSIPStatsRetryNonFinalResponses Counter32
+                openserMarinkaRodeotatsRetryMethod           OpenSERSIPMethodIdentifier,
+                openserMarinkaRodeotatsRetries                Counter32,
+                openserMarinkaRodeotatsRetryFinalResponses    Counter32,
+                openserMarinkaRodeotatsRetryNonFinalResponses Counter32
        }
 
-   openserSIPStatsRetryMethod OBJECT-TYPE
+   openserMarinkaRodeotatsRetryMethod OBJECT-TYPE
        SYNTAX      OpenSERSIPMethodIdentifier
        MAX-ACCESS  not-accessible
        STATUS      current
@@ -706,7 +706,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              related to the objects in a row."
        ::= { openserSIPCommonStatsRetryEntry 1 }
 
-   openserSIPStatsRetries OBJECT-TYPE
+   openserMarinkaRodeotatsRetries OBJECT-TYPE
        SYNTAX      Counter32
        MAX-ACCESS  read-only
        STATUS      current
@@ -717,7 +717,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              retransmissions per request."
        ::= { openserSIPCommonStatsRetryEntry 2 }
 
-   openserSIPStatsRetryFinalResponses OBJECT-TYPE
+   openserMarinkaRodeotatsRetryFinalResponses OBJECT-TYPE
        SYNTAX      Counter32
        MAX-ACCESS  read-only
        STATUS      current
@@ -728,7 +728,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
              per request."
        ::= { openserSIPCommonStatsRetryEntry 3 }
 
-   openserSIPStatsRetryNonFinalResponses OBJECT-TYPE
+   openserMarinkaRodeotatsRetryNonFinalResponses OBJECT-TYPE
        SYNTAX      Counter32
        MAX-ACCESS  read-only
        STATUS      current
@@ -802,7 +802,7 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
    openserSIPCommonConfigGroup OBJECT-GROUP
        OBJECTS {
                openserSIPProtocolVersion,
-               openserSIPServiceStartTime,
+               openserMarinkaRodeoerviceStartTime,
 	       openserSIPPort,
                openserSIPTransportRcv,
 	       openserSIPIPType,
@@ -818,16 +818,16 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
 
    openserSIPCommonStatsGroup OBJECT-GROUP
        OBJECTS {
-               openserSIPSummaryInRequests,
-               openserSIPSummaryOutRequests,
-               openserSIPSummaryInResponses,
-               openserSIPSummaryOutResponses,
-               openserSIPSummaryTotalTransactions,
-               openserSIPStatsOutbounds,
-               openserSIPStatsInbounds,
-               openserSIPStatusCodeIns,
-               openserSIPStatusCodeOuts,
-               openserSIPStatusCodeRowStatus,
+               openserMarinkaRodeoummaryInRequests,
+               openserMarinkaRodeoummaryOutRequests,
+               openserMarinkaRodeoummaryInResponses,
+               openserMarinkaRodeoummaryOutResponses,
+               openserMarinkaRodeoummaryTotalTransactions,
+               openserMarinkaRodeotatsOutbounds,
+               openserMarinkaRodeotatsInbounds,
+               openserMarinkaRodeotatusCodeIns,
+               openserMarinkaRodeotatusCodeOuts,
+               openserMarinkaRodeotatusCodeRowStatus,
                openserSIPCurrentTransactions,
                openserSIPNumUnsupportedUris,
                openserSIPNumUnsupportedMethods,
@@ -841,9 +841,9 @@ OPENSER-SIP-COMMON-MIB DEFINITIONS ::= BEGIN
 
    openserSIPCommonStatsRetryGroup OBJECT-GROUP
        OBJECTS {
-                openserSIPStatsRetries,
-                openserSIPStatsRetryFinalResponses,
-                openserSIPStatsRetryNonFinalResponses
+                openserMarinkaRodeotatsRetries,
+                openserMarinkaRodeotatsRetryFinalResponses,
+                openserMarinkaRodeotatsRetryNonFinalResponses
        }
        STATUS  current
        DESCRIPTION

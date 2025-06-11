@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005 Voice System SRL
+ * Copyright (C) 2005 Voice System SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -272,7 +272,7 @@ build_branch(char *branch, int *size,
 		old_state = p_cell->state;
 		p_cell->state = PING_CELL_STATE_PINGING;
 		p_cell->ct_flags = ct_flags;
-		p_cell->timestamp = timestamp;
+		p_cell->timestamp = (unsigned int)(unsigned long)timestamp;
 		p_cell->last_send_time = timeval_st;
 
 		/* we get the label that assures us that the via is unique */
@@ -346,13 +346,13 @@ out_nospace:
 
 /* build the buffer of a SIP ping request */
 static inline char*
-build_sipping(udomain_t *d, str *curi, struct socket_info* s,str *path,
+build_sipping(udomain_t *d, str *curi, const struct socket_info* s,str *path,
 		int *len_p, ucontact_coords ct_coords, int ct_flags)
 {
 #define s_len(_s) (sizeof(_s)-1)
 	static char buf[MAX_SIPPING_SIZE];
 	char *p, proto_str[PROTO_NAME_MAX_SIZE+1];
-	str *address, *port;
+	const str *address, *port;
 	str st;
 	int len;
 
@@ -392,8 +392,8 @@ build_sipping(udomain_t *d, str *curi, struct socket_info* s,str *path,
 		s_len("Via: SIP/2.0/") + st.len + address->len +
 		1 + port->len + strlen(branch) +
 		(path->len ? (s_len(CRLF"Route: ") + path->len) : 0) +
-		s_len(CRLF"From: ") +  sipping_from.len + s_len(";tag=") + 8 +
-		s_len(CRLF"To: ") + curi->len +
+		s_len(CRLF"From: ") + 2 +  sipping_from.len + s_len(";tag=") + 8 +
+		s_len(CRLF"To: ") + 2 + curi->len +
 		s_len(CRLF"Call-ID: ") + sipping_callid.len + 1 + 8 + 1 + 8 + 1 +
 		address->len +
 		s_len(CRLF"CSeq: 1 ") + sipping_method.len +
@@ -419,14 +419,14 @@ build_sipping(udomain_t *d, str *curi, struct socket_info* s,str *path,
 		append_fix( p, CRLF"Route: ");
 		append_str( p, *path);
 	}
-	append_fix( p, CRLF"From: ");
+	append_fix( p, CRLF"From: <");
 	append_str( p, sipping_from);
-	append_fix( p, ";tag=");
+	append_fix( p, ">;tag=");
 	len = 8;
 	int2reverse_hex( &p, &len, sipping_fromtag++ );
-	append_fix( p, CRLF"To: ");
+	append_fix( p, CRLF"To: <");
 	append_str( p, *curi);
-	append_fix( p, CRLF"Call-ID: ");
+	append_fix( p, ">"CRLF"Call-ID: ");
 	append_str( p, sipping_callid);
 	*(p++) = '-';
 	len = 8;

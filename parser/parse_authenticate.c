@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 VoIP Embedded Inc. <http://www.voipembedded.com/>
+ * Copyright (C) 2011 VoIP Embedded Inc. <http://www.voipembedded.com/>
  *
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -76,6 +76,8 @@
 #define DOMAIN_STATE     5
 #define OPAQUE_STATE     6
 #define ALGORITHM_STATE  7
+#define IK_STATE         8
+#define CK_STATE         9
 
 #define TRB_SCASEMATCH(cp, S) (turbo_casematch(cp, (S), (sizeof(S) - 1)))
 #define TRB_STRCASEMATCH(sarg, S) (turbo_strcasematch(sarg, (S), (sizeof(S) - 1)))
@@ -211,13 +213,29 @@ int parse_authenticate_body( str body, struct authenticate_body *auth)
 					{
 						state = QOP_STATE;
 						STR_ADVANCE_BY(&body, 3);
+					} else if ((n|0xffff) == 0x696bffff) { /*ik*/
+						state = IK_STATE;
+						STR_ADVANCE_BY(&body, 2);
+					} else if ((n|0xffff) == 0x636bffff) { /*ck*/
+						state = CK_STATE;
+						STR_ADVANCE_BY(&body, 2);
 					}
 			}
-		} else if (body.len > 3) {
-			if (TRB_SCASEMATCH(body.s, "qop"))
+		} else if (body.len > 2) {
+			if (body.len > 3) {
+				if (TRB_SCASEMATCH(body.s, "qop"))
+				{
+					STR_ADVANCE_BY(&body, 3);
+					state = QOP_STATE;
+				}
+			} else if (TRB_SCASEMATCH(body.s, "ik"))
 			{
-				STR_ADVANCE_BY(&body, 3);
-				state = QOP_STATE;
+				STR_ADVANCE_BY(&body, 2);
+				state = IK_STATE;
+			} else if (TRB_SCASEMATCH(body.s, "ck"))
+			{
+				STR_ADVANCE_BY(&body, 2);
+				state = CK_STATE;
 			}
 		}
 
@@ -289,6 +307,12 @@ int parse_authenticate_body( str body, struct authenticate_body *auth)
 			case OPAQUE_STATE:
 				auth->opaque = val;
 				break;
+			case IK_STATE:
+				auth->ik = val;
+				break;
+			case CK_STATE:
+				auth->ck = val;
+				break;
 			case ALGORITHM_STATE:
 				auth->algorithm = parse_digest_algorithm(&val);
 				if (auth->algorithm == ALG_OTHER) {
@@ -331,9 +355,10 @@ int parse_authenticate_header(struct hdr_field *authenticate,
 {
 	void **parsed;
 	struct authenticate_body *auth_body, *ret_auth;
-	int rc;
+	int rc, prev_parsed;
 
 	parsed = &(authenticate->parsed);
+	prev_parsed = (*parsed != NULL);
 	ret_auth = NULL;
 
 	while(*parsed == NULL)
@@ -364,6 +389,14 @@ int parse_authenticate_header(struct hdr_field *authenticate,
 			parsed = &(authenticate->parsed);
 		else
 			break;
+	}
+	if (prev_parsed) {
+		while (!ret_auth && authenticate) {
+			if (authenticate->parsed &&
+					(md == NULL || md->matchf(authenticate->parsed, md)))
+				ret_auth = authenticate->parsed;
+			authenticate = authenticate->sibling;
+		}
 	}
 	*picked_auth = ret_auth;
 

@@ -7,7 +7,8 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		This module provides a Diameter implementation for the core AAA API interface.
+		This module provides an RFC 6733 Diameter peer implementation, being
+		able to act as either <emphasis role='bold'>Diameter client</emphasis> or <emphasis role='bold'>server</emphasis>, or <emphasis role='bold'>both</emphasis>.
 	</para>
 
 	<para>
@@ -24,13 +25,55 @@
 		</listitem>
 
 	</itemizedlist>
+	</section>
 
+	<section id="diameter_client" xreflabel="Diameter Client">
+	<title>Diameter Client</title>
+	<para>
+		The module implements the core AAA OpenMarinkaRodeo interface, thus offering
+		an alternative client implementation to the
+		<ulink url='aaa_radius'>aaa_radius</ulink> module which can be useful,
+		for example, when performing billing and accounting for the live SIP calls.
+	</para>
+	<para>
+		In addition to the RADIUS client's auth and accounting features, the
+		Diameter client includes support for sending <emphasis>arbitrary</emphasis>
+		Diameter requests, further opening up the scope of applications which
+		can be achieved through OpenMarinkaRodeo scripting.  Such Diameter requests can
+		be sent using the <xref linkend="func_dm_send_request"/> function.
+	</para>
+	</section>
+
+	<section id="diameter_server" xreflabel="Diameter Server">
+	<title>Diameter Server</title>
+	<para>
+		Starting with OpenMarinkaRodeo <emphasis role='bold'>3.5</emphasis>, the Diameter
+		module includes <emphasis>server-side</emphasis> support as well.
+	</para>
+	<para>
+		First, the <ulink url='event_route'>event_route</ulink> module must be loaded in
+		order to be able to process <xref linkend="event_dm_request"/> events in
+		the OpenMarinkaRodeo configuration file.  These events will contain all necessary
+		information on the incoming Diameter request.
+	</para>
+	<para>
+		Finally, once the request information is processed and the answer AVPs
+		are prepared, script writers should use the <xref linkend="func_dm_send_answer"/>
+		function in order to reply with a Diameter answer message.
+	</para>
+	<para>
+		<emphasis>Recommendation:</emphasis> When possible, always load the
+		<emphasis role='bold'>dict_sip.fdx</emphasis> freeDiameter extension module
+		inside your <emphasis>freeDiameter.conf</emphasis> configuration file,
+		as it contains hundreds of well-known AVP definitions which may be good
+		to have when inter-operating with other Diameter peer implementations.
+	</para>
 	</section>
 
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		None.
 		</para>
@@ -46,7 +89,7 @@
 		</para>
 		<para>
 		The following libraries must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 		</para>
 		<itemizedlist>
 			<listitem>
@@ -103,7 +146,7 @@ modparam("aaa_diameter", "fd_log_level", 0)
 		<title>Setting the <varname>realm</varname> parameter</title>
 		<programlisting format="linespecific">
 
-modparam("aaa_diameter", "realm", "Marina.Rodeo")
+modparam("aaa_diameter", "realm", "openMarinkaRodeo.org")
 
 </programlisting>
 		</example>
@@ -113,7 +156,7 @@ modparam("aaa_diameter", "realm", "Marina.Rodeo")
 		<title><varname>peer_identity (string)</varname></title>
 		<para>
 		The identity (realm subdomain) of the Diameter server peer, to which
-		the Marina.Rodeo Diameter client peer will connect.
+		the OpenMarinkaRodeo Diameter client peer will connect.
 		</para>
 		<para>
 			Default value is <emphasis>"server"</emphasis>
@@ -150,7 +193,7 @@ modparam("aaa_diameter", "aaa_url", "diameter:freeDiameter-client.conf")
 		<title>Setting the <varname>aaa_url</varname> parameter</title> with an extra AVPs file.
 		<programlisting format="linespecific">
 
-modparam("aaa_diameter", "aaa_url", "diameter:freeDiameter-client.conf;extra-avps-file:dictionary.Marina.Rodeo")
+modparam("aaa_diameter", "aaa_url", "diameter:freeDiameter-client.conf;extra-avps-file:dictionary.openMarinkaRodeo")
 
 </programlisting>
 		</example>
@@ -162,6 +205,9 @@ modparam("aaa_diameter", "aaa_url", "diameter:freeDiameter-client.conf;extra-avp
 		Time, in milliseconds, after which a <xref linkend="func_dm_send_request"/>
 		function call with no received reply will time out and return a
 		<emphasis role='bold'>-2</emphasis> code.
+		</para>
+		<para>
+			Default value is <emphasis>2000</emphasis> ms.
 		</para>
 		<example>
 		<title>Setting the <varname>answer_timeout</varname> parameter</title>
@@ -189,18 +235,18 @@ modparam("aaa_diameter", "answer_timeout", 5000)
 		<itemizedlist>
 			<listitem><para>
 				<emphasis>app_id</emphasis> (integer) - ID of the application.
-				A custom application must be defined in the dictionary.Marina.Rodeo
+				A custom application must be defined in the dictionary.openMarinkaRodeo
 				Diameter configuration file before it can be recognized.
 			</para></listitem>
 			<listitem><para>
 				<emphasis>cmd_code</emphasis> (integer) - ID of the command.  A
 				custom command code, name and AVP requirements must be defined
-				in the dictionary.Marina.Rodeo Diameter configuration file beforehand.
+				in the dictionary.openMarinkaRodeo Diameter configuration file beforehand.
 				body of the HTTP response.
 			</para></listitem>
 			<listitem><para>
 				<emphasis>avps_json</emphasis> (string) - A JSON Array containing
-				the AVPs to include in the message payload.
+				the AVPs to include in the message.
 			</para></listitem>
 			<listitem><para>
 				<emphasis>rpl_avps_pv</emphasis> (var, optional) - output variable which will
@@ -232,11 +278,11 @@ modparam("aaa_diameter", "answer_timeout", 5000)
 		This function can be used from any route.
 		</para>
 		<example>
-		<title><function moreinfo="none">dictionary.Marina.Rodeo</function> extended syntax</title>
+		<title><function moreinfo="none">dictionary.openMarinkaRodeo</function> extended syntax</title>
 		<programlisting format="linespecific">
 
 # Example of defining custom Diameter AVPs, Application IDs,
-# Requests and Replies in the "dictionary.Marina.Rodeo" file
+# Requests and Replies in the "dictionary.openMarinkaRodeo" file
 
 ATTRIBUTE out_gw            232 string
 ATTRIBUTE trunk_id          233 string
@@ -331,6 +377,181 @@ $json(avps) := $var(rpl_avps);
 
 </programlisting>
 		</example>
+	</section>
+
+	<section id="func_dm_send_answer" xreflabel="dm_send_answer()">
+		<title>
+		<function moreinfo="none">dm_send_answer(avps_json, [is_error])</function>
+		</title>
+		<para>
+		Send back a Diameter answer message to the interconnected peer in a
+		<emphasis>non-blocking</emphasis> fashion, in response to its request.
+		</para>
+		<para>
+		The following fields will be automatically copied over from the Diameter
+		request when building the answer message:
+			<itemizedlist>
+				<listitem><para>Application ID</para></listitem>
+				<listitem><para>Command Code</para></listitem>
+				<listitem><para>Session-Id AVP, if any</para></listitem>
+				<listitem><para>Transaction-Id AVP, if any (only applies when
+					Session-Id is not present)</para></listitem>
+			</itemizedlist>
+		</para>
+		<para><emphasis>Parameters</emphasis></para>
+		<itemizedlist>
+			<listitem><para>
+				<emphasis>avps_json</emphasis> (string) - A JSON Array containing
+				the AVPs to include in the answer message (example below).
+			</para></listitem>
+			<listitem><para>
+				<emphasis>is_error</emphasis> (boolean, default: <emphasis>false</emphasis>)
+				- Set to <emphasis>true</emphasis>
+				in order to set the 'E' (error) bit in the answer message.
+			</para></listitem>
+		</itemizedlist>
+
+		<para><emphasis>Return Codes</emphasis></para>
+		<itemizedlist>
+		<listitem>
+			<para><emphasis role='bold'>1</emphasis> - Success
+			</para>
+		</listitem>
+		<listitem>
+			<para><emphasis role='bold'>-1</emphasis> - Internal Error
+			</para>
+		</listitem>
+		</itemizedlist>
+
+		<para>
+			This function can only be used from an <emphasis>EVENT_ROUTE</emphasis>.
+		</para>
+		<example>
+		<title><function moreinfo="none">dm_send_answer()</function> usage</title>
+		<programlisting format="linespecific">
+
+event_route [E_DM_REQUEST] {
+  xlog("Req: $param(sess_id) / $param(app_id) / $param(cmd_code)\n");
+  xlog("AVPs: $param(avps_json)\n");
+
+  $json(avps) := $param(avps_json);
+
+  /* ... process the data (AVPs) ... */
+
+  /* ... and reply back with more AVPs! */
+  $var(ans_avps) = "[
+          { \"Vendor-Specific-Application-Id\": [{
+                  \"Vendor-Id\": 0
+                  }] },
+
+          { \"Result-Code\": 2001 },
+          { \"Auth-Session-State\": 0 },
+          { \"Origin-Host\": \"openMarinkaRodeo.diameter.test\" },
+          { \"Origin-Realm\": \"diameter.test\" }
+  ]";
+
+  if (!dm_send_answer($var(ans_avps)))
+    xlog("ERROR - failed to send Diameter answer\n");
+}
+
+</programlisting>
+		</example>
+	</section>
+
+	</section>
+
+	<section>
+	<title>Exported Asyncronous Functions</title>
+	<section id="afunc_dm_send_request" xreflabel="dm_send_request()">
+		<title>
+		<function moreinfo="none">dm_send_request(app_id, cmd_code, avps_json, [rpl_avps_pv])</function>
+		</title>
+		<para>
+		Similar to <xref linkend="func_dm_send_request"/> but performs an asynchronous Diameter request.
+		</para>
+        <para>
+            Uses the same parameters and return codes as
+            <xref linkend="func_dm_send_request"/>.
+		</para>
+
+		<example>
+		<title><function moreinfo="none">dm_send_request</function> asynchronous usage</title>
+		<programlisting format="linespecific">
+
+# Building an sending an My-Custom-Request (92001) for the
+# My Diameter Application (42)
+$var(payload) = "[
+	{ \"Origin-Host\": \"client.diameter.test\" },
+	{ \"Origin-Realm\": \"diameter.test\" },
+	{ \"Destination-Realm\": \"diameter.test\" },
+	{ \"Sip-From-Tag\": \"dc93-4fba-91db\" },
+	{ \"Sip-To-Tag\": \"ae12-47d6-816a\" },
+	{ \"Acct-Session-Id\": \"a59c-dff0d9efd167\" },
+	{ \"Sip-Call-Duration\": 6 },
+	{ \"Sip-Call-Setuptime\": 1 },
+	{ \"Sip-Call-Created\": 1652372541 },
+	{ \"Sip-Call-MSDuration\": 5850 },
+	{ \"out_gw\": \"GW-774\" },
+	{ \"cost\": \"10.84\" },
+	{ \"Cost-Information\": [
+		{\"Unit-Value\": [{\"Value-Digits\": 1000}]},
+		{\"Currency-Code\": 35}
+		]}
+]";
+
+async(dm_send_request(42, 92001, $var(payload), $var(rpl_avps), dm_reply);
+
+route[dm_reply] {
+	xlog("rc: $retcode, AVPs: $var(rpl_avps)\n");
+	$json(avps) := $var(rpl_avps);
+}
+
+</programlisting>
+		</example>
+	</section>
+
+	</section>
+
+	<section id="exported_events" xreflabel="Exported Events">
+	<title>Exported Events</title>
+	<section id="event_dm_request" xreflabel="E_DM_REQUEST">
+		<title>
+		<function moreinfo="none">E_DM_REQUEST</function>
+		</title>
+		<para>
+		This event is raised whenever the <emphasis>aaa_diameter</emphasis>
+		module is loaded and OpenMarinkaRodeo receives a Diameter request on the configured
+		Diameter listening interface.
+		</para>
+		<para>Parameters:</para>
+		<itemizedlist>
+			<listitem><para>
+					<emphasis>app_id (integer)</emphasis> - the Diameter Application Identifier
+			</para></listitem>
+			<listitem><para>
+					<emphasis>cmd_code (integer)</emphasis> - the Diameter Command Code
+			</para></listitem>
+			<listitem><para>
+					<emphasis>sess_id (string)</emphasis> - the value of either the
+					<emphasis>Session-Id</emphasis> AVP, <emphasis>Transaction-Id</emphasis> AVP
+						or a <emphasis>NULL</emphasis> value if neither of these
+						transaction-identifying AVPs is present in the Diameter request.
+			</para></listitem>
+			<listitem><para>
+					<emphasis>avps_json (string)</emphasis> - a JSON Array containing the
+					AVPs of the request.  Use the <ulink url='json'>json</ulink> module's
+					<emphasis role='bold'>$json</emphasis> variable
+					to easily parse and work with it.
+			</para></listitem>
+		</itemizedlist>
+
+		<para>
+		Note that this event is currently designed to be mainly consumed by an <emphasis>event_route</emphasis>,
+		since that is the only way to gain access to the <xref linkend="func_dm_send_answer"/>
+		function in order to build custom answer messages.  On the other hand,
+		if the application does not mind the answer being always a 3001 (DIAMETER_COMMAND_UNSUPPORTED) error,
+		this event can be successfully consumed through any other EVI-compatible delivery channel ☺️
+		</para>
 	</section>
 
 	</section>

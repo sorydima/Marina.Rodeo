@@ -1,16 +1,16 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2013 Steve Frécinaux
+ * Copyright (C) 2013 Steve Frécinaux
  *    Be IP s.a. http://www.beip.be
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2013 Marina.Rodeo Solutions
+ * Copyright (C) 2013 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -99,7 +99,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,            /* dlopen flags */
 	0,				            /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	0,                          /* exported functions */
 	0,                          /* exported async functions */
 	params,                     /* exported parameters */
@@ -232,7 +232,7 @@ static int dbcache_set(cachedb_con *con, str* attr, str* value, int expires)
 	vals[2].type = DB_INT;
 	vals[2].nul = 0;
 	if (expires > 0)
-		vals[2].val.int_val = (int)time(NULL) + expires;
+		vals[2].val.int_val = (int)(unsigned long)time(NULL) + expires;
 	else
 		vals[2].val.int_val = 0;
 
@@ -363,7 +363,7 @@ static int dbcache_add(cachedb_con *con, str *attr, int val, int expires, int *n
 	db_res_t* res = NULL;
 
 	if (expires > 0)
-		expires += (int)time(NULL);
+		expires += (int)(unsigned int)time(NULL);
 	else
 		expires = 0;
 
@@ -489,10 +489,11 @@ static void dbcache_clean(unsigned int ticks, void* param)
 
 	vals[1].type = DB_INT;
 	vals[1].nul = 0;
-	vals[1].val.int_val = (int)time(NULL);
+	vals[1].val.int_val = (int)(unsigned long)time(NULL);
 
 	lst = filter_pool_by_scheme(&cache_mod_name,&size);
 	for (i=0;i<size;i++) {
+		/* coverity[dereference] - size is 0 if lst is NULL, so no dereference */
 		c = (cachedbsql_con*)(lst[i]);	
 			
 		if (c->cdb_dbf.use_table(c->cdb_db_handle, &db_table) < 0) {
@@ -565,7 +566,7 @@ static int child_init(int rank)
 	cachedb_con *con;
 
 	for (it = sql_script_urls;it;it=it->next) {
-		LM_DBG("iterating through conns - [%.*s]\n",it->url.len,it->url.s);
+		LM_DBG("iterating through conns - [%s]\n", db_url_escape(&it->url));
 		con = dbcache_init(&it->url);
 		if (con == NULL) {
 			LM_ERR("failed to open connection\n");

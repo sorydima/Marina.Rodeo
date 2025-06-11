@@ -1,16 +1,16 @@
 /*
  * back-to-back logic module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Free Software Fundation
+ * Copyright (C) 2009 Free Software Fundation
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -77,7 +77,11 @@ enum b2b_tuple_state {
 #define B2BL_BR_FLAG_DONT_DELETE_BRIDGE_INITIATOR  (1<<4)
 #define B2BL_BR_FLAG_PROV_MEDIA                    (1<<5)
 #define B2BL_BR_FLAG_NO_OLD_ENT                    (1<<6)
+#define B2BL_BR_FLAG_PENDING_SDP                   (1<<7)
+#define B2BL_BR_FLAG_BR_MSG_LATE_BYE               (1<<8)
 
+/* reply flags */
+#define B2BL_RPL_FLAG_PASS_CONTACT                 (1<<0)
 
 /* modes to write in db */
 #define NO_DB         0
@@ -147,6 +151,9 @@ extern unsigned int b2bl_th_init_timeout;
 extern struct script_route_ref *global_req_rt_ref;
 extern struct script_route_ref *global_reply_rt_ref;
 extern int b2b_early_update;
+extern unsigned int ent_term_interval;
+
+extern struct b2b_term_timer *ent_term_timer;
 
 extern str top_hiding_scen_s;
 extern str internal_scen_s;

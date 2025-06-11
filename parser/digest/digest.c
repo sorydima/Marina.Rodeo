@@ -1,16 +1,16 @@
 /*
  * Digest credentials parser interface
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -163,6 +163,18 @@ void print_cred(dig_cred_t* _c)
 		CASE_PRINTENUM(ALG_SHA256SESS);
 		CASE_PRINTENUM(ALG_SHA512_256);
 		CASE_PRINTENUM(ALG_SHA512_256SESS);
+		CASE_PRINTENUM(ALG_AKAv1_MD5);
+		CASE_PRINTENUM(ALG_AKAv1_MD5SESS);
+		CASE_PRINTENUM(ALG_AKAv1_SHA256);
+		CASE_PRINTENUM(ALG_AKAv1_SHA256SESS);
+		CASE_PRINTENUM(ALG_AKAv1_SHA512_256);
+		CASE_PRINTENUM(ALG_AKAv1_SHA512_256SESS);
+		CASE_PRINTENUM(ALG_AKAv2_MD5);
+		CASE_PRINTENUM(ALG_AKAv2_MD5SESS);
+		CASE_PRINTENUM(ALG_AKAv2_SHA256);
+		CASE_PRINTENUM(ALG_AKAv2_SHA256SESS);
+		CASE_PRINTENUM(ALG_AKAv2_SHA512_256);
+		CASE_PRINTENUM(ALG_AKAv2_SHA512_256SESS);
 		CASE_PRINTENUM(ALG_OTHER);
 		}
 

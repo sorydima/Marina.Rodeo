@@ -1,16 +1,16 @@
 /*
  * emergency module - basic support for emergency calls
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2015 Robison Tesini & Evandro Villaron
+ * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -72,6 +72,15 @@ size_t write_data(char *ptr, size_t size, size_t nmemb, void *stream) {
 	return size * nmemb;
 }
 
+#define w_curl_easy_setopt(h, opt, value) \
+	do { \
+		CURLcode rc = curl_easy_setopt(h, opt, value); \
+		if (rc != CURLE_OK) { \
+			LM_ERR("curl_easy_setopt(%d): (%s)\n", opt, curl_easy_strerror(rc)); \
+			goto error; \
+		} \
+	} while (0)
+
 /* simple FTTP POST using curl lib */
 int post(char*  url, char* xml, char** response){
 	CURL *curl;
@@ -83,16 +92,17 @@ int post(char*  url, char* xml, char** response){
 	data.data = malloc(1024); /* reasonable size initial buffer */
 	if(NULL == data.data) {
 		LM_ERR("NO MEMORY\n");
+		curl_easy_cleanup(curl);
 		return -1;
 	}
 	memset(data.data, '\0', 1024);
 	LM_DBG("CURL PASSOU MALLOC\n");
 
 	if(curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, url);
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, xml);
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
+		w_curl_easy_setopt(curl, CURLOPT_URL, url);
+		w_curl_easy_setopt(curl, CURLOPT_POSTFIELDS, xml);
+		w_curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+		w_curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
 		long http_code = 0;
 		res = curl_easy_perform(curl);
 		int resp = -1;
@@ -120,6 +130,7 @@ int post(char*  url, char* xml, char** response){
 		return resp;
 	}
 
+error:
 	free(data.data);
 	return  -1;
 }

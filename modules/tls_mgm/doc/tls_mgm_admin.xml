@@ -44,7 +44,7 @@
 			<emphasis>proto_wss</emphasis>. The <emphasis>tls_mgm</emphasis> module
 			transparently exposes the TLS operations implemented by
 			<emphasis>tls_openssl</emphasis> and <emphasis>tls_wolfssl</emphasis> modules
-			to the higher-level Marina.Rodeo transport modules.
+			to the higher-level OpenMarinkaRodeo transport modules.
 		</para>
 		<para>
 			The TLS library selection ca be configured through the
@@ -69,7 +69,7 @@
 		</para>
 		<para>
 		For example, TLS domains can be used in virtual hosting scenarios with TLS.
-		&osips; offers SIP service for multiple domains, e.g. atlanta.com and biloxi.com. Altough
+		&oMarinkaRodeo; offers SIP service for multiple domains, e.g. atlanta.com and biloxi.com. Altough
 		both domains will be hosted on a single SIP proxy, the SIP proxy needs 2 certificates: One
 		for atlanta.com and one for biloxi.com. For incoming TLS connections, the SIP proxy
 		has to present the respective certificate during the TLS handshake. As the SIP proxy
@@ -123,7 +123,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
          <itemizedlist>
@@ -140,7 +140,7 @@
 		<title>Dependencies of external libraries</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -204,10 +204,10 @@ if (is_peer_verified()) {
         </section>
 
 	<section>
-		<title>&osips; Exported parameters</title>
+		<title>&oMarinkaRodeo; Exported parameters</title>
 		<para>
-		All these parameters can be used from the Marina.Rodeo.cfg file,
-		to configure the behavior of &osips;-TLS.
+		All these parameters can be used from the openMarinkaRodeo.cfg file,
+		to configure the behavior of &oMarinkaRodeo;-TLS.
 		</para>
 
 		<section id="param_listen" xreflabel="listen">
@@ -236,7 +236,7 @@ socket= tls:1.2.3.4:5061
 				<listitem>
 				<para><emphasis>auto</emphasis> - auto-detect which TLS library
 				module (<emphasis>tls_openssl</emphasis> or <emphasis>tls_wolfssl</emphasis>)
-				was loaded. Marina.Rodeo will not start if no module, or both modules are
+				was loaded. OpenMarinkaRodeo will not start if no module, or both modules are
 				found.
 				</para>
 				</listitem>
@@ -281,23 +281,23 @@ modparam("tls_mgm", "tls_library", "none")
 			</para>
 			<itemizedlist>
 				<listitem>
-				<para><emphasis>TLSv1_3</emphasis> - means &osips; will
+				<para><emphasis>TLSv1_3</emphasis> - means &oMarinkaRodeo; will
 				accept only TLSv1.3 connections. This version is only
 				available starting with OpenSSL 1.1.1 version.
 				</para>
 				</listitem>
 				<listitem>
-				<para><emphasis>TLSv1_2</emphasis> - means &osips; will
+				<para><emphasis>TLSv1_2</emphasis> - means &oMarinkaRodeo; will
 				accept only TLSv1.2 connections (rfc3261 conformant).
 				</para>
 				</listitem>
 				<listitem>
-				<para><emphasis>TLSv1</emphasis> - means &osips; will
+				<para><emphasis>TLSv1</emphasis> - means &oMarinkaRodeo; will
 				accept only TLSv1 connections (rfc3261 conformant).
 				</para>
 				</listitem>
 				<listitem>
-				<para><emphasis>SSLv23</emphasis> - means &osips; will
+				<para><emphasis>SSLv23</emphasis> - means &oMarinkaRodeo; will
 				accept any of the above methods, but the initial SSL
 				hello must be v2 (in the initial hello all the supported
 				protocols are advertised enabling switching to a higher
@@ -326,7 +326,7 @@ modparam("tls_mgm", "tls_library", "none")
 			<para>
 			If you want RFC3261 conformance and all your clients support
 			TLSv1 (or you are planning to use encrypted "tunnels" only
-			between different &osips; proxies) use TLSv1. If you want to
+			between different &oMarinkaRodeo; proxies) use TLSv1. If you want to
 			support older clients use SSLv23 (in fact most of the
 			applications with SSL support use the SSLv23 method).
 			</para>
@@ -354,7 +354,7 @@ modparam("tls_mgm", "tls_method", "[dom]-")              # all supported
 		<section id="param_certificate" xreflabel="certificate">
 			<title><varname>certificate</varname> ([domain](string)</title>
 			<para>
-			Public certificate file for &osips;. It will be used as
+			Public certificate file for &oMarinkaRodeo;. It will be used as
 			server-side certificate for incoming TLS connections, and as
 			a client-side certificate for outgoing TLS connections. The domain
 			part represents the name of the TLS domain.
@@ -367,7 +367,7 @@ modparam("tls_mgm", "tls_method", "[dom]-")              # all supported
 					</title>
 				<programlisting format="linespecific">
 ...
-modparam("tls_mgm", "certificate", "[dom]/mycerts/certs/Marina.Rodeo_server_cert.pem")
+modparam("tls_mgm", "certificate", "[dom]/mycerts/certs/openMarinkaRodeo_server_cert.pem")
 ...
 				</programlisting>
 			</example>
@@ -666,7 +666,7 @@ modparam("tls_mgm", "client_sip_domain_avp", "sip_match_dom")
 				<title>Usage of <varname>db_url</varname> block
 					</title>
 				<programlisting format="linespecific">
-modparam("tls_mgm", "db_url", "mysql://root:admin@localhost/Marina.Rodeo")
+modparam("tls_mgm", "db_url", "mysql://root:admin@localhost/openMarinkaRodeo")
 				</programlisting>
 			</example>
 		</section>
@@ -1328,15 +1328,15 @@ route{
 
 
 	<section id="tls-example">
-		<title>&osips; with TLS - script example</title>
+		<title>&oMarinkaRodeo; with TLS - script example</title>
 		<para>
-		IMPORTANT: The TLS support is based on TCP, and for allowing &osips;
+		IMPORTANT: The TLS support is based on TCP, and for allowing &oMarinkaRodeo;
 		to use TCP, it must be started in multi-process mode. So, there is
 		a must to have the "fork" parameter set to "yes":
 		</para>
 		<para>
 		NOTE: Since the TLS engine is quite memory consuming, increase the
-		used memory by the run time parameter "-m" (see &osips; -h for more
+		used memory by the run time parameter "-m" (see &oMarinkaRodeo; -h for more
 		details).
 		</para>
 		<itemizedlist>
@@ -1368,7 +1368,7 @@ route{
   #TLS specific settings
   loadmodule "tls_mgm.so"
 
-  modparam("tls_mgm", "certificate", "/path/Marina.RodeoX_cert.pem")
+  modparam("tls_mgm", "certificate", "/path/openMarinkaRodeoX_cert.pem")
   modparam("tls_mgm", "private_key", "/path/privkey.pem")
   modparam("tls_mgm", "ca_list", "/path/calist.pem")
   modparam("tls_mgm", "ca_list", "/path/calist.pem")
@@ -1525,7 +1525,7 @@ route{
 	<section>
 		<title>Debug TLS connections</title>
 	<para>If you want to debug TLS connections, put the following log
-	statements into your &osips;.cfg.
+	statements into your &oMarinkaRodeo;.cfg.
 	This will dump all available TLS pseudo variables.
 	</para>
 	<example>

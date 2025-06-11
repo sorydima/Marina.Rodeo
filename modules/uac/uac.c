@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2009 Voice Sistem SRL
+ * Copyright (C) 2005-2009 Voice Sistem SRL
 *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * UAC Marina.Rodeo-module is free software; you can redistribute it and/or
+ * UAC OpenMarinkaRodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * UAC Marina.Rodeo-module is distributed in the hope that it will be useful,
+ * UAC OpenMarinkaRodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -85,6 +85,7 @@ static int w_replace_to(struct sip_msg* msg, str* p1, str* p2);
 static int w_restore_to(struct sip_msg* msg);
 
 static int w_uac_auth(struct sip_msg* msg, intptr_t _alg);
+static int w_uac_inc_cseq(struct sip_msg* msg, int *cseq);
 static int fixup_replace_disp_uri(void** param);
 static int fixup_free_s(void** param);
 static int mod_init(void);
@@ -111,6 +112,9 @@ static const cmd_export_t cmds[]={
 		REQUEST_ROUTE|BRANCH_ROUTE|FAILURE_ROUTE},
 	{"uac_auth",        (cmd_function)w_uac_auth, {
 		{CMD_PARAM_STR|CMD_PARAM_OPT,dauth_fixup_algorithms,0}, {0,0,0}},
+		REQUEST_ROUTE|BRANCH_ROUTE|FAILURE_ROUTE},
+	{"uac_inc_cseq",        (cmd_function)w_uac_inc_cseq, {
+		{CMD_PARAM_INT, 0, 0}, {0,0,0}},
 		REQUEST_ROUTE|BRANCH_ROUTE|FAILURE_ROUTE},
 	{0,0,{{0,0,0}},0}
 };
@@ -140,7 +144,7 @@ static module_dependency_t *get_deps_restore_mode(const param_export_t *param)
 }
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "tm",       DEP_ABORT  },
 		{ MOD_TYPE_DEFAULT, "dialog",   DEP_SILENT },
 		{ MOD_TYPE_DEFAULT, "uac_auth", DEP_SILENT },
@@ -158,7 +162,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,       /* exported functions */
 	0,          /* exported async functions */
 	params,     /* param exports */
@@ -489,3 +493,11 @@ static int w_uac_auth(struct sip_msg* msg, intptr_t _alg)
 }
 
 
+static int w_uac_inc_cseq(struct sip_msg* msg, int *cseq)
+{
+	if (!cseq) {
+		LM_ERR("scripting bug: uac_inc_cseq() without value!\n");
+		return E_SCRIPT;
+	}
+	return uac_inc_cseq(msg, *cseq);
+}

@@ -1,16 +1,16 @@
 /**
  * Topology Hiding Module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015 Marina.Rodeo Foundation
+ * Copyright (C) 2015 OpenMarinkaRodeo Foundation
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -40,11 +40,18 @@
 #include "../rr/api.h"
 #include "../dialog/dlg_load.h"
 
+struct th_params {
+	str ct_caller_user;
+	str ct_callee_user;
+};
+
+extern str th_contact_caller_var;
+extern str th_contact_callee_var;
 enum encode_scheme {ENC_BASE64, ENC_BASE32};
 
 int topo_parse_passed_ct_params(str *params);
 int topo_parse_passed_hdr_ct_params(str *params);
-int topology_hiding(struct sip_msg *req,int extra_flags);
+int topology_hiding(struct sip_msg *req,int extra_flags, struct th_params *params);
 int topo_callid_pre_raw(str *data, struct sip_msg* req);
 int topo_callid_post_raw(str *data, struct sip_msg* req);
 int topology_hiding_match(struct sip_msg *req);

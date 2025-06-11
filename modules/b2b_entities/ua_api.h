@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2023 Marina.Rodeo Solutions
+ * Copyright (C) 2023 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * In addition, as a special exception, the Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 holders give
+ * In addition, as a special exception, the copyright holders give
  * permission to link the code of portions of this program with the
  * OpenSSL library under certain conditions as described in each
  * individual source file, and distribute linked combinations
@@ -21,7 +21,7 @@
  * version.  If you delete this exception statement from all source
  * files in the program, then also delete it here.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -92,7 +92,7 @@ int fixup_ua_flags(void** param);
 int fixup_free_ua_flags(void** param);
 
 int b2b_ua_server_init(struct sip_msg *msg, pv_spec_t *key_spec,
-	struct ua_sess_init_params *init_params);
+	struct ua_sess_init_params *init_params, str *extra);
 int b2b_ua_update(struct sip_msg *msg, str *key, str *method, str *body,
 	str *extra_headers, str *content_type);
 int b2b_ua_reply(struct sip_msg *msg, str *key, str *method, int *code,
@@ -112,6 +112,6 @@ mi_response_t *b2b_ua_session_list(const mi_params_t *params,
 
 int ua_evi_init(void);
 int raise_ua_sess_event(str *key, enum b2b_entity_type ent_type,
-	enum ua_sess_event_type ev_type, unsigned int flags, struct sip_msg *msg);
+	enum ua_sess_event_type ev_type, unsigned int flags, struct sip_msg *msg, str *extra);
 
 #endif

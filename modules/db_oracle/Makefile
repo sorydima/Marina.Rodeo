@@ -1,5 +1,3 @@
-# $Id$
-#
 # WARNING: do not run this directly, it should be run by the master Makefile
 
 include ../../Makefile.defs
@@ -79,11 +77,14 @@ endif
 
 include ../../Makefile.modules
 
-.PHONY: $(UTILS_DIR)/db_oracle/Marina.Rodeo_orasel
-$(UTILS_DIR)/db_oracle/Marina.Rodeo_orasel:
+.PHONY: $(UTILS_DIR)/db_oracle/openMarinkaRodeo_orasel
+$(UTILS_DIR)/db_oracle/openMarinkaRodeo_orasel:
 	make -C $(UTILS_DIR)/db_oracle
 
-install_module_custom: $(bin_prefix)/$(bin_dir) $(UTILS_DIR)/db_oracle/Marina.Rodeo_orasel
+install_module_custom: $(bin_prefix)/$(bin_dir) $(UTILS_DIR)/db_oracle/openMarinkaRodeo_orasel
+	$(INSTALL_BIN) $(UTILS_DIR)/db_oracle/openMarinkaRodeo_orasel $(bin_prefix)/$(bin_dir) ; \
+
+install_module_schema:
 	mkdir -p $(data_prefix)/$(data_dir)/oracle ; \
 	for FILE in $(wildcard $(SCRIPTS_DIR)/oracle/*) ; do \
 		if [ -f $$FILE ] ; then \
@@ -111,4 +112,3 @@ install_module_custom: $(bin_prefix)/$(bin_dir) $(UTILS_DIR)/db_oracle/Marina.Ro
 			$(data_prefix)/$(data_dir)/oracle/admin/`basename "$$FILE"` ; \
 		fi ;\
 	done ; \
-	$(INSTALL_BIN) $(UTILS_DIR)/db_oracle/Marina.Rodeo_orasel $(bin_prefix)/$(bin_dir) ; \

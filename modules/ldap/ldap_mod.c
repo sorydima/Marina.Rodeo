@@ -1,19 +1,19 @@
 /*
- * Marina.Rodeo LDAP Module
+ * OpenMarinkaRodeo LDAP Module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 University of North Carolina
+ * Copyright (C) 2007 University of North Carolina
  *
  * Original author: Christian Schlatter, cs@unc.edu
  *
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -59,6 +59,7 @@ static int child_init(int rank);
 */
 static int fixup_result_avp_type(void **param);
 static int fixup_substre(void** param);
+static int fixup_free_substre(void** param);
 
 /*
 * exported functions
@@ -78,7 +79,7 @@ static int w_ldap_result_check(struct sip_msg* msg, str* attr_name,
 /*
 * Default module parameter values
 */
-#define DEF_LDAP_CONFIG "/usr/local/etc/Marina.Rodeo/ldap.cfg"
+#define DEF_LDAP_CONFIG "/usr/local/etc/openMarinkaRodeo/ldap.cfg"
 #define DEF_REQ_CERT	"NEVER"
 
 /*
@@ -102,7 +103,7 @@ static const cmd_export_t cmds[] = {
 		{CMD_PARAM_STR, 0, 0},
 		{CMD_PARAM_VAR, 0, 0},
 		{CMD_PARAM_STR | CMD_PARAM_OPT, fixup_result_avp_type, 0},
-		{CMD_PARAM_STR | CMD_PARAM_OPT, fixup_substre, 0}, {0,0,0}},
+		{CMD_PARAM_STR | CMD_PARAM_OPT, fixup_substre, fixup_free_substre}, {0,0,0}},
 		REQUEST_ROUTE|FAILURE_ROUTE|BRANCH_ROUTE|
 		ONREPLY_ROUTE|LOCAL_ROUTE|STARTUP_ROUTE|TIMER_ROUTE|EVENT_ROUTE},
 	{"ldap_result_next", (cmd_function)w_ldap_result_next, {{0,0,0}},
@@ -111,7 +112,7 @@ static const cmd_export_t cmds[] = {
 	{"ldap_result_check", (cmd_function)w_ldap_result_check, {
 		{CMD_PARAM_STR, 0, 0},
 		{CMD_PARAM_STR, 0, 0},
-		{CMD_PARAM_STR | CMD_PARAM_OPT, fixup_substre, 0}, {0,0,0}},
+		{CMD_PARAM_STR | CMD_PARAM_OPT, fixup_substre, fixup_free_substre}, {0,0,0}},
 		REQUEST_ROUTE|FAILURE_ROUTE|
 		BRANCH_ROUTE|ONREPLY_ROUTE|LOCAL_ROUTE|STARTUP_ROUTE|TIMER_ROUTE|EVENT_ROUTE},
 	{"ldap_filter_url_encode", (cmd_function)w_ldap_filter_url_encode, {
@@ -144,7 +145,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	cmds,       /* Exported functions */
 	acmds,       /* Exported async functions */
 	params,     /* Exported parameters */
@@ -186,7 +187,7 @@ static int child_init(int rank)
 		}
 
 		/* won't check for null in get_ld_session since it's barely been initialized */
-		if (Marina.Rodeo_ldap_connect(ld_name, &get_ld_session(ld_name)->conn_s) != 0)
+		if (openMarinkaRodeo_ldap_connect(ld_name, &get_ld_session(ld_name)->conn_s) != 0)
 		{
 			LM_ERR("[%s]: failed to connect to LDAP host(s)\n", ld_name);
 			ldap_disconnect(ld_name, NULL);
@@ -342,5 +343,11 @@ static int fixup_substre(void** param)
 	}
 
 	*param=se;
+	return 0;
+}
+
+static int fixup_free_substre(void** param)
+{
+	subst_expr_free(*param);
 	return 0;
 }

@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Project
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2018-2020 Marina.Rodeo Solutions
+ * Copyright (C) 2017 OpenMarinkaRodeo Project
+ * Copyright (C) 2018-2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -181,14 +181,16 @@ static int gw_status_update(bin_packet_t *packet, int raise_event)
 	lock_start_read(part->ref_lock);
 
 	gw = get_gw_by_id(part->rdata->pgw_tree, &gw_id);
-	if (gw && ((gw->flags&DR_DST_STAT_MASK)!=flags)) {
-		/* import the status flags */
-		gw->flags = ((~DR_DST_STAT_MASK)&gw->flags) | (DR_DST_STAT_MASK&flags);
-		/* set the DIRTY flag to force flushing to DB */
-		gw->flags |= DR_DST_STAT_DIRT_FLAG;
-		if (raise_event)
-			/* raise event for the status change */
-			dr_raise_event(part, gw, MI_SSTR("replicated info"));
+	if (gw) {
+		if ((gw->flags&DR_DST_STAT_MASK)!=flags) {
+			/* import the status flags */
+			gw->flags = ((~DR_DST_STAT_MASK)&gw->flags) | (DR_DST_STAT_MASK&flags);
+			/* set the DIRTY flag to force flushing to DB */
+			gw->flags |= DR_DST_STAT_DIRT_FLAG;
+			if (raise_event)
+				/* raise event for the status change */
+				dr_raise_event(part, gw, MI_SSTR("replicated info"));
+		}
 		lock_stop_read(part->ref_lock);
 		return 0;
 	}
@@ -218,12 +220,14 @@ static int cr_status_update(bin_packet_t *packet)
 	lock_start_read(part->ref_lock);
 
 	cr = get_carrier_by_id(part->rdata->carriers_tree, &cr_id);
-	if (cr && ((cr->flags&DR_CR_FLAG_IS_OFF)!=flags)) {
-		/* import the status flags */
-		cr->flags = ((~DR_CR_FLAG_IS_OFF)&cr->flags)|(DR_CR_FLAG_IS_OFF&flags);
-		/* set the DIRTY flag to force flushing to DB */
-		cr->flags |= DR_CR_FLAG_DIRTY;
-		dr_raise_cr_event( part, cr, MI_SSTR("replicated info"));
+	if (cr) {
+		if ((cr->flags&DR_CR_FLAG_IS_OFF)!=flags) {
+			/* import the status flags */
+			cr->flags = ((~DR_CR_FLAG_IS_OFF)&cr->flags)|(DR_CR_FLAG_IS_OFF&flags);
+			/* set the DIRTY flag to force flushing to DB */
+			cr->flags |= DR_CR_FLAG_DIRTY;
+			dr_raise_cr_event( part, cr, MI_SSTR("replicated info"));
+		}
 		lock_stop_read(part->ref_lock);
 		return 0;
 	}

@@ -1,12 +1,12 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2008, 2009
+ * Copyright (c) 2008, 2009
  * 	     Eric Gouyer <folays@folays.net>
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2008, 2009, 2010, 2011
+ * Copyright (c) 2008, 2009, 2010, 2011
  *	     Arnaud Chong <shine@achamo.net>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice and this permission notice appear in all copies.
+ * copyright notice and this permission notice appear in all copies.
  *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
@@ -38,11 +38,11 @@
 #include "sipmemcache.h"
 #include "sipwatch.h"
 #include "sipdatetime.h"
-#include "sipstate.h"
+#include "MarinkaRodeotate.h"
 #include "compat.h"
 
-static const char *sipstate_filename;
-static int sipstate_time;
+static const char *MarinkaRodeotate_filename;
+static int MarinkaRodeotate_time;
 static lua_State *siplua_L;
 static struct sipapi_object *siplua_msg;
 
@@ -108,7 +108,7 @@ static void *siplua_lua_Alloc2(void *ud,
     return realloc(ptr, nsize);
 }
 
-static int l_sipstate_xlog(lua_State *L)
+static int l_MarinkaRodeotate_xlog(lua_State *L)
 {
   const char *level;
   const char *str;
@@ -142,7 +142,7 @@ static int l_sipstate_xlog(lua_State *L)
   return 0;
 }
 
-static int l_sipstate_xdbg(lua_State *L)
+static int l_MarinkaRodeotate_xdbg(lua_State *L)
 {
   const char *str;
   size_t len;
@@ -153,7 +153,7 @@ static int l_sipstate_xdbg(lua_State *L)
 }
 
 /* I was tired of not seing output when i wrongly used print() instead of xlog() */
-static int l_sipstate_print(lua_State *L)
+static int l_MarinkaRodeotate_print(lua_State *L)
 {
   const char *str;
   size_t len;
@@ -169,7 +169,7 @@ static int l_sipstate_print(lua_State *L)
   return 0;
 }
 
-static int l_sipstate_notice(lua_State *L)
+static int l_MarinkaRodeotate_notice(lua_State *L)
 {
   int nargs;
   int local = 0;
@@ -186,7 +186,7 @@ static int l_sipstate_notice(lua_State *L)
   return 0;
 }
 
-static int l_sipstate_getpid(lua_State *L)
+static int l_MarinkaRodeotate_getpid(lua_State *L)
 {
   int pid;
 
@@ -195,7 +195,7 @@ static int l_sipstate_getpid(lua_State *L)
   return 1;
 }
 
-static int l_sipstate_getmem(lua_State *L)
+static int l_MarinkaRodeotate_getmem(lua_State *L)
 {
   lua_newtable(L);
   lua_pushstring(L, "total_size");
@@ -207,7 +207,7 @@ static int l_sipstate_getmem(lua_State *L)
   return 1;
 }
 
-static int sipstate_getmeminfo(lua_State *L, struct mem_info *info)
+static int MarinkaRodeotate_getmeminfo(lua_State *L, struct mem_info *info)
 {
   lua_newtable(L);
   lua_pushstring(L, "total_size");
@@ -234,23 +234,23 @@ static int sipstate_getmeminfo(lua_State *L, struct mem_info *info)
   return 1;
 }
 
-static int l_sipstate_getpkginfo(lua_State *L)
+static int l_MarinkaRodeotate_getpkginfo(lua_State *L)
 {
   struct mem_info info;
 
   SHM_INFO(mem_block, &info);
-  return sipstate_getmeminfo(L, &info);
+  return MarinkaRodeotate_getmeminfo(L, &info);
 }
 
-static int l_sipstate_getshminfo(lua_State *L)
+static int l_MarinkaRodeotate_getshminfo(lua_State *L)
 {
   struct mem_info info;
 
   shm_info(&info);
-  return sipstate_getmeminfo(L, &info);
+  return MarinkaRodeotate_getmeminfo(L, &info);
 }
 
-static int l_sipstate_gethostname(lua_State *L)
+static int l_MarinkaRodeotate_gethostname(lua_State *L)
 {
   char name[MAXHOSTNAMELEN];
   int ret;
@@ -263,7 +263,7 @@ static int l_sipstate_gethostname(lua_State *L)
   return 1;
 }
 
-static int l_sipstate_filemtime(lua_State *L)
+static int l_MarinkaRodeotate_filemtime(lua_State *L)
 {
   const char *str;
   struct stat sb;
@@ -278,7 +278,7 @@ static int l_sipstate_filemtime(lua_State *L)
   return 1;
 }
 
-static int l_sipstate_setCoreDebug(lua_State *L)
+static int l_MarinkaRodeotate_setCoreDebug(lua_State *L)
 {
   int n;
 
@@ -290,18 +290,18 @@ static int l_sipstate_setCoreDebug(lua_State *L)
 
 static const struct luaL_Reg siplua_state_mylib [] =
   {
-    {"xlog", l_sipstate_xlog},
-    {"xdbg", l_sipstate_xdbg},
-    {"print", l_sipstate_print},
-    {"notice", l_sipstate_notice},
-    {"getpid", l_sipstate_getpid},
-    {"getmem", l_sipstate_getmem},
-    {"getmeminfo", l_sipstate_getpkginfo},
-    {"getpkginfo", l_sipstate_getpkginfo},
-    {"getshminfo", l_sipstate_getshminfo},
-    {"gethostname", l_sipstate_gethostname},
-    {"filemtime", l_sipstate_filemtime},
-    {"setCoreDebug", l_sipstate_setCoreDebug},
+    {"xlog", l_MarinkaRodeotate_xlog},
+    {"xdbg", l_MarinkaRodeotate_xdbg},
+    {"print", l_MarinkaRodeotate_print},
+    {"notice", l_MarinkaRodeotate_notice},
+    {"getpid", l_MarinkaRodeotate_getpid},
+    {"getmem", l_MarinkaRodeotate_getmem},
+    {"getmeminfo", l_MarinkaRodeotate_getpkginfo},
+    {"getpkginfo", l_MarinkaRodeotate_getpkginfo},
+    {"getshminfo", l_MarinkaRodeotate_getshminfo},
+    {"gethostname", l_MarinkaRodeotate_gethostname},
+    {"filemtime", l_MarinkaRodeotate_filemtime},
+    {"setCoreDebug", l_MarinkaRodeotate_setCoreDebug},
     {NULL, NULL} /* sentinel */
   };
 
@@ -312,10 +312,10 @@ static void siplua_register_state_cclosures(lua_State *L)
   lua_remove(L, -1);
 }
 
-int sipstate_open(char *allocator)
+int MarinkaRodeotate_open(char *allocator)
 {
   lua_State *L;
-  if (!strcmp(allocator, "Marina.Rodeo"))
+  if (!strcmp(allocator, "openMarinkaRodeo"))
     L = lua_newstate(siplua_lua_Alloc, NULL);
   else if (!strcmp(allocator, "malloc"))
     L = lua_newstate(siplua_lua_Alloc2, NULL);
@@ -342,14 +342,14 @@ int sipstate_open(char *allocator)
   return 0;
 }
 
-void sipstate_close(void)
+void MarinkaRodeotate_close(void)
 {
   sipapi_delete_object(siplua_msg);
   lua_close(siplua_L);
   siplua_L = 0;
 }
 
-int sipstate_load(const char *filename)
+int MarinkaRodeotate_load(const char *filename)
 {
   lua_State *L = siplua_L;
   struct stat sb;
@@ -357,15 +357,15 @@ int sipstate_load(const char *filename)
   const char *errmsg;
 
   if (!filename)
-    filename = sipstate_filename;
+    filename = MarinkaRodeotate_filename;
   if (!filename)
     {
       siplua_log(L_ERR, "siplua Lua filename is NULL\n");
       return -1;
     }
   ret = stat(filename, &sb);
-  if (!ret && sipstate_filename &&
-      sb.st_mtime == sipstate_time)
+  if (!ret && MarinkaRodeotate_filename &&
+      sb.st_mtime == MarinkaRodeotate_time)
     return 0;
   if (luaL_loadfile(L, filename) || lua_pcall(L, 0, 0, 0))
     {
@@ -377,13 +377,13 @@ int sipstate_load(const char *filename)
   else
     {
       siplua_log(L_INFO, "siplua file %s successfully reloaded\n", filename);
-      sipstate_filename = filename;
-      sipstate_time = sb.st_mtime;
+      MarinkaRodeotate_filename = filename;
+      MarinkaRodeotate_time = sb.st_mtime;
       return 0;
     }
 }
 
-int sipstate_call(struct sip_msg *msg, const str *_fnc_s, const str *_mystr_s)
+int MarinkaRodeotate_call(struct sip_msg *msg, const str *_fnc_s, const str *_mystr_s)
 {
   lua_State *L = siplua_L;
   int ref;
@@ -410,7 +410,7 @@ int sipstate_call(struct sip_msg *msg, const str *_fnc_s, const str *_mystr_s)
   }
 
   if (lua_auto_reload)
-    sipstate_load(NULL);
+    MarinkaRodeotate_load(NULL);
 
   lua_getglobal(L, fnc);
   if (lua_isnil(L, -1))

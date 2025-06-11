@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Project
+ * Copyright (C) 2017 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -51,7 +51,7 @@ typedef struct _ipc_job {
 static ipc_handler *ipc_handlers = NULL;
 static unsigned int ipc_handlers_no = 0;
 
-/* shared IPC support: dispatching a job to a random Marina.Rodeo worker */
+/* shared IPC support: dispatching a job to a random OpenMarinkaRodeo worker */
 static int ipc_shared_pipe[2];
 
 /* IPC type used for RPC - a self registered type */
@@ -231,8 +231,29 @@ int ipc_dispatch_job(ipc_handler_type type, void *payload)
 
 int ipc_send_rpc(int dst_proc, ipc_rpc_f *rpc, void *param)
 {
+	/* wait for the write IPC FD to be available, for a maximum 200ms */
+	busy_wait_for(IPC_FD_WRITE(dst_proc) >= 0, 200000, 10);
 	return __ipc_send_job(IPC_FD_WRITE(dst_proc), dst_proc,
 		ipc_rpc_type, rpc, param);
+}
+
+int ipc_send_rpc_all(ipc_rpc_f *rpc, void *param)
+{
+	int p, count = 0;
+
+	for (p = 1; p < counted_max_processes; p++) {
+		if (pt[p].flags & OSS_PROC_NO_IPC)
+			continue;
+		if (p == process_no) {
+			/* run line the cmd for the proc itself */
+			rpc(process_no, param);
+			count++;
+		} else {
+			if (ipc_send_rpc(p, rpc, param) >= 0)
+				count++;
+		}
+	}
+	return count;
 }
 
 int ipc_dispatch_rpc( ipc_rpc_f *rpc, void *param)

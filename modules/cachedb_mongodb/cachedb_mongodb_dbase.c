@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011-2019 Marina.Rodeo Project
+ * Copyright (C) 2011-2019 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -25,7 +25,7 @@
 #include "../../ut.h"
 #include "../../pt.h"
 #include "../../cachedb/cachedb.h"
-#include "../../lib/osips_malloc.h"
+#include "../../lib/oMarinkaRodeo_malloc.h"
 
 #include <string.h>
 
@@ -113,7 +113,7 @@ static char *build_mongodb_connect_string(struct cachedb_id *id)
 #define MONGOC_HANDSHAKE_APPNAME_MAX 128
 #endif
 
-char osips_appname[MONGOC_HANDSHAKE_APPNAME_MAX];
+char oMarinkaRodeo_appname[MONGOC_HANDSHAKE_APPNAME_MAX];
 mongo_con* mongo_new_connection(struct cachedb_id* id)
 {
 	char *p, *conn_str;
@@ -124,9 +124,9 @@ mongo_con* mongo_new_connection(struct cachedb_id* id)
 		return NULL;
 	}
 
-	snprintf(osips_appname, MONGOC_HANDSHAKE_APPNAME_MAX, "Marina.Rodeo-%d", my_pid());
+	snprintf(oMarinkaRodeo_appname, MONGOC_HANDSHAKE_APPNAME_MAX, "openMarinkaRodeo-%d", my_pid());
 
-	LM_DBG("MongoDB conn for [%s]: %s:%s://%s:xxxxxx@%s:%u\n", osips_appname,
+	LM_DBG("MongoDB conn for [%s]: %s:%s://%s:xxxxxx@%s:%u\n", oMarinkaRodeo_appname,
 	       id->scheme, id->group_name, id->username, id->host, id->port);
 
 	conn_str = build_mongodb_connect_string(id);
@@ -182,6 +182,9 @@ cachedb_con *mongo_con_init(str *url)
 void mongo_free_connection(cachedb_pool_con *con)
 {
 	mongo_con *mcon = (mongo_con *)con;
+	
+	if (!mcon)
+		return;
 
 	mongoc_collection_destroy(mcon->collection);
 	mongoc_database_destroy(mcon->database);
@@ -207,6 +210,9 @@ int mongo_con_get(cachedb_con *con, str *attr, str *val)
 	unsigned long ival;
 	char *p;
 	int ret = 0;
+
+	if (!con)
+		return -1;
 
 	LM_DBG("find %.*s in %s\n", attr->len, attr->s,
 	       MONGO_NAMESPACE(con));
@@ -236,7 +242,7 @@ int mongo_con_get(cachedb_con *con, str *attr, str *val)
 
 	while (mongoc_cursor_more(cursor) && mongoc_cursor_next(cursor, &doc)) {
 #endif
-		if (bson_iter_init_find(&iter, doc, "Marina.Rodeo")) {
+		if (bson_iter_init_find(&iter, doc, "openMarinkaRodeo")) {
 			value = bson_iter_value(&iter);
 			switch (value->value_type) {
 			case BSON_TYPE_UTF8:
@@ -295,12 +301,15 @@ int mongo_con_set(cachedb_con *con, str *attr, str *val, int expires)
 	struct timeval start;
 	int ret = 0;
 
+	if (!con)
+		return -1;
+
 	query = bson_new();
 	bson_append_utf8(query, MDB_PK, MDB_PKLEN, attr->s, attr->len);
 
 	update = bson_new();
 	BSON_APPEND_DOCUMENT_BEGIN(update, "$set", &child);
-	bson_append_utf8(&child, "Marina.Rodeo", 8, val->s, val->len);
+	bson_append_utf8(&child, "openMarinkaRodeo", 8, val->s, val->len);
 	bson_append_document_end(update, &child);
 
 	dbg_bson("query: ", query);
@@ -328,6 +337,9 @@ int mongo_con_remove(cachedb_con *con, str *attr)
 	bson_error_t error;
 	struct timeval start;
 	int ret = 0;
+
+	if (!con)
+		return -1;
 
 	doc = bson_new();
 	bson_append_utf8(doc, MDB_PK, MDB_PKLEN, attr->s, attr->len);
@@ -368,6 +380,9 @@ int mongo_raw_find(cachedb_con *con, bson_t *raw_query, bson_iter_t *ns,
 	int i, len, csz = 0, ret = -1;
 	const char *p;
 
+	if (!con)
+		return -1;
+
 	if (bson_iter_type(ns) != BSON_TYPE_UTF8) {
 		LM_ERR("collection name must be a string (%d)!\n", bson_iter_type(ns));
 		return -1;
@@ -406,7 +421,10 @@ int mongo_raw_find(cachedb_con *con, bson_t *raw_query, bson_iter_t *ns,
 		v = bson_iter_value(&iter);
 		bson_init_static(&proj, v->value.v_doc.data, v->value.v_doc.data_len);
 #if MONGOC_CHECK_VERSION(1, 5, 0)
-		bson_append_document(opts, "projection", 10, &proj);
+		if (!bson_append_document(opts, "projection", 10, &proj)) {
+			LM_ERR("failed to append doc\n");
+			goto out_err;
+		}
 #else
 		fields = &proj;
 #endif
@@ -519,6 +537,9 @@ int mongo_raw_update(cachedb_con *con, bson_t *raw_query, bson_iter_t *ns)
 	const bson_value_t *v;
 	int ret, count = 0;
 
+	if (!con)
+		return -1;
+
 	if (bson_iter_type(ns) != BSON_TYPE_UTF8) {
 		LM_ERR("collection name must be a string (%d)!\n", bson_iter_type(ns));
 		return -1;
@@ -624,6 +645,9 @@ int mongo_raw_insert(cachedb_con *con, bson_t *raw_query, bson_iter_t *ns)
 	const bson_value_t *v;
 	int ret, count = 0;
 
+	if (!con)
+		return -1;
+
 	if (bson_iter_type(ns) != BSON_TYPE_UTF8) {
 		LM_ERR("collection name must be a string (%d)!\n", bson_iter_type(ns));
 		return -1;
@@ -707,6 +731,9 @@ int mongo_raw_remove(cachedb_con *con, bson_t *raw_query, bson_iter_t *ns)
 	struct timeval start;
 	const bson_value_t *v;
 	int ret, count = 0;
+
+	if (!con)
+		return -1;
 
 	if (bson_iter_type(ns) != BSON_TYPE_UTF8) {
 		LM_ERR("collection name must be a string (%d)!\n", bson_iter_type(ns));
@@ -806,6 +833,9 @@ int mongo_con_raw_query(cachedb_con *con, str *qstr, cdb_raw_entry ***reply,
 	int ret = 0;
 	const char *p;
 	int csz = 0, i, len;
+
+	if (!con)
+		return -1;
 
 	LM_DBG("Get operation on namespace %s\n", MONGO_NAMESPACE(con));
 	start_expire_timer(start,mongo_exec_threshold);
@@ -966,6 +996,9 @@ int mongo_con_add(cachedb_con *con, str *attr, int val, int expires, int *new_va
 	struct timeval start;
 	int ret = 0;
 
+	if (!con)
+		return -1;
+
 	cmd = bson_new();
 	bson_append_utf8(cmd, "findAndModify", 13,
 	                 mongoc_collection_get_name(MONGO_COLLECTION(con)), -1);
@@ -976,7 +1009,7 @@ int mongo_con_add(cachedb_con *con, str *attr, int val, int expires, int *new_va
 
 	BSON_APPEND_DOCUMENT_BEGIN(cmd, "update", &child);
 	BSON_APPEND_DOCUMENT_BEGIN(&child, "$inc", &ichild);
-	bson_append_int32(&ichild, "Marina.Rodeo_counter", 16, val);
+	bson_append_int32(&ichild, "openMarinkaRodeo_counter", 16, val);
 	bson_append_document_end(&child, &ichild);
 	bson_append_document_end(cmd, &child);
 
@@ -1006,7 +1039,7 @@ int mongo_con_add(cachedb_con *con, str *attr, int val, int expires, int *new_va
 	    BSON_ITER_HOLDS_DOCUMENT(&iter) &&
 	    bson_iter_recurse(&iter, &sub_iter)) {
 
-		if (bson_iter_find(&sub_iter, "Marina.Rodeo_counter")) {
+		if (bson_iter_find(&sub_iter, "openMarinkaRodeo_counter")) {
 			*new_val = bson_iter_value(&sub_iter)->value.v_int32;
 		}
 	}
@@ -1031,6 +1064,9 @@ int mongo_con_get_counter(cachedb_con *con, str *attr, int *val)
 	bson_iter_t iter;
 	struct timeval start;
 	int ret = -2;
+
+	if (!con)
+		return -1;
 
 	query = bson_new();
 #if MONGOC_CHECK_VERSION(1, 5, 0)
@@ -1062,7 +1098,7 @@ int mongo_con_get_counter(cachedb_con *con, str *attr, int *val)
 	while (mongoc_cursor_more(cursor) && mongoc_cursor_next(cursor, &doc)) {
 #endif
 
-		if (bson_iter_init_find(&iter, doc, "Marina.Rodeo_counter")) {
+		if (bson_iter_init_find(&iter, doc, "openMarinkaRodeo_counter")) {
 			value = bson_iter_value(&iter);
 			switch (value->value_type) {
 			case BSON_TYPE_INT32:
@@ -1216,6 +1252,9 @@ int mongo_db_query_trans(cachedb_con *con, const str *table, const db_key_t *_k,
 	mongoc_collection_t *col = NULL;
 	char *strf, *stro;
 	str st;
+
+	if (!con)
+		return -1;
 
 	*_r = NULL;
 
@@ -1394,7 +1433,7 @@ int mongo_db_query_trans(cachedb_con *con, const str *table, const db_key_t *_k,
 						VAL_TYPE(cur_val) = DB_DATETIME;
 						VAL_TIME(cur_val) = bson_iter_date_time(&iter)/(int64_t)1000;
 						LM_DBG("Found time [%.*s]=[%d]\n",
-						       _c[c]->len, _c[c]->s, (int)VAL_TIME(cur_val));
+						       _c[c]->len, _c[c]->s, (int)(unsigned long)VAL_TIME(cur_val));
 						break;
 					case BSON_TYPE_OID:
 						bson_oid_to_string(bson_iter_oid(&iter), hex_oid);
@@ -1516,6 +1555,9 @@ int mongo_db_insert_trans(cachedb_con *con, const str *table,
 	mongoc_collection_t *col = NULL;
 	struct timeval start;
 
+	if (!con)
+		return -1;
+
 	doc = bson_new();
 	if (kvo_to_bson(_k, _v, NULL, _n, doc) != 0) {
 		LM_ERR("failed to build bson\n");
@@ -1564,6 +1606,9 @@ int mongo_db_delete_trans(cachedb_con *con, const str *table,
 	bson_error_t error;
 	mongoc_collection_t *col = NULL;
 	struct timeval start;
+
+	if (!con)
+		return -1;
 
 	doc = bson_new();
 	if (kvo_to_bson(_k, _v, _o, _n, doc) != 0) {
@@ -1614,6 +1659,9 @@ int mongo_db_update_trans(cachedb_con *con, const str *table,
 	bson_error_t error;
 	mongoc_collection_t *col = NULL;
 	struct timeval start;
+
+	if (!con)
+		return -1;
 
 	query = bson_new();
 	if (kvo_to_bson(_k, _v, _o, _n, query) != 0) {
@@ -1676,6 +1724,9 @@ int mongo_truncate(cachedb_con *con)
 	bson_error_t error;
 	struct timeval start;
 	int ret = 0;
+
+	if (!con)
+		return -1;
 
 	start_expire_timer(start, mongo_exec_threshold);
 	if (!mongoc_collection_remove(MONGO_COLLECTION(con),
@@ -1770,7 +1821,7 @@ int mongo_doc_to_dict(const bson_t *doc, cdb_dict_t *out_dict)
 	return 0;
 
 out_err:
-	cdb_free_entries(out_dict, osips_pkg_free);
+	cdb_free_entries(out_dict, oMarinkaRodeo_pkg_free);
 	return -1;
 }
 
@@ -1893,6 +1944,9 @@ int mongo_con_query(cachedb_con *con, const cdb_filter_t *filter,
 	cdb_row_t *row;
 	const bson_t *doc;
 	struct timeval start;
+
+	if (!con)
+		return -1;
 
 	LM_DBG("find all in %s\n", MONGO_NAMESPACE(con));
 
@@ -2073,6 +2127,9 @@ int mongo_con_update(cachedb_con *con, const cdb_filter_t *row_filter,
 	char has_set = 0, has_unset = 0;
 	cdb_pair_t *pair;
 	str key;
+
+	if (!con)
+		return -1;
 
 	if (mongo_cdb_filter_to_bson(row_filter, &filter) != 0) {
 		LM_ERR("failed to build bson filter\n");

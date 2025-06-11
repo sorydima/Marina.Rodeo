@@ -1,14 +1,14 @@
 /*
  * JWT Authentication Module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Project
+ * Copyright (C) 2020 OpenMarinkaRodeo Project
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -44,6 +44,11 @@ int extract_pub_key_from_cert(struct sip_msg* _msg, str* cert,
 
 	/* TODO - if x5c just add beggining & end */
 
+	if (cert == NULL) {
+		LM_ERR("Failed to parse certificate\n");
+		return -1;
+	}
+
 	bio = BIO_new_mem_buf((void*)cert->s,cert->len);
 	if (!bio) {
 		LM_ERR("Unable to create BIO buf\n");
@@ -51,10 +56,6 @@ int extract_pub_key_from_cert(struct sip_msg* _msg, str* cert,
 	}
 	
 	x509cert = PEM_read_bio_X509(bio, NULL, 0, NULL);
-	if (cert == NULL) {
-		LM_ERR("Failed to parse certificate\n");
-		goto err_free;
-	}
 
 	if ((pubkey = X509_get_pubkey(x509cert)) == NULL) {
 		LM_ERR("Failed to get pub key from certificate\n");

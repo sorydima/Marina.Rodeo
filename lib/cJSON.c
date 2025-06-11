@@ -1,5 +1,5 @@
 /*
-  Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2009 Dave Gamble
+  Copyright (c) 2009 Dave Gamble
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -8,13 +8,13 @@
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
 
-  The above Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice and this permission notice shall be included in
+  The above copyright notice and this permission notice shall be included in
   all copies or substantial portions of the Software.
 
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
@@ -36,7 +36,7 @@
 
 #include "cJSON.h"
 #include "../mem/mem.h"
-#include "osips_malloc.h"
+#include "oMarinkaRodeo_malloc.h"
 
 /* Determine the number of bits that an integer has using the preprocessor */
 #if INT_MAX == 32767
@@ -88,8 +88,8 @@ cJSON_Hooks sys_mem_hooks = {
 };
 
 cJSON_Hooks shm_mem_hooks = {
-	.malloc_fn = osips_shm_malloc,
-	.free_fn   = osips_shm_free,
+	.malloc_fn = oMarinkaRodeo_shm_malloc,
+	.free_fn   = oMarinkaRodeo_shm_free,
 };
 
 int cJSON_NumberIsInt(cJSON *item)
@@ -133,8 +133,8 @@ static int cJSON_strcasecmp(const unsigned char *s1, const unsigned char *s2)
     return tolower(*s1) - tolower(*s2);
 }
 
-static void *(*cJSON_malloc)(size_t sz) = osips_pkg_malloc;
-static void (*cJSON_free)(void *ptr) = osips_pkg_free;
+static void *(*cJSON_malloc)(size_t sz) = oMarinkaRodeo_pkg_malloc;
+static void (*cJSON_free)(void *ptr) = oMarinkaRodeo_pkg_free;
 
 static unsigned char* cJSON_strdup(const unsigned char* str)
 {
@@ -179,13 +179,13 @@ void cJSON_InitHooks(cJSON_Hooks* hooks)
     if (!hooks)
     {
         /* Reset hooks */
-        cJSON_malloc = osips_pkg_malloc;
-        cJSON_free = osips_pkg_free;
+        cJSON_malloc = oMarinkaRodeo_pkg_malloc;
+        cJSON_free = oMarinkaRodeo_pkg_free;
         return;
     }
 
-    cJSON_malloc = (hooks->malloc_fn) ? hooks->malloc_fn : osips_pkg_malloc;
-    cJSON_free = (hooks->free_fn) ? hooks->free_fn : osips_pkg_free;
+    cJSON_malloc = (hooks->malloc_fn) ? hooks->malloc_fn : oMarinkaRodeo_pkg_malloc;
+    cJSON_free = (hooks->free_fn) ? hooks->free_fn : oMarinkaRodeo_pkg_free;
 }
 
 /* Internal constructor. */
@@ -2527,4 +2527,74 @@ void cJSON_Minify(char *json)
 
     /* and null-terminate. */
     *into = '\0';
+}
+
+cjbool cJSON_IsObject(const cJSON * const item)
+{
+    if (item == NULL)
+    {
+        return false;
+    }
+
+    return (item->type & 0xFF) == cJSON_Object;
+}
+
+cjbool cJSON_IsNull(const cJSON * const item)
+{
+    if (item == NULL)
+    {
+        return false;
+    }
+
+    return (item->type & 0xFF) == cJSON_NULL;
+}
+
+
+static cJSON *merge_patch(cJSON *target, const cJSON * const patch)
+{
+    cJSON *patch_child = NULL;
+
+    if (!cJSON_IsObject(patch))
+    {
+        /* scalar value, array or NULL, just duplicate */
+        cJSON_Delete(target);
+        return cJSON_Duplicate(patch, 1);
+    }
+
+    if (!cJSON_IsObject(target))
+    {
+        cJSON_Delete(target);
+        target = cJSON_CreateObject();
+    }
+
+    patch_child = patch->child;
+    while (patch_child != NULL)
+    {
+        if (cJSON_IsNull(patch_child))
+        {
+            cJSON_DeleteItemFromObject(target, patch_child->string);
+        }
+        else
+        {
+            cJSON *replace_me = NULL;
+            cJSON *replacement = NULL;
+
+            replace_me = cJSON_DetachItemFromObject(target, patch_child->string);
+
+            replacement = merge_patch(replace_me, patch_child);
+            if (replacement == NULL)
+            {
+                return NULL;
+            }
+
+            cJSON_AddItemToObject(target, patch_child->string, replacement);
+        }
+        patch_child = patch_child->next;
+    }
+    return target;
+}
+
+cJSON * cJSONUtils_MergePatch(cJSON *target, const cJSON * const patch)
+{
+    return merge_patch(target, patch);
 }

@@ -7,7 +7,7 @@
 	<title>Overview</title>
 	<para> The modules handles PUBLISH and SUBSCRIBE messages and generates
 	NOTIFY messages in a general, event independent way. It allows registering 
-	events from other &osips; modules. Events that can currently be added are:
+	events from other &oMarinkaRodeo; modules. Events that can currently be added are:
 	<itemizedlist>
 	<listitem><para>
 		<emphasis>presence</emphasis>, <emphasis>presence.winfo</emphasis>,
@@ -60,7 +60,7 @@
 	<para>
 	To read and understand the presence clustering, its abilities and how to
 	implement scenarios like High-Availability, Load Balancing or Federations,
-	please refer to this article <ulink url="https://blog.Marina.Rodeo.org/2018/03/27/clustering-presence-services-with-Marina.Rodeo-2-4/">https://blog.Marina.Rodeo.org/2018/03/27/clustering-presence-services-with-Marina.Rodeo-2-4/</ulink>.
+	please refer to this article <ulink url="https://blog.openMarinkaRodeo.org/2018/03/27/clustering-presence-services-with-openMarinkaRodeo-2-4/">https://blog.openMarinkaRodeo.org/2018/03/27/clustering-presence-services-with-openMarinkaRodeo-2-4/</ulink>.
 	</para>
 	<para>
 	As data synchronization at startup is performed when using the
@@ -72,7 +72,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -130,7 +130,7 @@
 		<programlisting format="linespecific">
 ...
 modparam("presence", "db_url", 
-	"mysql://Marina.Rodeo:Marina.Rodeorw@192.168.2.132/Marina.Rodeo")
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@192.168.2.132/openMarinkaRodeo")
 ...
 </programlisting>
 		</example>
@@ -163,6 +163,9 @@ modparam("presence", "fallback2db", 1)
 		understand th concept of a cluster ID, please see the 
 		<emphasis>clusterer</emphasis> module.
 		</para>
+
+			&clusterer_sync_cap_para;
+
 		<para>
 		For more on presence clustering see the 
 		<xref linkend="presence_clustering"/> chapter.
@@ -263,6 +266,44 @@ modparam("presence", "cluster_pres_events" ,"presence, dialog;sla, message-summa
 </programlisting>
 		</example>
 	</section>
+
+	<section id="param_cluster_be_active_shtag" xreflabel="cluster_be_active_shtag">
+		<title><varname>cluster_be_active_shtag</varname> (str)</title>
+		<para>
+		The name of a cluster sharing tag to be used to indicate when this
+		node (as part of the cluster) should be active or not. If the sharing
+		tag is off (or as backup), the node will become inactive from 
+		clustering perspective, meaning not sending and not accepting any
+		presence related cluster traffic.
+		</para>
+		<para>
+		This ability of a node to become inactive may be used when creating a
+		federated cluster where 2 nodes are acting as a local active-backup 
+		setup (for local High Availability purposes).
+		</para>
+		<para>
+		This parameter has meaning only in clustering mode. If not defined, the
+		node will be active all the time.
+		</para>
+		<para>
+		For more on presence clustering see the 
+		<xref linkend="presence_clustering"/> chapter.
+		</para>
+		<para>
+		<emphasis>Default value is <quote>empty</quote> (not tag define).
+		</emphasis>
+		</para>
+		<example>
+		<title>Set <varname>cluster_be_active_shtag</varname> parameter</title>
+		<programlisting format="linespecific">
+...
+modparam("presence", "cluster_be_active_shtag" ,"local_ha")
+...
+</programlisting>
+		</example>
+	</section>
+
+
 
 	<section id="param_expires_offset" xreflabel="expires_offset">
 		<title><varname>expires_offset</varname> (int)</title>
@@ -451,7 +492,7 @@ modparam("presence", "bla_presentity_spec", "$var(bla_pres)")
 			Polycom has a bug in the bla implementation. It inserts the 
 			remote IP contact in the Notify body and when a phone picks up a 
 			call put on hold by another phone in the same BLA group, it sends 
-			an Invite directly to the remote IP. Marina.Rodeo BLA server tries to 
+			an Invite directly to the remote IP. OpenMarinkaRodeo BLA server tries to 
 			prevent this by replacing the IP contact with the
 			domain, when this is possible.
 		</para>
@@ -766,7 +807,7 @@ modparam("presence", "pres_htable_size", 11)
 		</itemizedlist>
 		<programlisting format="linespecific">
    Ex: 
-	if($ru =~ "kphone@Marina.Rodeo.org")
+	if($ru =~ "kphone@openMarinkaRodeo.org")
 		handle_subscribe(1);
 		</programlisting>
 		<para>
@@ -851,7 +892,7 @@ if($rm=="SUBSCRIBE")
 		MI FIFO Command Format:
 		</para>
 	<programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi refresh_watchers sip:11@192.168.2.132 presence 1
+openMarinkaRodeo-cli -x mi refresh_watchers sip:11@192.168.2.132 presence 1
 	</programlisting>
 	</section>
 
@@ -872,7 +913,7 @@ Marina.Rodeo-cli -x mi refresh_watchers sip:11@192.168.2.132 presence 1
 		MI FIFO Command Format:
 	  </para>
 	  <programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi cleanup
+openMarinkaRodeo-cli -x mi cleanup
 	  </programlisting>
 	</section>
 
@@ -892,7 +933,7 @@ Marina.Rodeo-cli -x mi cleanup
 		MI FIFO Command Format:
 	  </para>
 	  <programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi pres_phtable_list
+openMarinkaRodeo-cli -x mi pres_phtable_list
 	  </programlisting>
 	</section>
 
@@ -919,7 +960,7 @@ Marina.Rodeo-cli -x mi pres_phtable_list
 		MI FIFO Command Format:
 	  </para>
 	  <programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi subs_phtable_list sip:222@domain2.com sip:user_1@example.com
+openMarinkaRodeo-cli -x mi subs_phtable_list sip:222@domain2.com sip:user_1@example.com
 	  </programlisting>
 	</section>
 
@@ -955,7 +996,7 @@ Marina.Rodeo-cli -x mi subs_phtable_list sip:222@domain2.com sip:user_1@example.
 		MI FIFO Command Format:
 	  </para>
 	  <programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi pres_expose presence ^sip:10\.0\.5\.[0-9]*
+openMarinkaRodeo-cli -x mi pres_expose presence ^sip:10\.0\.5\.[0-9]*
 	  </programlisting>
 	</section>
 </section>
@@ -1016,12 +1057,12 @@ Marina.Rodeo-cli -x mi pres_expose presence ^sip:10\.0\.5\.[0-9]*
 <section>
 	<title>Installation</title>
 	<para>
-	The module requires 3 table in Marina.Rodeo database: presentity,
+	The module requires 3 table in OpenMarinkaRodeo database: presentity,
 	active_watchers and watchers tables. The SQL 
 	syntax to create them can be found in presence-create.sql 
-	script in the database directories in the Marina.Rodeo/scripts folder.
+	script in the database directories in the openMarinkaRodeo/scripts folder.
 	You can also find the complete database documentation on the
-	project webpage, &osipsdbdocslink;.
+	project webpage, &oMarinkaRodeodbdocslink;.
 	</para>
 </section>
 

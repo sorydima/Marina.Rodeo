@@ -1,6 +1,4 @@
-# $Id$
-#
-# XCAP operations module for Marina.Rodeo
+# XCAP operations module for OpenMarinkaRodeo
 #
 #
 # WARNING: do not run this directly, it should be run by the master Makefile

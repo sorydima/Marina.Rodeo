@@ -1,16 +1,16 @@
 /*
  * Driver and API to command and control FreeSWITCH ESL connections
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Solutions
+ * Copyright (C) 2017 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -26,7 +26,7 @@
 #include "../../mod_fix.h"
 #include "../../parser/msg_parser.h"
 #include "../../mem/mem.h"
-#include "../../lib/osips_malloc.h"
+#include "../../lib/oMarinkaRodeo_malloc.h"
 #include "../../lib/csv.h"
 #include "../../lib/url.h"
 #include "../../lib/list.h"
@@ -68,7 +68,7 @@ static const proc_export_t procs[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
 	{ /* modparam dependencies */
@@ -82,7 +82,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,  /* dlopen flags */
 	0,				  /* load function */
-	&deps,            /* Marina.Rodeo module dependencies */
+	&deps,            /* OpenMarinkaRodeo module dependencies */
 	cmds,             /* exported functions */
 	NULL,             /* exported async functions */
 	mod_params,       /* param exports */
@@ -113,8 +113,8 @@ static int mod_init(void)
 		return -1;
 	}
 
-	hooks.malloc_fn = osips_pkg_malloc;
-	hooks.free_fn = osips_pkg_free;
+	hooks.malloc_fn = oMarinkaRodeo_pkg_malloc;
+	hooks.free_fn = oMarinkaRodeo_pkg_free;
 	cJSON_InitHooks(&hooks);
 
 	return 0;

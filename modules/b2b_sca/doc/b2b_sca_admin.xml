@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		This module provides core SCA (Shared Call Appearance) functionality
-		for &osips;.
+		for &oMarinkaRodeo;.
 		It is designed to work in tandem with the presence_callinfo module.
 	</para>
 	<para>
@@ -89,7 +89,7 @@ alice1@example alice2@example  server   bob@example watcher@example
 	
 	<section id="dependencies" xreflabel="Dependencies"><title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -140,7 +140,7 @@ modparam("b2b_sca", "hash_size", "5")
 		<title>Set <varname>presence_server</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("b2b_sca", "presence_server", "sip:Marina.Rodeo")
+modparam("b2b_sca", "presence_server", "sip:openMarinkaRodeo.org")
 ...
 </programlisting>
 		</example>
@@ -525,7 +525,7 @@ modparam("b2b_sca",
 	<para>Parameters: <emphasis>none</emphasis></para>
 	<para>MI FIFO Command Format:</para>
 <programlisting  format="linespecific">
-	Marina.Rodeo-cli -x mi sca_list
+	openMarinkaRodeo-cli -x mi sca_list
 </programlisting>
 	</section>
 	</section>

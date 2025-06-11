@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009-2020 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008 Voice System SRL
+ * Copyright (C) 2009-2020 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2008 Voice System SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -200,7 +200,7 @@ int add_profile_definitions( char* profiles, unsigned int has_value)
 
 		/* check the name format */
 		for(i=0;i<name.len;i++) {
-			if ( !isalnum(name.s[i]) ) {
+			if ( !isalnum(name.s[i]) && name.s[i]!='_'  && name.s[i]!='-' ) {
 				LM_ERR("bad profile name <%.*s>, char %c - use only "
 						"alphanumerical characters\n", name.len,name.s,name.s[i]);
 				return -1;
@@ -312,7 +312,7 @@ int init_cachedb(void)
 
 	cdbc = cdbf.init(&cdb_url);
 	if (!cdbc) {
-		LM_ERR("cannot connect to cachedb_url %.*s\n", cdb_url.len, cdb_url.s);
+		LM_ERR("cannot connect to cachedb_url %s\n", db_url_escape(&cdb_url));
 		return -1;
 	}
 	LM_DBG("Inited cachedb \n");
@@ -342,8 +342,8 @@ int init_cachedb_utils(void)
 		return -1;
 	}
 	if (cachedb_bind_mod(&cdb_url, &cdbf) < 0) {
-		LM_ERR("cannot bind functions for cachedb_url %.*s\n",
-				cdb_url.len, cdb_url.s);
+		LM_ERR("cannot bind functions for cachedb_url %s\n",
+		       db_url_escape(&cdb_url));
 		return -1;
 	}
 	if (!CACHEDB_CAPABILITY(&cdbf,
@@ -354,7 +354,7 @@ int init_cachedb_utils(void)
 
 	cdbc = cdbf.init(&cdb_url);
 	if (!cdbc) {
-		LM_ERR("cannot connect to cachedb_url %.*s\n", cdb_url.len, cdb_url.s);
+		LM_ERR("cannot connect to cachedb_url %s\n", db_url_escape(&cdb_url));
 		return -1;
 	}
 

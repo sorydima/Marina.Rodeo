@@ -12,7 +12,7 @@
 		with hep. All hep parameters moved inside proto_hep.
 	</para>
 	<para>
-		The 2.2 version of &osips; came with a major improvement in tracer module.
+		The 2.2 version of &oMarinkaRodeo; came with a major improvement in tracer module.
 		Now all you have to do is call <emphasis>trace()</emphasis> function
 		with the proper parameters and it will do the job for you. Now you can trace
 		messages, transactions and dialogs with the same function. Also, you can trace
@@ -32,23 +32,23 @@
 	The tracing tracing can be turned on/off using fifo command.
 	</para>
 	<para>
-	Marina.Rodeo-cli -x mi trace on
-	Marina.Rodeo-cli -x mi trace [some_trace_id] on
+	openMarinkaRodeo-cli -x mi trace on
+	openMarinkaRodeo-cli -x mi trace [some_trace_id] on
 	</para>
 	<para>
-	Marina.Rodeo-cli -x mi trace off
-	Marina.Rodeo-cli -x mi trace [some_trace_id] off
+	openMarinkaRodeo-cli -x mi trace off
+	openMarinkaRodeo-cli -x mi trace [some_trace_id] off
 	</para>
 
 	<para>
-		Starting with &osips; 3.0 you can use the <emphasis>trace_start</emphasis> to
+		Starting with &oMarinkaRodeo; 3.0 you can use the <emphasis>trace_start</emphasis> to
 		create dynamic dynamic tracing destinations based on some custom filters.
 	</para>
 	</section>
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -90,7 +90,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -188,7 +188,7 @@ modparam("tracer", "trace_local_ip", "10.1.1.1")
 		<para>
 			When the uri is <emphasis>syslog</emphasis>, it has to follow the following
 			format: <emphasis>syslog[:FACILITY[:LEVEL]]</emphasis>. The default
-			facility and levels are the ones used by &osips;
+			facility and levels are the ones used by &oMarinkaRodeo;
 			(<emphasis>syslog_facility</emphasis> and <emphasis>log_level</emphasis>).
 			These can be tuned using
 			<xref linkend="param_syslog_default_facility"/> and
@@ -217,7 +217,7 @@ modparam("tracer", "trace_local_ip", "10.1.1.1")
 /*DB trace id*/
 modparam("tracer", "trace_id",
 "[tid]
-uri=mysql://xxxx:xxxx@10.10.10.10/Marina.Rodeo;
+uri=mysql://xxxx:xxxx@10.10.10.10/openMarinkaRodeo;
 table=new_sip_trace;")
 /* hep trace id with the hep id defined in proto_hep; check proto_hep docs
  * for more information */
@@ -309,7 +309,7 @@ modparam("tracer", "file_mode", 0644)
 		<title>
 		<function moreinfo="none">trace(trace_id, [scope], [type], [trace_attrs], [flags], [correlation_id])</function>
 		</title>
-		<para>This function has replaced the <emphasis>sip_trace()</emphasis> in &osips; 3.0.</para>
+		<para>This function has replaced the <emphasis>sip_trace()</emphasis> in &oMarinkaRodeo; 3.0.</para>
 		<para>
 			Store or replicate current processed SIP message, transaction / dialog or B2B session.
 			It is stored in the form prior applying chages made to it. The traced_user_avp
@@ -415,7 +415,7 @@ modparam("tracer", "file_mode", 0644)
 ...
 /* see declaration of tid in trace_id section */
 	$var(trace_id) = "tid";
-	$var(user) = "osip_user@Marina.Rodeo.org";
+	$var(user) = "osip_user@openMarinkaRodeo.org";
 
 ...
 /* Example 1: how to trace a dialog sip and xlog */
@@ -516,11 +516,11 @@ modparam("tracer", "file_mode", 0644)
 		</para>
 		<programlisting  format="linespecific">
 # Display global tracing mode and all trace destinations:
-Marina.Rodeo-cli -x mi trace
+openMarinkaRodeo-cli -x mi trace
 # Turn off global tracing:
-Marina.Rodeo-cli -x mi trace mode=off
+openMarinkaRodeo-cli -x mi trace mode=off
 # Turn on tracing for destination id tid2:
-Marina.Rodeo-cli -x mi trace id=tid2 mode=on
+openMarinkaRodeo-cli -x mi trace id=tid2 mode=on
 		</programlisting>
 	</section>
 
@@ -598,14 +598,14 @@ Marina.Rodeo-cli -x mi trace id=tid2 mode=on
 		MI FIFO Command to start tracing calls from IP 127.0.0.1 to HEP destination 10.0.0.1:9060:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi trace_start id=ip_filter uri=hep:10.0.0.1:9060 filter=ip=127.0.0.1
+		openMarinkaRodeo-cli -x mi trace_start id=ip_filter uri=hep:10.0.0.1:9060 filter=ip=127.0.0.1
 		</programlisting>
 
 		<para>
 		MI FIFO Command to start tracing calls from user Alice to user Bob:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi trace_start id=alice_bob uri=hep:10.0.0.1:9060 filter=caller=Alice filter=caller=Bob
+		openMarinkaRodeo-cli -x mi trace_start id=alice_bob uri=hep:10.0.0.1:9060 filter=caller=Alice filter=caller=Bob
 		</programlisting>
 	</section>
 
@@ -614,7 +614,7 @@ Marina.Rodeo-cli -x mi trace id=tid2 mode=on
 		<function moreinfo="none">trace_stop</function>
 		</title>
 		<para>
-			Stops &osips; from sending traffic to a dynamic trace id created
+			Stops &oMarinkaRodeo; from sending traffic to a dynamic trace id created
 			using the <emphasis>trace_start</emphasis> command.
 		</para>
 		<para>
@@ -635,7 +635,7 @@ Marina.Rodeo-cli -x mi trace id=tid2 mode=on
 		MI FIFO Command to stop tracing calls from user Alice to user Bob:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi trace_stop alice_bob
+		openMarinkaRodeo-cli -x mi trace_stop alice_bob
 		</programlisting>
 	</section>
 
@@ -645,21 +645,21 @@ Marina.Rodeo-cli -x mi trace id=tid2 mode=on
 	<section>
 		<title>Database setup</title>
 		<para>
-			Before running &osips; with tracer, you have to setup the database
+			Before running &oMarinkaRodeo; with tracer, you have to setup the database
 			tables where the module will store the data. For that, if the
 			table were not created by the installation script or you choose
 			to install everything by yourself you can use the tracer-create.sql
 			<acronym>SQL</acronym> script in the database directories in the
-			Marina.Rodeo/scripts folder as template.
+			openMarinkaRodeo/scripts folder as template.
 			You can also find the complete database documentation on the
-			project webpage, &osipsdbdocslink;.
+			project webpage, &oMarinkaRodeodbdocslink;.
 		</para>
 	</section>
 
 	<section>
 		<title>Known issues</title>
 		<para>
-			ACKs related to a transaction that are leaving &osips; are not
+			ACKs related to a transaction that are leaving &oMarinkaRodeo; are not
 			traced since they are handled statelessly using forward_request function.
 			Fixing it would mean to register a fwdcb callback that would be called
 			for all the messages but would be used only by ACKs, which would be

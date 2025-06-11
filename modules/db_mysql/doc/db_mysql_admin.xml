@@ -7,15 +7,15 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		This is a module which provides MySQL connectivity for Marina.Rodeo.
-		It implements the DB API defined in Marina.Rodeo.
+		This is a module which provides MySQL connectivity for OpenMarinkaRodeo.
+		It implements the DB API defined in OpenMarinkaRodeo.
 	</para>
 	</section>
 
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -31,7 +31,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -164,9 +164,12 @@ modparam("db_mysql", "ps_max_col_size", 4096)
 		<para>
 		Setting this parameter will allow you to use TLS for MySQL connections.
 		In order to enable TLS for a specific connection, you can use the
-		"tls_domain=<emphasis>dom_name</emphasis>" URL parameter in the db_url of
-		the respective Marina.Rodeo module. This should be placed at the end of the
-		URL after the '?' character.
+		"<emphasis role='bold'>tls_domain=</emphasis>dom_name" URL parameter in the db_url of
+		the respective OpenMarinkaRodeo module. This should be placed at the end of the
+		URL after the <emphasis role='bold'>'?'</emphasis> character. Additionally,
+		the query string may include the "<emphasis role='bold'>tls_opts=</emphasis>
+		PKEY,CERT,CA,CA_DIR,CIPHERS" CSV parameter, in order to control/limit the
+		amount of TLS options passed to the TLS library.
 		</para>
 		<para>
 		When using this parameter, you must also ensure that
@@ -194,13 +197,15 @@ modparam("db_mysql", "ps_max_col_size", 4096)
 		<programlisting format="linespecific">
 ...
 modparam("tls_mgm", "client_domain", "dom1")
-modparam("tls_mgm", "certificate", "[dom1]/etc/pki/tls/certs/Marina.Rodeo.pem")
-modparam("tls_mgm", "private_key", "[dom1]/etc/pki/tls/private/Marina.Rodeo.key")
+modparam("tls_mgm", "certificate", "[dom1]/etc/pki/tls/certs/openMarinkaRodeo.pem")
+modparam("tls_mgm", "private_key", "[dom1]/etc/pki/tls/private/openMarinkaRodeo.key")
 modparam("tls_mgm", "ca_list",     "[dom1]/etc/pki/tls/certs/ca.pem")
 ...
 modparam("db_mysql", "use_tls", 1)
 ...
-modparam("usrloc", "db_url", "mysql://root:1234@localhost/Marina.Rodeo?tls_domain=dom1")
+modparam("usrloc", "db_url", "mysql://root:1234@localhost/openMarinkaRodeo?tls_domain=dom1")
+...
+modparam("usrloc", "db_url", "mysql://root:1234@localhost/openMarinkaRodeo?tls_domain=dom1&amp;tls_opts=PKEY,CERT,CA,CA_DIR,CIPHERS")
 ...
 </programlisting>
 		</example>
@@ -222,7 +227,7 @@ modparam("usrloc", "db_url", "mysql://root:1234@localhost/Marina.Rodeo?tls_domai
 			<listitem>
 			<para>
 			- edit the "Makefile" and remove "db_mysql" from "excluded_modules"
-			list. Then follow the standard procedure to install &osips;:
+			list. Then follow the standard procedure to install &oMarinkaRodeo;:
 			"make all; make install".
 			</para>
 			</listitem>

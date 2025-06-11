@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014 Marina.Rodeo Solutions
+ * Copyright (C) 2014 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -39,7 +39,7 @@ unsigned int type_offsets[CONTEXT_COUNT][CONTEXT_COUNT_TYPE];
 static context_destroy_f *context_destroy_array[CONTEXT_COUNT];
 
 static void register_context_destroy(context_destroy_f f,
-		enum osips_context ctx, enum osips_context_val t)
+		enum oMarinkaRodeo_context ctx, enum oMarinkaRodeo_context_val t)
 {
 	static int count = 0; /* contains all counters */
 	context_destroy_f *tmp;
@@ -78,7 +78,7 @@ static void register_context_destroy(context_destroy_f f,
 }
 
 /* Note: @ctx will *not* be freed! */
-void context_destroy(enum osips_context ctxtype, context_p ctx)
+void context_destroy(enum oMarinkaRodeo_context ctxtype, context_p ctx)
 {
 	int f = 0;
 	int n;
@@ -113,7 +113,7 @@ void context_destroy(enum osips_context ctxtype, context_p ctx)
 	}
 }
 
-context_p context_alloc(enum osips_context type)
+context_p context_alloc(enum oMarinkaRodeo_context type)
 {
 	context_p ctx;
 
@@ -192,7 +192,7 @@ void clear_global_context(void)
 }
 
 
-int context_register_int(enum osips_context type, context_destroy_f f)
+int context_register_int(enum oMarinkaRodeo_context type, context_destroy_f f)
 {
 	context_sizes[type] += sizeof(int);
 	type_offsets[type][CONTEXT_STR_TYPE] += sizeof(int);
@@ -202,7 +202,7 @@ int context_register_int(enum osips_context type, context_destroy_f f)
 	return type_sizes[type][CONTEXT_INT_TYPE]++;
 }
 
-int context_register_str(enum osips_context type, context_destroy_f f)
+int context_register_str(enum oMarinkaRodeo_context type, context_destroy_f f)
 {
 	context_sizes[type] += sizeof(str);
 	type_offsets[type][CONTEXT_PTR_TYPE] += sizeof(str);
@@ -211,7 +211,7 @@ int context_register_str(enum osips_context type, context_destroy_f f)
 	return type_sizes[type][CONTEXT_STR_TYPE]++;
 }
 
-int context_register_ptr(enum osips_context type, context_destroy_f f)
+int context_register_ptr(enum oMarinkaRodeo_context type, context_destroy_f f)
 {
 	context_sizes[type] += sizeof(void *);
 	register_context_destroy(f, type, CONTEXT_PTR_TYPE);

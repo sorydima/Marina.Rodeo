@@ -9,7 +9,7 @@ CLUSTERER Module
         1.2. Capabilities layer
         1.3. Dependencies
 
-              1.3.1. Marina.Rodeo Modules
+              1.3.1. OpenMarinkaRodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -39,6 +39,7 @@ CLUSTERER Module
               1.4.23. flags_col
               1.4.24. description_col
               1.4.25. enable_stats (integer)
+              1.4.26. enable_rerouting (integer)
 
         1.5. Exported Functions
 
@@ -48,7 +49,8 @@ CLUSTERER Module
               1.5.2. cluster_send_rpl(cluster_id, dst_id, msg,
                       tag)
 
-              1.5.3. cluster_broadcast_req(cluster_id, msg, [tag])
+              1.5.3. cluster_broadcast_req(cluster_id, msg, [tag],
+                      [include_self])
 
               1.5.4. cluster_check_addr(cluster_id, ip, addr_type)
 
@@ -149,22 +151,23 @@ CLUSTERER Module
    1.23. Set flags_col parameter
    1.24. Set description_col parameter
    1.25. Set enable_stats parameter
-   1.26. cluster_send_req() usage
-   1.27. cluster_send_rpl() usage
-   1.28. cluster_broadcast_req() usage
-   1.29. cluster_check_addr() usage
-   1.30. clusterer_list usage
-   1.31. clusterer_list_topology usage
-   1.32. clusterer_list_cap usage
-   1.33. Example database content - clusterer table
-   1.34. Node A configuration
-   1.35. Node B configuration
+   1.26. Set enable_rerouting parameter
+   1.27. cluster_send_req() usage
+   1.28. cluster_send_rpl() usage
+   1.29. cluster_broadcast_req() usage
+   1.30. cluster_check_addr() usage
+   1.31. clusterer_list usage
+   1.32. clusterer_list_topology usage
+   1.33. clusterer_list_cap usage
+   1.34. Example database content - clusterer table
+   1.35. Node A configuration
+   1.36. Node B configuration
 
 Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The clusterer module is used to organize multiple Marina.Rodeo
+   The clusterer module is used to organize multiple OpenMarinkaRodeo
    instances into groups(clusters) in which the nodes can
    communicate with each other in order to replicate, share
    information or perform distributed tasks. The distributed logic
@@ -192,13 +195,13 @@ Chapter 1. Admin Guide
    link to a destination, the BIN packet sent by a module is
    transparently routed through the cluster.
 
-   Note that an Marina.Rodeo instance can belong to multiple clusters,
+   Note that an OpenMarinkaRodeo instance can belong to multiple clusters,
    communicating and establishing the topology separately for each
    one. In order to provision this in the database or the script,
    each node has an unique ID at global level, which can be
    referenced in each cluster.
 
-   An Marina.Rodeo instance can dynamically learn all the nodes in the
+   An OpenMarinkaRodeo instance can dynamically learn all the nodes in the
    cluster if database provisioning is not desired. It is enough
    to define at least one neigbour in the script in order to
    discover all the cluster components.
@@ -208,7 +211,7 @@ Chapter 1. Admin Guide
    The clusterer module also keeps track of the state of the nodes
    in terms of data synchronization for the functionalities (or
    "capabilities") implemented on top by other modules. Some
-   capabilities require a full data sync(at Marina.Rodeo startup or at
+   capabilities require a full data sync(at OpenMarinkaRodeo startup or at
    runtime via MI) from a valid "donor" node in the cluster that
    has the full data set. Furthermore, a capability can query the
    clusterer module in order to partition some distributed logic
@@ -233,7 +236,7 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. Marina.Rodeo Modules
+1.3.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * a database module - if db_mode is 1.
@@ -242,7 +245,7 @@ Chapter 1. Admin Guide
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.4. Exported Parameters
@@ -288,7 +291,7 @@ modparam("clusterer", "db_mode", 0)
    Example 1.3. Set db_url parameter
 ...
 modparam("clusterer", "db_url",
-        "mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo")
+        "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo")
 ...
 
 1.4.4. db_table
@@ -452,7 +455,7 @@ modparam("clusterer", "sync_packet_size", 32765)
 1.4.14. dispatch_jobs
 
    Enables the dispatching of jobs(processing replicated data
-   packets) from the receiving TCP worker process to free Marina.Rodeo
+   packets) from the receiving TCP worker process to free openMarinkaRodeo
    workers (including UDP, timer processes etc.).
 
    This generally improves the performance of handling replication
@@ -600,6 +603,20 @@ modparam("clusterer", "description_col", "description")
 modparam("clusterer", "enable_stats", 0)
 ...
 
+1.4.26. enable_rerouting (integer)
+
+   If packets should be rerouted via another node if a direct
+   route to destination is unavailible. Disabling may improve
+   stability in two-node topologies. Set it to zero to disable or
+   to non-zero to enable it.
+
+   Default value is “1 (enabled)”.
+
+   Example 1.26. Set enable_rerouting parameter
+...
+modparam("clusterer", "enable_rerouting", 0)
+...
+
 1.5. Exported Functions
 
 1.5.1.  cluster_send_req(cluster_id, dst_id, msg, [tag])
@@ -627,12 +644,12 @@ modparam("clusterer", "enable_stats", 0)
      * -2 - destination node is not reachable through any path
        according to the discovered topology
      * -3 - destination node or valid next hop appear to be
-       reachable but send failed or other Marina.Rodeo internal error
+       reachable but send failed or other OpenMarinkaRodeo internal error
 
    This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
    ONREPLY_ROUTE, BRANCH_ROUTE, LOCAL_ROUTE and EVENT_ROUTE.
 
-   Example 1.26. cluster_send_req() usage
+   Example 1.27. cluster_send_req() usage
 ...
 # send a request
 cluster_send_req(1, 1, "Check USER: $fU", $var(req_tag));
@@ -671,12 +688,12 @@ route[rpl_resume] {
      * -2 - destination node is not reachable through any path
        according to the discovered topology
      * -3 - destination node or valid next hop appear to be
-       reachable but send failed or other Marina.Rodeo internal error
+       reachable but send failed or other OpenMarinkaRodeo internal error
 
    This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
    ONREPLY_ROUTE, BRANCH_ROUTE, LOCAL_ROUTE and EVENT_ROUTE.
 
-   Example 1.27. cluster_send_rpl() usage
+   Example 1.28. cluster_send_rpl() usage
 ...
 event_route[E_CLUSTERER_REQ_RECEIVED] {
   cluster_send_rpl($param(cluster_id), $param(src_id), $var(my_reply), $
@@ -684,11 +701,14 @@ param(tag));
 }
 ...
 
-1.5.3.  cluster_broadcast_req(cluster_id, msg, [tag])
+1.5.3.  cluster_broadcast_req(cluster_id, msg, [tag], [include_self])
 
    This function has a similar behaviour to the cluster_send_req()
    function with the exception that the message is sent to all the
    nodes in the specified cluster.
+     * include_self (bool, optional, default: false) - raise the
+       event for current node as well, but without actually
+       sending a packet (both req and rpl).
 
    The function can return the following values:
      * 1 - successfully sent message to at least one node;
@@ -696,7 +716,7 @@ param(tag));
      * -2 - all nodes in the cluster are unreachable according to
        the discovered topology;
      * -3 - send failed for all nodes in the cluster or other
-       Marina.Rodeo internal error.
+       OpenMarinkaRodeo internal error.
 
    The meaning of the parameters is the same as for
    cluster_send_req().
@@ -704,9 +724,10 @@ param(tag));
    This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
    ONREPLY_ROUTE, BRANCH_ROUTE, LOCAL_ROUTE and EVENT_ROUTE.
 
-   Example 1.28. cluster_broadcast_req() usage
+   Example 1.29. cluster_broadcast_req() usage
 ...
-cluster_broadcast_req($var(cl_id), $var(share_data));
+# also raise the event for current node
+cluster_broadcast_req($var(cl_id), $var(share_data), , true);
 ...
 
 1.5.4.  cluster_check_addr(cluster_id, ip, addr_type)
@@ -726,7 +747,7 @@ cluster_broadcast_req($var(cl_id), $var(share_data));
    This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
    ONREPLY_ROUTE, BRANCH_ROUTE, LOCAL_ROUTE and EVENT_ROUTE.
 
-   Example 1.29. cluster_check_addr() usage
+   Example 1.30. cluster_check_addr() usage
 ...
 if (cluster_check_addr(1, $si)) {
         ...
@@ -746,7 +767,7 @@ if (cluster_check_addr(1, $si)) {
    Parameters:none
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi clusterer_reload
+                openMarinkaRodeo-cli -x mi clusterer_reload
 
 1.6.2.  clusterer_list
 
@@ -757,8 +778,8 @@ if (cluster_check_addr(1, $si)) {
 
    Parameters:none
 
-   Example 1.30. clusterer_list usage
-$ Marina.Rodeo-cli -x mi clusterer_list
+   Example 1.31. clusterer_list usage
+$ openMarinkaRodeo-cli -x mi clusterer_list
 {
     "Clusters": [
         {
@@ -791,8 +812,8 @@ $ Marina.Rodeo-cli -x mi clusterer_list
 
    Parameters:none
 
-   Example 1.31. clusterer_list_topology usage
-$ Marina.Rodeo-cli -x mi clusterer_list_topology
+   Example 1.32. clusterer_list_topology usage
+$ openMarinkaRodeo-cli -x mi clusterer_list_topology
 {
     "Clusters": [
         {
@@ -836,9 +857,9 @@ $ Marina.Rodeo-cli -x mi clusterer_list_topology
 
    MI FIFO Command Format:
                 #disable the local instance
-                Marina.Rodeo-cli -x mi clusterer_set_status 1 0
+                openMarinkaRodeo-cli -x mi clusterer_set_status 1 0
                 #disable node ID 3
-                Marina.Rodeo-cli -x mi clusterer_set_status 1 3 0
+                openMarinkaRodeo-cli -x mi clusterer_set_status 1 3 0
 
 1.6.5.  clusterer_remove_node
 
@@ -859,7 +880,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list_topology
      * node_id - ID of the node to be removed.
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi clusterer_remove_node 1 3
+                openMarinkaRodeo-cli -x mi clusterer_remove_node 1 3
 
 1.6.6.  cluster_send_mi
 
@@ -879,7 +900,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list_topology
    as parameter values are not currently supported.
 
    MI FIFO Command Format:
-Marina.Rodeo-cli -x mi cluster_send_mi 1 3 lb_reload
+openMarinkaRodeo-cli -x mi cluster_send_mi 1 3 lb_reload
 
 1.6.7.  cluster_broadcast_mi
 
@@ -898,7 +919,7 @@ Marina.Rodeo-cli -x mi cluster_send_mi 1 3 lb_reload
    as parameter values are not currently supported.
 
    MI FIFO Command Format:
-Marina.Rodeo-cli -x mi cluster_broadcast_mi 1 dr_reload partition_5
+openMarinkaRodeo-cli -x mi cluster_broadcast_mi 1 dr_reload partition_5
 
 1.6.8.  clusterer_list_cap
 
@@ -908,8 +929,8 @@ Marina.Rodeo-cli -x mi cluster_broadcast_mi 1 dr_reload partition_5
 
    Parameters:none
 
-   Example 1.32. clusterer_list_cap usage
-$ Marina.Rodeo-cli -x mi clusterer_list_cap
+   Example 1.33. clusterer_list_cap usage
+$ openMarinkaRodeo-cli -x mi clusterer_list_cap
 {
     "Clusters": [
         {
@@ -950,10 +971,10 @@ $ Marina.Rodeo-cli -x mi clusterer_list_cap
 
    MI FIFO Command Format:
                 #disable dialog replication in cluster 1
-                Marina.Rodeo-cli -x mi clusterer_set_cap_status 1 dialog-dlg
+                openMarinkaRodeo-cli -x mi clusterer_set_cap_status 1 dialog-dlg
 -repl 0
                 #enable dialog profile replication in cluster 2
-                Marina.Rodeo-cli -x mi clusterer_set_cap_status 2 dialog-pro
+                openMarinkaRodeo-cli -x mi clusterer_set_cap_status 2 dialog-pro
 f-repl 1
 
 1.6.10. clusterer_shtag_set_active
@@ -969,7 +990,7 @@ f-repl 1
    cluster it belogs to, in the format 'tag/cluster_id'.
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi clusterer_shtag_set_active vip1/3
+                openMarinkaRodeo-cli -x mi clusterer_shtag_set_active vip1/3
 
 1.6.11. clusterer_list_shtags
 
@@ -980,7 +1001,7 @@ f-repl 1
    Parameters: Command takes no parameters
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi clusterer_list_shtags
+                openMarinkaRodeo-cli -x mi clusterer_list_shtags
 
 1.7. Exported Script Variables
 
@@ -1011,7 +1032,7 @@ f-repl 1
 
    This event is raised when a generic, request-like, clusterer
    message is received. This type of message is sent directly from
-   the script and not by an Marina.Rodeo module.
+   the script and not by an OpenMarinkaRodeo module.
 
    Parameters:
      * cluster_id - The cluster ID of the source node.
@@ -1026,7 +1047,7 @@ f-repl 1
 
    This event is raised when a generic, reply-like, clusterer
    message is received. This type of message is sent directly from
-   the script and not by an Marina.Rodeo module.
+   the script and not by an OpenMarinkaRodeo module.
 
    Parameters:
      * cluster_id - The cluster ID of the source node.
@@ -1165,11 +1186,11 @@ oadcast from 2"
 1.10. Usage Example
 
    This section provides an usage example for replicating
-   ratelimit pipes between two Marina.Rodeo instances. It uses the
+   ratelimit pipes between two OpenMarinkaRodeo instances. It uses the
    clusterer module to manage the replicating nodes, and along
    with the proto_bin module, to send the replicated information.
 
-   The setup topology is simple: we have two Marina.Rodeo nodes
+   The setup topology is simple: we have two OpenMarinkaRodeo nodes
    running on two separate machines (although they could run on
    the same machine as well): Node A has IP 192.168.0.5 and Node B
    has IP 192.168.0.6. Both have, besides the traffic listeners
@@ -1178,7 +1199,7 @@ oadcast from 2"
 
    We insert in the the clusterer table the following:
 
-   Example 1.33. Example database content - clusterer table
+   Example 1.34. Example database content - clusterer table
 +----+------------+---------+----------------------+-------+------------
 -----+----------+----------+-------+-------------+
 | id | cluster_id | node_id | url                  | state | no_ping_ret
@@ -1218,17 +1239,17 @@ ries | priority | sip_addr | flags | description |
      * “description” - an opaque value used to describe the node
 
    After provisioning the two nodes in the database, we have to
-   configure the two instances of Marina.Rodeo. First, we configure
+   configure the two instances of OpenMarinkaRodeo. First, we configure
    Node A:
 
-   Example 1.34. Node A configuration
+   Example 1.35. Node A configuration
 ...
 socket= bin:192.168.0.5:5566 # bin listener for Node A
 
 loadmodule "proto_bin.so"
 
 loadmodule "clusterer.so"
-modparam("clusterer", "db_url", "mysql://Marina.Rodeo@192.168.0.7/Marina.Rodeo")
+modparam("clusterer", "db_url", "mysql://openMarinkaRodeo@192.168.0.7/openMarinkaRodeo")
 modparam("clusterer", "my_node_id", 1) # node_id for Node A
 
 loadmodule "ratelimit.so"
@@ -1237,7 +1258,7 @@ modparam("ratelimit", "pipe_replication_cluster", 1)
 
    Similarly, the configuration for Node B is as follows:
 
-   Example 1.35. Node B configuration
+   Example 1.36. Node B configuration
 ...
 socket= bin:192.168.0.6:5566 # bin listener for Node B
 
@@ -1245,14 +1266,14 @@ loadmodule "proto_bin.so"
 
 loadmodule "clusterer.so"
 # ideally, use the same database for both nodes
-modparam("clusterer", "db_url", "mysql://Marina.Rodeo@192.168.0.7/Marina.Rodeo")
+modparam("clusterer", "db_url", "mysql://openMarinkaRodeo@192.168.0.7/openMarinkaRodeo")
 modparam("clusterer", "my_node_id", 2) # node_id for Node B
 
 loadmodule "ratelimit.so"
 modparam("ratelimit", "pipe_replication_cluster", 1)
 ...
 
-   Starting the two Marina.Rodeo instances with the above
+   Starting the two OpenMarinkaRodeo instances with the above
    configurations provides your platform the ability to used
    shared ratelimit pipes in a very efficient and scalable way.
 
@@ -1391,7 +1412,7 @@ typedef struct clusterer_node {
 2.1.10.  register_module(mod_name, cb, auth_check,
 accept_clusters_ids, no_accept_clusters)
 
-   This function registers an Marina.Rodeo module in order to receive
+   This function registers an OpenMarinkaRodeo module in order to receive
    BIN packets and cluster notifications. A certain module can
    accept packets from multiple clusters and provides a single
    callback function that will be called for each received packet.
@@ -1432,19 +1453,19 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Vlad Patrascu (@rvlad-patrascu) 360 135 13387 7101
-   2. Liviu Chircu (@liviuchircu) 57 43 653 454
-   3. Eseanu Marius Cristian (@eseanucristian) 45 10 3142 534
-   4. Bogdan-Andrei Iancu (@bogdan-iancu) 29 15 1332 124
-   5. Razvan Crainea (@razvancrainea) 25 19 324 145
+   1. Vlad Patrascu (@rvlad-patrascu) 366 135 13387 7101
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 73 55 915 595
+   3. Eseanu Marius Cristian (@eseanucristian) 46 10 3142 534
+   4. Bogdan-Andrei Iancu (@bogdan-iancu) 31 16 1342 128
+   5. Razvan Crainea (@razvancrainea) 27 21 327 148
    6. Ionel Cerghit (@ionel-cerghit) 9 2 250 212
-   7. Maksym Sobolyev (@sobomax) 6 4 10 11
-   8. Jasper Hafkenscheid 4 2 107 2
-   9. Fabian Gast (@fgast) 4 2 3 3
-   10. Gohar Ahmed (@goharahmed) 3 1 6 5
+   7. Maksym Sobolyev (@sobomax) 8 6 12 13
+   8. Alexandra Titoc 6 4 18 4
+   9. Jasper Hafkenscheid 4 2 107 2
+   10. Fabian Gast (@fgast) 4 2 3 3
 
-   All remaining contributors: kworm83, Peter Lemenkov
-   (@lemenkov).
+   All remaining contributors: Gohar Ahmed (@goharahmed), kworm83,
+   Peter Lemenkov (@lemenkov), Shanee Vanstone.
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -1454,7 +1475,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1466,19 +1487,20 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Vlad Patrascu (@rvlad-patrascu)     Jul 2016 - Jul 2023
-   2.  Bogdan-Andrei Iancu (@bogdan-iancu) Apr 2016 - Apr 2023
-   3.  Maksym Sobolyev (@sobomax)          Jan 2021 - Feb 2023
-   4.  Liviu Chircu (@liviuchircu)         Mar 2016 - Oct 2022
-   5.  Razvan Crainea (@razvancrainea)     Nov 2015 - Aug 2022
-   6.  Jasper Hafkenscheid                 May 2022 - Jul 2022
-   7.  kworm83                             Feb 2021 - Feb 2021
-   8.  Fabian Gast (@fgast)                Nov 2018 - Jul 2020
-   9.  Gohar Ahmed (@goharahmed)           Mar 2019 - Mar 2019
-   10. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2016 - Apr 2025
+   2.  Razvan Crainea (@razvancrainea)     Nov 2015 - Sep 2024
+   3.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Apr 2016 - Sep 2024
+   5.  Shanee Vanstone                     Mar 2024 - Mar 2024
+   6.  Maksym Sobolyev (@sobomax)          Jan 2021 - Nov 2023
+   7.  Vlad Patrascu (@rvlad-patrascu)     Jul 2016 - Jul 2023
+   8.  Jasper Hafkenscheid                 May 2022 - Jul 2022
+   9.  kworm83                             Feb 2021 - Feb 2021
+   10. Fabian Gast (@fgast)                Nov 2018 - Jul 2020
 
-   All remaining contributors: Ionel Cerghit (@ionel-cerghit),
-   Eseanu Marius Cristian (@eseanucristian).
+   All remaining contributors: Gohar Ahmed (@goharahmed), Peter
+   Lemenkov (@lemenkov), Ionel Cerghit (@ionel-cerghit), Eseanu
+   Marius Cristian (@eseanucristian).
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -1487,12 +1509,12 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Vlad
-   Patrascu (@rvlad-patrascu), Jasper Hafkenscheid, Liviu Chircu
-   (@liviuchircu), Fabian Gast (@fgast), Razvan Crainea
-   (@razvancrainea), Peter Lemenkov (@lemenkov), Eseanu Marius
-   Cristian (@eseanucristian).
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Shanee Vanstone,
+   Bogdan-Andrei Iancu (@bogdan-iancu), Vlad Patrascu
+   (@rvlad-patrascu), Jasper Hafkenscheid, Fabian Gast (@fgast),
+   Razvan Crainea (@razvancrainea), Peter Lemenkov (@lemenkov),
+   Eseanu Marius Cristian (@eseanucristian).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
+   Copyright © 2015-2017 www.openMarinkaRodeo-solutions.com

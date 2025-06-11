@@ -1,18 +1,18 @@
 /*
  * PERMISSIONS module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2003 Miklós Tirpák (mtirpak@sztaki.hu)
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2003 iptel.org
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2003-2007 Juha Heinanen
+ * Copyright (C) 2003 Miklós Tirpák (mtirpak@sztaki.hu)
+ * Copyright (C) 2003 iptel.org
+ * Copyright (C) 2003-2007 Juha Heinanen
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -198,7 +198,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	cmds,      /* Exported functions */
 	0,         /* Exported async functions */
 	params,    /* Exported parameters */
@@ -409,11 +409,11 @@ static char* get_plain_uri(const str* uri)
 static int allow_routing(struct sip_msg* msg, int idx)
 {
 	struct hdr_field *from;
-	int len, q;
+	int len;
 	static char from_str[EXPRESSION_LENGTH+1];
 	static char ruri_str[EXPRESSION_LENGTH+1];
 	char* uri_str;
-	str branch;
+	struct msg_branch *branch;
 	int br_idx;
 
 	/* turn off control, allow any routing */
@@ -486,9 +486,8 @@ static int allow_routing(struct sip_msg* msg, int idx)
 	}
 
  check_branches:
-	for( br_idx=0 ; (branch.s=get_branch(br_idx,&branch.len,&q,0,0,0,0))!=0 ;
-	br_idx++ ) {
-		uri_str = get_plain_uri(&branch);
+	for( br_idx=0 ; (branch=get_msg_branch(br_idx))!=NULL ; br_idx++ ) {
+		uri_str = get_plain_uri(&branch->uri);
 		if (!uri_str) {
 			LM_ERR("failed to extract plain URI\n");
 			return -1;
@@ -628,13 +627,13 @@ static int mod_init(void)
 
 static int child_init(int rank)
 {
-	return 0;
+    return mi_init_address();
 }
 
 
 static int mi_address_child_init(void)
 {
-    return mi_init_address();
+    return 0;
 }
 
 /*

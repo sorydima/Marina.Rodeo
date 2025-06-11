@@ -10,7 +10,7 @@ lua Module
         1.3. Using the module
         1.4. Dependencies
 
-              1.4.1. Marina.Rodeo Modules
+              1.4.1. OpenMarinkaRodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -29,7 +29,7 @@ lua Module
 
               1.7.1. watch
 
-   2. Marina.Rodeo Lua API
+   2. OpenMarinkaRodeo Lua API
 
         2.1. Available functions
 
@@ -87,17 +87,17 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The time needed when writing a new Marina.Rodeo module
+   The time needed when writing a new OpenMarinkaRodeo module
    unfortunately is quite high, while the options provided by the
    configuration file are limited to the features implemented in
    the modules.
 
    With this Lua module, you can easily implement your own
-   Marina.Rodeo extensions in Lua.
+   OpenMarinkaRodeo extensions in Lua.
 
 1.2. Installing the module
 
-   This Lua module is loaded in Marina.Rodeo.cfg (just like all the
+   This Lua module is loaded in openMarinkaRodeo.cfg (just like all the
    other modules) with loadmodule("/path/to/lua.so");.
 
    For the Lua module to compile, you need a recent version of Lua
@@ -107,29 +107,29 @@ Chapter 1. Admin Guide
 1.3. Using the module
 
    With the Lua module, you can access to lua function on the
-   Marina.Rodeo side. You need to define a file to load and call a
+   OpenMarinkaRodeo side. You need to define a file to load and call a
    function from it. Write a function "mongo_alias" and then write
-   in your Marina.Rodeo.cfg
+   in your openMarinkaRodeo.cfg
 ...
 if (lua_exec("mongo_alias")) {
         ...
 }
 ...
 
-   On the Lua side, you have access to Marina.Rodeo functions and
+   On the Lua side, you have access to openMarinkaRodeo functions and
    variables (AVP, pseudoVar, ...). Read the documentation below
    for further informations.
 
 1.4. Dependencies
 
-1.4.1. Marina.Rodeo Modules
+1.4.1. OpenMarinkaRodeo Modules
 
    None ;-)
 
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * Lua 5.1.x or later
      * memcached
 
@@ -159,11 +159,11 @@ if (lua_exec("mongo_alias")) {
    only, but it may include an arbitary number of functions and
    "use" as many Lua module as necessary.
 
-   The default value is "/etc/Marina.Rodeo/Marina.Rodeo.lua"
+   The default value is "/etc/openMarinkaRodeo/openMarinkaRodeo.lua"
 
    Example 1.1. Set luafilename parameter
 ...
-modparam("lua", "luafilename", "/etc/Marina.Rodeo/Marina.Rodeo.lua")
+modparam("lua", "luafilename", "/etc/openMarinkaRodeo/openMarinkaRodeo.lua")
 ...
 
 1.5.2. lua_auto_reload (int)
@@ -181,7 +181,7 @@ modparam("lua", "luafilename", "/etc/Marina.Rodeo/Marina.Rodeo.lua")
 
    Change the default memory allocator for the lua module.
    Possible values are :
-     * Marina.Rodeo (default)
+     * openMarinkaRodeo (default)
      * malloc
 
 1.6. Exported Functions
@@ -219,13 +219,13 @@ if (lua_exec("mongo_alias")) {
      * extension (optional) - required if action is provided
 
    MI FIFO Command Format:
-  Marina.Rodeo-cli -x mi watch
+  openMarinkaRodeo-cli -x mi watch
 
-Chapter 2. Marina.Rodeo Lua API
+Chapter 2. OpenMarinkaRodeo Lua API
 
 2.1. Available functions
 
-   This module provides access to a limited number of Marina.Rodeo
+   This module provides access to a limited number of OpenMarinkaRodeo
    core functions.
 
 2.1.1. xdbg(message)
@@ -234,7 +234,7 @@ Chapter 2. Marina.Rodeo Lua API
 
 2.1.2. xlog([level],message)
 
-   Logs the message with Marina.Rodeo's logging facility. The logging
+   Logs the message with OpenMarinkaRodeo's logging facility. The logging
    level is one of the following:
      * ALERT
      * CRIT
@@ -272,7 +272,7 @@ Chapter 2. Marina.Rodeo Lua API
 2.1.9. isMyself(host, port)
 
    Test if the host and optionally the port represent one of the
-   addresses that Marina.Rodeo listens on.
+   addresses that OpenMarinkaRodeo listens on.
 
 2.1.10. grepSockInfo(host, port)
 
@@ -358,12 +358,12 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Arnaud Chong + Eric Gouyer 37 1 4335 0
+   1. Arnaud Chong + Eric Gouyer 38 1 4335 0
    2. Razvan Crainea (@razvancrainea) 34 27 274 230
    3. Vlad Patrascu (@rvlad-patrascu) 25 17 319 276
-   4. Liviu Chircu (@liviuchircu) 13 10 15 63
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 13 10 15 63
    5. Bogdan-Andrei Iancu (@bogdan-iancu) 8 6 9 3
-   6. Maksym Sobolyev (@sobomax) 6 4 15 12
+   6. Maksym Sobolyev (@sobomax) 7 5 16 13
    7. Vlad Paiu (@vladpaiu) 5 3 7 9
    8. Julián Moreno Patiño 3 1 1 1
    9. Peter Lemenkov (@lemenkov) 3 1 1 1
@@ -376,7 +376,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -388,11 +388,11 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
-   1. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jun 2023
-   2. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   1. Maksym Sobolyev (@sobomax)          Feb 2023 - Nov 2023
+   2. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jun 2023
    3. Razvan Crainea (@razvancrainea)     Feb 2012 - Feb 2023
    4. Bogdan-Andrei Iancu (@bogdan-iancu) May 2014 - Jan 2020
-   5. Liviu Chircu (@liviuchircu)         Mar 2014 - Mar 2019
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - Mar 2019
    6. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
    7. Julián Moreno Patiño                Feb 2016 - Feb 2016
    8. Vlad Paiu (@vladpaiu)               Feb 2012 - Jun 2012
@@ -406,10 +406,10 @@ Chapter 4. Documentation
 4.1. Contributors
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Razvan Crainea
-   (@razvancrainea), Peter Lemenkov (@lemenkov), Liviu Chircu
+   (@razvancrainea), Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
    (@liviuchircu), Vlad Paiu (@vladpaiu), Arnaud Chong + Eric
    Gouyer.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006-2011 Arnaud Chong, Eric Gouyer
+   Copyright © 2006-2011 Arnaud Chong, Eric Gouyer

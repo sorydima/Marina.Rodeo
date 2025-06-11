@@ -1,17 +1,17 @@
 /*
  * Route & Record-Route module, loose routing support
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009-2014 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2004 FhG Fokus
+ * Copyright (C) 2009-2014 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2001-2004 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -501,7 +501,7 @@ static inline int after_strict(struct sip_msg* _m)
 	rr_t* rt, *prev, *del_rt;
 	char* rem_off;
 	str uri;
-	struct socket_info *si;
+	const struct socket_info *si;
 	unsigned short port, proto;
 
 	hdr = _m->route;
@@ -713,7 +713,7 @@ static inline int after_loose(struct sip_msg* _m, int preloaded)
 	int ret;
 #endif
 	str uri;
-	struct socket_info *si;
+	const struct socket_info *si;
 	int force_ss = 0;
 
 	hdr = _m->route;

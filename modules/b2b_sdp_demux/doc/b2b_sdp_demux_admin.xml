@@ -33,7 +33,7 @@
 	<title>Use Cases</title>
 	<para>
 		A common scenario where this module can become useful is
-		when configuring &osips; as a SIPREC SRS proxy. Using this
+		when configuring &oMarinkaRodeo; as a SIPREC SRS proxy. Using this
 		module you can receive on one side SIPREC INVITEs, which
 		usually have two or more SDP streams (one for each
 		call/conference participants), and split/de-multiplex each
@@ -58,7 +58,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section id="b2b_sdp_demux_modules_dependencies">
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -76,7 +76,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>

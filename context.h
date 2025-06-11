@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014 Marina.Rodeo Solutions
+ * Copyright (C) 2014 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -23,7 +23,7 @@
  */
 
 /*
- * This header exposes the basic operations with an Marina.Rodeo context.
+ * This header exposes the basic operations with an OpenMarinkaRodeo context.
  *
  * A "context" is:
  *		- a data storage buffer
@@ -42,7 +42,7 @@
 #include "dprint.h"
 
 typedef void * context_p;
-enum osips_context {
+enum oMarinkaRodeo_context {
 	CONTEXT_GLOBAL,
 	CONTEXT_TRAN,
 	CONTEXT_DIALOG,
@@ -51,7 +51,7 @@ enum osips_context {
 	CONTEXT_COUNT,
 };
 
-enum osips_context_val {
+enum oMarinkaRodeo_context_val {
 	CONTEXT_INT_TYPE,
 	CONTEXT_STR_TYPE,
 	CONTEXT_PTR_TYPE,
@@ -74,7 +74,7 @@ extern unsigned int type_offsets[CONTEXT_COUNT][CONTEXT_COUNT_TYPE];
  *
  * Note: this will not change the "current_processing_ctx"
  */
-context_p context_alloc(enum osips_context type);
+context_p context_alloc(enum oMarinkaRodeo_context type);
 #define   context_free(context_p) pkg_free(context_p)
 
 
@@ -100,7 +100,7 @@ void clear_global_context(void);
  * destroys a context by calling each callback registered
  * Note: @ctx will *not* be freed!
  */
-void context_destroy(enum osips_context type, context_p ctx);
+void context_destroy(enum oMarinkaRodeo_context type, context_p ctx);
 
 
 /*
@@ -117,13 +117,13 @@ typedef void (*context_destroy_f)(void *);
  *
  * - they reserve and return a position in the context buffer of the given type
  */
-int context_register_int(enum osips_context type, context_destroy_f f);
-int context_register_str(enum osips_context type, context_destroy_f f);
-int context_register_ptr(enum osips_context type, context_destroy_f f);
+int context_register_int(enum oMarinkaRodeo_context type, context_destroy_f f);
+int context_register_str(enum oMarinkaRodeo_context type, context_destroy_f f);
+int context_register_ptr(enum oMarinkaRodeo_context type, context_destroy_f f);
 
    /****************************** SETTERS ********************************/
 
-static inline void context_put_int(enum osips_context type, context_p ctx,
+static inline void context_put_int(enum oMarinkaRodeo_context type, context_p ctx,
 								   int pos, int data)
 {
 #ifdef DBG_MALLOC
@@ -136,7 +136,7 @@ static inline void context_put_int(enum osips_context type, context_p ctx,
 	((int *)ctx)[pos] = data;
 }
 
-static inline void context_put_str(enum osips_context type, context_p ctx,
+static inline void context_put_str(enum oMarinkaRodeo_context type, context_p ctx,
 								   int pos, str *data)
 {
 #ifdef DBG_MALLOC
@@ -148,7 +148,7 @@ static inline void context_put_str(enum osips_context type, context_p ctx,
 	((str *)(void *)((char *)ctx + type_offsets[type][CONTEXT_STR_TYPE]))[pos] = *data;
 }
 
-static inline void context_put_ptr(enum osips_context type, context_p ctx,
+static inline void context_put_ptr(enum oMarinkaRodeo_context type, context_p ctx,
 				   int pos, void *data)
 {
 #ifdef DBG_MALLOC
@@ -163,7 +163,7 @@ static inline void context_put_ptr(enum osips_context type, context_p ctx,
 
    /****************************** GETTERS ********************************/
 
-static inline int context_get_int(enum osips_context type,
+static inline int context_get_int(enum oMarinkaRodeo_context type,
 								  context_p ctx, int pos)
 {
 #ifdef DBG_MALLOC
@@ -176,7 +176,7 @@ static inline int context_get_int(enum osips_context type,
 	return ((int *)ctx)[pos];
 }
 
-static inline str *context_get_str(enum osips_context type,
+static inline str *context_get_str(enum oMarinkaRodeo_context type,
 								   context_p ctx, int pos)
 {
 #ifdef DBG_MALLOC
@@ -189,7 +189,7 @@ static inline str *context_get_str(enum osips_context type,
 	return &((str *)(void *)((char *)ctx + type_offsets[type][CONTEXT_STR_TYPE]))[pos];
 }
 
-static inline void *context_get_ptr(enum osips_context type,
+static inline void *context_get_ptr(enum oMarinkaRodeo_context type,
 									context_p ctx, int pos)
 {
 #ifdef DBG_MALLOC

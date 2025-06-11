@@ -1,3 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table PUBLIC "-//openMarinkaRodeo.org//DTD DBSchema V1.1//EN" 
+  "https://openMarinkaRodeo.org/pub/openMarinkaRodeo/dbschema/dtd/1.1/dbschema.dtd" [
+
+<!ENTITY % entities SYSTEM "entities.xml">
+%entities;
+
+]>
+
 <table id="cc_flows" xmlns:db="http://docbook.org/ns/docbook">
 	<name>cc_flows</name>
 	<version>2</version>
@@ -5,7 +14,7 @@
 	<description>
 		<db:para>This table is used by the Call Center module to store
 		the definition of the call queues / flows.
-		More information can be found at: &Marina.Rodeo_MOD_DOC;call_center.html.
+		More information can be found at: &OPENMarinkaRodeo_MOD_DOC;call_center.html.
 		</db:para>
 	</description>
 

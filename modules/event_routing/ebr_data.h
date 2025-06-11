@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Solutions
+ * Copyright (C) 2017 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -24,6 +24,7 @@
 #define _MODULE_EBR_H
 
 #include "../../locking.h"
+#include "../../lib/cond.h"
 #include "../tm/t_lookup.h"
 
 #define EVI_ROUTING_NAME "routing"
@@ -42,8 +43,14 @@ struct _ebr_event;
 
 #define EBR_SUBS_TYPE_WAIT  (1<<0)
 #define EBR_SUBS_TYPE_NOTY  (1<<1)
-#define EBR_DATA_TYPE_ROUT  (1<<2)
-#define EBR_DATA_TYPE_FUNC  (1<<3)
+#define EBR_SUBS_TYPE_SWAIT (1<<2)
+#define EBR_DATA_TYPE_ROUT  (1<<3)
+#define EBR_DATA_TYPE_FUNC  (1<<4)
+
+#define EBR_SUBS_TYPE(_s) \
+	( ((_s)->flags&EBR_SUBS_TYPE_WAIT)?"WAIT": \
+		(((_s)->flags&EBR_SUBS_TYPE_SWAIT)?"SWAIT":"NOTIFY") )
+
 
 typedef struct usr_avp *(*ebr_pack_params_cb) (evi_params_t *params);
 
@@ -55,8 +62,8 @@ typedef struct _ebr_subscription {
 	ebr_pack_params_cb pack_params;
 	void *data;
 	int expire;
-	/* Transaction ID data */
-	struct tm_id tm ;
+	/* Transaction ID data , used for NOTIFY */
+	struct tm_id tm;
 	struct _ebr_subscription *next;
 } ebr_subscription;
 
@@ -69,6 +76,13 @@ typedef struct _ebr_event {
 	ebr_subscription *subs;
 	struct _ebr_event *next;
 } ebr_event;
+
+
+struct swait_pack {
+	gen_cond_t cond;
+	struct usr_avp *ret_avps;
+};
+
 
 ebr_event * search_ebr_event( const str *name );
 

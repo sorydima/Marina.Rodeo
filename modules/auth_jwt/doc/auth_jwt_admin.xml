@@ -7,7 +7,7 @@
 	<para>
 		The module implements authentication over JSON Web Tokens.
 		In some cases ( ie. WebRTC ) the user authenticates on another layer ( other than SIP ), so it makes no sense to double-authenticate it on the SIP layer.
-		Thus, the SIP client will simply present the JWT auth token it received from the server, and pass it on to Marina.Rodeo which will use that for authentication purposes.
+		Thus, the SIP client will simply present the JWT auth token it received from the server, and pass it on to OpenMarinkaRodeo which will use that for authentication purposes.
 
 		It relies on two DB tables, one containing JWT profiles ( a profile name and it's SIP username associated to it ) and one containing JWT secrets. Each secret has a corresponding profile, the KEY used for signing the JWT and two timestamps describing a validation interval. Multiple JWT secrets can point to the same JWT profile. 
 	</para>
@@ -16,7 +16,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 		<title>Dependencies</title>
 		<section>
-			<title>&osips; Modules</title>
+			<title>&oMarinkaRodeo; Modules</title>
 			<para>
 			The module depends on the following modules (in the other words
 			the listed modules must be loaded before this module):
@@ -33,7 +33,7 @@
 			<title>External Libraries or Applications</title>
 			<para>
 			The following libraries or applications must be installed
-			before running &osips; with this module loaded:
+			before running &oMarinkaRodeo; with this module loaded:
 			</para>
 			<itemizedlist>
 				<listitem>

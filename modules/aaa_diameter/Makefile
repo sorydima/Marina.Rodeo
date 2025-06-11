@@ -4,6 +4,6 @@ include ../../Makefile.defs
 auto_gen =
 NAME = aaa_diameter.so
 LIBS += -lfdproto -lfdcore
-extra_sources = app_Marina.Rodeo/avps.c
+extra_sources = app_openMarinkaRodeo/avps.c
 
 include ../../Makefile.modules

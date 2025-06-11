@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Project
+ * Copyright (C) 2017 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -70,6 +70,14 @@ int ipc_send_job(int dst_proc, ipc_handler_type type, void *payload);
  */
 int ipc_send_rpc(int dst_proc, ipc_rpc_f *rpc, void *param);
 
+/*
+ * Push the execution of a function, remotely, on all the processes
+ * that have IPC
+ *
+ * Return: number of processes the function was sent to
+ */
+int ipc_send_rpc_all(ipc_rpc_f *rpc, void *param);
+
 
 /*
  * Send a synchronous message to a specific "dst_proc" process
@@ -91,7 +99,7 @@ int ipc_recv_sync_reply(void **param);
 
 
 /*
- * Push a job for the next available Marina.Rodeo worker and quickly return
+ * Push a job for the next available OpenMarinkaRodeo worker and quickly return
  *
  * Return: 0 on success, -1 on failure
  */
@@ -99,7 +107,7 @@ int ipc_dispatch_job(ipc_handler_type type, void *payload);
 
 
 /*
- * Push the execution of a function, remotely, to next available Marina.Rodeo
+ * Push the execution of a function, remotely, to next available OpenMarinkaRodeo
  * worker process and quickly return
  *
  * Return: 0 on success, -1 on failure

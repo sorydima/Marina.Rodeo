@@ -17,7 +17,7 @@
 		<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -43,7 +43,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -66,7 +66,7 @@
 		<title>Set <varname>server_address</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_xmpp", "server_address", "sip:sa@Marina.Rodeo.org:5060")
+modparam("pua_xmpp", "server_address", "sip:sa@openMarinkaRodeo.org:5060")
 ...
 </programlisting>
 		</example>
@@ -82,7 +82,7 @@ modparam("pua_xmpp", "server_address", "sip:sa@Marina.Rodeo.org:5060")
 		<title>Set <varname>presence_server</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("pua_xmpp", "presence_server", "sip:pa@Marina.Rodeo.org:5075")
+modparam("pua_xmpp", "presence_server", "sip:pa@openMarinkaRodeo.org:5075")
 ...
 	</programlisting>
 		</example>

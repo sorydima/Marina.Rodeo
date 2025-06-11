@@ -1,17 +1,17 @@
 /*
  * Accounting module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem SRL
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2006 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -150,13 +150,13 @@ static int fixup_init_dburl(void **param);
  * pseudo-variables exported by acc module
  */
 static const pv_export_t mod_items[] = {
-	{ {"acc_extra", sizeof("acc_extra") - 1}, 2001, pv_get_acc_extra,
+	{ str_const_init("acc_extra"), 2001, pv_get_acc_extra,
 		pv_set_acc_extra, pv_parse_acc_extra_name,
 		0 /* parse index(won't use here) */, 0, 0},
-	{ {"acc_leg", sizeof("acc_leg") - 1}, 2002, pv_get_acc_leg,
+	{ str_const_init("acc_leg"), 2002, pv_get_acc_leg,
 		pv_set_acc_leg, pv_parse_acc_leg_name,
 		pv_parse_acc_leg_index, 0, 0},
-	{ {"acc_current_leg", sizeof("acc_current_leg") - 1}, 2003,
+	{ str_const_init("acc_current_leg"), 2003,
 		pv_get_acc_current_leg, 0, 0, 0, 0, 0},
 	{ {0, 0}, 0, 0, 0, 0, 0, 0, 0 }
 };
@@ -249,7 +249,7 @@ static module_dependency_t *get_deps_detect_dir(const param_export_t *param)
 }
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "tm", DEP_ABORT  },
 		{ MOD_TYPE_DEFAULT, "dialog", DEP_SILENT  },
 		{ MOD_TYPE_NULL, NULL, 0 },
@@ -286,7 +286,7 @@ struct module_exports exports= {
 	MODULE_VERSION,  /* module version */
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,       /* exported functions */
 	0,          /* exported async functions */
 	params,     /* exported params */

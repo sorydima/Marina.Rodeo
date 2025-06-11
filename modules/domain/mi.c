@@ -1,16 +1,16 @@
 /*
  * Domain MI functions
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem SRL
+ * Copyright (C) 2006 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -40,7 +40,7 @@ mi_response_t *mi_domain_reload(const mi_params_t *params,
 								struct mi_handler *async_hdl)
 {
 	if(db_mode==0)
-		return init_mi_error( 500, MI_SSTR("command not activated"));
+		return init_mi_error( 500, MI_SSTR("DB is disabled (db_mode=0)"));
 
 	if (reload_domain_table () == 1) {
 		return init_mi_result_ok();
@@ -60,7 +60,7 @@ mi_response_t *mi_domain_dump(const mi_params_t *params,
 	mi_item_t *resp_obj, *domains_arr;
 
 	if(db_mode==0)
-		return init_mi_error(500, MI_SSTR("command not activated"));
+		return init_mi_error(500, MI_SSTR("DB is disabled (db_mode=0)"));
 
 	resp = init_mi_result_object(&resp_obj);
 	if (!resp)

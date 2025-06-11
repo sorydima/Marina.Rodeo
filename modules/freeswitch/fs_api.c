@@ -1,16 +1,16 @@
 /*
  * FreeSWITCH API
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Solutions
+ * Copyright (C) 2017 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -29,6 +29,7 @@
 #include "../../forward.h"
 #include "../../ut.h"
 #include "../../lib/url.h"
+#include "../../status_report.h"
 
 #include "fs_api.h"
 #include "fs_ipc.h"
@@ -45,7 +46,7 @@ unsigned int *conn_mgr_process_no;
 
 /*
  * Any FreeSWITCH socket which is still referenced at least once
- * Both FS proc and random Marina.Rodeo MI reloaders may write to this list
+ * Both FS proc and random OpenMarinkaRodeo MI reloaders may write to this list
  */
 struct list_head *fs_sockets;
 rw_lock_t *sockets_lock;
@@ -104,7 +105,7 @@ int fs_api_set_proc_no(void)
 }
 
 /* TODO: rework this specific "PID advertising" hack
- * as part of a more reusable Marina.Rodeo mechanism */
+ * as part of a more reusable OpenMarinkaRodeo mechanism */
 int fs_api_wait_init(void)
 {
 	int i;
@@ -152,6 +153,8 @@ void evs_free(fs_evs *sock)
 	lock_destroy_rw(sock->lists_lk);
 
 	memset(sock, 0, sizeof *sock);
+
+	sock->invalid = 1; /* safety check against dangling fds in reactor */
 	shm_free(sock);
 }
 
@@ -301,7 +304,9 @@ static fs_evs* get_evs(const str *host, unsigned short port,
 		list_add(&sock->reconnect_list, fs_sockets_down);
 		lock_stop_write(sockets_down_lock);
 	} else {
-		evs_update(sock, user, pass);
+		/* avoid interfering with the auth of DB-provisioned sockets */
+		if (!(sock->flags & FS_EVS_FL_DB))
+			evs_update(sock, user, pass);
 
 		LM_DBG("found & updated FS sock: host=%s, port=%d, user=%s, pass=%s\n",
 		       sock->host.s, sock->port, sock->user.s, sock->pass.s);
@@ -367,12 +372,8 @@ int dup_common_tag(const str *tag, str *out)
 	memcpy(t->s.s, tag->s, tag->len);
 	t->s.s[t->s.len] = '\0';
 
-	if (!all_tags) {
-		all_tags = t;
-	} else {
-		t->next = all_tags;
-		all_tags = t;
-	}
+	t->next = all_tags;
+	all_tags = t;
 
 	*out = t->s;
 	return 0;
@@ -576,15 +577,29 @@ void evs_unsub(fs_evs *sock, const str *tag, const str_list *name)
 		LM_ERR("oom! some events may have been skipped\n");
 }
 
+void evs_set_flags(fs_evs *sock, unsigned int flags)
+{
+	lock_start_write(sock->stats_lk);
+	sock->flags |= flags;
+	lock_stop_write(sock->stats_lk);
+}
+
+void evs_reset_flags(fs_evs *sock, unsigned int flags)
+{
+	lock_start_write(sock->stats_lk);
+	sock->flags &= ~flags;
+	lock_stop_write(sock->stats_lk);
+}
+
 void put_evs(fs_evs *sock)
 {
 	/* prevents deadlocks on shutdown.
 	 *
-	 * For the FreeSWITCH Marina.Rodeo module, "graceful shutdowns" are not
+	 * For the FreeSWITCH OpenMarinkaRodeo module, "graceful shutdowns" are not
 	 * possible, since the main process brutally murders the FS connection
 	 * manager before it gets a chance to gracefully EOF its TCP connections.
 	 */
-	if (is_main)
+	if (sr_get_core_status() == STATE_TERMINATING)
 		return;
 
 	lock_start_write(sockets_lock);
@@ -641,7 +656,7 @@ void put_stats_evs(fs_evs *sock, str *tag)
 
 	/* prevents deadlocks on shutdown.
 	 *
-	 * For the FreeSWITCH Marina.Rodeo module, "graceful shutdowns" are not
+	 * For the FreeSWITCH OpenMarinkaRodeo module, "graceful shutdowns" are not
 	 * possible, since the main process brutally murders the FS connection
 	 * manager before it gets a chance to gracefully EOF its TCP connections.
 	 */
@@ -652,10 +667,10 @@ void put_stats_evs(fs_evs *sock, str *tag)
 	put_evs(sock);
 }
 
-/* This function assumes that the FS worker process _cannot_ reach the Marina.Rodeo
+/* This function assumes that the FS worker process _cannot_ reach the OpenMarinkaRodeo
  * script, thus never being in a position to call fs_api->fs_esl(). Otherwise,
  * it would immediately deadlock itself. Should the FS worker need to raise
- * script events, it should do it via IPC dispatch to other Marina.Rodeo procs */
+ * script events, it should do it via IPC dispatch to other OpenMarinkaRodeo procs */
 int fs_esl(fs_evs *sock, const str *fs_cmd, str *reply_txt)
 {
 	struct list_head *_, *__;
@@ -720,6 +735,8 @@ int fs_bind(struct fs_binds *fapi)
 	fapi->get_evs_by_url        = get_evs_by_url;
 	fapi->evs_sub               = evs_sub;
 	fapi->evs_unsub             = evs_unsub;
+	fapi->evs_set_flags         = evs_set_flags;
+	fapi->evs_reset_flags       = evs_reset_flags;
 	fapi->put_evs               = put_evs;
 	fapi->get_stats_evs         = get_stats_evs;
 	fapi->put_stats_evs         = put_stats_evs;

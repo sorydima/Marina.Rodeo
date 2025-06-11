@@ -1,19 +1,19 @@
 /*
  * digest_auth library
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 VoIP Embedded Inc.
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2013 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Maksym Sobolyev
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2011 VoIP Embedded Inc.
+ * Copyright (C) 2013 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2020 Maksym Sobolyev
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -41,7 +41,7 @@
 
 /* First/Last supported algorithm */
 #define FIRST_ALG_SPTD (ALG_UNSPEC)
-#define LAST_ALG_SPTD  (ALG_SHA512_256SESS)
+#define LAST_ALG_SPTD  (ALG_OTHER-1)
 
 typedef union {
 	HASH_MD5 MD5;
@@ -72,7 +72,7 @@ struct digest_auth_credential {
 };
 
 struct dauth_algorithm_match {
-	int algmask;
+	unsigned algmask;
 };
 
 #define DAUTH_ALGMATCH_ALL      (const struct dauth_algorithm_match){.algmask = ~0}
@@ -83,9 +83,9 @@ struct dauth_algorithm_match {
 #define DAUTH_AHFM_MSKSUP(_am) (&MATCH_AUTH_HF(dauth_algorithm_check, \
     &DAUTH_ALGMATCH_MSK(_am)))
 
-int digest_algorithm_available(alg_t);
-int dauth_algorithm_check(const struct authenticate_body *,
-    const struct match_auth_hf_desc *);
+int digest_algorithm_available(alg_t alg);
+int dauth_algorithm_check(const struct authenticate_body * body,
+    const struct match_auth_hf_desc * desc);
 int dauth_fixup_algorithms(void** param);
 
 #endif

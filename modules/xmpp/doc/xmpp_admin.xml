@@ -6,7 +6,7 @@
 	
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
-	<para>	This modules is a gateway between Marina.Rodeo and a jabber server. It enables the exchange of instant messages between
+	<para>	This modules is a gateway between OpenMarinkaRodeo and a jabber server. It enables the exchange of instant messages between
 		SIP clients and XMPP(jabber) clients. </para>
 	<para>	The gateway has two modes to run:</para>
 
@@ -20,7 +20,7 @@
 		</listitem>
 	</itemizedlist>
 	<para>	In the component mode, you need a local XMPP server (recommended jabberd2 or ejabberd); the xmpp module will relay all your connections to a tcp connection to the local jabber server.</para>
-	<para> After you have a running XMPP server, what you need to do is set the following parameters in the Marina.Rodeo configuration file:</para>
+	<para> After you have a running XMPP server, what you need to do is set the following parameters in the OpenMarinkaRodeo configuration file:</para>
 	<itemizedlist>
 		<listitem>
 			<para>xmpp_domain and xmpp_host, which are explained in the
@@ -31,7 +31,7 @@
 			<para>socket= your ip;</para>
 		</listitem> 
 		<listitem>
-			<para>alias=Marina.Rodeo domain and 
+			<para>alias=openMarinkaRodeo domain and 
 	alias=gateway domain;</para>
 		</listitem>
 		<listitem>
@@ -41,13 +41,13 @@
 	<para>	A use case, for the component-mode, would look like this:</para>
 	<itemizedlist>
 		<listitem>
-			<para>Marina.Rodeo is running on sip-server.Marina.Rodeo.org;</para>
+			<para>OpenMarinkaRodeo is running on sip-server.openMarinkaRodeo.org;</para>
 		</listitem>
 		<listitem>
-			<para>the jabber server is running on xmpp.Marina.Rodeo.org;</para>
+			<para>the jabber server is running on xmpp.openMarinkaRodeo.org;</para>
 		</listitem>	
 		<listitem>
-			<para>the component is running on xmpp-sip.Marina.Rodeo.org.</para>
+			<para>the component is running on xmpp-sip.openMarinkaRodeo.org.</para>
 		</listitem>	
 	</itemizedlist>
 	<para>
@@ -59,17 +59,17 @@
 	<para>	A use case, for the server-mode, would look like this: </para>
 	<itemizedlist>
 		<listitem>
-			<para>Marina.Rodeo is running on sip-server.Marina.Rodeo.org; </para>
+			<para>OpenMarinkaRodeo is running on sip-server.openMarinkaRodeo.org; </para>
 		</listitem>
 		<listitem>
-			<para>the "XMPP server" is running on xmpp-sip.Marina.Rodeo.org.</para>
+			<para>the "XMPP server" is running on xmpp-sip.openMarinkaRodeo.org.</para>
 		</listitem>
 	</itemizedlist>	
 	</section>
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -85,7 +85,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -132,7 +132,7 @@
 		<title>Set <varname>xmpp_domain</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
- modparam("xmpp", "xmpp_domain", "xmpp.Marina.Rodeo.org")
+ modparam("xmpp", "xmpp_domain", "xmpp.openMarinkaRodeo.org")
 ...
 </programlisting>
 		</example>
@@ -151,7 +151,7 @@
 		<title>Set <varname>xmpp_host</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
- modparam("xmpp", "xmpp_host", "xmpp.Marina.Rodeo.org")
+ modparam("xmpp", "xmpp_host", "xmpp.openMarinkaRodeo.org")
 ...
 </programlisting>
 		</example>
@@ -167,10 +167,10 @@
 		reach the jabber server will be considered to be for local xmpp users. It is necessary therefore
 		to make a translate the sip domain name into another domain when sending messages in xmpp.
 		This parameter is exactly the name that should be used as the SIP domain name in XMPP.
-		Usage example: If the sip and xmpp domain is Marina.Rodeo.org and this parameter is set to sip.Marina.Rodeo.org,
-		than in all the requests sent in xmpp the sip users will have the domain translated to sip.Marina.Rodeo.org.
-		Also, in XMPP account the SIP buddies must have this domain: sip.Marina.Rodeo.org, and it will be
-		translated to the real one Marina.Rodeo.org when traversing the gateway.
+		Usage example: If the sip and xmpp domain is openMarinkaRodeo.org and this parameter is set to sip.openMarinkaRodeo.org,
+		than in all the requests sent in xmpp the sip users will have the domain translated to sip.openMarinkaRodeo.org.
+		Also, in XMPP account the SIP buddies must have this domain: sip.openMarinkaRodeo.org, and it will be
+		translated to the real one openMarinkaRodeo.org when traversing the gateway.
 		</para>
 		<para>
 		<emphasis>
@@ -181,7 +181,7 @@
 		<title>Set <varname>xmpp_host</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
- modparam("xmpp", "sip_domain", "sip.Marina.Rodeo.org")
+ modparam("xmpp", "sip_domain", "sip.openMarinkaRodeo.org")
 ...
 </programlisting>
 		</example>
@@ -235,8 +235,8 @@
 		<title><varname>outbound_proxy</varname> (string)</title>
 		<para>
 		The SIP address used as next hop when sending the message. Very
-		useful when using Marina.Rodeo with a domain name not in DNS, or
-		when using a separate Marina.Rodeo instance for xmpp processing. If
+		useful when using OpenMarinkaRodeo with a domain name not in DNS, or
+		when using a separate OpenMarinkaRodeo instance for xmpp processing. If
 		not set, the message will be sent to the address in destination
 		URI.
 		</para>
@@ -249,7 +249,7 @@
 		<title>Set <varname>outbound_proxy</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
- modparam("xmpp", "outbound_proxy", "sip:Marina.Rodeo.org;transport=tcp")
+ modparam("xmpp", "outbound_proxy", "sip:openMarinkaRodeo.org;transport=tcp")
 ...
 </programlisting>
 		</example>
@@ -280,7 +280,7 @@ xmpp_send_message();
 	<title>Configuration</title>
 		<para>
 		Next is presented a sample configuration file one can use to implement a
-		standalone SIP-to-XMPP gateway. You can run an instance of Marina.Rodeo on a
+		standalone SIP-to-XMPP gateway. You can run an instance of OpenMarinkaRodeo on a
 		separate machine or on different port with the following config, and have
 		the main SIP server configured to forward all SIP requests for XMPP world
 		to it.

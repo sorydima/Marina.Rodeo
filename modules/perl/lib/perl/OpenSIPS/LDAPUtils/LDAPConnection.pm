@@ -1,19 +1,16 @@
+# Perl module for OpenMarinkaRodeo
 #
-# $Id$
-#
-# Perl module for Marina.Rodeo
-#
-# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Collax GmbH
+# Copyright (C) 2006 Collax GmbH
 #		     (Bastian Friedrich <bastian.friedrich@collax.com>)
 #
-# This file is part of Marina.Rodeo, a free SIP server.
+# This file is part of openMarinkaRodeo, a free SIP server.
 #
-# Marina.Rodeo is free software; you can redistribute it and/or modify
+# openMarinkaRodeo is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version
 #
-# Marina.Rodeo is distributed in the hope that it will be useful,
+# openMarinkaRodeo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -25,21 +22,21 @@
 
 # This file was kindly donated by Collax GmbH
 
-=head1 Marina.Rodeo::LDAPUtils::LDAPConnection
+=head1 OpenMarinkaRodeo::LDAPUtils::LDAPConnection
 
-Marina.Rodeo::LDAPUtils::LDAPConnection - Perl module to perform simple LDAP queries.
+OpenMarinkaRodeo::LDAPUtils::LDAPConnection - Perl module to perform simple LDAP queries.
 
 OO-Style interface:
 
-  use Marina.Rodeo::LDAPUtils::LDAPConnection;
-  my $ldap = new Marina.Rodeo::LDAPUtils::LDAPConnection;
+  use OpenMarinkaRodeo::LDAPUtils::LDAPConnection;
+  my $ldap = new OpenMarinkaRodeo::LDAPUtils::LDAPConnection;
   my @rows = $ldap-search("uid=andi","ou=people,ou=coreworks,ou=de");
 
 Procedural interface:
 
-  use Marina.Rodeo::LDAPUtils::LDAPConnection;
+  use OpenMarinkaRodeo::LDAPUtils::LDAPConnection;
   my @rows = $ldap->search(
-  	new Marina.Rodeo::LDAPUtils::LDAPConfig(), "uid=andi","ou=people,ou=coreworks,ou=de");
+  	new OpenMarinkaRodeo::LDAPUtils::LDAPConfig(), "uid=andi","ou=people,ou=coreworks,ou=de");
 
 This perl module offers a somewhat simplified interface to the C<Net::LDAP>
 functionality. It is intended for cases where just a few attributes should
@@ -47,9 +44,9 @@ be retrieved without the overhead of the full featured C<Net::LDAP>.
 
 =cut
 
-package Marina.Rodeo::LDAPUtils::LDAPConnection;
+package OpenMarinkaRodeo::LDAPUtils::LDAPConnection;
 
-use Marina.Rodeo::LDAPUtils::LDAPConf;
+use OpenMarinkaRodeo::LDAPUtils::LDAPConf;
 use Net::LDAP;
 use Authen::SASL;
 
@@ -61,9 +58,9 @@ my $ldap_singleton = undef;
 Set up a new LDAP connection.
 
 The first argument, when given, should be a hash reference pointing
-to to the connection parameters, possibly an C<Marina.Rodeo::LDAPUtils::LDAPConfig>
+to to the connection parameters, possibly an C<OpenMarinkaRodeo::LDAPUtils::LDAPConfig>
 object. This argument may be C<undef> in which case a new (default)
-C<Marina.Rodeo::LDAPUtils::LDAPConfig> object is used.
+C<OpenMarinkaRodeo::LDAPUtils::LDAPConfig> object is used.
 
 When the optional second argument is a true value, the connection
 will be authenticated. Otherwise an anonymous bind is done.
@@ -78,7 +75,7 @@ sub new {
     my $doauth   = shift;
 
     if( ! defined( $conf ) ) {
-      $conf = new Marina.Rodeo::LDAPUtils::LDAPConf();
+      $conf = new OpenMarinkaRodeo::LDAPUtils::LDAPConf();
     }
 
     #print STDERR "new ldap checks\n";
@@ -136,14 +133,14 @@ perform an ldap search, return the dn of the first matching
 directory entry, unless a specific attribute has been requested,
 in wich case the values(s) fot this attribute are returned.
 
-When the first argument (conf) is a C<Marina.Rodeo::LDAPUtils::LDAPConnection>, it
+When the first argument (conf) is a C<OpenMarinkaRodeo::LDAPUtils::LDAPConnection>, it
 will be used to perform the queries. You can pass the first argument 
 implicitly by using the "method" syntax.
 
 Otherwise the C<conf> argument should be a reference to a hash 
 containing the connection setup parameters as contained in a 
-C<Marina.Rodeo::LDAPUtils::LDAPConf> object. In this mode, the
-C<Marina.Rodeo::LDAPUtils::LDAPConnection> from previous queries will be reused.
+C<OpenMarinkaRodeo::LDAPUtils::LDAPConf> object. In this mode, the
+C<OpenMarinkaRodeo::LDAPUtils::LDAPConnection> from previous queries will be reused.
 
 =head3 Arguments:
 
@@ -184,11 +181,11 @@ sub search {
 
     my $ldap = undef;
 
-    if( $conf->isa("Marina.Rodeo::LDAPUtils::LDAPConnection") ) {
+    if( $conf->isa("OpenMarinkaRodeo::LDAPUtils::LDAPConnection") ) {
       $ldap = $conf;
     } else {
       if( ! $ldap_singleton ) {
-        $ldap_singleton = new Marina.Rodeo::LDAPUtils::LDAPConnection($conf);
+        $ldap_singleton = new OpenMarinkaRodeo::LDAPUtils::LDAPConnection($conf);
       }
       return undef unless $ldap_singleton;
       $ldap = $ldap_singleton;

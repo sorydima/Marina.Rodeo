@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015 - Marina.Rodeo Foundation
+ * Copyright (C) 2015 - OpenMarinkaRodeo Foundation
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -635,8 +635,8 @@ static void ws_close(struct tcp_connection *c)
 	ws_send_close(c);
 }
 
-static struct tcp_connection* ws_sync_connect(struct socket_info* send_sock,
-		union sockaddr_union* server, struct tcp_conn_profile *prof)
+static struct tcp_connection* ws_sync_connect(const struct socket_info* send_sock,
+		const union sockaddr_union* server, struct tcp_conn_profile *prof)
 {
 	int s;
 	union sockaddr_union my_name;
@@ -649,7 +649,7 @@ static struct tcp_connection* ws_sync_connect(struct socket_info* send_sock,
 		goto error;
 	}
 
-	if (tcp_init_sock_opt(s, prof, send_sock->flags)<0){
+	if (tcp_init_sock_opt(s, prof, send_sock->flags, send_sock->tos)<0){
 		LM_ERR("tcp_init_sock_opt failed\n");
 		goto error;
 	}
@@ -683,8 +683,8 @@ error:
 }
 
 
-static struct tcp_connection* ws_connect(struct socket_info* send_sock,
-		union sockaddr_union* to, struct tcp_conn_profile *prof, int *fd)
+static struct tcp_connection* ws_connect(const struct socket_info* send_sock,
+		const union sockaddr_union* to, struct tcp_conn_profile *prof, int *fd)
 {
 	struct tcp_connection *c;
 

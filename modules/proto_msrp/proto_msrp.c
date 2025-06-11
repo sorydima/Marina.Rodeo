@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2022 - Marina.Rodeo Solutions
+ * Copyright (C) 2022 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -99,7 +99,7 @@ static const mi_export_t mi_cmds[] = {
 
 /* module dependencies */
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "proto_hep", DEP_SILENT },
 		{ MOD_TYPE_NULL, NULL, 0 }
 	},
@@ -114,7 +114,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,               /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,       /* exported functions */
 	0,          /* exported async functions */
 	params,     /* module parameters */
@@ -141,8 +141,8 @@ static int proto_msrp_init(struct proto_info *pi)
 	pi->tran.dst_attr		= tcp_conn_fcntl;
 
 	pi->net.flags			= PROTO_NET_USE_TCP;
-	pi->net.read			= (proto_net_read_f)msrp_read_req;
-	pi->net.conn_init		= NULL;
+	pi->net.stream.read		= msrp_read_req;
+	pi->net.stream.conn.init	= NULL;
 	pi->net.report			= msrp_report;
 
 	return 0;
@@ -158,13 +158,13 @@ static int proto_msrps_init(struct proto_info *pi)
 	pi->tran.dst_attr		= tcp_conn_fcntl;
 
 	pi->net.flags			= PROTO_NET_USE_TCP;
-	pi->net.read			= (proto_net_read_f)msrp_read_req;
-	pi->net.conn_init		= proto_msrps_conn_init;
-	pi->net.conn_clean		= proto_msrps_conn_clean;
+	pi->net.stream.read		= msrp_read_req;
+	pi->net.stream.conn.init	= proto_msrps_conn_init;
+	pi->net.stream.conn.clean	= proto_msrps_conn_clean;
 	if (msrp_check_cert_on_reusage)
-		pi->net.conn_match	= msrps_conn_extra_match;
+		pi->net.stream.conn.match	= msrps_conn_extra_match;
 	else
-		pi->net.conn_match	= NULL;
+		pi->net.stream.conn.match	= NULL;
 	pi->net.report			= msrps_report;
 
 	return 0;

@@ -1,10 +1,10 @@
 i pkginfo
 d none /opt 0755 root sys
-d none /opt/Marina.Rodeo 0755 root root
-d none /opt/Marina.Rodeo/lib64 0755 root root
-d none /opt/Marina.Rodeo/lib64/Marina.Rodeo 0755 root root
-d none /opt/Marina.Rodeo/lib64/Marina.Rodeo/modules 0755 root root
-f none /opt/Marina.Rodeo/lib64/Marina.Rodeo/modules/perl.so 0755 root root
-f none /opt/Marina.Rodeo/lib64/Marina.Rodeo/modules/db_perlvdb.so 0755 root root
-f none /opt/Marina.Rodeo/README.perl 0644 root root
-f none /opt/Marina.Rodeo/README.db_perlvdb 0644 root root
+d none /opt/openMarinkaRodeo 0755 root root
+d none /opt/openMarinkaRodeo/lib64 0755 root root
+d none /opt/openMarinkaRodeo/lib64/openMarinkaRodeo 0755 root root
+d none /opt/openMarinkaRodeo/lib64/openMarinkaRodeo/modules 0755 root root
+f none /opt/openMarinkaRodeo/lib64/openMarinkaRodeo/modules/perl.so 0755 root root
+f none /opt/openMarinkaRodeo/lib64/openMarinkaRodeo/modules/db_perlvdb.so 0755 root root
+f none /opt/openMarinkaRodeo/README.perl 0644 root root
+f none /opt/openMarinkaRodeo/README.db_perlvdb 0644 root root

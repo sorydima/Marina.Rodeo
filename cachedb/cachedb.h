@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011-2019 Marina.Rodeo Solutions
+ * Copyright (C) 2011-2019 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -81,6 +81,9 @@ typedef struct cachedb_funcs_t {
 	        int expires, int *new_val);
 	int (*sub) (cachedb_con *con, str *attr, int val,
 	        int expires, int *new_val);
+	int (*iter_keys) (cachedb_con *con,
+	                  int (*kv_func)(const str *key, const str *value));
+
 	/* bi-dimensional array will be returned */
 	int (*raw_query) (cachedb_con *con, str *query, cdb_raw_entry ***reply,
 	                  int num_cols, int *num_rows);
@@ -154,7 +157,7 @@ typedef struct cachedb_funcs_t {
 		const cdb_dict_t *pairs);
 	int (*map_remove) (cachedb_con *con, const str *key, const str *subkey);
 
-	/* Checks if the database is replicated (in an Marina.Rodeo cluster).
+	/* Checks if the database is replicated (in an OpenMarinkaRodeo cluster).
 	 * Currently only makes sense for cachedb_local
 	 */
 	int (*is_replicated) (cachedb_con *con);

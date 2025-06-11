@@ -1,16 +1,16 @@
 /**
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2010-2020 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2009 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2010-2020 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2005-2009 Voice Sistem SRL
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -50,6 +50,7 @@
 #include "transformations.h"
 #include "script_var.h"
 #include "pvar.h"
+#include "sdp_ops.h"
 #include "flags.h"
 #include "xlog.h"
 
@@ -64,6 +65,8 @@
 #include "parser/parse_pai.h"
 #include "parser/digest/digest.h"
 #include "parser/contact/parse_contact.h"
+#include "parser/parse_authenticate.h"
+#include "lib/digest_auth/digest_auth.h"
 
 #define is_in_str(p, in) (p<in->s+in->len && *p)
 
@@ -149,6 +152,7 @@ int init_pvar_support(void)
 /* route param variable */
 static int pv_get_param(struct sip_msg *msg,  pv_param_t *ip, pv_value_t *res);
 static int pv_parse_param_name(pv_spec_p sp, const str *in);
+static int pv_parse_return_value(pv_spec_p sp, const str *in);
 
 /********** helper functions ********/
 /**
@@ -1743,6 +1747,18 @@ end:
 	return pv_get_strval(msg, param, res, &s);
 }
 
+
+static int pv_get_sdp(struct sip_msg *msg, pv_param_t *_, pv_value_t *res)
+{
+	pv_param_t param;
+
+	memset(&param, 0, sizeof param);
+	param.pvn.u.isname.name.n = ((TYPE_APPLICATION<<16)+SUBTYPE_SDP);
+
+	return pv_get_msg_body(msg, &param, res);
+}
+
+
 static int pv_get_authattr(struct sip_msg *msg, pv_param_t *param,
 		pv_value_t *res)
 {
@@ -1811,6 +1827,66 @@ static int pv_get_authattr(struct sip_msg *msg, pv_param_t *param,
 
 	if (s->len==0)
 		return pv_get_null(msg, param, res);
+	return pv_get_strval(msg, param, res, s);
+}
+
+
+static int pv_get_cauthattr(struct sip_msg *msg, pv_param_t *param,
+		pv_value_t *res)
+{
+	struct authenticate_body *auth = NULL;
+	str *s;
+
+	if(msg==NULL)
+		return -1;
+
+	if (msg->first_line.type!=SIP_REPLY) {
+		LM_DBG("{Proxy,WWW}-Authenticate header should be only in replies\n");
+		return pv_get_null(msg, param, res);
+	}
+	switch (msg->REPLY_STATUS) {
+		case 401:
+			parse_www_authenticate_header(msg, NULL, &auth);
+			break;
+		case 407:
+			parse_proxy_authenticate_header(msg, NULL, &auth);
+			break;
+		default:
+			LM_DBG("bad reply code for a challenge!\n");
+			break;
+	}
+	if (!auth) {
+		LM_DBG("no {Proxy,WWW}-Authenticate header\n");
+		return pv_get_null(msg, param, res);
+	}
+
+	switch (param->pvn.u.isname.name.n) {
+		case 1:
+			s = (str *)print_digest_algorithm(auth->algorithm);
+			break;
+		case 2:
+			s = &auth->realm;
+			break;
+		case 3:
+			s = &auth->nonce;
+			break;
+		case 4:
+			s = &auth->opaque;
+			break;
+		case 5:
+			s = &auth->qop;
+			break;
+		case 6:
+			s = &auth->ik;
+			break;
+		case 7:
+			s = &auth->ck;
+			break;
+		default:
+			LM_BUG("unhandled mode %d\n", param->pvn.u.isname.name.n);
+			return pv_get_null(msg, param, res);
+	}
+
 	return pv_get_strval(msg, param, res, s);
 }
 
@@ -1956,61 +2032,56 @@ static int pv_parse_branch_name(pv_spec_p sp, const str *in)
 	strncasecmp(in->s, BR_SOCKET_S, BR_SOCKET_LEN)==0 ) {
 		sp->pvp.pvn.u.isname.name.n = BR_SOCKET_ID;
 	} else {
-		LM_ERR("unsupported BRANCH field <%.*s>\n",in->len,in->s);
+		LM_ERR("unsupported MSG BRANCH field <%.*s>\n",in->len,in->s);
 		return -1;
 	}
 
 	return 0;
 }
 
-static inline int get_branch_field( int idx, pv_name_t *pvn, pv_value_t *res)
+static inline int get_branch_field( int idx, int field_id, pv_value_t *res)
 {
-	str uri;
-	qvalue_t q;
-	str duri;
-	str path;
-	unsigned int flags;
-	struct socket_info *si;
+	struct msg_branch *branch;
 
-	uri.s = get_branch(idx, &uri.len, &q, &duri, &path, &flags, &si);
-	if (!uri.s)
+	branch = get_msg_branch(idx);
+	if (branch==NULL)
 		return pv_get_null( NULL, NULL, res);
 
 	/* got a valid branch, return the field */
-	switch (pvn->u.isname.name.n) {
+	switch (field_id) {
 		case 0:
 		case BR_URI_ID: /* return URI */
-			res->rs = uri;
+			res->rs = branch->uri;
 			res->flags = PV_VAL_STR;
 			break;
 		case BR_Q_ID: /* return Q */
-			res->rs.s = q2str(q, (unsigned int*)&res->rs.len);
+			res->rs.s = q2str(branch->q, (unsigned int*)&res->rs.len);
 			res->flags = PV_VAL_STR;
 			break;
 		case BR_DURI_ID: /* return DURI */
-			if ( !duri.s || !duri.len)
+			if ( ZSTR(branch->dst_uri) )
 				return pv_get_null(NULL, NULL, res);
-			res->rs = duri;
+			res->rs = branch->dst_uri;
 			res->flags = PV_VAL_STR;
 			break;
 		case BR_PATH_ID: /* return PATH */
-			if ( !path.s || !path.len)
+			if ( ZSTR(branch->path) )
 				return pv_get_null(NULL, NULL, res);
-			res->rs = path;
+			res->rs = branch->path;
 			res->flags = PV_VAL_STR;
 			break;
 		case BR_FLAGS_ID: /* return FLAGS */
-			res->rs = bitmask_to_flag_list(FLAG_TYPE_BRANCH, flags);
+			res->rs = bitmask_to_flag_list(FLAG_TYPE_BRANCH, branch->bflags);
 			res->flags = PV_VAL_STR;
 			break;
 		case BR_SOCKET_ID: /* return SOCKET */
-			if ( !si )
+			if ( branch->force_send_socket==NULL )
 				return pv_get_null(NULL, NULL, res);
-			res->rs = si->sock_str;
+			res->rs = branch->force_send_socket->sock_str;
 			res->flags = PV_VAL_STR;
 			break;
 		default:
-			LM_CRIT("BUG - unsupported ID %d\n",pvn->u.isname.name.n);
+			LM_CRIT("BUG - unsupported ID %d\n",field_id);
 			return pv_get_null(NULL, NULL, res);
 	}
 	return 0;
@@ -2020,8 +2091,7 @@ static inline int get_branch_field( int idx, pv_name_t *pvn, pv_value_t *res)
 static int pv_get_branch_fields(struct sip_msg *msg, pv_param_t *param,
 		pv_value_t *res)
 {
-	str uri;
-	qvalue_t q;
+	int size;
 	int idx;
 	int idxf;
 	char *p;
@@ -2029,7 +2099,7 @@ static int pv_get_branch_fields(struct sip_msg *msg, pv_param_t *param,
 	if(msg==NULL || res==NULL)
 		return -1;
 
-	if (get_nr_branches() == 0)
+	if ( (size=get_dset_size()) == 0)
 		return pv_get_null(msg, param, res);
 
 	/* get the index */
@@ -2040,7 +2110,7 @@ static int pv_get_branch_fields(struct sip_msg *msg, pv_param_t *param,
 
 	if (idxf!=PV_IDX_ALL && idx==0) {
 		/* no index specified -> return the first branch */
-		return get_branch_field( 0, &param->pvn, res);
+		return get_branch_field( 0, param->pvn.u.isname.name.n, res);
 	}
 
 	if(idxf==PV_IDX_ALL) {
@@ -2048,10 +2118,12 @@ static int pv_get_branch_fields(struct sip_msg *msg, pv_param_t *param,
 		p = pv_local_buf;
 		idx = 0;
 
-		while ( (uri.s=get_branch(idx, &uri.len, &q, 0, 0, 0, 0))!=NULL ) {
+		while ( idx<size ) {
+
+			get_branch_field( idx, param->pvn.u.isname.name.n, res);
 
 			if ( pv_local_buf + PV_LOCAL_BUF_SIZE <=
-			p + uri.len + PV_FIELD_DELIM_LEN ) {
+			p + res->rs.len + PV_FIELD_DELIM_LEN ) {
 				LM_ERR("local buffer length exceeded\n");
 				return pv_get_null(msg, param, res);
 			}
@@ -2061,8 +2133,8 @@ static int pv_get_branch_fields(struct sip_msg *msg, pv_param_t *param,
 				p += PV_FIELD_DELIM_LEN;
 			}
 
-			memcpy(p, uri.s, uri.len);
-			p += uri.len;
+			memcpy(p, res->rs.s, res->rs.len);
+			p += res->rs.len;
 			idx++;
 		}
 
@@ -2075,13 +2147,241 @@ static int pv_get_branch_fields(struct sip_msg *msg, pv_param_t *param,
 	/* numerical index */
 	if (idx<0) {
 		/* index from the end */
-		if (-idx > get_nr_branches())
+		if (-idx > size)
 			return pv_get_null(msg, param, res);
-		idx = get_nr_branches() + idx;
+		idx = size + idx;
 	}
 
 	/* return the request branch info */
-	return get_branch_field( idx, &param->pvn, res);
+	return get_branch_field( idx, param->pvn.u.isname.name.n, res);
+}
+
+
+/******* MSG Branch stuff *******/
+
+static inline int get_msg_branch_field( struct sip_msg *msg, int idx,
+												int field_id, pv_value_t *res)
+{
+	if (idx==0) {
+		/* this is the RURI branch */
+		switch (field_id) {
+			case 0:
+			case BR_URI_ID: /* return URI */
+				res->rs = *GET_RURI(msg);
+				res->flags = PV_VAL_STR;
+				break;
+			case BR_Q_ID: /* return Q */
+				res->rs.s = q2str(msg->ruri_q, (unsigned int*)&res->rs.len);
+				res->flags = PV_VAL_STR;
+				break;
+			case BR_DURI_ID: /* return DURI */
+				if ( ZSTR(msg->dst_uri) )
+					return pv_get_null(NULL, NULL, res);
+				res->rs = msg->dst_uri;
+				res->flags = PV_VAL_STR;
+				break;
+			case BR_PATH_ID: /* return PATH */
+				if ( ZSTR(msg->path_vec) )
+					return pv_get_null(NULL, NULL, res);
+				res->rs = msg->path_vec;
+				res->flags = PV_VAL_STR;
+				break;
+			case BR_FLAGS_ID: /* return FLAGS */
+				res->rs = bitmask_to_flag_list(FLAG_TYPE_BRANCH,
+					msg->ruri_bflags);
+				res->flags = PV_VAL_STR;
+				break;
+			case BR_SOCKET_ID: /* return SOCKET */
+				if ( msg->force_send_socket==NULL )
+					return pv_get_null(NULL, NULL, res);
+				res->rs = msg->force_send_socket->sock_str;
+				res->flags = PV_VAL_STR;
+				break;
+			default:
+				LM_CRIT("BUG - unsupported ID %d\n",field_id);
+				return pv_get_null(NULL, NULL, res);
+		}
+		return 0;
+	} else {
+		/* translate this to idx into the additional msg branches */
+		return get_branch_field( idx-1, field_id, res);
+	}
+}
+
+static int pv_get_msg_branch_fields(struct sip_msg *msg, pv_param_t *param,
+		pv_value_t *res, int field)
+{
+	int size;
+	int idx;
+	int idxf;
+	char *p;
+
+	if(msg==NULL || res==NULL)
+		return -1;
+
+	size = get_dset_size() + 1;
+
+	/* get the index */
+	if(pv_get_spec_index(msg, param, &idx, &idxf)!=0) {
+		LM_ERR("invalid index\n");
+		return -1;
+	}
+
+	if (idxf==0 && idx==0) {
+		/* no index specified -> operate with the last branch */
+		return get_msg_branch_field( msg, size-1 , field, res);
+	}
+
+	if(idxf==PV_IDX_ALL) {
+		/* return all branches */
+		p = pv_local_buf;
+		idx = 0;
+
+		while ( idx<size ) {
+
+			get_msg_branch_field( msg, idx, field, res);
+
+			if ( pv_local_buf + PV_LOCAL_BUF_SIZE <=
+			p + res->rs.len + PV_FIELD_DELIM_LEN ) {
+				LM_ERR("local buffer length exceeded\n");
+				return pv_get_null(msg, param, res);
+			}
+
+			if (idx) {
+				memcpy(p, PV_FIELD_DELIM, PV_FIELD_DELIM_LEN);
+				p += PV_FIELD_DELIM_LEN;
+			}
+
+			memcpy(p, res->rs.s, res->rs.len);
+			p += res->rs.len;
+			idx++;
+		}
+
+		res->rs.s = pv_local_buf;
+		res->rs.len = p - pv_local_buf;
+		res->flags = PV_VAL_STR;
+		return 0;
+	}
+
+	/* numerical index */
+	if (idx<0) {
+		/* index from the end */
+		if (-idx > size)
+			return pv_get_null(msg, param, res);
+		idx = size + idx;
+	}
+
+	/* return the request branch info */
+	return get_msg_branch_field( msg, idx, field, res);
+}
+
+static int pv_get_msg_branch_uri(struct sip_msg *msg, pv_param_t *param,
+															pv_value_t *res)
+{
+	return pv_get_msg_branch_fields( msg, param, res, BR_URI_ID);
+}
+
+static int pv_get_msg_branch_duri(struct sip_msg *msg, pv_param_t *param,
+															pv_value_t *res)
+{
+	return pv_get_msg_branch_fields( msg, param, res, BR_DURI_ID);
+}
+
+static int pv_get_msg_branch_q(struct sip_msg *msg, pv_param_t *param,
+															pv_value_t *res)
+{
+	return pv_get_msg_branch_fields( msg, param, res, BR_Q_ID);
+}
+
+static int pv_get_msg_branch_path(struct sip_msg *msg, pv_param_t *param,
+															pv_value_t *res)
+{
+	return pv_get_msg_branch_fields( msg, param, res, BR_PATH_ID);
+}
+
+static int pv_get_msg_branch_flags(struct sip_msg *msg, pv_param_t *param,
+															pv_value_t *res)
+{
+	return pv_get_msg_branch_fields( msg, param, res, BR_FLAGS_ID);
+}
+
+static int pv_get_msg_branch_sock(struct sip_msg *msg, pv_param_t *param,
+															pv_value_t *res)
+{
+	return pv_get_msg_branch_fields( msg, param, res, BR_SOCKET_ID);
+}
+
+static int pv_get_msg_branch_attr(struct sip_msg *msg,  pv_param_t *param,
+															pv_value_t *res)
+{
+	int idx, idxf;
+	int size, n, attr_name;
+	unsigned short attr_flags;
+	int_str val;
+
+	if(msg==NULL || res==NULL || param==NULL)
+		return -1;
+
+	if (pv_get_avp_name(msg, param, &attr_name, &attr_flags)!=0) {
+		LM_ALERT("BUG in getting dst AVP name\n");
+		return -1;
+	}
+
+	/* get the index */
+	if (pv_get_spec_index(msg, param, &idx, &idxf)!=0) {
+		LM_ERR("invalid index\n");
+		return -1;
+	}
+
+	if (idxf==PV_IDX_ALL) {
+		/* ALL - not supported */
+		LM_ERR("ALL index not supported for attrs\n");
+		return -1;
+	}
+
+	size = get_dset_size() + 1 /* ruri branch*/;
+	/* if no branch set, consider the last one */
+	if (idxf==0 && idx==0)
+		idx = size - 1;
+
+	/* numerical index */
+	if (idx<0) {
+		/* index from the end */
+		if (-idx > size)
+			return -1;
+		idx = size + idx;
+	}
+
+	n = get_msg_branch_attr( idx, attr_name, &attr_flags, &val);
+	if ( n<0 || attr_flags&AVP_VAL_NULL)
+		return pv_get_null(msg, param, res);
+
+	res->flags = PV_VAL_STR;
+
+	if (attr_flags & AVP_VAL_STR) {
+		res->rs = val.s;
+	} else {
+		res->rs.s = sint2str(val.n, &res->rs.len);
+		res->ri = val.n;
+		res->flags |= PV_VAL_INT|PV_TYPE_INT;
+	}
+
+	return 0;
+}
+
+static int pv_get_msg_branch_lastidx(struct sip_msg *msg,  pv_param_t *param,
+															pv_value_t *res)
+{
+	int idx;
+
+	/* the last index is the size -1, counting all branches, as RURI as 
+	 * branch 0 followed by the added branches in dset */
+	idx = get_dset_size();
+	res->flags = PV_VAL_STR;
+	res->rs.s = sint2str( idx, &res->rs.len);
+	res->ri = idx;
+	res->flags |= PV_VAL_INT|PV_TYPE_INT;
+	return 0;
 }
 
 
@@ -2111,6 +2411,9 @@ static int pv_get_branch_fields(struct sip_msg *msg, pv_param_t *param,
 #define SOCK_AF_S             "af"
 #define SOCK_AF_LEN           (sizeof(SOCK_AF_S)-1)
 #define SOCK_AF_ID            8
+#define SOCK_FORCED_S         "forced"
+#define SOCK_FORCED_LEN       (sizeof(SOCK_FORCED_S)-1)
+#define SOCK_FORCED_ID        9
 
 static int pv_parse_socket_name(pv_spec_p sp, const str *in)
 {
@@ -2159,8 +2462,25 @@ static int pv_parse_socket_name(pv_spec_p sp, const str *in)
 	return 0;
 }
 
+static int pv_parse_socket_out_name(pv_spec_p sp, const str *in)
+{
+	if (sp==NULL || in==NULL || in->s==NULL || in->len==0)
+		return -1;
 
-static inline int get_socket_field( struct socket_info *si,
+	sp->pvp.pvn.type = PV_NAME_INTSTR;
+	sp->pvp.pvn.u.isname.type = 0;
+
+	if (in->len==SOCK_FORCED_LEN &&
+	strncasecmp(in->s, SOCK_FORCED_S, SOCK_FORCED_LEN)==0 ) {
+		sp->pvp.pvn.u.isname.name.n = SOCK_FORCED_ID;
+		return 0;
+	} else {
+		return pv_parse_socket_name(sp, in);
+	}
+}
+
+
+static inline int get_socket_field( const struct socket_info *si,
 											pv_name_t *pvn, pv_value_t *res)
 {
 	if (si==NULL)
@@ -2169,6 +2489,7 @@ static inline int get_socket_field( struct socket_info *si,
 	/* return the field */
 	switch (pvn->u.isname.name.n) {
 		case 0: /* return full socket description */
+		case SOCK_FORCED_ID: /* return forced socket description */
 			res->rs = si->sock_str;
 			res->flags = PV_VAL_STR;
 			break;
@@ -2256,10 +2577,13 @@ static int pv_get_socket_in_fields(struct sip_msg *msg, pv_param_t *param,
 static int pv_get_socket_out_fields(struct sip_msg *msg, pv_param_t *param,
 															pv_value_t *res)
 {
-	struct socket_info *si;
+	const struct socket_info *si;
 
 	if(msg==NULL || res==NULL)
 		return -1;
+
+	if (param->pvn.u.isname.name.n == SOCK_FORCED_ID && !msg->force_send_socket)
+		return pv_get_null(msg, NULL, res);
 
 	si = (msg->force_send_socket) ?
 		msg->force_send_socket : msg->rcv.bind_address;
@@ -3131,9 +3455,11 @@ static int pv_set_ruri_port(struct sip_msg* msg, pv_param_t *param,
 }
 
 
-static int pv_set_branch(struct sip_msg* msg, pv_param_t *param,
+static int pv_set_msg_branch(struct sip_msg* msg, pv_param_t *param,
 		int op, pv_value_t *val)
 {
+	struct msg_branch branch;
+
 	if (msg==NULL || param==NULL) {
 		LM_ERR("bad parameters\n");
 		return -1;
@@ -3145,7 +3471,10 @@ static int pv_set_branch(struct sip_msg* msg, pv_param_t *param,
 		return -1;
 	}
 
-	if (append_branch( msg, &val->rs, NULL, NULL, Q_UNSPECIFIED,  0, NULL)!=1){
+	memset( &branch, 0, sizeof branch);
+	branch.uri = val->rs;
+	branch.q = Q_UNSPECIFIED;
+	if (append_msg_branch( &branch )!=1){
 		LM_ERR("failed to append new branch\n");
 		return -1;
 	}
@@ -3154,15 +3483,16 @@ static int pv_set_branch(struct sip_msg* msg, pv_param_t *param,
 }
 
 
-static int pv_set_branch_fields(struct sip_msg* msg, pv_param_t *param,
-		int op, pv_value_t *val)
+static int _int_pv_set_branch_fields(struct sip_msg* msg, pv_param_t *param,
+		int op, pv_value_t *val, int field, int has_ruri_branch)
 {
+	int size, is_ruri_branch = 0;
 	int idx;
 	int idxf;
 	str *s;
 	qvalue_t q;
 	unsigned int flags;
-	struct socket_info *si;
+	const struct socket_info *si;
 
 	if (msg==NULL || param==NULL) {
 		LM_ERR("bad parameters\n");
@@ -3178,22 +3508,43 @@ static int pv_set_branch_fields(struct sip_msg* msg, pv_param_t *param,
 		return -1;
 	}
 
-	if(idxf==PV_IDX_ALL) {
+	if (idxf==PV_IDX_ALL) {
 		LM_ERR("SCRIPT BUG - * not allowed in branch assignment\n");
 		return -1;
 	}
 
-	if (idx<0) {
-		idx = get_nr_branches() + idx;
+	if (has_ruri_branch) {
+		size = get_dset_size() + 1 ;
+		/* no branch set, consider the last one */
+		if (idxf==0 && idx==0)
+			idx = size - 1;
+		else
+		/* if negative, count from the end */
+		if (idx<0)
+			idx = size + idx;
+		/* now evaluate and ajust the idx to dset only */
+		if (idx==0) {
+			is_ruri_branch = 1;
+		} else {
+			/* offset with -1 */
+			idx--;
+		}
+	} else {
+		size = get_dset_size();
+		/* if negative, count from the end */
+		if (idx<0)
+			idx = size + idx;
 	}
 
-	if (idx<0 || idx>=get_nr_branches()) {
-		LM_ERR("SCRIPT BUG - inexisting branch assignment [%d/%d]\n",
-			get_nr_branches(), idx);
-		return -1;
+	if (!is_ruri_branch) {
+		/* if not RURI branch, it is a msg branch, so check the idx*/
+		if (idx<0 || idx>=get_dset_size()) {
+			LM_ERR("inexisting branch assignment [%d/%d]\n", size, idx);
+			return -1;
+		}
 	}
 
-	switch (param->pvn.u.isname.name.n) {
+	switch (field) {
 		case BR_URI_ID: /* set URI */
 			if (!val || !(val->flags&PV_VAL_STR) || val->flags&(PV_VAL_NULL) ||
 			val->rs.len==0 ) {
@@ -3201,32 +3552,38 @@ static int pv_set_branch_fields(struct sip_msg* msg, pv_param_t *param,
 				return -1;
 			}
 			s = &val->rs;
-			return update_branch( idx, &s, NULL,
-				NULL, NULL, NULL, NULL);
+			return is_ruri_branch ?
+				set_ruri( msg, s) :
+				update_msg_branch_uri( idx, s);
 		case BR_Q_ID: /* set Q */
 			if ( val && !(val->flags&PV_VAL_INT) ) {
 				LM_ERR("INT value required to set the branch Q\n");
 				return -1;
 			}
 			q = (!val||val->flags&PV_VAL_NULL)? Q_UNSPECIFIED : val->ri;
-			return update_branch( idx, NULL, NULL,
-				NULL, &q, NULL, NULL);
+			if (is_ruri_branch )
+				set_ruri_q( msg, q);
+			else
+				update_msg_branch_q( idx, q);
+			return 0;
 		case BR_DURI_ID: /* set DURI */
 			if ( val && !(val->flags&PV_VAL_STR) ) {
 				LM_ERR("STR value required to set the branch DURI\n");
 				return -1;
 			}
 			s = (!val||val->flags&PV_VAL_NULL)? NULL : &val->rs;
-			return update_branch( idx, NULL, &s,
-				NULL, NULL, NULL, NULL);
+			return is_ruri_branch ?
+				set_dst_uri( msg, s) :
+				update_msg_branch_dst_uri( idx, s);
 		case BR_PATH_ID: /* set PATH */
 			if ( val && !(val->flags&PV_VAL_STR) ) {
 				LM_ERR("STR value required to set the branch PATH\n");
 				return -1;
 			}
 			s = (!val||val->flags&PV_VAL_NULL)? NULL : &val->rs;
-			return update_branch( idx, NULL, NULL,
-				&s, NULL, NULL, NULL);
+			return is_ruri_branch ?
+				set_path_vector( msg, s) :
+				update_msg_branch_path( idx, s);
 		case BR_FLAGS_ID: /* set FLAGS */
 			if ( val && !(val->flags&PV_VAL_STR) ) {
 				LM_ERR("string value required to set the branch FLAGS\n");
@@ -3234,8 +3591,11 @@ static int pv_set_branch_fields(struct sip_msg* msg, pv_param_t *param,
 			}
 			flags = (!val||val->flags&PV_VAL_NULL)?
 				0 : flag_list_to_bitmask(str2const(&val->rs), FLAG_TYPE_BRANCH, FLAG_DELIM, 0);
-			return update_branch( idx, NULL, NULL,
-				NULL, NULL, &flags, NULL);
+			if ( is_ruri_branch )
+				msg->ruri_bflags = flags;
+			else
+				update_msg_branch_bflags( idx, flags);
+			return 0;
 		case BR_SOCKET_ID: /* set SOCKET */
 			if ( val && !(val->flags&PV_VAL_STR) ) {
 				LM_ERR("STR value required to set the branch SOCKET\n");
@@ -3248,18 +3608,128 @@ static int pv_set_branch_fields(struct sip_msg* msg, pv_param_t *param,
 				if (si==NULL)
 					return -1;
 			}
-			return update_branch( idx, NULL, NULL,
-				NULL, NULL, NULL, &si);
+			if ( is_ruri_branch )
+				msg->force_send_socket = si;
+			else
+				update_msg_branch_socket( idx, si);
+			return 0;
 		default:
-			LM_CRIT("BUG - unsupported ID %d\n",param->pvn.u.isname.type);
+			LM_CRIT("BUG - unsupported ID %d\n", field);
 			return -1;
 	}
 }
 
+static int pv_set_branch_fields(struct sip_msg* msg, pv_param_t *param,
+		int op, pv_value_t *val)
+{
+	/* named branch fields,
+	 * so the type is in the name, no RURI branch support*/
+	return _int_pv_set_branch_fields( msg, param, op, val,
+		param->pvn.u.isname.name.n, 0);
+}
+
+static int pv_set_msg_branch_uri(struct sip_msg* msg, pv_param_t *param,
+		int op, pv_value_t *val)
+{
+	return _int_pv_set_branch_fields( msg, param, op, val, BR_URI_ID, 1);
+}
+
+static int pv_set_msg_branch_duri(struct sip_msg* msg, pv_param_t *param,
+		int op, pv_value_t *val)
+{
+	return _int_pv_set_branch_fields( msg, param, op, val, BR_DURI_ID, 1);
+}
+
+static int pv_set_msg_branch_q(struct sip_msg* msg, pv_param_t *param,
+		int op, pv_value_t *val)
+{
+	return _int_pv_set_branch_fields( msg, param, op, val, BR_Q_ID, 1);
+}
+
+static int pv_set_msg_branch_path(struct sip_msg* msg, pv_param_t *param,
+		int op, pv_value_t *val)
+{
+	return _int_pv_set_branch_fields( msg, param, op, val, BR_PATH_ID, 1);
+}
+
+static int pv_set_msg_branch_flags(struct sip_msg* msg, pv_param_t *param,
+		int op, pv_value_t *val)
+{
+	return _int_pv_set_branch_fields( msg, param, op, val, BR_FLAGS_ID, 1);
+}
+
+static int pv_set_msg_branch_sock(struct sip_msg* msg, pv_param_t *param,
+		int op, pv_value_t *val)
+{
+	return _int_pv_set_branch_fields( msg, param, op, val, BR_SOCKET_ID, 1);
+}
+
+static int pv_set_msg_branch_attr(struct sip_msg* msg, pv_param_t *param,
+		int op, pv_value_t *val)
+{
+	int idx, idxf;
+	int size, n, attr_name;
+	unsigned short attr_flags;
+	int_str attr_val;
+
+	if (msg==NULL || param==NULL) {
+		LM_ERR("bad parameters\n");
+		return -1;
+	}
+
+	if (msg->first_line.type == SIP_REPLY)
+		return -1;
+
+	if(pv_get_avp_name(msg, param, &attr_name, &attr_flags)!=0) {
+		LM_ALERT("BUG in getting dst AVP name\n");
+		return -1;
+	}
+
+	/* get the index */
+	if (pv_get_spec_index(msg, param, &idx, &idxf)!=0) {
+		LM_ERR("invalid index\n");
+		return -1;
+	}
+
+	if(idxf==PV_IDX_ALL) {
+		LM_ERR("SCRIPT BUG - * not allowed in branch assignment\n");
+		return -1;
+	}
+
+	size = get_dset_size() + 1 /* ruri branch*/;
+	/* if no branch set, consider the last one */
+	if (idxf==0 && idx==0)
+		idx = size - 1;
+
+	/* numerical index */
+	if (idx<0) {
+		/* index from the end */
+		if (-idx > size)
+			return -1;
+		idx = size + idx;
+	}
+
+	if (!val || val->flags&PV_VAL_NULL) {
+		attr_val.n = 0; //useless, makes compiler happy
+		attr_flags |= AVP_VAL_NULL;
+	} else
+	if(val->flags&PV_TYPE_INT) {
+		attr_val.n = val->ri;
+	} else {
+		attr_val.s = val->rs;
+		attr_flags |= AVP_VAL_STR;
+	}
+
+	n = set_msg_branch_attr(idx, attr_name, attr_flags, attr_val);
+
+	return (n>=0) ? 0 : -1 ;
+}
+
+
 static int pv_set_force_sock(struct sip_msg* msg, pv_param_t *param,
 		int op, pv_value_t *val)
 {
-	struct socket_info *si;
+	const struct socket_info *si;
 
 	if(msg==NULL || param==NULL)
 	{
@@ -3618,6 +4088,71 @@ static int pv_get_xlog_level(struct sip_msg *msg,  pv_param_t *param, pv_value_t
 	return 0;
 }
 
+static int pv_get_return_value(struct sip_msg *msg,  pv_param_t *param, pv_value_t *res)
+{
+	int index;
+	pv_value_t tv;
+
+	if (param==NULL) {
+		LM_CRIT("BUG - bad parameters\n");
+		return -1;
+	}
+
+	if(res == NULL)
+		return -1;
+
+	if (param->pvn.type == PV_NAME_INTSTR) {
+		if (param->pvn.u.isname.type != 0) {
+			LM_ERR("route $return variable accepts only integer indexes\n");
+			return -1;
+		}
+		index = param->pvn.u.isname.name.n;
+	} else {
+		/* pvar -> it might be another $param variable! */
+		if(pv_get_spec_value(msg, (pv_spec_p)(param->pvn.u.dname), &tv)!=0) {
+			LM_ERR("cannot get spec value\n");
+			return -1;
+		}
+
+		if(tv.flags&PV_VAL_NULL || tv.flags&PV_VAL_EMPTY) {
+			LM_ERR("null or empty name\n");
+			return -1;
+		}
+		if (!(tv.flags&PV_VAL_INT) || str2int(&tv.rs,(unsigned int*)&index) < 0) {
+			LM_ERR("invalid index <%.*s>\n", tv.rs.len, tv.rs.s);
+			return -1;
+		}
+	}
+
+	if (script_return_get(res, index) < 0) {
+		LM_ERR("could not get return %d\n", index);
+		return -1;
+	}
+
+	/* "normalize" integer */
+	if ((res->flags & PV_VAL_INT) && !(res->flags & PV_VAL_STR)) {
+		res->rs.s = int2str(res->ri, &res->rs.len);
+		res->flags |= PV_VAL_STR;
+	}
+
+	return 0;
+}
+
+/************** Boolean consts *****************/
+
+const pv_value_t pv_true = {
+	.ri = 1,
+	.rs = str_init("true"),
+	.flags = PV_VAL_STR|PV_VAL_INT|PV_TYPE_INT,
+};
+
+
+const pv_value_t pv_false = {
+	.ri = 0,
+	.rs = str_init("false"),
+	.flags = PV_VAL_STR|PV_VAL_INT|PV_TYPE_INT,
+};
+
 
 /************** MSG FLAGS function *****************/
 
@@ -3672,17 +4207,10 @@ static int msg_flag_get(struct sip_msg *msg,  pv_param_t *param, pv_value_t *res
 	}
 
 	if ( isflagset( msg, (unsigned int)param->pvn.u.isname.name.n)==1 ) {
-		res->ri = 1;
-		res->rs.s = "true";
-		res->rs.len = 4;
+		*res = pv_true;
 	} else {
-		res->ri = 0;
-		res->rs.s = "false";
-		res->rs.len = 5;
+		*res = pv_false;
 	}
-
-	res->flags = PV_VAL_STR|PV_VAL_INT|PV_TYPE_INT;
-
 	return 0;
 }
 
@@ -3697,17 +4225,10 @@ static int msg_is_request_get(struct sip_msg *msg, pv_param_t *param, pv_value_t
 	}
 
 	if ( msg->first_line.type==SIP_REQUEST ) {
-		res->ri = 1;
-		res->rs.s = "true";
-		res->rs.len = 4;
+		*res = pv_true;
 	} else {
-		res->ri = 0;
-		res->rs.s = "false";
-		res->rs.len = 5;
+		*res = pv_false;
 	}
-
-	res->flags = PV_VAL_STR|PV_VAL_INT|PV_TYPE_INT;
-
 	return 0;
 }
 
@@ -3736,7 +4257,7 @@ static int msg_type_get(struct sip_msg *msg, pv_param_t *param, pv_value_t *res)
 
 /************** BRANCH FLAGS function *****************/
 
-static int branch_flag_parse_name(pv_spec_p sp, const str *in)
+static int msg_branch_flag_parse_name(pv_spec_p sp, const str *in)
 {
 	unsigned int idx;
 	if (sp==NULL || in==NULL || in->s==NULL || in->len==0)
@@ -3756,9 +4277,10 @@ static int branch_flag_parse_name(pv_spec_p sp, const str *in)
 }
 
 
-static int branch_flag_set(struct sip_msg* msg, pv_param_t *param, int op,
+static int msg_branch_flag_set(struct sip_msg* msg, pv_param_t *param, int op,
 															pv_value_t *val)
 {
+	int size;
 	int idx;
 	int idxf;
 
@@ -3784,13 +4306,18 @@ static int branch_flag_set(struct sip_msg* msg, pv_param_t *param, int op,
 		return -1;
 	}
 
+	size = get_dset_size() + 1;
+
+	/* if no idx, work with the last branch */
+	if (idxf==0 && idx==0)
+		idx = size - 1;
+
 	if (idx<0) {
-		idx = get_nr_branches() + idx;
+		idx = size + idx;
 	}
 
-	if (idx<0 || idx>=get_nr_branches()) {
-		LM_DBG("inexisting branch flag assignment [%d/%d]\n",
-			get_nr_branches(), idx);
+	if (idx<0 || idx>=size) {
+		LM_DBG("inexisting branch flag assignment [%d/%d]\n", size, idx);
 		return -1;
 	}
 
@@ -3803,8 +4330,10 @@ static int branch_flag_set(struct sip_msg* msg, pv_param_t *param, int op,
 }
 
 
-static int branch_flag_get(struct sip_msg *msg,  pv_param_t *param, pv_value_t *res)
+static int msg_branch_flag_get(struct sip_msg *msg,  pv_param_t *param,
+															pv_value_t *res)
 {
+	int size;
 	int idx;
 	int idxf;
 
@@ -3824,28 +4353,22 @@ static int branch_flag_get(struct sip_msg *msg,  pv_param_t *param, pv_value_t *
 		return -1;
 	}
 
+	size = get_dset_size();
+
 	if (idx<0) {
-		idx = get_nr_branches() + idx;
+		idx = size + idx;
 	}
 
-	if (idx<0 || idx>=get_nr_branches()) {
-		LM_DBG("inexisting branch flag reading [%d/%d]\n",
-			get_nr_branches(), idx);
+	if (idx<0 || idx>=size) {
+		LM_DBG("inexisting branch flag reading [%d/%d]\n", size, idx);
 		return -1;
 	}
 
 	if ( isbflagset( msg, idx, param->pvn.u.isname.name.n)==1 ) {
-		res->ri = 1;
-		res->rs.s = "true";
-		res->rs.len = 4;
+		*res = pv_true;
 	} else {
-		res->ri = 0;
-		res->rs.s = "false";
-		res->rs.len = 5;
+		*res = pv_false;
 	}
-
-	res->flags = PV_VAL_STR|PV_VAL_INT|PV_TYPE_INT;
-
 	return 0;
 }
 
@@ -3859,354 +4382,426 @@ static int branch_flag_get(struct sip_msg *msg,  pv_param_t *param, pv_value_t *
 static
 #endif
 const pv_export_t _pv_names_table[] = {
-	{str_init("avp"), PVT_AVP, pv_get_avp, pv_set_avp,
+	{str_const_init("avp"), PVT_AVP, pv_get_avp, pv_set_avp,
 		pv_parse_avp_name, pv_parse_avp_index, 0, 0},
-	{str_init("hdr"), PVT_HDR, pv_get_hdr, 0, pv_parse_hdr_name,
+	{str_const_init("hdr"), PVT_HDR, pv_get_hdr, 0, pv_parse_hdr_name,
 		pv_parse_index, 0, 0},
-	{str_init("hdr_name"), PVT_HDR_NAME, pv_get_hdr_name, 0, 0,
+	{str_const_init("hdr_name"), PVT_HDR_NAME, pv_get_hdr_name, 0, 0,
 		pv_parse_index, 0, 0},
-	{str_init("hdrcnt"), PVT_HDRCNT, pv_get_hdrcnt, 0, pv_parse_hdr_name, 0, 0, 0},
-	{str_init("var"), PVT_SCRIPTVAR, pv_get_scriptvar,
+	{str_const_init("hdrcnt"), PVT_HDRCNT, pv_get_hdrcnt, 0, pv_parse_hdr_name, 0, 0, 0},
+	{str_const_init("var"), PVT_SCRIPTVAR, pv_get_scriptvar,
 		pv_set_scriptvar, pv_parse_scriptvar_name, 0, 0, 0},
-	{str_init("ai"), /* */
+	{str_const_init("ai"), /* */
 		PVT_PAI_URI, pv_get_pai, 0,
 		0, 0, 0, 0},
-	{str_init("au"), /* */
+	{str_const_init("au"), /* */
 		PVT_AUTH_USERNAME, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("ar"), /* auth realm */
+	{str_const_init("ar"), /* auth realm */
 		PVT_AUTH_REALM, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 2},
-	{str_init("adu"), /* auth digest uri */
+	{str_const_init("adu"), /* auth digest uri */
 		PVT_AUTH_DURI, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("ad"), /* */
+	{str_const_init("ad"), /* */
 		PVT_AUTH_DOMAIN, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 4},
-	{str_init("an"), /* */
+	{str_const_init("an"), /* */
 		PVT_AUTH_NONCE, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 5},
-	{str_init("auth.nonce"), /* */
+	{str_const_init("auth.nonce"), /* */
 		PVT_AUTH_NONCE, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 5},
-	{str_init("auth.resp"), /* */
+	{str_const_init("auth.resp"), /* */
 		PVT_AUTH_RESPONSE, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 6},
-	{str_init("auth.cnonce"), /* */
+	{str_const_init("auth.cnonce"), /* */
 		PVT_AUTH_CNONCE, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 7},
-	{str_init("auth.opaque"), /* */
+	{str_const_init("auth.opaque"), /* */
 		PVT_AUTH_OPAQUE, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 8},
-	{str_init("auth.alg"), /* */
+	{str_const_init("auth.alg"), /* */
 		PVT_AUTH_ALGORITHM, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 9},
-	{str_init("auth.qop"), /* */
+	{str_const_init("auth.qop"), /* */
 		PVT_AUTH_QOP, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 10},
-	{str_init("auth.nc"), /* */
+	{str_const_init("auth.nc"), /* */
 		PVT_AUTH_NONCE_COUNT, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 11},
-	{str_init("aU"), /* */
+	{str_const_init("aU"), /* */
 		PVT_AUTH_USERNAME_WHOLE, pv_get_authattr, 0,
 		0, 0, pv_init_iname, 99},
-	{str_init("Au"), /* */
+	{str_const_init("challenge.algorithm"), /* */
+		PVT_AUTH_USERNAME, pv_get_cauthattr, 0,
+		0, 0, pv_init_iname, 1},
+	{str_const_init("challenge.realm"),
+		PVT_AUTH_REALM, pv_get_cauthattr, 0,
+		0, 0, pv_init_iname, 2},
+	{str_const_init("challenge.nonce"),
+		PVT_AUTH_DURI, pv_get_cauthattr, 0,
+		0, 0, pv_init_iname, 3},
+	{str_const_init("challenge.opaque"),
+		PVT_AUTH_DOMAIN, pv_get_cauthattr, 0,
+		0, 0, pv_init_iname, 4},
+	{str_const_init("challenge.qop"),
+		PVT_AUTH_NONCE, pv_get_cauthattr, 0,
+		0, 0, pv_init_iname, 5},
+	{str_const_init("challenge.ik"), /* */
+		PVT_AUTH_NONCE, pv_get_cauthattr, 0,
+		0, 0, pv_init_iname, 6},
+	{str_const_init("challenge.ck"), /* */
+		PVT_AUTH_RESPONSE, pv_get_cauthattr, 0,
+		0, 0, pv_init_iname, 7},
+	{str_const_init("Au"), /* */
 		PVT_ACC_USERNAME, pv_get_acc_username, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("bf"), /* */
+	{str_const_init("bf"), /* */
 		PVT_BFLAGS, pv_get_bflags, 0,
 		0, 0, 0, 0},
-	{str_init("branch"), /* */
-		PVT_BRANCH, pv_get_branch_fields, pv_set_branch,
+	{str_const_init("branch"), /* to be obsolete */
+		PVT_BRANCH, pv_get_branch_fields, pv_set_msg_branch,
 		0, 0, 0, 0},
-	{str_init("branch"), /* */
+	{str_const_init("branch"), /* to be obsolete */
 		PVT_BRANCH, pv_get_branch_fields, pv_set_branch_fields,
 		pv_parse_branch_name, pv_parse_index, 0, 0},
-	{str_init("branch.flag"), /* */
-		PVT_BRANCH_FLAG, branch_flag_get, branch_flag_set,
-		branch_flag_parse_name, pv_parse_index, 0, 0},
-	{str_init("ci"), /* */
+	{str_const_init("branch.flag"), /* to be obsolete  */
+		PVT_BRANCH_FLAG, msg_branch_flag_get, msg_branch_flag_set,
+		msg_branch_flag_parse_name, pv_parse_index, 0, 0},
+	{str_const_init("ci"), /* */
 		PVT_CALLID, pv_get_callid, 0,
 		0, 0, 0, 0},
-	{str_init("cl"), /* */
+	{str_const_init("cl"), /* */
 		PVT_CONTENT_LENGTH, pv_get_content_length, 0,
 		0, 0, 0, 0},
-	{str_init("cs"), /* */
+	{str_const_init("cs"), /* */
 		PVT_CSEQ, pv_get_cseq, 0,
 		0, 0, 0, 0},
-	{str_init("ct"), /* */
+	{str_const_init("ct"), /* */
 		PVT_CONTACT, pv_get_contact_body, 0,
 		0, pv_parse_index, 0, 0},
-	{str_init("ct.fields"), /* */
+	{str_const_init("ct.fields"), /* */
 		PVT_CONTACT, pv_get_contact_body, 0,
 		pv_parse_ct_name, pv_parse_index, 0, 0},
-	{str_init("cT"), /* */
+	{str_const_init("cT"), /* */
 		PVT_CONTENT_TYPE, pv_get_content_type, 0,
 		0, pv_parse_index, 0, 0},
-	{str_init("dd"), /* */
+	{str_const_init("dd"), /* */
 		PVT_DSTURI_DOMAIN, pv_get_dsturi_attr, pv_set_dsturi_host,
 		0, 0, pv_init_iname, 1},
-	{str_init("di"), /* */
+	{str_const_init("di"), /* */
 		PVT_DIVERSION_URI, pv_get_diversion, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("dir"), /* */
+	{str_const_init("dir"), /* */
 		PVT_DIV_REASON, pv_get_diversion, 0,
 		0, 0, pv_init_iname, 2},
-	{str_init("dip"), /* */
+	{str_const_init("dip"), /* */
 		PVT_DIV_PRIVACY, pv_get_diversion, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("dp"), /* */
+	{str_const_init("dp"), /* */
 		PVT_DSTURI_PORT, pv_get_dsturi_attr, pv_set_dsturi_port,
 		0, 0, pv_init_iname, 2},
-	{str_init("dP"), /* */
+	{str_const_init("dP"), /* */
 		PVT_DSTURI_PROTOCOL, pv_get_dsturi_attr, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("ds"), /* */
+	{str_const_init("ds"), /* */
 		PVT_DSET, pv_get_dset, 0,
 		0, 0, 0, 0},
-	{str_init("du"), /* */
+	{str_const_init("du"), /* */
 		PVT_DSTURI, pv_get_dsturi, pv_set_dsturi,
 		0, 0, 0, 0},
-	{str_init("duri"), /* */
+	{str_const_init("duri"), /* */
 		PVT_DSTURI, pv_get_dsturi, pv_set_dsturi,
 		0, 0, 0, 0},
-	{str_init("err.class"), /* */
+	{str_const_init("err.class"), /* */
 		PVT_ERR_CLASS, pv_get_errinfo_attr, 0,
 		0, 0, 0, 0},
-	{str_init("err.level"), /* */
+	{str_const_init("err.level"), /* */
 		PVT_ERR_LEVEL, pv_get_errinfo_attr, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("err.info"), /* */
+	{str_const_init("err.info"), /* */
 		PVT_ERR_INFO, pv_get_errinfo_attr, 0,
 		0, 0, pv_init_iname, 2},
-	{str_init("err.rcode"), /* */
+	{str_const_init("err.rcode"), /* */
 		PVT_ERR_RCODE, pv_get_errinfo_attr, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("err.rreason"), /* */
+	{str_const_init("err.rreason"), /* */
 		PVT_ERR_RREASON, pv_get_errinfo_attr, 0,
 		0, 0, pv_init_iname, 4},
-	{str_init("fd"), /* */
+	{str_const_init("fd"), /* */
 		PVT_FROM_DOMAIN, pv_get_from_attr, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("from.domain"), /* */
+	{str_const_init("from.domain"), /* */
 		PVT_FROM_DOMAIN, pv_get_from_attr, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("fn"), /* */
+	{str_const_init("fn"), /* */
 		PVT_FROM_DISPLAYNAME, pv_get_from_attr, 0,
 		0, 0, pv_init_iname, 5},
-	{str_init("ft"), /* */
+	{str_const_init("ft"), /* */
 		PVT_FROM_TAG, pv_get_from_attr, 0,
 		0, 0, pv_init_iname, 4},
-	{str_init("fu"), /* */
+	{str_const_init("fu"), /* */
 		PVT_FROM, pv_get_from_attr, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("from"), /* */
+	{str_const_init("from"), /* */
 		PVT_FROM, pv_get_from_attr, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("fU"), /* */
+	{str_const_init("fU"), /* */
 		PVT_FROM_USERNAME, pv_get_from_attr, 0,
 		0, 0, pv_init_iname, 2},
-	{str_init("from.user"), /* */
+	{str_const_init("from.user"), /* */
 		PVT_FROM_USERNAME, pv_get_from_attr, 0,
 		0, 0, pv_init_iname, 2},
-	{str_init("log_level"), /* per process log level*/
+	{str_const_init("log_level"), /* per process log level*/
 		PVT_LOG_LEVEL, pv_get_log_level, pv_set_log_level,
 		0, 0, 0, 0},
-	{str_init("mb"), /* */
+	{str_const_init("mb"), /* */
 		PVT_MSG_BUF, pv_get_msg_buf, 0,
 		0, 0, 0, 0},
-	{str_init("mf"), /* */
+	{str_const_init("mf"), /* */
 		PVT_FLAGS, pv_get_flags, 0,
 		0, 0, 0, 0},
-	{str_init("msg.flag"), /* */
+	{str_const_init("msg.flag"), /* */
 		PVT_MSG_FLAG, msg_flag_get, msg_flag_set,
 		msg_flag_parse_name, 0, 0, 0},
-	{str_init("msg.is_request"), /* */
+	{str_const_init("msg.is_request"), /* */
 		PVT_MSG_FLAG, msg_is_request_get, 0,
 		0, 0, 0, 0},
-	{str_init("msg.type"), /* */
+	{str_const_init("msg.type"), /* */
 		PVT_MSG_FLAG, msg_type_get, 0,
 		0, 0, 0, 0},
-	{str_init("mi"), /* */
+
+	{str_const_init("msg.branch"), /* */
+		PVT_BRANCH, pv_get_branch_fields, pv_set_msg_branch,
+		0, 0, 0, 0},
+	{str_const_init("msg.branch.uri"), /* */
+		PVT_BRANCH, pv_get_msg_branch_uri, pv_set_msg_branch_uri,
+		0, pv_parse_index, 0, 0},
+	{str_const_init("msg.branch.duri"), /* */
+		PVT_BRANCH, pv_get_msg_branch_duri, pv_set_msg_branch_duri,
+		0, pv_parse_index, 0, 0},
+	{str_const_init("msg.branch.path"), /* */
+		PVT_BRANCH, pv_get_msg_branch_path, pv_set_msg_branch_path,
+		0, pv_parse_index, 0, 0},
+	{str_const_init("msg.branch.q"), /* */
+		PVT_BRANCH, pv_get_msg_branch_q, pv_set_msg_branch_q,
+		0, pv_parse_index, 0, 0},
+	{str_const_init("msg.branch.flags"), /* */
+		PVT_BRANCH, pv_get_msg_branch_flags, pv_set_msg_branch_flags,
+		0, pv_parse_index, 0, 0},
+	{str_const_init("msg.branch.socket"), /* */
+		PVT_BRANCH, pv_get_msg_branch_sock, pv_set_msg_branch_sock,
+		0, pv_parse_index, 0, 0},
+	{str_const_init("msg.branch.flag"), /* */
+		PVT_BRANCH_FLAG, msg_branch_flag_get, msg_branch_flag_set,
+		msg_branch_flag_parse_name, pv_parse_index, 0, 0},
+	{str_const_init("msg.branch.attr"), /* */
+		PVT_BRANCH, pv_get_msg_branch_attr, pv_set_msg_branch_attr,
+		pv_parse_avp_name, pv_parse_index, 0, 0},
+	{str_const_init("msg.branch.last_idx"), /* */
+		PVT_BRANCH, pv_get_msg_branch_lastidx, NULL,
+		NULL, NULL, 0, 0},
+	{str_const_init("mi"), /* */
 		PVT_MSGID, pv_get_msgid, 0,
 		0, 0, 0, 0},
-	{str_init("ml"), /* */
+	{str_const_init("ml"), /* */
 		PVT_MSG_LEN, pv_get_msg_len, 0,
 		0, 0, 0, 0},
-	{str_init("od"), /* */
+	{str_const_init("od"), /* */
 		PVT_OURI_DOMAIN, pv_get_ouri_attr, 0,
 		0, 0, pv_init_iname, 2},
-	{str_init("op"), /* */
+	{str_const_init("op"), /* */
 		PVT_OURI_PORT, pv_get_ouri_attr, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("oP"), /* */
+	{str_const_init("oP"), /* */
 		PVT_OURI_PROTOCOL, pv_get_ouri_attr, 0,
 		0, 0, pv_init_iname, 4},
-	{str_init("ou"), /* */
+	{str_const_init("ou"), /* */
 		PVT_OURI, pv_get_ouri, 0,
 		0, 0, 0, 0},
-	{str_init("ouri"), /* */
+	{str_const_init("ouri"), /* */
 		PVT_OURI, pv_get_ouri, 0,
 		0, 0, 0, 0},
-	{str_init("oU"), /* */
+	{str_const_init("oU"), /* */
 		PVT_OURI_USERNAME, pv_get_ouri_attr, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("path"), /* */
+	{str_const_init("path"), /* */
 		PVT_PATH, pv_get_path, 0,
 		0, 0, 0, 0},
-	{str_init("pd"), /* */
+	{str_const_init("pd"), /* */
 		PVT_PPI_DOMAIN, pv_get_ppi_attr, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("pn"), /* */
+	{str_const_init("pn"), /* */
 		PVT_PPI_DISPLAYNAME, pv_get_ppi_attr, 0,
 		0, 0, pv_init_iname, 4},
-	{str_init("pp"), /* */
+	{str_const_init("pp"), /* */
 		PVT_PID, pv_get_pid, 0,
 		0, 0, 0, 0},
-	{str_init("pu"), /* */
+	{str_const_init("pu"), /* */
 		PVT_PPI, pv_get_ppi_attr, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("pU"), /* */
+	{str_const_init("pU"), /* */
 		PVT_PPI_USERNAME, pv_get_ppi_attr, 0,
 		0, 0, pv_init_iname, 2},
-	{str_init("rb"), /* */
+	{str_const_init("rb"), /* */
 		PVT_MSG_BODY, pv_get_msg_body, 0,
 		0, pv_parse_index, 0, 0},
-	{str_init("rb"), /* */
+	{str_const_init("rb"), /* */
 		PVT_MSG_BODY, pv_get_msg_body, 0,
 		pv_parse_rb_name, pv_parse_index, 0, 0},
-	{str_init("rc"), /* */
+	{str_const_init("rc"), /* */
 		PVT_RETURN_CODE, pv_get_return_code, 0,
 		0, 0, 0, 0},
-	{str_init("retcode"), /* */
+	{str_const_init("retcode"), /* */
 		PVT_RETURN_CODE, pv_get_return_code, 0,
 		0, 0, 0, 0},
-	{str_init("rd"), /* */
+	{str_const_init("rd"), /* */
 		PVT_RURI_DOMAIN, pv_get_ruri_attr, pv_set_ruri_host,
 		0, 0, pv_init_iname, 2},
-	{str_init("ruri.domain"), /* */
+	{str_const_init("ruri.domain"), /* */
 		PVT_RURI_DOMAIN, pv_get_ruri_attr, pv_set_ruri_host,
 		0, 0, pv_init_iname, 2},
-	{str_init("re"), /* */
+	{str_const_init("re"), /* */
 		PVT_RPID_URI, pv_get_rpid, 0,
 		0, 0, 0, 0},
-	{str_init("rm"), /* */
+	{str_const_init("rm"), /* */
 		PVT_METHOD, pv_get_method, 0,
 		0, 0, 0, 0},
-	{str_init("route"), /* */
+	{str_const_init("route"), /* */
 		PVT_ROUTE, pv_get_route, 0,
 		0, pv_parse_index, 0, 0},
-	{str_init("route.name"), /* */
+	{str_const_init("route.name"), /* */
 		PVT_ROUTE_NAME, pv_get_route_name, 0,
 		0, pv_parse_index, 0, 0},
-	{str_init("route.type"), /* */
+	{str_const_init("route.type"), /* */
 		PVT_ROUTE_TYPE, pv_get_route_type, 0,
 		0, pv_parse_index, 0, 0},
-	{str_init("rp"), /* */
+	{str_const_init("rp"), /* */
 		PVT_RURI_PORT, pv_get_ruri_attr, pv_set_ruri_port,
 		0, 0, pv_init_iname, 3},
-	{str_init("rP"), /* */
+	{str_const_init("rP"), /* */
 		PVT_RURI_PROTOCOL, pv_get_ruri_attr, 0,
 		0, 0, pv_init_iname, 4},
-	{str_init("rr"), /* */
+	{str_const_init("rr"), /* */
 		PVT_REASON, pv_get_reason, 0,
 		0, 0, 0, 0},
-	{str_init("rs"), /* */
+	{str_const_init("rs"), /* */
 		PVT_STATUS, pv_get_status, 0,
 		0, 0, 0, 0},
-	{str_init("rt"), /* */
+	{str_const_init("rt"), /* */
 		PVT_REFER_TO, pv_get_refer_to, 0,
 		0, 0, 0, 0},
-	{str_init("ru"), /* */
+	{str_const_init("ru"), /* */
 		PVT_RURI, pv_get_ruri, pv_set_ruri,
 		0, 0, 0, 0},
-	{str_init("ruri"), /* */
+	{str_const_init("ruri"), /* */
 		PVT_RURI, pv_get_ruri, pv_set_ruri,
 		0, 0, 0, 0},
-	{str_init("ru_q"), /* */
+	{str_const_init("ru_q"), /* */
 		PVT_RU_Q, pv_get_ru_q, pv_set_ru_q,
 		0, 0, 0, 0},
-	{str_init("rU"), /* */
+	{str_const_init("rU"), /* */
 		PVT_RURI_USERNAME, pv_get_ruri_attr, pv_set_ruri_user,
 		0, 0, pv_init_iname, 1},
-	{str_init("ruri.user"), /* */
+	{str_const_init("ruri.user"), /* */
 		PVT_RURI_USERNAME, pv_get_ruri_attr, pv_set_ruri_user,
 		0, 0, pv_init_iname, 1},
-	{str_init("src_ip"), /* */
+	{str_const_init("sdp"), /* */
+		PVT_SDP, pv_get_sdp, pv_set_sdp,
+		0, 0, pv_init_iname, 1},
+	{str_const_init("sdp"), /* */
+		PVT_SDP, pv_get_sdp, pv_set_sdp,
+		pv_parse_sdp_name, 0, pv_init_iname, 1},
+	{str_const_init("sdp.line"), /* */
+		PVT_SDP_LINE, pv_get_sdp_line, pv_set_sdp_line,
+		pv_parse_sdp_line_name, pv_parse_sdp_line_index, 0, 0},
+	{str_const_init("sdp.stream"), /* */
+		PVT_SDP_STREAM, pv_get_sdp_stream, pv_set_sdp_stream,
+		pv_parse_sdp_stream_name, pv_parse_sdp_line_index, 0, 0},
+	{str_const_init("sdp.stream.idx"), /* */
+		PVT_SDP_LINE, pv_get_sdp_stream_idx, 0,
+		pv_parse_sdp_stream_name, 0, 0, 0},
+	{str_const_init("sdp.session"), /* */
+		PVT_SDP_SESSION, pv_get_sdp_session, pv_set_sdp_session,
+		pv_parse_sdp_line_name, pv_parse_sdp_line_index, 0, 0},
+	{str_const_init("src_ip"), /* */
 		PVT_SRCIP, pv_get_srcip, 0,
 		0, 0, 0, 0},
-	{str_init("socket_in"), /* */
+	{str_const_init("socket_in"), /* */
 		PVT_SOCKET_IN, pv_get_socket_in_fields, NULL,
 		0, 0, 0, 0},
-	{str_init("socket_in"), /* */
+	{str_const_init("socket_in"), /* */
 		PVT_SOCKET_IN, pv_get_socket_in_fields, NULL,
 		pv_parse_socket_name, 0, 0, 0},
-	{str_init("socket_out"), /* */
+	{str_const_init("socket_out"), /* */
 		PVT_SOCKET_OUT, pv_get_socket_out_fields, pv_set_force_sock,
 		0, 0, 0, 0},
-	{str_init("socket_out"), /* */
+	{str_const_init("socket_out"), /* */
 		PVT_SOCKET_OUT, pv_get_socket_out_fields, NULL,
-		pv_parse_socket_name, 0, 0, 0},
-	{str_init("si"), /* */
+		pv_parse_socket_out_name, 0, 0, 0},
+	{str_const_init("si"), /* */
 		PVT_SRCIP, pv_get_srcip, 0,
 		0, 0, 0, 0},
-	{str_init("sp"), /* */
+	{str_const_init("sp"), /* */
 		PVT_SRCPORT, pv_get_srcport, 0,
 		0, 0, 0, 0},
-	{str_init("td"), /* */
+	{str_const_init("td"), /* */
 		PVT_TO_DOMAIN, pv_get_to_attr, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("to.domain"), /* */
+	{str_const_init("to.domain"), /* */
 		PVT_TO_DOMAIN, pv_get_to_attr, 0,
 		0, 0, pv_init_iname, 3},
-	{str_init("time"), /* */
+	{str_const_init("time"), /* */
 		PVT_TIME, pv_get_formated_time, 0,
 		pv_parse_time_name, 0, 0, 0},
-	{str_init("tn"), /* */
+	{str_const_init("tn"), /* */
 		PVT_TO_DISPLAYNAME, pv_get_to_attr, 0,
 		0, 0, pv_init_iname, 5},
-	{str_init("tt"), /* */
+	{str_const_init("tt"), /* */
 		PVT_TO_TAG, pv_get_to_attr, 0,
 		0, 0, pv_init_iname, 4},
-	{str_init("tu"), /* */
+	{str_const_init("tu"), /* */
 		PVT_TO, pv_get_to_attr, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("to"), /* */
+	{str_const_init("to"), /* */
 		PVT_TO, pv_get_to_attr, 0,
 		0, 0, pv_init_iname, 1},
-	{str_init("tU"), /* */
+	{str_const_init("tU"), /* */
 		PVT_TO_USERNAME, pv_get_to_attr, 0,
 		0, 0, pv_init_iname, 2},
-	{str_init("to.user"), /* */
+	{str_const_init("to.user"), /* */
 		PVT_TO_USERNAME, pv_get_to_attr, 0,
 		0, 0, pv_init_iname, 2},
-	{str_init("Tf"), /* */
+	{str_const_init("Tf"), /* */
 		PVT_TIMEF, pv_get_timef, 0,
 		0, 0, 0, 0},
-	{str_init("Ts"), /* */
+	{str_const_init("Ts"), /* */
 		PVT_TIMES, pv_get_times, 0,
 		0, 0, 0, 0},
-	{str_init("Tsm"), /* */
+	{str_const_init("Tsm"), /* */
 		PVT_TIMES, pv_get_timem, 0,
 		0, 0, 0, 0},
-	{str_init("TS"), /* */
+	{str_const_init("TS"), /* */
 		PVT_TIMES, pv_get_start_times, 0,
 		0, 0, 0, 0},
-	{str_init("ua"), /* */
+	{str_const_init("ua"), /* */
 		PVT_USERAGENT, pv_get_useragent, 0,
 		0, 0, 0, 0},
-	{str_init("C"), PVT_COLOR, pv_get_color, 0,
+	{str_const_init("C"), PVT_COLOR, pv_get_color, 0,
 		pv_parse_color_name, 0, 0, 0 },
-	{str_init("argv"), PVT_ARGV, pv_get_argv, 0,
+	{str_const_init("argv"), PVT_ARGV, pv_get_argv, 0,
 		pv_parse_argv_name, 0, 0, 0 },
-	{str_init("param"), PVT_ROUTE_PARAM, pv_get_param, 0,
+	{str_const_init("param"), PVT_ROUTE_PARAM, pv_get_param, 0,
 		pv_parse_param_name, 0, 0, 0 },
-	{str_init("cfg_line"), PVT_LINE_NUMBER, pv_get_line_number, 0,
+	{str_const_init("cfg_line"), PVT_LINE_NUMBER, pv_get_line_number, 0,
 		0, 0, 0, 0 },
-	{str_init("cfg_file"), PVT_CFG_FILE_NAME, pv_get_cfg_file_name, 0,
+	{str_const_init("cfg_file"), PVT_CFG_FILE_NAME, pv_get_cfg_file_name, 0,
 	0, 0, 0, 0 },
-	{str_init("xlog_level"), PVT_XLOG_LEVEL, pv_get_xlog_level,
+	{str_const_init("xlog_level"), PVT_XLOG_LEVEL, pv_get_xlog_level,
 		pv_set_xlog_level, 0, 0, 0, 0 },
+	{str_const_init("return"), PVT_EXTRA, pv_get_return_value, 0,
+		pv_parse_return_value, 0, 0, 0 },
 	{{0,0}, 0, 0, 0, 0, 0, 0, 0}
 };
 
@@ -5011,6 +5606,9 @@ int pv_elem_free_all(pv_elem_p log)
 	{
 		t = log;
 		log = log->next;
+
+		if (t->spec.trans)
+			free_transformation((trans_t *)t->spec.trans);
 		pkg_free(t);
 	}
 	return 0;
@@ -5140,8 +5738,8 @@ static int pv_init_extra_list(void)
 
 static int pv_add_extra(const pv_export_t *e)
 {
-	char *p;
-	const str *in;
+	const char *p;
+	const str_const *in;
 	pv_extra_t *pvi = NULL;
 	pv_extra_t *pvj = NULL;
 	pv_extra_t *pvn = NULL;
@@ -5543,6 +6141,45 @@ static int pv_parse_param_name(pv_spec_p sp, const str *in)
 		/* remember it was a string, so we can retrieve it later */
 		sp->pvp.pvn.u.isname.name.s = *in;
 		sp->pvp.pvn.u.isname.type = AVP_NAME_STR;
+	}
+	return 0;
+
+}
+
+static int pv_parse_return_value(pv_spec_p sp, const str *in)
+{
+	char *p;
+	char *s;
+	pv_spec_p nsp = 0;
+
+	if(in==NULL || in->s==NULL || sp==NULL)
+		return -1;
+	p = in->s;
+	if(*p==PV_MARKER)
+	{
+		nsp = (pv_spec_p)pkg_malloc(sizeof(pv_spec_t));
+		if(nsp==NULL)
+		{
+			LM_ERR("no more memory\n");
+			return -1;
+		}
+		s = pv_parse_spec(in, nsp);
+		if(s==NULL)
+		{
+			LM_ERR("invalid name [%.*s]\n", in->len, in->s);
+			pv_spec_free(nsp);
+			return -1;
+		}
+		sp->pvp.pvn.type = PV_NAME_PVAR;
+		sp->pvp.pvn.u.dname = (void*)nsp;
+		return 0;
+	}
+	sp->pvp.pvn.u.isname.type = 0;
+	sp->pvp.pvn.type = PV_NAME_INTSTR;
+	/* do our best to convert it to an index */
+	if (str2int(in, (unsigned int *)&sp->pvp.pvn.u.isname.name.n) < 0) {
+		LM_ERR("could not convert index to int!\n");
+		return -1;
 	}
 	return 0;
 

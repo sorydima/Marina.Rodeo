@@ -16,7 +16,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -39,7 +39,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 				<para>
@@ -59,7 +59,7 @@
 		</para>
 		<para>
 		<emphasis>
-			Default value is <quote>"Marina.Rodeo"</quote>
+			Default value is <quote>"OpenMarinkaRodeo"</quote>
 		</emphasis>
 		</para>
 		<example>
@@ -75,7 +75,7 @@ modparam("topology_hiding", "th_callid_passwd", "my_topo_hiding_secret")
 	<section id="param_th_callid_prefix" xreflabel="th_callid_prefix">
 		<title><varname>th_callid_prefix</varname> (string)</title>
 		<para>
-			The prefix that will be used for detecting callids which have been encoded by the dialog topology hiding. Make sure to change this value in case your SIP path contains multiple Marina.Rodeo boxes with topology hiding.
+			The prefix that will be used for detecting callids which have been encoded by the dialog topology hiding. Make sure to change this value in case your SIP path contains multiple OpenMarinkaRodeo boxes with topology hiding.
 		</para>
 		<para>
 		<emphasis>
@@ -217,6 +217,45 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
 		</example>
 	</section>
 
+	<section id="param_th_contact_caller_username_var" xreflabel="th_contact_caller_username_var">
+		<title><varname>th_contact_caller_username_var</varname> (string)</title>
+		<para>
+			Variable used to store the value of the contact username advertised to the caller.
+		</para>
+		<para>
+		<emphasis>
+			Default value is <quote>_th_contact_caller_username_var_</quote>
+		</emphasis>
+		</para>
+		<example>
+		<title>Set <varname>th_contact_caller_username_var</varname> parameter</title>
+		<programlisting format="linespecific">
+...
+modparam("topology_hiding", "th_contact_caller_username_var", "__topo_hiding_username_var__")
+...
+</programlisting>
+		</example>
+	</section>
+	<section id="param_th_contact_callee_username_var" xreflabel="th_contact_callee_username_var">
+		<title><varname>th_contact_callee_username_var</varname> (string)</title>
+		<para>
+			Variable used to store the value of the contact username advertised to the callee.
+		</para>
+		<para>
+		<emphasis>
+			Default value is <quote>_th_contact_callee_username_var_</quote>
+		</emphasis>
+		</para>
+		<example>
+		<title>Set <varname>th_contact_callee_username_var</varname> parameter</title>
+		<programlisting format="linespecific">
+...
+modparam("topology_hiding", "th_contact_callee_username_var", "__topo_hiding_username_var__")
+...
+</programlisting>
+		</example>
+	</section>
+
 	</section>
 	<section id="exported_functions" xreflabel="exported_functions">
 	<title>Exported Functions</title>
@@ -235,13 +274,13 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
 			for these dialogs on which topology hiding is applied, is not done automatically.
 			Without topology hiding and only normal dialog, the detection was
 			done when loose_route was called. But now, for this dialogs where topology
-			hiding is applied, the in dialog requests reaching Marina.Rodeo won't have any Route headers
-			and the RURI will point to Marina.Rodeo machine.
+			hiding is applied, the in dialog requests reaching OpenMarinkaRodeo won't have any Route headers
+			and the RURI will point to OpenMarinkaRodeo machine.
 			So, to be able to match the in-dialog requests to the corresponding dialog, a script
 			function must be called. It's name is <emphasis>topology_hiding_match</emphasis> and you can read
 			it's description above.
 			The in-dialog topology requests are requests with a to tag,
-			RURI pointing to Marina.Rodeo and with a method specific to a
+			RURI pointing to openMarinkaRodeo and with a method specific to a
 			Invite dialog. For this kind of requests you should call
 			topology_hiding_match() function. If the request is successfully matched and fixed as according to the topology hiding logic,the function returns success.
 		</para>
@@ -276,7 +315,7 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
 					There are many cases where propagating the callid towards the callee side is not a good idea, since sometimes the callid contains the IP of the actual caller side, thus revealing part of the network topology.
 					</para>
 					<para>
-					When using the "C" flag, the callid will be automatically encoded / decoded, transparent for the script writer - inside Marina.Rodeo (script,MI functions, etc ) all the variables related to the callid will represent the callid value for the caller side. If the callid for the callee side is needed, refer to the $TH_callee_callid pvar.
+					When using the "C" flag, the callid will be automatically encoded / decoded, transparent for the script writer - inside OpenMarinkaRodeo (script,MI functions, etc ) all the variables related to the callid will represent the callid value for the caller side. If the callid for the callee side is needed, refer to the $TH_callee_callid pvar.
 					</para>
 					<para>
 						<emphasis>Note:</emphasis> Changing the callid of the call using the "C" flag is only
@@ -285,6 +324,16 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
 					</para>
 				</listitem>
 			</itemizedlist>
+		</para>
+		<para>
+			The second parameter can be used to advertise a particular
+			<emphasis>username</emphasis> in the Contact header URI, either on the
+			<emphasis>caller</emphasis>, either on the <emphasis>callee</emphasis>
+			leg, separated by <emphasis>/</emphasis>. The format of the parameter is 
+			<emphasis>caller_username|/[caller_contact_username][/callee_contact_username]</emphasis>.
+			If the separator is missing, the same contact username is advertised on
+			both legs. If the separator is being used, you can control the username
+			put in contact per leg.
 		</para>
 		<example>
 		<title><function>topology_hiding</function> usage</title>
@@ -297,6 +346,27 @@ if(!has_totag() &amp;&amp; is_method("INVITE")) {
 ...
 if(!has_totag() &amp;&amp; is_method("INVITE")) {
 	topology_hiding("U");
+}
+...
+# set "openMarinkaRodeo" for both caller and the callee's Contact username
+if(!has_totag() &amp;&amp; is_method("INVITE")) {
+	topology_hiding("U", "openMarinkaRodeo");
+}
+...
+# set "caller" in the caller's Contact username
+if(!has_totag() &amp;&amp; is_method("INVITE")) {
+	topology_hiding("U", "/caller");
+}
+...
+# set "callee" in the callee's Contact username
+if(!has_totag() &amp;&amp; is_method("INVITE")) {
+	topology_hiding("U", "//callee");
+}
+...
+# set "caller" in the caller's Contact username and
+# "callee" in the callee's Contact username
+if(!has_totag() &amp;&amp; is_method("INVITE")) {
+	topology_hiding("U", "/caller/callee");
 }
 ...
 </programlisting>

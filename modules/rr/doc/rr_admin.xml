@@ -12,7 +12,7 @@
 
 	<section id="RR-dialog-id">
 	<title>Dialog support</title>
-	<para>&osips; is basically <emphasis>only</emphasis> a transaction statefull 
+	<para>&oMarinkaRodeo; is basically <emphasis>only</emphasis> a transaction statefull 
 	proxy, without any dialog support build in. There are many features/services
 	which actually require dialog awareness, like storing the information in 
 	the dialog creation stage, information which will be used during the whole 
@@ -58,7 +58,7 @@
 		<title>Dialog support in RR module</title>
 		<programlisting format="linespecific">
   
-UAC                       Marina.Rodeo PROXY                          UAS
+UAC                       OpenMarinkaRodeo PROXY                          UAS
 
 ---- INVITE ------&gt;       record_route()          ----- INVITE ----&gt;
                      add_rr_param(";foo=true")
@@ -80,13 +80,13 @@ UAC                       Marina.Rodeo PROXY                          UAS
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
 			<listitem>
 			<para>
-				<emphasis>No dependencies on other &osips; modules</emphasis>.
+				<emphasis>No dependencies on other &oMarinkaRodeo; modules</emphasis>.
 			</para>
 			</listitem>
 			</itemizedlist>
@@ -97,7 +97,7 @@ UAC                       Marina.Rodeo PROXY                          UAS
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -183,11 +183,11 @@ modparam("rr", "add_username", 1)
 	<section id="param_enable_socket_mismatch_warning" xreflabel="enable_socket_mismatch_warning">
 		<title><varname>enable_socket_mismatch_warning</varname> (integer)</title>
 		<para>
-		When a preset record-route header is forced in &osips; config and the
+		When a preset record-route header is forced in &oMarinkaRodeo; config and the
 		host from the record-route header is not the same as the host server,
 		a warning will be printed out in the logs.
 		The 'enable_socket_mismatch_warning' parameter enables or disables the warning.
-		When &osips; is behind a NATed firewall, we don't want this warning
+		When &oMarinkaRodeo; is behind a NATed firewall, we don't want this warning
 		to be printed for every bridged call.
 		</para>
 		<para>
@@ -239,10 +239,10 @@ modparam("rr", "enable_socket_mismatch_warning", 0)
 		The function is able to automatically detecting if it deals with a
 		'strict' or 'loose' routing scenario (the difference is how the SIP
 		path is stored across the RURI and Route hdrs). To make the difference
-		between the two scenarios Marina.Rodeo has to determine which SIP URI
+		between the two scenarios OpenMarinkaRodeo has to determine which SIP URI
 		holds its address/domain - the RURI (then it is a strict routing
 		scenario) or the top Route URI (then it is a loose route scenario).
-		In order to check if the SIP URI holds its address/domain, Marina.Rodeo 
+		In order to check if the SIP URI holds its address/domain, OpenMarinkaRodeo 
 		checks the host URI against the listening IPs/interfaces (as a static
 		component) and the domains listed from the "domain" module/table (as 
 		the dynamic component).

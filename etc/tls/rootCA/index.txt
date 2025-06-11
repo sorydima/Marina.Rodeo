@@ -1,1 +1,1 @@
-V	300623115801Z		01	unknown	/C=IP/ST=marina.rodeo/O=Marina.Rodeo project/OU=Marina.Rodeo TLS tester/CN=Marina.Rodeo/emailAddress=sip@rechain.email
+V	300623115801Z		01	unknown	/C=IP/ST=openMarinkaRodeo.org/O=OpenMarinkaRodeo project/OU=OpenMarinkaRodeo TLS tester/CN=OpenMarinkaRodeo/emailAddress=team@openMarinkaRodeo.org

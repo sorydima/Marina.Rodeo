@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		This module provides optional, SQL-based support for fine-grained
-		management of all TCP connections taking place on Marina.Rodeo.
+		management of all TCP connections taking place on OpenMarinkaRodeo.
 	</para>
 
 	</section>
@@ -16,7 +16,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 			At least one SQL database module must be loaded (e.g. "db_xxx").
 		</para>
@@ -42,7 +42,7 @@
 		<title>Setting the <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 
-modparam("tcp_mgm", "db_url", "mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo")
+modparam("tcp_mgm", "db_url", "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo")
 
 </programlisting>
 		</example>
@@ -103,7 +103,7 @@ modparam("tcp_mgm", "connect_timeout_col", "connect_to")
 		<programlisting  format="linespecific">
 
 # reload all TCP paths
-$ Marina.Rodeo-cli -x mi tcp_reload
+$ openMarinkaRodeo-cli -x mi tcp_reload
 $ "OK"
 		</programlisting>
 		</section>

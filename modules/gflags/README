@@ -155,8 +155,8 @@ if(is_gflag(4))
 
    Example 1.5. set_gflag usage
 ...
-$ Marina.Rodeo-cli -x mi set_gflag 1
-$ Marina.Rodeo-cli -x mi set_gflag 0x3
+$ openMarinkaRodeo-cli -x mi set_gflag 1
+$ openMarinkaRodeo-cli -x mi set_gflag 0x3
 ...
 
 1.5.2. reset_gflag
@@ -168,8 +168,8 @@ $ Marina.Rodeo-cli -x mi set_gflag 0x3
 
    Example 1.6.  reset_gflag usage
 ...
-$ Marina.Rodeo-cli -x mi reset_gflag 1
-$ Marina.Rodeo-cli -x mi reset_gflag 0x3
+$ openMarinkaRodeo-cli -x mi reset_gflag 1
+$ openMarinkaRodeo-cli -x mi reset_gflag 0x3
 ...
 
 1.5.3. is_gflag
@@ -184,19 +184,19 @@ $ Marina.Rodeo-cli -x mi reset_gflag 0x3
 
    Example 1.7. is_gflag usage
 ...
-$ Marina.Rodeo-cli -x mi set_gflag 1024
-$ Marina.Rodeo-cli -x mi is_gflag 1024
+$ openMarinkaRodeo-cli -x mi set_gflag 1024
+$ openMarinkaRodeo-cli -x mi is_gflag 1024
 TRUE
-$ Marina.Rodeo-cli -x mi is_gflag 1025
+$ openMarinkaRodeo-cli -x mi is_gflag 1025
 TRUE
-$ Marina.Rodeo-cli -x mi is_gflag 1023
+$ openMarinkaRodeo-cli -x mi is_gflag 1023
 FALSE
-$ Marina.Rodeo-cli -x mi set_gflag 0x10
-$ Marina.Rodeo-cli -x mi is_gflag 1023
+$ openMarinkaRodeo-cli -x mi set_gflag 0x10
+$ openMarinkaRodeo-cli -x mi is_gflag 1023
 TRUE
-$ Marina.Rodeo-cli -x mi is_gflag 1007
+$ openMarinkaRodeo-cli -x mi is_gflag 1007
 FALSE
-$ Marina.Rodeo-cli -x mi is_gflag 16
+$ openMarinkaRodeo-cli -x mi is_gflag 16
 TRUE
 ...
 
@@ -207,7 +207,7 @@ TRUE
 
    Example 1.8.  get_gflags usage
 ...
-$ Marina.Rodeo-cli -x mi get_gflags
+$ openMarinkaRodeo-cli -x mi get_gflags
 0x3039
 12345
 ...
@@ -221,7 +221,7 @@ Chapter 2. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 41 31 423 326
    2. Daniel-Constantin Mierla (@miconda) 14 12 42 22
-   3. Liviu Chircu (@liviuchircu) 12 10 27 57
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 13 11 27 59
    4. Razvan Crainea (@razvancrainea) 10 8 26 24
    5. Henning Westerholt (@henningw) 8 6 42 31
    6. Jiri Kuthan (@jiriatipteldotorg) 8 4 278 4
@@ -243,7 +243,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -255,9 +255,9 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2005 - Oct 2022
-   3.  Liviu Chircu (@liviuchircu)         Mar 2014 - Jan 2021
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   2.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2005 - Oct 2022
    4.  Razvan Crainea (@razvancrainea)     Sep 2011 - Sep 2019
    5.  Dan Pascu (@danpascu)               May 2019 - May 2019
    6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
@@ -285,6 +285,6 @@ Chapter 3. Documentation
    Bokarius, Edson Gellert Schubert, Henning Westerholt
    (@henningw), Klaus Darilion.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2004 FhG FOKUS
+   Copyright © 2004 FhG FOKUS

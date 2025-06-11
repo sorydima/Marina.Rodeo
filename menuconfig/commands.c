@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2012 Marina.Rodeo Solutions
+ * Copyright (C) 2012 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -237,7 +237,7 @@ int generate_cfg(select_menu *menu,void *arg)
 	/* generate config name */
 	now=time(NULL);
 	localtime_r(&now, &now_tm);
-	n = snprintf(generated_name,128,"%Marina.Rodeo_%s_%d-%d-%d_%d:%d:%d.cfg",
+	n = snprintf(generated_name,128,"%sopenMarinkaRodeo_%s_%d-%d-%d_%d:%d:%d.cfg",
 			run_locally?"etc/":MENUCONFIG_GEN_PATH,
 			m4_cfg->output_name,now_tm.tm_year+1900,now_tm.tm_mon+1,
 			now_tm.tm_mday,now_tm.tm_hour,now_tm.tm_min,now_tm.tm_sec);

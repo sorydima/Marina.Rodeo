@@ -8,7 +8,7 @@ maxfwd Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -52,15 +52,15 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other Marina.Rodeo modules.
+     * No dependencies on other OpenMarinkaRodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -161,9 +161,9 @@ Chapter 2. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 46 30 864 484
-   2. Jan Janak (@janakj) 11 9 58 38
-   3. Daniel-Constantin Mierla (@miconda) 11 9 23 19
-   4. Liviu Chircu (@liviuchircu) 11 9 17 42
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 12 10 17 44
+   3. Jan Janak (@janakj) 11 9 58 38
+   4. Daniel-Constantin Mierla (@miconda) 11 9 23 19
    5. Andrei Pelinescu-Onciul 10 8 31 26
    6. Jiri Kuthan (@jiriatipteldotorg) 9 7 93 7
    7. Razvan Crainea (@razvancrainea) 8 6 9 8
@@ -171,10 +171,10 @@ Chapter 2. Contributors
    9. Henning Westerholt (@henningw) 4 2 3 3
    10. Maksym Sobolyev (@sobomax) 4 2 2 3
 
-   All remaining contributors: Konstantin Bokarius, Andreas Heise,
-   Peter Lemenkov (@lemenkov), Edson Gellert Schubert, Nils
-   Ohlmeier, Elena-Ramona Modroiu, Klaus Darilion, Walter Doekes
-   (@wdoekes).
+   All remaining contributors: Aron Podrigal (@ar45), Konstantin
+   Bokarius, Andreas Heise, Peter Lemenkov (@lemenkov), Edson
+   Gellert Schubert, Nils Ohlmeier, Elena-Ramona Modroiu, Klaus
+   Darilion, Alexandra Titoc, Walter Doekes (@wdoekes).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -184,7 +184,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -196,20 +196,21 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Razvan Crainea (@razvancrainea)     Feb 2012 - Sep 2019
-   3.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2002 - Apr 2019
-   5.  Liviu Chircu (@liviuchircu)         Jan 2014 - Aug 2018
-   6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   7.  Walter Doekes (@wdoekes)            May 2014 - May 2014
-   8.  Daniel-Constantin Mierla (@miconda) Nov 2006 - Mar 2008
-   9.  Konstantin Bokarius                 Mar 2008 - Mar 2008
-   10. Edson Gellert Schubert              Feb 2008 - Feb 2008
+   1.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   2.  Aron Podrigal (@ar45)               Sep 2024 - Sep 2024
+   3.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jan 2014 - May 2024
+   4.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   5.  Razvan Crainea (@razvancrainea)     Feb 2012 - Sep 2019
+   6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
+   7.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2002 - Apr 2019
+   8.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
+   9.  Walter Doekes (@wdoekes)            May 2014 - May 2014
+   10. Daniel-Constantin Mierla (@miconda) Nov 2006 - Mar 2008
 
-   All remaining contributors: Henning Westerholt (@henningw),
-   Klaus Darilion, Andreas Heise, Elena-Ramona Modroiu, Jan Janak
-   (@janakj), Andrei Pelinescu-Onciul, Nils Ohlmeier, Jiri Kuthan
+   All remaining contributors: Konstantin Bokarius, Edson Gellert
+   Schubert, Henning Westerholt (@henningw), Klaus Darilion,
+   Andreas Heise, Elena-Ramona Modroiu, Jan Janak (@janakj),
+   Andrei Pelinescu-Onciul, Nils Ohlmeier, Jiri Kuthan
    (@jiriatipteldotorg).
 
    (1) including any documentation-related commits, excluding
@@ -219,12 +220,12 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Vlad Patrascu (@rvlad-patrascu), Liviu Chircu
+   Last edited by: Vlad Patrascu (@rvlad-patrascu), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
    (@liviuchircu), Peter Lemenkov (@lemenkov), Razvan Crainea
    (@razvancrainea), Bogdan-Andrei Iancu (@bogdan-iancu),
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Klaus Darilion, Elena-Ramona Modroiu.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS
+   Copyright © 2003 FhG FOKUS

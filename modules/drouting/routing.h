@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2008 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2005-2008 Voice Sistem SRL
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of SIP Server (Marina.Rodeo).
+ * This file is part of Open SIP Server (OpenMarinkaRodeo).
  *
- * DROUTING Marina.Rodeo-module is free software; you can redistribute it and/or
+ * DROUTING OpenMarinkaRodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * DROUTING Marina.Rodeo-module is distributed in the hope that it will be useful,
+ * DROUTING OpenMarinkaRodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -26,6 +26,8 @@
 #include "../../usr_avp.h"
 #include "../../mem/mem.h"
 #include "../../map.h"
+#include "../../md5global.h"
+#include "../../md5.h"
 
 #include "prefix_tree.h"
 
@@ -70,8 +72,8 @@ struct head_cache_socket {
 	str host;
 	int port;
 	int proto;
-	struct socket_info *old_sock;
-	struct socket_info *new_sock;
+	const struct socket_info *old_sock;
+	const struct socket_info *new_sock;
 	struct head_cache_socket *next;
 };
 
@@ -97,8 +99,9 @@ add_carrier(
 	char *attrs,
 	int state,
 	rt_data_t *rd,
-	osips_malloc_f mf,
-	osips_free_f ff
+	oMarinkaRodeo_malloc_f mf,
+	oMarinkaRodeo_free_f ff,
+	MD5_CTX *hash_ctx
 	);
 
 /* add a PSTN gw in the list */
@@ -120,11 +123,12 @@ add_dst(
 	/* probe_mode */
 	int,
 	/* socket */
-	struct socket_info*,
+	const struct socket_info*,
 	/* state */
 	int,
-	osips_malloc_f mf,
-	osips_free_f ff
+	oMarinkaRodeo_malloc_f mf,
+	oMarinkaRodeo_free_f ff,
+	MD5_CTX *hash_ctx
 	);
 
 /* build a routing info list element */
@@ -141,8 +145,8 @@ build_rt_info(
 	int sort_profile,
 	char* attr,
 	rt_data_t* rd,
-	osips_malloc_f mf,
-	osips_free_f ff
+	oMarinkaRodeo_malloc_f mf,
+	oMarinkaRodeo_free_f ff
 	);
 
 int
@@ -152,7 +156,7 @@ parse_destination_list(
 	pgw_list_t** pgwl_ret,
 	unsigned short *len,
 	int no_resize,
-	osips_malloc_f mf
+	oMarinkaRodeo_malloc_f mf
 	);
 
 void
@@ -163,5 +167,8 @@ del_pgw_list(
 
 
 void
-free_rt_data(rt_data_t*, osips_free_f);
+free_rt_data(rt_data_t*, oMarinkaRodeo_free_f);
+
+void hash_carrier(pcr_t *pcr,MD5_CTX *hash_ctx); 
+void hash_dst(pgw_t *pgw,MD5_CTX *hash_ctx); 
 #endif

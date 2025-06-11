@@ -18,7 +18,7 @@
 	<section id="rfc-8760-support" xreflabel="RFC 8760 Support">
 	        <title>RFC 8760 Support (Strenghtened Authentication)</title>
 	        <para>
-			Starting with Marina.Rodeo 3.2, the <ulink url='auth'>auth</ulink>,
+			Starting with OpenMarinkaRodeo 3.2, the <ulink url='auth'>auth</ulink>,
 			<ulink url='auth_db'>auth_db</ulink> and
 			<ulink url='uac_auth'>uac_auth</ulink>
 			modules include support for two new digest authentication algorithms
@@ -32,7 +32,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 		<title>Dependencies</title>
 		<section>
-			<title>&osips; Modules</title>
+			<title>&oMarinkaRodeo; Modules</title>
 			<para>
 			The module depends on the following modules (in the other words
 			the listed modules must be loaded before this module):
@@ -54,7 +54,7 @@
 			<title>External Libraries or Applications</title>
 			<para>
 			The following libraries or applications must be installed
-			before running &osips; with this module loaded:
+			before running &oMarinkaRodeo; with this module loaded:
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -101,7 +101,7 @@ modparam("auth_db", "db_url", "&exampledb;")
 		</para>
 		<itemizedlist>
 			<listitem><para><emphasis>1 (calculate HA1)</emphasis> - the loaded
-			password is a plaintext password, so Marina.Rodeo will internally
+			password is a plaintext password, so OpenMarinkaRodeo will internally
 			calculate the HA1. As the passwords will be loaded from the column
 			specified in the <xref linkend="param_password_column"/> parameter,
 			be sure this parameter points to a column holding a plaintext password

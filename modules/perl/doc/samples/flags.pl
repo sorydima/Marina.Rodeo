@@ -1,5 +1,5 @@
-use Marina.Rodeo qw ( log );
-use Marina.Rodeo::Constants;
+use OpenMarinkaRodeo qw ( log );
+use OpenMarinkaRodeo::Constants;
 
 sub setflag{
 	my $m = shift;

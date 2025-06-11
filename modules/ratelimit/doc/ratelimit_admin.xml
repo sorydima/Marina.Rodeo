@@ -12,26 +12,26 @@
 		basis and not per source IP. The latest sources allow you to
 		dynamically group several messages into some entities and limit the
 		traffic based on them. The MI interface can be used to change
-		tunables while running Marina.Rodeo.
+		tunables while running OpenMarinkaRodeo.
 	</para>
 	<para>
-		This module is integrated with the &osips; Key-Value Interface,
+		This module is integrated with the &oMarinkaRodeo; Key-Value Interface,
 		providing support for distributed rate limiting using Redis or Memcached
 		CacheDB backends. The internal limiting data will no longer be kept on each
-		&osips; instance. It will be stored in the distributed Key-Value database
+		&oMarinkaRodeo; instance. It will be stored in the distributed Key-Value database
 		and queried by each instance before deciding if a SIP message should be
 		blocked or not.
 	</para>
 	<para>
 		To achieve a distributed ratelimit feature, the module can also replicate
-		its pipes counters to different &osips; instances using the clusterer module.
+		its pipes counters to different &oMarinkaRodeo; instances using the clusterer module.
 		To do that, define the <emphasis>pipe_replication_cluster</emphasis> parameter
 		in your configuration script.
 	</para>
 	<para>
-		Starting with &osips; 3.2, choosing whether to replicate a pipe over
+		Starting with &oMarinkaRodeo; 3.2, choosing whether to replicate a pipe over
 		CacheDB backends or bin replication is triggered by the flags specified
-		when the pipe is created: adding the <emphasis>/s</emphasis> suffix to the
+		when the pipe is created: adding the <emphasis>/r</emphasis> suffix to the
 		pipe's name will replicate through CacheDB, and adding <emphasis>/b</emphasis>
 		will replicate through bin/clusterer.
 	</para>
@@ -41,7 +41,7 @@
 	<para>
 		Limiting the rate messages are processed on a system directly
 		influences the load. The ratelimit module can be used to protect a
-		single host or to protect an Marina.Rodeo cluster when run on the
+		single host or to protect an OpenMarinkaRodeo cluster when run on the
 		dispatching box in front.
 	</para>
 	<para>
@@ -104,10 +104,10 @@
 		Random Early Detection tries to circumvent the synchronization problem
 		imposed by the tail drop algorithm by measuring the average load and
 		adapting the drop rate dynamically. When running with the RED
-		algorithm Marina.Rodeo will return errors to the Marina.Rodeo
+		algorithm OpenMarinkaRodeo will return errors to the OpenMarinkaRodeo
 		routing engine every n'th packet trying to evenly spread the measured
 		load of the last timer interval onto the current interval. As a
-		negative side effect Marina.Rodeo might drop messages although the limit might
+		negative side effect OpenMarinkaRodeo might drop messages although the limit might
 		not be reached within the interval. Decrease the timer interval if you
 		encounter this.
 		</para>
@@ -143,7 +143,7 @@
 	<section>
 	<title>Dynamic Rate Limiting Algorithms</title>
 	<para>
-		When running &osips; on different machines, one has to adjust the drop
+		When running &oMarinkaRodeo; on different machines, one has to adjust the drop
 		rates for the static algorithms to maintain a sub 100% load average or
 		packets start getting dropped in the network stack.  While this is not
 		in itself difficult, it isn't neither accurate nor trivial: another
@@ -189,13 +189,13 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
 			<listitem>
 			<para>
-				<emphasis>No dependencies on other &osips; modules</emphasis>.
+				<emphasis>No dependencies on other &oMarinkaRodeo; modules</emphasis>.
 			</para>
 			</listitem>
 			</itemizedlist>
@@ -205,7 +205,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -653,6 +653,42 @@ modparam("ratelimit", "slot_period", 100)
 </programlisting>
 		</example>
 	</section>
+	<section id="func_rl_values" xreflabel="rl_values()">
+		<title>
+		<function moreinfo="none">rl_values(ret_avp, regexp)</function>
+		</title>
+		<para>
+			Returns all the available pipes' names in the <emphasis>ret_avp</emphasis>
+			output variable.
+		</para>
+		<para>Meaning of the parameters is as follows:</para>
+		<itemizedlist>
+			<listitem><para>
+				<emphasis>ret_avp</emphasis> (string) - an AVP where the pipes'
+				names will be stored.
+			</para>
+			</listitem>
+			<listitem><para>
+				<emphasis>regexp</emphasis> (regex, optional) - a regular expression
+				used to filter the names of the pipes. If missing, all the pipes
+				are returned.
+			</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			This function can be used from any route.
+		</para>
+		<example>
+		<title><function>rl_values</function> usage</title>
+		<programlisting format="linespecific">
+...
+	rl_values($avp(values));
+	for ($var(pipe) in $(avp(values)[*]))
+		xlog("RATELIMIT: $var(pipe): $rl_count($var(pipe))\n");
+...
+</programlisting>
+		</example>
+	</section>
 
 	</section>
 
@@ -697,8 +733,8 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi rl_list pipe=gw_10.0.0.1
-		Marina.Rodeo-cli -x mi rl_list filter=gw_*
+		openMarinkaRodeo-cli -x mi rl_list pipe=gw_10.0.0.1
+		openMarinkaRodeo-cli -x mi rl_list filter=gw_*
 		</programlisting>
 	</section>
 	<section id="mi_rl_dump_pipe" xreflabel="rl_dump_pipe">
@@ -722,7 +758,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi rl_dump_pipe gw_10.0.0.1
+		openMarinkaRodeo-cli -x mi rl_dump_pipe gw_10.0.0.1
 		</programlisting>
 	</section>
 	<section id="mi_rl_reset_pipe" xreflabel="rl_reset_pipe">
@@ -746,7 +782,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi rl_reset_pipe gw_10.0.0.1
+		openMarinkaRodeo-cli -x mi rl_reset_pipe gw_10.0.0.1
 		</programlisting>
 	</section>
 	<section id="mi_rl_set_pid" xreflabel="rl_set_pid">
@@ -775,7 +811,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi rl_set_pid 0.5 0.5 0.5
+		openMarinkaRodeo-cli -x mi rl_set_pid 0.5 0.5 0.5
 		</programlisting>
 	</section>
 	<section id="mi_rl_get_pid" xreflabel="rl_get_pid">
@@ -793,7 +829,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi rl_get_pid
+		openMarinkaRodeo-cli -x mi rl_get_pid
 		</programlisting>
 	</section>
 	<section id="mi_rl_bin_status" xreflabel="rl_bin_status">
@@ -812,7 +848,7 @@ modparam("ratelimit", "slot_period", 100)
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi rl_bin_status
+		openMarinkaRodeo-cli -x mi rl_bin_status
 		</programlisting>
 	</section>
 	</section>

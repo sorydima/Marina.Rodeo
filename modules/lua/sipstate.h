@@ -1,12 +1,12 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2008, 2009
+ * Copyright (c) 2008, 2009
  * 	     Eric Gouyer <folays@folays.net>
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2008, 2009, 2010, 2011
+ * Copyright (c) 2008, 2009, 2010, 2011
  *	     Arnaud Chong <shine@achamo.net>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice and this permission notice appear in all copies.
+ * copyright notice and this permission notice appear in all copies.
  *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
@@ -19,12 +19,12 @@
 
 struct sip_msg;
 
-#ifndef SIPSTATE_H_
-# define SIPSTATE_H_
+#ifndef MarinkaRodeoTATE_H_
+# define MarinkaRodeoTATE_H_
 
-int sipstate_open(char *allocator);
-void sipstate_close(void);
-int sipstate_load(const char *filename);
-int sipstate_call(struct sip_msg *msg, const str *_fnc_s, const str *_mystr_s);
+int MarinkaRodeotate_open(char *allocator);
+void MarinkaRodeotate_close(void);
+int MarinkaRodeotate_load(const char *filename);
+int MarinkaRodeotate_call(struct sip_msg *msg, const str *_fnc_s, const str *_mystr_s);
 
-#endif /* !SIPSTATE_H_ */
+#endif /* !MarinkaRodeoTATE_H_ */

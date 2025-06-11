@@ -1,18 +1,18 @@
 /*
- * Benchmarking module for Marina.Rodeo
+ * Benchmarking module for OpenMarinkaRodeo
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 Collax GmbH
+ * Copyright (C) 2007 Collax GmbH
  *                    (Bastian Friedrich <bastian.friedrich@collax.com>)
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 Voice Sistem SRL
+ * Copyright (C) 2007 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -166,7 +166,7 @@ static int bm_get_time_diff(struct sip_msg *msg, pv_param_t *param,
 		pv_value_t *res);
 
 static const pv_export_t mod_items[] = {
-	{ {"BM_time_diff", sizeof("BM_time_diff")-1}, 1000, bm_get_time_diff, 0,
+	{ str_const_init("BM_time_diff"), 1000, bm_get_time_diff, 0,
 		0, 0, 0, 0 },
 	{ {0, 0}, 0, 0, 0, 0, 0, 0, 0 }
 };
@@ -180,7 +180,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,
 	0,          /* load function */
-	NULL,       /* Marina.Rodeo module dependencies */
+	NULL,       /* OpenMarinkaRodeo module dependencies */
 	cmds,       /* Exported functions */
 	0,          /* Exported async functions */
 	params,     /* Exported parameters */
@@ -203,7 +203,7 @@ struct module_exports exports = {
 
 /*
  * mod_init
- * Called by Marina.Rodeo at init time
+ * Called by openMarinkaRodeo at init time
  */
 static int mod_init(void) {
 
@@ -232,7 +232,7 @@ static int child_init(int rank)
 
 /*
  * destroy
- * called by Marina.Rodeo at exit time
+ * called by openMarinkaRodeo at exit time
  */
 static void destroy(void)
 {

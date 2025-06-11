@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -36,6 +36,7 @@
 
 
 str _extra_cancel_hdrs = {NULL,0};
+extern int _tm_branch_index;
 
 
 /* determine which branches should be canceled; do it
@@ -116,9 +117,11 @@ void cancel_branch( struct cell *t, int branch )
 	crb->activ_type=TYPE_LOCAL_CANCEL;
 
 	if ( has_tran_tmcbs( t, TMCB_REQUEST_BUILT) ) {
+		_tm_branch_index = branch;
 		set_extra_tmcb_params( &crb->buffer, &crb->dst);
 		run_trans_callbacks( TMCB_REQUEST_BUILT,
 			t, t->uas.request, 0, 0);
+		_tm_branch_index = 0;
 	}
 
 	LM_DBG("sending cancel...\n");

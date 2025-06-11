@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005 Voice Sistem SRL
+ * Copyright (C) 2005 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * UAC Marina.Rodeo-module is free software; you can redistribute it and/or
+ * UAC OpenMarinkaRodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * UAC Marina.Rodeo-module is distributed in the hope that it will be useful,
+ * UAC OpenMarinkaRodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -252,7 +252,7 @@ static int uac_auth_dlg_leg(struct dlg_cell *dlg, str *tag)
 		return callee_idx(dlg);
 }
 
-int uac_auth( struct sip_msg *msg, int algmask)
+int uac_auth( struct sip_msg *msg, unsigned algmask)
 {
 	struct authenticate_body *auth = NULL;
 	str msg_body;
@@ -307,7 +307,7 @@ int uac_auth( struct sip_msg *msg, int algmask)
 	}
 
 	if (auth == NULL) {
-		LM_ERR("Unable to extract authentication info\n");
+		LM_ERR("Unable to extract a compatible authentication challenge\n");
 		goto error;
 	}
 
@@ -486,4 +486,33 @@ void rr_uac_auth_checker(struct sip_msg *msg, str *r_param, void *cb_param)
 		LM_ERR("Failed to register TMCB response fwded - continue \n");
 		return;
 	}
+}
+
+int uac_inc_cseq(struct sip_msg *msg, int val)
+{
+	struct cell *t = uac_tmb.t_gett();
+	if (t==T_UNDEFINED || t==T_NULL_CELL)
+	{
+		LM_CRIT("no current transaction found\n");
+		return -1;
+	}
+
+	if (apply_cseq_op(msg, val) < 0) {
+		LM_WARN("Failed to increment the CSEQ header!\n");
+		return -1;
+	}
+
+	/* only register the TMCB once per transaction */
+	if (!(msg->msg_flags & FL_USE_UAC_CSEQ ||
+	t->uas.request->msg_flags & FL_USE_UAC_CSEQ)) {
+		if (uac_tmb.register_tmcb( msg, 0, TMCB_RESPONSE_FWDED,
+		apply_cseq_decrement,0,0)!=1) {
+			LM_ERR("Failed to register TMCB response fwded - continue \n");
+			return -1;
+		}
+	}
+	msg->msg_flags |= FL_USE_UAC_CSEQ;
+	t->uas.request->msg_flags |= FL_USE_UAC_CSEQ;
+
+	return 1;
 }

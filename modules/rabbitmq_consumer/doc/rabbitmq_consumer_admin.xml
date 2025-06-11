@@ -16,14 +16,14 @@
 	<para>
 		Using this module you can subscribe consumers to a RabbitMQ broker in order
 		to receive AMQP messages for specified queues. The messages will be delivered
-		by triggering events through the &osips; Event Interface.
+		by triggering events through the &oMarinkaRodeo; Event Interface.
 	</para>
 	</section>
 
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 			The following modules must be loaded before this module:
 			<itemizedlist>
@@ -40,7 +40,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 		</para>
 			<itemizedlist>
 			<listitem>
@@ -99,7 +99,7 @@
 			</listitem>
 			<listitem>
 			<para>
-				<emphasis>event</emphasis> - Mandatory parameter - the name of the &osips;
+				<emphasis>event</emphasis> - Mandatory parameter - the name of the &oMarinkaRodeo;
 				event that will be triggered for each AMQP message received.
 			</para>
 			</listitem>
@@ -107,7 +107,7 @@
 			<para>
 				<emphasis>ack</emphasis> - flag that indicates to the broker
 				that messages will be acknowledged upon receival. If you do not
-				set this flag, the server will not expect ACKs and &osips; will not
+				set this flag, the server will not expect ACKs and &oMarinkaRodeo; will not
 				send them.
 			</para>
 			</listitem>
@@ -185,7 +185,7 @@ modparam("rabbitmq_consumer", "connect_timeout", 1000)
 	<section id="param_retry_timeout" xreflabel="retry_timeout">
 		<title><varname>retry_timeout</varname> (integer)</title>
 		<para>
-		The interval (in milliseconds) after which &osips; will try to
+		The interval (in milliseconds) after which &oMarinkaRodeo; will try to
 		re-establish a failed AMQP connection to a RabbitMQ server.
 		</para>
 		<para>

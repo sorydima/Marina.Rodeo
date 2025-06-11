@@ -1,17 +1,17 @@
 /**
  * dispatcher module -- stateless load balancing
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2004-2005 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006-2010 Voice Sistem SRL
+ * Copyright (C) 2004-2005 FhG Fokus
+ * Copyright (C) 2006-2010 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -99,6 +99,9 @@ typedef struct _ds_db_head
 	str ping_method;
 	str persistent_state;
 
+	str ping_sock;
+	struct socket_info *ping_sock_info;
+
 	struct _ds_db_head *next;
 } ds_db_head_t;
 
@@ -118,6 +121,9 @@ ds_db_head_t default_db_head = {
 	{NULL, -1},
 	{NULL, -1},
 	{"1", 1},
+
+	{NULL, -1},
+	NULL,
 
 	NULL
 };
@@ -162,7 +168,7 @@ static str options_reply_codes_str= {0, 0};
 static int* options_reply_codes = NULL;
 static int options_codes_no;
 static str probing_sock_s;
-struct socket_info *probing_sock = NULL;
+const struct socket_info *probing_sock = NULL;
 
 ds_partition_t *partitions = NULL, *default_partition = NULL;
 
@@ -372,7 +378,7 @@ static const mi_export_t mi_cmds[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_SQLDB, NULL, DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -391,7 +397,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,
 	0,
 	params,
@@ -420,6 +426,7 @@ DEF_GETTER_FUNC(script_attrs_avp);
 DEF_GETTER_FUNC(ping_from);
 DEF_GETTER_FUNC(ping_method);
 DEF_GETTER_FUNC(persistent_state);
+DEF_GETTER_FUNC(ping_sock);
 
 static partition_specific_param_t partition_params[] = {
 	{str_init("db_url"), {NULL, 0}, GETTER_FUNC(db_url)},
@@ -433,6 +440,7 @@ static partition_specific_param_t partition_params[] = {
 	PARTITION_SPECIFIC_PARAM (ping_from, ""),
 	PARTITION_SPECIFIC_PARAM (ping_method, ""),
 	PARTITION_SPECIFIC_PARAM (persistent_state, "1"),
+	PARTITION_SPECIFIC_PARAM (ping_sock, ""),
 };
 
 static const unsigned int partition_param_count = sizeof (partition_params) /
@@ -483,7 +491,7 @@ static int split_partition_argument(str *arg, str *partition_name)
 	arg->len -= partition_name->len + 1;
 
 	trim(partition_name);
-	for (;arg->s[0] == ' ' && arg->len; ++arg->s, --arg->len);
+	for (;(arg->s[0] == ' ' || arg->s[0] == '\n')  && arg->len; ++arg->s, --arg->len);
 	return 0;
 }
 
@@ -624,6 +632,7 @@ static int set_partition_arguments(unsigned int type, void *val)
 			}
 		}
 
+		raw_line.len -= end_pair_pos + 1 - raw_line.s;
 		raw_line.s = end_pair_pos + 1;
 		end_pair_pos = q_memchr(raw_line.s, end_pair_delim, raw_line.len);
 		eq_pos = q_memchr(raw_line.s, eq_val_delim, raw_line.len);
@@ -758,14 +767,28 @@ static int partition_init(ds_db_head_t *db_head, ds_partition_t *partition)
 		if (pkg_str_dup(&partition->ping_method, &db_head->ping_method) < 0)
 			LM_ERR("cannot duplicate ping_method\n");
 	}
+
+	if (db_head->ping_sock.s && db_head->ping_sock.len > 0) {
+		if (pkg_str_dup(&partition->ping_sock, &db_head->ping_sock) < 0) {
+			LM_ERR("cannot duplicate ping_sock\n");
+			return -1;
+		}
+		partition->ping_sock_info = (struct socket_info *)parse_sock_info(&partition->ping_sock);
+		if (partition->ping_sock_info==NULL) {
+			LM_ERR("socket <%.*s> is not local to openMarinkaRodeo (we must listen "
+				"on it\n", partition->ping_sock.len, partition->ping_sock.s);
+			return -1;
+		}
+	}
+
 	partition->persistent_state = ds_persistent_state;
-	if (str_strcmp(&db_head->persistent_state, const_str("0")) ||
-			str_strcmp(&db_head->persistent_state, const_str("no")) ||
-			str_strcmp(&db_head->persistent_state, const_str("off")))
+    if (str_strcmp(&db_head->persistent_state, const_str("0")) == 0 ||
+        str_strcmp(&db_head->persistent_state, const_str("no")) == 0 ||
+        str_strcmp(&db_head->persistent_state, const_str("off")) == 0)
 		partition->persistent_state = 0;
-	else if (str_strcmp(&db_head->persistent_state, const_str("1")) ||
-			str_strcmp(&db_head->persistent_state, const_str("yes")) ||
-			str_strcmp(&db_head->persistent_state, const_str("on")))
+    else if (str_strcmp(&db_head->persistent_state, const_str("1")) == 0 ||
+        str_strcmp(&db_head->persistent_state, const_str("yes")) == 0 ||
+        str_strcmp(&db_head->persistent_state, const_str("on")) == 0)
 		partition->persistent_state = 1;
 
 	if (partition->persistent_state)
@@ -999,7 +1022,7 @@ next_part:
 		if (probing_sock_s.s && (probing_sock_s.len = strlen(probing_sock_s.s))) {
 			probing_sock = parse_sock_info(&probing_sock_s);
 			if (probing_sock==NULL) {
-				LM_ERR("socket <%.*s> is not local to Marina.Rodeo (we must listen "
+				LM_ERR("socket <%.*s> is not local to openMarinkaRodeo (we must listen "
 					"on it\n", probing_sock_s.len, probing_sock_s.s);
 				return -1;
 			}
@@ -1022,13 +1045,14 @@ next_part:
 			return -1;
 		}
 
-		/* Register the weight-recalculation timer */
-		if (fetch_freeswitch_stats &&
-		    register_timer("ds-update-weights", ds_update_weights, NULL,
-		            fs_api.stats_update_interval, TIMER_FLAG_SKIP_ON_DELAY)<0) {
-			LM_ERR("failed to register timer for weight recalc!\n");
-			return -1;
-		}
+	}
+
+	/* Register the weight-recalculation timer */
+	if (fetch_freeswitch_stats &&
+	    register_timer("ds-update-weights", ds_update_weights, NULL,
+	            fs_api.stats_update_interval, TIMER_FLAG_SKIP_ON_DELAY)<0) {
+		LM_ERR("failed to register timer for weight recalc!\n");
+		return -1;
 	}
 
 	/* register timer to flush the state of destination back to DB */

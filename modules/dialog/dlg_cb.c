@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009-2020 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem SRL
+ * Copyright (C) 2009-2020 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2006 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -31,7 +31,7 @@ static struct dlg_head_cbl* create_cbs = 0;
 
 static struct dlg_head_cbl* load_cbs = 0;
 
-static struct dlg_cb_params params = {NULL, DLG_DIR_NONE, 1, NULL, NULL};
+static struct dlg_cb_params params = {NULL, DLG_DIR_NONE, -1, 1, NULL, NULL};
 
 
 #define POINTER_CLOSED_MARKER  ((void *)(-1))
@@ -232,13 +232,14 @@ void run_create_callbacks(struct dlg_cell *dlg, struct sip_msg *msg)
 
 
 void run_dlg_callbacks(int type , struct dlg_cell *dlg, struct sip_msg *msg,
-								unsigned int dir, void *dlg_data, int locked,
-								unsigned int is_active)
+								unsigned int dir, int dst_leg, void *dlg_data,
+								int locked, unsigned int is_active)
 {
 	struct dlg_callback *cb;
 
 	params.msg = msg;
 	params.direction = dir;
+	params.dst_leg = dst_leg;
 	params.is_active = is_active;
 	params.dlg_data = dlg_data;
 

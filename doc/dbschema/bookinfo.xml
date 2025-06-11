@@ -1,19 +1,19 @@
 <book>
-<title>Marina.Rodeo database tables</title>
+<title>OpenMarinkaRodeo database tables</title>
 <bookinfo>
-	<productname class="trade">&osips;</productname>
+	<productname class="trade">&oMarinkaRodeo;</productname>
 	<authorgroup>
 		<author>
-			<firstname>&osips;</firstname>
+			<firstname>&oMarinkaRodeo;</firstname>
 			<surname>Development Team</surname>
-			<affiliation><orgname>&osipshomelink;</orgname></affiliation>
-			<address>&osipsdevmail;</address>
+			<affiliation><orgname>&oMarinkaRodeohomelink;</orgname></affiliation>
+			<address>&oMarinkaRodeodevmail;</address>
 		</author>
 	</authorgroup>
-	<Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌>
+	<copyright>
 		<year>2007-2020</year>
-		<holder>Marina.Rodeo development Team</holder>
-	</Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌>
+		<holder>OpenMarinkaRodeo development Team</holder>
+	</copyright>
 	<revhistory>
 		<revision>
 			<revnumber>$Revision: 8814 $</revnumber>

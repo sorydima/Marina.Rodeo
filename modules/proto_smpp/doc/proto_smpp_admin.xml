@@ -48,7 +48,7 @@
 		<title>SMPP to SIP bridging</title>
 		<para>
 			When bridging a message received over the SMPP interface,
-			Marina.Rodeo builds a SIP Message and sends it to the outbound
+			OpenMarinkaRodeo builds a SIP Message and sends it to the outbound
 			proxy identified by the <xref linkend="param_smpp_outbound_uri"/>
 			module's parameter.
 		</para>
@@ -58,7 +58,7 @@
 		<title>SMSC binding</title>
 		<para>
 			In order to be able to deliver messages to SMSc, an ESME needs to
-			first bind to the SMSc. This is done at &osips; startup by sending
+			first bind to the SMSc. This is done at &oMarinkaRodeo; startup by sending
 			a SMPP <emphasis>bind_transciever</emphasis> command to connect
 			to the SMSc, or an <emphasis>outbind</emphasis> command to inform
 			an SMSc it can now bind to our gateway.
@@ -68,7 +68,7 @@
 			For each server, one can cofigure the following information:
 			<itemizedlist>
 			<listitem><para><emphasis>Name</emphasis> - an unique name given to
-			the SMSc that is used to reference this SMSc in the &osips; script.
+			the SMSc that is used to reference this SMSc in the &oMarinkaRodeo; script.
 			</para></listitem>
 			<listitem><para><emphasis>IP</emphasis> - The IP the SMSc is listening
 			on for new bindings/connections.
@@ -137,7 +137,7 @@
 			</itemizedlist>
 		</para>
 		<para>
-			When &osips; starts up, it reads all SMSc specifications from the
+			When &oMarinkaRodeo; starts up, it reads all SMSc specifications from the
 			database and triggers a binding with them. <emphasis>Note: </emphasis>
 			reloading the SMSc database is not yet supported, but it is a work in
 			progress.
@@ -152,7 +152,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -179,10 +179,10 @@
 	</section>
 
 	<section>
-		<title>&osips; Exported parameters</title>
+		<title>&oMarinkaRodeo; Exported parameters</title>
 		<para>
-		All these parameters can be used from the Marina.Rodeo.cfg file,
-		to configure the behavior of &osips;-SMPP gateway.
+		All these parameters can be used from the openMarinkaRodeo.cfg file,
+		to configure the behavior of &oMarinkaRodeo;-SMPP gateway.
 		</para>
 
 	<section id="param_db_url" xreflabel="db_url">
@@ -254,7 +254,7 @@ modparam("proto_smpp", "smpp_max_msg_chunks", 32)
 		<title><varname>smpp_send_timeout</varname> (integer)</title>
 		<para>
 		Time in milliseconds after a TCP connection will be closed if it is
-		not available for blocking writing in this interval (and &osips; wants
+		not available for blocking writing in this interval (and &oMarinkaRodeo; wants
 		to send something on it).
 		</para>
 		<para>
@@ -570,7 +570,7 @@ modparam("proto_smpp", "session_type_col", "smsc_session_type")
 		</title>
 		<para>
 			This function is used to convert a SIP message received in the
-			&osips; script to a SMPP PDU and send it to the
+			&oMarinkaRodeo; script to a SMPP PDU and send it to the
 			<emphasis>smsc_name (string)</emphasis> received as parameter.
 			The SMPP parameters used to construct the PDU are provisione
 			in the database, and the command sent is either

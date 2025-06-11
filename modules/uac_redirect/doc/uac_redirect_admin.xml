@@ -8,7 +8,7 @@
 	<section id="overview" xreflabel="Overview">
 		<title>Overview</title>
 		<para>
-		UAC REDIRECT - User Agent Client redirection - module enhance &osips;
+		UAC REDIRECT - User Agent Client redirection - module enhance &oMarinkaRodeo;
 		with the functionality of being able to handle (interpret, filter,
 		log and follow) redirect responses ( 3xx replies class).
 		</para>
@@ -43,7 +43,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 		<title>Dependencies</title>
 		<section>
-			<title>&osips; Modules</title>
+			<title>&oMarinkaRodeo; Modules</title>
 			<para>
 			The following modules must be loaded before this module:
 			<itemizedlist>
@@ -66,7 +66,7 @@
 			<title>External Libraries or Applications</title>
 			<para>
 				The following libraries or applications must be installed 
-				before running &osips; with this module loaded:
+				before running &oMarinkaRodeo; with this module loaded:
 				<itemizedlist>
 				<listitem>
 				<para>

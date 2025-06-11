@@ -21,7 +21,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		A cachedb_* type module must be loaded before loading
 		the dns_cache module.
@@ -65,6 +65,30 @@ modparam("dns_cache", "cachedb_url","memcached://192.168.2.130:8888/")
 		<programlisting format="linespecific">
 ...
 modparam("dns_cache", "blacklist_timeout",7200) # 2 hours
+...
+		</programlisting>
+		</example>
+		
+		</section>
+
+		<section id="param_min_ttl" xreflabel="min_ttl">
+		<title><varname>min_ttl</varname> (int)</title>
+		<para>
+			The minimum number of seconds that a DNS record will be kept in
+			cache. If the TTL received in the DNS answer is lower than this
+			value, the record will be cached for min_ttl seconds.
+		</para>
+		<para>
+		<emphasis>
+			Default value is <emphasis role='bold'>0</emphasis> seconds (no minimum TTL is enforced).
+		</emphasis>
+		</para>
+		
+		<example>
+		<title>Set <varname>min_ttl</varname> parameter</title>
+		<programlisting format="linespecific">
+...
+modparam("dns_cache", "min_ttl",300) # 5 minutes
 ...
 		</programlisting>
 		</example>

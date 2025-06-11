@@ -1,16 +1,16 @@
 /*
- * Entry point for including and running Marina.Rodeo unit tests (core + modules)
+ * Entry point for including and running OpenMarinkaRodeo unit tests (core + modules)
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2018-2020 Marina.Rodeo Solutions
+ * Copyright (C) 2018-2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -22,6 +22,7 @@
 
 #include <tap.h>
 
+#include "../db/test/test_db.h"
 #include "../cachedb/test/test_cachedb.h"
 #include "../lib/test/test_csv.h"
 #include "../lib/test/test_digest_auth.h"
@@ -59,7 +60,7 @@ int run_unit_tests(void)
 
 	/* core tests */
 	if (!strcmp(testing_module, "core")) {
-		/* remember to update the Makefile.test Marina.Rodeo command-line with at
+		/* remember to update the Makefile.test OpenMarinkaRodeo command-line with at
 		 * least "-m2048 -M128" before stress-testing any of the allocators! */
 		//test_malloc();
 		test_cachedb();
@@ -67,6 +68,7 @@ int run_unit_tests(void)
 		test_parser();
 		test_ut();
 		test_lib_digest_auth();
+		test_db();
 
 	/* module tests */
 	} else {

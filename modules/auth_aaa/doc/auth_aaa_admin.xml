@@ -42,7 +42,7 @@
 		</itemizedlist>
 	</para>
 	<para>
-		All additional credentials will be stored as &osips; AVPs
+		All additional credentials will be stored as &oMarinkaRodeo; AVPs
 		(SIP_AVP_NAME = SIP_AVP_VALUE).
 	</para>
 	<para>
@@ -68,7 +68,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 		<section>
-			<title>&osips; Modules</title>
+			<title>&oMarinkaRodeo; Modules</title>
 			<para>
 			The module depends on the following modules (in the other words 
 			the listed modules must be loaded before this module):

@@ -121,13 +121,13 @@
 	<section id="dependencies" xreflabel="Dependencies">
 		<title>Dependencies</title>
 		<section>
-			<title>&osips; Modules</title>
+			<title>&oMarinkaRodeo; Modules</title>
 			<para>
 		The following modules must be loaded before this module:
 				<itemizedlist>
 					<listitem>
 						<para>
-				<!--<emphasis>No dependencies on other &osips; modules</emphasis>.-->
+				<!--<emphasis>No dependencies on other &oMarinkaRodeo; modules</emphasis>.-->
 							<emphasis>At least one real DB module</emphasis>.
 						</para>
 					</listitem>
@@ -138,7 +138,7 @@
 			<title>External Libraries or Applications</title>
 			<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 				<itemizedlist>
 					<listitem>
 						<para>
@@ -170,11 +170,11 @@ modparam("group","db_url","virtual://set1")
 modparam("presence|presence_xml", "db_url","virtual://set2")
 
 modparam("db_virtual", "db_urls", "define set1 PARALLEL")
-modparam("db_virtual", "db_urls", "mysql://Marina.Rodeo:Marina.Rodeo@localhost/testa")
-modparam("db_virtual", "db_urls", "postgres://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo")
+modparam("db_virtual", "db_urls", "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/testa")
+modparam("db_virtual", "db_urls", "postgres://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo")
 
 modparam("db_virtual", "db_urls", "define set2 FAILOVER")
-modparam("db_virtual", "db_urls", "mysql://Marina.Rodeo:Marina.Rodeo@localhost/testa")
+modparam("db_virtual", "db_urls", "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/testa")
 ...
 				</programlisting>
 			</example>
@@ -261,7 +261,7 @@ modparam("db_virtual", "db_max_consec_retrys", 20)
 		MI FIFO Command Format:
 			</para>
 			<programlisting  format="linespecific">
-				Marina.Rodeo-cli -x mi db_get
+				openMarinkaRodeo-cli -x mi db_get
 			</programlisting>
 		</section>
 
@@ -297,7 +297,7 @@ modparam("db_virtual", "db_max_consec_retrys", 20)
 		MI FIFO Command Format:
 			</para>
 			<programlisting  format="linespecific">
-				Marina.Rodeo-cli -x mi db_set 3 2 0 1
+				openMarinkaRodeo-cli -x mi db_set 3 2 0 1
 			</programlisting>
 		</section>
 	</section>

@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2012 Marina.Rodeo Solutions
+ * Copyright (C) 2012 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -53,15 +53,17 @@ static cachedb_con *cdbc = 0;
 
 static int blacklist_timeout=3600; /* seconds */
 static str cachedb_url = {0,0};
+static int min_ttl=0; /* seconds */
 
 static const param_export_t params[]={
 	{ "cachedb_url",                 STR_PARAM, &cachedb_url.s},
 	{ "blacklist_timeout",           INT_PARAM, &blacklist_timeout},
+	{ "min_ttl",                     INT_PARAM, &min_ttl},
 	{0,0,0}
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_CACHEDB, NULL, DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -77,7 +79,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,			/* dlopen flags */
 	0,							/* load function */
-	&deps,              /* Marina.Rodeo module dependencies */
+	&deps,              /* OpenMarinkaRodeo module dependencies */
 	0,					/* exported functions */
 	0,					/* exported async functions */
 	params,					/* exported parameters */
@@ -106,7 +108,7 @@ static int mod_init(void)
 		return -1;
 	} else {
 		cachedb_url.len = strlen(cachedb_url.s);
-		LM_DBG("using CacheDB URL: %s\n", cachedb_url.s);
+		LM_DBG("using CacheDB URL: %s\n", db_url_escape(&cachedb_url));
 	}
 
 	/* set pointers that resolver will use for caching */
@@ -119,8 +121,8 @@ static int mod_init(void)
 static int child_init(int rank)
 {
 	if (cachedb_bind_mod(&cachedb_url, &cdbf) < 0) {
-		LM_ERR("cannot bind functions for db_url %.*s\n",
-				cachedb_url.len, cachedb_url.s);
+		LM_ERR("cannot bind functions for db_url %s\n",
+				db_url_escape(&cachedb_url));
 		return -1;
 	}
 
@@ -132,7 +134,7 @@ static int child_init(int rank)
 
 	cdbc = cdbf.init(&cachedb_url);
 	if (!cdbc) {
-		LM_ERR("cannot connect to db_url %.*s\n", cachedb_url.len, cachedb_url.s);
+		LM_ERR("cannot connect to db_url %s\n", db_url_escape(&cachedb_url));
 		return -1;
 	}
 
@@ -150,6 +152,8 @@ static void destroy(void)
 static int rdata_struct_len=sizeof(struct rdata)-sizeof(void *) -
 		sizeof(struct rdata *);
 
+#define MAXALIASES		36
+#define MAXADDRS 		36
 static unsigned char *he_buf=NULL;
 static int he_buf_len=0;
 static char* serialize_he_rdata(struct hostent *he,int *buf_len,int do_encoding)
@@ -165,7 +169,7 @@ static char* serialize_he_rdata(struct hostent *he,int *buf_len,int do_encoding)
 		len+=strlen(he->h_name)+1;
 
 	if (he->h_aliases)
-       		for (i=0;he->h_aliases[i];i++) {
+		for (i=0;he->h_aliases[i]&&alias_no<MAXALIASES-1;i++) {
 			/* integer with len + len bytes of alias */
 			len+=strlen(he->h_aliases[i])+1+sizeof(int);
 			alias_no++;
@@ -174,7 +178,7 @@ static char* serialize_he_rdata(struct hostent *he,int *buf_len,int do_encoding)
 
 	i=0;
 	if (he->h_addr_list)
-       		for (i=0;he->h_addr_list[i];i++) {
+		for (i=0;he->h_addr_list[i]&&addr_no<MAXADDRS-1;i++) {
 			len+=he->h_length;
 			addr_no++;
 		}
@@ -203,13 +207,15 @@ static char* serialize_he_rdata(struct hostent *he,int *buf_len,int do_encoding)
 	memcpy(p,&he->h_addrtype,sizeof(int));
 	p+=sizeof(int);
 
-	/* copy h_name len */
-	len=strlen(he->h_name)+1;
-	memcpy(p,&len,sizeof(int));
-	p+=sizeof(int);
-	/* copy h_name */
-	memcpy(p,he->h_name,len);
-	p+=len;
+	if (he->h_name) {
+		/* copy h_name len */
+		len=strlen(he->h_name)+1;
+		memcpy(p,&len,sizeof(int));
+		p+=sizeof(int);
+		/* copy h_name */
+		memcpy(p,he->h_name,len);
+		p+=len;
+	}
 
 	/* copy number of aliases */
 	memcpy(p,&alias_no,sizeof(int));
@@ -217,7 +223,7 @@ static char* serialize_he_rdata(struct hostent *he,int *buf_len,int do_encoding)
 
 	/* copy aliases, if any */
 	if (he->h_aliases)
-       		for (i=0;he->h_aliases[i];i++) {
+		for (i=0;he->h_aliases[i];i++) {
 			len=strlen(he->h_aliases[i])+1;
 			/* copy alias length */
 			memcpy(p,&len,sizeof(int));
@@ -233,7 +239,7 @@ static char* serialize_he_rdata(struct hostent *he,int *buf_len,int do_encoding)
 
 	/* copy addresses */
 	if (he->h_addr_list)
-       		for (i=0;he->h_addr_list[i];i++) {
+		for (i=0;he->h_addr_list[i];i++) {
 			/* copy addreses. length will be known from the addrtype field */
 			len=he->h_length;
 			memcpy(p,he->h_addr_list[i],len);
@@ -259,8 +265,6 @@ static char* serialize_he_rdata(struct hostent *he,int *buf_len,int do_encoding)
 static unsigned char *dec_he_buf=NULL;
 static int dec_he_buf_len=0;
 static struct hostent dec_global_he;
-#define MAXALIASES		36
-#define MAXADDRS 		36
 static char *h_addr_ptrs[MAXADDRS];
 static char *host_aliases[MAXALIASES];
 static struct hostent* deserialize_he_rdata(char *buff,int buf_len,int do_decoding)
@@ -289,10 +293,8 @@ static struct hostent* deserialize_he_rdata(char *buff,int buf_len,int do_decodi
 
 	/* set pointer in dec_global_he */
 	ap = host_aliases;
-	*ap = NULL;
 	dec_global_he.h_aliases = host_aliases;
 	hap = h_addr_ptrs;
-	*hap = NULL;
 	dec_global_he.h_addr_list = h_addr_ptrs;
 
 	if (do_decoding) {
@@ -329,6 +331,7 @@ static struct hostent* deserialize_he_rdata(char *buff,int buf_len,int do_decodi
 		*ap++ = (char *)p;
 		p+=len;
 	}
+	*ap = NULL;
 
 	/* get number of addresses */
 	memcpy(&addr_no,p,sizeof(int));
@@ -339,6 +342,7 @@ static struct hostent* deserialize_he_rdata(char *buff,int buf_len,int do_decodi
 		*hap++ = (char *)p;
 		p+=dec_global_he.h_length;
 	}
+	*hap = NULL;
 
 	return &dec_global_he;
 }
@@ -875,6 +879,10 @@ int put_dnscache_value(char *name,int r_type,void *record,int rdata_len,
 		}
 
 		key_ttl = ttl;
+
+		if (min_ttl > 0 && key_ttl < min_ttl) {
+			key_ttl = min_ttl;
+		}
 	}
 
 	LM_INFO("putting key [%.*s] with value [%.*s] ttl = %d\n",

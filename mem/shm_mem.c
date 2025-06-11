@@ -1,17 +1,17 @@
 /*
  * Shared memory functions
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2019 Marina.Rodeo Solutions
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2019 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -38,7 +38,7 @@
 
 #endif
 
-enum osips_mm mem_allocator_shm = MM_NONE;
+enum oMarinkaRodeo_mm mem_allocator_shm = MM_NONE;
 
 #ifndef INLINE_ALLOC
 #ifdef DBG_MALLOC
@@ -100,12 +100,21 @@ static int shm_shmid=-1; /*shared memory id*/
 gen_lock_t *mem_lock;
 #endif
 
+#if defined F_PARALLEL_MALLOC
+gen_lock_t *hash_locks[TOTAL_F_PARALLEL_POOLS];
+/* we allocated TOTAL_F_PARALLEL_POOLS mem blocks */
+static void** shm_mempools=NULL;
+void **shm_blocks;
+#endif
+
 #ifdef HP_MALLOC
 gen_lock_t *mem_locks;
 #endif
 
 static void* shm_mempool=INVALID_MAP;
 void *shm_block;
+
+int init_done=0;
 
 #ifdef DBG_MALLOC
 gen_lock_t *mem_dbg_lock;
@@ -118,7 +127,7 @@ int shm_skip_sh_log = 1;
 #endif
 
 /*
- * - the memory fragmentation pattern of Marina.Rodeo
+ * - the memory fragmentation pattern of OpenMarinkaRodeo
  * - holds the total number of shm_mallocs requested for each
  *   different possible size since daemon startup
  * - allows memory warming (preserving the fragmentation pattern on restarts)
@@ -162,7 +171,7 @@ static str shm_size_str = { "size", 4 };
 int set_shm_mm(const char *mm_name)
 {
 #ifdef INLINE_ALLOC
-	LM_NOTICE("this is an inlined allocator build (see Marina.Rodeo -V), "
+	LM_NOTICE("this is an inlined allocator build (see openMarinkaRodeo -V), "
 	          "cannot set a custom shm allocator (%s)\n", mm_name);
 	return 0;
 #endif
@@ -265,12 +274,12 @@ void *shm_getmem(int fd, void *force_addr, unsigned long size)
 }
 
 
-#if !defined INLINE_ALLOC && defined HP_MALLOC
+#if !defined(INLINE_ALLOC) && (defined(HP_MALLOC) || defined(F_PARALLEL_MALLOC))
 /* startup optimization */
-int shm_use_global_lock;
+int shm_use_global_lock = 1;
 #endif
 
-int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
+int shm_mem_init_mallocs(void* mempool, unsigned long pool_size,int idx)
 {
 #ifdef HP_MALLOC
 	int i;
@@ -283,10 +292,10 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 	shm_block = qm_malloc_init(mempool, pool_size, "shm");
 #elif defined HP_MALLOC
 	shm_block = hp_shm_malloc_init(mempool, pool_size, "shm");
+#elif define F_PARALEL_MALLOC
+	shm_blocks[idx] = parallel_malloc_init(mempool, pool_size, "shm", idx);
 #endif
 #else
-	if (mem_allocator_shm == MM_NONE)
-		mem_allocator_shm = mem_allocator;
 
 #ifdef HP_MALLOC
 	if (mem_allocator_shm == MM_HP_MALLOC
@@ -297,8 +306,15 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 		shm_stats[4].stat_pointer = &shm_rused;
 		shm_stats[5].flags = STAT_NO_RESET;
 		shm_stats[5].stat_pointer = &shm_frags;
-	} else {
-		shm_use_global_lock = 1;
+
+		shm_use_global_lock = 0;
+	}
+#endif
+
+#ifdef F_PARALLEL_MALLOC
+	if (mem_allocator_shm == MM_F_PARALLEL_MALLOC ||
+	mem_allocator_shm == MM_F_PARALLEL_MALLOC_DBG) {
+		shm_use_global_lock = 0;
 	}
 #endif
 
@@ -307,7 +323,7 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 #ifdef F_MALLOC
 	case MM_F_MALLOC:
 	case MM_F_MALLOC_DBG:
-		shm_stats_core_init = (osips_shm_stats_init_f)fm_stats_core_init;
+		shm_stats_core_init = (oMarinkaRodeo_shm_stats_init_f)fm_stats_core_init;
 		shm_stats_get_index = fm_stats_get_index;
 		shm_stats_set_index = fm_stats_set_index;
 		shm_frag_overhead = FM_FRAG_OVERHEAD;
@@ -319,7 +335,7 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 #ifdef Q_MALLOC
 	case MM_Q_MALLOC:
 	case MM_Q_MALLOC_DBG:
-		shm_stats_core_init = (osips_shm_stats_init_f)qm_stats_core_init;
+		shm_stats_core_init = (oMarinkaRodeo_shm_stats_init_f)qm_stats_core_init;
 		shm_stats_get_index = qm_stats_get_index;
 		shm_stats_set_index = qm_stats_set_index;
 		shm_frag_overhead = QM_FRAG_OVERHEAD;
@@ -331,13 +347,25 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 #ifdef HP_MALLOC
 	case MM_HP_MALLOC:
 	case MM_HP_MALLOC_DBG:
-		shm_stats_core_init = (osips_shm_stats_init_f)hp_stats_core_init;
+		shm_stats_core_init = (oMarinkaRodeo_shm_stats_init_f)hp_stats_core_init;
 		shm_stats_get_index = hp_stats_get_index;
 		shm_stats_set_index = hp_stats_set_index;
 		shm_frag_overhead = HP_FRAG_OVERHEAD;
 		shm_frag_file = hp_frag_file;
 		shm_frag_func = hp_frag_func;
 		shm_frag_line = hp_frag_line;
+		break;
+#endif
+#ifdef F_PARALLEL_MALLOC
+	case MM_F_PARALLEL_MALLOC:
+	case MM_F_PARALLEL_MALLOC_DBG:
+		shm_stats_core_init = (oMarinkaRodeo_shm_stats_init_f)parallel_stats_core_init;
+		shm_stats_get_index = parallel_stats_get_index;
+		shm_stats_set_index = parallel_stats_set_index;
+		shm_frag_overhead = F_PARALLEL_FRAG_OVERHEAD;
+		shm_frag_file = parallel_frag_file;
+		shm_frag_func = parallel_frag_func;
+		shm_frag_line = parallel_frag_line;
 		break;
 #endif
 	default:
@@ -366,6 +394,12 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 		shm_frag_size = hp_frag_size;
 		break;
 #endif
+#ifdef F_PARALLEL_MALLOC
+	case MM_F_PARALLEL_MALLOC:
+	case MM_F_PARALLEL_MALLOC_DBG:
+		shm_frag_size = parallel_frag_size;
+		break;
+#endif
 	default:
 		LM_ERR("current build does not include support for "
 		       "selected allocator (%s)\n", mm_str(mem_allocator_shm));
@@ -373,119 +407,143 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 	}
 
 	switch (mem_allocator_shm) {
+#ifdef F_PARALLEL_MALLOC
+	case MM_F_PARALLEL_MALLOC:
+	case MM_F_PARALLEL_MALLOC_DBG:
+		shm_blocks[idx] = parallel_malloc_init(mempool, pool_size, "shm", idx);
+		if (!shm_blocks[idx]) {
+			LM_CRIT("parallel alloc init :( \n");
+			goto err_destroy;	
+		}
+		gen_shm_malloc         = (oMarinkaRodeo_block_malloc_f)parallel_malloc;
+		gen_shm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)parallel_malloc;
+		gen_shm_realloc        = (oMarinkaRodeo_block_realloc_f)parallel_realloc;
+		gen_shm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)parallel_realloc;
+		gen_shm_free           = (oMarinkaRodeo_block_free_f)parallel_free;
+		gen_shm_free_unsafe    = (oMarinkaRodeo_block_free_f)parallel_free;
+		gen_shm_info           = (oMarinkaRodeo_mem_info_f)parallel_info;
+		gen_shm_status         = (oMarinkaRodeo_mem_status_f)parallel_status;
+		gen_shm_get_size       = (oMarinkaRodeo_get_mmstat_f)parallel_get_size;
+		gen_shm_get_used       = (oMarinkaRodeo_get_mmstat_f)parallel_get_used;
+		gen_shm_get_rused      = (oMarinkaRodeo_get_mmstat_f)parallel_get_real_used;
+		gen_shm_get_mused      = (oMarinkaRodeo_get_mmstat_f)parallel_get_max_real_used;
+		gen_shm_get_free       = (oMarinkaRodeo_get_mmstat_f)parallel_get_free;
+		gen_shm_get_frags      = (oMarinkaRodeo_get_mmstat_f)parallel_get_frags;
+		break;
+#endif
 #ifdef F_MALLOC
 	case MM_F_MALLOC:
 		shm_block = fm_malloc_init(mempool, pool_size, "shm");
-		gen_shm_malloc         = (osips_block_malloc_f)fm_malloc;
-		gen_shm_malloc_unsafe  = (osips_block_malloc_f)fm_malloc;
-		gen_shm_realloc        = (osips_block_realloc_f)fm_realloc;
-		gen_shm_realloc_unsafe = (osips_block_realloc_f)fm_realloc;
-		gen_shm_free           = (osips_block_free_f)fm_free;
-		gen_shm_free_unsafe    = (osips_block_free_f)fm_free;
-		gen_shm_info           = (osips_mem_info_f)fm_info;
-		gen_shm_status         = (osips_mem_status_f)fm_status;
-		gen_shm_get_size       = (osips_get_mmstat_f)fm_get_size;
-		gen_shm_get_used       = (osips_get_mmstat_f)fm_get_used;
-		gen_shm_get_rused      = (osips_get_mmstat_f)fm_get_real_used;
-		gen_shm_get_mused      = (osips_get_mmstat_f)fm_get_max_real_used;
-		gen_shm_get_free       = (osips_get_mmstat_f)fm_get_free;
-		gen_shm_get_frags      = (osips_get_mmstat_f)fm_get_frags;
+		gen_shm_malloc         = (oMarinkaRodeo_block_malloc_f)fm_malloc;
+		gen_shm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)fm_malloc;
+		gen_shm_realloc        = (oMarinkaRodeo_block_realloc_f)fm_realloc;
+		gen_shm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)fm_realloc;
+		gen_shm_free           = (oMarinkaRodeo_block_free_f)fm_free;
+		gen_shm_free_unsafe    = (oMarinkaRodeo_block_free_f)fm_free;
+		gen_shm_info           = (oMarinkaRodeo_mem_info_f)fm_info;
+		gen_shm_status         = (oMarinkaRodeo_mem_status_f)fm_status;
+		gen_shm_get_size       = (oMarinkaRodeo_get_mmstat_f)fm_get_size;
+		gen_shm_get_used       = (oMarinkaRodeo_get_mmstat_f)fm_get_used;
+		gen_shm_get_rused      = (oMarinkaRodeo_get_mmstat_f)fm_get_real_used;
+		gen_shm_get_mused      = (oMarinkaRodeo_get_mmstat_f)fm_get_max_real_used;
+		gen_shm_get_free       = (oMarinkaRodeo_get_mmstat_f)fm_get_free;
+		gen_shm_get_frags      = (oMarinkaRodeo_get_mmstat_f)fm_get_frags;
 		break;
 #endif
 #ifdef Q_MALLOC
 	case MM_Q_MALLOC:
 		shm_block = qm_malloc_init(mempool, pool_size, "shm");
-		gen_shm_malloc         = (osips_block_malloc_f)qm_malloc;
-		gen_shm_malloc_unsafe  = (osips_block_malloc_f)qm_malloc;
-		gen_shm_realloc        = (osips_block_realloc_f)qm_realloc;
-		gen_shm_realloc_unsafe = (osips_block_realloc_f)qm_realloc;
-		gen_shm_free           = (osips_block_free_f)qm_free;
-		gen_shm_free_unsafe    = (osips_block_free_f)qm_free;
-		gen_shm_info           = (osips_mem_info_f)qm_info;
-		gen_shm_status         = (osips_mem_status_f)qm_status;
-		gen_shm_get_size       = (osips_get_mmstat_f)qm_get_size;
-		gen_shm_get_used       = (osips_get_mmstat_f)qm_get_used;
-		gen_shm_get_rused      = (osips_get_mmstat_f)qm_get_real_used;
-		gen_shm_get_mused      = (osips_get_mmstat_f)qm_get_max_real_used;
-		gen_shm_get_free       = (osips_get_mmstat_f)qm_get_free;
-		gen_shm_get_frags      = (osips_get_mmstat_f)qm_get_frags;
+		gen_shm_malloc         = (oMarinkaRodeo_block_malloc_f)qm_malloc;
+		gen_shm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)qm_malloc;
+		gen_shm_realloc        = (oMarinkaRodeo_block_realloc_f)qm_realloc;
+		gen_shm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)qm_realloc;
+		gen_shm_free           = (oMarinkaRodeo_block_free_f)qm_free;
+		gen_shm_free_unsafe    = (oMarinkaRodeo_block_free_f)qm_free;
+		gen_shm_info           = (oMarinkaRodeo_mem_info_f)qm_info;
+		gen_shm_status         = (oMarinkaRodeo_mem_status_f)qm_status;
+		gen_shm_get_size       = (oMarinkaRodeo_get_mmstat_f)qm_get_size;
+		gen_shm_get_used       = (oMarinkaRodeo_get_mmstat_f)qm_get_used;
+		gen_shm_get_rused      = (oMarinkaRodeo_get_mmstat_f)qm_get_real_used;
+		gen_shm_get_mused      = (oMarinkaRodeo_get_mmstat_f)qm_get_max_real_used;
+		gen_shm_get_free       = (oMarinkaRodeo_get_mmstat_f)qm_get_free;
+		gen_shm_get_frags      = (oMarinkaRodeo_get_mmstat_f)qm_get_frags;
 		break;
 #endif
 #ifdef HP_MALLOC
 	case MM_HP_MALLOC:
 		shm_block = hp_shm_malloc_init(mempool, pool_size, "shm");
-		gen_shm_malloc         = (osips_block_malloc_f)hp_shm_malloc;
-		gen_shm_malloc_unsafe  = (osips_block_malloc_f)hp_shm_malloc_unsafe;
-		gen_shm_realloc        = (osips_block_realloc_f)hp_shm_realloc;
-		gen_shm_realloc_unsafe = (osips_block_realloc_f)hp_shm_realloc_unsafe;
-		gen_shm_free           = (osips_block_free_f)hp_shm_free;
-		gen_shm_free_unsafe    = (osips_block_free_f)hp_shm_free_unsafe;
-		gen_shm_info           = (osips_mem_info_f)hp_info;
-		gen_shm_status         = (osips_mem_status_f)hp_status;
-		gen_shm_get_size       = (osips_get_mmstat_f)hp_shm_get_size;
-		gen_shm_get_used       = (osips_get_mmstat_f)hp_shm_get_used;
-		gen_shm_get_rused      = (osips_get_mmstat_f)hp_shm_get_real_used;
-		gen_shm_get_mused      = (osips_get_mmstat_f)hp_shm_get_max_real_used;
-		gen_shm_get_free       = (osips_get_mmstat_f)hp_shm_get_free;
-		gen_shm_get_frags      = (osips_get_mmstat_f)hp_shm_get_frags;
+		gen_shm_malloc         = (oMarinkaRodeo_block_malloc_f)hp_shm_malloc;
+		gen_shm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)hp_shm_malloc_unsafe;
+		gen_shm_realloc        = (oMarinkaRodeo_block_realloc_f)hp_shm_realloc;
+		gen_shm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)hp_shm_realloc_unsafe;
+		gen_shm_free           = (oMarinkaRodeo_block_free_f)hp_shm_free;
+		gen_shm_free_unsafe    = (oMarinkaRodeo_block_free_f)hp_shm_free_unsafe;
+		gen_shm_info           = (oMarinkaRodeo_mem_info_f)hp_info;
+		gen_shm_status         = (oMarinkaRodeo_mem_status_f)hp_status;
+		gen_shm_get_size       = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_size;
+		gen_shm_get_used       = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_used;
+		gen_shm_get_rused      = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_real_used;
+		gen_shm_get_mused      = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_max_real_used;
+		gen_shm_get_free       = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_free;
+		gen_shm_get_frags      = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_frags;
 		break;
 #endif
 #ifdef DBG_MALLOC
 #ifdef F_MALLOC
 	case MM_F_MALLOC_DBG:
 		shm_block = fm_malloc_init(mempool, pool_size, "shm");
-		gen_shm_malloc         = (osips_block_malloc_f)fm_malloc_dbg;
-		gen_shm_malloc_unsafe  = (osips_block_malloc_f)fm_malloc_dbg;
-		gen_shm_realloc        = (osips_block_realloc_f)fm_realloc_dbg;
-		gen_shm_realloc_unsafe = (osips_block_realloc_f)fm_realloc_dbg;
-		gen_shm_free           = (osips_block_free_f)fm_free_dbg;
-		gen_shm_free_unsafe    = (osips_block_free_f)fm_free_dbg;
-		gen_shm_info           = (osips_mem_info_f)fm_info;
-		gen_shm_status         = (osips_mem_status_f)fm_status_dbg;
-		gen_shm_get_size       = (osips_get_mmstat_f)fm_get_size;
-		gen_shm_get_used       = (osips_get_mmstat_f)fm_get_used;
-		gen_shm_get_rused      = (osips_get_mmstat_f)fm_get_real_used;
-		gen_shm_get_mused      = (osips_get_mmstat_f)fm_get_max_real_used;
-		gen_shm_get_free       = (osips_get_mmstat_f)fm_get_free;
-		gen_shm_get_frags      = (osips_get_mmstat_f)fm_get_frags;
+		gen_shm_malloc         = (oMarinkaRodeo_block_malloc_f)fm_malloc_dbg;
+		gen_shm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)fm_malloc_dbg;
+		gen_shm_realloc        = (oMarinkaRodeo_block_realloc_f)fm_realloc_dbg;
+		gen_shm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)fm_realloc_dbg;
+		gen_shm_free           = (oMarinkaRodeo_block_free_f)fm_free_dbg;
+		gen_shm_free_unsafe    = (oMarinkaRodeo_block_free_f)fm_free_dbg;
+		gen_shm_info           = (oMarinkaRodeo_mem_info_f)fm_info;
+		gen_shm_status         = (oMarinkaRodeo_mem_status_f)fm_status_dbg;
+		gen_shm_get_size       = (oMarinkaRodeo_get_mmstat_f)fm_get_size;
+		gen_shm_get_used       = (oMarinkaRodeo_get_mmstat_f)fm_get_used;
+		gen_shm_get_rused      = (oMarinkaRodeo_get_mmstat_f)fm_get_real_used;
+		gen_shm_get_mused      = (oMarinkaRodeo_get_mmstat_f)fm_get_max_real_used;
+		gen_shm_get_free       = (oMarinkaRodeo_get_mmstat_f)fm_get_free;
+		gen_shm_get_frags      = (oMarinkaRodeo_get_mmstat_f)fm_get_frags;
 		break;
 #endif
 #ifdef Q_MALLOC
 	case MM_Q_MALLOC_DBG:
 		shm_block = qm_malloc_init(mempool, pool_size, "shm");
-		gen_shm_malloc         = (osips_block_malloc_f)qm_malloc_dbg;
-		gen_shm_malloc_unsafe  = (osips_block_malloc_f)qm_malloc_dbg;
-		gen_shm_realloc        = (osips_block_realloc_f)qm_realloc_dbg;
-		gen_shm_realloc_unsafe = (osips_block_realloc_f)qm_realloc_dbg;
-		gen_shm_free           = (osips_block_free_f)qm_free_dbg;
-		gen_shm_free_unsafe    = (osips_block_free_f)qm_free_dbg;
-		gen_shm_info           = (osips_mem_info_f)qm_info;
-		gen_shm_status         = (osips_mem_status_f)qm_status_dbg;
-		gen_shm_get_size       = (osips_get_mmstat_f)qm_get_size;
-		gen_shm_get_used       = (osips_get_mmstat_f)qm_get_used;
-		gen_shm_get_rused      = (osips_get_mmstat_f)qm_get_real_used;
-		gen_shm_get_mused      = (osips_get_mmstat_f)qm_get_max_real_used;
-		gen_shm_get_free       = (osips_get_mmstat_f)qm_get_free;
-		gen_shm_get_frags      = (osips_get_mmstat_f)qm_get_frags;
+		gen_shm_malloc         = (oMarinkaRodeo_block_malloc_f)qm_malloc_dbg;
+		gen_shm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)qm_malloc_dbg;
+		gen_shm_realloc        = (oMarinkaRodeo_block_realloc_f)qm_realloc_dbg;
+		gen_shm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)qm_realloc_dbg;
+		gen_shm_free           = (oMarinkaRodeo_block_free_f)qm_free_dbg;
+		gen_shm_free_unsafe    = (oMarinkaRodeo_block_free_f)qm_free_dbg;
+		gen_shm_info           = (oMarinkaRodeo_mem_info_f)qm_info;
+		gen_shm_status         = (oMarinkaRodeo_mem_status_f)qm_status_dbg;
+		gen_shm_get_size       = (oMarinkaRodeo_get_mmstat_f)qm_get_size;
+		gen_shm_get_used       = (oMarinkaRodeo_get_mmstat_f)qm_get_used;
+		gen_shm_get_rused      = (oMarinkaRodeo_get_mmstat_f)qm_get_real_used;
+		gen_shm_get_mused      = (oMarinkaRodeo_get_mmstat_f)qm_get_max_real_used;
+		gen_shm_get_free       = (oMarinkaRodeo_get_mmstat_f)qm_get_free;
+		gen_shm_get_frags      = (oMarinkaRodeo_get_mmstat_f)qm_get_frags;
 		break;
 #endif
 #ifdef HP_MALLOC
 	case MM_HP_MALLOC_DBG:
 		shm_block = hp_shm_malloc_init(mempool, pool_size, "shm");
-		gen_shm_malloc         = (osips_block_malloc_f)hp_shm_malloc_dbg;
-		gen_shm_malloc_unsafe  = (osips_block_malloc_f)hp_shm_malloc_unsafe_dbg;
-		gen_shm_realloc        = (osips_block_realloc_f)hp_shm_realloc_dbg;
-		gen_shm_realloc_unsafe = (osips_block_realloc_f)hp_shm_realloc_unsafe_dbg;
-		gen_shm_free           = (osips_block_free_f)hp_shm_free_dbg;
-		gen_shm_free_unsafe    = (osips_block_free_f)hp_shm_free_unsafe_dbg;
-		gen_shm_info           = (osips_mem_info_f)hp_info;
-		gen_shm_status         = (osips_mem_status_f)hp_status_dbg;
-		gen_shm_get_size       = (osips_get_mmstat_f)hp_shm_get_size;
-		gen_shm_get_used       = (osips_get_mmstat_f)hp_shm_get_used;
-		gen_shm_get_rused      = (osips_get_mmstat_f)hp_shm_get_real_used;
-		gen_shm_get_mused      = (osips_get_mmstat_f)hp_shm_get_max_real_used;
-		gen_shm_get_free       = (osips_get_mmstat_f)hp_shm_get_free;
-		gen_shm_get_frags      = (osips_get_mmstat_f)hp_shm_get_frags;
+		gen_shm_malloc         = (oMarinkaRodeo_block_malloc_f)hp_shm_malloc_dbg;
+		gen_shm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)hp_shm_malloc_unsafe_dbg;
+		gen_shm_realloc        = (oMarinkaRodeo_block_realloc_f)hp_shm_realloc_dbg;
+		gen_shm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)hp_shm_realloc_unsafe_dbg;
+		gen_shm_free           = (oMarinkaRodeo_block_free_f)hp_shm_free_dbg;
+		gen_shm_free_unsafe    = (oMarinkaRodeo_block_free_f)hp_shm_free_unsafe_dbg;
+		gen_shm_info           = (oMarinkaRodeo_mem_info_f)hp_info;
+		gen_shm_status         = (oMarinkaRodeo_mem_status_f)hp_status_dbg;
+		gen_shm_get_size       = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_size;
+		gen_shm_get_used       = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_used;
+		gen_shm_get_rused      = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_real_used;
+		gen_shm_get_mused      = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_max_real_used;
+		gen_shm_get_free       = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_free;
+		gen_shm_get_frags      = (oMarinkaRodeo_get_mmstat_f)hp_shm_get_frags;
 		break;
 #endif
 #endif
@@ -496,10 +554,15 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 	}
 #endif
 
-	if (!shm_block){
-		LM_CRIT("could not initialize shared malloc\n");
-		shm_mem_destroy();
-		return -1;
+	if (mem_allocator_shm != MM_F_PARALLEL_MALLOC && mem_allocator_shm != MM_F_PARALLEL_MALLOC_DBG) {
+		if (!shm_block){
+#ifdef F_PARALLEL_MALLOC
+err_destroy:
+#endif
+			LM_CRIT("could not initialize shared malloc\n");
+			shm_mem_destroy();
+			return -1;
+		}
 	}
 
 #if defined(SHM_EXTRA_STATS) && defined(SHM_SHOW_DEFAULT_GROUP)
@@ -576,6 +639,21 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 	memset(shm_hash_usage, 0, HP_TOTAL_HASH_SIZE * sizeof *shm_hash_usage);
 #endif
 
+#if defined F_PARALLEL_MALLOC
+	hash_locks[idx] = shm_malloc_unsafe(sizeof(gen_lock_t));
+	if (!hash_locks[idx]) {
+		LM_CRIT("could not initialize lock on idx %d\n",idx);
+		shm_mem_destroy();
+		return -1;
+	}
+
+	if (!lock_init(hash_locks[idx])) {
+		LM_CRIT("could not initialize lock on idx %d\n",idx);
+		shm_mem_destroy();
+		return -1;
+	}
+#endif
+
 #if defined F_MALLOC || defined Q_MALLOC
 	mem_lock = shm_malloc_unsafe(sizeof *mem_lock);
 	if (!mem_lock) {
@@ -592,22 +670,22 @@ int shm_mem_init_mallocs(void* mempool, unsigned long pool_size)
 #endif
 
 #ifdef STATISTICS
-	if (event_shm_threshold) {
-		event_shm_last=shm_malloc_unsafe(sizeof(long));
-		if (event_shm_last==0){
-			LM_CRIT("could not allocate shm last event indicator\n");
-			shm_mem_destroy();
-			return -1;
-		}
-		*event_shm_last=0;
-		event_shm_pending=shm_malloc_unsafe(sizeof(int));
-		if (event_shm_pending==0){
-			LM_CRIT("could not allocate shm pending flags\n");
-			shm_mem_destroy();
-			return -1;
-		}
-		*event_shm_pending=0;
+	{
+		struct {
+			long last;
+			int pending;
+		} *ev_holders;
 
+		ev_holders = shm_malloc_unsafe(sizeof *ev_holders);
+		if (!ev_holders) {
+			LM_CRIT("could not allocate SHM event holders\n");
+			shm_mem_destroy();
+			return -1;
+		}
+		memset(ev_holders, 0, sizeof *ev_holders);
+
+		event_shm_last = &ev_holders->last;
+		event_shm_pending = &ev_holders->pending;
 	}
 #endif /* STATISTICS */
 
@@ -699,6 +777,23 @@ int shm_mem_init(void)
 		return -1;
 	}
 
+#ifdef F_PARALLEL_MALLOC
+	/* we will need multiple pools, malloc pointers here */
+	shm_mempools = malloc(TOTAL_F_PARALLEL_POOLS * sizeof(void*));
+	if (!shm_mempools) {
+		LM_ERR("Failed to init all the mempools \n");
+		return -1;
+	}
+	memset(shm_mempools,0,TOTAL_F_PARALLEL_POOLS * sizeof(void *));
+
+	shm_blocks = malloc(TOTAL_F_PARALLEL_POOLS * sizeof(void *));
+	if (!shm_blocks) {
+		LM_ERR("Failed to init all the blocks \n");
+		return -1;
+	}
+	memset(shm_blocks,0,TOTAL_F_PARALLEL_POOLS * sizeof(void *));
+#endif
+
 #ifndef USE_ANON_MMAP
 	fd=open("/dev/zero", O_RDWR);
 	if (fd==-1){
@@ -707,6 +802,51 @@ int shm_mem_init(void)
 	}
 #endif /* USE_ANON_MMAP */
 
+	if (mem_allocator_shm == MM_NONE)
+		mem_allocator_shm = mem_allocator;
+
+#ifdef F_PARALLEL_MALLOC
+	if (mem_allocator_shm == MM_F_PARALLEL_MALLOC ||
+	mem_allocator_shm == MM_F_PARALLEL_MALLOC_DBG) {
+		int i;
+		LM_DBG("Paralel malloc, total pools size is %d\n",TOTAL_F_PARALLEL_POOLS);
+		for (i=0;i<TOTAL_F_PARALLEL_POOLS;i++) {
+			unsigned long block_size;
+
+			block_size = shm_mem_size/TOTAL_F_PARALLEL_POOLS;
+			shm_mempools[i] = shm_getmem(fd,NULL,block_size);
+			LM_DBG("Allocated %p pool on idx %d with size %ld\n",shm_mempools[i],i,block_size);
+
+			if (shm_mempools[i] == INVALID_MAP) {
+				LM_CRIT("could not attach shared memory segment %d: %s\n",
+						i,strerror(errno));
+				return -1;
+			}
+
+			if (shm_mem_init_mallocs(shm_mempools[i], block_size,i)) {
+				LM_CRIT("could not init shared memory segment %d\n",i);
+				return -1;
+			}
+		}
+
+		init_done = 1;
+		return 0;
+	} else {
+		shm_mempool = shm_getmem(fd, NULL, shm_mem_size);
+#ifndef USE_ANON_MMAP
+		close(fd);
+#endif /* USE_ANON_MMAP */
+		if (shm_mempool == INVALID_MAP) {
+			LM_CRIT("could not attach shared memory segment: %s\n",
+					strerror(errno));
+			/* destroy segment*/
+			shm_mem_destroy();
+			return -1;
+		}
+
+		return shm_mem_init_mallocs(shm_mempool, shm_mem_size,0);
+	}
+#else
 	shm_mempool = shm_getmem(fd, NULL, shm_mem_size);
 #ifndef USE_ANON_MMAP
 	close(fd);
@@ -719,7 +859,8 @@ int shm_mem_init(void)
 		return -1;
 	}
 
-	return shm_mem_init_mallocs(shm_mempool, shm_mem_size);
+	return shm_mem_init_mallocs(shm_mempool, shm_mem_size,0);
+#endif
 }
 
 #ifdef DBG_MALLOC
@@ -766,6 +907,7 @@ int shm_dbg_mem_init(void)
 	default:
 		LM_ERR("current build does not include support for "
 		       "selected allocator (%s)\n", mm_str(mem_allocator_shm));
+		close(fd_dbg);
 		return -1;
 	}
 	#endif
@@ -939,6 +1081,11 @@ void shm_mem_destroy(void)
 	struct shmid_ds shm_info;
 #endif
 
+#ifdef F_PARALLEL_MALLOC
+	/* just let OS free for us, for now */
+	return;
+#endif
+
 #ifdef HP_MALLOC
 	int j;
 
@@ -1019,12 +1166,8 @@ void shm_mem_destroy(void)
 	#endif
 
 	#ifdef STATISTICS
-		if (event_shm_threshold) {
-			if (event_shm_last)
-				shm_free(event_shm_last);
-			if (event_shm_pending)
-				shm_free(event_shm_pending);
-		}
+		if (event_shm_last)
+			shm_free_unsafe(event_shm_last);
 	#endif
 	}
 	shm_relmem(shm_mempool, shm_mem_size);

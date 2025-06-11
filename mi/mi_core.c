@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011-2018 Marina.Rodeo Solutions
+ * Copyright (C) 2006 Voice Sistem SRL
+ * Copyright (C) 2011-2018 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -138,13 +138,11 @@ static mi_response_t *mi_version_1(const mi_params_t *params,
 		return 0;
 	}
 
-#ifdef VERSIONTYPE
 	if (add_mi_string(resp_obj, MI_SSTR(VERSIONTYPE), MI_SSTR(THISREVISION))<0) {
 		LM_ERR("failed to add mi item\n");
 		free_mi_response(resp);
 		return 0;
 	}
-#endif
 
 	return resp;
 }
@@ -353,7 +351,7 @@ mi_response_t *mi_log_level(const mi_params_t *params, pid_t pid)
 	}
 
 	if (pid) {
-		/* convert pid to Marina.Rodeo id */
+		/* convert pid to OpenMarinkaRodeo id */
 		i = get_process_ID_by_PID(pid);
 		if (i == -1) {
 			free_mi_response(resp);
@@ -746,7 +744,7 @@ static mi_response_t *mi_mem_pkg_dump(const mi_params_t *params, int llevel)
 	if (get_mi_int_param(params, "pid", &pid) < 0)
 		return init_mi_param_error();
 
-	/* convert pid to Marina.Rodeo id */
+	/* convert pid to OpenMarinkaRodeo id */
 	i = get_process_ID_by_PID(pid);
 	if (i == -1)
 		return init_mi_error(404, MI_SSTR("Process not found"));
@@ -853,19 +851,19 @@ static mi_response_t *w_reload_routes(const mi_params_t *params,
 
 
 static const mi_export_t mi_core_cmds[] = {
-	{ "uptime", "prints various time information about Marina.Rodeo - "
+	{ "uptime", "prints various time information about OpenMarinkaRodeo - "
 		"when it started to run, for how long it runs", 0, init_mi_uptime, {
 		{mi_uptime, {0}},
 		{EMPTY_MI_RECIPE}
 		}
 	},
-	{ "version", "prints the version string of a running Marina.Rodeo", 0, 0, {
+	{ "version", "prints the version string of a runningOpenMarinkaRodeo", 0, 0, {
 		{mi_version, {0}},
 		{mi_version_1, {"revision", 0}},
 		{EMPTY_MI_RECIPE}
 		}
 	},
-	{ "pwd", "prints the working directory of Marina.Rodeo", 0, 0, {
+	{ "pwd", "prints the working directory of OpenMarinkaRodeo", 0, 0, {
 		{mi_pwd, {0}},
 		{EMPTY_MI_RECIPE}
 		}
@@ -881,17 +879,17 @@ static const mi_export_t mi_core_cmds[] = {
 		{EMPTY_MI_RECIPE}
 		}
 	},
-	{ "ps", "lists all processes used by Marina.Rodeo", 0, 0, {
+	{ "ps", "lists all processes used by OpenMarinkaRodeo", 0, 0, {
 		{mi_ps, {0}},
 		{EMPTY_MI_RECIPE}
 		}
 	},
-	{ "kill", "terminates Marina.Rodeo", 0, 0, {
+	{ "kill", "terminates OpenMarinkaRodeo", 0, 0, {
 		{mi_kill, {0}},
 		{EMPTY_MI_RECIPE}
 		}
 	},
-	{ "log_level", "gets/sets the per process or global log level in Marina.Rodeo",
+	{ "log_level", "gets/sets the per process or global log level in OpenMarinkaRodeo",
 		0, 0, {
 		{w_log_level, 	{0}},
 		{w_log_level_1, {"level", 0}},
@@ -899,7 +897,7 @@ static const mi_export_t mi_core_cmds[] = {
 		{EMPTY_MI_RECIPE}
 		}
 	},
-	{ "xlog_level", "gets/sets the per process or global xlog level in Marina.Rodeo",
+	{ "xlog_level", "gets/sets the per process or global xlog level in OpenMarinkaRodeo",
 		0, 0, {
 		{w_xlog_level, 	{0}},
 		{w_xlog_level_1, {"level", 0}},
@@ -923,7 +921,7 @@ static const mi_export_t mi_core_cmds[] = {
 
 #if defined(Q_MALLOC) && defined(DBG_MALLOC)
 	{ "shm_check", "complete scan of the shared memory pool "
-		"(if any error is found, Marina.Rodeo will abort!)", 0, 0, {
+		"(if any error is found, OpenMarinkaRodeo will abort!)", 0, 0, {
 		{mi_shm_check, {0}},
 		{EMPTY_MI_RECIPE}
 		}
@@ -1007,7 +1005,7 @@ static const mi_export_t mi_core_cmds[] = {
 		{EMPTY_MI_RECIPE}
 		}
 	},
-	{ "sr_list_status", "list the status of all the identifiers in Marina.Rodeo"
+	{ "sr_list_status", "list the status of all the identifiers in OpenMarinkaRodeo"
 	" or from a certain 'status-report' group", 0, 0, {
 		{mi_sr_list_status, {0}},
 		{mi_sr_list_status, {"group",0}},

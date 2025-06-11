@@ -8,7 +8,7 @@ dispatcher Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo modules
+              1.2.1. OpenMarinkaRodeo modules
               1.2.2. External libraries or applications
 
         1.3. Exported Parameters
@@ -92,7 +92,7 @@ dispatcher Module
 
         1.8. Installation and Running
 
-              1.8.1. Marina.Rodeo config file
+              1.8.1. OpenMarinkaRodeo config file
 
    2. Frequently Asked Questions
    3. Contributors
@@ -161,7 +161,7 @@ dispatcher Module
    1.42. ds_is_in_list usage
    1.43. ds_count usage
    1.44. ds_count usage
-   1.45. Marina.Rodeo config script - sample dispatcher usage
+   1.45. OpenMarinkaRodeo config script - sample dispatcher usage
 
 Chapter 1. Admin Guide
 
@@ -207,7 +207,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo modules
+1.2.1. OpenMarinkaRodeo modules
 
    The following modules must be loaded before this module:
      * TM - only if active recovery of failed hosts is required.
@@ -218,7 +218,7 @@ Chapter 1. Admin Guide
 1.2.2. External libraries or applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module:
+   before running OpenMarinkaRodeo with this module:
      * none.
 
 1.3. Exported Parameters
@@ -243,7 +243,7 @@ modparam("dispatcher", "db_url", "mysql://user:passwb@localhost/database
    The name of the avp to contain the attributes string of the
    current destination. When a destination is selected,
    automatically, this AVP will provide the attributes string -
-   this is an opaque string (from Marina.Rodeo point of view) : it is
+   this is an opaque string (from OpenMarinkaRodeo point of view) : it is
    loaded from destination definition ( via DB) and blindly
    provided in the script. Setting this parameter will only change
    the default partition's attrs_avp. Use the partition parameter
@@ -264,7 +264,7 @@ modparam("dispatcher", "attrs_avp", "$avp(272)")
    Name of the avp to contain the script attributes string of the
    current destination. When a destination is selected,
    automatically, this AVP will provide the attributes string -
-   this is an opaque string (from Marina.Rodeo point of view) : it is
+   this is an opaque string (from OpenMarinkaRodeo point of view) : it is
    provided via the ds_push_script_attrs MI or SCRIPT function.
 
 Note
@@ -287,7 +287,9 @@ modparam("dispatcher", "attrs_avp", "$avp(script_attrs)")
    the route gets called ). The return value of the route is
    considered by the dispatcher module to be the current weight of
    the dispatcher entry, and when using the 10 algo, the
-   dispatcher entries are sorted in ascending weight order.
+   dispatcher entries are sorted in ascending weight order. If the
+   returned value from the algo route is negative, the current
+   dispatcher entry will be automatically skipped from usage
 
    Default value is “null” - disabled.
 
@@ -409,7 +411,7 @@ modparam("dispatcher", "ds_ping_maxfwd", 2)
 1.3.11. ds_probing_sock (str)
 
    A socket description [proto:]host[:port] of the local socket
-   (which is used by Marina.Rodeo for SIP traffic) to be used (if
+   (which is used by OpenMarinkaRodeo for SIP traffic) to be used (if
    multiple) for sending the probing messages from.
 
    Default value is “NULL(none)”.
@@ -612,7 +614,7 @@ modparam("dispatcher", "persistent_state", 0)
 
    If clustering enbled, the module will automatically share
    changes over the status of the destinations with the other
-   Marina.Rodeo instances that are part of a cluster. Whenever such a
+   OpenMarinkaRodeo instances that are part of a cluster. Whenever such a
    status changes (following an MI command, a probing result, a
    script command), the module will replicate this status change
    to all the nodes in this given cluster.
@@ -621,14 +623,22 @@ modparam("dispatcher", "persistent_state", 0)
    which node in the cluster will perform the pinging/probing to
    destinations. See the cluster_sharing_tag option.
 
+   This OpenMarinkaRodeo cluster exposes the "dispatcher-status-repl"
+   capability in order to mark nodes as eligible for becoming data
+   donors during an arbitrary sync request. Consequently, the
+   cluster must have at least one node marked with the "seed"
+   value as the clusterer.flags column/property in order to be
+   fully functional. Consult the clusterer - Capabilities chapter
+   for more details.
+
    For more info on how to define and populate a cluster (with
-   Marina.Rodeo nodes) see the "clusterer" module.
+   OpenMarinkaRodeo nodes) see the clusterer module.
 
    Default value is “0 (none)”.
 
    Example 1.24. Set cluster_id parameter
 ...
-# replicate destination status with all Marina.Rodeo in cluster ID 9
+# replicate destination status with all OpenMarinkaRodeo in cluster ID 9
 modparam("dispatcher", "cluster_id", 9)
 ...
 
@@ -854,7 +864,7 @@ modparam("dispatcher", "probe_mode_col", "probing")
    "fs://user:password@127.0.0.1:8021". The default ESL port is
    8021.
 
-   Marina.Rodeo will establish a connection with the given socket and
+   OpenMarinkaRodeo will establish a connection with the given socket and
    periodically calculate/update the weights of these destinations
    using statistics pushed by the FreeSWITCH box.
 
@@ -863,7 +873,7 @@ modparam("dispatcher", "probe_mode_col", "probing")
    FreeSWITCH ones.
 
    The dynamic weights are recalculated every
-   event_heartbeat_interval seconds (see the "freeswitch" Marina.Rodeo
+   event_heartbeat_interval seconds (see the "freeswitch" OpenMarinkaRodeo
    module for more details regarding this setting), as the stats
    from FreeSWITCH are expected to arrive. The update formula is
    shown below (FreeSWITCH stats are highlighted in bold):
@@ -885,11 +895,11 @@ modparam("dispatcher", "fetch_freeswitch_stats", 1)
    from FreeSWITCH are available yet.
 
    Important: When mixing normal destinations with
-   FreeSWITCH-enabled ones in the same dispatching set, Marina.Rodeo
+   FreeSWITCH-enabled ones in the same dispatching set, OpenMarinkaRodeo
    will truncate any weight values that are larger than
    max_freeswitch_weight to the value of this parameter!
 
-   NOTE: Marina.Rodeo internally rounds weights to nearest integer, so
+   NOTE: OpenMarinkaRodeo internally rounds weights to nearest integer, so
    larger max weight values will more accurately represent the
    current load on the FreeSWITCH boxes! For example, if you set
    this parameter to 1, the box will receive no traffic whenever
@@ -933,7 +943,7 @@ modparam("dispatcher", "max_freeswitch_weight", 1000)
             determine the load on each server. If the parameter is
             not specified, then the first entry in the set is
             chosen.
-          + “10” - The algo_route Marina.Rodeo route is called for
+          + “10” - The algo_route OpenMarinkaRodeo route is called for
             each dispatcher entry in the setid, in order to decide
             the routing order. See the algo_route parameter for
             usage examples
@@ -1198,7 +1208,7 @@ if (ds_push_script_attrs($var(my_attributes),$si , $sp, 1, 'my_partition
      * address: address of the destination in the group
 
    MI FIFO Command Format:
-Marina.Rodeo-cli -x mi ds_set_state a 2 sip:10.0.0.202
+openMarinkaRodeo-cli -x mi ds_set_state a 2 sip:10.0.0.202
 
 1.5.2.  ds_list
 
@@ -1214,7 +1224,7 @@ Marina.Rodeo-cli -x mi ds_set_state a 2 sip:10.0.0.202
        the provided partition.
 
    MI FIFO Command Format:
-Marina.Rodeo-cli -x mi ds_list
+openMarinkaRodeo-cli -x mi ds_list
 
 1.5.3.  ds_reload
 
@@ -1232,8 +1242,8 @@ Marina.Rodeo-cli -x mi ds_list
           + “y”: inherit state
 
    MI FIFO Command Format:
-Marina.Rodeo-cli -x mi ds_reload
-Marina.Rodeo-cli -x mi ds_reload inherit_state=n
+openMarinkaRodeo-cli -x mi ds_reload
+openMarinkaRodeo-cli -x mi ds_reload inherit_state=n
 
 1.5.4.  ds_push_script_attrs
 
@@ -1251,7 +1261,7 @@ Marina.Rodeo-cli -x mi ds_reload inherit_state=n
        script attributes
 
    MI FIFO Command Format:
-#Marina.Rodeo-cli -x mi ds_push_script_attrs '{"ping":"30000","load":"50"}'
+#openMarinkaRodeo-cli -x mi ds_push_script_attrs '{"ping":"30000","load":"50"}'
 '192.168.0.107' 5091 1 main
 
 1.6. Exported Events
@@ -1348,13 +1358,19 @@ to [inactive] due to negative probing reply\n"
             ]
         },
 
+
+   For how to access and use the Status/Report information, please
+   see
+   https://www.openMarinkaRodeo.org/Documentation/Interface-StatusReport-3
+   -3.
+
 1.8. Installation and Running
 
-1.8.1. Marina.Rodeo config file
+1.8.1. OpenMarinkaRodeo config file
 
    Next picture displays a sample usage of dispatcher.
 
-   Example 1.45. Marina.Rodeo config script - sample dispatcher usage
+   Example 1.45. OpenMarinkaRodeo config script - sample dispatcher usage
 ...
 #
 # sample config file for dispatcher module
@@ -1367,10 +1383,10 @@ check_via = off     # (cmd. line: -v)
 dns = off           # (cmd. line: -r)
 rev_dns = off       # (cmd. line: -R)
 
-# for more info: Marina.Rodeo -h
+# for more info: openMarinkaRodeo -h
 
 # ------------------ module loading ----------------------------------
-mpath = "/usr/lib/x86_64-linux-gnu/Marina.Rodeo/modules"
+mpath = "/usr/lib/x86_64-linux-gnu/openMarinkaRodeo/modules"
 
 loadmodule "maxfwd.so"
 loadmodule "signaling.so"
@@ -1382,8 +1398,8 @@ loadmodule "dispatcher.so"
 loadmodule "proto_udp.so"
 
 # ----------------- setting module-specific parameters ---------------
-modparam("dispatcher", "db_url", "mysql://Marina.Rodeo:Marina.Rodeo@localhost/
-Marina.Rodeo")
+modparam("dispatcher", "db_url", "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/
+openMarinkaRodeo")
 
 route {
         if (!mf_process_maxfwd_header(10)) {
@@ -1462,23 +1478,35 @@ Chapter 2. Frequently Asked Questions
 
    2.6.
 
-   Where can I find more about Marina.Rodeo?
+   Where can I find more about OpenMarinkaRodeo?
+
+   Take a look at https://openMarinkaRodeo.org/.
 
    2.7.
 
    Where can I post a question about this module?
 
+   First at all check if your question was already answered on one
+   of our mailing lists:
+     * User Mailing List -
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users
+     * Developer Mailing List -
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/devel
+
    E-mails regarding any stable version should be sent to
-   <sip@rechain.email> and e-mail regarding development
+   <users@lists.openMarinkaRodeo.org> and e-mail regarding development
    versions or SVN snapshots should be send to
-   <support@rechain.email>.
+   <devel@lists.openMarinkaRodeo.org>.
+
+   If you want to keep the mail private, send it to
+   <users@lists.openMarinkaRodeo.org>.
 
    2.8.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/sorydima/Marina.Rodeo/issues
+   https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues
 
 Chapter 3. Contributors
 
@@ -1487,27 +1515,28 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Bogdan-Andrei Iancu (@bogdan-iancu) 167 106 3320 2022
-   2. Liviu Chircu (@liviuchircu) 106 68 1664 1429
-   3. Daniel-Constantin Mierla (@miconda) 81 39 3372 844
-   4. Andrei Datcu (@andrei-datcu) 47 15 2153 846
-   5. Razvan Crainea (@razvancrainea) 44 36 601 175
+   1. Bogdan-Andrei Iancu (@bogdan-iancu) 170 108 3331 2025
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 111 72 1711 1441
+   3. Daniel-Constantin Mierla (@miconda) 82 39 3372 844
+   4. Andrei Datcu (@andrei-datcu) 48 15 2153 846
+   5. Razvan Crainea (@razvancrainea) 46 37 602 175
    6. Ionut Ionita (@ionutrazvanionita) 43 17 1145 969
    7. Ovidiu Sas (@ovidiusas) 31 17 705 434
    8. Vlad Patrascu (@rvlad-patrascu) 19 11 378 236
-   9. Vlad Paiu (@vladpaiu) 16 9 673 33
+   9. Vlad Paiu (@vladpaiu) 17 10 681 33
    10. Henning Westerholt (@henningw) 11 7 93 125
 
    All remaining contributors: Carsten Bock, Ionel Cerghit
-   (@ionel-cerghit), Elena-Ramona Modroiu, John Burke
-   (@john08burke), Klaus Darilion, Maksym Sobolyev (@sobomax),
-   Anca Vamanu, Jarrod Baumann (@jarrodb), wangdd, Walter Doekes
-   (@wdoekes), Nick Altmann (@nikbyte), Jan Janak (@janakj),
-   Andrei Pelinescu-Onciul, Peter Lemenkov (@lemenkov), Stanislaw
-   Pitucha, Federico Cabiddu, Konstantin Bokarius, Andreas Granig,
-   John Riordan, Aron Podrigal (@ar45), Julián Moreno Patiño,
-   Kevin McAllister, Roman Sevko, UnixDev, David Sanders, Edson
-   Gellert Schubert.
+   (@ionel-cerghit), Elena-Ramona Modroiu, Maksym Sobolyev
+   (@sobomax), John Burke (@john08burke), Norman Brandinger
+   (@NormB), Klaus Darilion, Anca Vamanu, Jarrod Baumann
+   (@jarrodb), wangdd, Walter Doekes (@wdoekes), Nick Altmann
+   (@nikbyte), Jan Janak (@janakj), Andrei Pelinescu-Onciul, Peter
+   Lemenkov (@lemenkov), Stanislaw Pitucha, Babak Yakhchali,
+   Federico Cabiddu, Konstantin Bokarius, Alexandra Titoc, Andreas
+   Granig, John Riordan, Aron Podrigal (@ar45), Julián Moreno
+   Patiño, Kevin McAllister, Roman Sevko, UnixDev, David Sanders,
+   Edson Gellert Schubert.
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -1517,7 +1546,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1529,28 +1558,29 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Razvan Crainea (@razvancrainea)     May 2011 - Jul 2023
-   2.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2005 - May 2023
-   3.  wangdd                              Apr 2023 - May 2023
-   4.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   5.  Liviu Chircu (@liviuchircu)         Aug 2012 - Aug 2022
-   6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jul 2022
-   7.  John Burke (@john08burke)           Feb 2021 - Jan 2022
-   8.  Vlad Paiu (@vladpaiu)               Mar 2012 - Apr 2020
-   9.  Peter Lemenkov (@lemenkov)          Jun 2018 - Feb 2020
-   10. Roman Sevko                         Oct 2019 - Oct 2019
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Aug 2012 - May 2025
+   2.  Babak Yakhchali                     Feb 2025 - Feb 2025
+   3.  Norman Brandinger (@NormB)          Nov 2024 - Nov 2024
+   4.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   5.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2005 - Feb 2024
+   6.  Vlad Paiu (@vladpaiu)               Mar 2012 - Dec 2023
+   7.  Maksym Sobolyev (@sobomax)          Feb 2023 - Nov 2023
+   8.  Razvan Crainea (@razvancrainea)     May 2011 - Nov 2023
+   9.  wangdd                              Apr 2023 - May 2023
+   10. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jul 2022
 
-   All remaining contributors: Nick Altmann (@nikbyte), Ionel
-   Cerghit (@ionel-cerghit), Ionut Ionita (@ionutrazvanionita),
-   Julián Moreno Patiño, Jarrod Baumann (@jarrodb), Ovidiu Sas
-   (@ovidiusas), David Sanders, Aron Podrigal (@ar45), Andrei
-   Datcu (@andrei-datcu), Walter Doekes (@wdoekes), Stanislaw
-   Pitucha, Anca Vamanu, John Riordan, UnixDev, Kevin McAllister,
-   Klaus Darilion, Carsten Bock, Daniel-Constantin Mierla
-   (@miconda), Henning Westerholt (@henningw), Konstantin
-   Bokarius, Edson Gellert Schubert, Federico Cabiddu,
-   Elena-Ramona Modroiu, Andreas Granig, Andrei Pelinescu-Onciul,
-   Jan Janak (@janakj).
+   All remaining contributors: John Burke (@john08burke), Peter
+   Lemenkov (@lemenkov), Roman Sevko, Nick Altmann (@nikbyte),
+   Ionel Cerghit (@ionel-cerghit), Ionut Ionita
+   (@ionutrazvanionita), Julián Moreno Patiño, Jarrod Baumann
+   (@jarrodb), Ovidiu Sas (@ovidiusas), David Sanders, Aron
+   Podrigal (@ar45), Andrei Datcu (@andrei-datcu), Walter Doekes
+   (@wdoekes), Stanislaw Pitucha, Anca Vamanu, John Riordan,
+   UnixDev, Kevin McAllister, Klaus Darilion, Carsten Bock,
+   Daniel-Constantin Mierla (@miconda), Henning Westerholt
+   (@henningw), Konstantin Bokarius, Edson Gellert Schubert,
+   Federico Cabiddu, Elena-Ramona Modroiu, Andreas Granig, Andrei
+   Pelinescu-Onciul, Jan Janak (@janakj).
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -1559,20 +1589,20 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Razvan Crainea (@razvancrainea), wangdd, Liviu
-   Chircu (@liviuchircu), Vlad Patrascu (@rvlad-patrascu),
-   Bogdan-Andrei Iancu (@bogdan-iancu), John Burke (@john08burke),
-   Vlad Paiu (@vladpaiu), Roman Sevko, Peter Lemenkov (@lemenkov),
-   Nick Altmann (@nikbyte), Ionel Cerghit (@ionel-cerghit), Jarrod
-   Baumann (@jarrodb), Ovidiu Sas (@ovidiusas), Ionut Ionita
-   (@ionutrazvanionita), Andrei Datcu (@andrei-datcu), Walter
-   Doekes (@wdoekes), Stanislaw Pitucha, Anca Vamanu, Klaus
-   Darilion, Daniel-Constantin Mierla (@miconda), Konstantin
-   Bokarius, Carsten Bock, Edson Gellert Schubert, Elena-Ramona
-   Modroiu.
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Vlad Paiu
+   (@vladpaiu), Razvan Crainea (@razvancrainea), wangdd, Vlad
+   Patrascu (@rvlad-patrascu), Bogdan-Andrei Iancu
+   (@bogdan-iancu), John Burke (@john08burke), Roman Sevko, Peter
+   Lemenkov (@lemenkov), Nick Altmann (@nikbyte), Ionel Cerghit
+   (@ionel-cerghit), Jarrod Baumann (@jarrodb), Ovidiu Sas
+   (@ovidiusas), Ionut Ionita (@ionutrazvanionita), Andrei Datcu
+   (@andrei-datcu), Walter Doekes (@wdoekes), Stanislaw Pitucha,
+   Anca Vamanu, Klaus Darilion, Daniel-Constantin Mierla
+   (@miconda), Konstantin Bokarius, Carsten Bock, Edson Gellert
+   Schubert, Elena-Ramona Modroiu.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005-2010 Voice Sistem SRL
+   Copyright © 2005-2010 Voice Sistem SRL
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2004 FhG FOKUS
+   Copyright © 2004 FhG FOKUS

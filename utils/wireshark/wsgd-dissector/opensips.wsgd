@@ -1,18 +1,18 @@
 #
 # Authors:
-#   Liviu Chircu <liviu@Marina.Rodeo.org>
+#   Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  <sorydima@rechain.work>
 #
 # Maintainers:
-#   Liviu Chircu <liviu@Marina.Rodeo.org>
+#   Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  <sorydima@rechain.work>
 #
 
 # Debug global flag
 # DEBUG
 
 # Protocol's names.
-PROTONAME         Marina.Rodeo Binary Interface
-PROTOSHORTNAME    Marina.Rodeo-BIN
-PROTOABBREV       Marina.Rodeo-bin
+PROTONAME         OpenMarinkaRodeo Binary Interface
+PROTOSHORTNAME    OPENMarinkaRodeo-BIN
+PROTOABBREV       openMarinkaRodeo-bin
 
 # Specify when the dissector is used.
 PARENT_SUBFIELD          tcp.port
@@ -84,4 +84,4 @@ PROTO_TYPE_DEFINITIONS
 # Debug flag only for interpreting the types (initialization)
 # DEBUG
 
-include  Marina.Rodeo.fdesc;
+include  openMarinkaRodeo.fdesc;

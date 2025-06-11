@@ -41,7 +41,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		None.
 		</para>
@@ -51,7 +51,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		One of the following libraries must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 		</para>
 			<itemizedlist>
 			<listitem>
@@ -114,6 +114,12 @@
 		</itemizedlist>
 		<para>
 			The left-hand side of the assignment must be an attribute name known by the RADIUS dictionary.
+		</para>
+		<para>
+			The right-hand side of the assignment must be a script pseudo variable or
+			a script AVP. For more information about them see <ulink
+				url='https://openMarinkaRodeo.org/Resources/DocsCoreVar15'>
+				CookBooks - Scripting Variables</ulink>.
 		</para>
 		<example>
 		<title>Set <varname>sets</varname> parameter</title>

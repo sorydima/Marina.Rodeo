@@ -40,6 +40,8 @@ cfgutils Module
               1.4.18. strings_share_lock(key1, key2)
               1.4.19. get_accurate_time(sec, usec, [str_sec_usec])
 
+              1.4.20. shuffle_avps(name)
+
         1.5. Exported Asyncronous Functions
 
               1.5.1. sleep(seconds)
@@ -105,19 +107,20 @@ cfgutils Module
    1.23. release_dynamic_lock usage
    1.24. strings_share_lock usage
    1.25. get_accurate_time usage
-   1.26. async sleep usage
-   1.27. async usleep usage
-   1.28. rand_set_prob usage
-   1.29. rand_reset_prob usage
-   1.30. rand_get_prob usage
-   1.31. check_config_hash usage
-   1.32. get_config_hash usage
-   1.33. shv_set usage
-   1.34. shv_get usage
-   1.35. env(name) pseudo-variable usage
-   1.36. RANDOM pseudo-variable usage
-   1.37. ctime(name) pseudo-variable usage
-   1.38. shv(name) pseudo-variable usage
+   1.26. shuffle_avps usage
+   1.27. async sleep usage
+   1.28. async usleep usage
+   1.29. rand_set_prob usage
+   1.30. rand_reset_prob usage
+   1.31. rand_get_prob usage
+   1.32. check_config_hash usage
+   1.33. get_config_hash usage
+   1.34. shv_set usage
+   1.35. shv_get usage
+   1.36. env(name) pseudo-variable usage
+   1.37. RANDOM pseudo-variable usage
+   1.38. ctime(name) pseudo-variable usage
+   1.39. shv(name) pseudo-variable usage
 
 Chapter 1. Admin Guide
 
@@ -187,7 +190,7 @@ modparam("cfgutils", "initial_probability", 15)
 
    Example 1.2. hash_file parameter usage
 
-modparam("cfgutils", "hash_file", "/etc/Marina.Rodeo/Marina.Rodeo.cfg")
+modparam("cfgutils", "hash_file", "/etc/openMarinkaRodeo/openMarinkaRodeo.cfg")
 
 
 1.3.3. shv_hash_size (integer)
@@ -246,7 +249,7 @@ modparam("cfgutils", "varset", "gw=s:sip:11.11.11.11;transport=tcp")
 
 1.3.6. lock_pool_size (integer)
 
-   The number of dynamic script locks to be allocated at Marina.Rodeo
+   The number of dynamic script locks to be allocated at OpenMarinkaRodeo
    startup. This number must be a power of 2. (i.e. 1, 2, 4, 8,
    16, 32, 64 ...)
 
@@ -698,20 +701,41 @@ get_accurate_time($var(sec), $var(usec));
 xlog("Current Unix timestamp: $var(sec) s, $var(usec) us\n");
 ...
 
+1.4.20.  shuffle_avps(name)
+
+   Randomly shuffles AVPs with name.
+
+   Meaning of the parameters is as follows:
+     * name (variable) - name of AVP to shuffle.
+
+   This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+   BRANCH_ROUTE, LOCAL_ROUTE and ONREPLY_ROUTE.
+
+   Example 1.26. shuffle_avps usage
+...
+$avp(foo) := "str1";
+$avp(foo)  = "str2";
+$avp(foo)  = "str3";
+xlog("Initial AVP list is: $(avp(foo)[*])\n");       # str3 str2 str1
+if(shuffle_avps( $avp(foo) ))
+    xlog("Shuffled AVP list is: $(avp(foo)[*])\n");  # str1, str3, str2
+(for example)
+...
+
 1.5. Exported Asyncronous Functions
 
 1.5.1.  sleep(seconds)
 
    Waits a number of seconds. This function does exactly the same
    as sleep(), but in an asynchronous way. The script execution is
-   suspended until the waiting is done; then Marina.Rodeo resumes the
+   suspended until the waiting is done; then OpenMarinkaRodeo resumes the
    script execution via the resume route.
 
    To read and understand more on the asynchronous functions, how
    to use them and what are their advantages, please refer to the
-   Marina.Rodeo online Manual.
+   OpenMarinkaRodeo online Manual.
 
-   Example 1.26. async sleep usage
+   Example 1.27. async sleep usage
 {
 ...
 async( sleep("5"), after_sleep );
@@ -725,14 +749,14 @@ route[after_sleep] {
 
    Waits a number of micro-seconds. This function does exactly the
    same as usleep(), but in an asynchronous way. The script
-   execution is suspended until the waiting is done; then Marina.Rodeo
+   execution is suspended until the waiting is done; then OpenMarinkaRodeo
    resumes the script execution via the resume route.
 
    To read and understand more on the asynchronous functions, how
    to use them and what are their advantages, please refer to the
-   Marina.Rodeo online Manual.
+   OpenMarinkaRodeo online Manual.
 
-   Example 1.27. async usleep usage
+   Example 1.28. async usleep usage
 {
 ...
 async( usleep("1000"), after_usleep );
@@ -752,9 +776,9 @@ route[after_usleep] {
      * prob_proc - the parameter should be a percent value (number
        from 0 to 99).
 
-   Example 1.28. rand_set_prob usage
+   Example 1.29. rand_set_prob usage
 ...
-$ Marina.Rodeo-cli -x mi rand_set_prob 10
+$ openMarinkaRodeo-cli -x mi rand_set_prob 10
 ...
 
 1.6.2. rand_reset_prob
@@ -763,9 +787,9 @@ $ Marina.Rodeo-cli -x mi rand_set_prob 10
 
    This command don't need a parameter.
 
-   Example 1.29.  rand_reset_prob usage
+   Example 1.30.  rand_reset_prob usage
 ...
-$ Marina.Rodeo-cli -x mi rand_reset_prob
+$ openMarinkaRodeo-cli -x mi rand_reset_prob
 ...
 
 1.6.3. rand_get_prob
@@ -774,9 +798,9 @@ $ Marina.Rodeo-cli -x mi rand_reset_prob
 
    The function return the actual probability value.
 
-   Example 1.30. rand_get_prob usage
+   Example 1.31. rand_get_prob usage
 ...
-$ Marina.Rodeo-cli -x mi get_prob
+$ openMarinkaRodeo-cli -x mi get_prob
 The actual probability is 50 percent.
 ...
 
@@ -790,9 +814,9 @@ The actual probability is 50 percent.
    been configured and 500 on errors. Additional a short text
    message is printed.
 
-   Example 1.31. check_config_hash usage
+   Example 1.32. check_config_hash usage
 ...
-$ Marina.Rodeo-cli -x mi check_config_hash
+$ openMarinkaRodeo-cli -x mi check_config_hash
 The actual config file hash is identical to the stored one.
 ...
 
@@ -803,9 +827,9 @@ The actual config file hash is identical to the stored one.
    The function returns 200 OK and the hash value on success or
    404 if no file for hashing has been configured.
 
-   Example 1.32. get_config_hash usage
+   Example 1.33. get_config_hash usage
 ...
-$ Marina.Rodeo-cli -x mi get_config_hash
+$ openMarinkaRodeo-cli -x mi get_config_hash
 1580a37104eb4de69ab9f31ce8d6e3e0
 ...
 
@@ -820,9 +844,9 @@ $ Marina.Rodeo-cli -x mi get_config_hash
           + “str”: string value
      * value : value to be set
 
-   Example 1.33. shv_set usage
+   Example 1.34. shv_set usage
 ...
-$ Marina.Rodeo-cli -x mi shv_set debug int 0
+$ openMarinkaRodeo-cli -x mi shv_set debug int 0
 ...
 
 1.6.7. shv_get
@@ -833,10 +857,10 @@ $ Marina.Rodeo-cli -x mi shv_set debug int 0
      * name : shared variable name. If this parameter is missing,
        all shared variables are returned.
 
-   Example 1.34. shv_get usage
+   Example 1.35. shv_get usage
 ...
-$ Marina.Rodeo-cli -x mi shv_get debug
-$ Marina.Rodeo-cli -x mi shv_get
+$ openMarinkaRodeo-cli -x mi shv_get debug
+$ openMarinkaRodeo-cli -x mi shv_get
 ...
 
 1.7. Exported Pseudo-Variables
@@ -845,7 +869,7 @@ $ Marina.Rodeo-cli -x mi shv_get
 
    This PV provides access to the environment variable 'name'.
 
-   Example 1.35. env(name) pseudo-variable usage
+   Example 1.36. env(name) pseudo-variable usage
 ...
 xlog("PATH environment variable is $env(PATH)\n");
 ...
@@ -854,7 +878,7 @@ xlog("PATH environment variable is $env(PATH)\n");
 
    Returns a random value from the [0 - 2^31) range.
 
-   Example 1.36. RANDOM pseudo-variable usage
+   Example 1.37. RANDOM pseudo-variable usage
 ...
 $avp(10) = ($RANDOM / 16777216); # 2^24
 if ($avp(10) < 10) {
@@ -882,7 +906,7 @@ exit;
      * isdst - return daylight saving time status (int, 0 - DST
        off, >0 DST on)
 
-   Example 1.37. ctime(name) pseudo-variable usage
+   Example 1.38. ctime(name) pseudo-variable usage
 ...
 if ($ctime(year) == 2008) {
         xlog("request: $rm from $fu to $ru in year 2008\n");
@@ -892,13 +916,13 @@ if ($ctime(year) == 2008) {
 1.7.4. $shv(name)
 
    It is a class of pseudo-variables stored in shared memory. The
-   value of $shv(name) is visible across all Marina.Rodeo processes.
+   value of $shv(name) is visible across all openMarinkaRodeo processes.
    Each “shv” has single value and it is initialized to integer 0.
    You can use “shvset” parameter to initialize the shared
    variable. The module exports a set of MI functions to get/set
    the value of shared variables.
 
-   Example 1.38. shv(name) pseudo-variable usage
+   Example 1.39. shv(name) pseudo-variable usage
 ...
 modparam("cfgutils", "shvset", "debug=i:1")
 ...
@@ -914,20 +938,20 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Liviu Chircu (@liviuchircu) 91 41 2962 1508
-   2. Henning Westerholt (@henningw) 29 18 1088 86
-   3. Bogdan-Andrei Iancu (@bogdan-iancu) 27 22 367 109
-   4. Razvan Crainea (@razvancrainea) 20 15 289 79
-   5. Vlad Patrascu (@rvlad-patrascu) 19 7 357 548
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 94 44 2966 1512
+   2. Henning Westerholt (@henningw) 30 18 1088 86
+   3. Bogdan-Andrei Iancu (@bogdan-iancu) 29 23 462 109
+   4. Vlad Patrascu (@rvlad-patrascu) 21 7 357 548
+   5. Razvan Crainea (@razvancrainea) 20 15 289 79
    6. Elena-Ramona Modroiu 14 3 1183 7
    7. Daniel-Constantin Mierla (@miconda) 12 10 84 32
-   8. Maksym Sobolyev (@sobomax) 6 4 20 14
+   8. Maksym Sobolyev (@sobomax) 7 5 24 18
    9. Anca Vamanu 6 3 220 14
    10. Ionel Cerghit (@ionel-cerghit) 5 1 18 161
 
    All remaining contributors: Vlad Paiu (@vladpaiu), Sergio
    Gutierrez, Konstantin Bokarius, Walter Doekes (@wdoekes), Peter
-   Lemenkov (@lemenkov), Edson Gellert Schubert.
+   Lemenkov (@lemenkov), Edson Gellert Schubert, Alexandra Titoc.
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -937,7 +961,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -949,21 +973,21 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2023
-   2.  Liviu Chircu (@liviuchircu)         Sep 2012 - Apr 2023
-   3.  Maksym Sobolyev (@sobomax)          Dec 2015 - Feb 2023
-   4.  Razvan Crainea (@razvancrainea)     Oct 2010 - Jan 2020
-   5.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2007 - Oct 2019
-   6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   7.  Ionel Cerghit (@ionel-cerghit)      Dec 2015 - Dec 2015
-   8.  Walter Doekes (@wdoekes)            Jan 2015 - Jan 2015
-   9.  Vlad Paiu (@vladpaiu)               Jan 2013 - Jul 2014
-   10. Anca Vamanu                         Aug 2009 - Sep 2009
+   1.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Sep 2012 - May 2024
+   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2007 - Feb 2024
+   4.  Maksym Sobolyev (@sobomax)          Dec 2015 - Nov 2023
+   5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2023
+   6.  Razvan Crainea (@razvancrainea)     Oct 2010 - Jan 2020
+   7.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
+   8.  Ionel Cerghit (@ionel-cerghit)      Dec 2015 - Dec 2015
+   9.  Walter Doekes (@wdoekes)            Jan 2015 - Jan 2015
+   10. Vlad Paiu (@vladpaiu)               Jan 2013 - Jul 2014
 
-   All remaining contributors: Sergio Gutierrez, Henning
-   Westerholt (@henningw), Daniel-Constantin Mierla (@miconda),
-   Elena-Ramona Modroiu, Konstantin Bokarius, Edson Gellert
-   Schubert.
+   All remaining contributors: Anca Vamanu, Sergio Gutierrez,
+   Henning Westerholt (@henningw), Daniel-Constantin Mierla
+   (@miconda), Elena-Ramona Modroiu, Konstantin Bokarius, Edson
+   Gellert Schubert.
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -972,17 +996,17 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Bogdan-Andrei
-   Iancu (@bogdan-iancu), Razvan Crainea (@razvancrainea), Peter
+   Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Liviu
+   Chircu (@liviuchircu), Razvan Crainea (@razvancrainea), Peter
    Lemenkov (@lemenkov), Vlad Patrascu (@rvlad-patrascu), Anca
    Vamanu, Sergio Gutierrez, Henning Westerholt (@henningw),
    Daniel-Constantin Mierla (@miconda), Elena-Ramona Modroiu,
    Konstantin Bokarius, Edson Gellert Schubert.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007-2008 1und1 Internet AG
+   Copyright © 2007-2008 1und1 Internet AG
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007-2008 BASIS AudioNet GmbH
+   Copyright © 2007-2008 BASIS AudioNet GmbH
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007-2008 Elena-Ramona Modroiu
+   Copyright © 2007-2008 Elena-Ramona Modroiu

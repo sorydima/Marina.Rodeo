@@ -52,7 +52,7 @@
 		</para>
 		<para>
 		Default value is 
-			<quote>mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo</quote>
+			<quote>mysql://openMarinkaRodeoro:openMarinkaRodeoro@localhost/openMarinkaRodeo</quote>
 		</para>
 		<example>
 		<title>Setting db_url parameter</title>
@@ -120,6 +120,23 @@ modparam("domain", "domain_col", "domain_name")
 		<title>Setting attrs_col parameter</title>
 		<programlisting format="linespecific">
 modparam("domain", "attrs_col", "attributes")
+</programlisting>
+		</example>
+	</section>
+	<section>
+		<title><varname>subdomain_col</varname> (int)</title>
+		<para>
+		Name of the "accept_subdomain" column in the domain table.
+		A positive value for the column means the domain accepts subdomains.
+		A 0 value means it does not.
+		</para>
+		<para>
+		Default value is <quote>accept_subdomain</quote>.
+		</para>
+		<example>
+		<title>Setting subdomain_col parameter</title>
+		<programlisting format="linespecific">
+modparam("domain", "subdomain_col", "has_subdomain")
 </programlisting>
 		</example>
 	</section>
@@ -267,7 +284,7 @@ if (is_domain_local($avp(some_avp), $avp(attrs))) {
 		MI FIFO Command Format:
 		</para>
         <programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi domain_reload
+		openMarinkaRodeo-cli -x mi domain_reload
 		</programlisting>
 		
 	</section>
@@ -285,7 +302,7 @@ if (is_domain_local($avp(some_avp), $avp(attrs))) {
 		MI FIFO Command Format:
 		</para>
         <programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi domain_dump
+		openMarinkaRodeo-cli -x mi domain_dump
 		</programlisting>
 	</section>
 	</section>

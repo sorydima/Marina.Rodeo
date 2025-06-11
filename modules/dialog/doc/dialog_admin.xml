@@ -7,7 +7,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-	The dialog module provides dialog awareness to the &osips; proxy. Its
+	The dialog module provides dialog awareness to the &oMarinkaRodeo; proxy. Its
 	functionality is to keep trace of the current dialogs, to offer information
 	about them (like how many dialogs are active).
 	</para>
@@ -18,7 +18,7 @@
 	</para>
 	<para>
 	The module, via an internal API, also provide the foundation to build on
-	top of it more complex dialog-based functionalities via other &osips;
+	top of it more complex dialog-based functionalities via other &oMarinkaRodeo;
 	modules.
 	</para>
 	</section>
@@ -88,10 +88,10 @@
 	the original request.
 	</para>
 	<para>
-	Dialog profiles can also be used in distributed systems, using the &osips;
+	Dialog profiles can also be used in distributed systems, using the &oMarinkaRodeo;
 	CacheDB Interface or the <emphasis>clusterer</emphasis> module. This feature
-	allows you to share dialog profile information with multiple &osips; instaces
-	that use the same CacheDB backend or are part of an &osips; cluster. In order
+	allows you to share dialog profile information with multiple &oMarinkaRodeo; instaces
+	that use the same CacheDB backend or are part of an &oMarinkaRodeo; cluster. In order
 	to do that, the <emphasis role='bold'>cachedb_url</emphasis> or
 	<emphasis role='bold'>profile_replication_cluster</emphasis> parameters must be defined.
 	Also, the profile must be marked as shared, by adding one of the
@@ -105,10 +105,10 @@
 	<title>Dialog clustering</title>
 	<para>
 	<emphasis role='bold'>Dialog replication</emphasis> is a mechanism used to
-	mirror all dialog changes taking place in one Marina.Rodeo instance to one or
+	mirror all dialog changes taking place in one OpenMarinkaRodeo instance to one or
 	multiple other instances. The process is simplified by using the
 	<emphasis>clusterer</emphasis> module which facilitates the management of a
-	cluster of Marina.Rodeo nodes and the sending of replication-related BIN packets
+	cluster of OpenMarinkaRodeo nodes and the sending of replication-related BIN packets
 	(binary-encoded, using <emphasis>proto_bin</emphasis>). This feature
 	is useful in achieving High Availability and/or Load Balancing for ongoing calls.
 	</para>
@@ -121,7 +121,7 @@
 	dialogs using the <emphasis role='bold'>sharing tags</emphasis> mechanism.
 	For details and configuration examples on how this would work
 	in different usage scenarios, see 
-	<ulink url="https://blog.Marina.Rodeo.org/2018/03/23/clustering-ongoing-calls-with-Marina.Rodeo-2-4/">this article</ulink>.
+	<ulink url="https://blog.openMarinkaRodeo.org/2018/03/23/clustering-ongoing-calls-with-openMarinkaRodeo-2-4/">this article</ulink>.
 	</para>
 	<para>
 	The following actions will <emphasis role='bold'>not</emphasis> be performed for a dialog
@@ -136,11 +136,11 @@
 	</itemizedlist>
 	</para>
 	<para>
-	In addition to the event-driven replication, an Marina.Rodeo instance will first
+	In addition to the event-driven replication, an OpenMarinkaRodeo instance will first
 	try to learn all the dialog information from antoher node in the cluster at startup.
 	The data synchronization mechanism requires defining one of the nodes in the cluster
 	as a "<emphasis role='bold'>seed</emphasis>" node.
-	See the <ulink url="https://Marina.Rodeo.org/docs/modules/3.0.x/clusterer.html#capabilities">clusterer</ulink> 
+	See the <ulink url="https://openMarinkaRodeo.org/docs/modules/3.0.x/clusterer.html#capabilities">clusterer</ulink> 
 	module for details on how to do this and why is it needed.
 	</para>
 	<para>
@@ -169,7 +169,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -200,7 +200,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -248,7 +248,7 @@ modparam("dialog", "enable_stats", 0)
 		IMPORTANT: If dialogs' information should be stored in a database,
 		a constant hash_size should be used, otherwise the restored process
 		will not take place. If you really want to modify the hash_size you
-		must delete all table's rows before restarting &osips;.
+		must delete all table's rows before restarting &oMarinkaRodeo;.
 		</para>
 		<para>
 		<emphasis>
@@ -385,8 +385,8 @@ modparam("dialog", "dlg_extra_hdrs", "Hint: credit expired\r\n")
 		</emphasis>
 		</para>
 		<para>
-		NOTE that if you have call looping on your Marina.Rodeo server (passing
-		more than once through the same Marina.Rodeo instance), it is strongly
+		NOTE that if you have call looping on your OpenMarinkaRodeo server (passing
+		more than once through the same OpenMarinkaRodeo instance), it is strongly
 		suggested to use only DID_ONLY mode, as the SIP based matching will
 		have an undefined behavior - from SIP perspective, a sequential
 		dialog will match all the loops of the call, as the Call-ID, To and 
@@ -517,7 +517,7 @@ modparam("dialog", "db_update_period", 120)
 <section id="param_options_ping_interval" xreflabel="options_ping_interval">
 		<title><varname>options_ping_interval</varname> (integer)</title>
 		<para>
-		The interval (seconds) at which Marina.Rodeo will generate in-dialog
+		The interval (seconds) at which OpenMarinkaRodeo will generate in-dialog
 		OPTIONS pings for one or both of the involved parties.
 		</para>
 		<para>
@@ -538,7 +538,7 @@ modparam("dialog", "options_ping_interval", 20)
 <section id="param_reinvite_ping_interval" xreflabel="reinvite_ping_interval">
 		<title><varname>reinvite_ping_interval</varname> (integer)</title>
 		<para>
-		The interval (seconds) at which Marina.Rodeo will generate in-dialog
+		The interval (seconds) at which OpenMarinkaRodeo will generate in-dialog
 		Re-INVITE pings for one or both of the involved parties.
 		</para>
 		<para>
@@ -1046,9 +1046,9 @@ modparam("dialog", "flags_column", "flags_c_name")
 	<section id="param_profiles_with_value" xreflabel="profiles_with_value">
 		<title><varname>profiles_with_value</varname> (string)</title>
 		<para>
-			List of names (alphanumerical) for profiles with values. Flags
+			List of names (alphanumerical/-/_) for profiles with values. Flags
 			<emphasis>/b</emphasis> or <emphasis>/s</emphasis> allow sharing
-			profiles between &osips; instances using the clusterer module or a
+			profiles between &oMarinkaRodeo; instances using the clusterer module or a
 			CacheDB backend, respectively.
 		</para>
 		<para>
@@ -1069,9 +1069,9 @@ modparam("dialog", "profiles_with_value", "callerCC; gatewayCC; clientChannels/s
 	<section id="param_profiles_no_value" xreflabel="profiles_no_value">
 		<title><varname>profiles_no_value</varname> (string)</title>
 		<para>
-			List of names (alphanumerical) for profiles without values. Flags
+			List of names (alphanumerical/-/_) for profiles without values. Flags
 			<emphasis>/b</emphasis> or <emphasis>/s</emphasis> allow sharing
-			profiles between &osips; instances using the clusterer module or a
+			profiles between &oMarinkaRodeo; instances using the clusterer module or a
 			CacheDB backend, respectively.
 		</para>
 		<para>
@@ -1270,6 +1270,9 @@ modparam("dialog", "profile_timeout", "43200")
 			and receiving all the dialog-related events (creation, update and
 			deletion) in the cluster.
 		</para>
+
+			&clusterer_sync_cap_para;
+
 		<para>
 		<emphasis>
 			Default value is <quote>0</quote> (no replication).
@@ -2605,6 +2608,45 @@ event_route[E_RTPPROXY_DTMF] {
 </programlisting>
 		</example>
 	</section>
+	<section id="func_dlg_inc_cseq" xreflabel="dlg_inc_cseq()">
+		<title>
+			<function moreinfo="none">dlg_inc_cseq([tag, ][inc])</function>
+		</title>
+		<para>Increments the dialog's generated CSeq associated to the leg
+		identified by the dialog's tag.
+		</para>
+		<para>Parameters:</para>
+		<itemizedlist>
+			<listitem><para><emphasis>tag (string, optional)</emphasis> -
+			the tag to increment the CSeq value for. If missing, the
+			message's <emphasis>To</emphasis> tag is used to identify
+			the leg to increment the CSeq for.
+			</para></listitem>
+			<listitem><para><emphasis>inc (integer, optional)</emphasis> - the
+			value used to increment/decrement (if negative) the CSeq of
+			the identified leg. If not used, the value is incremented with
+			<emphasis>1</emphasis>.
+			</para></listitem>
+		</itemizedlist>
+		<para>
+			This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+			ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE routes.
+		</para>
+		<example>
+		<title><function>dlg_inc_cseq</function> usage</title>
+		<programlisting format="linespecific">
+...
+route {
+	...
+	if (has_totag()) {
+		if (loose_route())
+			dlg_inc_cseq(); # increment upstream CSeq after each in-dialog request
+	}
+}
+...
+</programlisting>
+		</example>
+	</section>
 
 	</section>
 
@@ -2649,7 +2691,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<title><varname>create_sent</varname></title>
 			<para>
 				Returns the number of replicated dialog
-			<emphasis role='bold'>create</emphasis> requests send to other Marina.Rodeo
+			<emphasis role='bold'>create</emphasis> requests send to other OpenMarinkaRodeo
 			instances.
 			</para>
 		</section>
@@ -2657,7 +2699,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<title><varname>update_sent</varname></title>
 			<para>
 				Returns the number of replicated dialog
-			<emphasis role='bold'>update</emphasis> requests send to other Marina.Rodeo
+			<emphasis role='bold'>update</emphasis> requests send to other OpenMarinkaRodeo
 			instances.
 			</para>
 		</section>
@@ -2665,7 +2707,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<title><varname>delete_sent</varname></title>
 			<para>
 				Returns the number of replicated dialog
-			<emphasis role='bold'>delete</emphasis> requests send to other Marina.Rodeo
+			<emphasis role='bold'>delete</emphasis> requests send to other OpenMarinkaRodeo
 			instances.
 			</para>
 		</section>
@@ -2674,7 +2716,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<para>
 				Returns the number of dialog
 			<emphasis role='bold'>create</emphasis> events received from other
-			Marina.Rodeo instances.
+			OpenMarinkaRodeo instances.
 			</para>
 		</section>
 		<section id="stat_update_recv" xreflabel="update_recv">
@@ -2682,7 +2724,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<para>
 				Returns the number of dialog
 			<emphasis role='bold'>update</emphasis> events received from other
-			Marina.Rodeo instances.
+			OpenMarinkaRodeo instances.
 			</para>
 		</section>
 		<section id="stat_delete_recv" xreflabel="delete_recv">
@@ -2690,7 +2732,7 @@ event_route[E_RTPPROXY_DTMF] {
 			<para>
 				Returns the number of dialog
 			<emphasis role='bold'>delete</emphasis> events received from other
-			Marina.Rodeo instances.
+			OpenMarinkaRodeo instances.
 			</para>
 		</section>
 	</section>
@@ -2742,12 +2784,12 @@ event_route[E_RTPPROXY_DTMF] {
 		</para>
 		<programlisting  format="linespecific">
 		## list all ongoing dialogs
-		Marina.Rodeo-cli -x mi dlg_list
+		openMarinkaRodeo-cli -x mi dlg_list
 		## list the dialog by callid and From TAG
-		Marina.Rodeo-cli -x mi dlg_list callid=abcdrssfrs122444@192.168.1.1 from_tag=AAdfeEFF33
+		openMarinkaRodeo-cli -x mi dlg_list callid=abcdrssfrs122444@192.168.1.1 from_tag=AAdfeEFF33
 		## list 10 dialogs, starting from the position 40
 		## (in the list of all ongoing dialogs)
-		Marina.Rodeo-cli -x mi dlg_list index=40 counter=10
+		openMarinkaRodeo-cli -x mi dlg_list index=40 counter=10
 		</programlisting>
 		</section>
 
@@ -2771,7 +2813,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi dlg_list_ctx
+		openMarinkaRodeo-cli -x mi dlg_list_ctx
 		</programlisting>
 		</section>
 
@@ -2810,9 +2852,9 @@ event_route[E_RTPPROXY_DTMF] {
 		</para>
 		<programlisting  format="linespecific">
 		# terminate the dialog via the internal Dialog-ID
-		Marina.Rodeo-cli -x mi dlg_end_dlg 6ae.4b38d013
+		openMarinkaRodeo-cli -x mi dlg_end_dlg 6ae.4b38d013
 		# terminate the dialog via its SIP Call-ID
-		Marina.Rodeo-cli -x mi dlg_end_dlg Y2IwYjQ2YmE2ZDg5MWVkNDNkZGIwZjAzNGM1ZDY
+		openMarinkaRodeo-cli -x mi dlg_end_dlg Y2IwYjQ2YmE2ZDg5MWVkNDNkZGIwZjAzNGM1ZDY
 		</programlisting>
 		</section>
 
@@ -2844,7 +2886,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi profile_get_size inboundCalls
+		openMarinkaRodeo-cli -x mi profile_get_size inboundCalls
 		</programlisting>
 		</section>
 
@@ -2878,7 +2920,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi profile_list_dlgs inboundCalls
+		openMarinkaRodeo-cli -x mi profile_list_dlgs inboundCalls
 		</programlisting>
 		</section>
 
@@ -2904,7 +2946,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi profile_get_values inboundCalls
+		openMarinkaRodeo-cli -x mi profile_get_values inboundCalls
 		</programlisting>
 		</section>
 		<section id="mi_profile_end_dlgs" xreflabel="profile_end_dlgs">
@@ -2930,14 +2972,14 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi profile_end_dlgs inboundCalls
+		openMarinkaRodeo-cli -x mi profile_end_dlgs inboundCalls
 		</programlisting>
 		</section>
 		<section id="mi_dlg_db_sync" xreflabel="dlg_db_sync">
 		<title><function moreinfo="none">dlg_db_sync</function></title>
 		<para>
 		Will load all the information about the dialogs from the database
-		in the Marina.Rodeo internal memory. If a dialog is already found in memory
+		in the OpenMarinkaRodeo internal memory. If a dialog is already found in memory
 		and has the same/an older state, it will be updated with the values from
 		DB. Otherwise, the newer in-memory version will not be changed.
 		</para>
@@ -2949,7 +2991,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi dlg_db_sync
+		openMarinkaRodeo-cli -x mi dlg_db_sync
 		</programlisting>
 		</section>
 
@@ -2979,7 +3021,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi dlg_cluster_sync vip1
+		openMarinkaRodeo-cli -x mi dlg_cluster_sync vip1
 		</programlisting>
 		</section>
 
@@ -2997,7 +3039,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi dlg_restore_db
+		openMarinkaRodeo-cli -x mi dlg_restore_db
 		</programlisting>
 		</section>
 
@@ -3016,7 +3058,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi list_all_profiles
+		openMarinkaRodeo-cli -x mi list_all_profiles
 		</programlisting>
 		</section>
 
@@ -3045,7 +3087,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi dlg_push_var var_name var_value DID1 [ DID2 DID3 ...  DIDN ]
+		openMarinkaRodeo-cli -x mi dlg_push_var var_name var_value DID1 [ DID2 DID3 ...  DIDN ]
 		</programlisting>
 		</section>
 
@@ -3110,7 +3152,7 @@ event_route[E_RTPPROXY_DTMF] {
 						<emphasis>inbound</emphasis> - advertises in the body of the sequential
 							message generated the last body received from its pair. For example,
 							if the <emphasis>mode=challenge-caller</emphasis>, the message will
-							contain the body sent to &osips; by the callee. This is useful when
+							contain the body sent to &oMarinkaRodeo; by the callee. This is useful when
 							you need to alter the body previously sent to the caller, because you
 							want to re-negotiate a different media proxy for the call. This can
 							be achieved by catching the generated request in
@@ -3120,7 +3162,7 @@ event_route[E_RTPPROXY_DTMF] {
 						<emphasis>outbound</emphasis> - advertises in the body of the sequential
 							message generated the last body sent to that UAC. For example,
 							if the <emphasis>mode=challenge-caller</emphasis>, the message will
-							contain the last body sent by &osips; to the caller. This is useful
+							contain the last body sent by &oMarinkaRodeo; to the caller. This is useful
 							in a high availability scenario when trying to re-negotiate the
 							contact of the server, but there is no need to alter the body sent
 							earlier.
@@ -3132,6 +3174,10 @@ event_route[E_RTPPROXY_DTMF] {
 					</para></listitem>
 				</itemizedlist>
 			</para></listitem>
+			<listitem><para>
+				<emphasis>headers</emphasis> - (optional) can be used to specify some headers for
+					the initial sequential message.
+			</para></listitem>
 		</itemizedlist>
 		<para>
 			This functions runs asynchronously and returns the status code and reason
@@ -3141,7 +3187,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI Command Format:
 		</para>
 		<programlisting  format="linespecific">
-			Marina.Rodeo-cli -x mi dlg_send_sequential \
+			openMarinkaRodeo-cli -x mi dlg_send_sequential \
 				callid=5291231-testing@127.0.0.1
 		</programlisting>
 
@@ -3149,7 +3195,7 @@ event_route[E_RTPPROXY_DTMF] {
 		MI Command used to trigger media re-negotiation:
 		</para>
 		<programlisting  format="linespecific">
-			Marina.Rodeo-cli -x mi dlg_send_sequential \
+			openMarinkaRodeo-cli -x mi dlg_send_sequential \
 				callid=5291231-testing@127.0.0.1 \
 				mode=challenge \
 				body=inbound
@@ -3159,13 +3205,86 @@ event_route[E_RTPPROXY_DTMF] {
 		MI Command used to UPDATE the callee's remote Contact after a server failover:
 		</para>
 		<programlisting  format="linespecific">
-			Marina.Rodeo-cli -x mi dlg_send_sequential \
+			openMarinkaRodeo-cli -x mi dlg_send_sequential \
 				callid=5291231-testing@127.0.0.1 \
 				mode=challenge-callee \
 				body=outbound \
 				method=UPDATE
 		</programlisting>
 
+		<para>
+		MI Command used to send REFER to the callee, and add Refer-To header:
+		</para>
+		<programlisting  format="linespecific">
+			openMarinkaRodeo-cli -x mi dlg_send_sequential \
+				callid=usR8FlGOSMfCTAIHebHCOQ.. \
+				method=REFER \
+				body=none \
+				mode=callee \
+				headers='Refer-To: sip:user@domain:50060'
+		</programlisting>
+
+		</section>
+
+		<section id="set_dlg_profile_mi" xreflabel="set_dlg_profile_mi">
+		<title><function moreinfo="none">set_dlg_profile</function></title>
+		<para>
+		Set the dialog identified by dialog ID / Call-ID into the given profile ( with optional value and clearing of the old profile values )
+		</para>
+		<para>
+		Name: <emphasis>set_dlg_profile</emphasis>
+		</para>
+		<para>Parameters: <emphasis>It takes 2-4 parameters</emphasis>
+		</para>
+		<itemizedlist>
+			<listitem><para>
+				<emphasis>dlg_id</emphasis> - dialog ID or Call-ID for the respective dialog
+			</para></listitem>
+			<listitem><para>
+				<emphasis>profile</emphasis> - profile name to be set
+			</para></listitem>
+			<listitem><para>
+				<emphasis>value</emphasis> - optional, the profile value to be set 
+			</para></listitem>
+			<listitem><para>
+				<emphasis>clear_values</emphasis> - optional, clear previous values in the profile before setting the new one
+			</para></listitem>
+		</itemizedlist>
+		<para>
+		MI FIFO Command Format:
+		</para>
+		<programlisting  format="linespecific">
+		openMarinkaRodeo-cli -x mi set_dlg_profile DID my_profile my_value 1
+		</programlisting>
+		</section>
+
+		<section id="unset_dlg_profile_mi" xreflabel="unset_dlg_profile_mi">
+		<title><function moreinfo="none">unset_dlg_profile</function></title>
+		<para>
+		Unsets the dialog identified by dialog ID / Call-ID from the given profile ( with optional value and clearing of the old profile values )
+		</para>
+		<para>
+		Name: <emphasis>set_dlg_profile</emphasis>
+		</para>
+		<para>Parameters: <emphasis>It takes 2-3 parameters</emphasis>
+		</para>
+		<itemizedlist>
+			<listitem><para>
+				<emphasis>dlg_id</emphasis> - dialog ID or Call-ID for the respective dialog
+			</para></listitem>
+			<listitem><para>
+				<emphasis>profile</emphasis> - profile name to be unset
+			</para></listitem>
+			<listitem><para>
+				<emphasis>value</emphasis> - optional, the profile value to be unset. for profiles with value, by omitting this parameter you can now clear all values of the given profile. 
+			</para></listitem>
+		</itemizedlist>
+		<para>
+		MI FIFO Command Format:
+		</para>
+		<programlisting  format="linespecific">
+		openMarinkaRodeo-cli -x mi unset_dlg_profile DID my_profile my_value
+		</programlisting>
 		</section>
 	</section>
 
@@ -3374,8 +3493,15 @@ event_route[E_RTPPROXY_DTMF] {
 			<para>
 			This is a read/write variable that allows access to the dialog
 			attribute named <emphasis>name</emphasis>. It can hold a string or
-			integer value. This PV will be available only for sequential requests,
-			after doing loose_route().
+			integer value.
+			</para>
+			<para>
+			Be sure and use this variable only when having a dialog context 
+			(like after create_dialog() or match_dialog() or equivalent).
+			</para>
+			<para>
+			The variable accepts dynamic names, meaning the name may contain
+			other variables.
 			</para>
 			<para>
 			NULL will be returned if there is no dialog for the request.

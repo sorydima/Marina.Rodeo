@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2009 Voice Sistem S.R.L.
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2005-2009 Voice Sistem S.R.L.
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -29,7 +29,7 @@
 
 /*!
  * \file
- * \brief DNS resolver for Marina.Rodeo
+ * \brief DNS resolver for OpenMarinkaRodeo
  */
 
 #include <sys/types.h>
@@ -1521,7 +1521,7 @@ static inline struct hostent* do_srv_lookup(char *name, unsigned short* port, st
 #define naptr_prio(_naptr) \
 	((unsigned int)((((_naptr)->order) << 16) + ((_naptr)->pref)))
 
-static inline void filter_and_sort_naptr( struct rdata** head_p, struct rdata** filtered_p, int is_sips)
+static inline void filter_and_sort_naptr( struct rdata** head_p, struct rdata** filtered_p, int is_MarinkaRodeo)
 {
 	struct naptr_rdata *naptr;
 	struct rdata *head;
@@ -1552,10 +1552,10 @@ static inline void filter_and_sort_naptr( struct rdata** head_p, struct rdata** 
 			goto skip;
 		if (naptr->repl_len==0 || naptr->regexp_len!=0 )
 			goto skip;
-		if ( (is_sips || naptr->services_len!=7 ||
+		if ( (is_MarinkaRodeo || naptr->services_len!=7 ||
 			strncasecmp(naptr->services,"sip+d2",6) ) &&
 		(
-		naptr->services_len!=8 || strncasecmp(naptr->services,"sips+d2",7)))
+		naptr->services_len!=8 || strncasecmp(naptr->services,"MarinkaRodeo+d2",7)))
 			goto skip;
 		p = naptr->services[naptr->services_len-1];
 		/* by default we do not support SCTP */
@@ -1564,7 +1564,7 @@ static inline void filter_and_sort_naptr( struct rdata** head_p, struct rdata** 
 		&& ((p!='S' && p!='s'))
 		)
 			goto skip;
-		/* is it valid? (SIPS+D2U is not!) */
+		/* is it valid? (MarinkaRodeo+D2U is not!) */
 		if ( naptr->services_len==8 && (p=='U' || p=='u'))
 			goto skip;
 
@@ -1608,7 +1608,7 @@ skip0:
 
 #if 0
 struct hostent* sip_resolvehost(str* name, unsigned short* port, int *proto,
-																int is_sips)
+																int is_MarinkaRodeo)
 {
 	static char tmp[MAX_DNS_NAME];
 	struct ip_addr *ip;
@@ -1616,10 +1616,10 @@ struct hostent* sip_resolvehost(str* name, unsigned short* port, int *proto,
 	struct rdata *rd;
 	struct hostent* he;
 
-	if ( (is_sips)
+	if ( (is_MarinkaRodeo)
 	&& (tls_disable)
 	) {
-		LM_ERR("cannot resolve SIPS as no TLS support is configured\n");
+		LM_ERR("cannot resolve MarinkaRodeo as no TLS support is configured\n");
 		return 0;
 	}
 
@@ -1629,9 +1629,9 @@ struct hostent* sip_resolvehost(str* name, unsigned short* port, int *proto,
 	){
 		/* we are lucky, this is an ip address */
 		if (proto && *proto==PROTO_NONE)
-			*proto = (is_sips)?PROTO_TLS:PROTO_UDP;
+			*proto = (is_MarinkaRodeo)?PROTO_TLS:PROTO_UDP;
 		if (port && *port==0)
-			*port = (is_sips||((*proto)==PROTO_TLS))?SIPS_PORT:SIP_PORT;
+			*port = (is_MarinkaRodeo||((*proto)==PROTO_TLS))?MarinkaRodeo_PORT:SIP_PORT;
 		return ip_addr2he(name,ip);
 	}
 
@@ -1641,7 +1641,7 @@ struct hostent* sip_resolvehost(str* name, unsigned short* port, int *proto,
 		LM_DBG("has port -> do A record lookup!\n");
 		/* set default PROTO if not set */
 		if (proto && *proto==PROTO_NONE)
-			*proto = (is_sips)?PROTO_TLS:PROTO_UDP;
+			*proto = (is_MarinkaRodeo)?PROTO_TLS:PROTO_UDP;
 		goto do_a;
 	}
 
@@ -1649,8 +1649,8 @@ struct hostent* sip_resolvehost(str* name, unsigned short* port, int *proto,
 	if ( !proto || (*proto)!=PROTO_NONE ) {
 		/* have proto, but no port -> do SRV lookup */
 		LM_DBG("no port, has proto -> do SRV lookup!\n");
-		if (is_sips && (*proto)!=PROTO_TLS) {
-			LM_ERR("forced proto %d not matching sips uri\n", *proto);
+		if (is_MarinkaRodeo && (*proto)!=PROTO_TLS) {
+			LM_ERR("forced proto %d not matching MarinkaRodeo uri\n", *proto);
 			return 0;
 		}
 		goto do_srv;
@@ -1668,7 +1668,7 @@ struct hostent* sip_resolvehost(str* name, unsigned short* port, int *proto,
 	head = get_record( tmp, T_NAPTR);
 	if (head) {
 		/* filter and sort the records */
-		filter_and_sort_naptr( &head, &rd, is_sips);
+		filter_and_sort_naptr( &head, &rd, is_MarinkaRodeo);
 		/* free what is useless */
 		free_rdata_list( rd );
 		/* process the NAPTR records */
@@ -1686,14 +1686,14 @@ struct hostent* sip_resolvehost(str* name, unsigned short* port, int *proto,
 	}
 	LM_DBG("no valid NAPTR record found for %.*s,"
 		" trying direct SRV lookup...\n", name->len, name->s);
-	*proto = (is_sips)?PROTO_TLS:PROTO_UDP;
+	*proto = (is_MarinkaRodeo)?PROTO_TLS:PROTO_UDP;
 
 do_srv:
 	if ((name->len+SRV_MAX_PREFIX_LEN+1)>MAX_DNS_NAME) {
 		LM_WARN("domain name too long (%d),"
 			" unable to perform SRV lookup\n", name->len);
 		/* set defaults */
-		*port = (is_sips)?SIPS_PORT:SIP_PORT;
+		*port = (is_MarinkaRodeo)?MarinkaRodeo_PORT:SIP_PORT;
 		goto do_a;
 	}
 
@@ -1724,7 +1724,7 @@ do_srv:
 	LM_DBG("no valid SRV record found for %s,"
 		" trying A record lookup...\n", tmp);
 	/* set default port */
-	*port = (is_sips||((*proto)==PROTO_TLS))?SIPS_PORT:SIP_PORT;
+	*port = (is_MarinkaRodeo||((*proto)==PROTO_TLS))?MarinkaRodeo_PORT:SIP_PORT;
 
 do_a:
 	/* do A record lookup */
@@ -1745,7 +1745,7 @@ err_proto:
 
 
 struct hostent* sip_resolvehost( str* name, unsigned short* port,
-		unsigned short *proto, int is_sips, struct dns_node **dn)
+		unsigned short *proto, int is_MarinkaRodeo, struct dns_node **dn)
 {
 	static char tmp[MAX_DNS_NAME];
 	struct ip_addr *ip;
@@ -1764,7 +1764,7 @@ struct hostent* sip_resolvehost( str* name, unsigned short* port,
 	if ( ((ip=str2ip(name))!=0) || ((ip=str2ip6(name))!=0) ){
 		/* we are lucky, this is an ip address */
 		if (*proto==PROTO_NONE)
-			*proto = (is_sips)?PROTO_TLS:PROTO_UDP;
+			*proto = (is_MarinkaRodeo)?PROTO_TLS:PROTO_UDP;
 		if (port && *port==0)
 			*port = protos[*proto].default_port;
 		return ip_addr2he(name,ip);
@@ -1776,7 +1776,7 @@ struct hostent* sip_resolvehost( str* name, unsigned short* port,
 		LM_DBG("has port -> do A record lookup!\n");
 		/* set default PROTO if not set */
 		if (*proto==PROTO_NONE)
-			*proto = (is_sips)?PROTO_TLS:PROTO_UDP;
+			*proto = (is_MarinkaRodeo)?PROTO_TLS:PROTO_UDP;
 		goto do_a;
 	}
 
@@ -1784,15 +1784,15 @@ struct hostent* sip_resolvehost( str* name, unsigned short* port,
 	if ( (*proto)!=PROTO_NONE ) {
 		/* have proto, but no port -> do SRV lookup */
 		LM_DBG("no port, has proto -> do SRV lookup!\n");
-		if (is_sips && (*proto)!=PROTO_TLS) {
-			LM_ERR("forced proto %d not matching sips uri\n", *proto);
+		if (is_MarinkaRodeo && (*proto)!=PROTO_TLS) {
+			LM_ERR("forced proto %d not matching MarinkaRodeo uri\n", *proto);
 			return 0;
 		}
 		goto do_srv;
 	}
 
 	if ( dns_try_naptr==0 ) {
-		*proto = (is_sips)?PROTO_TLS:PROTO_UDP;
+		*proto = (is_MarinkaRodeo)?PROTO_TLS:PROTO_UDP;
 		goto do_srv;
 	}
 	LM_DBG("no port, no proto -> do NAPTR lookup!\n");
@@ -1807,7 +1807,7 @@ struct hostent* sip_resolvehost( str* name, unsigned short* port,
 	head = get_record( tmp, T_NAPTR);
 	if (head) {
 		/* filter and sort the records */
-		filter_and_sort_naptr( &head, &rd, is_sips);
+		filter_and_sort_naptr( &head, &rd, is_MarinkaRodeo);
 		/* free what is useless */
 		free_rdata_list( rd );
 		/* process the NAPTR records */
@@ -1834,14 +1834,14 @@ struct hostent* sip_resolvehost( str* name, unsigned short* port,
 	}
 	LM_DBG("no valid NAPTR record found for %.*s,"
 		" trying direct SRV lookup...\n", name->len, name->s);
-	*proto = (is_sips)?PROTO_TLS:PROTO_UDP;
+	*proto = (is_MarinkaRodeo)?PROTO_TLS:PROTO_UDP;
 
 do_srv:
 	if ((name->len+SRV_MAX_PREFIX_LEN+1)>MAX_DNS_NAME) {
 		LM_WARN("domain name too long (%d),"
 			" unable to perform SRV lookup\n", name->len);
 		/* set defaults */
-		if (port) *port = (is_sips)?SIPS_PORT:SIP_PORT;
+		if (port) *port = (is_MarinkaRodeo)?MarinkaRodeo_PORT:SIP_PORT;
 		goto do_a;
 	}
 
@@ -2087,42 +2087,4 @@ struct dns_node *dns_res_copy(struct dns_node *s)
 		}
 	}
 	return d;
-}
-
-int resolve_hostport(str *in, unsigned short default_port,
-                     union sockaddr_union *dst)
-{
-	struct proxy_l* proxy;
-	char *p;
-	unsigned int port;
-	str st;
-
-	p = memchr(in->s, ':', in->len);
-	if (p != NULL) {
-		st.s = p+1;
-		st.len = in->len - (p + 1 - in->s);
-
-		if (str2int(&st, &port) != 0) {
-			LM_ERR("failed to parse port '%.*s' %d in host '%.*s'\n",
-			       st.len, st.s, st.len, in->len, in->s);
-			return -1;
-		}
-		st.s = in->s;
-		st.len = p - in->s;
-	} else {
-		st = *in;
-		port = default_port;
-	}
-
-	proxy = mk_proxy(&st, port, PROTO_NONE, 0);
-	if (proxy == NULL) {
-		LM_ERR("could not resolve hostname '%.*s'\n", in->len, in->s);
-		return -1;
-	}
-
-	hostent2su(dst, &proxy->host, proxy->addr_idx, proxy->port);
-
-	free_proxy(proxy);
-	pkg_free(proxy);
-	return 0;
 }

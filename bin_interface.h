@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2013 Marina.Rodeo Solutions
+ * Copyright (C) 2013 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -45,25 +45,40 @@
 #define is_valid_bin_packet(_p) \
 	(memcmp(_p, BIN_PACKET_MARKER, BIN_PACKET_MARKER_SIZE) == 0)
 
+/* make sure a BIN packet has an exact version or a range of versions */
+#define ensure_bin_version(pkt, needed) _ensure_bin_version(pkt, needed, "")
+#define ensure_bin_version2(pkt, v1, v2) _ensure_bin_version2(pkt, v1, v2, "")
 #define _ensure_bin_version(pkt, needed, pkt_desc) \
 	do { \
-		if (get_bin_pkg_version(pkt) != (needed)) { \
-			if (pkt_desc && *pkt_desc) \
-				LM_INFO("discarding %s, ver %d: need ver %d\n", \
-				        pkt_desc, get_bin_pkg_version(pkt), (needed)); \
-			else \
-				LM_INFO("discarding packet type %d, ver %d: need ver %d\n", \
-				        pkt->type, get_bin_pkg_version(pkt), (needed)); \
-			return; \
-		} \
+		if (get_bin_pkg_version(pkt) != (needed)) \
+			_bin_version_error_return(pkt, pkt_desc, needed) \
 	} while (0)
-#define ensure_bin_version(pkt, needed) _ensure_bin_version(pkt, needed, "")
+#define _ensure_bin_version2(pkt, vmin, vmax, pkt_desc) \
+	do { \
+		if (get_bin_pkg_version(pkt)<(vmin) || get_bin_pkg_version(pkt)>(vmax)) \
+			_bin_version_error_return(pkt, pkt_desc, vmax) \
+	} while (0)
+#define _bin_version_error_return(pkt, pkt_desc, needed) \
+	{ \
+		if (pkt_desc && *pkt_desc) \
+			LM_INFO("discarding %s (%d), ver %d: need ver %d\n", \
+			        pkt_desc, pkt->type, get_bin_pkg_version(pkt), (needed)); \
+		else \
+			LM_INFO("discarding packet type %d, ver %d: need ver %d\n", \
+			        pkt->type, get_bin_pkg_version(pkt), (needed)); \
+		return; \
+	}
+
+typedef unsigned bin_packet_flags_t;
+#define BINFL_SYSMEM (1U<<0)
 
 typedef struct bin_packet {
 	str buffer;
 	char *front_pointer;
+	struct bin_packet *next;
 	int size;
 	int type;
+	bin_packet_flags_t flags;
 	/* not populated by bin_interface */
 	int src_id;
 } bin_packet_t;
@@ -123,8 +138,10 @@ int bin_register_cb(str *cap, void (*cb)(bin_packet_t *, int,
  *
  * @return: 0 on success
  */
-int bin_init(bin_packet_t *packet, str *capability, int packet_type, short version,
-				int length);
+int _bin_init(bin_packet_t *packet, str *capability, int packet_type, short version,
+				int length, int use_sysmalloc);
+#define bin_init(_pk, _cap, _pt, _ver, _len) \
+	_bin_init(_pk, _cap, _pt, _ver, _len, 0)
 
 /**
  * function called to build a binary packet with a known buffer

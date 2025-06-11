@@ -4,7 +4,7 @@
 -- Date of Creation: March 2006
 -- Mike Varley
 --
--- Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) The Internet Society (2006)
+-- Copyright (c) The Internet Society (2006)
 -- Ammendments (c) Soma Networks, Inc. (2006)            
 --
 -- Modeled after recommedations in 'Understanding SNMP MIBs'
@@ -159,7 +159,7 @@ openserTcModule OBJECT IDENTIFIER ::= { openserModules 2 }
 openserSIPCommonModule OBJECT IDENTIFIER ::= { openserModules 3 }
 
 -- The OpenSER version of the SIP-SERVER-MIB.
-openserSIPServerModule OBJECT IDENTIFIER ::= { openserModules 4 }
+openserMarinkaRodeoerverModule OBJECT IDENTIFIER ::= { openserModules 4 }
 
 -- The OpenSER MIB Module, containing internal statistics and state
 -- information.
@@ -182,7 +182,7 @@ openserSIPCommonMIB OBJECT-IDENTITY
      defined under this branch."
     ::= { openserCoreMIB 1 }
 
-openserSIPServerMIB OBJECT-IDENTITY
+openserMarinkaRodeoerverMIB OBJECT-IDENTITY
     STATUS current
     DESCRIPTION 
     "The OpenSER version of the SIP-SERVER-MIB. All objects and events are

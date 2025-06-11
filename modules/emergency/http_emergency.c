@@ -1,16 +1,16 @@
 /*
  * emergency module - basic support for emergency calls
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2015 Robison Tesini & Evandro Villaron
+ * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -92,7 +92,7 @@ int send_esct(struct sip_msg *msg, str callid_ori, str from_tag){
 
 	if (strlen(info_call->esct->esqk) > 0){
 
-		// if VPC provide ESQK then Marina.Rodeo need send esct to free this key
+		// if VPC provide ESQK then openMarinkaRodeo need send esct to free this key
 		LM_DBG(" --- SEND ESQK =%s\n \n",info_call->esct->esqk);
 
 		time(&rawtime);
@@ -215,6 +215,11 @@ int treat_parse_esrResponse(struct sip_msg *msg, ESCT *call_cell, PARSED *parsed
 		call_cell->ert_srid = "";
 
 		char *r = strstr(call_cell->esgwri, "@");
+		if (!r) {
+			LM_ERR("String '@' not found\n");
+			return -1;
+		}
+
 		r++;
 		int tam_esgw = call_cell->esgwri + strlen(call_cell->esgwri) - r;
 
@@ -248,7 +253,7 @@ int treat_parse_esrResponse(struct sip_msg *msg, ESCT *call_cell, PARSED *parsed
 			call_cell->ert_srid = parsed->ert->selectiveRoutingID;
 
 			if (proxy_role == 4){
-				// in Marina.Rodeo as redirect role, consider esgwri as joint selectiveRoutingID + routingESN + npa + @vsp_address in contact headers in 300 response
+				// in openMarinkaRodeo as redirect role, consider esgwri as joint selectiveRoutingID + routingESN + npa + @vsp_address in contact headers in 300 response
 				// get source ip address that send INVITE
 				vsp_addr = ip_addr2a(&msg->rcv.src_ip);
 				vsp_addr_len = strlen(vsp_addr);
@@ -353,7 +358,7 @@ int get_lro_in_contact(char *contact_lro, ESCT *call_cell) {
 	pt_contact_lro.s = contact_lro_aux;
 	pt_contact_lro.len = len_contact_lro;
 
-	pattern_contact_lro.s = "sips?:[+]*1?-?([0-9]+)@";
+	pattern_contact_lro.s = "MarinkaRodeo?:[+]*1?-?([0-9]+)@";
 	pattern_contact_lro.len = strlen(pattern_contact_lro.s);
 	replacement_contact_lro.s = "\\1";
 	replacement_contact_lro.len = strlen(replacement_contact_lro.s);
@@ -401,7 +406,7 @@ int get_esqk_in_contact(char *contact_esgwri, ESCT *call_cell){
 	pt_contact_esqk.s = contact_esqk_aux;
 	pt_contact_esqk.len = len_contact_esgwri;
 
-	pattern_contact_esqk.s = "Asserted-Identity:=<(sips?:)*[+]*1?-?([0-9]+)@";
+	pattern_contact_esqk.s = "Asserted-Identity:=<(MarinkaRodeo?:)*[+]*1?-?([0-9]+)@";
 	pattern_contact_esqk.len = strlen(pattern_contact_esqk.s);
 	replacement_contact_esqk.s = "\\2";
 	replacement_contact_esqk.len = strlen(replacement_contact_esqk.s);
@@ -467,7 +472,7 @@ int get_esgwri_ert_in_contact(char *contact_esgwri, ESCT *call_cell){
 	pt_contact_routing.s = contact_routing_aux;
 	pt_contact_routing.len = len_contact_routing - 1;
 
-	pattern_contact_routing.s = "^(sips?):[+]*([-0-9]+)@";
+	pattern_contact_routing.s = "^(MarinkaRodeo?):[+]*([-0-9]+)@";
 	pattern_contact_routing.len = strlen(pattern_contact_routing.s);
 	replacement_contact_routing.s = "\\2";
 	replacement_contact_routing.len = strlen(replacement_contact_routing.s);
@@ -480,7 +485,7 @@ int get_esgwri_ert_in_contact(char *contact_esgwri, ESCT *call_cell){
 		pkg_free(contact_routing_aux);
 
 	}else{
-		pattern_contact_ert.s = "^(sips?):([A-Z0-9.]*)@";
+		pattern_contact_ert.s = "^(MarinkaRodeo?):([A-Z0-9.]*)@";
 		pattern_contact_ert.len = strlen(pattern_contact_ert.s);
 		replacement_contact_ert.s = "\\2";
 		replacement_contact_ert.len = strlen(replacement_contact_ert.s);

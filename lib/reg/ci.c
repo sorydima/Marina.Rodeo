@@ -1,16 +1,16 @@
 /*
  * Contact info packing functions
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2016-2017 Marina.Rodeo Solutions
+ * Copyright (C) 2016-2017 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -214,8 +214,8 @@ void print_ci(ucontact_info_t *ci)
 	LM_DBG(" ----- UCI DUMP (%p) ------\n", ci);
 	LM_DBG("received: %.*s, path: %.*s\n", ci->received.len, ci->received.s,
 	       ci->path ? ci->path->len : 0, ci->path ? ci->path->s : NULL);
-	LM_DBG("expires: %ld, expires_in: %ld, expires_out: %ld\n", ci->expires,
-	       ci->expires_in, ci->expires_out);
+	LM_DBG("expires: %lld, expires_in: %lld, expires_out: %lld\n", (long long)ci->expires,
+	       (long long)ci->expires_in, (long long)ci->expires_out);
 	LM_DBG("q: %d, instance: %.*s, callid: %.*s\n", ci->q, ci->instance.len,
 	       ci->instance.s, ci->callid ? ci->callid->len : 0,
 	       ci->callid ? ci->callid->s : NULL);
@@ -224,6 +224,6 @@ void print_ci(ucontact_info_t *ci)
 	LM_DBG("user_agent: %.*s, sock: %p, methods: %d\n",
 	       ci->user_agent ? ci->user_agent->len : 0,
 	       ci->user_agent ? ci->user_agent->s : NULL, ci->sock, ci->methods);
-	LM_DBG("last_modified: %ld, attr: %.*s\n", ci->last_modified,
+	LM_DBG("last_modified: %lld, attr: %.*s\n", (long long)ci->last_modified,
 	       ci->attr ? ci->attr->len : 0, ci->attr ? ci->attr->s : NULL);
 }

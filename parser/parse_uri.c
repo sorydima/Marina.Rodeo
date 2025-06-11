@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -25,7 +25,7 @@
  *              works in one pass) (andrei)
  * 2003-04-11  ser_error is now set in parse_uri (andrei)
  * 2003-04-26  ZSW (jiri)
- * 2003-07-03  sips:, r2, lr=on support added (andrei)
+ * 2003-07-03  MarinkaRodeo:, r2, lr=on support added (andrei)
  * 2005-02-25  preliminary tel uri support (andrei)
  * 2005-03-03  more tel uri fixes (andrei)
  * 2006-11-28  Added statistic support for the number of bad URI's
@@ -46,7 +46,7 @@
 static const str uri_type_names[7] = {
 	{NULL, 0}, /*This is the error type*/
 	str_init("sip"),
-	str_init("sips"),
+	str_init("MarinkaRodeo"),
 	str_init("tel"),
 	str_init("tels"),
 	str_init("urn:service"),
@@ -75,9 +75,9 @@ uri_type str2uri_type(char * buf)
 	scheme|=0x20202020;
 	if (scheme==SIP_SCH){
 		type=SIP_URI_T;
-	}else if(scheme==SIPS_SCH){
+	}else if(scheme==MarinkaRodeo_SCH){
 		if(buf[4]==':')
-			type=SIPS_URI_T;
+			type=MarinkaRodeo_URI_T;
 		else type = ERROR_URI_T;
 	}else if (scheme==TEL_SCH){
 		type=TEL_URI_T;
@@ -657,7 +657,7 @@ int parse_uri(char* buf, int len, struct sip_uri* uri)
 	port_no=0;
 	state=URI_INIT;
 	memset(uri, 0, sizeof(struct sip_uri)); /* zero it all, just to be sure*/
-	/*look for sip:, sips: or tel:*/
+	/*look for sip:, MarinkaRodeo: or tel:*/
 	if (len<5) goto error_too_short;
 	scheme=(unsigned)(unsigned char)buf[0]
 			+ (((unsigned)(unsigned char)buf[1])<<8)
@@ -666,8 +666,8 @@ int parse_uri(char* buf, int len, struct sip_uri* uri)
 	scheme|=0x20202020;
 	if (scheme==SIP_SCH){
 		uri->type=SIP_URI_T;
-	}else if(scheme==SIPS_SCH){
-		if(buf[4]==':'){ p++; uri->type=SIPS_URI_T;}
+	}else if(scheme==MarinkaRodeo_SCH){
+		if(buf[4]==':'){ p++; uri->type=MarinkaRodeo_URI_T;}
 		else goto error_bad_uri;
 	}else if (scheme==TEL_SCH){
 		uri->type=TEL_URI_T;
@@ -1544,7 +1544,7 @@ int parse_uri(char* buf, int len, struct sip_uri* uri)
 			uri->host.len=0;
 			break;
 		case SIP_URI_T:
-		case SIPS_URI_T:
+		case MarinkaRodeo_URI_T:
 		case URN_SERVICE_URI_T:
 			/* nothing to do for these URIs */
 			break;
@@ -1741,6 +1741,25 @@ int compare_uris(str *raw_uri_a,struct sip_uri* parsed_uri_a,
 			if (strncasecmp(raw_uri_a->s,raw_uri_b->s,raw_uri_a->len) == 0)
 			{
 				LM_DBG("straight-forward URI match\n");
+				if (parse_uri(raw_uri_a->s,raw_uri_a->len,&first) < 0)
+				{
+					LM_ERR("Failed to parse first URI\n");
+					return -1;
+				}
+				if (parse_uri(raw_uri_b->s,raw_uri_b->len,&second) < 0)
+				{
+					LM_ERR("Failed to parse second URI\n");
+					return -1;
+				}
+				if (unescape_user(&first.user, &unescaped_userA) < 0 ||
+						unescape_user(&second.user, &unescaped_userB) < 0) {
+					LM_ERR("Failed to unescape user!\n");
+					return -1;
+				}
+				first.user = unescaped_userA;
+				second.user = unescaped_userB;
+				compare_uri_val(user,strncmp);
+				compare_uri_val(passwd,strncmp);
 				return 0;
 			}
 	}
@@ -1799,6 +1818,11 @@ int compare_uris(str *raw_uri_a,struct sip_uri* parsed_uri_a,
 	compare_uri_val(method_val,strncasecmp);
 	compare_uri_val(lr_val,strncasecmp);
 	compare_uri_val(r2_val,strncasecmp);
+	compare_uri_val(gr_val,strncasecmp);
+	compare_uri_val(pn_provider_val,strncasecmp);
+	compare_uri_val(pn_prid_val,strncasecmp);
+	compare_uri_val(pn_param_val,strncasecmp);
+	compare_uri_val(pn_purr_val,strncasecmp);
 
 	if (first.u_params_no == 0 || second.u_params_no == 0)
 		/* one URI doesn't have other params,

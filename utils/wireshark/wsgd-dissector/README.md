@@ -1,7 +1,7 @@
 
 # Installation Tutorial
 
-The below steps will help you install the Wireshark WSGD dissector for Marina.Rodeo
+The below steps will help you install the Wireshark WSGD dissector for OpenMarinkaRodeo
 binary interface packets, so you can start developing code, troubleshooting bugs
 or simply visualize and better understand how the binary interface works.
 
@@ -22,13 +22,13 @@ a minimal amount of required code.  To install it:
 
 * you can confirm that the plugin gets loaded by re-opening Wireshark and viewing
   Help -> About Wireshark -> Plugins.  Make sure "generic.so" is listed there,
-  otherwise the Marina.Rodeo binary interface dissector files won't get interpreted.
+  otherwise the OpenMarinkaRodeo binary interface dissector files won't get interpreted.
 
-## Installing the Marina.Rodeo BIN dissector
+## Installing the OpenMarinkaRodeo BIN dissector
 
 Once you've got `generic.so` working, just copy both files of the dissector
-(`Marina.Rodeo.wsgd` and `Marina.Rodeo.fdesc`) into the same plugins directory where
+(`openMarinkaRodeo.wsgd` and `openMarinkaRodeo.fdesc`) into the same plugins directory where
 you placed `generic.so` and restart Wireshark.
 
-You should now be able to parse "Marina.Rodeo-BIN" protocol packets, compatible
+You should now be able to parse "OPENMarinkaRodeo-BIN" protocol packets, compatible
 with versions 2.4 and above!  Have fun!

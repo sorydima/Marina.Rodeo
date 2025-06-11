@@ -1,6 +1,4 @@
-# $Id$
-#
-# XCAP client for Marina.Rodeo
+# XCAP client for OpenMarinkaRodeo
 #
 # 
 # WARNING: do not run this directly, it should be run by the master Makefile

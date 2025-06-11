@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2004 iptel.org
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008 1&1 Internet AG
+ * Copyright (C) 2001-2004 iptel.org
+ * Copyright (C) 2008 1&1 Internet AG
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -126,22 +126,22 @@ int db_postgres_connect(struct pg_con* ptr)
 		rmSubstr(copy, tls_domain);
 
 		// if tls_domain was the first parameter
-		// before rmSubstr() tls_domain=[dom]&application_name=Marina.Rodeo&connect_timeout=100
-		// after  rmSubstr() &application_name=Marina.Rodeo&connect_timeout=100
+		// before rmSubstr() tls_domain=[dom]&application_name=openMarinkaRodeo&connect_timeout=100
+		// after  rmSubstr() &application_name=openMarinkaRodeo&connect_timeout=100
 		if (*copy == '&') {
 			memmove(copy, copy+1, strlen(copy));
 		}
 		// if tls_domain was the last parameter
-		// before rmSubstr() application_name=Marina.Rodeo&connect_timeout=100&tls_domain=[dom]
-		// after  rmSubstr() &application_name=Marina.Rodeo&connect_timeout=100&
+		// before rmSubstr() application_name=openMarinkaRodeo&connect_timeout=100&tls_domain=[dom]
+		// after  rmSubstr() &application_name=openMarinkaRodeo&connect_timeout=100&
 		len = strlen(copy);
 		if (copy[len-1] == '&') {
 			copy[len-1] = '\0';
 		}
 
 		// if tls_domain was a middle parameter
-		// before rmSubstr() application_name=Marina.Rodeo&tls_domain=[dom]&connect_timeout=100
-		// after  rmSubstr() &application_name=Marina.Rodeo&&connect_timeout=100
+		// before rmSubstr() application_name=openMarinkaRodeo&tls_domain=[dom]&connect_timeout=100
+		// after  rmSubstr() &application_name=openMarinkaRodeo&&connect_timeout=100
 		char *index = strstr(copy, "&&");
 		if (index) {
 			removeChar(copy, index-copy);
@@ -152,28 +152,38 @@ int db_postgres_connect(struct pg_con* ptr)
 
 	/* If use_tls is specified and tls_domain=[dom] was found in the parameter list */
 	/* configure the SSL connection parameters */
-	if (use_tls && tls_domain_name.len) {
-		/* the connection should use TLS */
-		if (!ptr->tls_dom) {
-			ptr->tls_dom = tls_api.find_client_domain_name(&tls_domain_name);
+	if (use_tls) {
+		if (tls_domain_name.len) {
+		/* the connection must use TLS */
 			if (!ptr->tls_dom) {
-				LM_ERR("TLS domain: %.*s not found\n", tls_domain_name.len, tls_domain_name.s);
-				return -1;
+				ptr->tls_dom = tls_api.find_client_domain_name(&tls_domain_name);
+				if (!ptr->tls_dom) {
+					LM_ERR("TLS domain: %.*s not found\n", tls_domain_name.len, tls_domain_name.s);
+					return -1;
+				}
 			}
+
+			LM_DBG("SSL key file: %.*s\n", ptr->tls_dom->pkey.len, ptr->tls_dom->pkey.s);
+			LM_DBG("SSL cert file: %.*s\n", ptr->tls_dom->cert.len, ptr->tls_dom->cert.s);
+			LM_DBG("SSL ca file: %.*s\n", ptr->tls_dom->ca.len, ptr->tls_dom->ca.s);
+			LM_DBG("SSL verify_cert: %d\n", ptr->tls_dom->verify_cert);
+
+			if (ptr->tls_dom->verify_cert == 1) {
+				PSQL_PARAM("sslmode", "verify-ca");
+			} else {
+				PSQL_PARAM("sslmode", "require");
+			}
+
+			PSQL_PARAM("sslkey", ptr->tls_dom->pkey.s);
+			PSQL_PARAM("sslcert", ptr->tls_dom->cert.s);
+			PSQL_PARAM("sslrootcert", ptr->tls_dom->ca.s);
+		} else {
+			/* try SSL if available, fallback to non-SSL */
+			PSQL_PARAM("sslmode", "prefer");
 		}
-
-		LM_DBG("SSL key file: %.*s\n", ptr->tls_dom->pkey.len, ptr->tls_dom->pkey.s);
-		LM_DBG("SSL cert file: %.*s\n", ptr->tls_dom->cert.len, ptr->tls_dom->cert.s);
-		LM_DBG("SSL ca file: %.*s\n", ptr->tls_dom->ca.len, ptr->tls_dom->ca.s);
-		LM_DBG("SSL verify_cert: %d\n", ptr->tls_dom->verify_cert);
-
-		if (ptr->tls_dom->verify_cert == 1) {
-			PSQL_PARAM("sslmode", "verify-ca");
-		}
-
-		PSQL_PARAM("sslkey", ptr->tls_dom->pkey.s);
-		PSQL_PARAM("sslcert", ptr->tls_dom->cert.s);
-		PSQL_PARAM("sslrootcert", ptr->tls_dom->ca.s);
+	} else {
+		/* do not try SSL at all*/
+		PSQL_PARAM("sslmode", "disable");
 	}
 
 	/* force the default timeout */

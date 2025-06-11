@@ -1,13 +1,13 @@
 #!/bin/sh
 #
 ### BEGIN INIT INFO
-# Provides:          Marina.Rodeo
+# Provides:          openMarinkaRodeo
 # Required-Start:    $syslog $network $local_fs $time $remote_fs
 # Required-Stop:     $syslog $network $local_fs $remote_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Start the Marina.Rodeo SIP server
-# Description:       Start the Marina.Rodeo SIP server
+# Short-Description: Start the OpenMarinkaRodeo SIP server
+# Description:       Start the OpenMarinkaRodeo SIP server
 ### END INIT INFO
 #
 # TODO:
@@ -19,16 +19,16 @@ set -e
 
 PATH_EXTRA=
 PATH=/sbin:/bin:/usr/sbin:/usr/bin${PATH_EXTRA:+:${PATH_EXTRA}}
-DAEMON=/sbin/Marina.Rodeo
-NAME=Marina.Rodeo
-DESC=Marina.Rodeo
-CFGFILE=/etc/Marina.Rodeo/Marina.Rodeo.cfg
-M4CFGFILE=/etc/Marina.Rodeo/Marina.Rodeo.m4
-M4ARCHIVEDIR=/etc/Marina.Rodeo/archive
-HOMEDIR=/run/Marina.Rodeo
+DAEMON=/sbin/openMarinkaRodeo
+NAME=openMarinkaRodeo
+DESC=openMarinkaRodeo
+CFGFILE=/etc/openMarinkaRodeo/openMarinkaRodeo.cfg
+M4CFGFILE=/etc/openMarinkaRodeo/openMarinkaRodeo.m4
+M4ARCHIVEDIR=/etc/openMarinkaRodeo/archive
+HOMEDIR=/run/openMarinkaRodeo
 PIDFILE=$HOMEDIR/$NAME.pid
-DEFAULTS=/etc/default/Marina.Rodeo
-RUN_Marina.Rodeo=no
+DEFAULTS=/etc/default/openMarinkaRodeo
+RUN_OPENMarinkaRodeo=no
 
 
 [ -e "/lib/lsb/init-functions" ] && . /lib/lsb/init-functions
@@ -39,15 +39,15 @@ if [ -f $DEFAULTS ]; then
    . $DEFAULTS || true
 fi
 
-if [ "$RUN_Marina.Rodeo" != "yes" ]; then
-    echo "Marina.Rodeo not yet configured. Edit /etc/default/Marina.Rodeo first."
+if [ "$RUN_OPENMarinkaRodeo" != "yes" ]; then
+    echo "OpenMarinkaRodeo not yet configured. Edit /etc/default/openMarinkaRodeo first."
     exit 0
 fi
 
 
-check_Marina.Rodeo_config ()
+check_openMarinkaRodeo_config ()
 {
-	# Check if Marina.Rodeo configuration is valid before starting the server
+	# Check if openMarinkaRodeo configuration is valid before starting the server
 	set +e
 	out=$($DAEMON -c -f $CFGFILE 2>&1 > /dev/null)
 	retcode=$?
@@ -63,15 +63,15 @@ create_radius_seqfile ()
 {
     # Create a radius sequence file to be used by the radius client if
     # radius accounting is enabled. This is needed to avoid any issue
-    # with the file not being writable if Marina.Rodeo first starts as user
+    # with the file not being writable if openMarinkaRodeo first starts as user
     # root because DUMP_CORE is enabled and creates this file as user
-    # root and then later it switches back to user Marina.Rodeo and cannot
-    # write to the file. If the file exists before Marina.Rodeo starts, it
+    # root and then later it switches back to user openMarinkaRodeo and cannot
+    # write to the file. If the file exists before openMarinkaRodeo starts, it
     # won't change it's ownership and will be writable for both root
-    # and Marina.Rodeo, no matter what options are chosen at install time
-    RADIUS_SEQ_FILE=/run/Marina.Rodeo/Marina.Rodeo_radius.seq
-    if [ -d /run/Marina.Rodeo ]; then
-	chown ${USER}:${GROUP} /run/Marina.Rodeo
+    # and openMarinkaRodeo, no matter what options are chosen at install time
+    RADIUS_SEQ_FILE=/run/openMarinkaRodeo/openMarinkaRodeo_radius.seq
+    if [ -d /run/openMarinkaRodeo ]; then
+	chown ${USER}:${GROUP} /run/openMarinkaRodeo
 
 	if [ ! -f $RADIUS_SEQ_FILE ]; then
 	    touch $RADIUS_SEQ_FILE
@@ -85,8 +85,8 @@ create_radius_seqfile ()
 
 S_MEMORY=$((`echo $S_MEMORY | sed -e 's/[^0-9]//g'`))
 P_MEMORY=$((`echo $P_MEMORY | sed -e 's/[^0-9]//g'`))
-[ -z "$USER" ]  && USER=Marina.Rodeo
-[ -z "$GROUP" ] && GROUP=Marina.Rodeo
+[ -z "$USER" ]  && USER=openMarinkaRodeo
+[ -z "$GROUP" ] && GROUP=openMarinkaRodeo
 [ $S_MEMORY -le 0 ] && S_MEMORY=32
 [ $P_MEMORY -le 0 ] && P_MEMORY=32
 
@@ -105,7 +105,7 @@ OPTIONS="-P $PIDFILE -m $S_MEMORY -M $P_MEMORY -u $USER -g $GROUP -f $CFGFILE"
 
 case "$1" in
   start)
-	check_Marina.Rodeo_config
+	check_openMarinkaRodeo_config
 	create_radius_seqfile
 
 	# dirs under /run will go away on reboot.
@@ -148,7 +148,7 @@ case "$1" in
 	log_end_msg $?
 	;;
   restart|force-reload)
-	check_Marina.Rodeo_config
+	check_openMarinkaRodeo_config
 	create_radius_seqfile
 
 	log_daemon_msg "Restarting $DESC" "$NAME"

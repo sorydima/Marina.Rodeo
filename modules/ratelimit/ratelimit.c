@@ -1,17 +1,17 @@
 /*
  * ratelimit module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Hendrik Scholz <hscholz@raisdorf.net>
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008 Ovidiu Sas <osas@voipembedded.com>
+ * Copyright (C) 2006 Hendrik Scholz <hscholz@raisdorf.net>
+ * Copyright (C) 2008 Ovidiu Sas <osas@voipembedded.com>
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -122,6 +122,8 @@ static int pv_get_rl_count(struct sip_msg *msg, pv_param_t *param,
 		pv_value_t *res);
 static int pv_parse_rl_count(pv_spec_p sp, const str *in);
 
+static int fixup_avp(void** param);
+
 static const cmd_export_t cmds[] = {
 	{"rl_check", (cmd_function)w_rl_check, {
 		{CMD_PARAM_STR,0,0},
@@ -137,6 +139,10 @@ static const cmd_export_t cmds[] = {
 		{CMD_PARAM_STR,0,0}, {0,0,0}},
 		REQUEST_ROUTE|FAILURE_ROUTE|ONREPLY_ROUTE|
 		BRANCH_ROUTE|ERROR_ROUTE|LOCAL_ROUTE|TIMER_ROUTE|EVENT_ROUTE},
+	{"rl_values", (cmd_function)w_rl_values, {
+		{CMD_PARAM_VAR,fixup_avp,0},
+		{CMD_PARAM_REGEX|CMD_PARAM_OPT,0, 0}, {0,0,0}},
+		ALL_ROUTES},
 	{0,0,{{0,0,0}},0}
 };
 
@@ -194,13 +200,13 @@ static const mi_export_t mi_cmds [] = {
 };
 
 static const pv_export_t mod_items[] = {
-	{ {"rl_count", sizeof("rl_count")-1}, 1010, pv_get_rl_count, 0,
+	{ str_const_init("rl_count"), 1010, pv_get_rl_count, 0,
 		 pv_parse_rl_count, 0, 0, 0 },
 	{ {0, 0}, 0, 0, 0, 0, 0, 0, 0 }
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
 	{ /* modparam dependencies */
@@ -215,7 +221,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,	/* dlopen flags */
 	0,					/* load function */
-	&deps,				/* Marina.Rodeo module dependencies */
+	&deps,				/* OpenMarinkaRodeo module dependencies */
 	cmds,
 	NULL,
 	params,
@@ -390,7 +396,7 @@ static int mod_init(void)
 	if (db_url.s) {
 		db_url.len = strlen(db_url.s);
 		db_prefix.len = strlen(db_prefix.s);
-		LM_DBG("using CacheDB url: %s\n", db_url.s);
+		LM_DBG("using CacheDB url: %s\n", db_url_escape(&db_url));
 	}
 
 	RL_SHM_MALLOC(rl_network_count, sizeof(int));
@@ -1126,4 +1132,14 @@ static int pv_parse_rl_count(pv_spec_p sp, const str *in)
 	sp->pvp.pvn.u.isname.type = AVP_NAME_STR;
 	return 0;
 
+}
+
+static int fixup_avp(void** param)
+{
+	if (((pv_spec_t*)*param)->type != PVT_AVP) {
+		LM_ERR("invalid pvar type - only AVPs are allowed!\n");
+		return E_SCRIPT;
+	}
+
+	return 0;
 }

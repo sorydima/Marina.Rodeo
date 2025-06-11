@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -88,7 +88,7 @@ struct hostport {
 		} \
 	} while (0)
 
-static inline str *get_adv_host(struct socket_info *send_sock)
+static inline const str *get_adv_host(const struct socket_info *send_sock)
 {
 	if(send_sock->adv_name_str.len)
 		return &(send_sock->adv_name_str);
@@ -98,7 +98,7 @@ static inline str *get_adv_host(struct socket_info *send_sock)
 		return &(send_sock->address_str);
 }
 
-static inline str *get_adv_port(struct socket_info *send_sock)
+static inline const str *get_adv_port(const struct socket_info *send_sock)
 {
 	if(send_sock->adv_port_str.len)
 		return &(send_sock->adv_port_str);
@@ -108,7 +108,7 @@ static inline str *get_adv_port(struct socket_info *send_sock)
 		return &(send_sock->port_no_str);
 }
 
-static inline str *_get_adv_host(struct socket_info *send_sock,
+static inline const str *_get_adv_host(const struct socket_info *send_sock,
                                  struct sip_msg *msg)
 {
 	if (send_sock->adv_name_str.len)
@@ -121,7 +121,7 @@ static inline str *_get_adv_host(struct socket_info *send_sock,
 		return &send_sock->address_str;
 }
 
-static inline str *_get_adv_port(struct socket_info *send_sock,
+static inline const str *_get_adv_port(const struct socket_info *send_sock,
                                  struct sip_msg *msg)
 {
 	if (send_sock->adv_port_str.len)
@@ -135,11 +135,11 @@ static inline str *_get_adv_port(struct socket_info *send_sock,
 }
 
 char * build_req_buf_from_sip_req (	struct sip_msg* msg,
-				unsigned int *returned_len, struct socket_info* send_sock,
+				unsigned int *returned_len, const struct socket_info* send_sock,
 				int proto, str *via_params, unsigned int flags);
 
 char * build_res_buf_from_sip_res(	struct sip_msg* msg,
-				unsigned int *returned_len, struct socket_info *sock,int flags);
+				unsigned int *returned_len, const struct socket_info *sock,int flags);
 
 
 char * build_res_buf_from_sip_req( unsigned int code,
@@ -150,7 +150,7 @@ char * build_res_buf_from_sip_req( unsigned int code,
 				struct bookmark *bmark);
 
 char* via_builder( unsigned int *len,
-	struct socket_info* send_sock,
+	const struct socket_info* send_sock,
 	str *branch, str* extra_params, int proto, struct hostport *hp );
 
 
@@ -161,7 +161,7 @@ int branch_builder( unsigned int hash_index,
 	/* output value: string and actual length */
 	char *branch_str, int *len );
 
-char *contact_builder(struct socket_info* send_sock, int *ct_len);
+char *contact_builder(const struct socket_info* send_sock, int *ct_len);
 
 /* check if IP address in Via != source IP address of signaling */
 int received_test( struct sip_msg *msg );
@@ -171,7 +171,7 @@ char *construct_uri(str *protocol,str *username,str *domain,str *port,
 
 void process_lumps( struct sip_msg* msg, struct lump* lumps, char* new_buf,
 		unsigned int* new_buf_offs, unsigned int* orig_offs,
-		struct socket_info* send_sock, int max_offset);
+		const struct socket_info* send_sock, int max_offset);
 
 int is_del_via1_lump(struct sip_msg* msg);
 
@@ -180,10 +180,10 @@ char* received_builder(struct sip_msg *msg, unsigned int *received_len);
 char* rport_builder(struct sip_msg *msg, unsigned int *rport_len);
 
 unsigned int prep_reassemble_body_parts( struct sip_msg* msg,
-		struct socket_info* send_sock);
+		const struct socket_info* send_sock);
 
 void reassemble_body_parts( struct sip_msg* msg, char* new_buf,
 		unsigned int* new_offs, unsigned int* orig_offs,
-		struct socket_info* send_sock);
+		const struct socket_info* send_sock);
 
 #endif

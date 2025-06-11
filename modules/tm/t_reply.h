@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -30,6 +30,9 @@
 
 extern int restart_fr_on_each_reply;
 extern int onreply_avp_mode;
+extern struct script_route_ref *tm_local_reply_route;
+
+struct ua_client;
 
 /* reply processing status */
 enum rps {
@@ -69,6 +72,8 @@ typedef int (*treply_f)(struct sip_msg * , unsigned int , const str * );
 typedef int (*treply_wb_f)( struct cell* trans, unsigned int code, str *text,
 	str *body, str *new_header, str *to_tag);
 typedef int (*tgen_totag_f)(struct sip_msg * , str * );
+typedef int (*tcheck_trans_f)(struct sip_msg *);
+typedef int (*trelay_f)(struct sip_msg  *p_msg , void *flags, struct proxy_l *proxy);
 
 #define LOCK_REPLIES(_t) lock(&(_t)->reply_mutex )
 #define UNLOCK_REPLIES(_t) unlock(&(_t)->reply_mutex )
@@ -147,6 +152,9 @@ int t_retransmit_reply( struct cell *t );
 void tm_init_tags();
 
 int unixsock_t_reply(str* msg);
+
+void process_reply_and_timer(struct cell *t,int branch,int msg_status, 
+	struct sip_msg *p_msg,int last_uac_status, struct ua_client *uac);
 
 #endif
 

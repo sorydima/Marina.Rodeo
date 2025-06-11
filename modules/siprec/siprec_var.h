@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2021 Marina.Rodeo Project
+ * Copyright (C) 2021 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -25,10 +25,21 @@
 #include "../../pvar.h"
 #include "../../socket_info.h"
 
+#define SIPREC_DEFAULT_INSTANCE "default"
+
 struct srec_var {
-	str group, caller, callee, media, headers;
-	struct socket_info *si;
+	str group;
+	str caller;
+	str callee;
+	str media;
+	str headers;
+	str from_uri;
+	str to_uri;
+	str group_custom_extension;
+	str session_custom_extension;
+	const struct socket_info *si;
 };
+extern str siprec_default_instance;
 
 int init_srec_var(void);
 int pv_parse_siprec(pv_spec_p sp, const str *in);
@@ -36,7 +47,8 @@ int pv_get_siprec(struct sip_msg *msg,  pv_param_t *param,
 		pv_value_t *val);
 int pv_set_siprec(struct sip_msg* msg, pv_param_t *param,
 		int op, pv_value_t *val);
+int pv_parse_siprec_instance(pv_spec_p sp, const str *in);
 
-struct srec_var *get_srec_var(void);
+struct srec_var *get_srec_var(str *instance);
 
 #endif /* _SIPREC_VAR_H_ */

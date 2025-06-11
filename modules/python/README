@@ -8,7 +8,7 @@ Python Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -48,7 +48,7 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    This module can be used to efficiently run Python code directly
-   from the Marina.Rodeo script, without executing the python
+   from the OpenMarinkaRodeo script, without executing the python
    interpreter.
 
    The module provides the means to load a python module and run
@@ -100,7 +100,7 @@ Chapter 1. Admin Guide
      * src_address - the (IP, port) tuple representing source
        address of the message
      * dst_address - the (IP, port) tuple representing the
-       destination address (Marina.Rodeo address) of the message
+       destination address (OpenMarinkaRodeo address) of the message
      * copy() - copies the current SIP message in a new object
      * rewrite_ruri() - changes the R-URI of the message;
        available only for requests
@@ -116,7 +116,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * None.
@@ -124,7 +124,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * python-dev - provides the Python bindings.
 
 1.3. Exported Parameters
@@ -133,11 +133,11 @@ Chapter 1. Admin Guide
 
    The script that contains the Python module.
 
-   Default value is “/usr/local/etc/Marina.Rodeo/handler.py”.
+   Default value is “/usr/local/etc/openMarinkaRodeo/handler.py”.
 
    Example 1.1. Set script_name parameter
 ...
-modparam("python", "script_name", "/usr/local/bin/Marina.Rodeo_handler.py")
+modparam("python", "script_name", "/usr/local/bin/openMarinkaRodeo_handler.py")
 ...
 
 1.3.2. mod_init_function (string)
@@ -185,10 +185,10 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Maksym Sobolyev (@sobomax) 22 10 1319 23
+   1. Maksym Sobolyev (@sobomax) 24 11 1321 25
    2. Razvan Crainea (@razvancrainea) 20 13 500 99
    3. Vlad Patrascu (@rvlad-patrascu) 13 9 204 113
-   4. Liviu Chircu (@liviuchircu) 8 6 30 61
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 9 6 30 61
    5. Bogdan-Andrei Iancu (@bogdan-iancu) 6 4 36 48
    6. Peter Lemenkov (@lemenkov) 4 2 2 2
    7. importos 3 1 104 4
@@ -201,7 +201,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -213,10 +213,10 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
-   1. Maksym Sobolyev (@sobomax)          Dec 2009 - Feb 2023
+   1. Maksym Sobolyev (@sobomax)          Dec 2009 - Oct 2024
    2. Razvan Crainea (@razvancrainea)     Mar 2015 - Jan 2021
    3. importos                            Nov 2020 - Nov 2020
-   4. Liviu Chircu (@liviuchircu)         Jul 2014 - Jan 2020
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jul 2014 - Jan 2020
    5. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Nov 2019
    6. Peter Lemenkov (@lemenkov)          Jun 2018 - Oct 2019
    7. Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Apr 2019
@@ -229,9 +229,9 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: importos, Vlad Patrascu (@rvlad-patrascu),
-   Peter Lemenkov (@lemenkov), Liviu Chircu (@liviuchircu), Razvan
+   Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Razvan
    Crainea (@razvancrainea).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2009 Sippy Software, Inc.
+   Copyright © 2009 Sippy Software, Inc.

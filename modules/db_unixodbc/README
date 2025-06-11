@@ -8,7 +8,7 @@ unixodbc Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -48,7 +48,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   This module allows to use the unixodbc package with Marina.Rodeo.
+   This module allows to use the unixodbc package with OpenMarinkaRodeo.
    It have been tested with mysql and the odbc connector, but it
    should work also with other database. The auth_db module works.
 
@@ -60,15 +60,15 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other Marina.Rodeo modules.
+     * No dependencies on other OpenMarinkaRodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -117,15 +117,15 @@ modparam("db_unixodbc", "use_escape_common", 1)
 
 1.5.2. Configuring and Running
 
-   In the Marina.Rodeo.conf file, add the line:
+   In the openMarinkaRodeo.conf file, add the line:
 ....
-loadmodule "/usr/local/lib/Marina.Rodeo/modules/db_unixodbc.so"
+loadmodule "/usr/local/lib/openMarinkaRodeo/modules/db_unixodbc.so"
 ....
 
    You should also uncomment this:
 ....
-loadmodule "/usr/local/lib/Marina.Rodeo/modules/auth.so"
-loadmodule "/usr/local/lib/Marina.Rodeo/modules/auth_db.so"
+loadmodule "/usr/local/lib/openMarinkaRodeo/modules/auth.so"
+loadmodule "/usr/local/lib/openMarinkaRodeo/modules/auth_db.so"
 modparam("usrloc", "db_mode", 2)
 modparam("auth_db", "calculate_ha1", yes)
 modparam("auth_db", "password_column", "password")
@@ -135,7 +135,7 @@ modparam("auth_db", "password_column", "password")
    with the url adding this line:
 ....
 modparam("usrloc|auth_db", "db_url",
-    "unixodbc://Marina.Rodeo:Marina.Rodeorw@localhost/my_dsn")
+    "unixodbc://openMarinkaRodeo:openMarinkaRodeorw@localhost/my_dsn")
 ....
 
    replacing my_dsn with the correct value.
@@ -149,7 +149,7 @@ shell>safe_mysqld --user=mysql --socket=/var/lib/mysql/mysql.sock
 
 Chapter 2. Developer Guide
 
-   The module implements the Marina.Rodeo DB API, in order to be used
+   The module implements the OpenMarinkaRodeo DB API, in order to be used
    by other modules.
 
 Chapter 3. Contributors
@@ -161,18 +161,18 @@ Chapter 3. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Henning Westerholt (@henningw) 45 22 385 1129
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 44 31 617 418
-   3. Marco Lorrai 23 1 2660 0
+   3. Marco Lorrai 24 1 2660 0
    4. Daniel-Constantin Mierla (@miconda) 20 15 221 140
-   5. Liviu Chircu (@liviuchircu) 18 10 136 313
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 19 11 136 315
    6. Razvan Crainea (@razvancrainea) 10 8 63 26
-   7. Maksym Sobolyev (@sobomax) 4 2 4 4
-   8. Vlad Patrascu (@rvlad-patrascu) 4 2 3 3
-   9. Anca Vamanu 4 1 89 103
-   10. Elena-Ramona Modroiu 3 1 37 1
+   7. Peter Lemenkov (@lemenkov) 4 2 8 7
+   8. Maksym Sobolyev (@sobomax) 4 2 4 4
+   9. Vlad Patrascu (@rvlad-patrascu) 4 2 3 3
+   10. Anca Vamanu 4 1 89 103
 
-   All remaining contributors: Anonymous, Konstantin Bokarius,
-   Alex Massover, Razvan Pistolea, Norman Brandinger (@NormB),
-   Peter Lemenkov (@lemenkov), Edson Gellert Schubert, Vlad Paiu
+   All remaining contributors: Elena-Ramona Modroiu, Anonymous,
+   Konstantin Bokarius, Alex Massover, Razvan Pistolea, Norman
+   Brandinger (@NormB), Edson Gellert Schubert, Vlad Paiu
    (@vladpaiu), Carsten Bock.
 
    (1) DevScore = author_commits + author_lines_added /
@@ -183,7 +183,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -195,12 +195,12 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Razvan Crainea (@razvancrainea)     Oct 2011 - Jan 2021
-   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Dec 2005 - Apr 2019
-   4.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   5.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   6.  Liviu Chircu (@liviuchircu)         Mar 2014 - Jun 2018
+   1.  Peter Lemenkov (@lemenkov)          Jun 2018 - Feb 2025
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   3.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   4.  Razvan Crainea (@razvancrainea)     Oct 2011 - Jan 2021
+   5.  Bogdan-Andrei Iancu (@bogdan-iancu) Dec 2005 - Apr 2019
+   6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
    7.  Vlad Paiu (@vladpaiu)               Jul 2011 - Jul 2011
    8.  Razvan Pistolea                     Jul 2009 - Jul 2009
    9.  Alex Massover                       Mar 2009 - Mar 2009
@@ -218,12 +218,12 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Peter Lemenkov (@lemenkov), Liviu Chircu
+   Last edited by: Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
    (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu),
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Henning Westerholt (@henningw), Elena-Ramona
    Modroiu, Marco Lorrai.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005-2006 Marco Lorrai
+   Copyright © 2005-2006 Marco Lorrai

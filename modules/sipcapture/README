@@ -8,7 +8,7 @@ SipCapture Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Parameters
@@ -114,7 +114,7 @@ Chapter 1. Admin Guide
    Offer a possibility to store incoming/outgoing SIP messages in
    database.
 
-   Marina.Rodeo can capture SIP messages in three mode
+   OpenMarinkaRodeo can capture SIP messages in three mode
      * IPIP encapsulation. (ETHHDR+IPHDR+IPHDR+UDPHDR).
      * Monitoring/mirroring port.
      * Homer encapsulation protocl mode (HEP v1/2/3). With version
@@ -125,13 +125,13 @@ Chapter 1. Admin Guide
 
    The capturing can be turned on/off using fifo commad.
 
-   Marina.Rodeo-cli -x mi sip_capture on
+   openMarinkaRodeo-cli -x mi sip_capture on
 
-   Marina.Rodeo-cli -x mi sip_capture off
+   openMarinkaRodeo-cli -x mi sip_capture off
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * database module - mysql, postrgress, dbtext, unixodbc...
@@ -140,7 +140,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Parameters
@@ -217,7 +217,7 @@ modparam("sipcapture", "hep_capture_on", 1)
 
    Parameter to set the maximum number of 'INSERT' queries of
    captured packets to be done in the same time, only if the DB
-   supports async operations. If Marina.Rodeo is shut down, the
+   supports async operations. If OpenMarinkaRodeo is shut down, the
    remaining queries shall be executed. The query buffer is
    limited 65535 chars, so probably no more than 30-40 queries can
    be done in the same time, depending mostly on the size of the
@@ -665,10 +665,10 @@ route[capture_resume] {
      * src_ip - IPv4/IPv6 address, depending on the proto_family,
        of the sending node.
      * dst_ip - IPv4/IPv6 address, depending on the proto_family,
-       of the receiving node(Marina.Rodeo hep interface ip on which
+       of the receiving node(OpenMarinkaRodeo hep interface ip on which
        the message was received).
      * src_port - Sending node port.
-     * dst_port - Receiving port(Marina.Rodeo hep interace port on
+     * dst_port - Receiving port(OpenMarinkaRodeo hep interace port on
        which the message was received).
 
    Example 1.24. hep_net usage
@@ -719,19 +719,19 @@ route[capture_resume] {
        “off” ) without changing anything.
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi sip_capture off
+                openMarinkaRodeo-cli -x mi sip_capture off
 
 1.8. Database setup
 
-   Before running Marina.Rodeo with sipcapture, you have to setup the
+   Before running OpenMarinkaRodeo with sipcapture, you have to setup the
    database tables where the module will store the data. For that,
    if the table were not created by the installation script or you
    choose to install everything by yourself you can use the
    sipcapture-create.sql and reportcapture-create.sql or the
    sipcapture-st-create.sql SQL script in the database directories
-   in the Marina.Rodeo/scripts folder as template. You can also find
+   in the openMarinkaRodeo/scripts folder as template. You can also find
    the complete database documentation on the project webpage,
-   https://Marina.Rodeo.org/docs/db/db-schema-devel.html.
+   https://openMarinkaRodeo.org/docs/db/db-schema-devel.html.
 
 1.9. Limitation
 
@@ -750,18 +750,18 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Ionut Ionita (@ionutrazvanionita) 201 45 5927 6525
-   2. Liviu Chircu (@liviuchircu) 42 22 473 927
+   1. Ionut Ionita (@ionutrazvanionita) 203 45 5927 6525
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 45 24 477 933
    3. Bogdan-Andrei Iancu (@bogdan-iancu) 29 24 202 180
    4. Razvan Crainea (@razvancrainea) 24 21 86 64
    5. Alexandr Dubovikov (@adubovikov) 22 2 2360 0
    6. Vlad Patrascu (@rvlad-patrascu) 9 7 73 54
-   7. Maksym Sobolyev (@sobomax) 6 4 16 13
+   7. Maksym Sobolyev (@sobomax) 8 6 19 16
    8. Walter Doekes (@wdoekes) 5 3 7 5
-   9. Zero King (@l2dy) 4 2 2 3
-   10. Vlad Paiu (@vladpaiu) 3 1 3 3
+   9. Bence Szigeti 4 2 10 4
+   10. Zero King (@l2dy) 4 2 2 3
 
-   All remaining contributors: Bence Szigeti, Dusan Klinec
+   All remaining contributors: Vlad Paiu (@vladpaiu), Dusan Klinec
    (@ph4r05), Ezequiel Lovelle (@lovelle), Julián Moreno Patiño,
    Peter Lemenkov (@lemenkov).
 
@@ -773,7 +773,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -785,11 +785,11 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Bence Szigeti                       Jul 2023 - Jul 2023
-   2.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2023
-   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Aug 2012 - May 2023
-   4.  Maksym Sobolyev (@sobomax)          Jan 2021 - Feb 2023
-   5.  Liviu Chircu (@liviuchircu)         Mar 2014 - Nov 2022
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   2.  Maksym Sobolyev (@sobomax)          Jan 2021 - Nov 2023
+   3.  Bence Szigeti                       Jul 2023 - Aug 2023
+   4.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2023
+   5.  Bogdan-Andrei Iancu (@bogdan-iancu) Aug 2012 - May 2023
    6.  Razvan Crainea (@razvancrainea)     Aug 2015 - Apr 2021
    7.  Walter Doekes (@wdoekes)            May 2014 - Apr 2021
    8.  Zero King (@l2dy)                   Mar 2020 - Mar 2020
@@ -808,11 +808,11 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Zero King (@l2dy), Vlad Patrascu
-   (@rvlad-patrascu), Liviu Chircu (@liviuchircu), Razvan Crainea
+   (@rvlad-patrascu), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Razvan Crainea
    (@razvancrainea), Peter Lemenkov (@lemenkov), Ionut Ionita
    (@ionutrazvanionita), Vlad Paiu (@vladpaiu), Alexandr Dubovikov
    (@adubovikov).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2011 QSC AG
+   Copyright © 2011 QSC AG

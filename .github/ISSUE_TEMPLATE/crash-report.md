@@ -1,6 +1,6 @@
 ---
 name: Crash Report
-about: Report a crash in Marina.Rodeo
+about: Report a crash in OpenMarinkaRodeo
 title: "[CRASH]"
 labels: ''
 assignees: ''
@@ -8,29 +8,36 @@ assignees: ''
 ---
 
 <!--
-Thank you for reporting a crash in Marina.Rodeo!
+Thank you for reporting a crash in OpenMarinkaRodeo!
 
 In order for us to understand better the reason of the crash, kindly provide all the available information you have about it, according to the template below
 -->
 
-**Marina.Rodeo version you are running**
-<!-- paste below, inside the ticks block,  the output of the `marinarodeo -V` command -->
+**OpenMarinkaRodeo version you are running**
+<!-- paste below, inside the ticks block,  the output of the `openMarinkaRodeo -V` command -->
 
 ```
 ```
+
+**Crash Core Dump**
+<!--
+*Please* DO NOT post the content of the corefile here, but rather provide *a link* to a place (dropbox, pastebin, gdrive) where you stored the output of the core dump.
+If you don't have a core dump, please generate one according to the steps described here:
+https://www.openMarinkaRodeo.org/Documentation/TroubleShooting-Crash
+-->
 
 **Describe the traffic that generated the bug**
 <!--
-Please describe what kind of traffic made Marina.Rodeo crash
+Please describe what kind of traffic made OpenMarinkaRodeo crash
 -->
 
 **To Reproduce**
 <!--
 Steps to reproduce the behavior:
 Example:
-1. Start Marina.Rodeo
+1. Start OpenMarinkaRodeo
 2. Start traffic
-3. Check Marina.Rodeo crashed
+3. Check OpenMarinkaRodeo crashed
 -->
 
 **Relevant System Logs**
@@ -40,7 +47,7 @@ Please provide, in ticks block (```example```), relevant information from the sy
 
 **OS/environment information**
  - Operating System: <!-- (example: `Debian 9`) -->
- - Marina.Rodeo installation: <!-- (example: `git`/`source`/`debs`/`manual packages`) -->
+ - OpenMarinkaRodeo installation: <!-- (example: `git`/`source`/`debs`/`manual packages`) -->
  - other relevant information:
 
 **Additional context**

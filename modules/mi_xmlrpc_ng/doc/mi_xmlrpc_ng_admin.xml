@@ -29,7 +29,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 		<itemizedlist>
 		<listitem>
 			<para><emphasis>libxml2</emphasis></para>
@@ -38,7 +38,7 @@
 		</para>
 	</section>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 		<itemizedlist>
@@ -56,7 +56,7 @@
 		<title><varname>http_root</varname>(string)</title>
 		<para>
 		Specifies the root path for xmlrpc requests:
-		http://[Marina.Rodeo_IP]:[Marina.Rodeo_httpd_port]/[http_root]
+		http://[openMarinkaRodeo_IP]:[openMarinkaRodeo_httpd_port]/[http_root]
 		</para>
 		<para>
 		<emphasis>The default value is "RPC2".</emphasis>
@@ -65,7 +65,7 @@
 		<title>Set <varname>http_root</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("mi_xmlrpc_ng", "http_root", "Marina.Rodeo_mi_xmlrpc")
+modparam("mi_xmlrpc_ng", "http_root", "openMarinkaRodeo_mi_xmlrpc")
 ...
 </programlisting>
 		</example>

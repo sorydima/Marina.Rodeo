@@ -11,7 +11,7 @@ H350 Module
 
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -65,7 +65,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The Marina.Rodeo H350 module enables an Marina.Rodeo SIP proxy server
+   The OpenMarinkaRodeo H350 module enables an OpenMarinkaRodeo SIP proxy server
    to access SIP account data stored in an LDAP [RFC4510]
    directory containing H.350 [H.350] commObjects. ITU-T
    Recommendation H.350 standardizes LDAP object classes to store
@@ -83,10 +83,10 @@ Chapter 1. Admin Guide
    to set up an H.350/LDAP directory and discusses different
    deployment scenarios.
 
-   The H350 module uses the Marina.Rodeo LDAP module to import H.350
-   attribute values into the Marina.Rodeo routing script variable
+   The H350 module uses the OpenMarinkaRodeo LDAP module to import H.350
+   attribute values into the OpenMarinkaRodeo routing script variable
    space. The module exports functions to parse and store the
-   H.350 attribute values from the Marina.Rodeo routing script. It
+   H.350 attribute values from the OpenMarinkaRodeo routing script. It
    allows a script writer to implement H.350 based SIP digest
    authentication, call forwarding, SIP URI alias to AOR
    rewriting, and service level parsing.
@@ -145,7 +145,7 @@ objectClass                   top
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The module depends on the following modules (the listed modules
    must be loaded before this module):
@@ -154,7 +154,7 @@ objectClass                   top
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * OpenLDAP library (libldap), libldap header files
        (libldap-dev) are needed for compilation
 
@@ -201,7 +201,7 @@ modparam("h350", "search_scope", "sub");
    filter strings. The result of the LDAP search is stored
    internally and can be accessed either by one of the
    h350_result* or one of the ldap_result* functions from the
-   Marina.Rodeo LDAP module.
+   OpenMarinkaRodeo LDAP module.
 
    The function returns -1 (FALSE) for internal errors, and -2
    (FALSE) if no H.350 commObject was found with a matching
@@ -459,7 +459,7 @@ AVP value = argument / 1000
    $avp("prefix_f[2]]") = "sip:alice@example.com".
 
    These AVPs can then be used to implement the desired behavior
-   in the Marina.Rodeo routing script.
+   in the OpenMarinkaRodeo routing script.
 
    This function returns the number of successfully parsed simple
    call forwarding rules (TRUE), in case the H.350
@@ -523,17 +523,15 @@ if (!h350_result_call_preferences("callee_pref_") && ($retcode == -1))
 # Example for forward-unconditionally (CFU)
 #
 
-if (is_avp_set("$avp(callee_pref_u)"))
+if ($avp(callee_pref_u) != NULL)
 {
-    # replace R-URI with CFU URI, g will fetch all CFU URIs
+    # push CFU URI into R-URI and additional branches
     # --> request can fork
-    if (avp_pushto("$ru", "$avp(callee_pref_u)/g"))
-    {
-            avp_delete("$avp(callee_pref_u)");
-    } else
-    {
-            sl_send_reply(500, "Internal server error");
-            exit;
+    $ru = $avp(callee_pref_u);
+    $avp(callee_pref_u) = NULL;
+    while ($avp(callee_pref_u)!=NULL) {
+        $branch = $avp(callee_pref_u);
+        $avp(callee_pref_u) = NULL;
     }
     sl_send_reply(181, "Call is being forwarded");
     t_relay();
@@ -547,7 +545,7 @@ if (is_avp_set("$avp(callee_pref_u)"))
    which can be used to store SIP account service level values in
    an LDAP directory. This function parses the
    SIPIdentityServiceLevel attribute and stores all service level
-   values as AVPs for later retrieval in the Marina.Rodeo routing
+   values as AVPs for later retrieval in the OpenMarinkaRodeo routing
    script. The function accesses the H.350 commObject fetched by a
    call to h350_*_lookup or ldap_search.
 
@@ -618,7 +616,7 @@ if (!h350_result_service_level("caller_sl_") && ($retcode == -1))
 # make routing decision based on service level AVPs
 #
 
-if (is_avp_set("$avp(caller_sl_international)"))
+if ($avp(caller_sl_international) != NULL)
 {
     t_relay();
 }
@@ -652,11 +650,11 @@ Chapter 2. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Christian Schlatter 21 3 1993 1
-   2. Bogdan-Andrei Iancu (@bogdan-iancu) 15 13 52 50
+   2. Bogdan-Andrei Iancu (@bogdan-iancu) 16 14 58 58
    3. Daniel-Constantin Mierla (@miconda) 12 9 79 83
-   4. Liviu Chircu (@liviuchircu) 10 8 25 37
-   5. Vlad Patrascu (@rvlad-patrascu) 9 3 80 247
-   6. Razvan Crainea (@razvancrainea) 8 6 51 59
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 11 9 25 39
+   5. Razvan Crainea (@razvancrainea) 10 7 53 61
+   6. Vlad Patrascu (@rvlad-patrascu) 9 3 80 247
    7. Maksym Sobolyev (@sobomax) 4 2 3 4
    8. Konstantin Bokarius 3 1 1 4
    9. Peter Lemenkov (@lemenkov) 3 1 1 1
@@ -670,7 +668,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -682,12 +680,12 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Razvan Crainea (@razvancrainea)     Jun 2011 - Jul 2020
-   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2008 - Mar 2020
-   4.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   5.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   6.  Liviu Chircu (@liviuchircu)         Mar 2014 - Jun 2018
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   2.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2008 - Feb 2024
+   3.  Razvan Crainea (@razvancrainea)     Jun 2011 - Feb 2024
+   4.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
+   6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
    7.  Daniel-Constantin Mierla (@miconda) Sep 2007 - Mar 2008
    8.  Konstantin Bokarius                 Mar 2008 - Mar 2008
    9.  Edson Gellert Schubert              Feb 2008 - Feb 2008
@@ -700,12 +698,12 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Vlad Patrascu (@rvlad-patrascu), Peter Lemenkov
-   (@lemenkov), Liviu Chircu (@liviuchircu), Razvan Crainea
-   (@razvancrainea), Bogdan-Andrei Iancu (@bogdan-iancu),
+   Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Razvan
+   Crainea (@razvancrainea), Vlad Patrascu (@rvlad-patrascu),
+   Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu),
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Christian Schlatter.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007 University of North Carolina
+   Copyright © 2007 University of North Carolina

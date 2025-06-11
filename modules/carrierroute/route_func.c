@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007-2008 1&1 Internet AG
+ * Copyright (C) 2007-2008 1&1 Internet AG
  *
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -277,8 +277,8 @@ static int actually_rewrite(const struct route_rule *rs, str *dest,
 
 	len = rs->local_prefix.len + user->len + rs->local_suffix.len +
 	      AT_SIGN_LEN + rs->host.len - strip;
-	if (msg->parsed_uri.type == SIPS_URI_T) {
-		len += SIPS_URI_LEN;
+	if (msg->parsed_uri.type == MarinkaRodeo_URI_T) {
+		len += MarinkaRodeo_URI_LEN;
 	} else {
 		len += SIP_URI_LEN;
 	}
@@ -289,9 +289,9 @@ static int actually_rewrite(const struct route_rule *rs, str *dest,
 	}
 	dest->len = len;
 	p = dest->s;
-	if (msg->parsed_uri.type == SIPS_URI_T) {
-		memcpy(p, SIPS_URI, SIPS_URI_LEN);
-		p += SIPS_URI_LEN;
+	if (msg->parsed_uri.type == MarinkaRodeo_URI_T) {
+		memcpy(p, MarinkaRodeo_URI, MarinkaRodeo_URI_LEN);
+		p += MarinkaRodeo_URI_LEN;
 	} else {
 		memcpy(p, SIP_URI, SIP_URI_LEN);
 		p += SIP_URI_LEN;

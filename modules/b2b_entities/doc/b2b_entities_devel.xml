@@ -4,7 +4,7 @@
 	<title>&develguide;</title>
 	<para>
 		The module provides an API that can be used from other
-		&osips; modules. The API offers the functions for creating and handing dialogs.
+		&oMarinkaRodeo; modules. The API offers the functions for creating and handing dialogs.
 		A dialog can be created on a receipt initial message, and this will correspond to
 		a b2b server entity, or initiated by the server and in this case a client entity
 		will be created in b2b_entities module.

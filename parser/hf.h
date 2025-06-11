@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -100,6 +100,9 @@ enum _hdr_types_t {
 	HDR_SUCCESS_REPORT_T		     /**> MSRP Success-Report header field */,
 	HDR_STATUS_T				     /**> MSRP Status header field */,
 	HDR_USE_PATH_T				     /**> MSRP Use-Path header field */,
+	HDR_SECURITY_CLIENT_T		     /**> sec-agree RFC3329 Security-Client header field */,
+	HDR_SECURITY_SERVER_T		     /**> sec-agree RFC3329 Security-Server header field */,
+	HDR_SECURITY_VERIFY_T		     /**> sec-agree RFC3329 Security-Verify header field */,
 	HDR_EOH_T					     /**< Some other header field */
 };
 
@@ -174,6 +177,9 @@ typedef unsigned long long hdr_flags_t;
 #define HDR_SUCCESS_REPORT_F		HDR_F_DEF(SUCCESS_REPORT)
 #define HDR_STATUS_F				HDR_F_DEF(STATUS)
 #define HDR_USE_PATH_F				HDR_F_DEF(USE_PATH)
+#define HDR_SECURITY_CLIENT_F		HDR_F_DEF(SECURITY_CLIENT)
+#define HDR_SECURITY_SERVER_F		HDR_F_DEF(SECURITY_SERVER)
+#define HDR_SECURITY_VERIFY_F		HDR_F_DEF(SECURITY_VERIFY)
 #define HDR_OTHER_F					HDR_F_DEF(OTHER)
 
 typedef enum _hdr_types_t hdr_types_t;
@@ -223,6 +229,9 @@ static inline int hdr_allocs_parse(struct hdr_field* hdr)
 		case HDR_PROXY_AUTHENTICATE_T:
 		case HDR_ALLOW_T:
 		case HDR_SUPPORTED_T:
+		case HDR_SECURITY_CLIENT_T:
+		case HDR_SECURITY_SERVER_T:
+		case HDR_SECURITY_VERIFY_T:
 			return 1;
 		default:
 			return 0;
@@ -246,7 +255,7 @@ void clean_hdr_field(struct hdr_field* hf);
 void free_hdr_field_lst(struct hdr_field* hf);
 
 /**
- * Output the contents of a header to the Marina.Rodeo logging system
+ * Output the contents of a header to the openMarinkaRodeo logging system
  * with log level ERROR.
  * \param hf header that is dumped
  */

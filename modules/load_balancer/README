@@ -10,7 +10,7 @@ Load Balancer Module
         1.3. Probing and Disabling destinations
         1.4. Dependencies
 
-              1.4.1. Marina.Rodeo Modules
+              1.4.1. OpenMarinkaRodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -106,13 +106,13 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The Load-Balancer module comes to provide traffic routing based
-   on load. Shortly, when Marina.Rodeo routes calls to a set of
+   on load. Shortly, when OpenMarinkaRodeo routes calls to a set of
    destinations, it is able to keep the load status (as number of
    ongoing calls) of each destination and to choose to route to
-   the less loaded destination (at that moment). Marina.Rodeo is aware
+   the less loaded destination (at that moment). OpenMarinkaRodeo is aware
    of the capacity of each destination - it is preconfigured with
    the maximum load accepted by the destinations. To be more
-   precise, when routing, Marina.Rodeo will consider the less loaded
+   precise, when routing, OpenMarinkaRodeo will consider the less loaded
    destination not the destination with the smallest number of
    ongoing calls, but the destination with the largest available
    slot.
@@ -126,9 +126,9 @@ Chapter 1. Admin Guide
 
 1.2. How it works
 
-   Please refer to the Load-Balancer tutorial from the Marina.Rodeo
+   Please refer to the Load-Balancer tutorial from the OpenMarinkaRodeo
    website:
-   https://Marina.Rodeo.org/Documentation/Tutorials-LoadBalancing-1-9.
+   https://openMarinkaRodeo.org/Documentation/Tutorials-LoadBalancing-1-9.
 
 1.3. Probing and Disabling destinations
 
@@ -162,7 +162,7 @@ Chapter 1. Admin Guide
 
 1.4. Dependencies
 
-1.4.1. Marina.Rodeo Modules
+1.4.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * Dialog - Dialog module
@@ -174,7 +174,7 @@ Chapter 1. Admin Guide
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.5. Exported Parameters
@@ -185,7 +185,7 @@ Chapter 1. Admin Guide
    are stored.
 
    Default value is
-   “mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo”.
+   “mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo”.
 
    Example 1.1. Set db_url parameter
 ...
@@ -293,12 +293,12 @@ modparam("load_balancer", "lb_define_blacklist", "blist2= 2,10,6")
    "channels=fs://user:password@127.0.0.1:8021". The default ESL
    port is 8021.
 
-   Marina.Rodeo will establish a connection with the given socket and
+   OpenMarinkaRodeo will establish a connection with the given socket and
    periodically update the internal maximum value of the given
    resource using statistics pushed by the FreeSWITCH box.
 
    The max value of a resource is updated every
-   event_heartbeat_interval seconds (see the "freeswitch" Marina.Rodeo
+   event_heartbeat_interval seconds (see the "freeswitch" OpenMarinkaRodeo
    module for more details regarding this setting), as the stats
    arrive from FreeSWITCH.
 
@@ -352,7 +352,7 @@ modparam("load_balancer", "initial_freeswitch_load", 200)
 
    If clustering enbled, the module will automatically share
    changes over the status of the destinations with the other
-   Marina.Rodeo instances that are part of a cluster. Whenever such a
+   OpenMarinkaRodeo instances that are part of a cluster. Whenever such a
    status changes (following an MI command, a probing result, a
    script command), the module will replicate this status change
    to all the nodes in this given cluster.
@@ -361,14 +361,22 @@ modparam("load_balancer", "initial_freeswitch_load", 200)
    which node in the cluster will perform the pinging/probing to
    destinations. See the cluster_sharing_tag option.
 
+   This OpenMarinkaRodeo cluster exposes the "load_balancer-status-repl"
+   capability in order to mark nodes as eligible for becoming data
+   donors during an arbitrary sync request. Consequently, the
+   cluster must have at least one node marked with the "seed"
+   value as the clusterer.flags column/property in order to be
+   fully functional. Consult the clusterer - Capabilities chapter
+   for more details.
+
    For more info on how to define and populate a cluster (with
-   Marina.Rodeo nodes) see the "clusterer" module.
+   OpenMarinkaRodeo nodes) see the "clusterer" module.
 
    Default value is “0 (none)”.
 
    Example 1.11. Set cluster_id parameter
 ...
-# replicate destination status with all Marina.Rodeo in cluster ID 9
+# replicate destination status with all OpenMarinkaRodeo in cluster ID 9
 modparam("load_balancer", "cluster_id", 9)
 ...
 
@@ -660,7 +668,7 @@ if (lb_is_destination($si,$sp) ) {
    Trigers the reload of the load balancing data from the DB.
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi lb_reload
+                openMarinkaRodeo-cli -x mi lb_reload
 
 1.7.2. lb_resize
 
@@ -672,7 +680,7 @@ if (lb_is_destination($si,$sp) ) {
      * new_capacity - new resource capacity.
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi lb_resize 11 voicemail 56
+                openMarinkaRodeo-cli -x mi lb_resize 11 voicemail 56
 
 1.7.3. lb_list
 
@@ -680,7 +688,7 @@ if (lb_is_destination($si,$sp) ) {
    each resource of the destination.
 
    Example 1.19. lb_list usage
-$ Marina.Rodeo-cli -x mi lb_list
+$ openMarinkaRodeo-cli -x mi lb_list
 Destination:: sip:127.0.0.1:5100 id=1 enabled=yes auto-re=on
         Resource:: pstn max=3 load=0
         Resource:: transc max=5 load=1
@@ -702,10 +710,10 @@ Destination:: sip:127.0.0.1:5200 id=2 enabled=no auto-re=on
        for the destination.
 
    Example 1.20. lb_status usage
-$ Marina.Rodeo-cli -x mi lb_status 2
+$ openMarinkaRodeo-cli -x mi lb_status 2
 enable:: no
-$ Marina.Rodeo-cli -x mi lb_status 2 1
-$ Marina.Rodeo-cli -x mi lb_status 2
+$ openMarinkaRodeo-cli -x mi lb_status 2 1
+$ openMarinkaRodeo-cli -x mi lb_status 2
 enable:: yes
 
 1.8. Exported Events
@@ -731,9 +739,9 @@ Chapter 3. Frequently Asked Questions
 
    3.1.
 
-   Where can I find more about Marina.Rodeo?
+   Where can I find more about OpenMarinkaRodeo?
 
-   Take a look at https://Marina.Rodeo.org/.
+   Take a look at https://openMarinkaRodeo.org/.
 
    3.2.
 
@@ -742,23 +750,23 @@ Chapter 3. Frequently Asked Questions
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable Marina.Rodeo release should be sent to
-   <users@lists.Marina.Rodeo.org> and e-mails regarding development
-   versions should be sent to <devel@lists.Marina.Rodeo.org>.
+   E-mails regarding any stable OpenMarinkaRodeo release should be sent to
+   <users@lists.openMarinkaRodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.openMarinkaRodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.Marina.Rodeo.org>.
+   <users@lists.openMarinkaRodeo.org>.
 
    3.3.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
+   https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues.
 
 Chapter 4. Contributors
 
@@ -767,11 +775,11 @@ Chapter 4. Contributors
    Table 4.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Bogdan-Andrei Iancu (@bogdan-iancu) 122 73 4323 747
-   2. Liviu Chircu (@liviuchircu) 41 32 683 170
+   1. Bogdan-Andrei Iancu (@bogdan-iancu) 124 74 4331 755
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 43 34 688 172
    3. Vlad Patrascu (@rvlad-patrascu) 38 19 623 766
    4. Sergey Khripchenko (@shripchenko) 28 10 1058 516
-   5. Razvan Crainea (@razvancrainea) 26 20 261 143
+   5. Razvan Crainea (@razvancrainea) 27 21 266 148
    6. Vlad Paiu (@vladpaiu) 5 3 7 5
    7. Maksym Sobolyev (@sobomax) 5 3 6 7
    8. Walter Doekes (@wdoekes) 5 3 3 3
@@ -790,7 +798,7 @@ Chapter 4. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -802,12 +810,12 @@ Chapter 4. Contributors
 
    Table 4.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Razvan Crainea (@razvancrainea)     Oct 2010 - Oct 2022
-   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Feb 2009 - Oct 2022
-   4.  Vlad Patrascu (@rvlad-patrascu)     Mar 2017 - Jul 2022
-   5.  agree                               Jan 2022 - Jan 2022
-   6.  Liviu Chircu (@liviuchircu)         Sep 2012 - Sep 2020
+   1.  Razvan Crainea (@razvancrainea)     Oct 2010 - Oct 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Sep 2012 - Sep 2024
+   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Feb 2009 - Oct 2023
+   4.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   5.  Vlad Patrascu (@rvlad-patrascu)     Mar 2017 - Jul 2022
+   6.  agree                               Jan 2022 - Jan 2022
    7.  Zero King (@l2dy)                   Mar 2020 - Mar 2020
    8.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
    9.  Jeremy Martinez (@JeremyMartinez51) Feb 2017 - Feb 2017
@@ -824,13 +832,13 @@ Chapter 5. Documentation
 
 5.1. Contributors
 
-   Last edited by: agree, Zero King (@l2dy), Vlad Patrascu
-   (@rvlad-patrascu), Liviu Chircu (@liviuchircu), Razvan Crainea
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), agree, Zero King
+   (@l2dy), Vlad Patrascu (@rvlad-patrascu), Razvan Crainea
    (@razvancrainea), Bogdan-Andrei Iancu (@bogdan-iancu), Peter
    Lemenkov (@lemenkov), Sergey Khripchenko (@shripchenko),
    Ezequiel Lovelle (@lovelle), Walter Doekes (@wdoekes), Vlad
    Paiu (@vladpaiu).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2009 Voice Sistem SRL
+   Copyright © 2009 Voice Sistem SRL

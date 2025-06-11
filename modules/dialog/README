@@ -11,7 +11,7 @@ dialog Module
         1.4. Dialog clustering
         1.5. Dependencies
 
-              1.5.1. Marina.Rodeo Modules
+              1.5.1. OpenMarinkaRodeo Modules
               1.5.2. External Libraries or Applications
 
         1.6. Exported Parameters
@@ -108,6 +108,8 @@ dialog Module
               1.7.25. dlg_send_sequential(method, leg, [, body] [,
                       content-type] [, headers])
 
+              1.7.26. dlg_inc_cseq([tag, ][inc])
+
         1.8. Exported Statistics
 
               1.8.1. active_dialogs
@@ -137,6 +139,8 @@ dialog Module
               1.9.11. list_all_profiles
               1.9.12. dlg_push_var
               1.9.13. dlg_send_sequential
+              1.9.14. set_dlg_profile
+              1.9.15. unset_dlg_profile
 
         1.10. Exported Pseudo-Variables
 
@@ -260,12 +264,13 @@ dialog Module
    1.75. dlg_on_timeout usage
    1.76. dlg_on_hangup usage
    1.77. dlg_send_sequential usage to convert DTMF codes
+   1.78. dlg_inc_cseq usage
 
 Chapter 1. Admin Guide
 
 1.1. Overview
 
-   The dialog module provides dialog awareness to the Marina.Rodeo
+   The dialog module provides dialog awareness to the OpenMarinkaRodeo
    proxy. Its functionality is to keep trace of the current
    dialogs, to offer information about them (like how many dialogs
    are active).
@@ -277,7 +282,7 @@ Chapter 1. Admin Guide
 
    The module, via an internal API, also provide the foundation to
    build on top of it more complex dialog-based functionalities
-   via other Marina.Rodeo modules.
+   via other OpenMarinkaRodeo modules.
 
 1.2. How it works
 
@@ -327,10 +332,10 @@ Chapter 1. Admin Guide
    reply routes of the original request.
 
    Dialog profiles can also be used in distributed systems, using
-   the Marina.Rodeo CacheDB Interface or the clusterer module. This
+   the OpenMarinkaRodeo CacheDB Interface or the clusterer module. This
    feature allows you to share dialog profile information with
-   multiple Marina.Rodeo instaces that use the same CacheDB backend or
-   are part of an Marina.Rodeo cluster. In order to do that, the
+   multiple OpenMarinkaRodeo instaces that use the same CacheDB backend or
+   are part of an OpenMarinkaRodeo cluster. In order to do that, the
    cachedb_url or profile_replication_cluster parameters must be
    defined. Also, the profile must be marked as shared, by adding
    one of the '/s' or '/b' suffixes to the name of the profile in
@@ -339,10 +344,10 @@ Chapter 1. Admin Guide
 1.4. Dialog clustering
 
    Dialog replication is a mechanism used to mirror all dialog
-   changes taking place in one Marina.Rodeo instance to one or
+   changes taking place in one OpenMarinkaRodeo instance to one or
    multiple other instances. The process is simplified by using
    the clusterer module which facilitates the management of a
-   cluster of Marina.Rodeo nodes and the sending of
+   cluster of OpenMarinkaRodeo nodes and the sending of
    replication-related BIN packets (binary-encoded, using
    proto_bin). This feature is useful in achieving High
    Availability and/or Load Balancing for ongoing calls.
@@ -366,7 +371,7 @@ Chapter 1. Admin Guide
      * counting the dialog in the profiles that it belongs; only
        if profile replication is also enabled
 
-   In addition to the event-driven replication, an Marina.Rodeo
+   In addition to the event-driven replication, an OpenMarinkaRodeo
    instance will first try to learn all the dialog information
    from antoher node in the cluster at startup. The data
    synchronization mechanism requires defining one of the nodes in
@@ -400,7 +405,7 @@ Chapter 1. Admin Guide
 
 1.5. Dependencies
 
-1.5.1. Marina.Rodeo Modules
+1.5.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * TM - Transaction module
@@ -412,7 +417,7 @@ Chapter 1. Admin Guide
 1.5.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.6. Exported Parameters
@@ -441,7 +446,7 @@ modparam("dialog", "enable_stats", 0)
    database, a constant hash_size should be used, otherwise the
    restored process will not take place. If you really want to
    modify the hash_size you must delete all table's rows before
-   restarting Marina.Rodeo.
+   restarting OpenMarinkaRodeo.
 
    Default value is “4096”.
 
@@ -519,8 +524,8 @@ modparam("dialog", "dlg_extra_hdrs", "Hint: credit expired\r\n")
 
    Default value is “1 (DID_FALLBACK)”.
 
-   NOTE that if you have call looping on your Marina.Rodeo server
-   (passing more than once through the same Marina.Rodeo instance), it
+   NOTE that if you have call looping on your OpenMarinkaRodeo server
+   (passing more than once through the same OpenMarinkaRodeo instance), it
    is strongly suggested to use only DID_ONLY mode, as the SIP
    based matching will have an undefined behavior - from SIP
    perspective, a sequential dialog will match all the loops of
@@ -555,7 +560,7 @@ modparam("dialog", "delete_delay", 10)
    database a database url must be specified.
 
    Default value is
-   “mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo”.
+   “mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo”.
 
    Example 1.9. Set db_url parameter
 ...
@@ -600,7 +605,7 @@ modparam("dialog", "db_update_period", 120)
 
 1.6.12. options_ping_interval (integer)
 
-   The interval (seconds) at which Marina.Rodeo will generate
+   The interval (seconds) at which OpenMarinkaRodeo will generate
    in-dialog OPTIONS pings for one or both of the involved
    parties.
 
@@ -613,7 +618,7 @@ modparam("dialog", "options_ping_interval", 20)
 
 1.6.13. reinvite_ping_interval (integer)
 
-   The interval (seconds) at which Marina.Rodeo will generate
+   The interval (seconds) at which OpenMarinkaRodeo will generate
    in-dialog Re-INVITE pings for one or both of the involved
    parties.
 
@@ -909,9 +914,10 @@ modparam("dialog", "flags_column", "flags_c_name")
 
 1.6.37. profiles_with_value (string)
 
-   List of names (alphanumerical) for profiles with values. Flags
-   /b or /s allow sharing profiles between Marina.Rodeo instances
-   using the clusterer module or a CacheDB backend, respectively.
+   List of names (alphanumerical/-/_) for profiles with values.
+   Flags /b or /s allow sharing profiles between OpenMarinkaRodeo
+   instances using the clusterer module or a CacheDB backend,
+   respectively.
 
    Default value is “empty”.
 
@@ -923,8 +929,8 @@ annels/s; codecUsed/b;")
 
 1.6.38. profiles_no_value (string)
 
-   List of names (alphanumerical) for profiles without values.
-   Flags /b or /s allow sharing profiles between Marina.Rodeo
+   List of names (alphanumerical/-/_) for profiles without values.
+   Flags /b or /s allow sharing profiles between OpenMarinkaRodeo
    instances using the clusterer module or a CacheDB backend,
    respectively.
 
@@ -1045,6 +1051,14 @@ modparam("dialog", "profile_timeout", "43200")
    clusterer module. This enables sending and receiving all the
    dialog-related events (creation, update and deletion) in the
    cluster.
+
+   This OpenMarinkaRodeo cluster exposes the "dialog-dlg-repl" capability
+   in order to mark nodes as eligible for becoming data donors
+   during an arbitrary sync request. Consequently, the cluster
+   must have at least one node marked with the "seed" value as the
+   clusterer.flags column/property in order to be fully
+   functional. Consult the clusterer - Capabilities chapter for
+   more details.
 
    Default value is “0” (no replication).
 
@@ -1914,6 +1928,35 @@ event_route[E_RTPPROXY_DTMF] {
 }
 ...
 
+1.7.26.  dlg_inc_cseq([tag, ][inc])
+
+   Increments the dialog's generated CSeq associated to the leg
+   identified by the dialog's tag.
+
+   Parameters:
+     * tag (string, optional) - the tag to increment the CSeq
+       value for. If missing, the message's To tag is used to
+       identify the leg to increment the CSeq for.
+     * inc (integer, optional) - the value used to
+       increment/decrement (if negative) the CSeq of the
+       identified leg. If not used, the value is incremented with
+       1.
+
+   This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
+   ONREPLY_ROUTE, BRANCH_ROUTE and LOCAL_ROUTE routes.
+
+   Example 1.78. dlg_inc_cseq usage
+...
+route {
+        ...
+        if (has_totag()) {
+                if (loose_route())
+                        dlg_inc_cseq(); # increment upstream CSeq after
+each in-dialog request
+        }
+}
+...
+
 1.8. Exported Statistics
 
 1.8.1. active_dialogs
@@ -1943,32 +1986,32 @@ event_route[E_RTPPROXY_DTMF] {
 1.8.6. create_sent
 
    Returns the number of replicated dialog create requests send to
-   other Marina.Rodeo instances.
+   other OpenMarinkaRodeo instances.
 
 1.8.7. update_sent
 
    Returns the number of replicated dialog update requests send to
-   other Marina.Rodeo instances.
+   other OpenMarinkaRodeo instances.
 
 1.8.8. delete_sent
 
    Returns the number of replicated dialog delete requests send to
-   other Marina.Rodeo instances.
+   other OpenMarinkaRodeo instances.
 
 1.8.9. create_recv
 
    Returns the number of dialog create events received from other
-   Marina.Rodeo instances.
+   OpenMarinkaRodeo instances.
 
 1.8.10. update_recv
 
    Returns the number of dialog update events received from other
-   Marina.Rodeo instances.
+   OpenMarinkaRodeo instances.
 
 1.8.11. delete_recv
 
    Returns the number of dialog delete events received from other
-   Marina.Rodeo instances.
+   OpenMarinkaRodeo instances.
 
 1.9. Exported MI Functions
 
@@ -1996,13 +2039,13 @@ event_route[E_RTPPROXY_DTMF] {
 
    MI FIFO Command Format:
                 ## list all ongoing dialogs
-                Marina.Rodeo-cli -x mi dlg_list
+                openMarinkaRodeo-cli -x mi dlg_list
                 ## list the dialog by callid and From TAG
-                Marina.Rodeo-cli -x mi dlg_list callid=abcdrssfrs122444@192.
+                openMarinkaRodeo-cli -x mi dlg_list callid=abcdrssfrs122444@192.
 168.1.1 from_tag=AAdfeEFF33
                 ## list 10 dialogs, starting from the position 40
                 ## (in the list of all ongoing dialogs)
-                Marina.Rodeo-cli -x mi dlg_list index=40 counter=10
+                openMarinkaRodeo-cli -x mi dlg_list index=40 counter=10
 
 1.9.2. dlg_list_ctx
 
@@ -2017,7 +2060,7 @@ event_route[E_RTPPROXY_DTMF] {
    Parameters: see “dlg_list”
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi dlg_list_ctx
+                openMarinkaRodeo-cli -x mi dlg_list_ctx
 
 1.9.3. dlg_end_dlg
 
@@ -2040,9 +2083,9 @@ event_route[E_RTPPROXY_DTMF] {
 
    MI FIFO Command Format:
                 # terminate the dialog via the internal Dialog-ID
-                Marina.Rodeo-cli -x mi dlg_end_dlg 6ae.4b38d013
+                openMarinkaRodeo-cli -x mi dlg_end_dlg 6ae.4b38d013
                 # terminate the dialog via its SIP Call-ID
-                Marina.Rodeo-cli -x mi dlg_end_dlg Y2IwYjQ2YmE2ZDg5MWVkNDNkZ
+                openMarinkaRodeo-cli -x mi dlg_end_dlg Y2IwYjQ2YmE2ZDg5MWVkNDNkZ
 GIwZjAzNGM1ZDY
 
 1.9.4. profile_get_size
@@ -2062,7 +2105,7 @@ GIwZjAzNGM1ZDY
      * value (optional)- string value to toughen the check;
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi profile_get_size inboundCalls
+                openMarinkaRodeo-cli -x mi profile_get_size inboundCalls
 
 1.9.5. profile_list_dlgs
 
@@ -2083,7 +2126,7 @@ GIwZjAzNGM1ZDY
      * value (optional)- string value to toughen the check;
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi profile_list_dlgs inboundCalls
+                openMarinkaRodeo-cli -x mi profile_list_dlgs inboundCalls
 
 1.9.6. profile_get_values
 
@@ -2098,7 +2141,7 @@ GIwZjAzNGM1ZDY
      * profile - name of the profile to list the dialog for.
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi profile_get_values inboundCalls
+                openMarinkaRodeo-cli -x mi profile_get_values inboundCalls
 
 1.9.7. profile_end_dlgs
 
@@ -2115,12 +2158,12 @@ GIwZjAzNGM1ZDY
        only the dialogs with the specified value
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi profile_end_dlgs inboundCalls
+                openMarinkaRodeo-cli -x mi profile_end_dlgs inboundCalls
 
 1.9.8. dlg_db_sync
 
    Will load all the information about the dialogs from the
-   database in the Marina.Rodeo internal memory. If a dialog is
+   database in the OpenMarinkaRodeo internal memory. If a dialog is
    already found in memory and has the same/an older state, it
    will be updated with the values from DB. Otherwise, the newer
    in-memory version will not be changed.
@@ -2130,7 +2173,7 @@ GIwZjAzNGM1ZDY
    It takes no parameters
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi dlg_db_sync
+                openMarinkaRodeo-cli -x mi dlg_db_sync
 
 1.9.9. dlg_cluster_sync
 
@@ -2151,7 +2194,7 @@ GIwZjAzNGM1ZDY
        be marked with in order to be synced
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi dlg_cluster_sync vip1
+                openMarinkaRodeo-cli -x mi dlg_cluster_sync vip1
 
 1.9.10. dlg_restore_db
 
@@ -2164,7 +2207,7 @@ GIwZjAzNGM1ZDY
    It takes no parameters
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi dlg_restore_db
+                openMarinkaRodeo-cli -x mi dlg_restore_db
 
 1.9.11. list_all_profiles
 
@@ -2176,7 +2219,7 @@ GIwZjAzNGM1ZDY
    Parameters: It takes no parameters
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi list_all_profiles
+                openMarinkaRodeo-cli -x mi list_all_profiles
 
 1.9.12. dlg_push_var
 
@@ -2193,7 +2236,7 @@ GIwZjAzNGM1ZDY
        actual Call-ID.
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi dlg_push_var var_name var_value DID1
+                openMarinkaRodeo-cli -x mi dlg_push_var var_name var_value DID1
 [ DID2 DID3 ...  DIDN ]
 
 1.9.13. dlg_send_sequential
@@ -2233,7 +2276,7 @@ GIwZjAzNGM1ZDY
           + inbound - advertises in the body of the sequential
             message generated the last body received from its
             pair. For example, if the mode=challenge-caller, the
-            message will contain the body sent to Marina.Rodeo by the
+            message will contain the body sent to OpenMarinkaRodeo by the
             callee. This is useful when you need to alter the body
             previously sent to the caller, because you want to
             re-negotiate a different media proxy for the call.
@@ -2242,35 +2285,85 @@ GIwZjAzNGM1ZDY
           + outbound - advertises in the body of the sequential
             message generated the last body sent to that UAC. For
             example, if the mode=challenge-caller, the message
-            will contain the last body sent by Marina.Rodeo to the
+            will contain the last body sent by OpenMarinkaRodeo to the
             caller. This is useful in a high availability scenario
             when trying to re-negotiate the contact of the server,
             but there is no need to alter the body sent earlier.
           + custom:CONTENT_TYPE:BODY - this can be used to specify
             a specific Content-Type ehader and body for the
             sequential message generated.
+     * headers - (optional) can be used to specify some headers
+       for the initial sequential message.
 
    This functions runs asynchronously and returns the status code
    and reason of the last reply received for either the challenge
    or normal mode.
 
    MI Command Format:
-                        Marina.Rodeo-cli -x mi dlg_send_sequential \
+                        openMarinkaRodeo-cli -x mi dlg_send_sequential \
                                 callid=5291231-testing@127.0.0.1
 
    MI Command used to trigger media re-negotiation:
-                        Marina.Rodeo-cli -x mi dlg_send_sequential \
+                        openMarinkaRodeo-cli -x mi dlg_send_sequential \
                                 callid=5291231-testing@127.0.0.1 \
                                 mode=challenge \
                                 body=inbound
 
    MI Command used to UPDATE the callee's remote Contact after a
    server failover:
-                        Marina.Rodeo-cli -x mi dlg_send_sequential \
+                        openMarinkaRodeo-cli -x mi dlg_send_sequential \
                                 callid=5291231-testing@127.0.0.1 \
                                 mode=challenge-callee \
                                 body=outbound \
                                 method=UPDATE
+
+   MI Command used to send REFER to the callee, and add Refer-To
+   header:
+                        openMarinkaRodeo-cli -x mi dlg_send_sequential \
+                                callid=usR8FlGOSMfCTAIHebHCOQ.. \
+                                method=REFER \
+                                body=none \
+                                mode=callee \
+                                headers='Refer-To: sip:user@domain:50060
+'
+
+1.9.14. set_dlg_profile
+
+   Set the dialog identified by dialog ID / Call-ID into the given
+   profile ( with optional value and clearing of the old profile
+   values )
+
+   Name: set_dlg_profile
+
+   Parameters: It takes 2-4 parameters
+     * dlg_id - dialog ID or Call-ID for the respective dialog
+     * profile - profile name to be set
+     * value - optional, the profile value to be set
+     * clear_values - optional, clear previous values in the
+       profile before setting the new one
+
+   MI FIFO Command Format:
+                openMarinkaRodeo-cli -x mi set_dlg_profile DID my_profile my_val
+ue 1
+
+1.9.15. unset_dlg_profile
+
+   Unsets the dialog identified by dialog ID / Call-ID from the
+   given profile ( with optional value and clearing of the old
+   profile values )
+
+   Name: set_dlg_profile
+
+   Parameters: It takes 2-3 parameters
+     * dlg_id - dialog ID or Call-ID for the respective dialog
+     * profile - profile name to be unset
+     * value - optional, the profile value to be unset. for
+       profiles with value, by omitting this parameter you can now
+       clear all values of the given profile.
+
+   MI FIFO Command Format:
+                openMarinkaRodeo-cli -x mi unset_dlg_profile DID my_profile my_v
+alue
 
 1.10. Exported Pseudo-Variables
 
@@ -2402,8 +2495,12 @@ GIwZjAzNGM1ZDY
 
    This is a read/write variable that allows access to the dialog
    attribute named name. It can hold a string or integer value.
-   This PV will be available only for sequential requests, after
-   doing loose_route().
+
+   Be sure and use this variable only when having a dialog context
+   (like after create_dialog() or match_dialog() or equivalent).
+
+   The variable accepts dynamic names, meaning the name may
+   contain other variables.
 
    NULL will be returned if there is no dialog for the request.
 
@@ -2511,9 +2608,9 @@ Chapter 3. Frequently Asked Questions
 
    3.5.
 
-   Where can I find more about Marina.Rodeo?
+   Where can I find more about OpenMarinkaRodeo?
 
-   Take a look at https://Marina.Rodeo.org/.
+   Take a look at https://openMarinkaRodeo.org/.
 
    3.6.
 
@@ -2522,23 +2619,23 @@ Chapter 3. Frequently Asked Questions
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable Marina.Rodeo release should be sent to
-   <users@lists.Marina.Rodeo.org> and e-mails regarding development
-   versions should be sent to <devel@lists.Marina.Rodeo.org>.
+   E-mails regarding any stable OpenMarinkaRodeo release should be sent to
+   <users@lists.openMarinkaRodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.openMarinkaRodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.Marina.Rodeo.org>.
+   <users@lists.openMarinkaRodeo.org>.
 
    3.7.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
+   https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues.
 
 Chapter 4. Contributors
 
@@ -2547,29 +2644,30 @@ Chapter 4. Contributors
    Table 4.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Bogdan-Andrei Iancu (@bogdan-iancu) 452 285 13276 3527
-   2. Razvan Crainea (@razvancrainea) 270 202 5072 1553
-   3. Vlad Paiu (@vladpaiu) 253 144 7205 3026
-   4. Vlad Patrascu (@rvlad-patrascu) 198 104 4330 3514
-   5. Liviu Chircu (@liviuchircu) 175 126 3111 1362
-   6. Ovidiu Sas (@ovidiusas) 34 26 601 161
+   1. Bogdan-Andrei Iancu (@bogdan-iancu) 460 288 13367 3546
+   2. Razvan Crainea (@razvancrainea) 296 220 5467 1782
+   3. Vlad Paiu (@vladpaiu) 262 149 7467 3027
+   4. Vlad Patrascu (@rvlad-patrascu) 200 104 4330 3514
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 183 133 3128 1374
+   6. Ovidiu Sas (@ovidiusas) 35 26 601 161
    7. Dan Pascu (@danpascu) 30 25 233 179
-   8. Eseanu Marius Cristian (@eseanucristian) 18 6 722 341
+   8. Eseanu Marius Cristian (@eseanucristian) 19 6 722 341
    9. Daniel-Constantin Mierla (@miconda) 16 13 76 66
    10. Henning Westerholt (@henningw) 16 10 172 187
 
    All remaining contributors: Anca Vamanu, Walter Doekes
-   (@wdoekes), Ionut Ionita (@ionutrazvanionita), Ionel Cerghit
-   (@ionel-cerghit), Andrei Dragus, Maksym Sobolyev (@sobomax),
-   John Riordan, Hugues Mitonneau, Carsten Bock, Peter Lemenkov
-   (@lemenkov), Jerome Martin, Klaus Darilion, Jarrod Baumann
-   (@jarrodb), Nick Altmann (@nikbyte), Zero King (@l2dy), Michel
-   Bensoussan, Richard Revels, Elena-Ramona Modroiu, Tavis
-   Paquette, Ryan Bullock, Andrei Datcu (@andrei-datcu), Jeffrey
-   Magder, Ron Winacott, Andy Pyles, Julián Moreno Patiño,
-   Konstantin Bokarius, sergei lavrov, Alex Massover, Damien
-   Sandras (@dsandras), Alex Hermann, Dusan Klinec (@ph4r05),
-   Norman Brandinger (@NormB), UnixDev, Eliot Gable, Ryan Bullock
+   (@wdoekes), Ionut Ionita (@ionutrazvanionita), Maksym Sobolyev
+   (@sobomax), Ionel Cerghit (@ionel-cerghit), Andrei Dragus,
+   Alexandra Titoc, John Riordan, Hugues Mitonneau, Carsten Bock,
+   Peter Lemenkov (@lemenkov), Jerome Martin, Klaus Darilion,
+   Jarrod Baumann (@jarrodb), Nick Altmann (@nikbyte), Zero King
+   (@l2dy), Michel Bensoussan, Richard Revels, Tavis Paquette,
+   Elena-Ramona Modroiu, Ryan Bullock, Andrei Datcu
+   (@andrei-datcu), Jeffrey Magder, Stefan-Cristian Mititelu, Ron
+   Winacott, Andy Pyles, Julián Moreno Patiño, Konstantin
+   Bokarius, sergei lavrov, Alex Massover, Damien Sandras
+   (@dsandras), Alex Hermann, Dusan Klinec (@ph4r05), Norman
+   Brandinger (@NormB), UnixDev, Eliot Gable, Ryan Bullock
    (@rrb3942), Edson Gellert Schubert.
 
    (1) DevScore = author_commits + author_lines_added /
@@ -2580,7 +2678,7 @@ Chapter 4. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -2592,19 +2690,20 @@ Chapter 4. Contributors
 
    Table 4.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Razvan Crainea (@razvancrainea)     Aug 2010 - Aug 2023
-   2.  Vlad Patrascu (@rvlad-patrascu)     Jul 2016 - Jun 2023
-   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Apr 2006 - Jun 2023
-   4.  Liviu Chircu (@liviuchircu)         Aug 2012 - Jun 2023
-   5.  Ovidiu Sas (@ovidiusas)             Feb 2008 - Jun 2023
-   6.  Ryan Bullock                        May 2023 - May 2023
-   7.  Maksym Sobolyev (@sobomax)          Nov 2020 - Feb 2023
-   8.  Peter Lemenkov (@lemenkov)          Jun 2018 - Sep 2022
-   9.  Vlad Paiu (@vladpaiu)               Oct 2010 - Nov 2021
-   10. Nick Altmann (@nikbyte)             Oct 2013 - May 2021
+   1.  Razvan Crainea (@razvancrainea)     Aug 2010 - Apr 2025
+   2.  Vlad Paiu (@vladpaiu)               Oct 2010 - Jan 2025
+   3.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Apr 2006 - Jun 2024
+   5.  Stefan-Cristian Mititelu            Jan 2024 - Jan 2024
+   6.  Maksym Sobolyev (@sobomax)          Nov 2020 - Nov 2023
+   7.  Vlad Patrascu (@rvlad-patrascu)     Jul 2016 - Jun 2023
+   8.  Ovidiu Sas (@ovidiusas)             Feb 2008 - Jun 2023
+   9.  Ryan Bullock                        May 2023 - May 2023
+   10. Peter Lemenkov (@lemenkov)          Jun 2018 - Sep 2022
 
-   All remaining contributors: Walter Doekes (@wdoekes), sergei
-   lavrov, Zero King (@l2dy), Dan Pascu (@danpascu), Ionel Cerghit
+   All remaining contributors: Nick Altmann (@nikbyte), Walter
+   Doekes (@wdoekes), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), sergei lavrov,
+   Zero King (@l2dy), Dan Pascu (@danpascu), Ionel Cerghit
    (@ionel-cerghit), Jarrod Baumann (@jarrodb), Ionut Ionita
    (@ionutrazvanionita), Julián Moreno Patiño, Dusan Klinec
    (@ph4r05), Eseanu Marius Cristian (@eseanucristian), Andrei
@@ -2624,19 +2723,20 @@ Chapter 5. Documentation
 
 5.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Bogdan-Andrei
-   Iancu (@bogdan-iancu), Ryan Bullock, Vlad Patrascu
-   (@rvlad-patrascu), Razvan Crainea (@razvancrainea), Vlad Paiu
-   (@vladpaiu), Zero King (@l2dy), Dan Pascu (@danpascu), Peter
-   Lemenkov (@lemenkov), Julián Moreno Patiño, Ionut Ionita
-   (@ionutrazvanionita), Ionel Cerghit (@ionel-cerghit), Walter
-   Doekes (@wdoekes), Eseanu Marius Cristian (@eseanucristian),
-   Norman Brandinger (@NormB), Anca Vamanu, Andrei Dragus, Hugues
-   Mitonneau, Klaus Darilion, Henning Westerholt (@henningw),
-   Ovidiu Sas (@ovidiusas), Daniel-Constantin Mierla (@miconda),
-   Konstantin Bokarius, Edson Gellert Schubert, Michel Bensoussan,
-   Andy Pyles, Elena-Ramona Modroiu.
+   Last edited by: Vlad Paiu (@vladpaiu), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
+   (@liviuchircu), Razvan Crainea (@razvancrainea), Bogdan-Andrei
+   Iancu (@bogdan-iancu), Stefan-Cristian Mititelu, Ryan Bullock,
+   Vlad Patrascu (@rvlad-patrascu), Zero King (@l2dy), Dan Pascu
+   (@danpascu), Peter Lemenkov (@lemenkov), Julián Moreno Patiño,
+   Ionut Ionita (@ionutrazvanionita), Ionel Cerghit
+   (@ionel-cerghit), Walter Doekes (@wdoekes), Eseanu Marius
+   Cristian (@eseanucristian), Norman Brandinger (@NormB), Anca
+   Vamanu, Andrei Dragus, Hugues Mitonneau, Klaus Darilion,
+   Henning Westerholt (@henningw), Ovidiu Sas (@ovidiusas),
+   Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
+   Gellert Schubert, Michel Bensoussan, Andy Pyles, Elena-Ramona
+   Modroiu.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006-2009 Voice Sistem SRL
+   Copyright © 2006-2009 Voice Sistem SRL

@@ -1,14 +1,14 @@
 /*
  * restart persistency shared mem stuff
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -53,7 +53,7 @@
 
 /* number of retries if a map fails */
 #define RPM_MAP_RETRIES			5
-/* 0RpM - Marina.Rodeo Restart Persistency Memory */
+/* 0RpM - OpenMarinkaRodeo Restart Persistency Memory */
 #define RPM_MAGIC_CODE			0x0052704Du
 
 /* returns a pointer to a restart persistency zone, identified by the key */
@@ -66,7 +66,7 @@ int rpm_key_del(char *key);
 /* initializes the restart persistency memory */
 int rpm_init_mem(void);
 
-extern enum osips_mm mem_allocator_rpm;
+extern enum oMarinkaRodeo_mm mem_allocator_rpm;
 int set_rpm_mm(const char *mm_name);
 extern unsigned long rpm_mem_size;
 extern char *rpm_mem_file;

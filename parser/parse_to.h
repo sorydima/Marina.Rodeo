@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 Fhg Fokus
+ * Copyright (C) 2001-2003 Fhg Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -43,7 +43,9 @@ struct to_body{
 	str uri;                      /* URI */
 	str display;                  /* Display Name */
 	str tag_value;                /* Value of tag */
-	struct sip_uri parsed_uri;    /* Parsed URI */
+	struct sip_uri parsed_uri;    /* Parsed URI
+	                               * IMPORTANT - be sure you set it to 0
+	                               * upon parse URI failure !!!!!! */
 	struct to_param *param_lst;   /* Linked list of parameters */
 	struct to_param *last_param;  /* Last parameter in the list */
 	struct to_body *next;         /* Next body if multi-instance header */
@@ -68,5 +70,9 @@ void free_to(struct to_body* tb);
 void free_to_params(struct to_body *tb);
 
 char* parse_multi_to(char* buffer, char *end, struct to_body *to_b);
+
+int has_totag(struct sip_msg* _m);
+
+int parse_to_body_uri(struct to_body *to_b);
 
 #endif

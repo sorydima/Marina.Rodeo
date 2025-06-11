@@ -30,14 +30,14 @@
 			<listitem>
 			<para>
 				<emphasis>the cache is 100% persistent. A restart
-					of Marina.Rodeo server will not affect the DB. The DB is also
+					of OpenMarinkaRodeo server will not affect the DB. The DB is also
 				persistent so it can also be restarted without loss of information.</emphasis>
 			</para>
 			</listitem>
 
 			<listitem>
 			<para>
-				<emphasis>Multiple Marina.Rodeo instances can easily share key-value information
+				<emphasis>Multiple OpenMarinkaRodeo instances can easily share key-value information
 				via a regular SQL-based database</emphasis>
 			</para>
 			</listitem>
@@ -70,7 +70,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		None.
 		</para>
@@ -80,7 +80,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 		</para>
 			<itemizedlist>
 			<listitem>
@@ -98,7 +98,7 @@
 		<section id="param_cachedb_url" xreflabel="cachedb_url">
 		<title><varname>cachedb_url</varname> (string)</title>
 		<para>
-			The url of the Database  that Marina.Rodeo will connect to in order
+			The url of the Database  that OpenMarinkaRodeo will connect to in order
 			to use the from script cache_store,cache_fetch, etc operations.
 		</para>
 
@@ -107,14 +107,14 @@
 		</para>
 		
 		<para>
-			The parameter can be set multiple times to create multiple connections accessible from the Marina.Rodeo script.
+			The parameter can be set multiple times to create multiple connections accessible from the OpenMarinkaRodeo script.
 		</para>
 		
 		<example>
 		<title>Set <varname>db_url</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/Marina.Rodeo_sql")
+modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/openMarinkaRodeo_sql")
 ...
 	</programlisting>
 		</example>
@@ -123,8 +123,8 @@ modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/Mari
 		<title>Usage example </title>
 		<programlisting format="linespecific">
 ...
-modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/Marina.Rodeo_sql")
-modparam("cachedb_sql", "cachedb_url", "sql:2nd-postgres://root:vlad@localhost/Marina.Rodeo_pg")
+modparam("cachedb_sql", "cachedb_url", "sql:1st-mysql://root:vlad@localhost/openMarinkaRodeo_sql")
+modparam("cachedb_sql", "cachedb_url", "sql:2nd-postgres://root:vlad@localhost/openMarinkaRodeo_pg")
 ...
 ...
 cache_store("sql:1st-mysql","key","$ru value");
@@ -137,7 +137,7 @@ cache_store("sql:2nd-postgres","counter","10");
 		<section id="param_db_table" xreflabel="db_table">
 		<title><varname>db_table</varname> (string)</title>
 		<para>
-			The table of the Database  that Marina.Rodeo will connect to in order
+			The table of the Database  that OpenMarinkaRodeo will connect to in order
 			to use the from script cache_store,cache_fetch, etc operations.
 		</para>
 		

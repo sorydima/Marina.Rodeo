@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2008 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2005-2008 Voice Sistem SRL
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of SIP Server (Marina.Rodeo).
+ * This file is part of Open SIP Server (OpenMarinkaRodeo).
  *
- * DROUTING Marina.Rodeo-module is free software; you can redistribute it and/or
+ * DROUTING OpenMarinkaRodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * DROUTING Marina.Rodeo-module is distributed in the hope that it will be useful,
+ * DROUTING OpenMarinkaRodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -106,8 +106,32 @@ int dr_set_gw_sock_filter_mode(char *mode)
 	return -1;
 }
 
+void hash_rule(char* grplst, str* prefix, rt_info_t* rule, MD5_CTX* hash_ctx)
+{
+	int i;
+
+	if (hash_ctx == NULL)
+		return;
+
+	MD5Update(hash_ctx, grplst, strlen(grplst));
+	if (prefix->s && prefix->len)
+		MD5Update(hash_ctx, prefix->s, prefix->len);
+
+	MD5Update(hash_ctx, (char *)&rule->priority, sizeof(rule->priority));
+	if (rule->attrs.s && rule->attrs.len)
+		MD5Update(hash_ctx, rule->attrs.s, rule->attrs.len);
+	MD5Update(hash_ctx, (char *)rule->sort_alg, sizeof(rule->sort_alg));
+
+	for (i=0;i<rule->pgwa_len;i++) {
+		if (rule->pgwl[i].is_carrier == 1)
+			hash_carrier(rule->pgwl[i].dst.carrier,hash_ctx);
+		else
+			hash_dst(rule->pgwl[i].dst.gw,hash_ctx);
+	}
+}
+
 static int add_rule(rt_data_t *rdata, char *grplst, str *prefix,
-		rt_info_t *rule, osips_malloc_f malloc_f, osips_free_f free_f)
+		rt_info_t *rule, oMarinkaRodeo_malloc_f malloc_f, oMarinkaRodeo_free_f free_f,MD5_CTX* hash_ctx)
 {
 	long int t;
 	char *tmp;
@@ -164,13 +188,15 @@ static int add_rule(rt_data_t *rdata, char *grplst, str *prefix,
 		goto error;
 	}
 
+	hash_rule(grplst,prefix,rule,hash_ctx);
+
 	return 0;
 error:
 	return -1;
 }
 
 static struct head_cache_socket *get_cache_sock_info(struct head_cache *cache,
-		struct socket_info *old_sock)
+		const struct socket_info *old_sock)
 {
 	struct head_cache_socket *hsock;
 	for (hsock = cache->sockets; hsock; hsock = hsock->next)
@@ -180,7 +206,7 @@ static struct head_cache_socket *get_cache_sock_info(struct head_cache *cache,
 }
 
 
-static int add_cache_sock_info(struct head_cache *cache, struct socket_info *sock,
+static int add_cache_sock_info(struct head_cache *cache, const struct socket_info *sock,
 		str *host, int port, int proto)
 {
 	struct head_cache_socket *hsock;
@@ -283,7 +309,7 @@ void dr_update_head_cache(struct head_db *head)
 extern struct custom_rule_table *custom_rule_tables;
 
 rt_data_t* dr_load_routing_info(struct head_db *part,
-                  int persistent_state, str *rules_tables, int rules_tables_no)
+                  int persistent_state, str *rules_tables, int rules_tables_no,MD5_CTX* hash_ctx)
 {
 	int    int_vals[5];
 	char * str_vals[7];
@@ -303,7 +329,7 @@ rt_data_t* dr_load_routing_info(struct head_db *part,
 	int discarded_gw = 0, discarded_cr = 0, discarded_rl = 0;
 	int no_rows = 10;
 	int db_cols;
-	struct socket_info *sock;
+	const struct socket_info *sock;
 	str s_sock, host;
 	int proto, port;
 	char id_buf[INT2STR_MAX_LEN];
@@ -420,7 +446,7 @@ rt_data_t* dr_load_routing_info(struct head_db *part,
 						if (gw_sock_filter==DR_GW_SOCK_FILTER_MODE_MATCH)
 							continue;
 						LM_ERR("GW <%s>(%s): socket <%.*s> is not local to "
-								"Marina.Rodeo (we must listen on it) -> ignoring socket\n",
+								"OpenMarinkaRodeo (we must listen on it) -> ignoring socket\n",
 								str_vals[STR_VALS_GWID_DRD_COL],
 								str_vals[STR_VALS_ID_DRD_COL], s_sock.len,s_sock.s);
 					} else if (part->cache) {
@@ -453,7 +479,8 @@ rt_data_t* dr_load_routing_info(struct head_db *part,
 						sock,
 						int_vals[INT_VALS_STATE_DRD_COL],
 						part->malloc,
-						part->free )<0 ) {
+						part->free,
+				   		hash_ctx )<0 ) {
 				LM_ERR("failed to add destination <%s>(%s) -> skipping\n",
 						str_vals[STR_VALS_GWID_DRD_COL],
 						str_vals[STR_VALS_ID_DRD_COL]);
@@ -575,7 +602,8 @@ rt_data_t* dr_load_routing_info(struct head_db *part,
 							str_vals[STR_VALS_ATTRS_DRC_COL],
 							int_vals[INT_VALS_STATE_DRC_COL], rdata,
 							part->malloc,
-							part->free) != 0 ) {
+							part->free,
+							hash_ctx) != 0 ) {
 					LM_ERR("failed to add carrier db_id <%s> -> skipping\n",
 							str_vals[STR_VALS_ID_DRC_COL]);
 					discarded_cr++;
@@ -724,7 +752,7 @@ rt_data_t* dr_load_routing_info(struct head_db *part,
 				}
 				/* add the rule */
 				if (add_rule(rdata, str_vals[STR_VALS_GROUP_DRR_COL], &tmp, ri,
-						part->malloc, part->free)!=0) {
+						part->malloc, part->free,hash_ctx)!=0) {
 					LM_ERR("failed to add rule id %d -> skipping\n",
 							int_vals[INT_VALS_RULE_ID_DRR_COL]);
 					free_rt_info(ri, part->free);

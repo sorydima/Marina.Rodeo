@@ -1,15 +1,15 @@
 #!/sbin/sh
-# Script for checking prerequisites for Marina.Rodeo-identity
+# Script for checking prerequisites for OpenMarinkaRodeo-identity
 
-BASE="Marina.Rodeo-base"
+BASE="OpenMarinkaRodeo-base"
 LIBSSL="libssl.a"
-TMPLIST="/tmp/.Marina.Rodeossl"
+TMPLIST="/tmp/.openMarinkaRodeossl"
 
 pkginfo | grep -i $BASE > /dev/null
 
 if [ $? -eq 1 ]
 then
-	echo "Marina.Rodeo-identity depends on package Marina.Rodeo-base which is not installed";
+	echo "OpenMarinkaRodeo-identity depends on package OpenMarinkaRodeo-base which is not installed";
 	exit 1;
 fi
 
@@ -18,7 +18,7 @@ lines=`wc -l $TMPLIST`
 
 if [ $lines = "0" ]
 then
-	echo "Marina.Rodeo-xmlrpc depends on OpenSSL Libraries, which cannot be found on system";
+	echo "OpenMarinkaRodeo-xmlrpc depends on OpenSSL Libraries, which cannot be found on system";
 	exit 1;
 else
 	exit 0;

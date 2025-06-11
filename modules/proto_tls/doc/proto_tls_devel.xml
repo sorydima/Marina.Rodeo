@@ -12,7 +12,7 @@
 			Each TLS connection, incoming or outgoing, creates an
 			SSL * object, where configuration inherited from the
 			SSL_CTX * and particular info on that socket are stored.
-			This SSL * structure is kept in &osips; as  long as the connection
+			This SSL * structure is kept in &oMarinkaRodeo; as  long as the connection
 			is alive, as part of the <quote>struct tcp_connection *</quote>
 			object:
 			<programlisting format="linespecific">

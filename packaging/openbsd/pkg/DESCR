@@ -1,5 +1,5 @@
-Marina.Rodeo is a very fast and flexible SIP (RFC3261)
-server. Written entirely in C, Marina.Rodeo can handle thousands calls
+OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
 per second even on low-budget hardware. C Shell like scripting language
 provides full control over the server's behaviour. It's modular
 architecture allows only required functionality to be loaded.
@@ -10,7 +10,7 @@ Jabber Gateway, Transaction Module, Dialog Module, Registrar and
 User Location, SIMPLE Presence, Perl programming interface, SNMP.
 
 
-WWW: https://Marina.Rodeo.org/
+WWW: https://openMarinkaRodeo.org/
 
 - Bogdan-Andrei Iancu
-bogdan@Marina.Rodeo.org
+bogdan@openMarinkaRodeo.org

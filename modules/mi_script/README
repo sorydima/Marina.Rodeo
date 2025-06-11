@@ -9,7 +9,7 @@ MI script Module
         1.2. Values Returned
         1.3. Dependencies
 
-              1.3.1. Marina.Rodeo Modules
+              1.3.1. OpenMarinkaRodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -62,7 +62,7 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    This module provides multiple hooks to run Management Interface
-   commands directly from Marina.Rodeo script. It supports running
+   commands directly from OpenMarinkaRodeo script. It supports running
    both synchronous and asynchronous commands. Depending on the
    nature of the command (asynchronous or not), and on the way the
    mi command is run from script, the returned result is
@@ -82,7 +82,7 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. Marina.Rodeo Modules
+1.3.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * proto_hep module, in case MI tracing is used.
@@ -90,7 +90,7 @@ Chapter 1. Admin Guide
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * none
 
 1.4. Exported Parameters
@@ -283,8 +283,9 @@ Chapter 2. Contributors
    commits^(2) and lines added/removed^(3)
                    Name               DevScore Commits Lines ++ Lines --
    1. Razvan Crainea (@razvancrainea)    17       6      1112      13
-   2. Liviu Chircu (@liviuchircu)        4        2       61       5
-   3. Maksym Sobolyev (@sobomax)         4        2       3        4
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)        5        3       69       8
+   3. Maksym Sobolyev (@sobomax)         5        3       7        8
+   4. Alexandra Titoc                    3        1       4        2
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -294,7 +295,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -306,9 +307,10 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                    Name                 Commit Activity
-   1. Maksym Sobolyev (@sobomax)      Feb 2023 - Feb 2023
-   2. Liviu Chircu (@liviuchircu)     Jun 2022 - Jan 2023
-   3. Razvan Crainea (@razvancrainea) May 2021 - Sep 2022
+   1. Alexandra Titoc                 Sep 2024 - Sep 2024
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)     Jun 2022 - Aug 2024
+   3. Maksym Sobolyev (@sobomax)      Feb 2023 - Nov 2023
+   4. Razvan Crainea (@razvancrainea) May 2021 - Sep 2022
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -317,9 +319,9 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Razvan Crainea
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Razvan Crainea
    (@razvancrainea).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2021 Marina.Rodeo Solutions
+   Copyright © 2021 OpenMarinkaRodeo Solutions

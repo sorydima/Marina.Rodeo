@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015 - Marina.Rodeo Foundation
+ * Copyright (C) 2015 - OpenMarinkaRodeo Foundation
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -103,7 +103,7 @@
 	"Sec-WebSocket-Protocol: " WS_PROTO_SIP HTTP_END
 #define HTTP_HANDSHAKE_END_LEN (sizeof(HTTP_HANDSHAKE_END) - 1)
 
-#define MAX_HOST_LEN IP_ADDR_MAX_STR_SIZE /*IP*/ + 1 /*':'*/ + 5 /*65535*/
+#define MAX_HOST_LEN IP_ADDR_MAX_STR_SIZE /*IP*/ + 2 /* '[' & ']' for ipv6 */ + 1 /*':'*/ + 5 /*65535*/
 
 #include "../../sha1.h"
 
@@ -844,9 +844,9 @@ static int ws_parse_req_handshake(struct tcp_connection *c, char *msg, int len)
 	memset(&tmp_msg, 0, sizeof(struct sip_msg));
 	tmp_msg.len = len;
 	tmp_msg.buf = tmp_msg.unparsed = msg;
-	if (parse_headers(&tmp_msg, HDR_EOH_F, 0) < 0) {
+	if (parse_headers_aux(&tmp_msg, HDR_EOH_F, 0,0) < 0) {
 		LM_ERR("cannot parse headers\n%.*s\n", len, msg);
-		goto error;
+		goto ws_error;
 	}
 	/* verify headers according to RFC6455 */
 	for (hf = tmp_msg.headers; hf; hf = hf->next) {
@@ -1122,9 +1122,9 @@ static int ws_parse_rpl_handshake(struct tcp_connection *c, char *msg, int len)
 	memset(&tmp_msg, 0, sizeof(struct sip_msg));
 	tmp_msg.len = len;
 	tmp_msg.buf = tmp_msg.unparsed = msg;
-	if (parse_headers(&tmp_msg, HDR_EOH_F, 0) < 0) {
+	if (parse_headers_aux(&tmp_msg, HDR_EOH_F, 0, 0) < 0) {
 		LM_ERR("cannot parse headers\n%.*s\n", len, msg);
-		goto error;
+		goto ws_error;
 	}
 	/* verify headers according to RFC6455 */
 	for (hf = tmp_msg.headers; hf; hf = hf->next) {
@@ -1273,6 +1273,7 @@ static int ws_start_handshake(struct tcp_connection *c)
 	char *port;
 	int port_len;
 	static char host_orig_buf[MAX_HOST_LEN];
+	char *h;
 
 	str trace_str = { ws_trace_buf, 0 };
 
@@ -1303,14 +1304,21 @@ static int ws_start_handshake(struct tcp_connection *c)
 	ip = ip_addr2a(&c->rcv.src_ip);
 	port = int2str(c->rcv.src_port, &port_len);
 	n = strlen(ip);
-	memcpy(host_orig_buf, ip, n);
-	host_orig_buf[n] = ':';
-	memcpy(host_orig_buf + n + 1, port, port_len);
+	h = host_orig_buf;
+	if (c->rcv.src_ip.af == AF_INET6)
+		*h++ = '[';
+	memcpy(h, ip, n);
+	h += n;
+	if (c->rcv.src_ip.af == AF_INET6)
+		*h++ = ']';
+	*h++ = ':';
+	memcpy(h, port, port_len);
+	h += port_len;
 
 	iov[2].iov_base = _ws_common_resource.s;
 	iov[2].iov_len = _ws_common_resource.len;
 
-	iov[7].iov_len = n + port_len + 1;
+	iov[7].iov_len = h - host_orig_buf;
 	iov[10].iov_len = iov[7].iov_len;
 
 	iov[13].iov_base = WS_KEY(c).s;

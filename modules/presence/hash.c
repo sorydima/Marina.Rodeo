@@ -1,16 +1,16 @@
 /*
  * presence module - presence server implementation
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 Voice Sistem S.R.L.
+ * Copyright (C) 2007 Voice Sistem S.R.L.
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -245,7 +245,7 @@ int insert_shtable(shtable_t htable,unsigned int hash_code, subs_t* subs)
 		goto error;
 	}
 
-	new_rec->expires+= (int)time(NULL);
+	new_rec->expires+= (unsigned int)(unsigned long)time(NULL);
 	if(fallback2db)
 		new_rec->db_flag= NO_UPDATEDB_FLAG;
 	else
@@ -348,7 +348,7 @@ int update_shtable(shtable_t htable,unsigned int hash_code,
 
 	if(type & REMOTE_TYPE)
 	{
-		s->expires= subs->expires+ (int)time(NULL);
+		s->expires= subs->expires+ (unsigned int)(unsigned long)time(NULL);
 		s->remote_cseq= subs->remote_cseq;
 	}
 	else

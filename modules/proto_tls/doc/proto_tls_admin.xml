@@ -24,12 +24,12 @@
 		<para>
 		The TLS support was simultaneously added in both projects. In SER,
 		the support was committed in a separate <quote>experimental</quote>
-		CVS tree, as patch to the main CVS tree. In Marina.Rodeo, the support was
+		CVS tree, as patch to the main CVS tree. In OpenMarinkaRodeo, the support was
 		integrated directly into the CVS tree, as a built-in component, and is
-		part of stable Marina.Rodeo since release >=1.0.0.
+		part of stable OpenMarinkaRodeo since release >=1.0.0.
 		</para>
 		<para>
-		Starting with Marina.Rodeo 2.1, the TLS has been moved to a separate
+		Starting with OpenMarinkaRodeo 2.1, the TLS has been moved to a separate
 		transport module, that implements the more generic Transport
 		Interface.
 		</para>
@@ -162,7 +162,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
         <itemizedlist>
@@ -184,7 +184,7 @@
 		<title>Dependencies of external libraries</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -197,10 +197,10 @@
 	</section>
 
 	<section>
-		<title>&osips; Exported parameters</title>
+		<title>&oMarinkaRodeo; Exported parameters</title>
 		<para>
-		All these parameters can be used from the Marina.Rodeo.cfg file,
-		to configure the behavior of &osips;-TLS.
+		All these parameters can be used from the openMarinkaRodeo.cfg file,
+		to configure the behavior of &oMarinkaRodeo;-TLS.
 		</para>
 
 		<section id="param_listen" xreflabel="listen">
@@ -326,7 +326,7 @@ modparam("proto_tls", "tls_max_msg_chunks", 8)
 		<para>
 		This checking is done only when comes to send SIP traffic via TLS and
 		it is applied only against connections that were created / initiated 
-		by Marina.Rodeo (as TLS client). Any accepte connection (as TLS server) will
+		by OpenMarinkaRodeo (as TLS client). Any accepte connection (as TLS server) will
 		automatically match (the extra test will be skipped).
 		</para>
 		<para>
@@ -413,11 +413,11 @@ modparam("proto_tls", "trace_on", 1)
 			<emphasis role="bold">IMPORTANT</emphasis>
 			Filtering on ip addresses and ports can be made using <emphasis role="bold">
 			$si</emphasis> and <emphasis role="bold">$sp</emphasis> for matching
-			either the entity that is connecting to &osips; or the entity to which
-			&osips; is connecting. The name might be misleading (<emphasis role="bold">
+			either the entity that is connecting to &oMarinkaRodeo; or the entity to which
+			&oMarinkaRodeo; is connecting. The name might be misleading (<emphasis role="bold">
 				$si</emphasis> meaning the source ip if you read the docs) but in reality
-			it is simply the socket other than the &osips; socket. In order to match
-			&osips; interface (either the one that accepted the connection or the one
+			it is simply the socket other than the &oMarinkaRodeo; socket. In order to match
+			&oMarinkaRodeo; interface (either the one that accepted the connection or the one
 			that initiated a connection) <emphasis role="bold">$socket_in(ip)</emphasis> (ip) and
 			<emphasis role="bold">$socket_in(port)</emphasis> (port) can be used.
 		</para>
@@ -441,7 +441,7 @@ modparam("proto_tls", "trace_filter_route", "tls_filter")
 route[tls_filter] {
 	...
 	/* all connections opened from/by ip 1.1.1.1:8000 will be traced
-	   on interface 1.1.1.10:5060(Marina.Rodeo listener)
+	   on interface 1.1.1.10:5060(openMarinkaRodeo listener)
 	   all the other connections won't be */
 	 if ( $si == "1.1.1.1" &amp;&amp; $sp == 8000 &amp;&amp;
 		$socket_in(ip) == "1.1.1.10"  &amp;&amp; $socket_in(port) == 5060)
@@ -505,7 +505,7 @@ modparam("proto_tls", "tls_send_timeout", 200) # number of milliseconds
 		<para>
 			If the TLS connect and write operations should be done in an
 			asynchronous mode (non-blocking connect and
-			write). If disabled, Marina.Rodeo will block and wait for TLS
+			write). If disabled, OpenMarinkaRodeo will block and wait for TLS
 			operations like connect and write.
 		</para>
 		<para><emphasis>
@@ -627,7 +627,7 @@ modparam("proto_tls", "tls_async_handshake_timeout", 100)
 			MI FIFO Command Format:
 			</para>
 			<programlisting  format="linespecific">
-			Marina.Rodeo-cli -x mi tls_trace on
+			openMarinkaRodeo-cli -x mi tls_trace on
 			</programlisting>
 		</section>
 	</section>

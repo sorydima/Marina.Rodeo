@@ -2,16 +2,16 @@
  * high-performance allocator with fine-grained SHM locking
  *   (note: may perform worse than F_MALLOC at low CPS values!)
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2019 Marina.Rodeo Solutions
+ * Copyright (C) 2014-2019 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -104,7 +104,7 @@ static unsigned int optimized_put_indexes[HP_HASH_SIZE];
 	HP_LINEAR_HASH_SIZE + big_hash_idx((s)) - HP_MALLOC_OPTIMIZE_FACTOR + 1)
 
 /*
- * adaptive image of Marina.Rodeo's memory usage during runtime
+ * adaptive image of OpenMarinkaRodeo's memory usage during runtime
  * used to fragment the shared memory pool at daemon startup
  */
 char *mem_warming_pattern_file = MEM_WARMING_DEFAULT_PATTERN_FILE;
@@ -292,7 +292,7 @@ static inline void hp_frag_detach(struct hp_block *hpb, struct hp_frag *frag)
 #endif
 
 /**
- * dumps the current memory allocation pattern of Marina.Rodeo into a pattern file
+ * dumps the current memory allocation pattern of OpenMarinkaRodeo into a pattern file
  */
 void hp_update_shm_pattern_file(void)
 {

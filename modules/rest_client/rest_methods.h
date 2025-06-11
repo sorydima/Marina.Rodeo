@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2013 Marina.Rodeo Solutions
+ * Copyright (C) 2013 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -47,7 +47,7 @@ extern int ssl_verifyhost;
 
 extern int curl_http_version;
 extern int no_concurrent_connects;
-extern int curl_conn_lifetime;
+extern unsigned int curl_conn_lifetime;
 
 /* handle for use with synchronous reqs */
 extern CURL *sync_handle;
@@ -58,6 +58,9 @@ enum rest_client_method {
 	REST_CLIENT_PUT,
 	REST_CLIENT_POST
 };
+#define rest_client_method_str(_m) ( \
+	(_m) == REST_CLIENT_GET ? "GET" : \
+	(_m) == REST_CLIENT_POST ? "POST" : "PUT")
 
 /* return codes for rest_client script functions */
 #define RCL_OK_LOCKED            2
@@ -112,6 +115,7 @@ typedef struct rest_async_param_ {
 	struct curl_slist *header_list;
 	str body;
 	str ctype;
+	unsigned long timeout_s; /* max possible duration for the entire cURL op */
 
 	rest_trace_param_t* tparam;
 

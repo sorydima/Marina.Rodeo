@@ -1,16 +1,16 @@
 /*
  * version and compile flags macros
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2004 FhG Fokus
+ * Copyright (C) 2004 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -23,7 +23,7 @@
 #ifndef version_h
 #define version_h
 
-#define Marina.Rodeo_FULL_VERSION  NAME " " VERSION " (" ARCH "/" OS ")"
+#define OPENMarinkaRodeo_FULL_VERSION  NAME " " VERSION " (" ARCH "/" OS ")"
 
 
 #ifdef STATISTICS
@@ -97,6 +97,12 @@
 #define HP_MALLOC_STR ", HP_MALLOC"
 #else
 #define HP_MALLOC_STR ""
+#endif
+
+#ifdef F_PARALLEL_MALLOC
+#define F_PARALLEL_MALLOC_STR ", F_PARALLEL_MALLOC"
+#else
+#define F_PARALLEL_MALLOC_STR ""
 #endif
 
 #ifdef DBG_MALLOC
@@ -177,11 +183,11 @@
 #define NOSMP_STR ""
 #endif
 
-#define Marina.Rodeo_COMPILE_FLAGS \
+#define OPENMarinkaRodeo_COMPILE_FLAGS \
 	STATS_STR EXTRA_STATS_STR EXTRA_DEBUG_STR \
 	DISABLE_NAGLE_STR USE_MCAST_STR NO_DEBUG_STR NO_LOG_STR \
 	SHM_MMAP_STR PKG_MALLOC_STR Q_MALLOC_STR F_MALLOC_STR \
-	HP_MALLOC_STR DBG_MALLOC_STR CC_O0_STR \
+	HP_MALLOC_STR F_PARALLEL_MALLOC_STR DBG_MALLOC_STR CC_O0_STR \
 	DEBUG_DMALLOC_STR QM_JOIN_FREE_STR FAST_LOCK_STR NOSMP_STR \
 	USE_PTHREAD_MUTEX_STR USE_UMUTEX_STR USE_POSIX_SEM_STR \
 	USE_SYSV_SEM_STR DBG_LOCK_STR

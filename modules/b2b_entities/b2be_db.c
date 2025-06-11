@@ -1,16 +1,16 @@
 /*
  * back-to-back entities module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Free Software Fundation
+ * Copyright (C) 2011 Free Software Fundation
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -228,7 +228,8 @@ static int b2be_cdb_insert(int type, b2b_dlg_t* dlg, int cols_no)
 	if ((rc = b2be_cdbf.map_set(b2be_cdb, cdb_key, cdb_subkey, &cdb_pairs)))
 		LM_ERR("cachedb set failed\n");
 
-	pkg_free(cdb_subkey->s);
+	if (cdb_subkey)
+		pkg_free(cdb_subkey->s);
 	pkg_free(cdb_key->s);
 	cdb_free_entries(&cdb_pairs, NULL);
 
@@ -258,12 +259,7 @@ int b2be_db_insert(b2b_dlg_t* dlg, int type)
 		qvals[11].val.str_val.s = 0;
 		qvals[11].val.str_val.len = 0;
 	}
-	if (!str_check_token(&dlg->logic_key)) {
-		qvals[12].val.str_val.s = NULL;
-		qvals[12].val.str_val.len = 0;
-	} else {
-		qvals[12].val.str_val = dlg->logic_key;
-	}
+	qvals[12].val.str_val = dlg->logic_key;
 	qvals[13].val.str_val= dlg->mod_name;
 
 	if (!dlg->storage.len) {
@@ -327,21 +323,16 @@ static void b2b_entity_cdb_delete(int type, b2b_dlg_t* dlg)
 		return;
 	}
 
-	if (!str_check_token(&dlg->logic_key)) {
-		cdb_subkey = NULL;
-	} else {
-		cdb_subkey = get_b2be_map_subkey(&dlg->logic_key);
-		if (!cdb_subkey) {
-			LM_ERR("Failed to build map key\n");
-			return;
-		}
+	cdb_subkey = get_b2be_map_subkey(&dlg->logic_key);
+	if (!cdb_subkey) {
+		LM_ERR("Failed to build map key\n");
+		return;
 	}
 
 	if (b2be_cdbf.map_remove(b2be_cdb, cdb_key, cdb_subkey) < 0)
 		LM_ERR("Failed to delete from cachedb\n");
 
-	if (cdb_subkey)
-		pkg_free(cdb_subkey->s);
+	pkg_free(cdb_subkey->s);
 	pkg_free(cdb_key->s);
 }
 
@@ -503,12 +494,7 @@ void store_b2b_dlg(b2b_table htable, unsigned int hsize, int type, int no_lock)
 					qvals[11].val.str_val.s = 0;
 					qvals[11].val.str_val.len = 0;
 				}
-				if (!str_check_token(&dlg->logic_key)) {
-					qvals[12].val.str_val.s = NULL;
-					qvals[12].val.str_val.len = 0;
-				} else {
-					qvals[12].val.str_val = dlg->logic_key;
-				}
+				qvals[12].val.str_val = dlg->logic_key;
 				qvals[13].val.str_val= dlg->mod_name;
 			}
 

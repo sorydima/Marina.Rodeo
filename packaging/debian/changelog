@@ -1,39 +1,45 @@
-Marina.Rodeo (3.5.0-dev-1) beta; urgency=low
+openMarinkaRodeo (3.6.0-dev-1) beta; urgency=low
+
+  * Development Build.
+
+ -- Razvan Crainea <razvan@openMarinkaRodeo.org>  Mon, 27 May 2024 16:00:00 +0300
+
+openMarinkaRodeo (3.5.0-dev-1) beta; urgency=low
 
   * Development Build.
 
  -- Nick Altmann <nick@altmann.pro>  Thu, 18 May 2023 16:00:00 +0300
 
-Marina.Rodeo (3.4.0-1) beta; urgency=low
+openMarinkaRodeo (3.4.0-1) beta; urgency=low
 
   * Major Public Release.
 
- -- Liviu Chircu <liviu@Marina.Rodeo.org>  Wed, 17 May 2023 16:06:38 +0300
+ -- Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  <sorydima@rechain.work>  Wed, 17 May 2023 16:06:38 +0300
 
 
-Marina.Rodeo (3.3.0-1) stable; urgency=low
-
-  * Minor Public Release.
-
- -- Razvan Crainea <razvan@Marina.Rodeo.org>  Mon, 17 Aug 2021 00:00:00 +0300
-
-
-Marina.Rodeo (3.2.0-1) stable; urgency=low
+openMarinkaRodeo (3.3.0-1) stable; urgency=low
 
   * Minor Public Release.
 
- -- Razvan Crainea <razvan@Marina.Rodeo.org>  Wed, 21 Jul 2021 15:07:53 +0300
+ -- Razvan Crainea <razvan@openMarinkaRodeo.org>  Mon, 17 Aug 2021 00:00:00 +0300
 
 
-Marina.Rodeo (3.1.0-1) stable; urgency=low
+openMarinkaRodeo (3.2.0-1) stable; urgency=low
 
   * Minor Public Release.
 
- -- Razvan Crainea <razvan@Marina.Rodeo.org>  Tue, 16 Apr 2019 21:15:04 +0300
+ -- Razvan Crainea <razvan@openMarinkaRodeo.org>  Wed, 21 Jul 2021 15:07:53 +0300
 
 
-Marina.Rodeo (3.0.0-1) unstable; urgency=medium
+openMarinkaRodeo (3.1.0-1) stable; urgency=low
+
+  * Minor Public Release.
+
+ -- Razvan Crainea <razvan@openMarinkaRodeo.org>  Tue, 16 Apr 2019 21:15:04 +0300
+
+
+openMarinkaRodeo (3.0.0-1) unstable; urgency=medium
 
   * Local package
 
- -- Razvan Crainea <razvan@Marina.Rodeo.org>  Fri, 14 Apr 2017 12:20:44 +0200
+ -- Razvan Crainea <razvan@openMarinkaRodeo.org>  Fri, 14 Apr 2017 12:20:44 +0200

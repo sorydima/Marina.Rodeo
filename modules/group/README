@@ -12,7 +12,7 @@ group Module
 
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -97,7 +97,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * A database module, like mysql, postgres or dbtext.
@@ -106,7 +106,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -118,7 +118,7 @@ Chapter 1. Admin Guide
    Example 1.1. Set db_url parameter
 
 ...
-modparam("group", "db_url", "mysql://username:password@dbhost/Marina.Rodeo")
+modparam("group", "db_url", "mysql://username:password@dbhost/openMarinkaRodeo")
 ...
 
 
@@ -363,22 +363,22 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Bogdan-Andrei Iancu (@bogdan-iancu) 45 31 848 397
+   1. Bogdan-Andrei Iancu (@bogdan-iancu) 46 31 848 397
    2. Jan Janak (@janakj) 35 20 1370 148
    3. Daniel-Constantin Mierla (@miconda) 24 18 176 226
-   4. Liviu Chircu (@liviuchircu) 15 11 87 152
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 16 12 87 154
    5. Razvan Crainea (@razvancrainea) 9 7 16 39
    6. Irina-Maria Stanescu 9 4 466 59
    7. Andrei Pelinescu-Onciul 7 5 101 40
    8. Henning Westerholt (@henningw) 7 5 27 46
    9. Vlad Patrascu (@rvlad-patrascu) 5 2 78 106
-   10. Edson Gellert Schubert 5 1 0 206
+   10. Sergio Gutierrez 5 1 122 72
 
-   All remaining contributors: Jiri Kuthan (@jiriatipteldotorg),
-   Maksym Sobolyev (@sobomax), Peter Lemenkov (@lemenkov), Walter
-   Doekes (@wdoekes), Dan Pascu (@danpascu), Sergio Gutierrez,
-   Konstantin Bokarius, Norman Brandinger (@NormB), UnixDev, Anca
-   Vamanu.
+   All remaining contributors: Edson Gellert Schubert, Jiri Kuthan
+   (@jiriatipteldotorg), Maksym Sobolyev (@sobomax), Peter
+   Lemenkov (@lemenkov), Walter Doekes (@wdoekes), Dan Pascu
+   (@danpascu), Konstantin Bokarius, Alexandra Titoc, Norman
+   Brandinger (@NormB), UnixDev, Anca Vamanu.
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -388,7 +388,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -400,22 +400,22 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Razvan Crainea (@razvancrainea)     Jun 2011 - Jun 2021
-   3.  Walter Doekes (@wdoekes)            Apr 2021 - Apr 2021
-   4.  Liviu Chircu (@liviuchircu)         Mar 2014 - May 2020
-   5.  Peter Lemenkov (@lemenkov)          Jun 2018 - May 2020
-   6.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2005 - Mar 2020
-   7.  Dan Pascu (@danpascu)               Oct 2007 - Apr 2019
-   8.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   9.  Irina-Maria Stanescu                Aug 2009 - Dec 2009
-   10. Anca Vamanu                         Sep 2009 - Sep 2009
+   1.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   3.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   4.  Razvan Crainea (@razvancrainea)     Jun 2011 - Jun 2021
+   5.  Walter Doekes (@wdoekes)            Apr 2021 - Apr 2021
+   6.  Peter Lemenkov (@lemenkov)          Jun 2018 - May 2020
+   7.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2005 - Mar 2020
+   8.  Dan Pascu (@danpascu)               Oct 2007 - Apr 2019
+   9.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
+   10. Irina-Maria Stanescu                Aug 2009 - Dec 2009
 
-   All remaining contributors: UnixDev, Sergio Gutierrez, Henning
-   Westerholt (@henningw), Daniel-Constantin Mierla (@miconda),
-   Konstantin Bokarius, Edson Gellert Schubert, Norman Brandinger
-   (@NormB), Jan Janak (@janakj), Andrei Pelinescu-Onciul, Jiri
-   Kuthan (@jiriatipteldotorg).
+   All remaining contributors: Anca Vamanu, UnixDev, Sergio
+   Gutierrez, Henning Westerholt (@henningw), Daniel-Constantin
+   Mierla (@miconda), Konstantin Bokarius, Edson Gellert Schubert,
+   Norman Brandinger (@NormB), Jan Janak (@janakj), Andrei
+   Pelinescu-Onciul, Jiri Kuthan (@jiriatipteldotorg).
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -424,15 +424,15 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Peter Lemenkov (@lemenkov), Liviu Chircu
+   Last edited by: Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
    (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu), Razvan
    Crainea (@razvancrainea), Irina-Maria Stanescu, Sergio
    Gutierrez, Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert, Dan Pascu (@danpascu), Jan
    Janak (@janakj).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2009 Voice Sistem SRL
+   Copyright © 2009 Voice Sistem SRL
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS
+   Copyright © 2003 FhG FOKUS

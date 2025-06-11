@@ -1,3 +1,29 @@
+[![Build Status](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/main.yml?query=branch%3Amaster++)
+[![Unit Tests](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/unittests.yml/badge.svg?branch=master)](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/unittests.yml?query=branch%3Amaster++)
+[![OSS-Fuzz](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/cifuzz.yml/badge.svg?branch=master)](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/cifuzz.yml?query=branch%3Amaster++)
+[![Cross Platform Builds](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/multiarch.yml/badge.svg?branch=master)](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/multiarch.yml?query=branch%3Amaster++)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/7580/badge.svg)](https://scan.coverity.com/projects/openMarinkaRodeo-openMarinkaRodeo)
+
+# Welcome to OpenMarinkaRodeo Project
+
+
+## About
+
+OpenMarinkaRodeo is a GPL licensed SIP server implementation. It started as a fork of
+Fokus Fraunhofer SIP Express Router (SER) project. OpenMarinkaRodeo wants to be a more
+open project, not only from license point of view, but more open as project
+management, especially for external contributions.
+
+OpenMarinkaRodeo wants to overcome the development latency of current SER project,
+to ensure a shorter path into a release for new added features.
+OpenMarinkaRodeo is a project maintained by OpenMarinkaRodeo Solutions
+by a team including core and main developers of SER project.
+
+
+## Info
+For information regarding the OpenMarinkaRodeo installation, please see the [INSTALL](INSTALL)
+file.
+
 # Welcome to Marina.Rodeo Project! 🛁
 
 ## Embrace the Future of Communication with Marina.Rodeo 🐝
@@ -16,12 +42,12 @@ Marina.Rodeo thrives under the care of REChain Network Solutions, steered by a t
 
 ## Engage and Explore the Possibilities
 
-Are you curious about Marina.Rodeo's usage or features? Connect with us at <mailto:support@rechain.email> to explore and understand how this innovative solution can transform your communication experience.
+Are you curious about Marina.Rodeo's usage or features? Connect with us at <mailto:support@rechain.network> to explore and understand how this innovative solution can transform your communication experience.
 
-Do you have a knack for development or want to contribute to Marina.Rodeo's evolution? Join our collaborative journey by reaching out to <mailto:sorydima@rechain.email> for contributions, bug reports, and more.
+Do you have a knack for development or want to contribute to Marina.Rodeo's evolution? Join our collaborative journey by reaching out to <mailto:sorydima@rechain.work> for contributions, bug reports, and more.
 
-Are you envisioning business opportunities or seeking consultancy on Marina.Rodeo? Drop us a line at <mailto:pr@rechain.email> to explore partnership possibilities, product inquiries, or consultancy services.
+Are you envisioning business opportunities or seeking consultancy on Marina.Rodeo? Drop us a line at <mailto:support@rechain.network> to explore partnership possibilities, product inquiries, or consultancy services.
 
 Step into the world of Marina.Rodeo—where communication transcends limits, technology defies norms, and possibilities are limitless. 🚀
 
-### Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain ®️. 🪐 Copyright © 2023-2024 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email cfa@rechain.email anti@rechain.email mot_cfa@rechain.email rechainstore@rechain.email models@rechain.email dex@rechain.email email@rechain.email musicdapp@rechain.email pitomec@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
+### Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain ®️. 🪐 Copyright © 2023-2025 REChain, Inc REChain ® is a registered trademark support@rechain.network Please allow anywhere from 1 to 5 business days for E-mail responses! 💌

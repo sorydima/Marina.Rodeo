@@ -1,7 +1,7 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 Alexander Christ,
+ * Copyright (C) 2007 Alexander Christ,
  *    Cologne University of Applied Sciences
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Voice Sistem SRL
+ * Copyright (C) 2009 Voice Sistem SRL
  *
  * This file is part of openser, a free SIP server.
  *
@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * In addition, as a special exception, the Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 holders give
+ * In addition, as a special exception, the copyright holders give
  * permission to link the code of portions of this program with the
  * OpenSSL library under certain conditions as described in each
  * individual source file, and distribute linked combinations
@@ -151,7 +151,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	cmds, /* exported functions */
 	0,    /* exported async functions */
 	params,	/* parameters to be exportet */
@@ -1302,6 +1302,11 @@ static int checkSign(X509 * cert, char * identityHF, struct sip_msg * msg)
 	/* EVP_DecodeBlock counts the terminating '=', but this padding character does not
 	belong to the signature.*/
 	p=strstr(identityHF , "=");
+	if (!p) {
+		pkg_free(sigbuf);
+		LM_ERR("String '=' not found\n");
+		return 0;
+	}
 	siglen-=strspn(p , "=");
 
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
@@ -1406,6 +1411,8 @@ static time_t parseX509Date(ASN1_STRING * dateString)
 {
 	unsigned char * tmp = NULL;
 	struct tm tmDate;
+
+	tmDate.tm_isdst = 0;
 
 	if(!dateString)
 	{

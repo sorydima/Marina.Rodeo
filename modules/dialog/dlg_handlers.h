@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008-2020 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice System SRL
+ * Copyright (C) 2008-2020 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2006 Voice System SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -63,6 +63,7 @@ static inline int dlg_match_mode_str_to_int(const str *in)
 
 struct _dlg_cseq{
 	struct dlg_cell *dlg;
+	int dst_leg;
 	str cseq;
 };
 
@@ -105,9 +106,10 @@ typedef int (*terminate_dlg_f)(const str *callid, unsigned int h_entry,
 		unsigned int h_id, const str *reason);
 typedef int (*indialog_reply_f) (struct sip_msg *msg, int statuscode,
 		void *param);
+typedef void (*indialog_release_f) (void *param);
 typedef int (*send_indialog_req_f)(struct dlg_cell *dlg, str *method,
 		int leg, str *body, str *ct, str *hdrs, indialog_reply_f func,
-		void *param);
+		void *param, indialog_release_f release);
 
 
 void init_dlg_handlers(int default_timeout);
@@ -135,7 +137,7 @@ int terminate_dlg(const str *callid, unsigned int h_entry, unsigned int h_id,
 
 int send_indialog_request(struct dlg_cell *dlg, str *method,
 		int leg, str *body, str *ct, str *hdrs, indialog_reply_f func,
-		void *param);
+		void *param, indialog_release_f release);
 
 void unreference_dialog(void *dialog);
 

@@ -7,21 +7,21 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		This is a module which integrates the Berkeley DB into Marina.Rodeo.
-		It implements the DB API defined in Marina.Rodeo.
+		This is a module which integrates the Berkeley DB into OpenMarinkaRodeo.
+		It implements the DB API defined in OpenMarinkaRodeo.
 	</para>
 	</section>
 
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
 			<listitem>
 			<para>
-				<emphasis>No dependencies on other &osips; modules</emphasis>.
+				<emphasis>No dependencies on other &oMarinkaRodeo; modules</emphasis>.
 			</para>
 			</listitem>
 			</itemizedlist>
@@ -32,7 +32,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -146,14 +146,14 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 				<emphasis>table_path</emphasis> - to reload a particular table
 				provide the tablename as the arguement; to reload
 				all tables provide the db_path to the db files. The path can be found
-				in Marina.Rodeo-cli config variable.
+				in openMarinkaRodeoc-cli config variable.
 			</para></listitem>
 		</itemizedlist>
 		<para>
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi bdb_reload subscriber
+		openMarinkaRodeo-cli -x mi bdb_reload subscriber
 		</programlisting>
 	</section>
 	</section>
@@ -167,7 +167,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 		</para>
 		
 		<para>
-		Next, prepare to compile Marina.Rodeo with the db_berkeley module. 
+		Next, prepare to compile OpenMarinkaRodeo with the db_berkeley module. 
 		In the directory /modules/db_berkeley, modify the Makefile to point 
 		to your distribution of Berkeley DB. You may also define 'BDB_EXTRA_DEBUG' 
 		to compile in extra debug logs. However, it is not a recommended 
@@ -183,7 +183,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 			<listitem>
 			<para>
 			edit the "Makefile" and remove "db_berkeley" from "excluded_modules"
-			list. Then follow the standard procedure to install &osips;:
+			list. Then follow the standard procedure to install &oMarinkaRodeo;:
 			"make all; make install".
 			</para>
 			</listitem>
@@ -196,18 +196,18 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 		</itemizedlist>
 		
 		<para>
-		Installation of Marina.Rodeo is performed by simply running make install
+		Installation of OpenMarinkaRodeo is performed by simply running make install
 		as root user of the main directory. This will install the binaries 
 		in /usr/local/sbin/.
-		If this was successful, &osips; control engine files should now 
-		be installed as /usr/local/sbin/Marina.Rodeo-dbctl.
+		If this was successful, &oMarinkaRodeo; control engine files should now 
+		be installed as /usr/local/sbin/openMarinkaRodeodbctl.
 		</para>
 		
 		<para>
 		Decide where (on the filesystem) you want to install the Berkeley DB files.
-		For instance, '/usr/local/etc/Marina.Rodeo/db_berkeley' directory.
-		Make note of this directory as we need to add this path to the Marina.Rodeo-cli config file.
-		Note: Marina.Rodeo will not startup without these DB files.
+		For instance, '/usr/local/etc/openMarinkaRodeo/db_berkeley' directory.
+		Make note of this directory as we need to add this path to the openMarinkaRodeo-cli config file.
+		Note: OpenMarinkaRodeo will not startup without these DB files.
 		</para>
 		
 		<para>
@@ -215,7 +215,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 		The DB files are initially seeded with necessary meta-data. 
 		This is a good time to review the meta-data section details,
 		before making modifications to your tables dbschema.
-		By default, the files are installed in '/usr/local/share/Marina.Rodeo/db_berkeley/Marina.Rodeo'
+		By default, the files are installed in '/usr/local/share/openMarinkaRodeo/db_berkeley/openMarinkaRodeo'
 		By default these tables are created Read/Write and without any journalling as 
 		shown. These settings can be modified on a per table basis.
 		Note: If you plan to use bdb_recover, you must change the LOGFLAGS.
@@ -229,20 +229,20 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 		
 		
 		<para>
-		Execute Marina.Rodeo-dbctl - There are three (3) groups of tables you may need depending
+		Execute openMarinkaRodeodbctl - There are three (3) groups of tables you may need depending
 		on your situation.
 		</para>
 	        <programlisting  format="linespecific">
-		Marina.Rodeo-dbctl create   		(required)
-		Marina.Rodeo-dbctl presence 		(optional)
-		Marina.Rodeo-dbctl extra    		(optional)
+		openMarinkaRodeodbctl create   		(required)
+		openMarinkaRodeodbctl presence 		(optional)
+		openMarinkaRodeodbctl extra    		(optional)
 		</programlisting>
 		
 		<para>
-		Modify the Marina.Rodeo configuration file to use db_berkeley module. 
+		Modify the OpenMarinkaRodeo configuration file to use db_berkeley module. 
 		The database URL for modules must be the path to the directory where 
 		the Berkeley DB table-files are located, prefixed by "berkeley://", 
-		e.g., "berkeley:///usr/local/etc/Marina.Rodeo/db_berkeley". 
+		e.g., "berkeley:///usr/local/etc/openMarinkaRodeo/db_berkeley". 
 		</para>
 		
 		<para>
@@ -279,7 +279,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 	<title>Database Schema and Metadata</title>
 	
 	<para>
-	All Berkeley DB tables are created via the Marina.Rodeo-dbctl script. 
+	All Berkeley DB tables are created via the openMarinkaRodeodbctl script. 
 	This section provides details as to the content and 
 	format of the DB file upon creation.
 	</para>
@@ -482,7 +482,7 @@ username(str) domain(str) password(str) ha1(str) ha1b(str) first_name(str) last_
 	The db_berkeley module uses the Concurrent Data Store (CDS) architecture. 
 	As such, no transaction or journaling is provided by the DB natively. 
 	The application bdb_recover is specifically written to recover data from 
-	journal files that Marina.Rodeo creates.  
+	journal files that OpenMarinkaRodeo creates.  
 	The bdb_recover application requires an additional text file that contains 
 	the table schema.
 	</para>
@@ -490,7 +490,7 @@ username(str) domain(str) password(str) ha1(str) ha1b(str) first_name(str) last_
 	<para>
 	The schema is loaded with the '-s' option and is required for all operations.
 	Provide the path to the db_berkeley plain-text schema files. By default, these
-	install to '/usr/local/share/Marina.Rodeo/db_berkeley/Marina.Rodeo/'.
+	install to '/usr/local/share/openMarinkaRodeo/db_berkeley/openMarinkaRodeo/'.
 	</para>
 	
 	<para>

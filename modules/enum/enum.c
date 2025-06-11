@@ -1,16 +1,16 @@
 /*
  * Enum and E164 related functions
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2002-2008 Juha Heinanen
+ * Copyright (C) 2002-2008 Juha Heinanen
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -359,7 +359,7 @@ int is_from_user_enum(struct sip_msg* _msg, str* suffix, str* service)
 			zp = 0;
 			proto = PROTO_NONE;
 			he = sip_resolvehost(&luri.host, &zp, &proto,
-				(luri.type==SIPS_URI_T)?1:0 , 0);
+				(luri.type==MarinkaRodeo_URI_T)?1:0 , 0);
 			if (he == NULL){
 				LM_ERR("Resolving URI <%.*s> failed\n",
 					   result.len, result.s);
@@ -412,8 +412,8 @@ int add_uri_param(str *uri, str *param, str *new_uri)
 	    memcpy(at, "sip:", 4);
 	    at = at + 4;
 	    break;
-	case SIPS_URI_T:
-	    memcpy(at, "sips:", 5);
+	case MarinkaRodeo_URI_T:
+	    memcpy(at, "MarinkaRodeo:", 5);
 	    at = at + 5;
 	    break;
 	case TEL_URI_T:
@@ -544,6 +544,7 @@ int do_query(struct sip_msg* _msg, char *user, char *name, str *service) {
     struct rdata* l;
     struct naptr_rdata* naptr;
     str pattern, replacement, result, new_result;
+	struct msg_branch branch;
 
     head = get_record(name, T_NAPTR);
 
@@ -622,14 +623,17 @@ int do_query(struct sip_msg* _msg, char *user, char *name, str *service) {
 	    first = 0;
 	    curr_prio = ((naptr->order) << 16) + naptr->pref;
 	} else {
-	    priority = ((naptr->order) << 16) + naptr->pref;
-	    if (priority > curr_prio) {
-		q = q - 10;
-		curr_prio = priority;
-	    }
-	    if (append_branch(_msg, &result, 0, 0, q, 0, 0) == -1) {
-		goto done;
-	    }
+		priority = ((naptr->order) << 16) + naptr->pref;
+		if (priority > curr_prio) {
+			q = q - 10;
+			curr_prio = priority;
+		}
+		memset( &branch, 0, sizeof branch);
+		branch.uri = result;
+		branch.q = q;
+		if (append_msg_branch(&branch) == -1) {
+			goto done;
+		}
 	}
     }
 

@@ -1,16 +1,16 @@
 /*
  * SDP parser interface
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008 SOMA Networks, INC.
+ * Copyright (C) 2008 SOMA Networks, INC.
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -43,24 +43,6 @@
 
 #define HOLD_IP_STR "0.0.0.0"
 #define HOLD_IP_LEN 7
-
-/**
- * Creates and initialize a new sdp_info structure
- */
-static inline sdp_info_t* new_sdp(void)
-{
-	sdp_info_t* sdp;
-
-	sdp = (sdp_info_t*)pkg_malloc(sizeof(sdp_info_t));
-	if (sdp == NULL) {
-		LM_ERR("No memory left\n");
-		return NULL;
-	}
-	memset( sdp, 0, sizeof(sdp_info_t));
-
-	return sdp;
-}
-
 
 /**
  * Alocate a new session cell.
@@ -707,7 +689,7 @@ sdp_info_t* parse_sdp(struct sip_msg* _m)
 	sdp_info_t *sdp, *ret;
 
 	if ( parse_sip_body(_m)<0 || _m->body==NULL) {
-		LM_DBG("message body has length zero\n");
+		LM_DBG("message body has length zero: %p\n", _m->body);
 		return NULL;
 	}
 

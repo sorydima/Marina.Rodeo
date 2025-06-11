@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -147,7 +147,7 @@ static mi_response_t *mi_call_unhold(const mi_params_t *params,
 								struct mi_handler *async_hdl);
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "dialog", DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -230,7 +230,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,               /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,
 	NULL,
 	params,
@@ -892,7 +892,7 @@ static mi_response_t *mi_call_blind_transfer(const mi_params_t *params,
 
 	if (call_dlg_api.send_indialog_request(dlg, &refer,
 			(caller?DLG_CALLER_LEG:callee_idx(dlg)), NULL, NULL, refer_hdr,
-			mi_call_transfer_reply, async_hdl) < 0) {
+			mi_call_transfer_reply, async_hdl, NULL) < 0) {
 		LM_ERR("could not send the transfer message!\n");
 		isval.s = empty_str;
 		call_dlg_api.store_dlg_value(dlg, &call_transfer_param, &isval,
@@ -1037,7 +1037,7 @@ static mi_response_t *mi_call_attended_transfer(const mi_params_t *params,
 
 	if (call_dlg_api.send_indialog_request(dlgA, &refer,
 			(callerA?DLG_CALLER_LEG:callee_idx(dlgA)), NULL, NULL, refer_hdr,
-			mi_call_transfer_reply, async_hdl) < 0) {
+			mi_call_transfer_reply, async_hdl, NULL) < 0) {
 		LM_ERR("could not send the transfer message!\n");
 		isval.s = empty_str;
 		call_dlg_api.store_dlg_value((dlgB?dlgB:dlgA),
@@ -1179,7 +1179,7 @@ static int call_put_leg_onhold(struct dlg_cell *dlg, int leg)
 
 	/* send it out */
 	ret = call_dlg_api.send_indialog_request(dlg, &invite, leg, &body, &ct,
-			NULL, mi_call_hold_reply, (void *)(long)param);
+			NULL, mi_call_hold_reply, (void *)(long)param, NULL);
 	pkg_free(body.s);
 	if (ret < 0) {
 		init_str(&state, "fail");
@@ -1227,7 +1227,7 @@ static int call_resume_leg_onhold(struct dlg_cell *dlg, int leg)
 
 	RAISE_CALL_EVENT(HOLD, &dlg->callid, &sleg, &action, &state, NULL);
 	if (call_dlg_api.send_indialog_request(dlg, &invite, leg, &body, &ct,
-			NULL, mi_call_hold_reply, (void *)(long)param) < 0) {
+			NULL, mi_call_hold_reply, (void *)(long)param, NULL) < 0) {
 		init_str(&state, "fail");
 		RAISE_CALL_EVENT(HOLD, &dlg->callid, &sleg, &action, &state, NULL);
 		LM_ERR("could not resume leg %d\n", leg);
@@ -1411,7 +1411,7 @@ static int w_call_blind_transfer(struct sip_msg *req, int leg, str *dst)
 
 	if (call_dlg_api.send_indialog_request(dlg, &refer,
 			(leg == DLG_CALLER_LEG?DLG_CALLER_LEG:callee_idx(dlg)), NULL, NULL,
-			refer_hdr, mi_call_transfer_reply, NULL) < 0) {
+			refer_hdr, mi_call_transfer_reply, NULL, NULL) < 0) {
 		LM_ERR("could not send the transfer message!\n");
 		isval.s = empty_str;
 		call_dlg_api.store_dlg_value(dlg, &call_transfer_param, &isval,
@@ -1498,7 +1498,7 @@ static int w_call_attended_transfer(struct sip_msg *req, int leg,
 
 	if (call_dlg_api.send_indialog_request(dlgA, &refer,
 			(leg == DLG_CALLER_LEG?DLG_CALLER_LEG:callee_idx(dlgA)), NULL, NULL,
-			refer_hdr, mi_call_transfer_reply, NULL) < 0) {
+			refer_hdr, mi_call_transfer_reply, NULL, NULL) < 0) {
 		LM_ERR("could not send the transfer message!\n");
 		isval.s = empty_str;
 		call_dlg_api.store_dlg_value(dlgB, &call_transfer_callid_param, &isval,

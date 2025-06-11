@@ -1,5 +1,5 @@
-use Marina.Rodeo qw ( log );
-use Marina.Rodeo::Constants;
+use OpenMarinkaRodeo qw ( log );
+use OpenMarinkaRodeo::Constants;
 
 sub messagedump {
 	my $m = shift;
@@ -10,7 +10,7 @@ sub messagedump {
 	my $uri = $m->getRURI();
 	log(L_INFO, "RURI is $uri\n");
 
-	open F,">>/tmp/Marina.Rodeo-perl-messagedump";
+	open F,">>/tmp/openMarinkaRodeo-perl-messagedump";
 	print F "=========================== New header ===========================\n";
 	my $fh = $m->getFullHeader();
 	print F $fh;

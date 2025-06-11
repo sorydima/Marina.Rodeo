@@ -1,25 +1,25 @@
-Marina.Rodeo for Debian
+OpenMarinkaRodeo for Debian
 ------------------
 
-* Marina.Rodeo setup
+* OpenMarinkaRodeo setup
 ---------------
 
-To setup Marina.Rodeo, you need to:
- - configure Marina.Rodeo properly to suit your needs
- - edit /etc/default/Marina.Rodeo, adjust the MEMORY parameter and set
-   RUN_Marina.Rodeo to "yes"
+To setup OpenMarinkaRodeo, you need to:
+ - configure OpenMarinkaRodeo properly to suit your needs
+ - edit /etc/default/openMarinkaRodeo, adjust the MEMORY parameter and set
+   RUN_OPENMarinkaRodeo to "yes"
 
 If you are building an HA cluster using heartbeat or similar, you'll want
 to disable the init script by running:
 
-  update-rc.d Marina.Rodeo remove
+  update-rc.d openMarinkaRodeo remove
 
-so that Marina.Rodeo will not be launched at system startup. You still need
-to set RUN_Marina.Rodeo to "yes" if you want to use the /etc/init.d/Marina.Rodeo init
+so that OpenMarinkaRodeo will not be launched at system startup. You still need
+to set RUN_OPENMarinkaRodeo to "yes" if you want to use the /etc/init.d/openMarinkaRodeo init
 script.
 
-Set the DUMP_CORE parameter in /etc/default/Marina.Rodeo to "yes" if you want to
-get a core dump in case Marina.Rodeo crashes. The debug symbols for Marina.Rodeo are
-provided by the Marina.Rodeo-dbg package.
+Set the DUMP_CORE parameter in /etc/default/openMarinkaRodeo to "yes" if you want to
+get a core dump in case OpenMarinkaRodeo crashes. The debug symbols for OpenMarinkaRodeo are
+provided by the openMarinkaRodeo-dbg package.
 
 -- Julien BLACHE <jblache@debian.org>, Fri, 08 Sep 2006 14:43:21 +0200

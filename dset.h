@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2004 FhG FOKUS
+ * Copyright (C) 2001-2004 FhG FOKUS
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -29,42 +29,40 @@
 
 #include "ip_addr.h"
 #include "qvalue.h"
+#include "str.h"
+#include "usr_avp.h"
+
+
+struct msg_branch
+{
+	str tag;
+
+	str uri;
+
+	str dst_uri;
+
+	str path;
+
+	int q; /* Preference of the contact among contact within the array */
+
+	const struct socket_info* force_send_socket;
+
+	unsigned int bflags;
+
+	struct usr_avp *attrs;
+};
+
 
 struct sip_msg;
 
-int get_nr_branches(void);
+
+
+int get_dset_size(void);
 
 /*! \brief
- * To be called in the startup phase of Marina.Rodeo
+ * To be called in the startup phase of OpenMarinkaRodeo
  */
 int init_dset(void);
-
-/*! \brief
- * Add a new branch to current transaction
- */
-int append_branch(struct sip_msg* msg, str* uri, str* dst_uri, str* path,
-		qvalue_t q, unsigned int flags, struct socket_info* force_socket);
-
-
-
-/* ! \brief
- * Updates an already created branches
- */
-int update_branch(unsigned int idx, str** uri, str** dst_uri, str** path,
-		qvalue_t* q, unsigned int* flags, struct socket_info** force_socket);
-
-
-/*! \brief
- * Get the next branch in the current transaction
- */
-char* get_branch( unsigned int idx, int* len, qvalue_t* q, str* dst_uri,
-		str* path, unsigned int *flags, struct socket_info** force_socket);
-
-
-/*! \brief
- * Removes a given branch in the current transaction
- */
-int remove_branch( unsigned int idx);
 
 
 /*! \brief
@@ -76,7 +74,7 @@ void set_dset_state(unsigned char enable);
 /*! \brief
  * Empty the array of branches
  */
-void clear_branches(void);
+void clear_dset(void);
 
 
 /*! \brief
@@ -86,7 +84,53 @@ void clear_branches(void);
 char* print_dset(struct sip_msg* msg, int* len);
 
 
-int branch_uri2dset( str *new_uri );
+
+
+
+/*! \brief
+ * Add a new branch to current transaction
+ */
+int append_msg_branch(struct msg_branch *branch);
+
+
+/* ! \brief
+ * Updates an already created branches
+ */
+int update_msg_branch_uri(unsigned int idx, str *val);
+int update_msg_branch_dst_uri(unsigned int idx, str *val);
+int update_msg_branch_path(unsigned int idx, str *val);
+int update_msg_branch_q(unsigned int idx, int val);
+int update_msg_branch_socket(unsigned int idx, const struct socket_info* val);
+int update_msg_branch_bflags(unsigned int idx, unsigned int val);
+
+
+/*! \brief
+ * Get the next branch in the current transaction
+ */
+struct msg_branch* get_msg_branch( unsigned int idx);
+
+
+/*! \brief
+ * Removes a given branch in the current transaction
+ */
+int remove_msg_branch( unsigned int idx);
+
+
+int msg_branch_uri2dset( str *new_uri );
+
+
+/*! \brief
+ * Moves the branch index idx into the SIP request msg.
+ */
+int move_msg_branch_to_ruri(int idx, struct sip_msg *msg);
+
+
+/*! \brief
+ * Swaps two branches between. Index -1 means MSG branch
+ */
+int swap_msg_branches(struct sip_msg *msg, int src_idx, int dst_idx);
+
+
 
 
 /*! \brief
@@ -108,8 +152,19 @@ int resetbflag(struct sip_msg *msg, unsigned int b_idx, unsigned int mask);
 
 
 /*! \brief
- * Moves the branch index idx into the SIP request msg.
+ * Move a branch over another existing one. Index -1 means MSG branch
+ * If "keep_src", the source branch will not be deleted -> copy
  */
-int move_branch_to_ruri(int idx, struct sip_msg *msg);
+int move_msg_branch(struct sip_msg *msg, int src_idx, int dst_idx,
+		int keep_src);
+
+
+int get_msg_branch_attr(unsigned int b_idx, int name_id,
+		unsigned short *flags, int_str *val);
+
+int set_msg_branch_attr(unsigned int b_idx, int name_id,
+		unsigned short flags, int_str val);
+
+struct usr_avp **ruri_branch_attrs_head(void);
 
 #endif /* _DSET_H */

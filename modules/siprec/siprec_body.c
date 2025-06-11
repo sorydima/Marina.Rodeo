@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Project
+ * Copyright (C) 2017 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -38,10 +38,33 @@ void srs_free_stream(struct srs_sdp_stream *stream)
 	shm_free(stream);
 }
 
-int srs_add_raw_sdp_stream(int label, int medianum, siprec_uuid *uuid,
+int srs_fill_sdp_stream(int label, int medianum, siprec_uuid *uuid,
 		struct src_sess *sess, struct src_part *part)
 {
+	struct list_head *it;
 	struct srs_sdp_stream *stream = NULL;
+
+	/* first, search for a corresponding stream */
+	list_for_each(it, &part->streams) {
+		stream = list_entry(it, struct srs_sdp_stream, list);
+		/* if we have a uuid, it is possible that we've already
+		 * created it */
+		if (uuid) {
+			if (siprec_cmp_uuid(uuid, &stream->uuid) == 0)
+				break;
+		} else if (stream->medianum == medianum) {
+			/* if not, we might have the same medianum, so we need
+			 * to update it */
+			break;
+		}
+		stream = NULL;
+	}
+	if (stream) {
+		if (uuid)
+			memcpy(stream->uuid, uuid, sizeof *uuid);
+		stream->label = label;
+		return 0;
+	}
 
 	stream = shm_malloc(sizeof *stream);
 	if (!stream) {
@@ -52,7 +75,10 @@ int srs_add_raw_sdp_stream(int label, int medianum, siprec_uuid *uuid,
 	stream->label = label;
 	stream->medianum = medianum;
 
-	memcpy(stream->uuid, uuid, sizeof *uuid);
+	if (uuid)
+		memcpy(stream->uuid, uuid, sizeof *uuid);
+	else
+		siprec_build_uuid(stream->uuid);
 	list_add_tail(&stream->list, &part->streams);
 	sess->streams_no++;
 
@@ -196,19 +222,31 @@ static int srs_build_xml(struct src_sess *sess, struct srec_buffer *buf)
 	if (sess->group.s) {
 		SIPREC_COPY("\r\n\t<group group_id=\"", buf);
 		SIPREC_COPY_STR(sess->group, buf);
-		SIPREC_COPY("\"/>", buf);
+		SIPREC_COPY("\">", buf);
+
+		if (sess->group_custom_extension.s) {
+			LM_DBG("group_custom_extension: %.*s\n", sess->group_custom_extension.len, sess->group_custom_extension.s);
+			LM_DBG("group_custom_extension.len: %d\n", sess->group_custom_extension.len);
+
+			// add group custom extensions
+			SIPREC_COPY("\r\n\t\t", buf);
+			SIPREC_COPY_STR(sess->group_custom_extension, buf);
+		}
+
+		SIPREC_COPY("\r\n\t</group>", buf);
 	}
+
 	SIPREC_COPY("\r\n\t<session session_id=\"", buf);
 	SIPREC_COPY_UUID(sess->uuid, buf);
-	if (!sess->group.s && !sess->dlg)
+	if (!sess->group.s && !sess->ctx->dlg && !sess->session_custom_extension.s)
 		SIPREC_COPY("\"/>\r\n", buf);
 	else {
 		SIPREC_COPY("\">", buf);
-		if (sess->dlg) {
+		if (sess->ctx->dlg) {
 			SIPREC_COPY("\r\n\t\t", buf);
-			SIPREC_COPY_OPEN_TAG("sipSessionID", buf);
-			SIPREC_COPY_STR(sess->dlg->callid, buf);
-			SIPREC_COPY_CLOSE_TAG("sipSessionID", buf);
+			SIPREC_COPY_OPEN_TAG("MarinkaRodeoessionID", buf);
+			SIPREC_COPY_STR(sess->ctx->dlg->callid, buf);
+			SIPREC_COPY_CLOSE_TAG("MarinkaRodeoessionID", buf);
 		}
 		if (sess->group.s) {
 			SIPREC_COPY("\r\n\t\t", buf);
@@ -216,8 +254,16 @@ static int srs_build_xml(struct src_sess *sess, struct srec_buffer *buf)
 			SIPREC_COPY_STR(sess->group, buf);
 			SIPREC_COPY_CLOSE_TAG("group-ref", buf);
 		}
+
+		if (sess->session_custom_extension.s) {
+			// add session custom extensions
+			SIPREC_COPY("\r\n\t\t", buf);
+			SIPREC_COPY_STR(sess->session_custom_extension, buf);
+		}
+
 		SIPREC_COPY("\r\n\t</session>\r\n", buf);
 	}
+
 	for (p = 0; p < sess->participants_no; p++) {
 		if (!sess->participants[p].aor.s && !sess->participants[p].xml_val.s)
 			continue;
@@ -359,7 +405,7 @@ int srs_build_body(struct src_sess *sess, str *sdp, str *body)
 	SIPREC_COPY_STR(siprec_content_type, &buf);
 	SIPREC_COPY_STR(siprec_content_disposition, &buf);
 	SIPREC_COPY(CRLF, &buf);
-	
+
 	if (srs_build_xml(sess, &buf) < 0)
 		return -1;
 

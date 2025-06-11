@@ -1,3 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table PUBLIC "-//openMarinkaRodeo.org//DTD DBSchema V1.1//EN" 
+  "http://openMarinkaRodeo.org/pub/openMarinkaRodeo/dbschema/dtd/1.1/dbschema.dtd" [
+
+<!ENTITY % entities SYSTEM "entities.xml">
+%entities;
+
+]>
+
 <table id="rc_clients" xmlns:db="http://docbook.org/ns/docbook">
 	<name>rc_clients</name>
 	<version>1</version>
@@ -5,7 +14,7 @@
 	<description>
 		<db:para>This table is used by the Rate Cacher module to keep track of the
 		clients - the inbound side of the traffic.
-		More information can be found at: &Marina.Rodeo_MOD_DOC;rate_cacher.html.
+		More information can be found at: &OPENMarinkaRodeo_MOD_DOC;rate_cacher.html.
 		</db:para>
 	</description>
 

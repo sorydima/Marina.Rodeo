@@ -9,7 +9,7 @@ rtpengine Module
         1.2. Multiple RTP proxy usage
         1.3. Dependencies
 
-              1.3.1. Marina.Rodeo Modules
+              1.3.1. OpenMarinkaRodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -27,6 +27,7 @@ rtpengine Module
               1.4.11. db_table (string)
               1.4.12. socket_column (string)
               1.4.13. set_column (string)
+              1.4.14. ping_enabled (integer)
 
         1.5. Exported Functions
 
@@ -47,40 +48,55 @@ rtpengine Module
               1.5.7. rtpengine_stop_recording([flags [,
                       sock_var]])
 
-              1.5.8. rtpengine_play_media(flags, [duration_spec[,
+              1.5.8. rtpengine_pause_recording([flags [,
+                      sock_var]])
+
+              1.5.9. rtpengine_play_media(flags, [duration_spec[,
                       sock_var[, sockvar]]])
 
-              1.5.9. rtpengine_stop_media([flags[, sockvar]])
-              1.5.10. rtpengine_block_media([flags[, sockvar]])
-              1.5.11. rtpengine_unblock_media([flags[, sockvar]])
-              1.5.12. rtpengine_block_dtmf([flags[, sockvar]])
-              1.5.13. rtpengine_unblock_dtmf([flags[, sockvar]])
-              1.5.14. rtpengine_start_forwarding([flags[,
+              1.5.10. rtpengine_stop_media(flags[, [sock_var[,
+                      sockvar]], [last_frame_pos]])
+
+              1.5.11. rtpengine_block_media([flags[, sockvar]])
+              1.5.12. rtpengine_unblock_media([flags[, sockvar]])
+              1.5.13. rtpengine_block_dtmf([flags[, sockvar]])
+              1.5.14. rtpengine_unblock_dtmf([flags[, sockvar]])
+              1.5.15. rtpengine_start_forwarding([flags[,
                       sockvar]])
 
-              1.5.15. rtpengine_stop_forwarding([flags[,
+              1.5.16. rtpengine_stop_forwarding([flags[,
                       sockvar]])
 
-              1.5.16. rtpengine_play_dtmf(code, [flags[,
+              1.5.17. rtpengine_play_dtmf(code, [flags[,
                       sockvar]])
 
-        1.6. Exported Pseudo-Variables
+        1.6. Exported Asyncronous Functions
 
-              1.6.1. $rtpstat
-              1.6.2. $rtpstat(STAT)[index]
-              1.6.3. $rtpquery
+              1.6.1. rtpengine_offer([flags[, sock_pvar[,
+                      sdp_pvar[, body]]]])
 
-        1.7. Exported MI Functions
+              1.6.2. rtpengine_answer([flags[, sock_pvar[,
+                      sdp_pvar[, body]]]])
 
-              1.7.1. rtpengine_enable
-              1.7.2. rtpengine_show
-              1.7.3. rtpengine_reload
-              1.7.4. teardown
+              1.6.3. rtpengine_delete([flags[, sock_var]])
 
-        1.8. Exported Events
+        1.7. Exported Pseudo-Variables
 
-              1.8.1. E_RTPENGINE_NOTIFICATION
-              1.8.2. E_RTPENGINE_STATUS
+              1.7.1. $rtpstat
+              1.7.2. $rtpstat(STAT)[index]
+              1.7.3. $rtpquery
+
+        1.8. Exported MI Functions
+
+              1.8.1. rtpengine_enable
+              1.8.2. rtpengine_show
+              1.8.3. rtpengine_reload
+              1.8.4. teardown
+
+        1.9. Exported Events
+
+              1.9.1. E_RTPENGINE_NOTIFICATION
+              1.9.2. E_RTPENGINE_STATUS
 
    2. Frequently Asked Questions
    3. Contributors
@@ -114,33 +130,42 @@ rtpengine Module
    1.11. Set db_table parameter
    1.12. Set socket_column parameter
    1.13. Set set_column parameter
-   1.14. rtpengine_use_set usage
-   1.15. rtpengine_offer usage
-   1.16. rtpengine_offer usage with body replace
-   1.17. rtpengine_offer usage with call recording
-   1.18. rtpengine_offer usage for transcoding
-   1.19. rtpengine_answer usage
-   1.20. rtpengine_delete usage
-   1.21. rtpengine_manage usage
-   1.22. rtpengine_start_recording usage
-   1.23. rtpengine_stop_recording usage
-   1.24. Ringback tone using rtpengine_play_media
-   1.25. Manage music on hold using rtpengine_play_media
-   1.26. Ringback tone stop using rtpengine_stop_media
-   1.27. Example of rtpengine_block_media usage
-   1.28. Example of rtpengine_unblock_media usage
-   1.29. Example of rtpengine_block_dtmf usage
-   1.30. Example of rtpengine_unblock_dtmf usage
-   1.31. Example of rtpengine_start_forwarding usage
-   1.32. Example of rtpengine_stop_forwarding usage
-   1.33. Example of rtpengine_play_dtmf usage
-   1.34. $rtpstat Usage
-   1.35. $rtpstat(STAT)
-   1.36. $rtpquery Usage
-   1.37. rtpengine_enable usage
-   1.38. rtpengine_show usage
-   1.39. rtpengine_reload usage
-   1.40. teardown usage
+   1.14. Set ping_enabled parameter
+   1.15. rtpengine_use_set usage
+   1.16. rtpengine_offer usage
+   1.17. rtpengine_offer usage with body replace
+   1.18. rtpengine_offer usage with call recording
+   1.19. rtpengine_offer usage for transcoding
+   1.20. Set extra_failover_error parameter
+   1.21. rtpengine_answer usage
+   1.22. rtpengine_delete usage
+   1.23. rtpengine_manage usage
+   1.24. rtpengine_start_recording usage
+   1.25. rtpengine_stop_recording usage
+   1.26. rtpengine_pause_recording usage
+   1.27. Ringback tone using rtpengine_play_media
+   1.28. Manage music on hold using rtpengine_play_media
+   1.29. Ringback tone stop using rtpengine_stop_media
+   1.30. Example use of the last-frame-pos parameter
+          rtpengine_stop_media
+
+   1.31. Example of rtpengine_block_media usage
+   1.32. Example of rtpengine_unblock_media usage
+   1.33. Example of rtpengine_block_dtmf usage
+   1.34. Example of rtpengine_unblock_dtmf usage
+   1.35. Example of rtpengine_start_forwarding usage
+   1.36. Example of rtpengine_stop_forwarding usage
+   1.37. Example of rtpengine_play_dtmf usage
+   1.38. Example of async rtpengine_offer() usage
+   1.39. Example of async rtpengine_answer() usage
+   1.40. Example of async rtpengine_delete() usage
+   1.41. $rtpstat Usage
+   1.42. $rtpstat(STAT)
+   1.43. $rtpquery Usage
+   1.44. rtpengine_enable usage
+   1.45. rtpengine_show usage
+   1.46. rtpengine_reload usage
+   1.47. teardown usage
 
 Chapter 1. Admin Guide
 
@@ -193,9 +218,27 @@ Chapter 1. Admin Guide
    the avp needs to be set only once before rtpengine_offer() or
    rtpengine_manage() call.
 
+   The module is able to failover to a new node within a set, if a
+   chosen one has communication issues. Moreover, it will also
+   failover if the node returns one of the following errors:
+     * Parallel session limit reached
+     * Ran out of ports
+
+   You can use the extra_failover_error parameter to extend the
+   above list.
+
+   Many rtpengine_* functions accept a "sock_var" parameter that
+   will be populated with the socket of the RTPEngine chosen for
+   the particular operation. The format of the data stored in
+   "sock_var" is: "proto:ip:port". If the "sock_var" has been
+   specified and it is non-NULL then it will be used to determine
+   the specific RTPEngine to use. Note that the socket specified
+   by "sock_var" must be a member of the current RTPEngine Set
+   context.
+
 1.3. Dependencies
 
-1.3.1. Marina.Rodeo Modules
+1.3.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * tm module - (optional) if you want to have
@@ -204,7 +247,7 @@ Chapter 1. Admin Guide
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.4. Exported Parameters
@@ -212,7 +255,9 @@ Chapter 1. Admin Guide
 1.4.1. rtpengine_sock (string)
 
    Definition of socket(s) used to connect to (a set) RTP proxy.
-   It may specify a UNIX socket or an IPv4/IPv6 UDP socket.
+   It may specify a UNIX socket or an IPv4/IPv6 UDP socket. If the
+   protocol part (i.e. “udp:”) is missing, the socket is treated
+   as a UNIX socket.
 
    Default value is “NONE” (disabled).
 
@@ -287,7 +332,7 @@ modparam("rtpengine", "rtpengine_timer_interval", 1)
 1.4.6. notification_sock (string)
 
    An UDP socket formatted as IP:port that indicates the listening
-   IP and port Marina.Rodeo will bind for to receive notifications
+   IP and port OpenMarinkaRodeo will bind for to receive notifications
    (such as DTMF events) from RTPengine.
 
    Every notification received from RTPengine will trigger an
@@ -351,7 +396,7 @@ modparam("rtpengine", "error_pv", "$var(rtpengine_error)")
    Example 1.10. Set db_url parameter
 ...
 modparam("rtpengine", "db_url",
-                "mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo")
+                "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo")
 ...
 
 1.4.11. db_table (string)
@@ -388,6 +433,22 @@ modparam("rtpengine", "socket_column", "sock")
 modparam("rtpengine", "set_column", "set_new")
 ...
 
+1.4.14. ping_enabled (integer)
+
+   This parameter indicates whether probing should be done for
+   enabled nodes as well.
+
+   If this parameter is set, each enabled node is pinged every
+   rtpengine_timer_interval seconds, unless there was any
+   communication with the node since the previous interval.
+
+   Default value is “0” (disabled).
+
+   Example 1.14. Set ping_enabled parameter
+...
+modparam("rtpengine", "ping_enabled", yes)
+...
+
 1.5. Exported Functions
 
 1.5.1.  rtpengine_use_set(setid)
@@ -399,7 +460,7 @@ modparam("rtpengine", "set_column", "set_new")
    This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE,
    BRANCH_ROUTE.
 
-   Example 1.14. rtpengine_use_set usage
+   Example 1.15. rtpengine_use_set usage
 ...
 rtpengine_use_set(2);
 rtpengine_offer();
@@ -418,7 +479,7 @@ rtpengine_offer();
        item is either an individual token, or a token in
        “key=value” format. The possible tokens are described
        below.
-       When passing an option that Marina.Rodeo is not aware of, it
+       When passing an option that OpenMarinkaRodeo is not aware of, it
        will be blindly sent to the rtpengine daemon to be
        processed.
           + via-branch=... - Include the “branch” value of one of
@@ -644,7 +705,7 @@ rtpengine_offer();
 
    This function can be used from ALL_ROUTES.
 
-   Example 1.15. rtpengine_offer usage
+   Example 1.16. rtpengine_offer usage
 route {
 ...
     if (is_method("INVITE")) {
@@ -676,7 +737,7 @@ onreply_route[2]
 ...
 }
 
-   Example 1.16. rtpengine_offer usage with body replace
+   Example 1.17. rtpengine_offer usage with body replace
 ...
 if (rtpengine_offer(, $var(socket), $var(body), $rb)) {
     xlog("Used rtpengine $var(socket)\n");
@@ -687,7 +748,7 @@ if (rtpengine_offer(, $var(socket), $var(body), $rb)) {
 }
 ...
 
-   Example 1.17. rtpengine_offer usage with call recording
+   Example 1.18. rtpengine_offer usage with call recording
 ...
 $var(rtpengine_flags) = $var(rtpengine_flags) + " record-call=yes";
 
@@ -704,7 +765,7 @@ cording_keys){s.encode.hexa});
 rtpengine_offer($var(rtpengine_flags));
 ...
 
-   Example 1.18. rtpengine_offer usage for transcoding
+   Example 1.19. rtpengine_offer usage for transcoding
 ...
 # Goal: make A-side talk PCMA and B-side talk opus
 # * do not present PCMA to B-side: codec-mask-PCMA, but use it on A-side
@@ -712,6 +773,27 @@ rtpengine_offer($var(rtpengine_flags));
 # * offer opus to B-side: transcode-opus
 rtpengine_offer("... codec-mask-PCMA codec-strip-opus transcode-opus ...
 ");
+...
+
+1.5.2.1. extra_failover_error (string)
+
+   Contains a (XDB) regular expression that can be used to match
+   an error received from a RTPEngine node. If matched the module
+   tries to use a new node to handle the affected command.
+
+   This parameter can be used to extend the list (see Failover of
+   errors the module implicitely fails over.
+
+   Note each declaration will define a single expression/matching
+   rule. If you want to define multiple rules, you need to define
+   the parameter multiple times.
+
+   Default value is empty, no extra errors are being used.
+
+   Example 1.20. Set extra_failover_error parameter
+...
+modparam("rtpengine", "extra_failover_error", "Parallel session limit re
+ached")
 ...
 
 1.5.3.  rtpengine_answer([flags[, sock_pvar[, sdp_pvar[, body]]]])
@@ -726,13 +808,13 @@ rtpengine_offer("... codec-mask-PCMA codec-strip-opus transcode-opus ...
    This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE,
    FAILURE_ROUTE, BRANCH_ROUTE.
 
-   Example 1.19. rtpengine_answer usage
+   Example 1.21. rtpengine_answer usage
 
    See rtpengine_offer() function example above for examples.
 
 1.5.4.  rtpengine_delete([flags[, sock_var]])
 
-   Tears down the RTPProxy session for the current call.
+   Tears down the RTPEngine session for the current call.
 
    See rtpengine_offer() function description above for the
    meaning of the parameters. Note that not all flags make sense
@@ -740,14 +822,14 @@ rtpengine_offer("... codec-mask-PCMA codec-strip-opus transcode-opus ...
 
    This function can be used from ALL_ROUTES.
 
-   Example 1.20. rtpengine_delete usage
+   Example 1.22. rtpengine_delete usage
 ...
 rtpengine_delete();
 ...
 
 1.5.5.  rtpengine_manage([flags[, sock_var[, sdp_var[, body]]]])
 
-   Manage the RTPProxy session - it combines the functionality of
+   Manage the RTPEngine session - it combines the functionality of
    rtpengine_offer(), rtpengine_answer() and rtpengine_delete(),
    detecting internally based on message type and method which one
    to execute.
@@ -768,7 +850,7 @@ rtpengine_delete();
 
    This function can be used from ALL_ROUTES.
 
-   Example 1.21. rtpengine_manage usage
+   Example 1.23. rtpengine_manage usage
 ...
 rtpengine_manage();
 ...
@@ -788,7 +870,7 @@ rtpengine_manage();
 
    This function can be used from any route.
 
-   Example 1.22. rtpengine_start_recording usage
+   Example 1.24. rtpengine_start_recording usage
 ...
 rtpengine_start_recording();
 ...
@@ -808,19 +890,43 @@ rtpengine_start_recording();
 
    This function can be used from any route.
 
-   Example 1.23. rtpengine_stop_recording usage
+   Example 1.25. rtpengine_stop_recording usage
 ...
 rtpengine_stop_recording();
 ...
 
-1.5.8.  rtpengine_play_media(flags, [duration_spec[, sock_var[,
+1.5.8.  rtpengine_pause_recording([flags [, sock_var]])
+
+   This function will send a signal to the RTP proxy to pause
+   recording the RTP stream on the RTP proxy. Identical to stop
+   recording except that it instructs the recording daemon not to
+   close the recording file, but instead leave it open so that
+   recording can later be resumed via another start recording
+   message.
+
+   Meaning of the parameters is as follows:
+     * flags(string, optional) - flags used to change the behavior
+       of the recorder. An importat value to set is the call-id
+       value, which can be used to start recording a different
+       call than the requested one.
+     * sock_var(var, optional) - variable used to store the
+       rtpengine socket chosen for this call.
+
+   This function can be used from any route.
+
+   Example 1.26. rtpengine_pause_recording usage
+...
+rtpengine_stop_recording();
+...
+
+1.5.9.  rtpengine_play_media(flags, [duration_spec[, sock_var[,
 sockvar]]])
 
    This function will start playing a media file to one of the
    endpoints.
 
    Meaning of the parameters is as follows:
-     * flags(string) - a list of flags simialar to the other
+     * flags(string) - a list of flags similar to the other
        functions. One of the file, blob or db-id parameters is
        mandatory to indicate the content of the media file to be
        played. file is a common choice for specifying rtpengine to
@@ -841,13 +947,13 @@ sockvar]]])
 
    This function can be used from any route.
 
-   Example 1.24. Ringback tone using rtpengine_play_media
+   Example 1.27. Ringback tone using rtpengine_play_media
 ...
 if (is_method("INVITE") && !has_totag())
         rtpengine_play_media("file=/path/to/ringback_tone_file.wav");
 ...
 
-   Example 1.25. Manage music on hold using rtpengine_play_media
+   Example 1.28. Manage music on hold using rtpengine_play_media
 ...
 if (is_method("INVITE") && has_totag()) {
         if (is_audio_on_hold()) {
@@ -861,7 +967,8 @@ e.wav");
 }
 ...
 
-1.5.9.  rtpengine_stop_media([flags[, sockvar]])
+1.5.10.  rtpengine_stop_media(flags[, [sock_var[, sockvar]],
+[last_frame_pos]])
 
    This function will stop playing a media file previously started
    by a rtpengine_play_media() call. The meaning of its parameters
@@ -870,15 +977,38 @@ e.wav");
    rtpengine_play_media() call, otherwise RTPEngine will not be
    able to stop media playing.
 
+   Meaning of the parameters is as follows:
+     * flags(string) - a list of flags similar to the other
+       functions.
+     * last_frame_pos(var, optional) - a pseudo variable that will
+       contain the last frame played of the file.
+
    This function can be used from any route.
 
-   Example 1.26. Ringback tone stop using rtpengine_stop_media
+   Example 1.29. Ringback tone stop using rtpengine_stop_media
 ...
 if (is_method("INVITE") && $rs == 200)
         rtpengine_stop_media();
 ...
 
-1.5.10.  rtpengine_block_media([flags[, sockvar]])
+   Example 1.30. Example use of the last-frame-pos parameter
+   rtpengine_stop_media
+...
+if (is_method("INVITE") && has_totag()) {
+        if (is_audio_on_hold()) {
+                $dlg_val(on_hold = "1";
+                rtpengine_play_media("from-tag=$tt start-pos=$avp(last_f
+rame_pos) file=/path/to/moh_file.wav");
+        } else if ($dlg_val(on_hold) == "1") {
+                rtpengine_stop_media("from-tag=$tt", , $avp(last_frame_p
+os));
+                $dlg_val(on_hold = "0");
+        }
+}
+        rtpengine_stop_media();
+...
+
+1.5.11.  rtpengine_block_media([flags[, sockvar]])
 
    This function will block the media sent from one of the
    endpoints. The direction to be blocked is controled by the
@@ -886,12 +1016,12 @@ if (is_method("INVITE") && $rs == 200)
 
    This function can be used from any route.
 
-   Example 1.27. Example of rtpengine_block_media usage
+   Example 1.31. Example of rtpengine_block_media usage
 ...
 rtpengine_block_media();
 ...
 
-1.5.11.  rtpengine_unblock_media([flags[, sockvar]])
+1.5.12.  rtpengine_unblock_media([flags[, sockvar]])
 
    This function will resume/unblock the media sent from one of
    the endpoints. The direction to be blocked is controled by the
@@ -899,12 +1029,12 @@ rtpengine_block_media();
 
    This function can be used from any route.
 
-   Example 1.28. Example of rtpengine_unblock_media usage
+   Example 1.32. Example of rtpengine_unblock_media usage
 ...
 rtpengine_unblock_media();
 ...
 
-1.5.12.  rtpengine_block_dtmf([flags[, sockvar]])
+1.5.13.  rtpengine_block_dtmf([flags[, sockvar]])
 
    This function will block the DTMF media sent from one of the
    endpoints. The direction to be blocked is controled by the
@@ -912,12 +1042,12 @@ rtpengine_unblock_media();
 
    This function can be used from any route.
 
-   Example 1.29. Example of rtpengine_block_dtmf usage
+   Example 1.33. Example of rtpengine_block_dtmf usage
 ...
 rtpengine_block_dtmf();
 ...
 
-1.5.13.  rtpengine_unblock_dtmf([flags[, sockvar]])
+1.5.14.  rtpengine_unblock_dtmf([flags[, sockvar]])
 
    This function will resume/unblock the DTMF media sent from one
    of the endpoints. The direction to be blocked is controled by
@@ -925,12 +1055,12 @@ rtpengine_block_dtmf();
 
    This function can be used from any route.
 
-   Example 1.30. Example of rtpengine_unblock_dtmf usage
+   Example 1.34. Example of rtpengine_unblock_dtmf usage
 ...
 rtpengine_unblock_dtmf();
 ...
 
-1.5.14.  rtpengine_start_forwarding([flags[, sockvar]])
+1.5.15.  rtpengine_start_forwarding([flags[, sockvar]])
 
    This function will start forwarding the media to a TLS
    destination specified in the tls-send-to parmeter of RTPEngine.
@@ -940,24 +1070,24 @@ rtpengine_unblock_dtmf();
 
    This function can be used from any route.
 
-   Example 1.31. Example of rtpengine_start_forwarding usage
+   Example 1.35. Example of rtpengine_start_forwarding usage
 ...
 rtpengine_start_forwarding();
 ...
 
-1.5.15.  rtpengine_stop_forwarding([flags[, sockvar]])
+1.5.16.  rtpengine_stop_forwarding([flags[, sockvar]])
 
    This function will stop forwarding of the media previously
    started using the rtpengine_start_forwarding() function.
 
    This function can be used from any route.
 
-   Example 1.32. Example of rtpengine_stop_forwarding usage
+   Example 1.36. Example of rtpengine_stop_forwarding usage
 ...
 rtpengine_stop_forwarding();
 ...
 
-1.5.16.  rtpengine_play_dtmf(code, [flags[, sockvar]])
+1.5.17.  rtpengine_play_dtmf(code, [flags[, sockvar]])
 
    This function instructs RTP to send the DTMF code to the
    participant of the call. The code can be a digit (“0-9”) or a
@@ -973,25 +1103,73 @@ rtpengine_stop_forwarding();
 
    This function can be used from any route.
 
-   Example 1.33. Example of rtpengine_play_dtmf usage
+   Example 1.37. Example of rtpengine_play_dtmf usage
 ...
 rtpengine_play_dtmf("0"); # send the 0 code upstream
 ...
 
-1.6. Exported Pseudo-Variables
+1.6. Exported Asyncronous Functions
 
-1.6.1. $rtpstat
+1.6.1. rtpengine_offer([flags[, sock_pvar[, sdp_pvar[, body]]]])
+
+   The asynchronous flavor of the rtpengine_offer() function. It
+   receives the same parameters, with the same meanings.
+
+   Example 1.38. Example of async rtpengine_offer() usage
+...
+if (is_method("ACK") && has_totag() && has_body_part("application/sdp"))
+ {
+        async(rtpengine_offer(), resume_invite);
+}
+...
+route[resume_invite] {
+        t_relay();
+}
+...
+
+1.6.2. rtpengine_answer([flags[, sock_pvar[, sdp_pvar[, body]]]])
+
+   The asynchronous flavor of the rtpengine_answer() function. It
+   receives the same parameters, with the same meanings.
+
+   Example 1.39. Example of async rtpengine_answer() usage
+...
+if (is_method("ACK") && has_body_part("application/sdp")) {
+        # late negotiation
+        async(rtpengine_answer(), resume_ack);
+}
+...
+route[resume_ack] {
+        t_relay();
+}
+...
+
+1.6.3.  rtpengine_delete([flags[, sock_var]])
+
+   The asynchronous flavor of the rtpengine_delete() function. It
+   receives the same parameters, with the same meanings.
+
+   Example 1.40. Example of async rtpengine_delete() usage
+...
+if (is_method("BYE")) {
+        launch(rtpengine_delete());
+}
+...
+
+1.7. Exported Pseudo-Variables
+
+1.7.1. $rtpstat
 
    Returns the RTP statistics from the RTP proxy. The RTP
    statistics from the RTP proxy are provided as a string and it
    does contain several packet counters.
 
-   Example 1.34. $rtpstat Usage
+   Example 1.41. $rtpstat Usage
 ...
     append_hf("X-RTP-Statistics: $rtpstat\r\n");
 ...
 
-1.6.2. $rtpstat(STAT)[index]
+1.7.2. $rtpstat(STAT)[index]
 
    Returnes one of the pre-fined statistics listed below:
      * MOS-average - without an index, it returns the average MOS
@@ -1059,7 +1237,7 @@ rtpengine_play_dtmf("0"); # send the 0 code upstream
    short, or if the phones do not properly report RTP statistics
    over RTCP). In these cases the variable returns the NULL value.
 
-   Example 1.35. $rtpstat(STAT)
+   Example 1.42. $rtpstat(STAT)
 ...
     xlog("Average MOS of the entire call is $rtpstat(MOS-average)\r\n");
     xlog("Average MOS of caller is $(rtpstat(MOS-average)[$ft])\r\n");
@@ -1068,7 +1246,7 @@ rtpengine_play_dtmf("0"); # send the 0 code upstream
 pstat(MOS-min-at)[$ft])\r\n");
 ...
 
-1.6.3. $rtpquery
+1.7.3. $rtpquery
 
    Does a Query command to the RTP proxy and returns the answer in
    a JSON format. You can use this variable to fetch arbitrary
@@ -1079,22 +1257,23 @@ pstat(MOS-min-at)[$ft])\r\n");
    any information from the query, such as RTP statistics, or MOS
    values.
 
-   Example 1.36. $rtpquery Usage
+   Example 1.43. $rtpquery Usage
 ...
         $json(reply) := $rtpquery;
         xlog("Total RTP Stats: $json(reply/totals)\n");
 ...
 
-1.7. Exported MI Functions
+1.8. Exported MI Functions
 
-1.7.1. rtpengine_enable
+1.8.1. rtpengine_enable
 
    Enables/disables a RTP proxy.
 
    Parameters:
      * url - the RTP proxy url (exactly as defined in the config
        file).
-     * enable - 1 - enable, 0 - disable the RTP proxy.
+     * enable - 1 - enable, 0 - disable the RTP proxy, 2 - put the
+       RTP node in probing mode.
      * setid (optional) the set ID of the nodes to be updated. If
        provided, only nodes in the provided set will be updated.
 
@@ -1102,28 +1281,28 @@ pstat(MOS-min-at)[$ft])\r\n");
    different set), all of its instances will be enabled/disabled
    IF no set ID is provided.
 
-   Example 1.37.  rtpengine_enable usage
+   Example 1.44.  rtpengine_enable usage
 ...
 ## disable all rtpengines by URL
-$ Marina.Rodeo-cli -x mi rtpengine_enable udp:192.168.2.133:8081 0
+$ openMarinkaRodeo-cli -x mi rtpengine_enable udp:192.168.2.133:8081 0
 ## enable rtpengine by URL and set ID (3)
-$ Marina.Rodeo-cli -x mi rtpengine_enable url=udp:192.168.2.133:8081 enable=
+$ openMarinkaRodeo-cli -x mi rtpengine_enable url=udp:192.168.2.133:8081 enable=
 1 setid=3
 ...
 
-1.7.2. rtpengine_show
+1.8.2. rtpengine_show
 
    Displays all the RTP proxies and their information: set and
    status (disabled or not, weight and recheck_ticks).
 
    No parameter.
 
-   Example 1.38.  rtpengine_show usage
+   Example 1.45.  rtpengine_show usage
 ...
-$ Marina.Rodeo-cli -x mi rtpengine_show
+$ openMarinkaRodeo-cli -x mi rtpengine_show
 ...
 
-1.7.3. rtpengine_reload
+1.8.3. rtpengine_reload
 
    Reloads all rtpengine sets from the database. Used only when
    the “db_url” parameter is set.
@@ -1137,13 +1316,13 @@ $ Marina.Rodeo-cli -x mi rtpengine_show
 
    No parameter.
 
-   Example 1.39.  rtpengine_reload usage
+   Example 1.46.  rtpengine_reload usage
 ...
-$ Marina.Rodeo-cli -x mi rtpengine_reload
-$ Marina.Rodeo-cli -x mi rtpengine_reload type=soft
+$ openMarinkaRodeo-cli -x mi rtpengine_reload
+$ openMarinkaRodeo-cli -x mi rtpengine_reload type=soft
 ...
 
-1.7.4. teardown
+1.8.4. teardown
 
    Terminates the SIP dialog by the SIP Call-ID given as
    parameter.
@@ -1156,15 +1335,15 @@ $ Marina.Rodeo-cli -x mi rtpengine_reload type=soft
    done just to make rtpengine happy when trying to terminate SIP
    calls based on RTP timeouts.
 
-   Example 1.40.  teardown usage
+   Example 1.47.  teardown usage
 ...
-$ Marina.Rodeo-cli -x mi teardown Y2IwYjQ2YmE2ZDg5MWVkNDNkZGIwZjAzNGM1ZDY0ZD
+$ openMarinkaRodeo-cli -x mi teardown Y2IwYjQ2YmE2ZDg5MWVkNDNkZGIwZjAzNGM1ZDY0ZD
 Q
 ...
 
-1.8. Exported Events
+1.9. Exported Events
 
-1.8.1.  E_RTPENGINE_NOTIFICATION
+1.9.1.  E_RTPENGINE_NOTIFICATION
 
    This event is raised when a notification is received from
    RTPengine.
@@ -1184,7 +1363,7 @@ Q
      * duration - how long the digit was pressed
      * volume - volume of the tone
 
-1.8.2.  E_RTPENGINE_STATUS
+1.9.2.  E_RTPENGINE_STATUS
 
    This event is raised when a RTPEngine server changes it's
    status to active/inactive.
@@ -1193,6 +1372,8 @@ Q
      * socket - the socket that identifies the RTPEngine instance.
      * status - active if the RTPEngine instance responds to
        probing or inactive if the instance was deactivated.
+     * set - the numeric id of the set this RTPEngine instance is
+       part of.
 
 Chapter 2. Frequently Asked Questions
 
@@ -1228,9 +1409,9 @@ ssion-connection ICE=force RTP/SAVPF");
 
    2.2.
 
-   Where can I find more about Marina.Rodeo?
+   Where can I find more about OpenMarinkaRodeo?
 
-   Take a look at https://Marina.Rodeo.org/.
+   Take a look at https://openMarinkaRodeo.org/.
 
    2.3.
 
@@ -1239,23 +1420,23 @@ ssion-connection ICE=force RTP/SAVPF");
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable Marina.Rodeo release should be sent to
-   <users@lists.Marina.Rodeo.org> and e-mails regarding development
-   versions should be sent to <devel@lists.Marina.Rodeo.org>.
+   E-mails regarding any stable OpenMarinkaRodeo release should be sent to
+   <users@lists.openMarinkaRodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.openMarinkaRodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.Marina.Rodeo.org>.
+   <users@lists.openMarinkaRodeo.org>.
 
    2.4.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
+   https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues.
 
 Chapter 3. Contributors
 
@@ -1264,20 +1445,22 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Razvan Crainea (@razvancrainea) 209 110 5936 3060
+   1. Razvan Crainea (@razvancrainea) 243 135 6446 3157
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 31 17 423 595
    3. John Burke (@john08burke) 25 17 647 102
-   4. Liviu Chircu (@liviuchircu) 20 16 91 173
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 20 16 91 173
    5. Richard Fuchs 20 2 640 723
    6. Vlad Patrascu (@rvlad-patrascu) 15 7 218 330
-   7. Peter Lemenkov (@lemenkov) 10 7 27 62
-   8. Eric Tamme (@etamme) 7 5 42 19
-   9. Nick Altmann (@nikbyte) 6 4 43 2
-   10. Ovidiu Sas (@ovidiusas) 5 3 37 7
+   7. Norman Brandinger (@NormB) 12 10 72 18
+   8. Peter Lemenkov (@lemenkov) 11 8 29 64
+   9. Vlad Paiu (@vladpaiu) 8 1 566 94
+   10. Eric Tamme (@etamme) 7 5 42 19
 
-   All remaining contributors: Maksym Sobolyev (@sobomax), Zero
-   King (@l2dy), Rob Gagnon (@rgagnon24), Flavio E. Goncalves, Dan
-   Pascu (@danpascu), Oliver Severin Mulelid-Tynes (@olivermt).
+   All remaining contributors: Nick Altmann (@nikbyte), Maksym
+   Sobolyev (@sobomax), Ovidiu Sas (@ovidiusas), Eddie Fiorentine,
+   Zero King (@l2dy), Norm Brandinger, Rob Gagnon (@rgagnon24),
+   Flavio E. Goncalves, hatee, Dan Pascu (@danpascu), Oliver
+   Severin Mulelid-Tynes (@olivermt).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -1287,7 +1470,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1298,22 +1481,24 @@ Chapter 3. Contributors
 3.2. By Commit Activity
 
    Table 3.2. Most recently active contributors^(1) to this module
-                      Name                   Commit Activity
-   1.  Razvan Crainea (@razvancrainea)     Jun 2014 - Jul 2023
-   2.  Liviu Chircu (@liviuchircu)         Jul 2014 - May 2023
-   3.  Maksym Sobolyev (@sobomax)          Jan 2021 - Feb 2023
-   4.  Peter Lemenkov (@lemenkov)          Jun 2018 - Apr 2022
-   5.  John Burke (@john08burke)           Jun 2019 - Apr 2022
-   6.  Bogdan-Andrei Iancu (@bogdan-iancu) Jun 2014 - Apr 2022
-   7.  Nick Altmann (@nikbyte)             May 2021 - May 2021
-   8.  Flavio E. Goncalves                 Oct 2020 - Oct 2020
-   9.  Zero King (@l2dy)                   Mar 2020 - Sep 2020
-   10. Ovidiu Sas (@ovidiusas)             Jun 2020 - Jun 2020
+                    Name                 Commit Activity
+   1.  Norm Brandinger                 May 2025 - May 2025
+   2.  Norman Brandinger (@NormB)      Jun 2024 - Feb 2025
+   3.  Razvan Crainea (@razvancrainea) Jun 2014 - Feb 2025
+   4.  Peter Lemenkov (@lemenkov)      Jun 2018 - Feb 2025
+   5.  Vlad Paiu (@vladpaiu)           Jan 2025 - Jan 2025
+   6.  hatee                           Dec 2024 - Dec 2024
+   7.  Eddie Fiorentine                Nov 2024 - Nov 2024
+   8.  Maksym Sobolyev (@sobomax)      Jan 2021 - Nov 2023
+   9.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)     Jul 2014 - May 2023
+   10. John Burke (@john08burke)       Jun 2019 - Apr 2022
 
-   All remaining contributors: Vlad Patrascu (@rvlad-patrascu),
-   Dan Pascu (@danpascu), Oliver Severin Mulelid-Tynes
-   (@olivermt), Rob Gagnon (@rgagnon24), Eric Tamme (@etamme),
-   Richard Fuchs.
+   All remaining contributors: Bogdan-Andrei Iancu
+   (@bogdan-iancu), Nick Altmann (@nikbyte), Flavio E. Goncalves,
+   Zero King (@l2dy), Ovidiu Sas (@ovidiusas), Vlad Patrascu
+   (@rvlad-patrascu), Dan Pascu (@danpascu), Oliver Severin
+   Mulelid-Tynes (@olivermt), Rob Gagnon (@rgagnon24), Eric Tamme
+   (@etamme), Richard Fuchs.
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -1322,20 +1507,21 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Razvan Crainea (@razvancrainea), Liviu Chircu
-   (@liviuchircu), John Burke (@john08burke), Nick Altmann
-   (@nikbyte), Flavio E. Goncalves, Peter Lemenkov (@lemenkov),
-   Vlad Patrascu (@rvlad-patrascu), Bogdan-Andrei Iancu
-   (@bogdan-iancu), Richard Fuchs.
+   Last edited by: Norm Brandinger, Razvan Crainea
+   (@razvancrainea), Eddie Fiorentine, Norman Brandinger (@NormB),
+   Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), John Burke (@john08burke), Nick
+   Altmann (@nikbyte), Flavio E. Goncalves, Peter Lemenkov
+   (@lemenkov), Vlad Patrascu (@rvlad-patrascu), Bogdan-Andrei
+   Iancu (@bogdan-iancu), Richard Fuchs.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2013-2014 Sipwise GmbH
+   Copyright © 2013-2014 Sipwise GmbH
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2010 VoIPEmbedded Inc.
+   Copyright © 2010 VoIPEmbedded Inc.
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2009-2014 TuTPro Inc.
+   Copyright © 2009-2014 TuTPro Inc.
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Voice Sistem SRL
+   Copyright © 2005 Voice Sistem SRL
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003-2008 Sippy Software, Inc.
+   Copyright © 2003-2008 Sippy Software, Inc.

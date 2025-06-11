@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -38,6 +38,7 @@ int cpl_proxy_to_loc_set( struct sip_msg *msg, struct location **locs,
 													unsigned char flag)
 {
 	struct location *foo;
+	struct msg_branch branch;
 	int bflags;
 	int r;
 
@@ -75,8 +76,12 @@ int cpl_proxy_to_loc_set( struct sip_msg *msg, struct location **locs,
 		bflags = ((*locs)->flags&CPL_LOC_NATED) ? cpl_fct.ulb.nat_flag : 0 ;
 		LM_DBG("appending branch <%.*s>, flags %d\n",
 			(*locs)->addr.uri.len, (*locs)->addr.uri.s, bflags);
-		if(append_branch(msg, &(*locs)->addr.uri, &(*locs)->addr.received,0,
-		Q_UNSPECIFIED, bflags, 0)==-1){
+		memset( &branch, 0, sizeof branch);
+		branch.uri = (*locs)->addr.uri;
+		branch.dst_uri = (*locs)->addr.received;
+		branch.q = Q_UNSPECIFIED;
+		branch.bflags = bflags;
+		if (append_msg_branch(&branch)==-1){
 			LM_ERR("failed when appending branch <%s>\n",(*locs)->addr.uri.s);
 			goto error;
 		}
@@ -93,7 +98,7 @@ int cpl_proxy_to_loc_set( struct sip_msg *msg, struct location **locs,
 	}
 
 	/* do t_forward */
-	if ((r = cpl_fct.tmb.t_relay(msg, 0, 0, 0, 0, 0, 0, 0, 0)) < 0) {
+	if ((r = cpl_fct.tmb.t_relay(msg, 0, 0)) < 0) {
 		LM_ERR("t_relay failed! error=%d\n",r);
 		goto error;
 	}

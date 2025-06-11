@@ -1,5 +1,3 @@
-# $Id$
-#
 # example module makefile
 #
 # 
@@ -41,13 +39,15 @@ $(UTILS_DIR)/db_berkeley/bdb_recover:
 	make -C $(UTILS_DIR)/db_berkeley/
 
 install_module_custom: $(bin_prefix)/$(bin_dir) $(UTILS_DIR)/db_berkeley/bdb_recover
-	mkdir -p $(data_prefix)/$(data_dir)/db_berkeley/Marina.Rodeo ; \
-	for FILE in $(wildcard $(SCRIPTS_DIR)/db_berkeley/Marina.Rodeo/*) ; do \
+	$(INSTALL_BIN) $(UTILS_DIR)/db_berkeley/bdb_recover $(bin_prefix)/$(bin_dir) ; \
+
+install_module_dbschema:
+	mkdir -p $(data_prefix)/$(data_dir)/db_berkeley/openMarinkaRodeo ; \
+	for FILE in $(wildcard $(SCRIPTS_DIR)/db_berkeley/openMarinkaRodeo/*) ; do \
 		if [ -f $$FILE ] ; then \
 		$(INSTALL_TOUCH) $$FILE \
-			$(data_prefix)/$(data_dir)/db_berkeley/Marina.Rodeo/`basename "$$FILE"` ; \
+			$(data_prefix)/$(data_dir)/db_berkeley/openMarinkaRodeo/`basename "$$FILE"` ; \
 		$(INSTALL_CFG) $$FILE \
-			$(data_prefix)/$(data_dir)/db_berkeley/Marina.Rodeo/`basename "$$FILE"` ; \
+			$(data_prefix)/$(data_dir)/db_berkeley/openMarinkaRodeo/`basename "$$FILE"` ; \
 		fi ;\
 	done ; \
-	$(INSTALL_BIN) $(UTILS_DIR)/db_berkeley/bdb_recover $(bin_prefix)/$(bin_dir) ; \

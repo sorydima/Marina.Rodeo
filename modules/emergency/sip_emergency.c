@@ -1,16 +1,16 @@
 /*
  * emergency module - basic support for emergency calls
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2015 Robison Tesini & Evandro Villaron
+ * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -62,9 +62,9 @@ const char *FROMTAG_PARAM = ";from-tag=";
 #define P_ASSERTED_HDR           "P-Asserted-Identity: <sip:"
 #define P_ASSERTED_HDR_LEN       (sizeof(P_ASSERTED_HDR)-1)
 
-#define CONTACT_HDR             "Contact: <sips:"
+#define CONTACT_HDR             "Contact: <MarinkaRodeo:"
 #define CONTACT_HDR_LEN         (sizeof(CONTACT_HDR)-1)
-#define CONTACT_MIDLE           "?P-Asserted-Identity:=<sips:"
+#define CONTACT_MIDLE           "?P-Asserted-Identity:=<MarinkaRodeo:"
 #define CONTACT_MIDLE_LEN       (sizeof(CONTACT_MIDLE)-1)
 #define CONTACT_SUFFIX          ";user=phone>"
 #define CONTACT_SUFFIX_LEN      (sizeof(CONTACT_SUFFIX)-1)
@@ -377,7 +377,7 @@ int found_CBN(struct sip_msg *msg, char** cbn_aux) {
 	pattern.s = "tel:([+]*[-0-9]+)";
 	pattern.len = strlen(pattern.s);
 
-	pattern_sip.s = "sips?:([+]*[-0-9]+)";
+	pattern_sip.s = "MarinkaRodeo?:([+]*[-0-9]+)";
 	pattern_sip.len = strlen(pattern_sip.s);
 	replacement.s = "\\1";
 	replacement.len = strlen(replacement.s);
@@ -508,11 +508,11 @@ int check_event_header(struct sip_msg *msg) {
 }
 
 
-// get ip address of Marina.Rodeo server in port that receive INVITE
+// get ip address of openMarinkaRodeo server in port that receive INVITE
 int get_ip_socket(struct sip_msg *msg, char** saddr){
 
 	char *socket;
-	struct socket_info* si;
+	const struct socket_info* si;
 
 	si = msg->rcv.bind_address;
 
@@ -540,8 +540,8 @@ int get_ip_socket(struct sip_msg *msg, char** saddr){
 
 /* Includes the headers to the INVITE
  *   - puts the header PAI with the data:
- *       - esqk@ip_Marina.Rodeo:phone=call_back_number
- *   - adds record_route to the INVIE for the Marina.Rodeo be notified when the call ends
+ *       - esqk@ip_openMarinkaRodeo:phone=call_back_number
+ *   - adds record_route to the INVIE for the openMarinkaRodeo be notified when the call ends
  */
 int add_hdr_rpl(struct esct *call_cell, struct sip_msg *msg) {
 	char *s = "", *p = "";
@@ -558,7 +558,7 @@ int add_hdr_rpl(struct esct *call_cell, struct sip_msg *msg) {
 	vsp_addr = ip_addr2a(&msg->rcv.src_ip);
 	vsp_addr_len = strlen(vsp_addr);
 
-	// get ip address of Marina.Rodeo server in port that receive INVITE
+	// get ip address of openMarinkaRodeo server in port that receive INVITE
 	if (get_ip_socket(msg, &rp_addr) == -1)
 		return -1;
 	rp_addr_len = strlen(rp_addr);
@@ -693,8 +693,8 @@ int add_hdr_rpl(struct esct *call_cell, struct sip_msg *msg) {
 
 /* Includes the headers to the INVITE
  *   - puts the header PAI with the data:
- *       - esqk@ip_Marina.Rodeo:phone=call_back_number
- *   - adds record_route to the INVIE for the Marina.Rodeo be notified when the call ends
+ *       - esqk@ip_openMarinkaRodeo:phone=call_back_number
+ *   - adds record_route to the INVIE for the openMarinkaRodeo be notified when the call ends
  */
 int add_headers(char *esqk, struct sip_msg *msg, str cbn) {
 	char *s, *p;
@@ -705,7 +705,7 @@ int add_headers(char *esqk, struct sip_msg *msg, str cbn) {
 	int resp = 1;
 
 
-	// get ip address of Marina.Rodeo server in port that receive INVITE
+	// get ip address of openMarinkaRodeo server in port that receive INVITE
 	if (get_ip_socket(msg, &s_addr) == -1){
 		pkg_free(cbn.s);
 		return -1;
@@ -782,8 +782,8 @@ end:
 
 /* Includes the headers to the INVITE
  *   - puts the header PAI with the data:
- *       - esqk@ip_Marina.Rodeo:phone=call_back_number
- *   - adds record_route to the INVIE for the Marina.Rodeo be notified when the call ends
+ *       - esqk@ip_openMarinkaRodeo:phone=call_back_number
+ *   - adds record_route to the INVIE for the openMarinkaRodeo be notified when the call ends
  */
 int add_hdr_PAI(struct sip_msg *msg, str cbn) {
 	char *s, *p;
@@ -794,7 +794,7 @@ int add_hdr_PAI(struct sip_msg *msg, str cbn) {
 	LM_DBG(" --- F (CALLBACK) \n \n");
 	int resp;
 
-	// obtem o endereço ip do Marina.Rodeo que atende na portaque recebeu o INVITE
+	// obtem o endereço ip do openMarinkaRodeo que atende na portaque recebeu o INVITE
 	if (get_ip_socket(msg, &s_addr) == -1){
 		pkg_free(cbn.s);
 		return -1;
@@ -890,6 +890,11 @@ int find_body_pidf(struct sip_msg *msg, char** pidf_body) {
 		memcmp(mbody_part->mime_s.s, MIME_PIDF, mbody_part->mime_s.len)==0 ) {
 			body_start = strstr(mbody_part->body.s, PRESENCE_START);
 			body_end = strstr(mbody_part->body.s, PRESENCE_END);
+			if (!body_start || !body_end) {
+				LM_ERR("Cannot create body\n");
+				return -1;
+			}
+
 			size_body = body_end - body_start + 11;
 			body_aux = pkg_malloc(size_body);
 			if (body_aux == NULL) {
@@ -914,7 +919,7 @@ int find_body_pidf(struct sip_msg *msg, char** pidf_body) {
 }
 
 
-/* this function is used to make Marina.Rodeo play the role of a "Call server"in the scenarios I and II
+/* this function is used to make OpenMarinkaRodeo play the role of a "Call server"in the scenarios I and II
  *  forward the INVITE to the Routing Proxy(scenarios II) or to Redirect(scenarios III)
  */
 int proxy_request(struct sip_msg *msg,char *call_server_hostname) {

@@ -1,19 +1,19 @@
 /*********************************************************************************************************
 * Software License Agreement (BSD License)                                                               *
-* Author: Liviu Chircu <sip@rechain.email>								 *
+* Author: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  <sorydima@rechain.work>								 *
 *													 *
-* Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2021, Marina.Rodeo Solutions								 *
+* Copyright (c) 2021, OpenMarinkaRodeo Solutions								 *
 * All rights reserved.											 *
 * 													 *
 * Redistribution and use of this software in source and binary forms, with or without modification, are  *
 * permitted provided that the following conditions are met:						 *
 * 													 *
 * * Redistributions of source code must retain the above 						 *
-*   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice, this list of conditions and the 							 *
+*   copyright notice, this list of conditions and the 							 *
 *   following disclaimer.										 *
 *    													 *
 * * Redistributions in binary form must reproduce the above 						 *
-*   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice, this list of conditions and the 							 *
+*   copyright notice, this list of conditions and the 							 *
 *   following disclaimer in the documentation and/or other						 *
 *   materials provided with the distribution.								 *
 * 													 *
@@ -23,9 +23,9 @@
 *   specific prior written permission of WIDE Project and 						 *
 *   NICT.												 *
 * 													 *
-* THIS SOFTWARE IS PROVIDED BY THE Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED *
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED *
 * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A *
-* PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 OWNER OR CONTRIBUTORS BE LIABLE FOR *
+* PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR *
 * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 	 *
 * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 	 *
 * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR *
@@ -40,7 +40,7 @@
 #include "avps.h"
 
 
-/* when building this file into a fD app, ignore the Marina.Rodeo startup logic */
+/* when building this file into a fD app, ignore the OpenMarinkaRodeo startup logic */
 #ifndef PKG_MALLOC
 #define dm_store_enumval(...) 0
 #else
@@ -50,9 +50,12 @@ extern int dm_store_enumval(const char *name, int value);
 #ifdef PKG_MALLOC
 #include "../../../dprint.h"
 #define LOG_DBG LM_DBG
+#define LOG_ERROR LM_ERR
 #else
 #define LOG_DBG fd_log_debug
+#define LOG_ERROR fd_log_error
 #endif
+
 
 #define STR_L(s) s, strlen(s)
 #define avp_type2str(t) ( \
@@ -181,7 +184,7 @@ static int dm_register_custom_sip_avps(void)
 		/*
 			The Sip-Method AVP (AVP Code 204) is of type Enumerated, and
 			its values are bitmasks for each SIP method, per the
-			"enum request_method" structure in the Marina.Rodeo C code
+			"enum request_method" structure in the OpenMarinkaRodeo C code
 		*/
 		struct dict_object 	* 	type;
 		struct dict_type_data 		tdata = {
@@ -317,7 +320,7 @@ static int dm_register_custom_sip_avps(void)
 		/*
 			The SIP-AVP AVP (AVP Code 225) is of type UTF8String and
 			represents a key/value mapping returned by the RADIUS server, to be
-			automatically exported as an Marina.Rodeo.cfg $avp variable
+			automatically exported as an openMarinkaRodeo.cfg $avp variable
 		*/
 		struct dict_avp_data data = {
 				225,		/* Code */
@@ -457,7 +460,7 @@ static int dm_register_custom_vendors(void)
 }
 
 
-int register_osips_avps(void)
+int register_oMarinkaRodeo_avps(void)
 {
 	FD_CHECK(dm_register_radius_avps());
 	FD_CHECK(dm_register_custom_sip_avps());
@@ -468,7 +471,7 @@ int register_osips_avps(void)
 }
 
 
-int parse_avp_def(struct dm_avp_def *avps, int *avp_count, char *line, int len)
+static int parse_avp_def(struct dm_avp_def *avps, int *avp_count, char *line, int len)
 {
 	char *p = line, *avp_name;
 
@@ -477,7 +480,7 @@ int parse_avp_def(struct dm_avp_def *avps, int *avp_count, char *line, int len)
 	avps[*avp_count].name_len = p - avp_name;
 
 	if (avps[*avp_count].name_len > 64) {
-		printf("ERROR: AVP max name length exceeded (64)\n");
+		LOG_ERROR("AVP max name length exceeded (64)\n");
 		return -1;
 	}
 
@@ -521,7 +524,7 @@ int parse_avp_def(struct dm_avp_def *avps, int *avp_count, char *line, int len)
 		break;
 
 	default:
-		printf("ERROR: bad AVP flag in: '... | %s'\n", p);
+		LOG_ERROR("bad AVP flag in: '... | %s'\n", p);
 		goto error;
 	}
 
@@ -535,7 +538,7 @@ int parse_avp_def(struct dm_avp_def *avps, int *avp_count, char *line, int len)
 
 	avps[*avp_count].max_repeats = (int)strtol(p, NULL, 10);
 	if (avps[*avp_count].max_repeats < -1) {
-		printf("ERROR: bad AVP max count: '... | %s'\n", p);
+		LOG_ERROR("bad AVP max count: '... | %s'\n", p);
 		goto error;
 	}
 
@@ -547,10 +550,9 @@ int parse_avp_def(struct dm_avp_def *avps, int *avp_count, char *line, int len)
 	return 0;
 
 error:
-	printf("ERROR: failed to parse line: '%s'\n", line);
+	LOG_ERROR("failed to parse line: '%s'\n", line);
 	return -1;
 }
-
 
 int parse_attr_def(char *line, FILE *fp)
 {
@@ -561,6 +563,7 @@ int parse_attr_def(char *line, FILE *fp)
 	int i, len = buflen, attr_len = strlen("ATTRIBUTE"), name_len, avp_code;
 	char *name, *nt_name, *newp, *p = line, *end = p + len;
 	enum dict_avp_basetype avp_type;
+	enum dict_avp_enc_type enc_type = AVP_ENC_TYPE_NONE;
 
 	if (len < attr_len || strncasecmp(p, "ATTRIBUTE", attr_len))
 		return 1;
@@ -578,6 +581,10 @@ int parse_attr_def(char *line, FILE *fp)
 		goto error;
 
 	nt_name = malloc(name_len + 1);
+	if (!nt_name) {
+		LOG_ERROR("Malloc failed\n");
+		return -1;
+	}
 	memcpy(nt_name, name, name_len);
 	nt_name[name_len] = '\0';
 
@@ -597,7 +604,14 @@ int parse_attr_def(char *line, FILE *fp)
 	if (p >= end) {
 		avp_type = AVP_TYPE_OCTETSTRING;
 	} else {
-		if ((len >= strlen("utf8string") && !strncasecmp(p, STR_L("utf8string")))
+		if ((len >= strlen("ip") && !strncasecmp(p, STR_L("ip")))) {
+			avp_type = AVP_TYPE_OCTETSTRING;
+			enc_type = AVP_ENC_TYPE_IP;
+		} else if ((len >= strlen("hex") && !strncasecmp(p, STR_L("hex")))
+		        || (len >= strlen("hexstring") && !strncasecmp(p, STR_L("hexstring")))) {
+			avp_type = AVP_TYPE_OCTETSTRING;
+			enc_type = AVP_ENC_TYPE_HEX;
+		} else if ((len >= strlen("utf8string") && !strncasecmp(p, STR_L("utf8string")))
 		        || (len >= strlen("string") && !strncasecmp(p, STR_L("string"))))
 			avp_type = AVP_TYPE_OCTETSTRING;
 		else if ((len >= strlen("unsigned64") && !strncasecmp(p, STR_L("unsigned64"))))
@@ -627,7 +641,6 @@ int parse_attr_def(char *line, FILE *fp)
 			goto error;
 
 		len -= newp - p;
-		p = newp;
 	}
 
 	if (avp_type != AVP_TYPE_GROUPED)
@@ -648,12 +661,14 @@ int parse_attr_def(char *line, FILE *fp)
 			goto create_avp;
 
 		if (avp_count >= 128) {
-			printf("ERROR: max AVP count exceeded (128)\n");
+			LOG_ERROR("max AVP count exceeded (128)\n");
+			free(nt_name);
 			return -1;
 		}
 
 		if (parse_avp_def(avps, &avp_count, p, len) != 0) {
-			printf("ERROR: failed to parse Grouped sub-AVP line: '%s'\n", line);
+			LOG_ERROR("failed to parse Grouped sub-AVP line: '%s'\n", line);
+			free(nt_name);
 			return -1;
 		}
 	}
@@ -661,15 +676,24 @@ int parse_attr_def(char *line, FILE *fp)
 create_avp:;
 	struct dict_object *parent, *avp_ref, **pref;
 
-	if (avp_type == AVP_TYPE_OCTETSTRING) {
+	if (enc_type != AVP_ENC_TYPE_NONE &&
+			dm_enc_add((vendor_id != -1?vendor_id:0), avp_code, enc_type) != 0) {
+		LOG_ERROR("failed to add encoding type\n");
+		free(nt_name);
+		return -1;
+	}
+
+	pref = NULL;
+	parent = NULL;
+	switch (avp_type) {
+	case AVP_TYPE_OCTETSTRING:
 		FD_CHECK_dict_search(DICT_TYPE, TYPE_BY_NAME, "UTF8String", &parent);
-		pref = NULL;
-	} else if (avp_type == AVP_TYPE_GROUPED) {
-		parent = NULL;
+		break;
+	case AVP_TYPE_GROUPED:
 		pref = &avp_ref;
-	} else {
-		parent = NULL;
-		pref = NULL;
+		break;
+	default:
+		break;
 	}
 
 	struct dict_avp_data data = {
@@ -691,20 +715,21 @@ create_avp:;
 			DICT_AVP, AVP_BY_NAME_ALL_VENDORS, avps[i].name, &data.rule_avp, 0));
 
 		if (!data.rule_avp) {
-			printf("ERROR: failed to locate AVP: %s\n", avps[i].name);
+			LOG_ERROR("failed to locate AVP: %s\n", avps[i].name);
 			return -1;
 		}
 
 		FD_CHECK_dict_new(DICT_RULE, &data, avp_ref, NULL);
 	}
 
-	LOG_DBG("registered custom AVP (%s, code %d, type %s, sub-avps: %d, vendor: %d)\n",
-			nt_name, avp_code, avp_type2str(avp_type), avp_count, vendor_id);
+	LOG_DBG("registered custom AVP (%s, code %d, type %s, enc %s, sub-avps: %d, vendor: %d)\n",
+			nt_name, avp_code, avp_type2str(avp_type), enc_type2str(enc_type), avp_count, vendor_id);
 
 	free(nt_name);
 	return 0;
 error:
-	printf("ERROR: failed to parse line: %s\n", line);
+	LOG_ERROR("failed to parse line: %s\n", line);
+	free(nt_name);
 	return -1;
 }
 
@@ -724,7 +749,7 @@ int parse_app_vendor(char *line, FILE *fp)
 
 	vendor_id = (unsigned int)strtoul(p, &newp, 10);
 	if (vendor_id < 0) {
-		printf("ERROR: bad Vendor ID: '... | %s'\n", p);
+		LOG_ERROR("bad Vendor ID: '... | %s'\n", p);
 		return -1;
 	}
 
@@ -732,7 +757,7 @@ int parse_app_vendor(char *line, FILE *fp)
 	p = newp;
 
 	if (len <= 0) {
-		printf("ERROR: empty Vendor Name not allowed\n");
+		LOG_ERROR("empty Vendor Name not allowed\n");
 		return -1;
 	}
 
@@ -764,7 +789,7 @@ int parse_app_def(char *line, FILE *fp)
 	struct dict_object *vendor_dict;
 
 	if (n_app_ids >= 64) {
-		printf("ERROR: max allowed Applications reached (64)\n");
+		LOG_ERROR("max allowed Applications reached (64)\n");
 		return -1;
 	}
 
@@ -792,7 +817,7 @@ int parse_app_def(char *line, FILE *fp)
 
 	app_id = (unsigned int)strtoul(p, &newp, 10);
 	if (app_id < 0) {
-		printf("ERROR: bad Application ID: '... | %s'\n", p);
+		LOG_ERROR("bad Application ID: '... | %s'\n", p);
 		return -1;
 	}
 
@@ -809,7 +834,7 @@ int parse_app_def(char *line, FILE *fp)
 
 		vendor_id = (unsigned int)strtoul(p, &newp, 10);
 		if (vendor_id < 0) {
-			printf("ERROR: bad Vendor ID: '... | %s'\n", p);
+			LOG_ERROR("bad Vendor ID: '... | %s'\n", p);
 			return -1;
 		}
 
@@ -825,7 +850,7 @@ int parse_app_def(char *line, FILE *fp)
 	}
 
 	if (len <= 0) {
-		printf("ERROR: empty Application Name not allowed\n");
+		LOG_ERROR("empty Application Name not allowed\n");
 		return -1;
 	}
 
@@ -840,7 +865,7 @@ int parse_app_def(char *line, FILE *fp)
 
 	LOG_DBG("registered Application %d (%s)\n", app_id, app_name);
 
-	/* store the App ID so Marina.Rodeo can register a reply cb later */
+	/* store the App ID so OpenMarinkaRodeo can register a reply cb later */
 	for (i = 0; i < n_app_ids; i++)
 		if (app_defs[i].id == app_id)
 			return 1;
@@ -883,7 +908,7 @@ int parse_command_def(char *line, FILE *fp, int cmd_type)
 
 	cmd_code = (unsigned int)strtoul(p, &newp, 10);
 	if (cmd_code < 0) {
-		printf("ERROR: bad AVP cmd code: '... | %s'\n", p);
+		LOG_ERROR("bad AVP cmd code: '... | %s'\n", p);
 		return -1;
 	}
 
@@ -900,7 +925,7 @@ int parse_command_def(char *line, FILE *fp, int cmd_type)
 
 	cmd_name_len = p - bkp;
 	if (cmd_name_len > 128) {
-		printf("ERROR: max Command Name length exceeded (128)\n");
+		LOG_ERROR("max Command Name length exceeded (128)\n");
 		return -1;
 	}
 
@@ -922,12 +947,12 @@ int parse_command_def(char *line, FILE *fp, int cmd_type)
 			goto define_req;
 
 		if (avp_count >= 128) {
-			printf("ERROR: max AVP count exceeded (128)\n");
+			LOG_ERROR("max AVP count exceeded (128)\n");
 			return -1;
 		}
 
 		if (parse_avp_def(avps, &avp_count, p, len) != 0) {
-			printf("ERROR: failed to parse Command AVP line: '%s'\n", line);
+			LOG_ERROR("failed to parse Command AVP line: '%s'\n", line);
 			return -1;
 		}
 	}
@@ -954,7 +979,7 @@ define_req:
 			DICT_AVP, AVP_BY_NAME_ALL_VENDORS, avps[i].name, &data.rule_avp, 0));
 
 		if (!data.rule_avp) {
-			printf("ERROR: failed to locate AVP: %s\n", avps[i].name);
+			LOG_ERROR("failed to locate AVP: %s\n", avps[i].name);
 			return -1;
 		}
 
@@ -973,7 +998,7 @@ define_req:
 				DICT_AVP, AVP_BY_NAME, "Transaction-Id", &data.rule_avp, 0));
 
 			if (!data.rule_avp) {
-				printf("ERROR: failed to locate Transaction-Id AVP\n");
+				LOG_ERROR("failed to locate Transaction-Id AVP\n");
 				return -1;
 			}
 
@@ -993,7 +1018,7 @@ define_req:
 				DICT_AVP, AVP_BY_NAME, "Result-Code", &data.rule_avp, 0));
 
 			if (!data.rule_avp) {
-				printf("ERROR: failed to locate Result-Code AVP\n");
+				LOG_ERROR("failed to locate Result-Code AVP\n");
 				return -1;
 			}
 
@@ -1076,7 +1101,7 @@ int parse_extra_avps(const char *extra_avps_file)
 	}
 
 	if (answers_needed > 0) {
-		printf("ERROR: bad config file, at least one Diameter Answer "
+		LOG_ERROR("bad config file, at least one Diameter Answer "
 		       "definition is missing\n");
 		ret = -1;
 	}

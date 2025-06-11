@@ -9,18 +9,20 @@ httpd Module
         1.2. Overview
         1.3. Dependencies
 
-              1.3.1. Marina.Rodeo Modules
+              1.3.1. OpenMarinkaRodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
 
               1.4.1. ip(string)
               1.4.2. port(integer)
-              1.4.3. buf_size (integer)
-              1.4.4. post_buf_size (integer)
-              1.4.5. tls_cert_file (string)
-              1.4.6. tls_key_file (string)
-              1.4.7. tls_ciphers (string)
+              1.4.3. conn_timeout(integer)
+              1.4.4. buf_size (integer)
+              1.4.5. post_buf_size (integer)
+              1.4.6. receive_buf_size (integer)
+              1.4.7. tls_cert_file (string)
+              1.4.8. tls_key_file (string)
+              1.4.9. tls_ciphers (string)
 
         1.5. Exported MI Functions
 
@@ -57,17 +59,19 @@ httpd Module
 
    1.1. Set ip parameter
    1.2. Set port parameter
-   1.3. Set buf_size parameter
-   1.4. Set post_buf_size parameter
-   1.5. Set tls_cert_file parameter
-   1.6. Set tls_key_file parameter
-   1.7. Set tls_key_file parameter
+   1.3. Set conn_timeout parameter
+   1.4. Set buf_size parameter
+   1.5. Set post_buf_size parameter
+   1.6. Set receive_buf_size parameter
+   1.7. Set tls_cert_file parameter
+   1.8. Set tls_key_file parameter
+   1.9. Set tls_key_file parameter
 
 Chapter 1. Admin Guide
 
 1.1. Overview
 
-   This module provides an HTTP transport layer for Marina.Rodeo.
+   This module provides an HTTP transport layer for OpenMarinkaRodeo.
 
    Implementation of httpd module's http server is based on
    libmicrohttpd library.
@@ -80,24 +84,24 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. Marina.Rodeo Modules
+1.3.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other Marina.Rodeo modules.
+     * No dependencies on other OpenMarinkaRodeo modules.
 
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * libmicrohttpd, with EPOLL support. This typically means a
        version newer than 0.9.50.
 
    WARNING! Please be aware about an EPOLL support regression in
    the libmicrohttpd library and packaging which affects the
-   Marina.Rodeo httpd module, which was fixed according to the below
+   OpenMarinkaRodeo httpd module, which was fixed according to the below
    timeline. The effect of the regression is that the HTTP reply
    body is sometimes never written by the library, causing the
-   client (e.g. Marina.Rodeo-cli) to hang indefinitely waiting for it:
+   client (e.g. openMarinkaRodeo-cli) to hang indefinitely waiting for it:
      * versions 0.9.51 - 0.9.52 have been tested and work
        correctly
      * regression introduced in 0.9.53 (Apr 2017), lasting until
@@ -132,7 +136,25 @@ modparam("httpd", "ip", "127.0.0.1")
 modparam("httpd", "port", 8000)
 ...
 
-1.4.3. buf_size (integer)
+1.4.3. conn_timeout(integer)
+
+   Auto-close TCP connections which are idle for more than the
+   designated timeout, in seconds. Set to zero to never close any
+   connections.
+
+   Note: the connection auto-close routine only seems to be
+   executed in an "on-demand" fashion, during an HTTPD network
+   event (e.g. on a new connection), which although not ideal, it
+   should be good enough in practical terms.
+
+   The default timeout is 30 seconds.
+
+   Example 1.3. Set conn_timeout parameter
+...
+modparam("httpd", "conn_timeout", 10)
+...
+
+1.4.4. buf_size (integer)
 
    It specifies the maximum length (in bytes) of the buffer used
    to write in the html response.
@@ -142,12 +164,12 @@ modparam("httpd", "port", 8000)
 
    The default value is 0.
 
-   Example 1.3. Set buf_size parameter
+   Example 1.4. Set buf_size parameter
 ...
 modparam("httpd", "buf_size", 524288)
 ...
 
-1.4.4. post_buf_size (integer)
+1.4.5. post_buf_size (integer)
 
    It specifies the length (in bytes) of the POST HTTP requests
    processing buffer. For large POST request, the default value
@@ -155,36 +177,49 @@ modparam("httpd", "buf_size", 524288)
 
    The default value is 1024. The minumal value is 256.
 
-   Example 1.4. Set post_buf_size parameter
+   Example 1.5. Set post_buf_size parameter
 ...
 modparam("httpd", "post_buf_size", 4096)
 ...
 
-1.4.5. tls_cert_file (string)
+1.4.6. receive_buf_size (integer)
+
+   It specifies the maximum length (in bytes) of the received HTTP
+   requests. For receiving large POST request, the default value
+   might require to be increased.
+
+   The default value is 1024.
+
+   Example 1.6. Set receive_buf_size parameter
+...
+modparam("httpd", "receive_buf_size", 4096)
+...
+
+1.4.7. tls_cert_file (string)
 
    Public certificate file for httpd. It will be used as
    server-side certificate for incoming TLS connections.
 
    The default value is ""
 
-   Example 1.5. Set tls_cert_file parameter
+   Example 1.7. Set tls_cert_file parameter
 ...
-modparam("httpd", "tls_cert_file", "/etc/Marina.Rodeo/tls/server.pem")
+modparam("httpd", "tls_cert_file", "/etc/openMarinkaRodeo/tls/server.pem")
 ...
 
-1.4.6. tls_key_file (string)
+1.4.8. tls_key_file (string)
 
    Private key of the above certificate. I must be kept in a safe
    place with tight permissions!
 
    The default value is ""
 
-   Example 1.6. Set tls_key_file parameter
+   Example 1.8. Set tls_key_file parameter
 ...
-modparam("httpd", "tls_key_file", "/etc/Marina.Rodeo/tls/server.key")
+modparam("httpd", "tls_key_file", "/etc/openMarinkaRodeo/tls/server.key")
 ...
 
-1.4.7. tls_ciphers (string)
+1.4.9. tls_ciphers (string)
 
    You can specify the list of algorithms for authentication and
    encryption that you allow. To obtain a list of ciphers and then
@@ -198,7 +233,7 @@ Warning
    The default value is
    "SECURE256:+SECURE192:-VERS-ALL:+VERS-TLS1.2"
 
-   Example 1.7. Set tls_key_file parameter
+   Example 1.9. Set tls_key_file parameter
 ...
 modparam("httpd", "tls_ciphers", "SECURE256:+SECURE192:-VERS-ALL:+VERS-T
 LS1.2")
@@ -217,7 +252,7 @@ LS1.2")
    Parameters: none
 
    MI FIFO Command Format:
-Marina.Rodeo-cli -x mi httpd_list_root_path
+openMarinkaRodeo-cli -x mi httpd_list_root_path
 
 1.6. Exported Functions
 
@@ -225,10 +260,10 @@ Marina.Rodeo-cli -x mi httpd_list_root_path
 
 1.7. Known issues
 
-   Due to the fact that Marina.Rodeo is a multiprocess application,
+   Due to the fact that OpenMarinkaRodeo is a multiprocess application,
    the microhttpd library is used in "external select" mode. This
    ensures that the library is not running in multithread mode and
-   the library is entirely controled by Marina.Rodeo. Due to this
+   the library is entirely controled by OpenMarinkaRodeo. Due to this
    particular mode of operations, for now, the entire http
    response is built in a pre-allocated buffer (see buf_size
    parameter).
@@ -238,8 +273,8 @@ Marina.Rodeo-cli -x mi httpd_list_root_path
    Running the http daemon as non root on ports below 1024 is
    forbidden by default in linux (kernel>=2.6.24). To allow the
    port binding, one can use setcap to give extra privilleges to
-   Marina.Rodeo binary:
-setcap 'cap_net_bind_service=+ep' /usr/local/sbin/Marina.Rodeo
+   openMarinkaRodeo binary:
+setcap 'cap_net_bind_service=+ep' /usr/local/sbin/openMarinkaRodeo
 
 Chapter 2. Developer Guide
 
@@ -269,19 +304,19 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Ovidiu Sas (@ovidiusas) 47 30 1667 147
+   1. Ovidiu Sas (@ovidiusas) 48 30 1667 147
    2. Razvan Crainea (@razvancrainea) 24 21 118 68
-   3. Liviu Chircu (@liviuchircu) 21 17 138 79
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 23 19 172 82
    4. Bogdan-Andrei Iancu (@bogdan-iancu) 14 12 103 54
    5. Vlad Patrascu (@rvlad-patrascu) 10 7 52 89
    6. Ionut Ionita (@ionutrazvanionita) 8 6 65 21
-   7. Maksym Sobolyev (@sobomax) 4 2 5 5
-   8. Fabian Gast (@fgast) 4 1 150 3
-   9. Stephane Alnet 3 1 39 3
-   10. Stas Kobzar 3 1 2 2
+   7. Vlad Paiu (@vladpaiu) 4 2 68 16
+   8. Maksym Sobolyev (@sobomax) 4 2 5 5
+   9. Alexandra Titoc 4 2 2 1
+   10. Fabian Gast (@fgast) 4 1 150 3
 
-   All remaining contributors: Dusan Klinec (@ph4r05), Peter
-   Lemenkov (@lemenkov).
+   All remaining contributors: Stephane Alnet, Stas Kobzar, Dusan
+   Klinec (@ph4r05), Peter Lemenkov (@lemenkov).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -291,7 +326,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -303,18 +338,19 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Liviu Chircu (@liviuchircu)         Mar 2014 - Aug 2022
-   3.  Razvan Crainea (@razvancrainea)     Mar 2015 - Oct 2021
-   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2013 - Aug 2021
-   5.  Fabian Gast (@fgast)                Aug 2020 - Aug 2020
-   6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   7.  Ovidiu Sas (@ovidiusas)             Jan 2012 - Jan 2019
-   8.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   9.  Ionut Ionita (@ionutrazvanionita)   Jan 2017 - Feb 2017
-   10. Dusan Klinec (@ph4r05)              Dec 2015 - Dec 2015
+   1.  Vlad Paiu (@vladpaiu)               Dec 2024 - Dec 2024
+   2.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   3.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   4.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   5.  Razvan Crainea (@razvancrainea)     Mar 2015 - Oct 2021
+   6.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2013 - Aug 2021
+   7.  Fabian Gast (@fgast)                Aug 2020 - Aug 2020
+   8.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
+   9.  Ovidiu Sas (@ovidiusas)             Jan 2012 - Jan 2019
+   10. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
 
-   All remaining contributors: Stas Kobzar, Stephane Alnet.
+   All remaining contributors: Ionut Ionita (@ionutrazvanionita),
+   Dusan Klinec (@ph4r05), Stas Kobzar, Stephane Alnet.
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -323,11 +359,12 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Bogdan-Andrei
-   Iancu (@bogdan-iancu), Fabian Gast (@fgast), Razvan Crainea
-   (@razvancrainea), Peter Lemenkov (@lemenkov), Vlad Patrascu
-   (@rvlad-patrascu), Ovidiu Sas (@ovidiusas).
+   Last edited by: Vlad Paiu (@vladpaiu), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
+   (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu), Fabian
+   Gast (@fgast), Razvan Crainea (@razvancrainea), Peter Lemenkov
+   (@lemenkov), Vlad Patrascu (@rvlad-patrascu), Ovidiu Sas
+   (@ovidiusas).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2012-2013 VoIP Embedded, Inc.
+   Copyright © 2012-2013 VoIP Embedded, Inc.

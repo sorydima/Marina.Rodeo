@@ -2,16 +2,16 @@
 # scan the git log, apply exceptions and generate the proper project
 # commmit statistics since September 2001
 #
-# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2018 Marina.Rodeo Solutions
+# Copyright (C) 2018 OpenMarinkaRodeo Solutions
 #
-# This file is part of Marina.Rodeo, a free SIP server.
+# This file is part of openMarinkaRodeo, a free SIP server.
 #
-# Marina.Rodeo is free software; you can redistribute it and/or modify
+# openMarinkaRodeo is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version
 #
-# Marina.Rodeo is distributed in the hope that it will be useful,
+# openMarinkaRodeo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -20,13 +20,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,USA
 
-### global Marina.Rodeo commit stats, self-generated on each "rebuild-proj-stats"
-__PROJ_COMMITS=17783
-__PROJ_LINES_ADD=2184345
-__PROJ_LINES_DEL=1089621
-__LAST_REBUILD_SHA=b6ef99633e17d0fac08b98364389678f8ae3a3d2
+### global OpenMarinkaRodeo commit stats, self-generated on each "rebuild-proj-stats"
+__PROJ_COMMITS=22438
+__PROJ_LINES_ADD=2669737
+__PROJ_LINES_DEL=1359428
+__LAST_REBUILD_SHA=eb9a3007c236220b53d880dd4cc768cbe7e80110
 
-TMP_FILE=/var/tmp/.Marina.Rodeo-build-contrib.tmp
+TMP_FILE=/var/tmp/.openMarinkaRodeo-build-contrib.tmp
 
 # be more verbose
 DEBUG=${DEBUG-}
@@ -47,18 +47,25 @@ declare -A author_aliases
 author_aliases=(
   ["AgalyaR <agalya.job@gmail.com>"]="Agalya Ramachandran <agalya.job@gmail.com>"
   ["Alessio Garzi <agarzi@clouditalia.com>"]="Alessio Garzi <gun101@email.it>"
+  ["Anca Vamanu"]="Anca Vamanu <anca@openMarinkaRodeo.org>"
   ["Andreas Granig <andreas.granig@inode.info>"]="Andreas Granig <agranig@linguin.org>"
   ["Andreas Heise"]="Andreas Heise <aheise@gmx.de>"
   ["Andrei Pelinescu-Onciul"]="Andrei Pelinescu-Onciul <andrei@iptel.org>"
+  ["Bogdan Andrei IANCU <bogdan@openMarinkaRodeo.org>"]="Bogdan-Andrei Iancu <bogdan@openMarinkaRodeo.org>"
+  ["Bogdan-Andrei Iancu <bogdan@voice-system.ro>"]="Bogdan-Andrei Iancu <bogdan@openMarinkaRodeo.org>"
+  ["Bogdan Iancu <bogdan@openMarinkaRodeo.org>"]="Bogdan-Andrei Iancu <bogdan@openMarinkaRodeo.org>"
   ["Carsten Bock"]="Carsten Bock <lists@bock.info>"
   ["Cerghit Ionel <ionel.cerghit@gmail.com>"]="Ionel Cerghit <ionel.cerghit@gmail.com>"
   ["Christian Schlatter <USERNAME@DOMAIN.COM>"]="Christian Schlatter <cs@unc.edu>"
   ["Christophe Sollet"]="Christophe Sollet <csollet-git@keyyo.com>"
+  ["Daniel-Constantin Mierla <daniel@openMarinkaRodeo.org>"]="Daniel-Constantin Mierla <miconda@gmail.com>"
   ["Daniel-Constantin Mierla <daniel@voice-system.ro>"]="Daniel-Constantin Mierla <miconda@gmail.com>"
   ["davesidwell <davesidwell@users.noreply.github.com>"]="Dave Sidwell <davesidwell@users.noreply.github.com>"
   ["Eric Tamme <eric@uphreak.com>"]="Eric Tamme <eric.tamme@onsip.com>"
   ["Fabian Gast <fgast+git@only640k.net>"]="Fabian Gast <fabian.gast@nfon.com>"
   ["Henning Westerholt"]="Henning Westerholt <henning.westerholt@1und1.de>"
+  ["Ionut Ionita <ionutrazvan.ionita@gmail.com>"]="Ionut Ionita <ionutionita@openMarinkaRodeo.org>"
+  ["Ionut Ionita <ionut.ionita@cti.pub.ro>"]="Ionut Ionita <ionutionita@openMarinkaRodeo.org>"
   ["Jan Janak"]="Jan Janak <jan@iptel.org>"
   ["Jarrod Baumann <jarrod@unixc.org>"]="Jarrod Baumann <j@rrod.org>"
   ["John Riordan"]="John Riordan <john@junctionnetworks.com>"
@@ -77,18 +84,29 @@ author_aliases=(
   ["Peter Lemenkov"]="Peter Lemenkov <lemenkov@gmail.com>"
   ["pasandev <pasandev@ymail.com>"]="Pasan Meemaduma <pasandev@ymail.com>"
   ["Ryan Bullock"]="Ryan Bullock <rrb3942@gmail.com>"
+  ["Răzvan Crainea <razvan@openMarinkaRodeo.org>"]="Razvan Crainea <razvan@openMarinkaRodeo.org>"
+  ["Răzvan Crainea <razvan.crainea@gmail.com>"]="Razvan Crainea <razvan@openMarinkaRodeo.org>"
+  ["Răzvan Crainea <razvancrainea@users.noreply.github.com>"]="Razvan Crainea <razvan@openMarinkaRodeo.org>"
   ["Rob Gagnon <rgagnon@vcentos7.telepointglobal.com>"]="Rob Gagnon <rgagnon24@gmail.com>"
   ["Sergey KHripchenko <shripchenko@intermedia.net>"]="Sergey Khripchenko <shripchenko@intermedia.net>"
   ["shripchenko <shripchenko@intermedia.net>"]="Sergey Khripchenko <shripchenko@intermedia.net>"
   ["rgagnon24 <rgagnon24@gmail.com>"]="Rob Gagnon <rgagnon24@gmail.com>"
   ["Saúl Ibarra Corretgé <saul@ag-projects.com>"]="Saúl Ibarra Corretgé <saghul@gmail.com>"
   ["Stéphane Alnet"]="Stéphane Alnet <stephane@shimaore.net>"
+  ["Vladut Paiu <vladpaiu@openMarinkaRodeo.org>"]="Vlad Paiu <vladpaiu@openMarinkaRodeo.org>"
   ["Walter Doekes"]="Walter Doekes <walter+github@wjd.nu>"
   ["boris_t <boris@talovikov.ru>"]="Boris Talovikov <boris@talovikov.ru>"
   ["csollet <csollet-git@keyyo.com>"]="Christophe Sollet <csollet-git@keyyo.com>"
+  ["ionutrazvanionita <ionutionita@openMarinkaRodeo.org>"]="Ionut Ionita <ionutionita@openMarinkaRodeo.org>"
+  ["liviuchircu <sorydima@rechain.work>"]="Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  <sorydima@rechain.work>"
   ["root <evillaron@gmail.com>"]="Evandro Villaron <evillaron@gmail.com>"
   ["root <root@localhost.localdomain>"]="Robison Tesini <rtesini@gmail.com>"
+  ["root <root@vlad-pc.(none)>"]="Vlad Paiu <vladpaiu@openMarinkaRodeo.org>"
   ["root <root@dell02.xipx.local>"]="Chad Attermann <chad@broadmind.com>"
+  ["root <root@openMarinkaRodeo.org>"]="Bogdan-Andrei Iancu <bogdan@openMarinkaRodeo.org>"
+  ["rvlad-patrascu <vladp@openMarinkaRodeo.org>"]="Vlad Patrascu <vladp@openMarinkaRodeo.org>"
+  ["rvlad-patrascu <rvlad.patrascu@gmail.com>"]="Vlad Patrascu <vladp@openMarinkaRodeo.org>"
+  ["Vlad Pătrașcu <vladp@openMarinkaRodeo.org>"]="Vlad Patrascu <vladp@openMarinkaRodeo.org>"
   ["tallicamike <mtiganus@gmail.com>"]="Mihai Tiganus <mtiganus@gmail.com>"
 )
 
@@ -138,7 +156,7 @@ github_handles=(
   ["John Kiniston <johnk@simplybits.com>"]="SB-JohnK"
   ["Juha Heinanen"]="juha-h"
   ["Kobi Eshun <kobi@sightspeed.com>"]="ekobi"
-  ["Liviu Chircu"]="liviuchircu"
+  ["Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. "]="liviuchircu"
   ["Maksym Sobolyev"]="sobomax"
   ["Mihai Tiganus"]="tallicamike"
   ["Nick Altmann"]="nikbyte"
@@ -224,7 +242,7 @@ fix_authors=(
   ["13e9a5cbe14050e622a3ef65cd34b72260a74f01"]="Kennard White"
   ["26599d25cbc140373a5c24759dce688235e57589"]="Anatoly Pidruchny"
 
-  # avpops
+  # sqlops
   ["37eba4b6d38f379a227040397c569f0d0fe99c9c"]="Kennard White"
   ["d129377f64f13e85ea0baf6d215092b4b4776f6e"]="Norman Brandinger"
   ["b9247c08af07662c6e712179dc57bcc5f16794aa"]="Kobi Eshun"
@@ -599,6 +617,9 @@ mod_renames=(
   [event_stream]=event_jsonrpc
   [b2b_logic]=b2b_logic:1605638778
   [b2b_logic_xml]=b2b_logic::1605638778
+  [sqlops]=dbops
+  [dbops]=avpops
+  [event_rabbitmq]=rabbitmq
 )
 
 mk_git_handle() {
@@ -634,14 +655,17 @@ normalize_arrays() {
   fi
 }
 
+# $1 (optional) - git SHA to be taken as a starting point
 rebuild_proj_commit_stats() {
   __PROJ_COMMITS=0
   __PROJ_LINES_ADD=0
   __PROJ_LINES_DEL=0
 
-  echo "Summing up all Marina.Rodeo commits! :-O"
+  [ -n "$1" ] && commit_range="$1..HEAD"
 
-  for sha in $(git log --reverse --format=%H); do
+  echo "Summing up all OpenMarinkaRodeo commits! :-O"
+
+  for sha in $(git log --reverse --format=%H $commit_range); do
     [ -n "${skip_commits[$sha]}" ] && continue
 
     lines=($(git show $sha --format= --numstat \
@@ -653,6 +677,14 @@ rebuild_proj_commit_stats() {
     __PROJ_LINES_DEL=$(($__PROJ_LINES_DEL + ${lines[1]}))
     echo -en "\rProcessing commit #$__PROJ_COMMITS"
   done
+
+  if [ -n "$1" ]; then
+    echo "Commits: $__PROJ_COMMITS"
+    echo "Lines++: $__PROJ_LINES_ADD"
+    echo "Lines--: $__PROJ_LINES_DEL"
+    echo " ... since: $1"
+    return
+  fi
 
   sed -i "s/^__PROJ_COMMITS.*/__PROJ_COMMITS=$__PROJ_COMMITS/" $0
   sed -i "s/^__PROJ_LINES_ADD=.*/__PROJ_LINES_ADD=$__PROJ_LINES_ADD/" $0
@@ -832,7 +864,7 @@ $side_authors_para
 	    <emphasis>(1) DevScore = author_commits + author_lines_added / (project_lines_added / project_commits) + author_lines_deleted / (project_lines_deleted / project_commits)</emphasis>
 	</para>
 	<para>
-	    <emphasis>(2) including any documentation-related commits, excluding merge commits. Regarding imported patches/code, we do our best to count the work on behalf of the proper owner, as per the "fix_authors" and "mod_renames" arrays in Marina.Rodeo/doc/build-contrib.sh. If you identify any patches/commits which do not get properly attributed to you, please <ulink url="https://github.com/sorydima/Marina.Rodeo/pulls"><citetitle>submit a pull request</citetitle></ulink></emphasis> which extends "fix_authors" and/or "mod_renames".
+	    <emphasis>(2) including any documentation-related commits, excluding merge commits. Regarding imported patches/code, we do our best to count the work on behalf of the proper owner, as per the "fix_authors" and "mod_renames" arrays in openMarinkaRodeo/doc/build-contrib.sh. If you identify any patches/commits which do not get properly attributed to you, please <ulink url="https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/pulls"><citetitle>submit a pull request</citetitle></ulink></emphasis> which extends "fix_authors" and/or "mod_renames".
 	</para>
 	<para>
 	    <emphasis>(3) ignoring whitespace edits, renamed files and auto-generated files</emphasis>
@@ -964,7 +996,7 @@ graceful_exit() {
 set -e
 
 if [ ! -r .git ]; then
-  echo "Please run this script from the root Marina.Rodeo directory!"
+  echo "Please run this script from the root openMarinkaRodeo directory!"
   exit 1
 fi
 
@@ -978,12 +1010,12 @@ normalize_arrays
 
 # if not already done, graft the entire git history of the SER project
 if [[ ! $(git log --reverse --format=%H | head -1) =~ ^f06ade ]]; then
-  remote=$(git remote -v | grep -i "sorydima/Marina.Rodeo.git.*fetch" | awk '{print $1}')
+  remote=$(git remote -v | grep -i "OpenMarinkaRodeo/openMarinkaRodeo.git.*fetch" | awk '{print $1}')
   git fetch ${remote:-origin} 'refs/replace/*:refs/replace/*'
 fi
 
 if [[ "$1" =~ rebuild-proj-stats ]]; then
-  rebuild_proj_commit_stats
+  rebuild_proj_commit_stats "$2"
   exit 0
 fi
 

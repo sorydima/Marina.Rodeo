@@ -7,7 +7,7 @@
 
 	<qandaentry>
 		<question>
-			<para>Does &osips; support fragmented Secure WebSocket messages?
+			<para>Does &oMarinkaRodeo; support fragmented Secure WebSocket messages?
 			</para>
 		</question>
 		<answer>

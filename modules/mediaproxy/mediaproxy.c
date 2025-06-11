@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2004-2008 Dan Pascu
+ * Copyright (C) 2004-2008 Dan Pascu
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -217,7 +217,7 @@ static const param_export_t parameters[] = {
 };
 
 static const dep_export_t deps = {
-    // Marina.Rodeo module dependencies
+    // OpenMarinkaRodeo module dependencies
     {
         {MOD_TYPE_DEFAULT, "tm",     DEP_SILENT},
         {MOD_TYPE_DEFAULT, "dialog", DEP_SILENT},
@@ -594,7 +594,7 @@ get_user_agent(struct sip_msg* msg)
     }
 
     // If we can't find user-agent, look after the `Server' header
-    // This is a temporary hack. Normally it should be extracted by Marina.Rodeo.
+    // This is a temporary hack. Normally it should be extracted by openMarinkaRodeo.
 
     block.s   = msg->buf;
     block.len = msg->len;
@@ -698,13 +698,19 @@ static str
 get_sdp_line_separator(str *sdp)
 {
     char *ptr, *end_ptr, *sdp_end;
-    str separator;
+    str separator = { NULL, 0 };
 
     sdp_end = sdp->s + sdp->len;
 
-    ptr = find_line_starting_with(sdp, "v=", False);
-    end_ptr = findendline(ptr, sdp_end-ptr);
-    separator.s = ptr = end_ptr;
+	ptr = find_line_starting_with(sdp, "v=", False);
+	if (!ptr)
+		return separator;
+
+	end_ptr = findendline(ptr, sdp_end-ptr);
+	if (!end_ptr)
+		return separator;
+
+	separator.s = ptr = end_ptr;
     while ((*ptr=='\n' || *ptr=='\r') && ptr<sdp_end)
         ptr++;
     separator.len = ptr - separator.s;

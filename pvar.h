@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -131,7 +131,8 @@ enum _pv_type {
 	PVT_LINE_NUMBER,      PVT_CFG_FILE_NAME,     PVT_LOG_LEVEL,
 	PVT_XLOG_LEVEL,       PVT_AF,                PVT_HDR_NAME,
 	PVT_SOCKET_IN,        PVT_SOCKET_OUT,        PVT_BRANCH_FLAG,
-	PVT_MSG_FLAG,
+	PVT_SDP,              PVT_SDP_LINE,          PVT_SDP_STREAM,
+	PVT_SDP_SESSION,      PVT_MSG_FLAG,
 	/* registered by json module */
 	PVT_JSON,
 	/* registered by xml module */
@@ -216,7 +217,7 @@ typedef int (*pv_init_param_f)(pv_spec_p sp, int param);
  * - $(class_name(inner_name)[index]{transformation})
  */
 typedef struct _pv_export {
-	const str name;                /*!< class name of PV */
+	const str_const name;          /*!< class name of PV */
 	pv_type_t type;                /*!< type of PV */
 	pv_getf_t  getf;               /*!< function to get the value */
 	pv_setf_t  setf;               /*!< function to set the value */
@@ -237,10 +238,15 @@ typedef struct _pv_elem
 	struct _pv_elem *next;
 } pv_elem_t, *pv_elem_p;
 
+
+extern const pv_value_t pv_true;
+extern const pv_value_t pv_false;
+
 extern int pv_print_buf_size;
 int init_pvar_support(void);
 
 int pv_print_spec(struct sip_msg* msg, const pv_spec_p sp, char *buf, int *len);
+/* @return: the @in pointer is moved immediately after the spec (+1) */
 char* pv_parse_spec(const str *in, const pv_spec_p sp);
 int pv_get_spec_value(struct sip_msg* msg, const pv_spec_p sp, pv_value_t *value);
 int pv_printf(struct sip_msg* msg, pv_elem_p list, char *buf, int *len);

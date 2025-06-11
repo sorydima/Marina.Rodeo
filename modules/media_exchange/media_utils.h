@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -24,6 +24,10 @@
 #include "../../parser/sdp/sdp.h"
 #include "../../bin_interface.h"
 
+#define MEDIA_DEFAULT_INSTANCE "default"
+#define MEDIA_INSTANCE(_i) ((_i) != NULL?(_i):&media_default_instance)
+
+extern str media_default_instance;
 extern str content_type_sdp;
 extern str content_type_sdp_hdr;
 
@@ -53,8 +57,8 @@ void media_exchange_event_received(enum b2b_entity_type et, str *key,
 		bin_packet_t *store, int backend);
 
 str *media_exchange_get_offer_sdp(rtp_ctx ctx, struct dlg_cell *dlg,
-		int mleg, int *release);
-str *media_exchange_get_answer_sdp(rtp_ctx ctx, str *body,
-		int mleg, int *release);
+		int leg, int *release);
+str *media_exchange_get_answer_sdp(rtp_ctx ctx, struct dlg_cell *dlg, str *body,
+		int leg, int *release);
 
 #endif /* _MEDIA_UTILS_H_ */

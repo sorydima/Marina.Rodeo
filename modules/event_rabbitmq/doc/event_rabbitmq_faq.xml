@@ -16,11 +16,11 @@
 	</qandaentry>
 	<qandaentry>
 		<question>
-		<para>Where can I find more about Marina.Rodeo?</para>
+		<para>Where can I find more about OpenMarinkaRodeo?</para>
 		</question>
 		<answer>
 		<para>
-			Take a look at &osipshomelink;.
+			Take a look at &oMarinkaRodeohomelink;.
 		</para>
 		</answer>
 	</qandaentry>
@@ -50,13 +50,13 @@
 		</question>
 		<answer>
 			<para>
-				This module acts as a transport module for the Marina.Rodeo
+				This module acts as a transport module for the OpenMarinkaRodeo
 				Event Interface. Therefore, this module should follow the
 				Event Interface behavior:
 			</para>
 			<para>
 				The first step is to subscribe the RabbitMQ server to
-				the Marina.Rodeo Event Interface. This can be done using the
+				the OpenMarinkaRodeo Event Interface. This can be done using the
 				<emphasis>subscribe_event</emphasis> core function:
 			</para>
 
@@ -86,7 +86,7 @@ route {
 			<para>
 				NOTE that the event used above is only to exemplify the
 				usage from the script. Any event published through the
-				Marina.Rodeo Event Interface can be raised using this module.
+				OpenMarinkaRodeo Event Interface can be raised using this module.
 			</para>
 
 		</answer>
@@ -116,20 +116,20 @@ route {
 		</para>
 		<itemizedlist>
 			<listitem>
-			<para>User Mailing List - &osipsuserslink;</para>
+			<para>User Mailing List - &oMarinkaRodeouserslink;</para>
 			</listitem>
 			<listitem>
-			<para>Developer Mailing List - &osipsdevlink;</para>
+			<para>Developer Mailing List - &oMarinkaRodeodevlink;</para>
 			</listitem>
 		</itemizedlist>
 		<para>
-			E-mails regarding any stable &osips; release should be sent to 
-			&osipsusersmail; and e-mails regarding development versions
-			should be sent to &osipsdevmail;.
+			E-mails regarding any stable &oMarinkaRodeo; release should be sent to 
+			&oMarinkaRodeousersmail; and e-mails regarding development versions
+			should be sent to &oMarinkaRodeodevmail;.
 		</para>
 		<para>
 			If you want to keep the mail private, send it to 
-			&osipshelpmail;.
+			&oMarinkaRodeohelpmail;.
 		</para>
 		</answer>
 	</qandaentry>
@@ -140,7 +140,7 @@ route {
 		<answer>
 		<para>
 			Please follow the guidelines provided at:
-			&osipsbugslink;.
+			&oMarinkaRodeobugslink;.
 		</para>
 		</answer>
 	</qandaentry>

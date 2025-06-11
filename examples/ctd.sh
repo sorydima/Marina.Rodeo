@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 # Usage: ctd.sh $FROM $TARGET
 # 
 # click-to-dial example using REFER
@@ -35,7 +33,7 @@
 # 2003-03-01 bug_fix: route set reversed
 # 2003-02-27 dialog support completed (jiri)
 # 2003-04-28 dialog info precomputed in SER (jiri)
-# 2007-04-06 updated for Marina.Rodeo 1.2.0+ (daniel)
+# 2007-04-06 updated for OpenMarinkaRodeo 1.2.0+ (daniel)
 
 #--------------------------------
 # config: who with whom
@@ -57,7 +55,7 @@ fi
 
 #---------------------------------
 # fixed config data
-FIFO="/tmp/Marina.Rodeo_fifo"
+FIFO="/tmp/openMarinkaRodeo_fifo"
 # address of controller
 FROM="<sip:controller@foo.bar>"
 CSEQ="1"

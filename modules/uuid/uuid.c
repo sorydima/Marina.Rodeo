@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2019 Marina.Rodeo Solutions
+ * Copyright (C) 2019 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -23,6 +23,7 @@
 #include "../../mod_fix.h"
 #include "../../dprint.h"
 
+#include <unistd.h>
 #include <uuid/uuid.h>
 
 #define UUID_STR_BUFSIZE 37
@@ -37,6 +38,7 @@ enum uuid_gen_vers {
 	UUID_VERS_3 = 3,
 	UUID_VERS_4 = 4,
 	UUID_VERS_5 = 5,
+	UUID_VERS_7 = 7,
 };
 
 static uuid_t uuid;
@@ -49,7 +51,7 @@ static int pv_get_uuid(struct sip_msg *msg, pv_param_t *param,
 						pv_value_t *res);
 
 static const pv_export_t mod_items[] = {
-	{{"uuid", sizeof("uuid")-1}, 1000, pv_get_uuid, 0, 0, 0, 0, 0},
+	{str_const_init("uuid"), 1000, pv_get_uuid, 0, 0, 0, 0, 0},
 	{{0, 0}, 0, 0, 0, 0, 0, 0, 0}
 };
 
@@ -69,7 +71,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	0,               /* Marina.Rodeo module dependencies */
+	0,               /* OpenMarinkaRodeo module dependencies */
 	cmds,            /* exported functions */
 	0,               /* exported async functions */
 	0,      		 /* param exports */
@@ -85,6 +87,34 @@ struct module_exports exports= {
 	0,       		 /* per-child init function */
 	0
 };
+
+static int gen_uuidv7(uuid_t value) {
+	// random bytes
+	if (getentropy(value, 16) != 0) {
+		return -1;
+	}
+
+	// current timestamp in ms
+	struct timeval tv;
+	if (gettimeofday(&tv, NULL) != 0)
+		return -1;
+
+	uint64_t timestamp = (uint64_t)tv.tv_sec * 1000 + tv.tv_usec / 1000;
+
+	// timestamp
+	value[0] = (timestamp >> 40) & 0xFF;
+	value[1] = (timestamp >> 32) & 0xFF;
+	value[2] = (timestamp >> 24) & 0xFF;
+	value[3] = (timestamp >> 16) & 0xFF;
+	value[4] = (timestamp >> 8) & 0xFF;
+	value[5] = timestamp & 0xFF;
+
+	// version and variant
+	value[6] = (value[6] & 0x0F) | 0x70;
+	value[8] = (value[8] & 0x3F) | 0x80;
+
+	return RET_OK;
+}
 
 static int gen_uuid(enum uuid_gen_vers vers, str *ns, str *n, pv_value_t *res)
 {
@@ -132,6 +162,9 @@ static int gen_uuid(enum uuid_gen_vers vers, str *ns, str *n, pv_value_t *res)
 	#endif
 	case UUID_VERS_4:
 		uuid_generate_random(uuid);
+		break;
+	case UUID_VERS_7:
+		rc = gen_uuidv7(uuid);
 		break;
 	default:
 		LM_BUG("Bad UUID generation algorithm selected\n");
@@ -193,6 +226,7 @@ static int w_uuid(struct sip_msg *msg, pv_spec_t *out_var, int *vers_param, str 
 	case UUID_VERS_3:
 	#endif
 	case UUID_VERS_4:
+	case UUID_VERS_7:
 	#ifdef UUID_TYPE_DCE_SHA1
 	case UUID_VERS_5:
 	#endif
