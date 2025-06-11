@@ -5,16 +5,16 @@
  * It should be replaced by a more generic parser if sub-packages or
  * parameters should be parsed too.
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -71,6 +71,9 @@
 
 #define REFER_STR "refer"
 #define REFER_STR_LEN 5
+
+#define REG_STR "reg"
+#define REG_STR_LEN 3
 
 
 static inline char* skip_token(char* _b, int _l)
@@ -144,6 +147,9 @@ int event_parser(char* _s, int _l, event_t* _e)
 	} else if ((_e->text.len == REFER_STR_LEN) &&
 		   !strncasecmp(REFER_STR, tmp.s, _e->text.len)) {
 		_e->parsed = EVENT_REFER;
+	} else if ((_e->text.len == REG_STR_LEN) &&
+		   !strncasecmp(REG_STR, tmp.s, _e->text.len)) {
+		_e->parsed = EVENT_REG;
 	} else {
 		_e->parsed = EVENT_OTHER;
 	}

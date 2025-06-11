@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2018 Marina.Rodeo Solutions
+ * Copyright (C) 2006 Voice Sistem SRL
+ * Copyright (C) 2018 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -637,6 +637,46 @@ int get_mi_arr_param_int(const mi_item_t *array, int pos, int *value)
 	}
 	return -1;
 }
+
+int try_get_mi_arr_param_object(const mi_item_t *array, int pos,
+						mi_item_t **s)
+{
+	if (!array) {
+		param_err_type = MI_PARAM_ERR_MISSING;
+		return MI_PARAM_ERR_MISSING;
+	}
+
+	*s = cJSON_GetArrayItem(array, pos);
+	if (!*s) {
+		param_err_type = MI_PARAM_ERR_MISSING;
+		return MI_PARAM_ERR_MISSING;
+	}
+
+	if (!((*s)->type & (cJSON_Object))) {
+		param_err_type = MI_PARAM_ERR_ARR_BAD_TYPE;
+		return MI_PARAM_ERR_ARR_BAD_TYPE;
+	}
+
+	return 0;
+}
+
+int get_mi_arr_param_object(const mi_item_t *array, int pos,
+						mi_item_t **s)
+{
+	switch (try_get_mi_arr_param_object(array, pos, s))
+	{
+		case MI_PARAM_ERR_MISSING:
+			LM_ERR("Array index out of bounds\n");
+			break;
+		case MI_PARAM_ERR_ARR_BAD_TYPE:
+			LM_ERR("Bad data type for array item\n");
+			break;
+		case 0:
+			return 0;
+	}
+	return -1;
+}
+
 
 mi_response_t *init_mi_param_error(void)
 {

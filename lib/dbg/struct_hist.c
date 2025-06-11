@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Solutions
+ * Copyright (C) 2017 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -76,11 +76,11 @@ static inline const char *verb2str(enum struct_hist_verb verb)
 	return sh_verb_strs[verb];
 }
 
-static void sh_unref_unsafe(struct struct_hist *sh, osips_free_f free_f);
-static void sh_free(struct struct_hist *sh, osips_free_f free_f);
+static void sh_unref_unsafe(struct struct_hist *sh, oMarinkaRodeo_free_f free_f);
+static void sh_free(struct struct_hist *sh, oMarinkaRodeo_free_f free_f);
 
 struct struct_hist_list *_shl_init(char *obj_name, int window_size,
-			int auto_logging, int init_actions_sz, osips_malloc_f malloc_f)
+			int auto_logging, int init_actions_sz, oMarinkaRodeo_malloc_f malloc_f)
 {
 	struct struct_hist_list *shl;
 
@@ -113,7 +113,7 @@ void sh_list_flush(struct struct_hist_list *shl)
 	lock_release(&shl->wlock);
 }
 
-void _shl_destroy(struct struct_hist_list *shl, osips_free_f free_f)
+void _shl_destroy(struct struct_hist_list *shl, oMarinkaRodeo_free_f free_f)
 {
 	struct list_head *el, *next;
 	struct struct_hist *sh;
@@ -130,7 +130,7 @@ void _shl_destroy(struct struct_hist_list *shl, osips_free_f free_f)
 }
 
 struct struct_hist *_sh_push(void *obj, struct struct_hist_list *list, int refs,
-	osips_malloc_f malloc_f, osips_free_f free_f)
+	oMarinkaRodeo_malloc_f malloc_f, oMarinkaRodeo_free_f free_f)
 {
 	struct struct_hist *sh, *last;
 
@@ -181,14 +181,17 @@ struct struct_hist *_sh_push(void *obj, struct struct_hist_list *list, int refs,
 	return sh;
 }
 
-static void sh_free(struct struct_hist *sh, osips_free_f free_f)
+static void sh_free(struct struct_hist *sh, oMarinkaRodeo_free_f free_f)
 {
 	func_free(free_f, sh->actions);
 	func_free(free_f, sh);
 }
 
-void _sh_unref(struct struct_hist *sh, osips_free_f free_f)
+void _sh_unref(struct struct_hist *sh, oMarinkaRodeo_free_f free_f)
 {
+	if (!sh)
+		return;
+
 	gen_lock_t *shl_lock = &sh->shlist->wlock;
 
 	lock_get(shl_lock);
@@ -224,7 +227,7 @@ void sh_flush(struct struct_hist *sh)
 	lock_release(&sh->wlock);
 }
 
-static void sh_unref_unsafe(struct struct_hist *sh, osips_free_f free_f)
+static void sh_unref_unsafe(struct struct_hist *sh, oMarinkaRodeo_free_f free_f)
 {
 	sh->ref--;
 	if (sh->ref != 0)
@@ -246,7 +249,7 @@ static void sh_unref_unsafe(struct struct_hist *sh, osips_free_f free_f)
 	sh_free(sh, free_f);
 }
 
-int _sh_log(osips_realloc_f realloc_f, struct struct_hist *sh,
+int _sh_log(oMarinkaRodeo_realloc_f realloc_f, struct struct_hist *sh,
 	enum struct_hist_verb verb, char *fmt, ...)
 {
 	va_list ap;
@@ -271,6 +274,7 @@ int _sh_log(osips_realloc_f realloc_f, struct struct_hist *sh,
 		if (!new) {
 			lock_release(&sh->wlock);
 			LM_ERR("oom\n");
+			va_end(ap);
 			return -1;
 		}
 		/* CAREFUL: newly added actions are not memset, for speed reasons! */

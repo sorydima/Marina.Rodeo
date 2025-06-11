@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015 Marina.Rodeo Project
+ * Copyright (C) 2015 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -47,7 +47,10 @@ int udp_start_processes(int *chd_rank, int *startup_done);
 
 struct socket_info* udp_find_listener(union sockaddr_union* to, int proto);
 
-/* initializes an already defined TCP listener */
+/* initializes an already defined UDP listener */
 int udp_init_listener(struct socket_info *si, int status_flags);
+
+/* binds and initialized UDP listener */
+int udp_bind_listener(struct socket_info *si);
 
 #endif /* _NET_UDP_H_ */

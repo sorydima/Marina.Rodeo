@@ -1,16 +1,16 @@
 /*
  * SNMPStats Module
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 SOMA Networks, INC.
+ * Copyright (C) 2006 SOMA Networks, INC.
  * Written by: Jeffrey Magder (jmagder@somanetworks.com)
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify it
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful, but
+ * openMarinkaRodeo is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
@@ -77,7 +77,7 @@
 #include "utilities.h"
 #include "sub_agent.h"
 
-/* Required in every Marina.Rodeo Module. */
+/* Required in every OpenMarinkaRodeo Module. */
 
 
 /*
@@ -95,7 +95,7 @@ volatile pid_t sysUpTime_pid;
  * for a full description. */
 static int spawn_sysUpTime_child();
 
-/* Storage for the "snmpgetPath" and "snmpCommunity" Marina.Rodeo.cfg parameters.
+/* Storage for the "snmpgetPath" and "snmpCommunity" openMarinkaRodeo.cfg parameters.
  * The parameters are used to define what happens with the sysUpTime child.  */
 char *snmpget_path   = NULL;
 char *snmp_community = NULL;
@@ -212,9 +212,9 @@ static int register_message_code_statistics(void)
 	return 0;
 }
 
-/* This is the first function to be called by Marina.Rodeo, to initialize the module.
+/* This is the first function to be called by OpenMarinkaRodeo, to initialize the module.
  * This call must always return a value as soon as possible.  If it were not to
- * return, then Marina.Rodeo would not be able to initialize any of the other
+ * return, then OpenMarinkaRodeo would not be able to initialize any of the other
  * modules. */
 static int mod_init(void)
 {
@@ -261,7 +261,7 @@ static int mod_init(void)
 }
 
 
-/* This function is called when Marina.Rodeo has finished creating all instances of
+/* This function is called when OpenMarinkaRodeo has finished creating all instances of
  * itself.  It is at this point that we want to create our AgentX sub-agent
  * process, and register a handler for any state changes of our child. */
 static int mod_child_init(int rank)
@@ -278,7 +278,7 @@ static int mod_child_init(int rank)
 	return 0;
 }
 
-/* This function is called when Marina.Rodeo is shutting down. When this happens, we
+/* This function is called when OpenMarinkaRodeo is shutting down. When this happens, we
  * log a useful message and kill the AgentX Sub-Agent child process */
 static void mod_destroy(void)
 {
@@ -335,7 +335,7 @@ static void sigchld_handler(int signal)
 /*
  * This function will spawn a child that retrieves the sysUpTime and stores the
  * result in a file. This file will be read by the AgentX Sub-agent process to
- * supply the openserSIPServiceStartTime time. This function never returns,
+ * supply the openserMarinkaRodeoerviceStartTime time. This function never returns,
  * but it will generated a SIGCHLD when it terminates.  There must a SIGCHLD
  * handler to ignore the SIGCHLD for only this process. (See sigchld_handler
  * above).
@@ -429,7 +429,7 @@ static int spawn_sysUpTime_child(void)
 	if (full_path_to_snmpget == NULL)
 	{
 		LM_ERR("Ran out of memory while trying to retrieve sysUpTime.  \n");
-		LM_ERR( "                  openserSIPServiceStartTime is "
+		LM_ERR( "                  openserMarinkaRodeoerviceStartTime is "
 				"defaulting to zero\n");
 		close(snmpget_fd);
 		return -1;
@@ -446,7 +446,7 @@ static int spawn_sysUpTime_child(void)
 	if (execve(full_path_to_snmpget, args, NULL) == -1) {
 		LM_ERR( "snmpget failed to run.  Did you supply the snmpstats module"
 				" with a proper snmpgetPath parameter? The "
-				"openserSIPServiceStartTime is defaulting to zero\n");
+				"openserMarinkaRodeoerviceStartTime is defaulting to zero\n");
 		close(snmpget_fd);
 		free(full_path_to_snmpget);
 		exit(-1);
@@ -459,7 +459,7 @@ static int spawn_sysUpTime_child(void)
 }
 
 
-/* This function is called whenever the Marina.Rodeo.cfg file specifies the
+/* This function is called whenever the openMarinkaRodeo.cfg file specifies the
  * snmpgetPath parameter.  The function will set the snmpget_path parameter. */
 int set_snmpget_path( modparam_t type, void *val)
 {

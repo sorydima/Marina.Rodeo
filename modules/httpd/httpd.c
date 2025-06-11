@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011-2012 VoIP Embedded Inc.
+ * Copyright (C) 2011-2012 VoIP Embedded Inc.
  *
- * This file is part of Open SIP Server (Marina.Rodeo).
+ * This file is part of Open SIP Server (openMarinkaRodeo).
  *
- * Marina.Rodeo is free software; you can redistribute it and/or
+ * openMarinkaRodeo is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -51,7 +51,7 @@
 
 /* module functions */
 static int mod_init();
-static int destroy(void);
+static void destroy(void);
 
 static mi_response_t *mi_list_root_path(const mi_params_t *params,
 						struct mi_handler *async_hdl);
@@ -59,12 +59,16 @@ static mi_response_t *mi_list_root_path(const mi_params_t *params,
 int port = 8888;
 str ip = {NULL, 0};
 str buffer = {NULL, 0};
+unsigned int hd_conn_timeout_s = 30;
 str tls_cert_file = {NULL, 0};
 str tls_key_file = {NULL, 0};
 str tls_ciphers = {"SECURE256:+SECURE192:-VERS-ALL:+VERS-TLS1.2", 45};
 int post_buf_size = DEFAULT_POST_BUF_SIZE;
+int receive_buf_size = DEFAULT_POST_BUF_SIZE;
 struct httpd_cb *httpd_cb_list = NULL;
 
+char *httpd_receive_buff = NULL;
+int httpd_receive_buff_pos=0;
 
 static const proc_export_t mi_procs[] = {
 	{"HTTPD",  0,  0, httpd_proc, 1,
@@ -78,7 +82,9 @@ static const param_export_t params[] = {
 	{"port",          INT_PARAM, &port},
 	{"ip",            STR_PARAM, &ip.s},
 	{"buf_size",      INT_PARAM, &buffer.len},
+	{"conn_timeout",  INT_PARAM, &hd_conn_timeout_s},
 	{"post_buf_size", INT_PARAM, &post_buf_size},
+	{"receive_buf_size", INT_PARAM, &receive_buf_size},
 	{"tls_cert_file", STR_PARAM, &tls_cert_file.s},
 	{"tls_key_file", STR_PARAM,  &tls_key_file.s},
 	{"tls_ciphers", STR_PARAM, &tls_ciphers.s},
@@ -107,7 +113,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,            /* dlopen flags */
 	0,				            /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	cmds,                       /* exported functions */
 	0,                          /* exported async functions */
 	params,                     /* exported parameters */
@@ -183,11 +189,17 @@ static int mod_init(void)
 		buffer.len = (pkg_mem_size/4);
 	LM_DBG("buf_size=[%d]\n", buffer.len);
 
+	httpd_receive_buff = pkg_malloc(receive_buf_size);
+	if (httpd_receive_buff == NULL) {
+		LM_ERR("No more pkg\n");
+		return -1;
+	}
+
 	return 0;
 }
 
 
-int destroy(void)
+static void destroy(void)
 {
 	struct httpd_cb *cb = httpd_cb_list;
 
@@ -198,7 +210,6 @@ int destroy(void)
 		shm_free(cb);
 		cb = httpd_cb_list;
 	}
-	return 0;
 }
 
 

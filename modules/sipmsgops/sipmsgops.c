@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -53,6 +53,7 @@
 #include "../../msg_translator.h"
 #include "../../mod_fix.h"
 #include "../../trim.h"
+#include "../../lib/cJSON.h"
 
 #include "codecs.h"
 #include "list_hdr.h"
@@ -101,6 +102,7 @@ static int add_body_part_f(struct sip_msg *msg, str *body, str *mime,
 static int get_updated_body_part_f(struct sip_msg *msg, int *type,pv_spec_t* out);
 static int is_audio_on_hold_f(struct sip_msg *msg);
 static int w_sip_validate(struct sip_msg *msg, void *flags, pv_spec_t* err_txt);
+static int w_sip_to_json(struct sip_msg *msg, pv_spec_t* out_json);
 
 static int fixup_parse_hname(void** param);
 
@@ -113,6 +115,7 @@ static int fixup_validate_fl(void** param);
 static int list_hdr_has_option(struct sip_msg *msg, void *hdr, str *option);
 static int list_hdr_add_option(struct sip_msg *msg, void *hdr, str *option);
 static int list_hdr_remove_option(struct sip_msg *msg, void *hdr, str *option);
+static int w_has_totag(struct sip_msg *msg);
 
 static int change_reply_status_f(struct sip_msg* msg, int* code, str* reason);
 
@@ -275,7 +278,7 @@ static const cmd_export_t cmds[]={
 		{CMD_PARAM_STR, 0, 0}, {0, 0, 0}},
 		REQUEST_ROUTE|ONREPLY_ROUTE|FAILURE_ROUTE|BRANCH_ROUTE|LOCAL_ROUTE},
 
-	{"has_totag", (cmd_function)has_totag, {{0, 0, 0}},
+	{"has_totag", (cmd_function)w_has_totag, {{0, 0, 0}},
 		REQUEST_ROUTE|ONREPLY_ROUTE|FAILURE_ROUTE|BRANCH_ROUTE|LOCAL_ROUTE},
 
 	{"ruri_has_param", (cmd_function)ruri_has_param, {
@@ -303,6 +306,9 @@ static const cmd_export_t cmds[]={
 	        {CMD_PARAM_VAR, 0, 0},
 		{0, 0, 0}},
 		REQUEST_ROUTE|ONREPLY_ROUTE|FAILURE_ROUTE|BRANCH_ROUTE|LOCAL_ROUTE},
+	{"sip_to_json",     (cmd_function)w_sip_to_json, {
+		{CMD_PARAM_VAR, 0, 0}, {0, 0, 0}},
+		REQUEST_ROUTE|ONREPLY_ROUTE|FAILURE_ROUTE|BRANCH_ROUTE|LOCAL_ROUTE},
 
 	{0,0,{{0,0,0}},0}
 };
@@ -314,7 +320,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	cmds,       /* exported functions */
 	0,          /* exported async functions */
 	0,          /* module parameters */
@@ -377,7 +383,7 @@ static int remove_hf(struct sip_msg* msg, int_str_t* rhf)
 
 	for (hf=msg->headers; hf; hf=hf->next) {
 		/* for well known header names str_hf->s will be set to NULL
-		   during parsing of Marina.Rodeo.cfg and str_hf->len contains
+		   during parsing of openMarinkaRodeo.cfg and str_hf->len contains
 		   the header type */
 		if (!rhf->is_str)
 		{
@@ -1010,8 +1016,8 @@ static int add_body_part_f(struct sip_msg *msg, str *body, str *mime,
 static int get_updated_body_part_f(struct sip_msg *msg, int *type, pv_spec_t* res)
 {
 	static str out = {NULL, 0};
-	struct body_part *p, *it;
-	unsigned int out_offs, orig_offs, parts;
+	struct body_part *p = NULL, *it;
+	unsigned int out_offs, orig_offs, parts = 0;
 	pv_value_t val;
 
 
@@ -1391,10 +1397,10 @@ static int sip_validate_hdrs(struct sip_msg *msg)
 								hf2->name.len, hf2->name.s);
 							goto failed;
 						}
-						if (!(((uri.type==SIP_URI_T || uri.type==SIPS_URI_T) &&
+						if (!(((uri.type==SIP_URI_T || uri.type==MarinkaRodeo_URI_T) &&
 						(uri2.type==TEL_URI_T || uri2.type==TELS_URI_T))
 						||
-						((uri2.type==SIP_URI_T || uri2.type==SIPS_URI_T) &&
+						((uri2.type==SIP_URI_T || uri2.type==MarinkaRodeo_URI_T) &&
 						(uri.type==TEL_URI_T || uri.type==TELS_URI_T))) ) {
 							LM_ERR("invalid uri type combination in "
 								"first [%d] and second [%d] hdrs [%.*s]\n",
@@ -1420,7 +1426,9 @@ static int sip_validate_hdrs(struct sip_msg *msg)
 							hf->name.len, hf->name.s);
 					goto failed;
 				}
-				hf->parsed = (void*)(unsigned long)u_aux;
+				/* do not write back the value, let he MF module do its
+				 * own magic on how to store the parsed value */
+				//hf->parsed = (void*)(unsigned long)u_aux;
 				break;
 
 			case HDR_SUPPORTED_T:
@@ -1612,8 +1620,8 @@ static int w_sip_validate(struct sip_msg *msg, void *_flags, pv_spec_t* err_txt)
 	struct hdr_field * ptr;
 	contact_t * contacts;
 	struct sip_uri test_contacts;
+	struct sip_uri *p_uri;
 	struct cseq_body * cbody;
-	struct to_body *from, *to;
 	pv_value_t pv_val;
 	char reason[MAX_REASON];
 	int ret = -SV_GENERIC_FAILURE;
@@ -1700,30 +1708,22 @@ static int w_sip_validate(struct sip_msg *msg, void *_flags, pv_spec_t* err_txt)
 
 	/* test to header uri */
 	if(flags & SIP_PARSE_TO) {
-		if(!msg->to->parsed) {
-			if(parse_to_header(msg) < 0) {
-				strcpy(reason, "failed to parse 'To' header");
-				ret = SV_TO_PARSE_ERROR;
-				goto failed;
-			}
-		}
 
-		to = (struct to_body*)msg->to->parsed;
-
-		if(parse_uri(to->uri.s, to->uri.len, &to->parsed_uri) < 0) {
+		if ( (p_uri=parse_to_uri(msg))==NULL ) {
 			strcpy(reason, "failed to parse 'To' header");
 			ret = SV_TO_PARSE_ERROR;
 			goto failed;
 		}
 
-		/* check for valid domain format */
-		if(check_hostname(&to->parsed_uri.host) < 0) {
+		/* check for valid domain format, if SIP/MarinkaRodeo types */
+		if ( (p_uri->type==SIP_URI_T || p_uri->type==MarinkaRodeo_URI_T) &&
+		check_hostname(&p_uri->host) < 0 ) {
 			strcpy(reason, "invalid domain for 'To' header");
 			ret = SV_TO_DOMAIN_ERROR;
 			goto failed;
 		}
 
-		if(!is_username_str(&to->parsed_uri.user)) {
+		if(!is_username_str(&p_uri->user)) {
 			strcpy(reason, "invalid username for 'To' header");
 			ret = SV_TO_USERNAME_ERROR;
 			goto failed;
@@ -1732,30 +1732,22 @@ static int w_sip_validate(struct sip_msg *msg, void *_flags, pv_spec_t* err_txt)
 
 	/* test from header uri */
 	if(flags & SIP_PARSE_FROM) {
-		if(!msg->from->parsed) {
-			if(parse_from_header(msg) < 0) {
-				strcpy(reason, "failed to parse 'From' header");
-				ret = SV_FROM_PARSE_ERROR;
-				goto failed;
-			}
-		}
 
-		from = (struct to_body*)msg->from->parsed;
-
-		if(parse_uri(from->uri.s, from->uri.len, &from->parsed_uri) < 0) {
+		if ( (p_uri=parse_from_uri(msg))==NULL ) {
 			strcpy(reason, "failed to parse 'From' header");
 			ret = SV_FROM_PARSE_ERROR;
 			goto failed;
 		}
 
-		/* check for valid domain format */
-		if(check_hostname(&from->parsed_uri.host) < 0) {
+		/* check for valid domain format, if SIP/MarinkaRodeo types */
+		if ( (p_uri->type==SIP_URI_T || p_uri->type==MarinkaRodeo_URI_T) &&
+		check_hostname(&p_uri->host) < 0 ) {
 			strcpy(reason, "invalid domain for 'From' header");
 			ret = SV_FROM_DOMAIN_ERROR;
 			goto failed;
 		}
 
-		if (!is_username_str(&from->parsed_uri.user)) {
+		if (!is_username_str(&p_uri->user)) {
 			strcpy(reason, "invalid username for 'From' header");
 			ret = SV_FROM_USERNAME_ERROR;
 			goto failed;
@@ -2071,4 +2063,106 @@ static int get_glob_headers_values(struct sip_msg* msg, str* pattern,pv_spec_t* 
 		cnt++;
 	}
 	return cnt==0 ? -1 : 1;
+}
+
+static int w_sip_to_json(struct sip_msg *msg, pv_spec_t* out_json)
+{
+	cJSON *ret=NULL, *aux, *aux2, *arr;
+	struct hdr_field* it;
+	char hdr_name_buf[255];
+	str json_ret = {0,0};
+	pv_value_t pv_val;
+
+	if (!msg) {
+		LM_ERR("No SIP msg, can't convert to json\n");
+		return -1;
+	}	
+
+	if(parse_headers(msg, HDR_EOH_F, 0) < 0) {
+		LM_ERR("Failed to parse all SIP msg \n");
+		return -1;
+	}
+
+	ret = cJSON_CreateObject();
+
+	/* first line */
+	aux = cJSON_CreateStr(msg->buf,msg->first_line.len); 
+	if (!aux) {
+		LM_ERR("Failed to create 1st line json \n");
+		goto error;
+	}
+
+	cJSON_AddItemToObject(ret,"first_line",aux);
+
+	/* headers */
+	aux = cJSON_CreateObject();
+	if (!aux) {
+		LM_ERR("Failed to create headers json \n");
+		goto error;
+	}
+
+	for (it=msg->headers;it;it=it->next) {
+		memcpy(hdr_name_buf,it->name.s,it->name.len);
+		hdr_name_buf[it->name.len] = 0;
+
+		arr = cJSON_GetObjectItem(aux, hdr_name_buf);
+		if (!arr) {
+			arr = cJSON_CreateArray();
+			cJSON_AddItemToObject(aux,hdr_name_buf,arr);
+		}
+
+		aux2 =  cJSON_CreateStr(it->body.s,it->body.len);
+		if (!aux2) {
+			LM_ERR("Failed to create individual header json\n");
+			goto error;
+		}
+
+		cJSON_AddItemToArray(arr,aux2);
+	}
+	cJSON_AddItemToObject(ret,"headers",aux);
+
+	/* body */
+	if (msg->body) {
+		aux = cJSON_CreateStr(msg->body->body.s,msg->body->body.len); 
+		if (!aux) {
+			LM_ERR("Failed to create body json\n");
+			goto error;
+		}
+		cJSON_AddItemToObject(ret,"body",aux);
+	}
+
+	json_ret.s = cJSON_Print(ret);
+	if (!json_ret.s) {
+		LM_ERR("Failed to print json to string obj\n");
+		goto error;
+	}
+
+	cJSON_Minify(json_ret.s);
+	json_ret.len = strlen(json_ret.s);
+
+	pv_val.flags = PV_VAL_STR;
+	pv_val.rs = json_ret;
+
+	if (pv_set_value(msg,out_json,0,&pv_val) != 0) {
+		LM_ERR("Failed to set out json pvar \n");
+		goto error;
+	} 
+
+	pkg_free(json_ret.s);
+	cJSON_Delete(ret);
+
+	return 1;
+
+error:
+	if (ret)
+		cJSON_Delete(ret);
+	if (json_ret.s)
+		pkg_free(json_ret.s);
+
+	return -1;
+}
+
+static int w_has_totag(struct sip_msg *msg)
+{
+	return (has_totag(msg) ?1:-1);
 }

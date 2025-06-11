@@ -1,16 +1,16 @@
 /*
  * user location clustering
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2013-2019 Marina.Rodeo Solutions
+ * Copyright (C) 2013-2019 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -40,22 +40,32 @@
 
 #define UL_BIN_V2      2
 #define UL_BIN_V3      3 // added "cmatch" (default: CT_MATCH_CONTACT_CALLID)
-
-#define UL_BIN_VERSION UL_BIN_V3
+#define UL_BIN_V4      4 // changed 'ct.cflags' from int bitmask to string repr
+#define UL_BIN_V5      5 // added 'r.kv_storage' to AoR INSERT packets
+#define UL_BIN_VERSION UL_BIN_V5
 
 extern int location_cluster;
 extern struct clusterer_binds clusterer_api;
 extern str ul_shtag_key;
 
+extern int ul_ha_cluster;
+extern str ul_ha_shtag;
+
 extern str contact_repl_cap;
 
 int ul_init_cluster(void);
+
 #define _is_my_ucontact(__ct) \
 	(!__ct->shtag.s || \
 	 clusterer_api.shtag_get(&__ct->shtag, location_cluster) \
 		== SHTAG_STATE_ACTIVE)
 
-/* duplicate local events to other Marina.Rodeo instances */
+#define ul_is_active_node() \
+	(!ul_ha_cluster || !ul_ha_shtag.s || \
+	 clusterer_api.shtag_get(&ul_ha_shtag, ul_ha_cluster) \
+		== SHTAG_STATE_ACTIVE)
+
+/* duplicate local events to other OpenMarinkaRodeo instances */
 void replicate_urecord_insert(urecord_t *r);
 void replicate_urecord_delete(urecord_t *r);
 void replicate_ucontact_insert(urecord_t *r, str *contact, ucontact_t *c,

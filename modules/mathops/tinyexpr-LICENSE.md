@@ -1,6 +1,6 @@
 TINYEXPR - Tiny recursive descent parser and evaluation engine in C
 
-Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2015, 2016 Lewis Van Winkle
+Copyright (c) 2015, 2016 Lewis Van Winkle
 
 http://CodePlea.com
 

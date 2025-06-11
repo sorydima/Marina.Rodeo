@@ -1,16 +1,16 @@
 /*
  * back-to-back logic module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Free Software Fundation
+ * Copyright (C) 2009 Free Software Fundation
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -58,8 +58,10 @@ static int mod_init(void);
 static void mod_destroy(void);
 static int child_init(int rank);
 static int fixup_init_flags(void** param);
+static int fixup_reply_flags(void** param);
 static int fixup_free_init_flags(void** param);
 static int fixup_bridge_flags(void** param);
+static int fixup_bridge_request_flags(void** param);
 static int fixup_init_id(void** param);
 static int fixup_check_avp(void** param);
 static int fixup_route(void** param);
@@ -79,7 +81,9 @@ static mi_response_t *mi_b2b_list(const mi_params_t *params,
 static mi_response_t *mi_b2b_terminate_call(const mi_params_t *params,
 								struct mi_handler *async_hdl);
 static void b2bl_clean(unsigned int ticks, void* param);
+void b2bl_term_entities_timer(unsigned int ticks, void* param);
 static void b2bl_db_timer_update(unsigned int ticks, void* param);
+static int init_entities_term_timer(void);
 
 int b2bl_script_init_request(struct sip_msg *msg, str *id, struct b2b_params *init_params,
 	void *req_routeid, void *reply_routeid);
@@ -87,13 +91,13 @@ int b2bl_server_new(struct sip_msg *msg, str *id, str *adv_contact,
 	pv_spec_t *hnames, pv_spec_t *hvals);
 int b2bl_client_new(struct sip_msg *msg, str *id, str *dest_uri, str *proxy,
 	 str *from_dname, str *adv_contact, pv_spec_t *hnames, pv_spec_t *hvals);
-int b2b_handle_reply(struct sip_msg* msg);
+int b2b_handle_reply(struct sip_msg* msg, unsigned int flags);
 int b2b_pass_request(struct sip_msg *msg);
 int b2b_delete_entity(struct sip_msg *msg);
 int b2b_end_dlg_leg(struct sip_msg *msg);
 int b2b_send_reply(struct sip_msg *msg, int *code, str *reason, str *headers, str *body);
 int  b2bl_script_bridge_msg(struct sip_msg* msg, str *key, int *entity_no,
-	str *adv_contact);
+	str *adv_contact, void *flags);
 int script_trigger_scenario(struct sip_msg* msg, str *id, str * params,
 	str *ent1, pv_spec_t *ent1_hnames, pv_spec_t *ent1_hvals,
 	str *ent2, pv_spec_t *ent2_hnames, pv_spec_t *ent2_hvals);	
@@ -102,6 +106,8 @@ str* b2bl_init_extern(struct b2b_params *init_params,
 	b2bl_init_params_t *scen_params, str *e1_id, str *e2_id,
 	b2bl_cback_f cbf, void* cb_param, unsigned int cb_mask);
 
+static int pv_get_b2bl_peer(struct sip_msg *msg,  pv_param_t *param, pv_value_t *tv);
+static int pv_parse_b2bl_peer(pv_spec_p sp, const str *in);
 int pv_get_b2bl_key(struct sip_msg *msg, pv_param_t *param, pv_value_t *res);
 int pv_get_scenario(struct sip_msg *msg, pv_param_t *param, pv_value_t *res);
 int pv_parse_entity_name(pv_spec_p sp, const str *in);
@@ -191,6 +197,9 @@ b2bl_tuple_t *local_ctx_tuple;
  * MI cmd, when the tuple is not created yet */
 struct b2b_ctx_val *local_ctx_vals;
 
+unsigned int ent_term_interval;
+struct b2b_term_timer *ent_term_timer;
+
 static const cmd_export_t cmds[]=
 {
 	{"b2b_init_request", (cmd_function)b2bl_script_init_request, {
@@ -215,7 +224,8 @@ static const cmd_export_t cmds[]=
 		{CMD_PARAM_VAR|CMD_PARAM_OPT, fixup_check_avp, 0},
 		{CMD_PARAM_VAR|CMD_PARAM_OPT, fixup_check_avp, 0}, {0,0,0}},
 		REQUEST_ROUTE},
-	{"b2b_handle_reply",(cmd_function)b2b_handle_reply, {{0,0,0}},
+	{"b2b_handle_reply",(cmd_function)b2b_handle_reply, {
+		{CMD_PARAM_STR|CMD_PARAM_OPT, fixup_reply_flags, NULL}, {0,0,0}},
 		REQUEST_ROUTE},
 	{"b2b_pass_request",(cmd_function)b2b_pass_request, {{0,0,0}},
 		REQUEST_ROUTE},
@@ -257,7 +267,9 @@ static const cmd_export_t cmds[]=
 	{"b2b_bridge_request", (cmd_function)b2bl_script_bridge_msg, {
 		{CMD_PARAM_STR,0,0},
 		{CMD_PARAM_INT,0,0},
-		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0}, {0,0,0}},
+		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
+		{CMD_PARAM_STR|CMD_PARAM_OPT, fixup_bridge_request_flags, 0},
+		{0,0,0}},
 		REQUEST_ROUTE},
 	{"b2b_logic_bind", (cmd_function)b2b_logic_bind, {{0,0,0}}, 0},
 	{0,0,{{0,0,0}},0}
@@ -288,18 +300,21 @@ static const param_export_t params[]=
 	{"db_mode",         INT_PARAM,                &b2bl_db_mode              },
 	{"b2bl_th_init_timeout",INT_PARAM,            &b2bl_th_init_timeout      },
 	{"b2bl_early_update",INT_PARAM,				  &b2b_early_update          },
+	{"old_entity_term_delay",INT_PARAM,           &ent_term_interval         },
 	{0,                    0,                          0                     }
 };
 
 static const pv_export_t mod_items[] = {
-	{{"b2b_logic.key", sizeof("b2b_logic.key") - 1}, 1000, pv_get_b2bl_key,
+	{str_const_init("b2b_logic.key"), 1000, pv_get_b2bl_key,
 		0, 0, 0, 0, 0},
-	{{"b2b_logic.scenario", sizeof("b2b_logic.scenario") - 1}, 1000,
+	{str_const_init("b2b_logic.scenario"), 1000,
 		pv_get_scenario, 0, 0, 0, 0, 0},
-	{{"b2b_logic.entity", sizeof("b2b_logic.entity") - 1}, 1000, pv_get_entity,
+	{str_const_init("b2b_logic.entity"), 1000, pv_get_entity,
 		0, pv_parse_entity_name, pv_parse_entity_index, 0, 0},
-	{{"b2b_logic.ctx", sizeof("b2b_logic.ctx") - 1}, 1000, pv_get_ctx,
+	{str_const_init("b2b_logic.ctx"), 1000, pv_get_ctx,
 		pv_set_ctx, pv_parse_ctx_name, 0, 0, 0},
+	{str_const_init("b2b_logic.peer"), 1000, pv_get_b2bl_peer,
+		NULL, pv_parse_b2bl_peer, 0, 0, 0},
 	{ {0, 0}, 0, 0, 0, 0, 0, 0, 0 }
 };
 
@@ -328,7 +343,7 @@ static const mi_export_t mi_cmds[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "b2b_entities", DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -345,7 +360,7 @@ struct module_exports exports= {
 	MODULE_VERSION,                 /* module version */
 	DEFAULT_DLFLAGS,                /* dlopen flags */
 	0,				                /* load function */
-	&deps,                          /* Marina.Rodeo module dependencies */
+	&deps,                          /* OpenMarinkaRodeo module dependencies */
 	cmds,                           /* exported functions */
 	0,                              /* exported async functions */
 	params,                         /* exported parameters */
@@ -654,11 +669,28 @@ next_hdr:
 	if(init_callid_hdr.s)
 		init_callid_hdr.len = strlen(init_callid_hdr.s);
 
+	if (b2bl_init_bridge_retry() < 0) {
+		LM_ERR("cannot initiate bridge retry!\n");
+		return -1;
+	}
+
 	register_timer("b2bl-clean", b2bl_clean, 0, b2b_clean_period,
 		TIMER_FLAG_DELAY_ON_DELAY);
 	if(b2bl_db_mode == WRITE_BACK)
 		register_timer("b2bl-dbupdate", b2bl_db_timer_update, 0,
 			b2b_update_period, TIMER_FLAG_SKIP_ON_DELAY);
+	register_timer("b2bl-bridge-retry", b2bl_timer_bridge_retry, 0, 1,
+		TIMER_FLAG_SKIP_ON_DELAY);
+
+	if (ent_term_interval) {
+		register_timer("b2bl-term-entities", b2bl_term_entities_timer, 0, 1,
+			TIMER_FLAG_DELAY_ON_DELAY);
+
+		if (init_entities_term_timer() < 0) {
+			LM_ERR("Failed to init entities termination timer\n");
+			return -1;
+		}
+	}
 
 	if (b2b_api.register_cb(entity_event_trigger,
 		B2BCB_TRIGGER_EVENT, &b2bl_mod_name) < 0) {
@@ -673,6 +705,29 @@ next_hdr:
 
 	new_ent_1_ctx_idx = context_register_ptr(CONTEXT_GLOBAL, new_ent_ctx_destroy);
 	new_ent_2_ctx_idx = context_register_ptr(CONTEXT_GLOBAL, new_ent_ctx_destroy);
+
+	return 0;
+}
+
+static int init_entities_term_timer(void)
+{
+	ent_term_timer = shm_malloc(sizeof *ent_term_timer);
+	if (!ent_term_timer) {
+		LM_ERR("no more shm memory\n");
+		return -1;
+	}
+	memset(ent_term_timer, 0, sizeof *ent_term_timer);
+
+	ent_term_timer->lock = lock_alloc();
+	if (ent_term_timer->lock==0) {
+		LM_ERR("failed to alloc lock\n");
+		return -1;
+	}
+
+	if (lock_init(ent_term_timer->lock)==0) {
+		LM_ERR("failed to init lock\n");
+		return -1;
+	}
 
 	return 0;
 }
@@ -711,7 +766,7 @@ static void term_entity(b2bl_entity_id_t *entity, int hash_index, str *key)
 	} else {
 		if ( key && ( !push_new_global_context() ||
 		(ctx=b2b_api.get_context())==NULL ||
-		pkg_str_dup(&ctx->b2bl_key, key)==0 )
+		pkg_str_dup(&ctx->b2bl_key, key)!=0 )
 		) {
 			LM_ERR("preparing ctx for request failed, entity [%.*s]\n",
 				entity->key.len, entity->key.s);
@@ -761,6 +816,18 @@ void b2bl_clean(unsigned int ticks, void* param)
 	}
 }
 
+void destroy_entities_term_timer(void)
+{
+	if (ent_term_timer==0)
+		return;
+
+	lock_destroy(ent_term_timer->lock);
+	lock_dealloc(ent_term_timer->lock);
+
+	shm_free(ent_term_timer);
+	ent_term_timer = 0;
+}
+
 static void mod_destroy(void)
 {
 	if (b2bl_db_mode==WRITE_BACK) {
@@ -788,7 +855,11 @@ static void mod_destroy(void)
 	if (server_address_pve)
 		pv_elem_free_all(server_address_pve);
 
+	if (ent_term_interval)
+		destroy_entities_term_timer();
+
 	destroy_b2bl_htable();
+	b2bl_free_bridge_retry();
 }
 
 static int child_init(int rank)
@@ -879,6 +950,17 @@ static int fixup_init_flags(void** param)
 	return 0;
 }
 
+static str reply_flags[] =
+{
+	str_init("pass-3xx-contact"),	/* B2BL_RPL_FLAG_PASS_CONTACT */
+	STR_NULL
+};
+
+static int fixup_reply_flags(void** param)
+{
+	return fixup_named_flags(param, reply_flags, NULL, NULL);
+}
+
 static int fixup_free_init_flags(void** param)
 {
 	if (*param)
@@ -933,6 +1015,29 @@ static int fixup_bridge_flags(void** param)
 			return -1;
 		}
 	}
+
+	return 0;
+}
+
+
+static str bridge_req_kv_flags[] =
+{
+	str_init("late_bye"),
+	STR_NULL
+};
+
+static int fixup_bridge_request_flags(void** param)
+{
+	if (fixup_named_flags(param, bridge_req_kv_flags, NULL, NULL)<0) {
+		LM_ERR("Failed to parse flags\n");
+		return -1;
+	}
+
+	/* ugly hack to move the flag on its right position (as the 
+	   fixup_named_flags() will set it with index 0 (as in the def array))
+	   WARNING: this works only because we have a single flag!!!! */
+	if (param)
+		*param = (void*)(unsigned long)B2BL_BR_FLAG_BR_MSG_LATE_BYE;
 
 	return 0;
 }
@@ -1172,20 +1277,25 @@ end:
 }
 
 int  b2bl_script_bridge_msg(struct sip_msg* msg, str *key, int *entity_no,
-	str *adv_contact)
+	str *adv_contact, void *flags_p)
 {
+	unsigned int flags = 0;
+
 	if (cur_route_ctx.flags & (B2BL_RT_REQ_CTX|B2BL_RT_RPL_CTX)) {
 		LM_ERR("The 'b2b_bridge_request' function cannot be used from the "
 			"b2b_logic dedicated routes\n");
 		return -1;
 	}
 
-	return b2bl_bridge_msg(msg, key, *entity_no, adv_contact);
+	if (flags_p)
+		flags = (unsigned int)(unsigned long)flags_p;
+
+	return b2bl_bridge_msg(msg, key, *entity_no, flags, adv_contact);
 }
 
 static int b2bl_api_bridge_msg(struct sip_msg* msg, str* key, int entity_no)
 {
-	return b2bl_bridge_msg(msg, key, entity_no, NULL);
+	return b2bl_bridge_msg(msg, key, entity_no, 0, NULL);
 }
 
 static mi_response_t *mi_b2b_terminate_call(const mi_params_t *params,
@@ -1198,7 +1308,7 @@ static mi_response_t *mi_b2b_terminate_call(const mi_params_t *params,
 	if (get_mi_string_param(params, "key", &key.s, &key.len) < 0)
 		return init_mi_param_error();
 
-	if (b2bl_get_tuple_key(&key, &hash_index, &local_index) < 0)
+	if (b2bl_get_tuple_key(&key, &hash_index, &local_index, NULL) < 0)
 		return init_mi_error(404, MI_SSTR("B2B session not found"));
 
 	B2BL_LOCK_GET(hash_index);
@@ -1243,7 +1353,7 @@ static mi_response_t *mi_b2b_bridge_f(const mi_params_t *params,
 	if (get_mi_int_param(params, "flag", &flag) < 0)
 		return init_mi_param_error();
 
-	return mi_b2b_bridge(params, flag, NULL);
+	return mi_b2b_bridge(params, &flag, NULL);
 }
 
 static mi_response_t *mi_b2b_bridge_pmu(const mi_params_t *params,
@@ -1271,7 +1381,7 @@ static mi_response_t *mi_b2b_bridge_4(const mi_params_t *params,
 		&prov_media.s, &prov_media.len) < 0)
 		return init_mi_param_error();
 
-	return mi_b2b_bridge(params, flag, &prov_media);
+	return mi_b2b_bridge(params, &flag, &prov_media);
 }
 
 static inline int internal_mi_print_b2bl_entity_id(mi_item_t *item, b2bl_entity_id_t *c)
@@ -1467,7 +1577,7 @@ static b2bl_tuple_t *ctx_search_tuple(struct b2b_context *ctx, int *locked)
 	if (!tuple) {
 		LM_ERR("Tuple [%u, %u] not found\n", ctx->hash_index, ctx->local_index);
 		B2BL_LOCK_RELEASE_AUX(ctx->hash_index);
-		locked = 0;
+		*locked = 0;
 		return NULL;
 	}
 
@@ -1635,7 +1745,7 @@ int pv_get_entity(struct sip_msg *msg, pv_param_t *param, pv_value_t *res)
 	b2bl_entity_id_t *curr_entities[MAX_BRIDGE_ENT];
 	b2bl_entity_id_t dummy_entity;
 	b2b_dlginfo_t dummy_dlginfo;
-	str callid;
+	str callid = {NULL, 0};
 	int i;
 	int locked = 0;
 
@@ -2075,11 +2185,8 @@ static str *b2bl_get_key(void)
 	int locked = 0;
 	b2bl_tuple_t *tuple = get_ctx_tuple(&locked);
 
-	if (!tuple) {
-		if (locked)
-			B2BL_LOCK_RELEASE_AUX(tuple->hash_index);
+	if (!tuple)
 		return NULL;
-	}
 
 	ret.s = buf;
 	ret.len = 0;
@@ -2270,4 +2377,125 @@ int b2bl_restore_upper_info(str* b2bl_key, b2bl_cback_f cbf, void* param,
 	B2BL_LOCK_RELEASE(hash_index);
 
 	return 0;
+}
+
+static int pv_parse_b2bl_peer(pv_spec_p sp, const str *in)
+{
+	char *p;
+	char *s;
+	pv_spec_p nsp = 0;
+
+	if(in==NULL || in->s==NULL || sp==NULL)
+		return -1;
+	p = in->s;
+	if(*p==PV_MARKER)
+	{
+		nsp = (pv_spec_p)pkg_malloc(sizeof(pv_spec_t));
+		if(nsp==NULL)
+		{
+			LM_ERR("no more memory\n");
+			return -1;
+		}
+		s = pv_parse_spec(in, nsp);
+		if(s==NULL)
+		{
+			LM_ERR("invalid name [%.*s]\n", in->len, in->s);
+			pv_spec_free(nsp);
+			return -1;
+		}
+		sp->pvp.pvn.type = PV_NAME_PVAR;
+		sp->pvp.pvn.u.dname = (void*)nsp;
+		return 0;
+	}
+	/* remember it was a string, so we can retrieve it later */
+	sp->pvp.pvn.u.isname.name.s = *in;
+	sp->pvp.pvn.u.isname.type = AVP_NAME_STR;
+	return 0;
+
+}
+
+static int pv_get_b2bl_peer(struct sip_msg *msg,  pv_param_t *param, pv_value_t *res)
+{
+	#define B2BL_PEER_BUF_SIZE 2048
+	int ret;
+	char _buf[B2BL_PEER_BUF_SIZE], *p = _buf;
+	pv_value_t tv;
+	b2bl_tuple_t* tuple;
+	unsigned int hash_index, local_index;
+	b2bl_entity_id_t *entity;
+	int entity_no;
+	str entity_str;
+
+	if(msg==NULL || res==NULL || param==NULL)
+		return -1;
+
+	if(param->pvn.type == PV_NAME_PVAR)
+	{
+		if(pv_get_spec_name(msg, param, &tv)!=0 || (!(tv.flags&PV_VAL_STR)))
+		{
+			LM_ERR("invalid name\n");
+			return -1;
+		}
+	} else {
+		tv.rs = param->pvn.u.isname.name.s;
+	}
+	ret = b2bl_get_tuple_key(&tv.rs, &hash_index, &local_index, &entity_str);
+	if(ret < 0)
+	{
+		if (ret == -1)
+			LM_ERR("Failed to parse key or find an entity [%.*s]\n",
+					tv.rs.len, tv.rs.s);
+		else
+			LM_ERR("Could not find entity [%.*s]\n",
+					tv.rs.len, tv.rs.s);
+		return -1;
+	}
+	B2BL_LOCK_GET(hash_index);
+
+	ret = -1;
+	tuple = b2bl_search_tuple_safe(hash_index, local_index);
+	if(tuple == NULL)
+	{
+		LM_ERR("No tuple found for %.*s\n", tv.rs.len, tv.rs.s);
+		goto end;
+	}
+	entity_no = b2bl_search_other_entity(tuple, &entity_str);
+	if (entity_no < 0) {
+		LM_ERR("Can not determine entity [%.*s]\n",
+			entity_str.len, entity_str.s);
+		goto end;
+	}
+	entity = tuple->bridge_entities[entity_no];
+	if (!entity) {
+		LM_ERR("Can not find entity [%.*s]\n",
+			tv.rs.len, tv.rs.s);
+		goto end;
+	}
+	if (!entity->dlginfo) {
+		LM_ERR("no dialog for entity [%.*s]\n",
+			tv.rs.len, tv.rs.s);
+		goto end;
+	}
+	if (entity->dlginfo->callid.len + entity->dlginfo->fromtag.len +
+			entity->dlginfo->totag.len + 2 /* two ';' */ >= B2BL_PEER_BUF_SIZE) {
+		LM_ERR("buffer too small (%d) for dialog info entity[%.*s]\n",
+				B2BL_PEER_BUF_SIZE, tv.rs.len, tv.rs.s);
+		goto end;
+	}
+	memcpy(p, entity->dlginfo->callid.s, entity->dlginfo->callid.len);
+	p += entity->dlginfo->callid.len;
+	*p++ = ';';
+	memcpy(p, entity->dlginfo->fromtag.s, entity->dlginfo->fromtag.len);
+	p += entity->dlginfo->fromtag.len;
+	*p++ = ';';
+	memcpy(p, entity->dlginfo->totag.s, entity->dlginfo->totag.len);
+	p += entity->dlginfo->totag.len;
+	#undef B2BL_PEER_BUF_SIZE
+	res->flags = PV_VAL_STR;
+	res->rs.s = _buf;
+	res->rs.len = p - _buf;
+	ret = 0;
+end:
+	B2BL_LOCK_RELEASE(hash_index);
+	return (ret < 0?pv_get_null(msg, param, res):ret);
 }

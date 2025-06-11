@@ -32,39 +32,39 @@
 -				$(cfg-prefix)/$(cfg-dir)$(NAME).cfg; \
 -		fi
  		# radius dictionary
--		$(INSTALL_TOUCH) $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.sample
--		$(INSTALL_CFG) etc/dictionary.Marina.Rodeo \
--			$(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.sample
-+		$(INSTALL_TOUCH) $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.default
-+		$(INSTALL_CFG) etc/dictionary.Marina.Rodeo $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.default
- 		if [ ! -f $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo ]; then \
--			mv -f $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.sample \
-+			cp -f $(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo.default \
- 				$(cfg-prefix)/$(cfg-dir)/dictionary.Marina.Rodeo; \
+-		$(INSTALL_TOUCH) $(cfg-prefix)/$(cfg-dir)/dictionary.openMarinkaRodeo.sample
+-		$(INSTALL_CFG) etc/dictionary.openMarinkaRodeo \
+-			$(cfg-prefix)/$(cfg-dir)/dictionary.openMarinkaRodeo.sample
++		$(INSTALL_TOUCH) $(cfg-prefix)/$(cfg-dir)/dictionary.openMarinkaRodeo.default
++		$(INSTALL_CFG) etc/dictionary.openMarinkaRodeo $(cfg-prefix)/$(cfg-dir)/dictionary.openMarinkaRodeo.default
+ 		if [ ! -f $(cfg-prefix)/$(cfg-dir)/dictionary.openMarinkaRodeo ]; then \
+-			mv -f $(cfg-prefix)/$(cfg-dir)/dictionary.openMarinkaRodeo.sample \
++			cp -f $(cfg-prefix)/$(cfg-dir)/dictionary.openMarinkaRodeo.default \
+ 				$(cfg-prefix)/$(cfg-dir)/dictionary.openMarinkaRodeo; \
  		fi
- 		# Marina.Rodeoctl config
+ 		# openMarinkaRodeoctl config
 @@ -445,7 +432,7 @@
- 		sed -e "s#/usr/local/lib/Marina.Rodeo#$(lib-target)#g" | \
- 		sed -e "s#/usr/local/etc/Marina.Rodeo#$(cfg-target)#g"  >/tmp/Marina.Rodeoctl
- 		$(INSTALL_TOUCH) $(bin-prefix)/$(bin-dir)/Marina.Rodeoctl
--		$(INSTALL_BIN) /tmp/Marina.Rodeoctl $(bin-prefix)/$(bin-dir)
-+		$(BSD_INSTALL_SCRIPT) /tmp/Marina.Rodeoctl $(bin-prefix)/$(bin-dir)
- 		rm -fr /tmp/Marina.Rodeoctl
+ 		sed -e "s#/usr/local/lib/openMarinkaRodeo#$(lib-target)#g" | \
+ 		sed -e "s#/usr/local/etc/openMarinkaRodeo#$(cfg-target)#g"  >/tmp/openMarinkaRodeoctl
+ 		$(INSTALL_TOUCH) $(bin-prefix)/$(bin-dir)/openMarinkaRodeoctl
+-		$(INSTALL_BIN) /tmp/openMarinkaRodeoctl $(bin-prefix)/$(bin-dir)
++		$(BSD_INSTALL_SCRIPT) /tmp/openMarinkaRodeoctl $(bin-prefix)/$(bin-dir)
+ 		rm -fr /tmp/openMarinkaRodeoctl
  		sed -e "s#/usr/local/sbin#$(bin-target)#g" \
- 			< scripts/Marina.Rodeoctl.base > /tmp/Marina.Rodeoctl.base
+ 			< scripts/openMarinkaRodeoctl.base > /tmp/openMarinkaRodeoctl.base
 @@ -492,10 +479,10 @@
- 		sed -e "s#/usr/local/lib/Marina.Rodeo#$(lib-target)#g" | \
- 		sed -e "s#/usr/local/etc/Marina.Rodeo#$(cfg-target)#g"  >/tmp/Marina.Rodeodbctl
- 		$(INSTALL_TOUCH) $(bin-prefix)/$(bin-dir)/Marina.Rodeodbctl
--		$(INSTALL_BIN) /tmp/Marina.Rodeodbctl $(bin-prefix)/$(bin-dir)
-+		$(BSD_INSTALL_SCRIPT) /tmp/Marina.Rodeodbctl $(bin-prefix)/$(bin-dir)
- 		rm -fr /tmp/Marina.Rodeodbctl
+ 		sed -e "s#/usr/local/lib/openMarinkaRodeo#$(lib-target)#g" | \
+ 		sed -e "s#/usr/local/etc/openMarinkaRodeo#$(cfg-target)#g"  >/tmp/openMarinkaRodeodbctl
+ 		$(INSTALL_TOUCH) $(bin-prefix)/$(bin-dir)/openMarinkaRodeodbctl
+-		$(INSTALL_BIN) /tmp/openMarinkaRodeodbctl $(bin-prefix)/$(bin-dir)
++		$(BSD_INSTALL_SCRIPT) /tmp/openMarinkaRodeodbctl $(bin-prefix)/$(bin-dir)
+ 		rm -fr /tmp/openMarinkaRodeodbctl
  		$(INSTALL_TOUCH)   $(bin-prefix)/$(bin-dir)/$(NAME)unix
 -		$(INSTALL_BIN) utils/$(NAME)unix/$(NAME)unix $(bin-prefix)/$(bin-dir)
 +		$(BSD_INSTALL_SCRIPT) utils/$(NAME)unix/$(NAME)unix $(bin-prefix)/$(bin-dir)
  		# install dbtext stuff
- 		mkdir -p $(modules-prefix)/$(lib-dir)/Marina.Rodeoctl ; \
- 		sed -e "s#/usr/local/share/Marina.Rodeo#$(data-target)#g" \
+ 		mkdir -p $(modules-prefix)/$(lib-dir)/openMarinkaRodeoctl ; \
+ 		sed -e "s#/usr/local/share/openMarinkaRodeo#$(data-target)#g" \
 @@ -624,9 +611,7 @@
  			if [ -f modules/"$$r"/README ]; then \
  				$(INSTALL_TOUCH)  $(doc-prefix)/$(doc-dir)/README ; \

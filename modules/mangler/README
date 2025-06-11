@@ -8,7 +8,7 @@ mangler Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -57,15 +57,15 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other Marina.Rodeo modules.
+     * No dependencies on other OpenMarinkaRodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -208,12 +208,12 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Gabriel Vasile 50 13 3118 674
+   1. Gabriel Vasile 52 13 3118 674
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 26 20 195 198
    3. Razvan Crainea (@razvancrainea) 14 12 39 27
    4. Daniel-Constantin Mierla (@miconda) 13 11 25 49
    5. Andrei Pelinescu-Onciul 12 9 71 72
-   6. Liviu Chircu (@liviuchircu) 9 7 17 60
+   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 9 7 17 60
    7. Vlad Patrascu (@rvlad-patrascu) 9 6 102 108
    8. Jan Janak (@janakj) 9 4 428 48
    9. Henning Westerholt (@henningw) 8 5 13 104
@@ -222,7 +222,7 @@ Chapter 2. Contributors
    All remaining contributors: Maksym Sobolyev (@sobomax), Jiri
    Kuthan (@jiriatipteldotorg), Walter Doekes (@wdoekes),
    Konstantin Bokarius, Edson Gellert Schubert, Elena-Ramona
-   Modroiu.
+   Modroiu, Alexandra Titoc.
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -232,7 +232,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -244,19 +244,19 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Liviu Chircu (@liviuchircu)         Mar 2014 - May 2023
-   2.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2005 - Apr 2020
-   4.  Peter Lemenkov (@lemenkov)          Jun 2018 - Feb 2020
-   5.  Razvan Crainea (@razvancrainea)     Jun 2011 - Sep 2019
-   6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   7.  Walter Doekes (@wdoekes)            Jun 2014 - Jun 2014
-   8.  Henning Westerholt (@henningw)      May 2007 - Jun 2008
-   9.  Daniel-Constantin Mierla (@miconda) Sep 2003 - Mar 2008
-   10. Konstantin Bokarius                 Mar 2008 - Mar 2008
+   1.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2023
+   3.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2005 - Apr 2020
+   5.  Peter Lemenkov (@lemenkov)          Jun 2018 - Feb 2020
+   6.  Razvan Crainea (@razvancrainea)     Jun 2011 - Sep 2019
+   7.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
+   8.  Walter Doekes (@wdoekes)            Jun 2014 - Jun 2014
+   9.  Henning Westerholt (@henningw)      May 2007 - Jun 2008
+   10. Daniel-Constantin Mierla (@miconda) Sep 2003 - Mar 2008
 
-   All remaining contributors: Edson Gellert Schubert,
-   Elena-Ramona Modroiu, Jan Janak (@janakj), Andrei
+   All remaining contributors: Konstantin Bokarius, Edson Gellert
+   Schubert, Elena-Ramona Modroiu, Jan Janak (@janakj), Andrei
    Pelinescu-Onciul, Jiri Kuthan (@jiriatipteldotorg), Gabriel
    Vasile.
 
@@ -268,12 +268,12 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Peter Lemenkov
-   (@lemenkov), Liviu Chircu (@liviuchircu), Bogdan-Andrei Iancu
+   (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Bogdan-Andrei Iancu
    (@bogdan-iancu), Razvan Crainea (@razvancrainea), Henning
    Westerholt (@henningw), Daniel-Constantin Mierla (@miconda),
    Konstantin Bokarius, Edson Gellert Schubert, Elena-Ramona
    Modroiu, Jan Janak (@janakj).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS
+   Copyright © 2003 FhG FOKUS

@@ -1,3 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table PUBLIC "-//openMarinkaRodeo.org//DTD DBSchema V1.1//EN" 
+  "https://openMarinkaRodeo.org/pub/openMarinkaRodeo/dbschema/dtd/1.1/dbschema.dtd" [
+
+<!ENTITY % entities SYSTEM "entities.xml">
+%entities;
+
+]>
+
 <table id="rtpengine" xmlns:db="http://docbook.org/ns/docbook">
 	<name>rtpengine</name>
 	<version>1</version>
@@ -5,7 +14,7 @@
 	<description>
 		<db:para>This table is used by the RTPEngine module to store
 		definitions of socket(s) used to connect to (a set) RTPEngine.
-		More information can be found at: &Marina.Rodeo_MOD_DOC;rtpengine.html.
+		More information can be found at: &OPENMarinkaRodeo_MOD_DOC;rtpengine.html.
 		</db:para>
 	</description>
 

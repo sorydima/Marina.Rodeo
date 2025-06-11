@@ -14,7 +14,7 @@ NAT Traversal Module
 
         1.3. Dependencies
 
-              1.3.1. Marina.Rodeo Modules
+              1.3.1. OpenMarinkaRodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -361,7 +361,7 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. Marina.Rodeo Modules
+1.3.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * sl module - if keepalive is enabled.
@@ -373,7 +373,7 @@ Chapter 1. Admin Guide
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.4. Exported Parameters
@@ -461,23 +461,23 @@ PS\r\nX-MyHeader: some_value\r\n")
 
    Specifies a filename where information about the NAT endpoints
    and the conditions for which they are being kept alive is saved
-   when Marina.Rodeo exits. The information in this file is then used
-   when Marina.Rodeo starts to restore its internal state and continue
+   when OpenMarinkaRodeo exits. The information in this file is then used
+   when OpenMarinkaRodeo starts to restore its internal state and continue
    to send keepalive messages to the NAT endpoints that have not
    expired in the meantime. This is useful when restarting
-   Marina.Rodeo to avoid losing keepalive state information about the
+   OpenMarinkaRodeo to avoid losing keepalive state information about the
    NAT endpoints. The internal keepalive state is guaranteed to be
-   saved in this file on exit, even when Marina.Rodeo crashes.
+   saved in this file on exit, even when OpenMarinkaRodeo crashes.
 
    The value of this parameter can be either a relative path, in
-   which case it will store it in the Marina.Rodeo working directory,
+   which case it will store it in the OpenMarinkaRodeo working directory,
    or an absolute path.
 
    Default value is undefined “keepalive_state”.
 
    Example 1.5. Setting the keepalive_state_file parameter
 ...
-modparam("nat_traversal", "keepalive_state_file", "/run/Marina.Rodeo/keepali
+modparam("nat_traversal", "keepalive_state_file", "/run/openMarinkaRodeo/keepali
 ve_state")
 ...
 
@@ -494,7 +494,7 @@ ve_state")
    the contacts. See the cluster_sharing_tag option.
 
    For more info on how to define and populate a cluster (with
-   Marina.Rodeo nodes) see the "clusterer" module.
+   OpenMarinkaRodeo nodes) see the "clusterer" module.
 
    Default value is “0 (none)”.
 
@@ -537,12 +537,12 @@ modparam("nat_traversal", "cluster_sharing_tag", "vip")
 
      * 1 - tests if client has a private IP address (as defined by
        RFC1918) in the Contact field of the SIP message.
-     * 2 - tests if client has contacted Marina.Rodeo from an address
+     * 2 - tests if client has contacted OpenMarinkaRodeo from an address
        that is different from the one in the Via field. Both the
        IP and port are compared by this test.
      * 4 - tests if client has a private IP address (as defined by
        RFC1918) in the top Via field of the SIP message.
-     * 8 - tests if client has contacted Marina.Rodeo from an address
+     * 8 - tests if client has contacted OpenMarinkaRodeo from an address
        that is different from the one in the Contact field. Only
        IP is compared by this test.
 
@@ -863,18 +863,18 @@ Chapter 2. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Dan Pascu (@danpascu) 54 26 3085 115
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 37 31 306 128
-   3. Liviu Chircu (@liviuchircu) 16 13 59 81
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 19 16 61 84
    4. Razvan Crainea (@razvancrainea) 9 7 11 6
    5. Saúl Ibarra Corretgé (@saghul) 9 5 188 102
    6. Vlad Patrascu (@rvlad-patrascu) 7 5 27 16
-   7. Vlad Paiu (@vladpaiu) 5 3 12 14
-   8. Maksym Sobolyev (@sobomax) 5 3 7 8
+   7. Maksym Sobolyev (@sobomax) 7 5 15 16
+   8. Vlad Paiu (@vladpaiu) 5 3 12 14
    9. Anca Vamanu 4 2 12 1
-   10. Peter Lemenkov (@lemenkov) 4 2 3 6
+   10. Alexandra Titoc 4 2 6 2
 
-   All remaining contributors: David Sanders, Stéphane Alnet
-   (@shimaore), okhowang, Sergio Gutierrez, Alexey Vasilyev
-   (@vasilevalex).
+   All remaining contributors: Peter Lemenkov (@lemenkov), David
+   Sanders, Stéphane Alnet (@shimaore), okhowang, Sergio
+   Gutierrez, Alexey Vasilyev (@vasilevalex).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -884,7 +884,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -896,20 +896,20 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2023
-   2.  okhowang                            Mar 2023 - Mar 2023
-   3.  Maksym Sobolyev (@sobomax)          Jan 2021 - Feb 2023
-   4.  Peter Lemenkov (@lemenkov)          Jun 2018 - Apr 2022
-   5.  Alexey Vasilyev (@vasilevalex)      Mar 2022 - Mar 2022
-   6.  Bogdan-Andrei Iancu (@bogdan-iancu) Jun 2008 - Apr 2020
-   7.  Razvan Crainea (@razvancrainea)     Jun 2011 - Sep 2019
-   8.  Dan Pascu (@danpascu)               May 2008 - Aug 2019
-   9.  Liviu Chircu (@liviuchircu)         Mar 2014 - Aug 2018
-   10. Saúl Ibarra Corretgé (@saghul)      Aug 2011 - Nov 2014
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - Sep 2024
+   2.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   3.  Maksym Sobolyev (@sobomax)          Jan 2021 - Nov 2023
+   4.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2023
+   5.  okhowang                            Mar 2023 - Mar 2023
+   6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Apr 2022
+   7.  Alexey Vasilyev (@vasilevalex)      Mar 2022 - Mar 2022
+   8.  Bogdan-Andrei Iancu (@bogdan-iancu) Jun 2008 - Apr 2020
+   9.  Razvan Crainea (@razvancrainea)     Jun 2011 - Sep 2019
+   10. Dan Pascu (@danpascu)               May 2008 - Aug 2019
 
-   All remaining contributors: David Sanders, Vlad Paiu
-   (@vladpaiu), Anca Vamanu, Stéphane Alnet (@shimaore), Sergio
-   Gutierrez.
+   All remaining contributors: Saúl Ibarra Corretgé (@saghul),
+   David Sanders, Vlad Paiu (@vladpaiu), Anca Vamanu, Stéphane
+   Alnet (@shimaore), Sergio Gutierrez.
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -919,11 +919,11 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Alexey Vasilyev (@vasilevalex), Bogdan-Andrei
-   Iancu (@bogdan-iancu), Dan Pascu (@danpascu), Liviu Chircu
-   (@liviuchircu), Peter Lemenkov (@lemenkov), Vlad Patrascu
+   Iancu (@bogdan-iancu), Dan Pascu (@danpascu), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
+   (@sorydima), Peter Lemenkov (@lemenkov), Vlad Patrascu
    (@rvlad-patrascu), Razvan Crainea (@razvancrainea), Saúl Ibarra
    Corretgé (@saghul).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2008 Dan Pascu
+   Copyright © 2008 Dan Pascu

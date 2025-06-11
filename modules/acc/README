@@ -30,7 +30,7 @@ Acc Module
 
         1.5. Dependencies
 
-              1.5.1. Marina.Rodeo Modules
+              1.5.1. OpenMarinkaRodeo Modules
               1.5.2. External Libraries or Applications
 
         1.6. Exported Parameters
@@ -171,7 +171,7 @@ Chapter 1. Admin Guide
        worry anymore whether you have set the flags or not, or be
        confused by various flag names, now you only have to call
        the function and it will do all the work for you.
-     * Marina.Rodeo now supports session/dialog accounting. It can
+     * OpenMarinkaRodeo now supports session/dialog accounting. It can
        automatically correlate INVITEs with BYEs for generating
        proper CDRs, for example for billing purposes.
      * If a UA fails in the middle of a conversation, a proxy will
@@ -299,7 +299,7 @@ modparam("acc", "extra_fields", "log: a -> test_a")
    By default, the multiple call-leg support is disabled - it can
    be enabled just by setting acc_leg variable leg_fields module
    parameter. Note that the last one only makes sense only for
-   CDRs that are generated automatically by Marina.Rodeo.
+   CDRs that are generated automatically by OpenMarinkaRodeo.
 
 1.3.3. Logged data
 
@@ -331,11 +331,11 @@ Note
 
    Important!!! In order to use RADIUS, one must include the AVPs
    which are located in
-   $(Marina.Rodeo_install_dir)/etc/dictionary.Marina.Rodeo, both in
-   Marina.Rodeo radius config script dictionary and radius server
+   $(openMarinkaRodeo_install_dir)/etc/dictionary.openMarinkaRodeo, both in
+   openMarinkaRodeo radius config script dictionary and radius server
    dictionary. Most important are the last three AVPs (IDs : 227,
    228, 229) which you won't find in any SIP dictionary (at least
-   at this moment) because they are only used in Marina.Rodeo.
+   at this moment) because they are only used in openMarinkaRodeo.
 
 1.4. CDRs accounting
 
@@ -363,7 +363,7 @@ Note
 
 1.5. Dependencies
 
-1.5.1. Marina.Rodeo Modules
+1.5.1. OpenMarinkaRodeo Modules
 
    The module depends on the following modules (in the other words
    the listed modules must be loaded before this module):
@@ -377,7 +377,7 @@ Note
 1.5.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * none.
 
 1.6. Exported Parameters
@@ -537,7 +537,7 @@ modparam("acc", "db_table_missed_calls", "myMC_table")
    Default value is “NULL” (SQL disabled).
 
    Example 1.12. db_url example
-modparam("acc", "db_url", "mysql://user:password@localhost/Marina.Rodeo")
+modparam("acc", "db_url", "mysql://user:password@localhost/openMarinkaRodeo")
 
 1.6.13. acc_method_column (string)
 
@@ -668,7 +668,7 @@ $(acc_leg(caller)[-2])
      * flags (string, optional) - flags for the accounting type
        you have selected. All the types have to be separated by
        '|'. The following parameters can be used:
-          + cdr - enables dialog-level accounting. Marina.Rodeo will
+          + cdr - enables dialog-level accounting. OpenMarinkaRodeo will
             internally detect dialog termination
             (generation/receipt of a BYE request), and store the
             CDR as soon as the BYE request is replied to. By
@@ -829,7 +829,7 @@ acc_aaa_request("403 Destination not allowed");
 1.8.6.  acc_evi_request(comment)
 
    Like acc_log_request, acc_evi_request reports on a request. The
-   report is packed as an event sent through the Marina.Rodeo Event
+   report is packed as an event sent through the OpenMarinkaRodeo Event
    Interface as E_ACC_EVENT if the reply code is a positive one
    (lower than 300), or E_ACC_MISSED_EVENT for negative or no
    codes. More information on this in Exported Events.
@@ -1019,27 +1019,34 @@ Chapter 2. Frequently Asked Questions
 
    2.5.
 
-   Where can I find more about Marina.Rodeo?
+   Where can I find more about OpenMarinkaRodeo?
 
-   Take a look at https://Marina.Rodeo/.
+   Take a look at https://openMarinkaRodeo.org/.
 
    2.6.
 
    Where can I post a question about this module?
 
-   E-mails regarding any stable Marina.Rodeo release should be sent to
-   <sip@rechain.email> and e-mails regarding development
-   versions should be sent to <sip@rechain.email>.
+   First at all check if your question was already answered on one
+   of our mailing lists:
+     * User Mailing List -
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users
+     * Developer Mailing List -
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/devel
+
+   E-mails regarding any stable OpenMarinkaRodeo release should be sent to
+   <users@lists.openMarinkaRodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.openMarinkaRodeo.org>.
 
    If you want to keep the mail private, send it to
-   <sip@rechain.email>.
+   <users@lists.openMarinkaRodeo.org>.
 
    2.7.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/sorydima/Marina.Rodeo/issues.
+   https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues.
 
 Chapter 3. Contributors
 
@@ -1048,23 +1055,23 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Bogdan-Andrei Iancu (@bogdan-iancu) 226 114 4306 4609
-   2. Jan Janak (@janakj) 145 16 5587 5074
-   3. Ionut Ionita (@ionutrazvanionita) 139 39 3730 4180
-   4. Razvan Crainea (@razvancrainea) 98 65 2702 662
-   5. Liviu Chircu (@liviuchircu) 67 51 615 559
-   6. Jiri Kuthan (@jiriatipteldotorg) 56 26 2272 660
+   1. Bogdan-Andrei Iancu (@bogdan-iancu) 228 114 4306 4609
+   2. Jan Janak (@janakj) 147 16 5587 5074
+   3. Ionut Ionita (@ionutrazvanionita) 140 39 3730 4180
+   4. Razvan Crainea (@razvancrainea) 102 67 2705 677
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 75 55 985 608
+   6. Jiri Kuthan (@jiriatipteldotorg) 57 26 2272 660
    7. Daniel-Constantin Mierla (@miconda) 26 23 115 88
-   8. Elena-Ramona Modroiu 24 4 2267 5
+   8. Elena-Ramona Modroiu 25 4 2267 5
    9. Vlad Patrascu (@rvlad-patrascu) 22 11 353 478
    10. Henning Westerholt (@henningw) 20 15 184 131
 
    All remaining contributors: Vlad Paiu (@vladpaiu), Maksym
    Sobolyev (@sobomax), Irina-Maria Stanescu, Karel Kozlik, Andrei
-   Pelinescu-Onciul, Dan Pascu (@danpascu), Juha Heinanen
-   (@juha-h), Elena-Ramona Modroiu, Ryan Bullock (@rrb3942),
-   Ovidiu Sas (@ovidiusas), Walter Doekes (@wdoekes), Sergio
-   Gutierrez, Peter Nixon, Alex Massover, Nils Ohlmeier,
+   Pelinescu-Onciul, Alexandra Titoc, Dan Pascu (@danpascu), Juha
+   Heinanen (@juha-h), Elena-Ramona Modroiu, Ryan Bullock
+   (@rrb3942), Ovidiu Sas (@ovidiusas), Walter Doekes (@wdoekes),
+   Sergio Gutierrez, Peter Nixon, Alex Massover, Nils Ohlmeier,
    Konstantin Bokarius, Alexey Vasilyev (@vasilevalex), Jesus
    Rodrigues, Julien Blache, Julián Moreno Patiño, Peter Lemenkov
    (@lemenkov), Dusan Klinec (@ph4r05), Edson Gellert Schubert.
@@ -1077,7 +1084,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1089,27 +1096,27 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Liviu Chircu (@liviuchircu)         Jan 2013 - May 2023
-   2.  Bogdan-Andrei Iancu (@bogdan-iancu) Dec 2003 - May 2023
-   3.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Mar 2023
-   4.  Maksym Sobolyev (@sobomax)          Dec 2003 - Feb 2023
-   5.  Alexey Vasilyev (@vasilevalex)      Mar 2022 - Mar 2022
-   6.  Razvan Crainea (@razvancrainea)     Aug 2010 - Jun 2021
-   7.  Walter Doekes (@wdoekes)            Apr 2021 - Apr 2021
-   8.  Dan Pascu (@danpascu)               Jul 2004 - Sep 2018
-   9.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   10. Ionut Ionita (@ionutrazvanionita)   Feb 2015 - May 2017
+   1.  Razvan Crainea (@razvancrainea)     Aug 2010 - Dec 2024
+   2.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   3.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jan 2013 - May 2024
+   4.  Maksym Sobolyev (@sobomax)          Dec 2003 - Nov 2023
+   5.  Bogdan-Andrei Iancu (@bogdan-iancu) Dec 2003 - May 2023
+   6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Mar 2023
+   7.  Alexey Vasilyev (@vasilevalex)      Mar 2022 - Mar 2022
+   8.  Walter Doekes (@wdoekes)            Apr 2021 - Apr 2021
+   9.  Dan Pascu (@danpascu)               Jul 2004 - Sep 2018
+   10. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
 
-   All remaining contributors: Julián Moreno Patiño, Dusan Klinec
-   (@ph4r05), Vlad Paiu (@vladpaiu), Ryan Bullock (@rrb3942),
-   Irina-Maria Stanescu, Alex Massover, Sergio Gutierrez, Ovidiu
-   Sas (@ovidiusas), Henning Westerholt (@henningw),
-   Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
-   Gellert Schubert, Elena-Ramona Modroiu, Jesus Rodrigues, Julien
-   Blache, Peter Nixon, Juha Heinanen (@juha-h), Jan Janak
-   (@janakj), Jiri Kuthan (@jiriatipteldotorg), Andrei
-   Pelinescu-Onciul, Elena-Ramona Modroiu, Nils Ohlmeier, Karel
-   Kozlik.
+   All remaining contributors: Ionut Ionita (@ionutrazvanionita),
+   Julián Moreno Patiño, Dusan Klinec (@ph4r05), Vlad Paiu
+   (@vladpaiu), Ryan Bullock (@rrb3942), Irina-Maria Stanescu,
+   Alex Massover, Sergio Gutierrez, Ovidiu Sas (@ovidiusas),
+   Henning Westerholt (@henningw), Daniel-Constantin Mierla
+   (@miconda), Konstantin Bokarius, Edson Gellert Schubert,
+   Elena-Ramona Modroiu, Jesus Rodrigues, Julien Blache, Peter
+   Nixon, Juha Heinanen (@juha-h), Jan Janak (@janakj), Jiri
+   Kuthan (@jiriatipteldotorg), Andrei Pelinescu-Onciul,
+   Elena-Ramona Modroiu, Nils Ohlmeier, Karel Kozlik.
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -1118,7 +1125,7 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Razvan Crainea
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Razvan Crainea
    (@razvancrainea), Bogdan-Andrei Iancu (@bogdan-iancu), Vlad
    Patrascu (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Ionut
    Ionita (@ionutrazvanionita), Ryan Bullock (@rrb3942),
@@ -1128,10 +1135,10 @@ Chapter 4. Documentation
    Janak (@janakj), Maksym Sobolyev (@sobomax), Elena-Ramona
    Modroiu.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2009-2013 Marina.Rodeo Solutions
+   Copyright © 2009-2013 OpenMarinkaRodeo Solutions
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2004-2009 Voice Sistem SRL
+   Copyright © 2004-2009 Voice Sistem SRL
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2002-2003 FhG FOKUS
+   Copyright © 2002-2003 FhG FOKUS

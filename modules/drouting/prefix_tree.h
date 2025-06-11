@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2008 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2005-2008 Voice Sistem SRL
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of SIP Server (Marina.Rodeo).
+ * This file is part of Open SIP Server (OpenMarinkaRodeo).
  *
- * DROUTING Marina.Rodeo-module is free software; you can redistribute it and/or
+ * DROUTING OpenMarinkaRodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * DROUTING Marina.Rodeo-module is distributed in the hope that it will be useful,
+ * DROUTING OpenMarinkaRodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -70,7 +70,7 @@ typedef struct pgw_ {
 	/* type of gateway */
 	int type;
 	str ip_str;
-	struct socket_info *sock;
+	const struct socket_info *sock;
 	/* strip / pri and attrs */
 	str pri;
 	int strip;
@@ -184,7 +184,7 @@ print_interim(
 int
 del_tree(
 	ptree_t *,
-	osips_free_f
+	oMarinkaRodeo_free_f
 	);
 
 int
@@ -194,8 +194,8 @@ add_prefix(
 	str*,
 	rt_info_t *,
 	unsigned int,
-	osips_malloc_f,
-	osips_free_f
+	oMarinkaRodeo_malloc_f,
+	oMarinkaRodeo_free_f
 	);
 
 rt_info_t*
@@ -203,8 +203,8 @@ get_prefix(
 	ptree_t *ptree,
 	str* prefix,
 	unsigned int rgid,
-	unsigned int *rgidx,
-	unsigned int *matched_len
+	unsigned int *matched_len,
+	int *rgidx
 	);
 
 int
@@ -212,8 +212,8 @@ add_rt_info(
 	ptree_node_t*,
 	rt_info_t*,
 	unsigned int,
-	osips_malloc_f,
-	osips_free_f
+	oMarinkaRodeo_malloc_f,
+	oMarinkaRodeo_free_f
 	);
 
 pgw_t*
@@ -240,19 +240,26 @@ get_carrier_by_id(
 void
 del_rt_list(
 	rt_info_wrp_t *rl,
-	osips_free_f
+	oMarinkaRodeo_free_f
 	);
 
 void
 free_rt_info(
 	rt_info_t*,
-	osips_free_f
+	oMarinkaRodeo_free_f
 	);
 
 rt_info_t*
 check_rt(
 	ptree_node_t *ptn,
 	unsigned int rgid
+	);
+
+rt_info_t*
+_check_rt(
+	ptree_node_t *ptn,
+	unsigned int rgid,
+	int *rgidx
 	);
 
 #endif

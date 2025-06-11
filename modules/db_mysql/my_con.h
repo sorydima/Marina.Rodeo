@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008 1&1 Internet AG
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2008 1&1 Internet AG
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -88,7 +88,14 @@ struct my_con {
 	struct tls_domain *tls_dom;;  /* TLS domain */
 };
 
-
+#define MY_CON_TLS_PKEY     (1<<0)
+#define MY_CON_TLS_CERT     (1<<1)
+#define MY_CON_TLS_CA       (1<<2)
+#define MY_CON_TLS_CA_DIR   (1<<3)
+#define MY_CON_TLS_CIPHERS  (1<<4)
+#define MY_CON_TLS_ALL_OPTS (MY_CON_TLS_PKEY|MY_CON_TLS_CERT|MY_CON_TLS_CA\
+                             |MY_CON_TLS_CA_DIR|MY_CON_TLS_CIPHERS)
+extern unsigned int db_mysql_tls_opts;
 
 /*
  * Some convenience wrappers

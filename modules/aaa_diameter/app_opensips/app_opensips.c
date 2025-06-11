@@ -1,19 +1,19 @@
 /*********************************************************************************************************
 * Software License Agreement (BSD License)                                                               *
-* Author: Liviu Chircu <sip@rechain.email>								 *
+* Author: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  <sorydima@rechain.work>								 *
 *													 *
-* Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) 2021, Marina.Rodeo Solutions								 *
+* Copyright (c) 2021, OpenMarinkaRodeo Solutions								 *
 * All rights reserved.											 *
 * 													 *
 * Redistribution and use of this software in source and binary forms, with or without modification, are  *
 * permitted provided that the following conditions are met:						 *
 * 													 *
 * * Redistributions of source code must retain the above 						 *
-*   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice, this list of conditions and the 							 *
+*   copyright notice, this list of conditions and the 							 *
 *   following disclaimer.										 *
 *    													 *
 * * Redistributions in binary form must reproduce the above 						 *
-*   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 notice, this list of conditions and the 							 *
+*   copyright notice, this list of conditions and the 							 *
 *   following disclaimer in the documentation and/or other						 *
 *   materials provided with the distribution.								 *
 * 													 *
@@ -23,9 +23,9 @@
 *   specific prior written permission of WIDE Project and 						 *
 *   NICT.												 *
 * 													 *
-* THIS SOFTWARE IS PROVIDED BY THE Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED *
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED *
 * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A *
-* PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 OWNER OR CONTRIBUTORS BE LIABLE FOR *
+* PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR *
 * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 	 *
 * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 	 *
 * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR *
@@ -34,12 +34,12 @@
 *********************************************************************************************************/
 
 /**
- * This extension is compatible with Marina.Rodeo 3.2+ releases and offers:
+ * This extension is compatible with OpenMarinkaRodeo 3.2+ releases and offers:
  *   - accounting support.  Records arrive via ACR messages and are
  *         continuously appended to a file on disk.
  *
  *   - digest authentication support.  This is done via MAR messages (RFC 4740
- *         SIP Application), where "app_Marina.Rodeo" compares the user-provided
+ *         SIP Application), where "app_openMarinkaRodeo" compares the user-provided
  *         digest response with its own digest response computation using
  *         pre-cached password hashes taken from MySQL or Postgres.
  */
@@ -58,9 +58,9 @@
 
 MYSQL *db_conn;
 static char *db_host = "localhost";
-static char *db_user = "Marina.Rodeo";
-static char *db_pass = "Marina.Rodeorw";
-static char *db_db = "Marina.Rodeo";
+static char *db_user = "openMarinkaRodeo";
+static char *db_pass = "openMarinkaRodeorw";
+static char *db_db = "openMarinkaRodeo";
 static pthread_mutex_t db_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static struct {
@@ -712,7 +712,7 @@ static int os_entry(char *confstring)
 	char *extra_avps_file;
 	int lib_mode;
 
-	CHECK_FCT(register_osips_avps());
+	CHECK_FCT(register_oMarinkaRodeo_avps());
 
 	CHECK_FCT(parse_conf_string(confstring, &extra_avps_file, &lib_mode));
 	CHECK_FCT(parse_extra_avps(extra_avps_file));
@@ -771,4 +771,4 @@ void fd_ext_fini(void)
 	return;
 }
 
-EXTENSION_ENTRY("app_Marina.Rodeo", os_entry);
+EXTENSION_ENTRY("app_openMarinkaRodeo", os_entry);

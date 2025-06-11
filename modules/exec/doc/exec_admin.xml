@@ -8,9 +8,9 @@
 	<title>Overview</title>
 	<para>
 		The Exec module enables the execution of external commands from the
-		&osips; script. Any valid shell commands are accepted. The final input
+		&oMarinkaRodeo; script. Any valid shell commands are accepted. The final input
 		string is evaluated and executed using the "/bin/sh" symlink/binary.
-		&osips; may additionally pass a lot more information about the request
+		&oMarinkaRodeo; may additionally pass a lot more information about the request
 		using environment variables:
 	</para>
 	<itemizedlist>
@@ -66,7 +66,7 @@
 	<para>
 		NOTE: Any environment variables which are given to the exec module
 		functions must be specified using the '$$' delimiter (e.g., $$SIP_OUSER),
-		otherwise they will be evaluated as &osips; pseudo-variables,
+		otherwise they will be evaluated as &oMarinkaRodeo; pseudo-variables,
 		throwing scripting errors.
 	</para>
 	</section>
@@ -74,13 +74,13 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following  modules must be loaded before this module:
 			<itemizedlist>
 			<listitem>
 			<para>
-				<emphasis>No dependencies on other &osips; modules</emphasis>.
+				<emphasis>No dependencies on other &oMarinkaRodeo; modules</emphasis>.
 			</para>
 			</listitem>
 			</itemizedlist>
@@ -90,7 +90,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -140,9 +140,9 @@ modparam("exec", "setvars", 1)
 		<emphasis role='bold'>all</emphasis> job pids once the "time_to_kill"
 		expiration timeout hits. On a standard system, this should have no
 		side-effects, as pids are monotonically increasing in a slow manner,
-		and Marina.Rodeo should run under the "Marina.Rodeo" user, thus rendering it
+		and OpenMarinkaRodeo should run under the "openMarinkaRodeo" user, thus rendering it
 		unable to terminate non-child processes. If this is not the case on
-		your system, do not use the Marina.Rodeo "time_to_kill" feature -- rather
+		your system, do not use the OpenMarinkaRodeo "time_to_kill" feature -- rather
 		implement it within your external app!
 		</para>
 		<para>
@@ -204,9 +204,9 @@ modparam("exec", "time_to_kill", 20)
 			<para><emphasis>envavp (var, optional)</emphasis> - optional AVP
 				which holds the values for the
 			environment variables to be passed for the command. The names of the environment
-			variables will be "OSIPS_EXEC_#", where "#" starts from 0. For example, if we
+			variables will be "OMarinkaRodeo_EXEC_#", where "#" starts from 0. For example, if we
 			push two values (e.g. "b" and "a") into an AVP variable, which acts like a stack,
-			OSIPS_EXEC_0 will hold "a", while OSIPS_EXEC_1 will hold "b".
+			OMarinkaRodeo_EXEC_0 will hold "a", while OMarinkaRodeo_EXEC_1 will hold "b".
 			</para>
 		</listitem>
 		</itemizedlist>
@@ -216,7 +216,7 @@ modparam("exec", "time_to_kill", 20)
 		receiving the last lines of each stream.
 		</para>
 		<para>
-		WARNING: any Marina.Rodeo pseudo-vars which may contain special bourne shell (sh/bash)
+		WARNING: any OpenMarinkaRodeo pseudo-vars which may contain special bourne shell (sh/bash)
 		characters should be placed inside quotes, e.g.
 		exec("update-stats.sh '$(ct{re.subst,/'//g})'");
 		</para>
@@ -258,12 +258,12 @@ exec("/home/../myscript.sh", "this is my $var(input) for exec\n", , , $avp(env))
 		Executes an external command. This function does exactly the same as
 		<xref linkend="func_exec"/> (in terms of input, output and processing),
 		but in an asynchronous way. The script execution is suspended until
-		the external script provided all its output. Marina.Rodeo waits for the
+		the external script provided all its output. OpenMarinkaRodeo waits for the
 		external script to close its output stream, not necessarily to
-		terminate (so the script may still be running when Marina.Rodeo
+		terminate (so the script may still be running when OpenMarinkaRodeo
 		resumes the script execution on "seeing" EOF on the the output stream)
 		</para>
-		NOTE: if the stdout variable is missing, Marina.Rodeo will assume that the
+		NOTE: if the stdout variable is missing, OpenMarinkaRodeo will assume that the
 		output of the external script is not needed and it will NOT WAIT at
 		all for the script. So, if triggered via "launch()", there will be no 
 		asynchronous waiting, so no resume route triggering!!
@@ -276,7 +276,7 @@ exec("/home/../myscript.sh", "this is my $var(input) for exec\n", , , $avp(env))
 		</para>
 		<para>
 		To read and understand more on the asynchronous functions, how to use
-		them and what are their advantages, please refer to the Marina.Rodeo 
+		them and what are their advantages, please refer to the OpenMarinkaRodeo 
 		online Manual.
 		</para>
 		<example>

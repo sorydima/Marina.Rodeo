@@ -1,16 +1,16 @@
 /*
  * generic key-value storage support
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2018 Marina.Rodeo Solutions
+ * Copyright (C) 2018 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -24,6 +24,7 @@
 #define __KV_STORE_H__
 
 #include "../../map.h"
+#include "../../pvar.h"
 
 int_str_t *kv_get(map_t _store, const str* _key);
 int_str_t *kv_put(map_t _store, const str* _key, const int_str_t* _val);
@@ -45,5 +46,9 @@ void store_free_buffer(str *serialized);
 map_t store_deserialize(const str *input);
 
 void store_destroy(map_t _store);
+
+int w_add_key(struct sip_msg* _m, void* _d, str* aor, str* key, str* value);
+int w_get_key(struct sip_msg* _m, void* _d, str* aor, str* key, pv_spec_t* destination);
+int w_delete_key(struct sip_msg* _m, void* _d, str* aor, str* key);
 
 #endif /* __KV_STORE_H__ */

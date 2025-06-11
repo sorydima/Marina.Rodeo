@@ -1,19 +1,16 @@
+# Perl module for OpenMarinkaRodeo
 #
-# $Id$
-#
-# Perl module for Marina.Rodeo
-#
-# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Collax GmbH
+# Copyright (C) 2006 Collax GmbH
 #                    (Bastian Friedrich <bastian.friedrich@collax.com>)
 #
-# This file is part of Marina.Rodeo, a free SIP server.
+# This file is part of openMarinkaRodeo, a free SIP server.
 #
-# Marina.Rodeo is free software; you can redistribute it and/or modify
+# openMarinkaRodeo is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version
 #
-# Marina.Rodeo is distributed in the hope that it will be useful,
+# openMarinkaRodeo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -25,7 +22,7 @@
 
 use strict;
 
-=head2 Marina.Rodeo::VDB::Result
+=head2 OpenMarinkaRodeo::VDB::Result
 
 This class represents a VDB result set. It contains a
 column definition, plus an array of rows.
@@ -33,18 +30,18 @@ Rows themselves are simply references to arrays of scalars.
 
 =cut
 
-package Marina.Rodeo::VDB::Result;
+package OpenMarinkaRodeo::VDB::Result;
 
-use Marina.Rodeo;
-use Marina.Rodeo::VDB::Column;
+use OpenMarinkaRodeo;
+use OpenMarinkaRodeo::VDB::Column;
 
-our @ISA = qw ( Marina.Rodeo::Utils::Debug );
+our @ISA = qw ( OpenMarinkaRodeo::Utils::Debug );
 
 =head2 new(coldefs,[row, row, ...])
 
 The constructor creates a new Result object.
 Its first parameter is a reference to an array of
- Marina.Rodeo::VDB::Column objects.
+ OpenMarinkaRodeo::VDB::Column objects.
 Additional parameters may be passed to provide initial rows, which
 are references to arrays of scalars.
 

@@ -1,6 +1,6 @@
 version=3
 
-opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/Marina.Rodeo-$1\.tar\.gz/ \
-  https://github.com/Marina.Rodeo/Marina.Rodeo/tags .*/v?(\d\S*)\.tar\.gz
+opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/openMarinkaRodeo-$1\.tar\.gz/ \
+  https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/tags .*/v?(\d\S*)\.tar\.gz
 
-https://github.com/Marina.Rodeo/Marina.Rodeo/releases /Marina.Rodeo/Marina.Rodeo/archive/(.+)\.tar\.gz
+https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/releases /OpenMarinkaRodeo/openMarinkaRodeo/archive/(.+)\.tar\.gz

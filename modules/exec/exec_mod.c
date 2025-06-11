@@ -1,16 +1,16 @@
 /*
  * execution module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -103,7 +103,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,/* dlopen flags */
 	0,				/* load function */
-	NULL,           /* Marina.Rodeo module dependencies */
+	NULL,           /* OpenMarinkaRodeo module dependencies */
 	cmds,           /* Exported functions */
 	acmds,          /* Exported async functions */
 	params,         /* Exported parameters */
@@ -158,7 +158,7 @@ static int fixup_check_avp(void** param)
 
 static inline int setenvvar(struct hf_wrapper** hf, int_str* value, int isstr, int idx)
 {
-	#define OSIPS_EXEC "OSIPS_EXEC_"
+	#define OMarinkaRodeo_EXEC "OMarinkaRodeo_EXEC_"
 
 
 	int len=0;
@@ -166,15 +166,15 @@ static inline int setenvvar(struct hf_wrapper** hf, int_str* value, int isstr, i
 
 	sidx.s = int2str((unsigned long)idx, &sidx.len);
 
-	(*hf)->envvar=pkg_malloc(strlen(OSIPS_EXEC) + sidx.len + 1/*=*/
+	(*hf)->envvar=pkg_malloc(strlen(OMarinkaRodeo_EXEC) + sidx.len + 1/*=*/
 					+ (isstr?(*value).s.len:INT2STR_MAX_LEN) + 1/*\0*/);
 	if ((*hf)->envvar==0) {
 		LM_ERR("no more pkg mem\n");
 		return -1;
 	}
 
-	memcpy((*hf)->envvar, OSIPS_EXEC, strlen(OSIPS_EXEC));
-	len=strlen(OSIPS_EXEC);
+	memcpy((*hf)->envvar, OMarinkaRodeo_EXEC, strlen(OMarinkaRodeo_EXEC));
+	len=strlen(OMarinkaRodeo_EXEC);
 
 	memcpy((*hf)->envvar+len, sidx.s, sidx.len);
 	len+=sidx.len;
@@ -194,7 +194,7 @@ static inline int setenvvar(struct hf_wrapper** hf, int_str* value, int isstr, i
 
 	return 0;
 
-	#undef OSIPS_EXEC
+	#undef OMarinkaRodeo_EXEC
 
 }
 

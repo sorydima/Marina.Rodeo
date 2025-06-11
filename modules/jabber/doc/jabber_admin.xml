@@ -69,7 +69,7 @@
 	<note>
 		<para>
 		A more complete guide about SIMPLE2Jabber gateway can be found 
-		at &osipshomelink;. The part below will be removed soon, only the manual 
+		at &oMarinkaRodeohomelink;. The part below will be removed soon, only the manual 
 		from web will be updated.
 		</para>
 	</note>
@@ -98,24 +98,24 @@
 		</listitem>
 		<listitem>
 		<para>
-			Set the module parameter values in cfg file of &osips;, load the 
+			Set the module parameter values in cfg file of &oMarinkaRodeo;, load the 
 			dependent modules, set up the routing rules for Jabber gateway.
 		</para>
 		</listitem>
 		<listitem>
 		<para>
-			Run &osips;.
+			Run &oMarinkaRodeo;.
 		</para>
 		</listitem>
 	</itemizedlist>
 	<para>
-		The administrator of &osips;/Jabber gateway <emphasis>must</emphasis> 
+		The administrator of &oMarinkaRodeo;/Jabber gateway <emphasis>must</emphasis> 
 		inform the users what are the aliases for Jabber/Other &im; networks. 
 		Other &im;s could be <acronym>AIM</acronym>, <acronym>ICQ</acronym>, 
 		<acronym>MSN</acronym>, Yahoo, and so on.
 	</para>
 	<para>
-		These aliases depend on the server hostname where runs &osips; and 
+		These aliases depend on the server hostname where runs &oMarinkaRodeo; and 
 		how local Jabber server is setup.
 	</para>
 	<para>
@@ -123,7 +123,7 @@
 	</para>
 	<itemizedlist>
 		<listitem>
-		<para>&osips; is running on <quote>server.org</quote>.</para>
+		<para>&oMarinkaRodeo; is running on <quote>server.org</quote>.</para>
 		</listitem>
 		<listitem>
 		<para>
@@ -158,10 +158,10 @@
 	<para>
 		It is indicated to have these aliases in <acronym>DNS</acronym>, thus 
 		the client application can resolve the <acronym>DNS</acronym> name. 
-		Otherwise there must be set the outbound proxy to &osips; server.
+		Otherwise there must be set the outbound proxy to &oMarinkaRodeo; server.
 	</para>
 	<para>
-		*** Routing rules for Jabber gateway First step is to configure &osips; 
+		*** Routing rules for Jabber gateway First step is to configure &oMarinkaRodeo; 
 		to recognize messages for Jabber gateway. Look at 
 		<quote>doc/xjab.cfg</quote> to see a sample. The idea is to look in 
 		messages for destination address and if it contains Jabber alias or
@@ -273,9 +273,9 @@
 	</para>
 	<note>
 		<para>
-		The &osips; administrator have to set the Jabber transports for each &im; network in
+		The &oMarinkaRodeo; administrator have to set the Jabber transports for each &im; network in
 		order to be able to send messages to those networks. The alias of each &im; network
-		can be found out from &osips; admin.
+		can be found out from &oMarinkaRodeo; admin.
 		</para>
 		<para>
 		You cannot send messages from your &sip; client to your associated Jabber
@@ -287,7 +287,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -313,7 +313,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -390,7 +390,7 @@ modparam("jabber", "jport", 1234)
 	<section id="param_jdomain" xreflabel="jdomain">
 		<title><varname>jdomain</varname> (string)</title>
 		<para>
-		Format: jabber.sipserver.com=&lt;delim&gt;. If the destination is for Jabber network
+		Format: jabber.MarinkaRodeoerver.com=&lt;delim&gt;. If the destination is for Jabber network
 		the &uri; should be like: username&lt;delim&gt;jabber_server@jdomain or
 		nickname&lt;delim&gt;roomname&lt;delim&gt;conference_server@jdomain
 		</para>
@@ -408,7 +408,7 @@ modparam("jabber", "jport", 1234)
 		<title>Set <varname>jdomain</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("jabber", "jdomain", "jabber.sipserver.com=*")
+modparam("jabber", "jdomain", "jabber.MarinkaRodeoerver.com=*")
 ...
 </programlisting>
 		</example>
@@ -467,7 +467,7 @@ modparam("jabber", "aliases", "1;msn.x.com=%")
 		<title>Set <varname>proxy</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("jabber", "proxy", "10.0.0.1:5060 sipserver.com:5060")
+modparam("jabber", "proxy", "10.0.0.1:5060 MarinkaRodeoerver.com:5060")
 ...
 </programlisting>
 		</example>

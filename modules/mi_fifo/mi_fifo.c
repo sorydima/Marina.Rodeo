@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem SRL
+ * Copyright (C) 2006 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -45,11 +45,11 @@
 
 static int mi_mod_init(void);
 static void fifo_process(int rank);
-static int mi_destroy(void);
+static void mi_destroy(void);
 
 /* FIFO server vars */
 /* FIFO name */
-static char *mi_fifo = "/tmp/Marina.Rodeo_fifo";
+static char *mi_fifo = "/tmp/openMarinkaRodeo_fifo";
 /* dir where reply fifos are allowed */
 static char *mi_fifo_reply_dir = DEFAULT_MI_REPLY_DIR;
 static int  mi_fifo_uid = -1;
@@ -94,7 +94,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,               /* dlopen flags */
 	0,				               /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	0,                             /* exported functions */
 	0,                             /* exported async functions */
 	mi_params,                     /* exported parameters */
@@ -228,7 +228,7 @@ static void fifo_process(int rank)
 }
 
 
-static int mi_destroy(void)
+static void mi_destroy(void)
 {
 	int n;
 	struct stat filestat;
@@ -240,15 +240,11 @@ static int mi_destroy(void)
 		if (unlink(mi_fifo)<0){
 			LM_ERR("cannot delete the fifo (%s): %s\n",
 				mi_fifo, strerror(errno));
-			goto error;
+			return;
 		}
 	} else if (n<0 && errno!=ENOENT) {
 		LM_ERR("FIFO stat failed: %s\n", strerror(errno));
-		goto error;
+		return;
 	}
-
-	return 0;
-error:
-	return -1;
 }
 

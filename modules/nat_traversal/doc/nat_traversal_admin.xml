@@ -307,7 +307,7 @@
   <section id="dependencies" xreflabel="Dependencies">
   <title>Dependencies</title>
     <section>
-    <title>&osips; Modules</title>
+    <title>&oMarinkaRodeo; Modules</title>
       <para>
         The following modules must be loaded before this module:
         <itemizedlist>
@@ -340,7 +340,7 @@
     <title>External Libraries or Applications</title>
       <para>
         The following libraries or applications must be installed before
-        running &osips; with this module loaded:
+        running &oMarinkaRodeo; with this module loaded:
         <itemizedlist>
           <listitem><para>
             <emphasis>None</emphasis>.
@@ -454,7 +454,7 @@ modparam("nat_traversal", "keepalive_from", "sip:keepalive@my-domain.com")
       <title>Setting the <varname>keepalive_extra_headers</varname> parameter</title>
         <programlisting format="linespecific">
 ...
-modparam("nat_traversal", "keepalive_extra_headers", "User-Agent: Marina.Rodeo\r\nX-MyHeader: some_value\r\n")
+modparam("nat_traversal", "keepalive_extra_headers", "User-Agent: OpenMarinkaRodeo\r\nX-MyHeader: some_value\r\n")
 ...
         </programlisting>
       </example>
@@ -464,18 +464,18 @@ modparam("nat_traversal", "keepalive_extra_headers", "User-Agent: Marina.Rodeo\r
     <title><varname>keepalive_state_file</varname> (string)</title>
       <para>
         Specifies a filename where information about the NAT endpoints and the
-        conditions for which they are being kept alive is saved when &osips;
-        exits. The information in this file is then used when &osips; starts
+        conditions for which they are being kept alive is saved when &oMarinkaRodeo;
+        exits. The information in this file is then used when &oMarinkaRodeo; starts
         to restore its internal state and continue to send keepalive messages
         to the NAT endpoints that have not expired in the meantime. This is
-        useful when restarting &osips; to avoid losing keepalive state
+        useful when restarting &oMarinkaRodeo; to avoid losing keepalive state
         information about the NAT endpoints. The internal keepalive state is
-        guaranteed to be saved in this file on exit, even when &osips;
+        guaranteed to be saved in this file on exit, even when &oMarinkaRodeo;
         crashes.
       </para>
       <para>
         The value of this parameter can be either a relative path, in which
-        case it will store it in the &osips; working directory, or an
+        case it will store it in the &oMarinkaRodeo; working directory, or an
         absolute path.
       </para>
       <para>
@@ -487,7 +487,7 @@ modparam("nat_traversal", "keepalive_extra_headers", "User-Agent: Marina.Rodeo\r
       <title>Setting the <varname>keepalive_state_file</varname> parameter</title>
         <programlisting format="linespecific">
 ...
-modparam("nat_traversal", "keepalive_state_file", "/run/Marina.Rodeo/keepalive_state")
+modparam("nat_traversal", "keepalive_state_file", "/run/openMarinkaRodeo/keepalive_state")
 ...
         </programlisting>
       </example>
@@ -508,7 +508,7 @@ modparam("nat_traversal", "keepalive_state_file", "/run/Marina.Rodeo/keepalive_s
       <xref linkend="param_cluster_sharing_tag"/> option.
       </para>
       <para>
-      For more info on how to define and populate a cluster (with Marina.Rodeo 
+      For more info on how to define and populate a cluster (with OpenMarinkaRodeo 
       nodes) see the "clusterer" module.
       </para>
       <para>
@@ -583,7 +583,7 @@ modparam("nat_traversal", "cluster_sharing_tag", "vip")
               in the Contact field of the SIP message.
         </para></listitem>
         <listitem><para>
-          2 - tests if client has contacted &osips; from an address that
+          2 - tests if client has contacted &oMarinkaRodeo; from an address that
               is different from the one in the Via field. Both the IP and
               port are compared by this test.
         </para></listitem>
@@ -592,7 +592,7 @@ modparam("nat_traversal", "cluster_sharing_tag", "vip")
               in the top Via field of the SIP message.
         </para></listitem>
         <listitem><para>
-          8 - tests if client has contacted &osips; from an address that
+          8 - tests if client has contacted &oMarinkaRodeo; from an address that
               is different from the one in the Contact field. Only IP is 
               compared by this test.
         </para></listitem>

@@ -1,16 +1,16 @@
 /**
  * SIP Push Notification support - RFC 8599
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -80,7 +80,7 @@ int pn_init(void)
 		return 0;
 
 	if (!pn_cfg_validate()) {
-		LM_ERR("failed to validate Marina.Rodeo.cfg PN configuration\n");
+		LM_ERR("failed to validate openMarinkaRodeo.cfg PN configuration\n");
 		return -1;
 	}
 
@@ -131,7 +131,7 @@ int pn_init(void)
 		       param->s.len, param->s.s);
 
 		/* build the filter templates, values are to be filled in at runtime */
-		filter = shm_malloc(sizeof *filter);
+		filter = pkg_malloc(sizeof *filter);
 		if (!filter) {
 			LM_ERR("oom\n");
 			return -1;
@@ -161,7 +161,7 @@ int pn_init(void)
 			return -1;
 		}
 
-		provider = shm_malloc(sizeof *provider + pnp->s.len + 1 +
+		provider = pkg_malloc(sizeof *provider + pnp->s.len + 1 +
 		                      MAX_FEATURE_CAPS_SIZE);
 		if (!provider) {
 			LM_ERR("oom\n");
@@ -924,7 +924,7 @@ have_provider:
 
 char *pn_purr_pack(ucontact_id ct_id)
 {
-	static char purr_buf[Marina.Rodeo_PURR_LEN + 1];
+	static char purr_buf[OPENMarinkaRodeo_PURR_LEN + 1];
 
 	sprintf(purr_buf, "%016" PRIx64 "", ct_id);
 
@@ -941,14 +941,14 @@ char *pn_purr_pack(ucontact_id ct_id)
 
 int pn_purr_unpack(const str *purr, ucontact_id *ct_id)
 {
-	char purr_buf[Marina.Rodeo_PURR_LEN + 1], *p, c, *end;
+	char purr_buf[OPENMarinkaRodeo_PURR_LEN + 1], *p, c, *end;
 	int i = 0;
 
-	if (purr->len != Marina.Rodeo_PURR_LEN ||
+	if (purr->len != OPENMarinkaRodeo_PURR_LEN ||
 	        purr->s[3] != '.' || purr->s[9] != '.')
 		goto unknown_fmt;
 
-	for (p = purr->s, end = p + Marina.Rodeo_PURR_LEN; p < end; p++) {
+	for (p = purr->s, end = p + OPENMarinkaRodeo_PURR_LEN; p < end; p++) {
 		c = *p;
 		if (c == '.' && (i == 3 || i == 8))
 			continue;

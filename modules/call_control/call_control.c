@@ -1,19 +1,19 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2019 Dan Pascu
+ * Copyright (C) 2005-2019 Dan Pascu
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of OpenMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * OpenMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * For a license to use the Marina.Rodeo software under conditions
+ * For a license to use the OpenMarinkaRodeo software under conditions
  * other than those described here, or to purchase support for this
  * software, please contact iptel.org by e-mail at the following addresses:
  *    info@iptel.org
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * OpenMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -184,7 +184,7 @@ static const param_export_t parameters[] = {
 
 
 static const dep_export_t deps = {
-    // Marina.Rodeo module dependencies
+    // OpenMarinkaRodeo module dependencies
     {
         {MOD_TYPE_DEFAULT, "dialog", DEP_ABORT},
         {MOD_TYPE_NULL, NULL, 0}

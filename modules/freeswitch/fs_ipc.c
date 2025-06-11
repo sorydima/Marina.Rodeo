@@ -1,16 +1,16 @@
 /*
  * Inter-process communication primitives
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Solutions
+ * Copyright (C) 2017 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -84,6 +84,7 @@ unsigned long fs_ipc_send_esl_cmd(fs_evs *sock, const str *fs_cmd)
 {
 	fs_ipc_esl_cmd *cmd;
 	unsigned long esl_reply_id;
+	unsigned int ticks;
 
 	cmd = shm_malloc(sizeof *cmd);
 	if (!cmd) {
@@ -93,8 +94,11 @@ unsigned long fs_ipc_send_esl_cmd(fs_evs *sock, const str *fs_cmd)
 	memset(cmd, 0, sizeof *cmd);
 
 	cmd->sock = sock;
+	ticks = get_ticks();
 
 	lock_start_write(sock->lists_lk);
+	/* we're only interested in usage at script level, not the actual ESL */
+	sock->last_esl_jiffy = ticks;
 	cmd->esl_reply_id = sock->esl_reply_id++;
 	lock_stop_write(sock->lists_lk);
 

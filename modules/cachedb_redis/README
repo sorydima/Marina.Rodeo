@@ -7,22 +7,27 @@ cachedb_redis Module
 
         1.1. Overview
         1.2. Advantages
-        1.3. Limitations
-        1.4. Dependencies
+        1.3. Redis Stack Support
+        1.4. Limitations
+        1.5. Dependencies
 
-              1.4.1. Marina.Rodeo Modules
-              1.4.2. External Libraries or Applications
+              1.5.1. OpenMarinkaRodeo Modules
+              1.5.2. External Libraries or Applications
 
-        1.5. Exported Parameters
+        1.6. Exported Parameters
 
-              1.5.1. cachedb_url (string)
-              1.5.2. connect_timeout (integer)
-              1.5.3. query_timeout (integer)
-              1.5.4. shutdown_on_error (integer)
-              1.5.5. use_tls (integer)
+              1.6.1. cachedb_url (string)
+              1.6.2. connect_timeout (integer)
+              1.6.3. query_timeout (integer)
+              1.6.4. shutdown_on_error (integer)
+              1.6.5. use_tls (integer)
+              1.6.6. ftsearch_index_name (string)
+              1.6.7. ftsearch_json_prefix (string)
+              1.6.8. ftsearch_max_results (integer)
+              1.6.9. ftsearch_json_mset_expire (integer)
 
-        1.6. Exported Functions
-        1.7. Raw Query Syntax
+        1.7. Exported Functions
+        1.8. Raw Query Syntax
 
    2. Contributors
 
@@ -50,7 +55,11 @@ cachedb_redis Module
    1.4. Set connect_timeout parameter
    1.5. Set the shutdown_on_error parameter
    1.6. Set the use_tls parameter
-   1.7. Redis Raw Query Examples
+   1.7. Set the ftsearch_index_name parameter
+   1.8. Set the ftsearch_json_prefix parameter
+   1.9. Set the ftsearch_max_results parameter
+   1.10. Set the ftsearch_json_mset_expire parameter
+   1.11. Redis Raw Query Examples
 
 Chapter 1. Admin Guide
 
@@ -67,31 +76,47 @@ Chapter 1. Admin Guide
      * memory costs are no longer on the server
      * many servers can be used inside a cluster, so the memory is
        virtually unlimited
-     * the cache is 100% persistent. A restart of Marina.Rodeo server
+     * the cache is 100% persistent. A restart of OpenMarinkaRodeo server
        will not affect the DB. The Redis DB is also persistent so
        it can also be restarted without loss of information.
      * redis is an open-source project so it can be used to
        exchange data with various other applications
-     * By creating a Redis Cluster, multiple Marina.Rodeo instances
+     * By creating a Redis Cluster, multiple OpenMarinkaRodeo instances
        can easily share key-value information
 
-1.3. Limitations
+1.3. Redis Stack Support
+
+   Starting with OpenMarinkaRodeo 3.6, the cachedb_redis module implements
+   the column-oriented cacheDB API functions. This makes it a
+   suitable cacheDB storage in scenarios such as user location
+   federation and full-sharing, which require this API to be
+   available.
+
+   The implementation makes use of RedisJSON and RediSearch --
+   these relatively new features are available in Redis Stack
+   Server, instead of the usual Redis Server (Redis OSS project).
+   More documentation is available on the Redis website.
+
+   OpenMarinkaRodeo will auto-detect availability of the RedisJSON support
+   when necessary and log the appropriate messages.
+
+1.4. Limitations
 
      * keys (in key:value pairs) may not contain spaces or control
        characters
 
-1.4. Dependencies
+1.5. Dependencies
 
-1.4.1. Marina.Rodeo Modules
+1.5.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * If a use_tls is defined, the tls_mgm module will need to be
        loaded as well.
 
-1.4.2. External Libraries or Applications
+1.5.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * hiredis:
        On the latest Debian based distributions, hiredis can be
        installed by running 'apt-get install libhiredis-dev'
@@ -102,11 +127,11 @@ Chapter 1. Admin Guide
        If TLS connections are enabled via the use_tls modparam,
        hiredis needs to be compiled with TLS support.
 
-1.5. Exported Parameters
+1.6. Exported Parameters
 
-1.5.1. cachedb_url (string)
+1.6.1. cachedb_url (string)
 
-   The URLs of the server groups that Marina.Rodeo will connect to in
+   The URLs of the server groups that OpenMarinkaRodeo will connect to in
    order to use, from script, the cache_store(), cache_fetch(),
    etc. operations. It may be set more than once. The prefix part
    of the URL will be the identifier that will be used from the
@@ -132,9 +157,9 @@ cache_fetch("redis:cluster1", "key", $avp(10));
 cache_remove("redis:cluster1", "key");
 ...
 
-1.5.2. connect_timeout (integer)
+1.6.2. connect_timeout (integer)
 
-   This parameter specifies how many milliseconds Marina.Rodeo should
+   This parameter specifies how many milliseconds OpenMarinkaRodeo should
    wait for connecting to a Redis node.
 
    Default value is “5000 ms”.
@@ -145,9 +170,9 @@ cache_remove("redis:cluster1", "key");
 modparam("cachedb_redis", "connect_timeout",1000)
 ...
 
-1.5.3. query_timeout (integer)
+1.6.3. query_timeout (integer)
 
-   This parameter specifies how many milliseconds Marina.Rodeo should
+   This parameter specifies how many milliseconds OpenMarinkaRodeo should
    wait for a query response from a Redis node.
 
    Default value is “5000 ms”.
@@ -158,9 +183,9 @@ modparam("cachedb_redis", "connect_timeout",1000)
 modparam("cachedb_redis", "query_timeout",1000)
 ...
 
-1.5.4. shutdown_on_error (integer)
+1.6.4. shutdown_on_error (integer)
 
-   By setting this parameter to 1, Marina.Rodeo will abort startup if
+   By setting this parameter to 1, OpenMarinkaRodeo will abort startup if
    the initial connection to Redis is not possible. Runtime
    reconnect behavior is unaffected by this parameter, and is
    always enabled.
@@ -169,11 +194,11 @@ modparam("cachedb_redis", "query_timeout",1000)
 
    Example 1.5. Set the shutdown_on_error parameter
 ...
-# abort Marina.Rodeo startup if Redis is down
+# abort OpenMarinkaRodeo startup if Redis is down
 modparam("cachedb_redis", "shutdown_on_error", 1)
 ...
 
-1.5.5. use_tls (integer)
+1.6.5. use_tls (integer)
 
    Setting this parameter will allow you to use TLS for Redis
    connections. In order to enable TLS for a specific connection,
@@ -207,12 +232,74 @@ modparam("cachedb_redis", "cachedb_url","redis://localhost:6379/?tls_dom
 ain=redis")
 ...
 
-1.6. Exported Functions
+1.6.6. ftsearch_index_name (string)
+
+   Only relevant with RedisJSON and RediSearch server-side
+   support.
+
+   A global index name to be used for all internal JSON full-text
+   search operations. Future extensions may add, e.g., a
+   connection-level index name setting.
+
+   Default value is "idx:usrloc".
+
+   Example 1.7. Set the ftsearch_index_name parameter
+
+modparam("cachedb_redis", "ftsearch_index_name", "ix::usrloc")
+
+
+1.6.7. ftsearch_json_prefix (string)
+
+   Only relevant with RedisJSON and RediSearch server-side
+   support.
+
+   A key naming prefix for all internally-created Redis JSON
+   objects (e.g. created with JSON.SET or JSON.MSET).
+
+   Default value is "usrloc:".
+
+   Example 1.8. Set the ftsearch_json_prefix parameter
+
+modparam("cachedb_redis", "ftsearch_json_prefix", "userlocation:")
+
+
+1.6.8. ftsearch_max_results (integer)
+
+   Only relevant with RedisJSON and RediSearch server-side
+   support.
+
+   The maximum number of results returned by each
+   internally-triggered FT.SEARCH JSON lookup query.
+
+   Default value is 10000 max results.
+
+   Example 1.9. Set the ftsearch_max_results parameter
+
+modparam("cachedb_redis", "ftsearch_max_results", 100)
+
+
+1.6.9. ftsearch_json_mset_expire (integer)
+
+   Only relevant with RedisJSON and RediSearch server-side
+   support.
+
+   A Redis EXPIRE timer to set/refresh on the JSON key after each
+   JSON.MSET operation (create the JSON or add/remove subkeys), in
+   seconds. A value of 0 disables the EXPIRE queries completely.
+
+   Default value is 3600 seconds.
+
+   Example 1.10. Set the ftsearch_json_mset_expire parameter
+
+modparam("cachedb_redis", "ftsearch_json_mset_expire", 7200)
+
+
+1.7. Exported Functions
 
    The module does not export functions to be used in
    configuration script.
 
-1.7. Raw Query Syntax
+1.8. Raw Query Syntax
 
    The cachedb_redis module allows to run RAW queries, thus taking
    full advantage of the capabilities of the back-end. The query
@@ -220,7 +307,7 @@ ain=redis")
 
    Here are a couple examples of running some Redis queries :
 
-   Example 1.7. Redis Raw Query Examples
+   Example 1.11. Redis Raw Query Examples
 ...
         $var(my_hash) = "my_hash_name";
         $var(my_key) = "my_key_name";
@@ -257,19 +344,21 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Vlad Paiu (@vladpaiu) 30 17 1428 43
-   2. Liviu Chircu (@liviuchircu) 28 18 543 276
-   3. Razvan Crainea (@razvancrainea) 16 13 130 35
-   4. Vlad Patrascu (@rvlad-patrascu) 12 6 595 38
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 43 23 1720 288
+   2. Vlad Paiu (@vladpaiu) 33 19 1446 50
+   3. Razvan Crainea (@razvancrainea) 17 14 150 48
+   4. Vlad Patrascu (@rvlad-patrascu) 13 6 595 38
    5. Bogdan-Andrei Iancu (@bogdan-iancu) 7 5 7 5
    6. Maksym Sobolyev (@sobomax) 6 4 7 7
-   7. jalung 4 1 144 61
-   8. Dan Pascu (@danpascu) 3 1 15 15
-   9. Ezequiel Lovelle 3 1 11 4
-   10. John Burke (@john08burke) 3 1 6 1
+   7. jalung 5 1 144 61
+   8. Norm Brandinger 4 1 207 5
+   9. Dan Pascu (@danpascu) 3 1 15 15
+   10. Ezequiel Lovelle 3 1 11 4
 
-   All remaining contributors: Julián Moreno Patiño, Peter
-   Lemenkov (@lemenkov), Jarrod Baumann (@jarrodb), Kristian Høgh.
+   All remaining contributors: John Burke (@john08burke),
+   tcresson, Eddie Fiorentine, Julián Moreno Patiño, Peter
+   Lemenkov (@lemenkov), zhengsh, Jarrod Baumann (@jarrodb),
+   Kristian Høgh.
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -279,7 +368,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -290,20 +379,22 @@ Chapter 2. Contributors
 2.2. By Commit Activity
 
    Table 2.2. Most recently active contributors^(1) to this module
-                      Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Liviu Chircu (@liviuchircu)         Mar 2014 - Jul 2022
-   3.  John Burke (@john08burke)           Apr 2022 - Apr 2022
-   4.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jan 2022
-   5.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Mar 2020
-   6.  Razvan Crainea (@razvancrainea)     Feb 2012 - Sep 2019
-   7.  Dan Pascu (@danpascu)               May 2019 - May 2019
-   8.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   9.  Kristian Høgh                       Apr 2016 - Apr 2016
-   10. Julián Moreno Patiño                Feb 2016 - Feb 2016
+                    Name                 Commit Activity
+   1.  Razvan Crainea (@razvancrainea) Feb 2012 - May 2025
+   2.  Norm Brandinger                 May 2025 - May 2025
+   3.  Eddie Fiorentine                Mar 2025 - Mar 2025
+   4.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)     Mar 2014 - Jan 2025
+   5.  Vlad Paiu (@vladpaiu)           Oct 2011 - Nov 2024
+   6.  tcresson                        Oct 2023 - Oct 2023
+   7.  zhengsh                         Aug 2023 - Aug 2023
+   8.  Maksym Sobolyev (@sobomax)      Feb 2023 - Feb 2023
+   9.  John Burke (@john08burke)       Apr 2022 - Apr 2022
+   10. Vlad Patrascu (@rvlad-patrascu) May 2017 - Jan 2022
 
-   All remaining contributors: Jarrod Baumann (@jarrodb), jalung,
-   Vlad Paiu (@vladpaiu), Ezequiel Lovelle.
+   All remaining contributors: Bogdan-Andrei Iancu
+   (@bogdan-iancu), Dan Pascu (@danpascu), Peter Lemenkov
+   (@lemenkov), Kristian Høgh, Julián Moreno Patiño, Jarrod
+   Baumann (@jarrodb), jalung, Ezequiel Lovelle.
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -312,7 +403,7 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Vlad Patrascu
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Vlad Patrascu
    (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Julián Moreno
    Patiño, Razvan Crainea (@razvancrainea), Vlad Paiu (@vladpaiu).
 
@@ -320,7 +411,7 @@ Chapter 4. Frequently Asked Questions
 
    4.1.
 
-   My Marina.Rodeo is occasionally crashing in libhiredis, what to do?
+   My OpenMarinkaRodeo is occasionally crashing in libhiredis, what to do?
 
    Make sure you've upgraded the Redis "libhiredis" client library
    to at least version 0.14.1. There was at least one significant
@@ -328,6 +419,6 @@ Chapter 4. Frequently Asked Questions
    (CVE-2020-7105), so upgrading to latest stable may very well
    fix the crash!
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
+   Copyright © 2011 www.openMarinkaRodeo-solutions.com

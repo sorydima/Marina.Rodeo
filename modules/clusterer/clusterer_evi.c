@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2021 Marina.Rodeo Project
+ * Copyright (C) 2021 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -123,14 +123,19 @@ int raise_node_state_ev(enum clusterer_event ev, int cluster_id, int node_id)
 {
 	int new_state = ev == CLUSTER_NODE_DOWN ? 0 : 1;
 
+	/* coverity[overrun-buffer-val: FALSE] */
 	if (evi_param_set_int(ei_clusterid_p, &cluster_id) < 0) {
 		LM_ERR("cannot set cluster_id event parameter\n");
 		return -1;
 	}
+
+	/* coverity[overrun-buffer-val: FALSE] */
 	if (evi_param_set_int(ei_nodeid_p, &node_id) < 0) {
 		LM_ERR("cannot set node_id event parameter\n");
 		return -1;
 	}
+
+	/* coverity[overrun-buffer-val: FALSE] */
 	if (evi_param_set_int(ei_newstate_p, &new_state) < 0) {
 		LM_ERR("cannot set new_state event parameter\n");
 		return -1;
@@ -147,10 +152,13 @@ int raise_node_state_ev(enum clusterer_event ev, int cluster_id, int node_id)
 int raise_gen_msg_ev(int cluster_id, int source_id,
 	int req_like, str *rcv_msg, str *rcv_tag)
 {
+	/* coverity[overrun-buffer-val: FALSE] */
 	if (evi_param_set_int(ei_clid_p, &cluster_id) < 0) {
 		LM_ERR("cannot set cluster id event parameter\n");
 		return -1;
 	}
+
+	/* coverity[overrun-buffer-val: FALSE] */
 	if (evi_param_set_int(ei_srcid_p, &source_id) < 0) {
 		LM_ERR("cannot set source id event parameter\n");
 		return -1;

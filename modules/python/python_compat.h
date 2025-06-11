@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2019 Marina.Rodeo Project
+ * Copyright (C) 2019 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -49,10 +49,10 @@
 #define PyLong_FromLong PyInt_FromLong
 #define PyLong_AsLong PyInt_AsLong
 
-void initMarina.Rodeo(void);
-#define PyInit_Marina.Rodeo initMarina.Rodeo
+void initOpenMarinkaRodeo(void);
+#define PyInit_OpenMarinkaRodeo initOpenMarinkaRodeo
 #else /* python3.x */
-PyMODINIT_FUNC PyInit_Marina.Rodeo(void);
+PyMODINIT_FUNC PyInit_OpenMarinkaRodeo(void);
 #endif
 
 #endif /* _PYTHON_COMPAT_H_ */

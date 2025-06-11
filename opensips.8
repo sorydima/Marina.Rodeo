@@ -1,13 +1,12 @@
-.\" $Id$
 .\" Process with
-.\" groff -man -Tascii Marina.Rodeo.8
+.\" groff -man -Tascii openMarinkaRodeo.8
 .\" 
-.TH "Marina.Rodeo" "8" "08.06.2006" "Marina.Rodeo" "VoIP SIP Server"
+.TH "OpenMarinkaRodeo" "8" "08.06.2006" "OpenMarinkaRodeo" "VoIP SIP Server"
 .SH "NAME"
-Marina.Rodeo \- flexible and roboust SIP (RFC3261, RFC3263) server for Voice over IP (VoIP)
+openMarinkaRodeo \- flexible and roboust SIP (RFC3261, RFC3263) server for Voice over IP (VoIP)
 
 .SH "SYNOPSIS"
-.B Marina.Rodeo
+.B openMarinkaRodeo
 [
 .B \-hcCrRvdDEVT
 ] [
@@ -41,7 +40,7 @@ Marina.Rodeo \- flexible and roboust SIP (RFC3261, RFC3263) server for Voice ove
 ]
 
 .SH "DESCRIPTION"
-.B Marina.Rodeo 
+.B OpenMarinkaRodeo 
 .BR  
 is a SIP\-based VoIP server running on most Unix\-like operating systems. It supports UDP, TCP and TLS transport layers. Among its features:
 .IP  *
@@ -86,7 +85,7 @@ Turns on debugging, multiple
 increase the debug level.
 .TP 
 .BI \-D
-Runs Marina.Rodeo in the foreground (it doesn't fork into daemon mode).
+Runs openMarinkaRodeo in the foreground (it doesn't fork into daemon mode).
 .TP 
 .BI \-E
 Sends all the log messages to stderr.
@@ -101,7 +100,7 @@ Displays the version number.
 Reads the configuration from 
 .B " config\-file" 
 (default
-.I  /etc/Marina.Rodeo/Marina.Rodeo.cfg
+.I  /etc/openMarinkaRodeo/openMarinkaRodeo.cfg
 ).
 .TP 
 .BI \-l " address"
@@ -129,7 +128,7 @@ Size of the shared memory which will be allocated (in Megabytes).
 .TP 
 .BI \-w " working\-dir" 
 Specifies the working directory. In the very improbable event that 
-.B Marina.Rodeo 
+.B openMarinkaRodeo 
 will crash, the core file will be generated here.
 .TP 
 .BI \-W " method"
@@ -137,32 +136,32 @@ Specify poll method.
 .TP 
 .BI \-t " chroot\-dir"
 Forces 
-.B Marina.Rodeo 
+.B openMarinkaRodeo 
 to chroot after reading the config file.
 .TP 
 .BI \-u " uid"
 Changes the user id under which 
-.B Marina.Rodeo
+.B openMarinkaRodeo
 runs.
 .TP 
 .BI \-g " gid"
 Changes the group id under which 
-.B Marina.Rodeo 
+.B openMarinkaRodeo 
 runs.
 .TP 
 .BI \-P " pid\-file"
 Creates a file containing the pid of the main 
-.B Marina.Rodeo 
+.B openMarinkaRodeo 
 process.
 .TP 
 .BI \-i " fifo\-path"
 Creates a fifo, useful for monitoring
-.B Marina.Rodeo
+.B openMarinkaRodeo
 status.
 .TP 
 .BI \-x " socket\-path"
 Creates a unix socket, useful for monitoring
-.B Marina.Rodeo
+.B openMarinkaRodeo
 status ( same as
 .BI \-i " fifo\-path" 
 but using instead unix sockets).
@@ -170,28 +169,28 @@ but using instead unix sockets).
 
 .SH "FILES"
 .PD 0
-.B /usr/sbin/Marina.Rodeo
+.B /usr/sbin/openMarinkaRodeo
 .br 
-.B /etc/Marina.Rodeo/Marina.Rodeo.cfg
+.B /etc/openMarinkaRodeo/openMarinkaRodeo.cfg
 .br 
-.B /usr/lib/Marina.Rodeo/modules/*
+.B /usr/lib/openMarinkaRodeo/modules/*
 .PD
 .SH "AUTHORS"
 see 
-.B /usr/share/doc/Marina.Rodeo/AUTHORS
+.B /usr/share/doc/openMarinkaRodeo/AUTHORS
 
 .SH "SEE ALSO"
-.BR Marina.Rodeo.cfg(5)
+.BR openMarinkaRodeo.cfg(5)
 .PP 
-Full documentation on Marina.Rodeo is available at
-.I https://Marina.Rodeo.org/.
+Full documentation on openMarinkaRodeo is available at
+.I https://openMarinkaRodeo.org/.
 .PP 
 Project tracker and GIT
 .I 
-https://github.com/Marina.Rodeo/Marina.Rodeo.
+https://github.com/OpenMarinkaRodeo/openMarinkaRodeo.
 .PP 
 Mailing lists:
 .nf 
-users@lists.Marina.Rodeo.org \- Marina.Rodeo user community
+users@lists.openMarinkaRodeo.org \- openMarinkaRodeo user community
 .nf 
-devel@lists.Marina.Rodeo.org \- Marina.Rodeo development, new features and unstable version
+devel@lists.openMarinkaRodeo.org \- openMarinkaRodeo development, new features and unstable version

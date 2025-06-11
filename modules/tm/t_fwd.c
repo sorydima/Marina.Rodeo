@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2010-2014 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2010-2014 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -235,7 +235,7 @@ error:
 
 /* be aware and use it *all* the time between pre_* and post_* functions! */
 static inline char *print_uac_request(struct sip_msg *i_req, unsigned int *len,
-		struct socket_info *send_sock, enum sip_protos proto )
+		const struct socket_info *send_sock, enum sip_protos proto )
 {
 	char *buf;
 	str *cid = NULL;
@@ -325,7 +325,7 @@ int add_blind_uac(void)  /*struct cell *t*/
 static inline int update_uac_dst( struct sip_msg *request,
 													struct ua_client *uac )
 {
-	struct socket_info* send_sock;
+	const struct socket_info* send_sock;
 	char *shbuf;
 	unsigned int len;
 
@@ -396,7 +396,8 @@ static inline unsigned int count_local_rr(struct sip_msg *req)
    may break the function logic!
 */
 static int add_uac( struct cell *t, struct sip_msg *request, const str *uri,
-		str* next_hop, unsigned int bflags, str* path, struct proxy_l *proxy)
+		str* next_hop, unsigned int bflags, str* path,
+		int q, struct usr_avp **attrs, struct proxy_l *proxy)
 {
 	unsigned short branch;
 	struct sip_msg_body *body_clone=NO_BODY_CLONE_MARKER;
@@ -423,6 +424,18 @@ static int add_uac( struct cell *t, struct sip_msg *request, const str *uri,
 	request->dst_uri=*next_hop;
 	request->path_vec=*path;
 	request->ruri_bflags=bflags;
+
+	/* we attach the attrs here as we need to see them in branch route
+	 * (inside pre_print_uac_request())
+	 * They will remain attached here if the UAC is successfully created;
+	 * if we exit with return the attrs will be freed by clean_branch().
+	 * Bottom line, we take over the attr list handling, so we NULL the
+	 * received holder (so the upper level will havve nothing to care furhter)
+	 */
+	if (attrs) {
+		t->uac[branch].battrs = *attrs;
+		*attrs = NULL;
+	}
 
 	if ( pre_print_uac_request( t, branch, request, &body_clone)!= 0 ) {
 		ret = -1;
@@ -471,6 +484,7 @@ static int add_uac( struct cell *t, struct sip_msg *request, const str *uri,
 	t->uac[branch].uri.len=request->new_uri.len;
 	t->uac[branch].br_flags = request->ruri_bflags;
 	t->uac[branch].added_rr = count_local_rr( request );
+	t->uac[branch].q = q;
 	t->nr_of_outgoings++;
 
 	/* done! */
@@ -693,14 +707,12 @@ int t_forward_nonack( struct cell *t, struct sip_msg* p_msg ,
 	int branch_ret, lowest_ret;
 	str current_uri;
 	branch_bm_t  added_branches;
-	int i, q;
 	struct cell *t_invite;
-	int success_branch;
-	str dst_uri;
-	struct socket_info *bk_sock;
-	unsigned int br_flags, bk_bflags;
+	int i, success_branch;
+	const struct socket_info *bk_sock;
+	unsigned int bk_bflags;
+	struct msg_branch *branch;
 	int idx;
-	str path;
 	str bk_path;
 
 	/* before doing enything, update the t flags from msg */
@@ -768,17 +780,18 @@ int t_forward_nonack( struct cell *t, struct sip_msg* p_msg ,
 
 	/* as first branch, use current R-URI, bflags, etc. */
 	branch_ret = add_uac( t, p_msg, &current_uri, &backup_dst,
-		getb0flags(p_msg), &p_msg->path_vec, proxy);
+		getb0flags(p_msg), &p_msg->path_vec, p_msg->ruri_q,
+		ruri_branch_attrs_head() , proxy);
 	if (branch_ret>=0)
 		added_branches |= 1<<branch_ret;
 	else
 		lowest_ret=branch_ret;
 
 	/* ....and now add the remaining additional branches */
-	for( idx=0; (current_uri.s=get_branch( idx, &current_uri.len, &q,
-	&dst_uri, &path, &br_flags, &p_msg->force_send_socket))!=0 ; idx++ ) {
-		branch_ret = add_uac( t, p_msg, &current_uri, &dst_uri,
-			br_flags, &path, proxy);
+	for( idx=0; (branch=get_msg_branch(idx))!=NULL ; idx++ ) {
+		p_msg->force_send_socket = branch->force_send_socket;
+		branch_ret = add_uac( t, p_msg, &branch->uri, &branch->dst_uri,
+			branch->bflags, &branch->path, branch->q, &branch->attrs, proxy);
 		/* pick some of the errors in case things go wrong;
 		   note that picking lowest error is just as good as
 		   any other algorithm which picks any other negative
@@ -789,7 +802,7 @@ int t_forward_nonack( struct cell *t, struct sip_msg* p_msg ,
 			lowest_ret=branch_ret;
 	}
 	/* consume processed branches */
-	clear_branches();
+	clear_dset();
 
 	/* restore original stuff */
 	p_msg->new_uri=backup_uri;
@@ -824,10 +837,12 @@ int t_forward_nonack( struct cell *t, struct sip_msg* p_msg ,
 
 			/* successfully sent out -> run callbacks */
 			if ( has_tran_tmcbs( t, TMCB_REQUEST_BUILT) ) {
+				_tm_branch_index = i;
 				set_extra_tmcb_params( &t->uac[i].request.buffer,
 					&t->uac[i].request.dst);
 				run_trans_callbacks( TMCB_REQUEST_BUILT, t,
 					p_msg, 0, 0);
+				_tm_branch_index = 0;
 			}
 
 			do {
@@ -1050,6 +1065,7 @@ int t_inject_branch( struct cell *t, struct sip_msg *msg, int flags)
 	static struct sip_msg faked_req;
 	branch_bm_t cancel_bm = 0;
 	str reason = str_init(CANCEL_REASON_200);
+	struct cell *bk_t = NULL;
 	int rc;
 
 	/* does the transaction state still accept new branches ? */
@@ -1084,14 +1100,19 @@ int t_inject_branch( struct cell *t, struct sip_msg *msg, int flags)
 			/* current message is a reply, so take the first branch from dset
 			 * and move it into the faked msg (that will be used by t_fwd 
 			 * function)*/
-			if (move_branch_to_ruri( 0, &faked_req)<0) {
+			if (move_msg_branch_to_ruri( 0, &faked_req)<0) {
 				LM_ERR("no branch found to be moved as new destination\n");
 				goto error;
 			}
 			/* remove it from set */
-			remove_branch(0);
+			remove_msg_branch(0);
 		}
 	}
+
+	/* t_forward_nonack() relies on T for various internal stuff, so be
+	 * we advertise the correct one */
+	bk_t = get_t();
+	set_t( t );
 
 	/* do we have to cancel the existing branches before injecting new ones? */
 	if (flags&TM_INJECT_FLAG_CANCEL) {
@@ -1110,6 +1131,8 @@ int t_inject_branch( struct cell *t, struct sip_msg *msg, int flags)
 		cancel_uacs( t, cancel_bm );
 		set_cancel_extra_hdrs( NULL, 0);
 	}
+
+	set_t( bk_t );
 
 	/* cleanup the faked request */
 	free_faked_req( &faked_req, t);
@@ -1143,7 +1166,7 @@ int t_replicate(struct sip_msg *p_msg, str *dst, int flags)
 		return -1;
 	}
 
-	if ( branch_uri2dset( GET_RURI(p_msg) )!=0 ) {
+	if ( msg_branch_uri2dset( GET_RURI(p_msg) )!=0 ) {
 		LM_ERR("failed to convert uri to dst\n");
 		return -1;
 	}

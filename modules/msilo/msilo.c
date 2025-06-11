@@ -1,16 +1,16 @@
 /*
  * MSILO module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -231,7 +231,7 @@ static const stat_export_t msilo_stats[] = {
 #endif
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "tm", DEP_ABORT },
 		{ MOD_TYPE_SQLDB,   NULL, DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
@@ -248,7 +248,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,       /* module's exported functions */
 	0,          /* module's exported async functions */
 	params,     /* module's exported parameters */
@@ -634,7 +634,7 @@ static int m_store(struct sip_msg* msg, str* owner)
 	}
 
 	/* current time */
-	val = (int)time(NULL);
+	val = (int)(unsigned long)time(NULL);
 
 	/* add expiration time */
 	db_keys[nr_keys] = &sc_exp_time;
@@ -1049,7 +1049,7 @@ void m_clean_silo(unsigned int ticks, void *param)
 		db_keys[0] = &sc_exp_time;
 		db_vals[0].type = DB_INT;
 		db_vals[0].nul = 0;
-		db_vals[0].val.int_val = (int)time(NULL);
+		db_vals[0].val.int_val = (int)(unsigned long)time(NULL);
 		if (msilo_dbf.delete(db_con, db_keys, db_ops, db_vals, 1) < 0)
 			LM_DBG("ERROR cleaning expired messages\n");
 	}
@@ -1148,7 +1148,7 @@ void m_send_ontimer(unsigned int ticks, void *param)
 	db_vals[1].type = DB_INT;
 	db_vals[1].nul = 0;
 	ttime = time(NULL);
-	db_vals[1].val.int_val = (int)ttime;
+	db_vals[1].val.int_val = (int)(unsigned long)ttime;
 
 	if (msilo_dbf.use_table(db_con, &ms_db_table) < 0)
 	{

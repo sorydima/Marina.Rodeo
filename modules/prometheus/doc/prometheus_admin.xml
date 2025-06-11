@@ -10,7 +10,7 @@
 		This module provides a HTTP interface for the
 		<ulink url='https://prometheus.io/'>Prometheus</ulink>
 		monitoring system, allowing it to fetch different
-		statistics from Marina.Rodeo.
+		statistics from OpenMarinkaRodeo.
 	</para>
 	<para>
 		In order to use it, you have to explicitely define the
@@ -39,7 +39,7 @@
 		</para>
 	</section>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 		<itemizedlist>
@@ -57,7 +57,7 @@
 		<title><varname>root</varname>(string)</title>
 		<para>
 		Specifies the root metrics path Promethus uses to query the stats:
-		http://[Marina.Rodeo_IP]:[Marina.Rodeo_httpd_port]/[root]
+		http://[openMarinkaRodeo_IP]:[openMarinkaRodeo_httpd_port]/[root]
 		</para>
 		<para>
 		<emphasis>The default value is "metrics".</emphasis>
@@ -78,13 +78,13 @@ modparam("prometheus", "root", "prometheus")
 		Appends a prefix to each statistic exported.
 		</para>
 		<para>
-		<emphasis>The default value is "Marina.Rodeo".</emphasis>
+		<emphasis>The default value is "openMarinkaRodeo".</emphasis>
 		</para>
 		<example>
 		<title>Set <varname>prefix</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("prometheus", "prefix", "Marina.Rodeo_1")
+modparam("prometheus", "prefix", "openMarinkaRodeo_1")
 ...
 </programlisting>
 		</example>
@@ -102,7 +102,7 @@ modparam("prometheus", "prefix", "Marina.Rodeo_1")
 		<title>Set <varname>group_prefix</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("prometheus", "group_prefix", "Marina.Rodeo")
+modparam("prometheus", "group_prefix", "openMarinkaRodeo")
 ...
 </programlisting>
 		</example>
@@ -157,7 +157,7 @@ modparam("prometheus", "group_label", "grp")
 		<listitem>
 			<para><emphasis>1</emphasis> - send the group in the name of the statstic.</para>
 			For example, <emphasis>timestamp</emphasis> statistic from the <emphasis>core</emphasis>
-			group would be exported as <emphasis>Marina.Rodeo_core_timestamp</emphasis>. Note that the
+			group would be exported as <emphasis>openMarinkaRodeo_core_timestamp</emphasis>. Note that the
 			<emphasis>group_prefix</emphasis> is still attached to the group's name.
 		</listitem>
 		<listitem>
@@ -182,7 +182,7 @@ modparam("prometheus", "group_mode", 1)
 	<section id="param_statistics" xreflabel="statistics">
 		<title><varname>statistics</varname>(string)</title>
 		<para>
-			The statistics that are being exported by Marina.Rodeo, separated by space.
+			The statistics that are being exported by OpenMarinkaRodeo, separated by space.
 			The list can also contain statistics groups's names - to do that, you shall
 			add a colon (<emphasis>:</emphasis>) at the end of the groups's name.
 		</para>
@@ -257,24 +257,168 @@ modparam("prometheus", "statistics", "active_dialogs load:")
 		<programlisting format="linespecific">
 ...
 # convert duration_gateway to stat duration with gateway as a label
-modparam("prometheus", "statistics", "group: /^(.*)_(.*)$/\1:gateway=\"\2\"/")
+modparam("prometheus", "labels", "group: /^(.*)_(.*)$/\1:gateway=\"\2\"/")
 ...
+</programlisting>
+		</example>
+	</section>
+
+	<section id="param_script_route" xreflabel="script_route">
+		<title><varname>script_route</varname>(string)</title>
+		<para>
+		Specifies the route name to be used to for adding custom prometheus information. 
+		</para>
+		<para>
+		<emphasis>The default value is "" - no custom route called.</emphasis>
+		</para>
+		<example>
+		<title>Set <varname>script_route</varname> parameter</title>
+		<programlisting format="linespecific">
+...
+modparam("prometheus", "script_route", "my_custom_prometheus_route")
+...
+route[my_custom_prometheus_route] {
+	# * the returned JSON needs to contain an array of objects
+	#   containing a header and a values field
+	# * the header field to contain the custom prometheus stats header
+	# * the values field is an array itself, of name/value objects
+	#   used for individual stats publishing
+	return (1, '[{
+        "header": "# TYPE openMarinkaRodeo_total_cps gauge",
+        "values": [
+            {
+                "name": "openMarinkaRodeo_total_cps",
+                "value": 3
+            }
+        ]
+    }, {
+        "header": "# TYPE openMarinkaRodeo_disabled_rtpengine gauge",
+        "values": [
+            {
+                "name": "openMarinkaRodeo_disabled_rtpengine",
+                "value": 0
+            }
+        ]
+    }]');
+}
+...
+</programlisting>
+		</example>
+	</section>
+
+	</section>
+
+	<section id="exported_functions" xreflabel="exported_functions">
+	<title>Exported Functions</title>
+	<section id="func_prometheus_declare_stat" xreflabel="prometheus_declare_stat">
+		<title>
+		<function moreinfo="none">prometheus_declare_stat(name, [type], [help])</function>
+		</title>
+		<para>
+			<emphasis>NOTE:</emphasis> this function can only be used in the
+			route declared in the <xref linkend="param_script_route"/> parameter.
+		</para>
+		<para>
+			Declares a custom statistic exported to Prometheus server. It specifies
+			its type and optionally a help string.
+		</para>
+		<para>Parameters</para>
+		<itemizedlist>
+		<listitem>
+			<para><emphasis>name</emphasis> (string) - the name of the statistic
+			</para>
+			<para><emphasis>type</emphasis> (string, optional) - the type of the
+			statistic (i.e. <emphasis>counter</emphasis> or <emphasis>gauge</emphasis>).
+			If missing the statistic is declared as <emphasis>gauge</emphasis>.
+			</para>
+			<para><emphasis>help</emphasis> (string, optional) - an optional value
+			used to describe the statistic meaning. If missing, it is not used.
+			</para>
+		</listitem>
+		</itemizedlist>
+		<para>
+			This function can only be used in the request
+			route declared in the <xref linkend="param_script_route"/> parameter.
+		</para>
+		<example>
+		<title><function moreinfo="none">prometheus_declare_stat</function> usage</title>
+		<programlisting format="linespecific">
+...
+modparam("prometheus", "script_route", "my_custom_prometheus_route")
+...
+route[my_custom_prometheus_route] {
+	...
+	prometheus_declare_stat("openMarinkaRodeo_cps");
+	prometheus_push_stat(3);
+	...
+}
+</programlisting>
+		</example>
+	</section>
+	<section id="func_prometheus_push_stat" xreflabel="prometheus_push_stat">
+		<title>
+		<function moreinfo="none">prometheus_push_stat(value, [label_name], [label_value])</function>
+		</title>
+		<para>
+			<emphasis>NOTE:</emphasis> this function can only be used in the
+			route declared in the <xref linkend="param_script_route"/> parameter.
+		</para>
+		<para>
+			Pushes a custom statistic value and optionally a set of labels
+			to the Prometheus server.
+		</para>
+		<para>
+			<emphasis>NOTE:</emphasis> a statistic's value should only be pushed
+			after it had been declared using the
+			<xref linkend="func_prometheus_declare_stat"/> function.
+		</para>
+		<para>Parameters</para>
+		<itemizedlist>
+		<listitem>
+			<para><emphasis>value</emphasis> (integer) - the value of the statistic
+			</para>
+			<para><emphasis>label_name</emphasis> (string, optional) - used to define
+			labels for the pushed statistic. If the <emphasis>label_value</emphasis>
+			parameter is missing, this parameter is appended to the name of the
+			statisic - this means that it should contain the whole set of labels
+				for the value (including curly brackets). If the
+			<emphasis>label_value</emphasis> is provided as well, then the parameter
+			should only contain one label's name.
+			</para>
+			<para><emphasis>label_value</emphasis> (string, optional) - the value that
+			should be used for the <emphasis>label_name</emphasis> parameter label.
+			</para>
+		</listitem>
+		</itemizedlist>
+		<para>
+			This function can only be used in the request
+			route declared in the <xref linkend="param_script_route"/> parameter.
+		</para>
+		<example>
+		<title><function moreinfo="none">prometheus_push_stat</function> usage</title>
+		<programlisting format="linespecific">
+...
+modparam("prometheus", "script_route", "my_custom_prometheus_route")
+...
+route[my_custom_prometheus_route] {
+	...
+	prometheus_declare_stat("openMarinkaRodeo_cps");
+	prometheus_push_stat(3); # no label is being used
+	prometheus_declare_stat("openMarinkaRodeo_cc");
+	# the next two are equivalent
+	prometheus_push_stat(10, "{gateway=\"gw1\"}"); # no label is being used
+	prometheus_push_stat(10, "gateway", "gw1"); # same as the above
+	...
+}
 </programlisting>
 		</example>
 	</section>
 	</section>
 
-	<section id="exported_functions" xreflabel="exported_functions">
-	<title>Exported Functions</title>
-		<para>
-		No function exported to be used from configuration file.
-		</para>
-	</section>
-
 	<section>
 	<title>Examples</title>
 		<para>
-			In order to have Prometheus query &osips; for statistics, you need to
+			In order to have Prometheus query &oMarinkaRodeo; for statistics, you need to
 			tell him where to get statistics from. To do that, you should define
 			a scarpe job in Prometheus's <emphasis>scrape_configs</emphasis> config,
 			indicating the IP and port you've configured the <emphasis>httpd</emphasis>
@@ -285,7 +429,7 @@ modparam("prometheus", "statistics", "group: /^(.*)_(.*)$/\1:gateway=\"\2\"/")
 		<programlisting format="linespecific">
 <![CDATA[
 scrape_configs:
-  - job_name: Marina.Rodeo
+  - job_name: openMarinkaRodeo
 
     static_configs:
     - targets: ['localhost:8888']

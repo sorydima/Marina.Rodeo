@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -143,6 +143,17 @@ typedef struct ua_client
 	   timer may fire and interfere with whoever tries to
 	   rewrite it */
 	struct retr_buf local_cancel;
+	/* UAC specific flags */
+	short            flags;
+	/* the onreply_route to be processed only for this branch */
+	struct script_route_ref *on_reply;
+	/* if we store a reply (branch picking), this is where it is */
+	struct sip_msg  *reply;
+	/* if we don't store, we at least want to know the status */
+	short            last_received;
+	/* number of RR headers that were locally added for this branch */
+	unsigned int     added_rr;
+
 	/* pointer to retransmission buffer where uri is printed;
 	   good for generating ACK/CANCEL */
 	str              uri;
@@ -154,19 +165,13 @@ typedef struct ua_client
 	str              adv_address;
 	/* the advertised port used for this branch */
 	str              adv_port;
-	/* number of RR headers that were locally added for this branch */
-	unsigned int     added_rr;
-	/* if we store a reply (branch picking), this is where it is */
-	struct sip_msg  *reply;
-	/* if we don't store, we at least want to know the status */
-	short            last_received;
-	/* UAC specific flags */
-	short            flags;
 	/* script flags, specific to this branch */
 	int              br_flags;
-	/* the onreply_route to be processed only for this branch */
-	struct script_route_ref *on_reply;
-	/* head list for avps */
+	/* q value of this branch */
+	int              q;
+	/* head list for branch attrs */
+	struct usr_avp   *battrs;
+	/* head list for script bavps */
 	struct usr_avp *user_avps;
 }ua_client_type;
 

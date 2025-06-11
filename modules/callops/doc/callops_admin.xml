@@ -11,7 +11,7 @@
 		ongoing calls. It can be used to trigger a call (either blind or attended)
 		transfer, or put a call on hold from the proxy side, rather than the
 		end-device side.
-		The module binds on top of the <ulink url='dialog'>&osips; Dialog
+		The module binds on top of the <ulink url='dialog'>&oMarinkaRodeo; Dialog
 		module</ulink> to get information about the ongoing calls, as well as
 		storing information about new calls that will be started.
 	</para>
@@ -49,7 +49,7 @@
 	</para>
 	<para>
 		The module can also be used to catch <emphasis>Notify refer</emphasis> events
-		and reply to them from the &osips; level. However, note that in <emphasis>
+		and reply to them from the &oMarinkaRodeo; level. However, note that in <emphasis>
 		auto</emphasis> mode even if the NOTIFY is handled when the dialog is matched,
 		the request will still continue its execution of the script, unlike when
 		<emphasis>manual</emphasis> mode is used with the
@@ -71,7 +71,7 @@ if (has_totag() &amp;&amp; loose_route() &amp;&amp;
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section id="callops_modules_dependencies">
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -93,7 +93,7 @@ if (has_totag() &amp;&amp; loose_route() &amp;&amp;
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -127,7 +127,7 @@ if (has_totag() &amp;&amp; loose_route() &amp;&amp;
 				<emphasis>manual</emphasis> / <emphasis>1</emphasis> - the user
 					will create its own logic to match the new calls, and will
 					call the <xref linkend="func_call_blind_replace"/> function
-					to make &osips; aware of the pair. Note that this mode does
+					to make &oMarinkaRodeo; aware of the pair. Note that this mode does
 					not handle automatically the <emphasis>Notify refer</emphasis>
 					either, so you also have to use the
 					<xref linkend="func_call_transfer_notify"/> function to handle
@@ -191,7 +191,7 @@ modparam("callops", "match_param", "call")
 			<para>
 				When <emphasis>manual mode</emphasis> is used, this function is
 				called to create a mapping between the transferring call and the
-				transferred call. It should be called when &osips; receives a
+				transferred call. It should be called when &oMarinkaRodeo; receives a
 				new call that is transferring an existing call.
 			</para>
 			<para>
@@ -203,7 +203,7 @@ modparam("callops", "match_param", "call")
 				</para></listitem>
 				<listitem><para>
 					<emphasis>leg</emphasis> (string, optional) - the leg that is
-						being transferred. If not specified, and &osips; cannot
+						being transferred. If not specified, and &oMarinkaRodeo; cannot
 						determine the leg based on its destination, the
 						<emphasis>unknown</emphasis> tag should be used.
 				</para></listitem>
@@ -404,7 +404,7 @@ if (has_totag() &amp;&amp; &amp;&amp; loose_route()) {
 					<emphasis>transfer_totag</emphasis> (string, optional) -
 					these parameters should always be specified together, and are
 					used in call attended transfer scenarios where the dialog of the
-					Bleg that is being transferred is not managed by &osips;.
+					Bleg that is being transferred is not managed by &oMarinkaRodeo;.
 					Note that for these scenarios only the A-leg dialog will
 					receive events about the call transfer.
 			</para></listitem>
@@ -414,14 +414,14 @@ if (has_totag() &amp;&amp; &amp;&amp; loose_route()) {
 		</para>
 		<programlisting  format="linespecific">
 # blind transfer to sip:agent@127.0.0.1
-Marina.Rodeo-cli -x mi call_transfer \
+openMarinkaRodeo-cli -x mi call_transfer \
 	callid=4b664b48-5639-40bf-bff8-3a866c145c3b \
 	leg=caller \
 	destination=sip:agent@217.0.0.1
 		</programlisting>
 		<programlisting  format="linespecific">
 # attended transfer between two calls
-Marina.Rodeo-cli -x mi call_transfer \
+openMarinkaRodeo-cli -x mi call_transfer \
 	callid=e8d024db-78e5-4d18-9794-5b8ba837bed4
 	leg=caller \
 	transfer_callid=559abf97-9834-4380-bba1-a036eb245450 \
@@ -457,7 +457,7 @@ Marina.Rodeo-cli -x mi call_transfer \
 		</para>
 		<programlisting  format="linespecific">
 # put a call on hold
-Marina.Rodeo-cli -x mi call_hold \
+openMarinkaRodeo-cli -x mi call_hold \
 	callid=921b00e4-fec0-4a36-9397-a40ab74e1893
 		</programlisting>
 		</section>
@@ -490,7 +490,7 @@ Marina.Rodeo-cli -x mi call_hold \
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi call_unhold \
+openMarinkaRodeo-cli -x mi call_unhold \
 	callid=921b00e4-fec0-4a36-9397-a40ab74e1893
 		</programlisting>
 		</section>
@@ -515,7 +515,7 @@ Marina.Rodeo-cli -x mi call_unhold \
 			For a blind transfer scenario, only one set of events are
 			triggered, whereas for attended transfer, you will get a set
 			of events for both dialogs involved in the transfer, as long
-			as both are proxied through &osips;
+			as both are proxied through &oMarinkaRodeo;
 		</para>
 		<para>Parameters:</para>
 		<itemizedlist>

@@ -1,16 +1,16 @@
 /*
  * call center module - call queuing and distribution
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2020 Marina.Rodeo Solutions
+ * Copyright (C) 2014-2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -46,6 +46,7 @@ static str rt_db_url = {NULL, 0};;
 static struct cc_data *data=NULL;
 static str b2b_scenario = str_init("call center");
 static str b2b_scenario_agent = str_init("call center agent");
+static str b2b_logic_ctx_param = str_init("call_center");
 
 /* b2b logic API */
 b2bl_api_t b2b_api;
@@ -168,6 +169,7 @@ static const param_export_t mod_params[]={
 	{ "ccf_m_dissuading_column",
 							  STR_PARAM, &ccf_m_dissuading_column.s        },
 	{ "ccf_m_flow_id_column", STR_PARAM, &ccf_m_flow_id_column.s           },
+	{ "b2b_logic_ctx_param",  STR_PARAM, &b2b_logic_ctx_param.s            },
 	{ 0,0,0 }
 };
 
@@ -227,7 +229,7 @@ static const stat_export_t mod_stats[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "b2b_logic", DEP_ABORT },
 		{ MOD_TYPE_SQLDB,   NULL,        DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
@@ -238,7 +240,7 @@ static const dep_export_t deps = {
 };
 
 static const pv_export_t mod_pvars[] = {
-	{ {"cc_state",  sizeof("cc_state")-1},     1000, pv_get_cc_state,
+	{ str_const_init("cc_state"),     1000, pv_get_cc_state,
 		0,                 0, 0, 0, 0 },
 	{ {0, 0}, 0, 0, 0, 0, 0, 0, 0 }
 };
@@ -249,7 +251,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,            /* exported functions */
 	0,               /* exported async functions */
 	mod_params,      /* param exports */
@@ -374,6 +376,7 @@ static int mod_init(void)
 	ccf_m_queue_column.len = strlen(ccf_m_queue_column.s);
 	ccf_m_dissuading_column.len = strlen(ccf_m_dissuading_column.s);
 	ccf_m_flow_id_column.len = strlen(ccf_m_flow_id_column.s);
+	b2b_logic_ctx_param.len = strlen(b2b_logic_ctx_param.s);
 
 	if (queue_pos_param.s)
 		queue_pos_param.len = strlen(queue_pos_param.s);
@@ -901,7 +904,7 @@ int b2bl_callback_customer(b2bl_cb_params_t *params, unsigned int event)
 	if (event!=B2B_BYE_CB) {
 		lock_set_release( data->call_locks, call->lock_idx );
 		cc_call_state = CC_CALL_NONE;
-		return 0;
+		return 1;
 	}
 
 	/* right-side leg of call sent BYE */
@@ -988,6 +991,10 @@ int set_call_leg( struct sip_msg *msg, struct cc_call *call, str *new_leg)
 		b2b_params.e1_from_dname = call->caller_dn;
 		b2b_params.e2_type = B2B_CLIENT;
 		b2b_params.e2_to = *new_leg;
+		if (call->script_param.len) {
+			b2b_params.ctx_key = b2b_logic_ctx_param;
+			b2b_params.ctx_val = call->script_param;
+		}
 
 		id = b2b_api.init(NULL, &b2b_scenario_agent, &b2b_params, b2bl_callback_agent,
 				(void*)call, B2B_DESTROY_CB|B2B_REJECT_CB|B2B_BYE_CB, NULL);
@@ -1014,6 +1021,10 @@ int set_call_leg( struct sip_msg *msg, struct cc_call *call, str *new_leg)
 		b2b_params.e1_type = B2B_SERVER;
 		b2b_params.e2_type = B2B_CLIENT;
 		b2b_params.e2_to = *new_leg;
+		if (call->script_param.len) {
+			b2b_params.ctx_key = b2b_logic_ctx_param;
+			b2b_params.ctx_val = call->script_param;
+		}
 
 		id = b2b_api.init(msg, &b2b_scenario, &b2b_params, b2bl_callback_customer,
 				(void*)call, B2B_DESTROY_CB|B2B_REJECT_CB|B2B_BYE_CB, NULL /* custom_hdrs */ );

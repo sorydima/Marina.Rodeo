@@ -18,7 +18,7 @@
 	Unless specified otherwise by the server through a "Connection: close"
 	indication, the module will keep and reuse the TCP connections it creates
 	as much as possible, regardless if the script writer performs blocking or
-	asynchronous HTTP requests.  These connections are not shared among Marina.Rodeo
+	asynchronous HTTP requests.  These connections are not shared among OpenMarinkaRodeo
 	workers — each worker maintains its own set of connections.
 	</para>
 	</section>
@@ -26,13 +26,13 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
 			<listitem>
 			<para>
-				<emphasis>No dependencies on other &osips; modules.</emphasis>.
+				<emphasis>No dependencies on other &oMarinkaRodeo; modules.</emphasis>.
 			</para>
 			</listitem>
 			</itemizedlist>
@@ -43,7 +43,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -128,7 +128,7 @@ modparam("rest_client", "connect_poll_interval", 2)
 		<title><varname>max_async_transfers</varname> (integer)</title>
 		<para>
 		Maximum number of asynchronous HTTP transfers <emphasis>a single</emphasis>
-		Marina.Rodeo worker is allowed to run simultaneously. As long as this threshold
+		OpenMarinkaRodeo worker is allowed to run simultaneously. As long as this threshold
 		is reached for a worker, all new async transfers it attempts to perform
 		will be done in a blocking manner, with appropriate logging warnings.
 		</para>
@@ -222,7 +222,7 @@ modparam("rest_client", "ssl_verifyhost", 0)
 		<title>Setting the <varname>ssl_capath</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("rest_client", "ssl_capath", "/home/Marina.Rodeo/ca_certificates")
+modparam("rest_client", "ssl_capath", "/home/openMarinkaRodeo/ca_certificates")
 ...
 </programlisting>
 		</example>
@@ -307,7 +307,7 @@ modparam("rest_client", "enable_expect_100", true)
 	<section id="param_no_concurrent_connects" xreflabel="no_concurrent_connects">
 		<title><varname>no_concurrent_connects</varname> (boolean)</title>
 		<para>
-		Set to <emphasis>true</emphasis> in order to only allow one Marina.Rodeo
+		Set to <emphasis>true</emphasis> in order to only allow one OpenMarinkaRodeo
 		worker to connect to a given URL hostname at a time.  While a worker
 		is connecting, all other workers will receive error code
 		<emphasis role='bold'>-4 (already connecting)</emphasis> when attempting
@@ -321,7 +321,7 @@ modparam("rest_client", "enable_expect_100", true)
 		</para>
 		<para>
 		This parameter may be useful in order to prevent system outages caused
-		by concurrent blocking of all Marina.Rodeo workers on a failed (hanging)
+		by concurrent blocking of all OpenMarinkaRodeo workers on a failed (hanging)
 		HTTP service, with no more free workers being left to process incoming
 		SIP packets.
 		</para>
@@ -831,8 +831,8 @@ $var(rc) = rest_get("https://call-info.org/?id=$(ci{rest.escape})", $var(body_pv
 $var(tmp) = "1%2B1%3D2%21";
 xlog("Output: $(var(tmp){rest.unescape})\n");
 
-# This example would produce log entry: "Marina.Rodeo, tastes better with every SIP!"
-$var(tmp) = "Marina.Rodeo%2C%20tastes%20better%20with%20every%20SIP%21";
+# This example would produce log entry: "OpenMarinkaRodeo, tastes better with every SIP!"
+$var(tmp) = "OpenMarinkaRodeo%2C%20tastes%20better%20with%20every%20SIP%21";
 xlog("$(var(tmp){rest.unescape})\n");
 ...
                 </programlisting>

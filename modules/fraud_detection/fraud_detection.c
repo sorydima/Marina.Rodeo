@@ -1,16 +1,16 @@
 /**
  * Fraud Detection Module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014 Marina.Rodeo Foundation
+ * Copyright (C) 2014 OpenMarinkaRodeo Foundation
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -361,7 +361,7 @@ static int check_fraud(struct sip_msg *msg, str *user, str *number, int *pid)
 		/* more than t0 + WINDOW_SIZE but less than 2 * WINDOW_SIZE
 		 * we can consider calls from t0 + (now - WINDOW_SIZE)
 		 * all cals from t0 to t0 + (now - WINDOW_SIZE) shall be invalidated */
-		unsigned int old_matched_time = se->stats.last_matched_time;
+		unsigned int old_matched_time = (unsigned int)(unsigned long)se->stats.last_matched_time;
 
 		se->stats.last_matched_time = nowt - FRD_SECS_PER_WINDOW + 1;
 
@@ -390,17 +390,25 @@ static int check_fraud(struct sip_msg *msg, str *user, str *number, int *pid)
 #define CHECK_AND_RAISE(pname, type) \
 	(thr->pname ## _thr.type && se->stats.pname >= thr->pname ## _thr.type) { \
 		raise_ ## type ## _event(&pname ## _name, &se->stats.pname,\
-				&thr->pname ## _thr.type, user, number, &rule->id);\
+				&thr->pname ## _thr.type, user, number, &rule->id, pid);\
 		rc = rc_ ## type ## _thr;\
 	}
 
+	/* coverity[overrun-buffer-val: FALSE] */
 	if CHECK_AND_RAISE(cpm, critical)
+	/* coverity[overrun-buffer-val: FALSE] */
 	else if CHECK_AND_RAISE(total_calls, critical)
+	/* coverity[overrun-buffer-val: FALSE] */
 	else if CHECK_AND_RAISE(concurrent_calls, critical)
+	/* coverity[overrun-buffer-val: FALSE] */
 	else if CHECK_AND_RAISE(seq_calls, critical)
+	/* coverity[overrun-buffer-val: FALSE] */
 	else if CHECK_AND_RAISE(cpm, warning)
+	/* coverity[overrun-buffer-val: FALSE] */
 	else if CHECK_AND_RAISE(total_calls, warning)
+	/* coverity[overrun-buffer-val: FALSE] */
 	else if CHECK_AND_RAISE(concurrent_calls, warning)
+	/* coverity[overrun-buffer-val: FALSE] */
 	else if CHECK_AND_RAISE(seq_calls, warning);
 
 #undef CHECK_AND_RAISE
@@ -429,6 +437,7 @@ static int check_fraud(struct sip_msg *msg, str *user, str *number, int *pid)
 		param->stats = se;        /* safe to ref, only freed @ shutdown */
 		param->user = shm_user;   /* safe to ref, only freed @ shutdown */
 		param->ruleid = rule->id;
+		param->pid = *pid;
 		param->dlg_terminated = 0;
 
 		param->calldur_warn = thr->call_duration_thr.warning;

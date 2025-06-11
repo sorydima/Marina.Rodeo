@@ -9,7 +9,7 @@ event_stream Module
         1.2. Stream socket syntax
         1.3. Dependencies
 
-              1.3.1. Marina.Rodeo Modules
+              1.3.1. OpenMarinkaRodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -69,9 +69,9 @@ Chapter 1. Admin Guide
    application server.
 
    In order to be notified, a JSON-RPC server has to subscribe for
-   a certain event provided by Marina.Rodeo. This can be done using
+   a certain event provided by OpenMarinkaRodeo. This can be done using
    the generic MI Interface (event_subscribe function) or from
-   Marina.Rodeo script (subscribe_event core function).
+   OpenMarinkaRodeo script (subscribe_event core function).
 
 1.2. Stream socket syntax
 
@@ -103,7 +103,7 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. Marina.Rodeo Modules
+1.3.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * none.
@@ -111,7 +111,7 @@ Chapter 1. Admin Guide
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * none
 
 1.4. Exported Parameters
@@ -143,7 +143,7 @@ modparam("event_stream", "reliable_mode", yes)
    Specified the amount of milliseconds the module waits for a
    command to complete. In reliable_mode, it specifies the time
    module waits the request to be sent and a reply received. In
-   non-reliable_mode, it represents only the time Marina.Rodeo takes
+   non-reliable_mode, it represents only the time openMarinkaRodeo takes
    to send the JSON-RPC notification.
 
    NOTE that if the event is not using names for its parameters,
@@ -169,8 +169,8 @@ modparam("event_stream", "timeout", 200)
 
    Example 1.3. Set event_param parameter
 ...
-modparam("event_stream", "event_param", "Marina.Rodeo_event")
-# json resulted will contain the "Marina.Rodeo_event": EVENT token
+modparam("event_stream", "event_param", "openMarinkaRodeo_event")
+# json resulted will contain the "openMarinkaRodeo_event": EVENT token
 ...
 
 1.5. Exported Functions
@@ -233,13 +233,13 @@ _BLOCKED event
 
 1.6.4. JSON-RPC Notification with Event's name
 
-   when having the event_param set to Marina.Rodeo_event, the event
+   when having the event_param set to openMarinkaRodeo_event, the event
    raised by the pike module will look like the following:
 
    Example 1.7. E_PIKE_BLOCKED notification with event name
 
 # module configuration
-modparam("event_stream", "event_param", "Marina.Rodeo_event")
+modparam("event_stream", "event_param", "openMarinkaRodeo_event")
 
 # Stream socket: tcp:HOST:PORT/handle_cmd
 
@@ -248,7 +248,7 @@ modparam("event_stream", "event_param", "Marina.Rodeo_event")
         "jsonrpc": "2.0",
         "method": "handle_cmd",
         "params": {
-                "Marina.Rodeo_event": "E_PIKE_BLOCKED"
+                "openMarinkaRodeo_event": "E_PIKE_BLOCKED"
                 "ip": "192.168.2.11"
         }
 }
@@ -292,12 +292,14 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Razvan Crainea (@razvancrainea) 31 14 1802 100
+   1. Razvan Crainea (@razvancrainea) 32 14 1802 100
    2. Vlad Patrascu (@rvlad-patrascu) 10 6 105 145
-   3. Liviu Chircu (@liviuchircu) 7 5 13 41
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 8 6 14 42
    4. Bogdan-Andrei Iancu (@bogdan-iancu) 4 2 7 9
    5. Maksym Sobolyev (@sobomax) 4 2 3 4
    6. Peter Lemenkov (@lemenkov) 4 2 2 2
+   7. Alexandra Titoc 3 1 1 1
+   8. Ryan Bullock 2 1 2 0
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -307,7 +309,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -319,12 +321,14 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
-   1. Liviu Chircu (@liviuchircu)         Apr 2018 - Jun 2023
-   2. Vlad Patrascu (@rvlad-patrascu)     May 2020 - Jun 2023
-   3. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   4. Peter Lemenkov (@lemenkov)          Jun 2018 - Aug 2020
-   5. Razvan Crainea (@razvancrainea)     Mar 2018 - Jan 2020
-   6. Bogdan-Andrei Iancu (@bogdan-iancu) Feb 2019 - Apr 2019
+   1. Ryan Bullock                        Apr 2025 - Apr 2025
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Apr 2018 - Mar 2025
+   3. Alexandra Titoc                     Sep 2024 - Sep 2024
+   4. Vlad Patrascu (@rvlad-patrascu)     May 2020 - Jun 2023
+   5. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   6. Peter Lemenkov (@lemenkov)          Jun 2018 - Aug 2020
+   7. Razvan Crainea (@razvancrainea)     Mar 2018 - Jan 2020
+   8. Bogdan-Andrei Iancu (@bogdan-iancu) Feb 2019 - Apr 2019
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -334,9 +338,9 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Peter Lemenkov
-   (@lemenkov), Liviu Chircu (@liviuchircu), Razvan Crainea
+   (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Razvan Crainea
    (@razvancrainea).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2018 www.Marina.Rodeo-solutions.com
+   Copyright © 2018 www.openMarinkaRodeo-solutions.com

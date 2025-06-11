@@ -10,7 +10,7 @@ rtpproxy Module
         1.3. RTPProxy timeout notifications
         1.4. Dependencies
 
-              1.4.1. Marina.Rodeo Modules
+              1.4.1. OpenMarinkaRodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -126,7 +126,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   This module is used by Marina.Rodeo to communicate with RTPProxy, a
+   This module is used by OpenMarinkaRodeo to communicate with RTPProxy, a
    media relay proxy used to make the communication between user
    agents behind NAT possible.
 
@@ -152,7 +152,7 @@ Chapter 1. Admin Guide
    rtpproxies (with a different weight value than 0) respond.
    Default weight is 1.
 
-   Starting with Marina.Rodeo 2.1, engage_rtp_proxy(),
+   Starting with OpenMarinkaRodeo 2.1, engage_rtp_proxy(),
    unforce_rtp_proxy() and start_recording() functions have been
    fully replaced by rtpproxy_engage(), rtpproxy_unforce() and
    rtpproxy_start_recording().
@@ -188,7 +188,7 @@ Chapter 1. Admin Guide
    To enable timeout notification there are several steps that you
    must follow:
 
-   Start Marina.Rodeo timeout detection by setting the
+   Start OpenMarinkaRodeo timeout detection by setting the
    “rtpp_notify_socket” module parameter in your configuration
    script. This is the socket where further notification will be
    received from rtpproxies. This socket must be a TCP or UNIX
@@ -200,7 +200,7 @@ Chapter 1. Admin Guide
    following command line parameters:
      * “ -n timeout_socket” - specifies where the notifications
        will be sent. This socket must be the same as
-       “rtpp_notify_socket” Marina.Rodeo module parameter. This
+       “rtpp_notify_socket” OpenMarinkaRodeo module parameter. This
        parameter is mandatory.
      * “ -T ttl” - limits the rtp session timeout to “ttl”. This
        parameter is optional and the default value is 60 seconds.
@@ -223,11 +223,11 @@ Chapter 1. Admin Guide
      * Patch RTPProxy: “patch < path_to_rtpproxy_patch”
 
    The patched version can also be found at:
-   https://Marina.Rodeo.org/pub/rtpproxy/
+   https://openMarinkaRodeo.org/pub/rtpproxy/
 
 1.4. Dependencies
 
-1.4.1. Marina.Rodeo Modules
+1.4.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * a database module - only if you want to load use a database
@@ -238,7 +238,7 @@ Chapter 1. Admin Guide
 1.4.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.5. Exported Parameters
@@ -247,7 +247,8 @@ Chapter 1. Admin Guide
 
    Definition of socket(s) used to connect to (a set) RTPProxy. It
    may specify a UNIX socket, an IPv4/IPv6 UDP socket or an
-   IPv4/IPv6 TCP socket.
+   IPv4/IPv6 TCP socket. If the protocol part (i.e. “udp:”) is
+   missing, the socket is treated as a UNIX socket.
 
    The definition also supports to specify a different IP that
    will be advertised instead of the one returned by RTPProxy.
@@ -374,7 +375,7 @@ modparam("rtpproxy", "nortpproxy_str", "a=sdpmangled:yes\r\n")
    Example 1.8. Set db_url parameter
 ...
 modparam("rtpproxy", "db_url",
-                "mysql://Marina.Rodeo:Marina.Rodeorw@192.168.2.132/Marina.Rodeo")
+                "mysql://openMarinkaRodeo:openMarinkaRodeorw@192.168.2.132/openMarinkaRodeo")
 ...
 
 
@@ -417,8 +418,8 @@ modparam("rtpproxy", "set_id_col", "rtpp_set_id")
 
 1.5.12. rtpp_notify_socket (string)
 
-   The socket Marina.Rodeo listens for notifications from RTPProxy.
-   Currently Marina.Rodeo can receive RTP timeout and DTMF events.
+   The socket OpenMarinkaRodeo listens for notifications from RTPProxy.
+   Currently OpenMarinkaRodeo can receive RTP timeout and DTMF events.
 
    Default value is “NULL” - no notifications are received.
 
@@ -480,7 +481,7 @@ modparam("rtpproxy", "generated_sdp_media_ip", "10.0.0.1")
    called for the initial INVITE and internally takes care of
    rewriting the body of 200 OKs and ACKs. Note that when used in
    bridge mode, this function might advertise wrong interfaces in
-   SDP (due to the fact that Marina.Rodeo is not aware of the RTPProxy
+   SDP (due to the fact that OpenMarinkaRodeo is not aware of the RTPProxy
    configuration), so you might face an undefined behavior.
 
    Meaning of the parameters is as follows:
@@ -762,7 +763,7 @@ rtpproxy_stop_stream2uas([[set_id][, sock_var]])
      * mediastream(int, optional) - this parameter is only used if
        the destination is specified, and represents the index of
        media stream to record/copy, starting from 1. If this
-       parameter is missing, Marina.Rodeo instructs RTPProxy to copy
+       parameter is missing, OpenMarinkaRodeo instructs RTPProxy to copy
        all the streams.
 
    This function can be used from REQUEST_ROUTE and ONREPLY_ROUTE.
@@ -853,10 +854,11 @@ xlog("RTP statistics for $ci: dropped=$(avp(stats)[4])\n");
    Parameters:
      * url - the rtp proxy url (exactly as defined in the config
        file).
+     * enable - 1 - enable, 0 - disable the RTPproxy node, 2 - put
+       the RTPproxy node in probing mode.
      * setid (optional) - the rtpproxy set ID (used for better
        indentification of the rtpproxy instance to be enabled, for
        example when a rtpproxy is used in multiple sets).
-     * enable - 1 - enable, 0 - disable. the config file).
 
    NOTE: if a rtpproxy is defined multiple times (in the same or
    different set), all its instances will be enables/disabled IF
@@ -865,9 +867,9 @@ xlog("RTP statistics for $ci: dropped=$(avp(stats)[4])\n");
    Example 1.24.  rtpproxy_enable usage
 ...
 ## disable a RTPProxy by URL only
-$ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0
+$ openMarinkaRodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0
 ## disable a RTPProxy by URL and set ID (3)
-$ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
+$ openMarinkaRodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0 3
 ...
 
 1.7.2. rtpproxy_show
@@ -879,7 +881,7 @@ $ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
 
    Example 1.25.  rtpproxy_show usage
 ...
-$ Marina.Rodeo-cli -x mi rtpproxy_show
+$ openMarinkaRodeo-cli -x mi rtpproxy_show
 ...
 
 1.7.3. rtpproxy_reload
@@ -893,7 +895,7 @@ $ Marina.Rodeo-cli -x mi rtpproxy_show
 
    Example 1.26.  rtpproxy_reload usage
 ...
-$ Marina.Rodeo-cli -x mi rtpproxy_reload
+$ openMarinkaRodeo-cli -x mi rtpproxy_reload
 ...
 
 1.8. Exported Events
@@ -911,7 +913,7 @@ $ Marina.Rodeo-cli -x mi rtpproxy_reload
 1.8.2.  E_RTPPROXY_DTMF
 
    This event is raised when a RTPProxy server sends a DTMF
-   notification to Marina.Rodeo. In order to catch RFC 2833/4733 DTMF
+   notification to OpenMarinkaRodeo. In order to catch RFC 2833/4733 DTMF
    events, you need to provide the d flag to rtpproxy_offer()/
    rtpproxy_answer().
 
@@ -938,9 +940,9 @@ Chapter 2. Frequently Asked Questions
 
    2.2.
 
-   Where can I find more about Marina.Rodeo?
+   Where can I find more about OpenMarinkaRodeo?
 
-   Take a look at https://Marina.Rodeo.org/.
+   Take a look at https://openMarinkaRodeo.org/.
 
    2.3.
 
@@ -949,23 +951,23 @@ Chapter 2. Frequently Asked Questions
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable Marina.Rodeo release should be sent to
-   <users@lists.Marina.Rodeo.org> and e-mails regarding development
-   versions should be sent to <devel@lists.Marina.Rodeo.org>.
+   E-mails regarding any stable OpenMarinkaRodeo release should be sent to
+   <users@lists.openMarinkaRodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.openMarinkaRodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.Marina.Rodeo.org>.
+   <users@lists.openMarinkaRodeo.org>.
 
    2.4.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
+   https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues.
 
 Chapter 3. Contributors
 
@@ -974,9 +976,9 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Razvan Crainea (@razvancrainea) 253 156 6080 2851
-   2. Maksym Sobolyev (@sobomax) 59 12 5054 280
-   3. Liviu Chircu (@liviuchircu) 28 22 228 243
+   1. Razvan Crainea (@razvancrainea) 267 167 6172 2881
+   2. Maksym Sobolyev (@sobomax) 63 13 5132 308
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 30 23 229 244
    4. Bogdan-Andrei Iancu (@bogdan-iancu) 27 23 123 116
    5. Vlad Patrascu (@rvlad-patrascu) 25 9 409 725
    6. Peter Lemenkov (@lemenkov) 7 5 60 59
@@ -989,7 +991,7 @@ Chapter 3. Contributors
    (@davesidwell), Ezequiel Lovelle (@lovelle), Christophe Sollet
    (@csollet), Anca Vamanu, Mikko Lehto, Dan Pascu (@danpascu),
    Walter Doekes (@wdoekes), Dusan Klinec (@ph4r05), Julián Moreno
-   Patiño, Zero King (@l2dy).
+   Patiño, Norman Brandinger (@NormB), Zero King (@l2dy).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -999,7 +1001,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1011,22 +1013,23 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Liviu Chircu (@liviuchircu)         Jul 2012 - May 2023
-   2.  Maksym Sobolyev (@sobomax)          Mar 2011 - Mar 2023
-   3.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Mar 2023
-   4.  Razvan Crainea (@razvancrainea)     Mar 2011 - May 2022
-   5.  Peter Lemenkov (@lemenkov)          Dec 2011 - Apr 2022
-   6.  John Burke (@john08burke)           Apr 2021 - Apr 2021
-   7.  Ovidiu Sas (@ovidiusas)             Mar 2011 - Jun 2020
-   8.  Bogdan-Andrei Iancu (@bogdan-iancu) Mar 2011 - Apr 2020
-   9.  robdyck                             Apr 2020 - Apr 2020
-   10. Zero King (@l2dy)                   Mar 2020 - Mar 2020
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jul 2012 - Apr 2025
+   2.  Razvan Crainea (@razvancrainea)     Mar 2011 - Jan 2025
+   3.  Norman Brandinger (@NormB)          Jun 2024 - Jun 2024
+   4.  Maksym Sobolyev (@sobomax)          Mar 2011 - May 2023
+   5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Mar 2023
+   6.  Peter Lemenkov (@lemenkov)          Dec 2011 - Apr 2022
+   7.  John Burke (@john08burke)           Apr 2021 - Apr 2021
+   8.  Ovidiu Sas (@ovidiusas)             Mar 2011 - Jun 2020
+   9.  Bogdan-Andrei Iancu (@bogdan-iancu) Mar 2011 - Apr 2020
+   10. robdyck                             Apr 2020 - Apr 2020
 
-   All remaining contributors: Dan Pascu (@danpascu), Ryan Bullock
-   (@rrb3942), Julián Moreno Patiño, Vlad Paiu (@vladpaiu), Dusan
-   Klinec (@ph4r05), Dave Sidwell (@davesidwell), Ezequiel Lovelle
-   (@lovelle), Mikko Lehto, Walter Doekes (@wdoekes), Christophe
-   Sollet (@csollet), Anca Vamanu.
+   All remaining contributors: Zero King (@l2dy), Dan Pascu
+   (@danpascu), Ryan Bullock (@rrb3942), Julián Moreno Patiño,
+   Vlad Paiu (@vladpaiu), Dusan Klinec (@ph4r05), Dave Sidwell
+   (@davesidwell), Ezequiel Lovelle (@lovelle), Mikko Lehto,
+   Walter Doekes (@wdoekes), Christophe Sollet (@csollet), Anca
+   Vamanu.
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -1035,15 +1038,14 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Razvan Crainea
-   (@razvancrainea), Maksym Sobolyev (@sobomax), Zero King
-   (@l2dy), Vlad Patrascu (@rvlad-patrascu), Peter Lemenkov
-   (@lemenkov), Julián Moreno Patiño, Bogdan-Andrei Iancu
-   (@bogdan-iancu), Mikko Lehto, Ryan Bullock (@rrb3942), Ovidiu
-   Sas (@ovidiusas).
+   Last edited by: Razvan Crainea (@razvancrainea), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
+   (@sorydima), Maksym Sobolyev (@sobomax), Zero King (@l2dy),
+   Vlad Patrascu (@rvlad-patrascu), Peter Lemenkov (@lemenkov),
+   Julián Moreno Patiño, Bogdan-Andrei Iancu (@bogdan-iancu),
+   Mikko Lehto, Ryan Bullock (@rrb3942), Ovidiu Sas (@ovidiusas).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005 Voice Sistem SRL
+   Copyright © 2005 Voice Sistem SRL
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003-2008 Sippy Software, Inc.
+   Copyright © 2003-2008 Sippy Software, Inc.

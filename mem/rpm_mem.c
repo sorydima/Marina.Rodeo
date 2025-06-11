@@ -1,16 +1,16 @@
 /*
  * Shared memory functions
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -35,14 +35,14 @@
 #include <fcntl.h>
 
 
-enum osips_mm mem_allocator_rpm = MM_NONE;
+enum oMarinkaRodeo_mm mem_allocator_rpm = MM_NONE;
 unsigned long rpm_mem_size = 0;
 char *rpm_mem_file = RESTART_PERSISTENCY_MEM_FILE;
 
 int set_rpm_mm(const char *mm_name)
 {
 #ifdef INLINE_ALLOC
-	LM_NOTICE("this is an inlined allocator build (see Marina.Rodeo -V), "
+	LM_NOTICE("this is an inlined allocator build (see openMarinkaRodeo -V), "
 	          "cannot set a custom rpm allocator (%s)\n", mm_name);
 	return 0;
 #endif
@@ -125,9 +125,9 @@ struct _rpm_map_block {
 	unsigned magic;						/* magic code used to check if file is valid -
 										   should match - RPM_MAGIC_CODE */
 	unsigned long size;					/* size of the block */
-	enum osips_mm alloc;				/* allocator type */
+	enum oMarinkaRodeo_mm alloc;				/* allocator type */
 	void *mapped_address;				/* address where file should be mapped */
-	void *block_address;				/* block where the Marina.Rodeo memory starts */
+	void *block_address;				/* block where the OpenMarinkaRodeo memory starts */
 	struct rpm_key *keys;				/* pointer to keys */
 } __attribute__((__packed__)) *rpm_map_block = NULL;
 
@@ -175,111 +175,111 @@ int rpm_mem_init_allocs(void)
 	switch (mem_allocator_rpm) {
 #ifdef F_MALLOC
 	case MM_F_MALLOC:
-		gen_rpm_malloc         = (osips_block_malloc_f)fm_malloc;
-		gen_rpm_malloc_unsafe  = (osips_block_malloc_f)fm_malloc;
-		gen_rpm_realloc        = (osips_block_realloc_f)fm_realloc;
-		gen_rpm_realloc_unsafe = (osips_block_realloc_f)fm_realloc;
-		gen_rpm_free           = (osips_block_free_f)fm_free;
-		gen_rpm_free_unsafe    = (osips_block_free_f)fm_free;
-		gen_rpm_info           = (osips_mem_info_f)fm_info;
-		gen_rpm_status         = (osips_mem_status_f)fm_status;
-		gen_rpm_get_size       = (osips_get_mmstat_f)fm_get_size;
-		gen_rpm_get_used       = (osips_get_mmstat_f)fm_get_used;
-		gen_rpm_get_rused      = (osips_get_mmstat_f)fm_get_real_used;
-		gen_rpm_get_mused      = (osips_get_mmstat_f)fm_get_max_real_used;
-		gen_rpm_get_free       = (osips_get_mmstat_f)fm_get_free;
-		gen_rpm_get_frags      = (osips_get_mmstat_f)fm_get_frags;
+		gen_rpm_malloc         = (oMarinkaRodeo_block_malloc_f)fm_malloc;
+		gen_rpm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)fm_malloc;
+		gen_rpm_realloc        = (oMarinkaRodeo_block_realloc_f)fm_realloc;
+		gen_rpm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)fm_realloc;
+		gen_rpm_free           = (oMarinkaRodeo_block_free_f)fm_free;
+		gen_rpm_free_unsafe    = (oMarinkaRodeo_block_free_f)fm_free;
+		gen_rpm_info           = (oMarinkaRodeo_mem_info_f)fm_info;
+		gen_rpm_status         = (oMarinkaRodeo_mem_status_f)fm_status;
+		gen_rpm_get_size       = (oMarinkaRodeo_get_mmstat_f)fm_get_size;
+		gen_rpm_get_used       = (oMarinkaRodeo_get_mmstat_f)fm_get_used;
+		gen_rpm_get_rused      = (oMarinkaRodeo_get_mmstat_f)fm_get_real_used;
+		gen_rpm_get_mused      = (oMarinkaRodeo_get_mmstat_f)fm_get_max_real_used;
+		gen_rpm_get_free       = (oMarinkaRodeo_get_mmstat_f)fm_get_free;
+		gen_rpm_get_frags      = (oMarinkaRodeo_get_mmstat_f)fm_get_frags;
 		break;
 #endif
 #ifdef Q_MALLOC
 	case MM_Q_MALLOC:
-		gen_rpm_malloc         = (osips_block_malloc_f)qm_malloc;
-		gen_rpm_malloc_unsafe  = (osips_block_malloc_f)qm_malloc;
-		gen_rpm_realloc        = (osips_block_realloc_f)qm_realloc;
-		gen_rpm_realloc_unsafe = (osips_block_realloc_f)qm_realloc;
-		gen_rpm_free           = (osips_block_free_f)qm_free;
-		gen_rpm_free_unsafe    = (osips_block_free_f)qm_free;
-		gen_rpm_info           = (osips_mem_info_f)qm_info;
-		gen_rpm_status         = (osips_mem_status_f)qm_status;
-		gen_rpm_get_size       = (osips_get_mmstat_f)qm_get_size;
-		gen_rpm_get_used       = (osips_get_mmstat_f)qm_get_used;
-		gen_rpm_get_rused      = (osips_get_mmstat_f)qm_get_real_used;
-		gen_rpm_get_mused      = (osips_get_mmstat_f)qm_get_max_real_used;
-		gen_rpm_get_free       = (osips_get_mmstat_f)qm_get_free;
-		gen_rpm_get_frags      = (osips_get_mmstat_f)qm_get_frags;
+		gen_rpm_malloc         = (oMarinkaRodeo_block_malloc_f)qm_malloc;
+		gen_rpm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)qm_malloc;
+		gen_rpm_realloc        = (oMarinkaRodeo_block_realloc_f)qm_realloc;
+		gen_rpm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)qm_realloc;
+		gen_rpm_free           = (oMarinkaRodeo_block_free_f)qm_free;
+		gen_rpm_free_unsafe    = (oMarinkaRodeo_block_free_f)qm_free;
+		gen_rpm_info           = (oMarinkaRodeo_mem_info_f)qm_info;
+		gen_rpm_status         = (oMarinkaRodeo_mem_status_f)qm_status;
+		gen_rpm_get_size       = (oMarinkaRodeo_get_mmstat_f)qm_get_size;
+		gen_rpm_get_used       = (oMarinkaRodeo_get_mmstat_f)qm_get_used;
+		gen_rpm_get_rused      = (oMarinkaRodeo_get_mmstat_f)qm_get_real_used;
+		gen_rpm_get_mused      = (oMarinkaRodeo_get_mmstat_f)qm_get_max_real_used;
+		gen_rpm_get_free       = (oMarinkaRodeo_get_mmstat_f)qm_get_free;
+		gen_rpm_get_frags      = (oMarinkaRodeo_get_mmstat_f)qm_get_frags;
 		break;
 #endif
 #ifdef HP_MALLOC
 	case MM_HP_MALLOC:
-		gen_rpm_malloc         = (osips_block_malloc_f)hp_rpm_malloc;
-		gen_rpm_malloc_unsafe  = (osips_block_malloc_f)hp_rpm_malloc_unsafe;
-		gen_rpm_realloc        = (osips_block_realloc_f)hp_rpm_realloc;
-		gen_rpm_realloc_unsafe = (osips_block_realloc_f)hp_rpm_realloc_unsafe;
-		gen_rpm_free           = (osips_block_free_f)hp_rpm_free;
-		gen_rpm_free_unsafe    = (osips_block_free_f)hp_rpm_free_unsafe;
-		gen_rpm_info           = (osips_mem_info_f)hp_info;
-		gen_rpm_status         = (osips_mem_status_f)hp_status;
-		gen_rpm_get_size       = (osips_get_mmstat_f)hp_rpm_get_size;
-		gen_rpm_get_used       = (osips_get_mmstat_f)hp_rpm_get_used;
-		gen_rpm_get_rused      = (osips_get_mmstat_f)hp_rpm_get_real_used;
-		gen_rpm_get_mused      = (osips_get_mmstat_f)hp_rpm_get_max_real_used;
-		gen_rpm_get_free       = (osips_get_mmstat_f)hp_rpm_get_free;
-		gen_rpm_get_frags      = (osips_get_mmstat_f)hp_rpm_get_frags;
+		gen_rpm_malloc         = (oMarinkaRodeo_block_malloc_f)hp_rpm_malloc;
+		gen_rpm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)hp_rpm_malloc_unsafe;
+		gen_rpm_realloc        = (oMarinkaRodeo_block_realloc_f)hp_rpm_realloc;
+		gen_rpm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)hp_rpm_realloc_unsafe;
+		gen_rpm_free           = (oMarinkaRodeo_block_free_f)hp_rpm_free;
+		gen_rpm_free_unsafe    = (oMarinkaRodeo_block_free_f)hp_rpm_free_unsafe;
+		gen_rpm_info           = (oMarinkaRodeo_mem_info_f)hp_info;
+		gen_rpm_status         = (oMarinkaRodeo_mem_status_f)hp_status;
+		gen_rpm_get_size       = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_size;
+		gen_rpm_get_used       = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_used;
+		gen_rpm_get_rused      = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_real_used;
+		gen_rpm_get_mused      = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_max_real_used;
+		gen_rpm_get_free       = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_free;
+		gen_rpm_get_frags      = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_frags;
 		break;
 #endif
 #ifdef DBG_MALLOC
 #ifdef F_MALLOC
 	case MM_F_MALLOC_DBG:
-		gen_rpm_malloc         = (osips_block_malloc_f)fm_malloc_dbg;
-		gen_rpm_malloc_unsafe  = (osips_block_malloc_f)fm_malloc_dbg;
-		gen_rpm_realloc        = (osips_block_realloc_f)fm_realloc_dbg;
-		gen_rpm_realloc_unsafe = (osips_block_realloc_f)fm_realloc_dbg;
-		gen_rpm_free           = (osips_block_free_f)fm_free_dbg;
-		gen_rpm_free_unsafe    = (osips_block_free_f)fm_free_dbg;
-		gen_rpm_info           = (osips_mem_info_f)fm_info;
-		gen_rpm_status         = (osips_mem_status_f)fm_status_dbg;
-		gen_rpm_get_size       = (osips_get_mmstat_f)fm_get_size;
-		gen_rpm_get_used       = (osips_get_mmstat_f)fm_get_used;
-		gen_rpm_get_rused      = (osips_get_mmstat_f)fm_get_real_used;
-		gen_rpm_get_mused      = (osips_get_mmstat_f)fm_get_max_real_used;
-		gen_rpm_get_free       = (osips_get_mmstat_f)fm_get_free;
-		gen_rpm_get_frags      = (osips_get_mmstat_f)fm_get_frags;
+		gen_rpm_malloc         = (oMarinkaRodeo_block_malloc_f)fm_malloc_dbg;
+		gen_rpm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)fm_malloc_dbg;
+		gen_rpm_realloc        = (oMarinkaRodeo_block_realloc_f)fm_realloc_dbg;
+		gen_rpm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)fm_realloc_dbg;
+		gen_rpm_free           = (oMarinkaRodeo_block_free_f)fm_free_dbg;
+		gen_rpm_free_unsafe    = (oMarinkaRodeo_block_free_f)fm_free_dbg;
+		gen_rpm_info           = (oMarinkaRodeo_mem_info_f)fm_info;
+		gen_rpm_status         = (oMarinkaRodeo_mem_status_f)fm_status_dbg;
+		gen_rpm_get_size       = (oMarinkaRodeo_get_mmstat_f)fm_get_size;
+		gen_rpm_get_used       = (oMarinkaRodeo_get_mmstat_f)fm_get_used;
+		gen_rpm_get_rused      = (oMarinkaRodeo_get_mmstat_f)fm_get_real_used;
+		gen_rpm_get_mused      = (oMarinkaRodeo_get_mmstat_f)fm_get_max_real_used;
+		gen_rpm_get_free       = (oMarinkaRodeo_get_mmstat_f)fm_get_free;
+		gen_rpm_get_frags      = (oMarinkaRodeo_get_mmstat_f)fm_get_frags;
 		break;
 #endif
 #ifdef Q_MALLOC
 	case MM_Q_MALLOC_DBG:
-		gen_rpm_malloc         = (osips_block_malloc_f)qm_malloc_dbg;
-		gen_rpm_malloc_unsafe  = (osips_block_malloc_f)qm_malloc_dbg;
-		gen_rpm_realloc        = (osips_block_realloc_f)qm_realloc_dbg;
-		gen_rpm_realloc_unsafe = (osips_block_realloc_f)qm_realloc_dbg;
-		gen_rpm_free           = (osips_block_free_f)qm_free_dbg;
-		gen_rpm_free_unsafe    = (osips_block_free_f)qm_free_dbg;
-		gen_rpm_info           = (osips_mem_info_f)qm_info;
-		gen_rpm_status         = (osips_mem_status_f)qm_status_dbg;
-		gen_rpm_get_size       = (osips_get_mmstat_f)qm_get_size;
-		gen_rpm_get_used       = (osips_get_mmstat_f)qm_get_used;
-		gen_rpm_get_rused      = (osips_get_mmstat_f)qm_get_real_used;
-		gen_rpm_get_mused      = (osips_get_mmstat_f)qm_get_max_real_used;
-		gen_rpm_get_free       = (osips_get_mmstat_f)qm_get_free;
-		gen_rpm_get_frags      = (osips_get_mmstat_f)qm_get_frags;
+		gen_rpm_malloc         = (oMarinkaRodeo_block_malloc_f)qm_malloc_dbg;
+		gen_rpm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)qm_malloc_dbg;
+		gen_rpm_realloc        = (oMarinkaRodeo_block_realloc_f)qm_realloc_dbg;
+		gen_rpm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)qm_realloc_dbg;
+		gen_rpm_free           = (oMarinkaRodeo_block_free_f)qm_free_dbg;
+		gen_rpm_free_unsafe    = (oMarinkaRodeo_block_free_f)qm_free_dbg;
+		gen_rpm_info           = (oMarinkaRodeo_mem_info_f)qm_info;
+		gen_rpm_status         = (oMarinkaRodeo_mem_status_f)qm_status_dbg;
+		gen_rpm_get_size       = (oMarinkaRodeo_get_mmstat_f)qm_get_size;
+		gen_rpm_get_used       = (oMarinkaRodeo_get_mmstat_f)qm_get_used;
+		gen_rpm_get_rused      = (oMarinkaRodeo_get_mmstat_f)qm_get_real_used;
+		gen_rpm_get_mused      = (oMarinkaRodeo_get_mmstat_f)qm_get_max_real_used;
+		gen_rpm_get_free       = (oMarinkaRodeo_get_mmstat_f)qm_get_free;
+		gen_rpm_get_frags      = (oMarinkaRodeo_get_mmstat_f)qm_get_frags;
 		break;
 #endif
 #ifdef HP_MALLOC
 	case MM_HP_MALLOC_DBG:
-		gen_rpm_malloc         = (osips_block_malloc_f)hp_rpm_malloc_dbg;
-		gen_rpm_malloc_unsafe  = (osips_block_malloc_f)hp_rpm_malloc_unsafe_dbg;
-		gen_rpm_realloc        = (osips_block_realloc_f)hp_rpm_realloc_dbg;
-		gen_rpm_realloc_unsafe = (osips_block_realloc_f)hp_rpm_realloc_unsafe_dbg;
-		gen_rpm_free           = (osips_block_free_f)hp_rpm_free_dbg;
-		gen_rpm_free_unsafe    = (osips_block_free_f)hp_rpm_free_unsafe_dbg;
-		gen_rpm_info           = (osips_mem_info_f)hp_info;
-		gen_rpm_status         = (osips_mem_status_f)hp_status_dbg;
-		gen_rpm_get_size       = (osips_get_mmstat_f)hp_rpm_get_size;
-		gen_rpm_get_used       = (osips_get_mmstat_f)hp_rpm_get_used;
-		gen_rpm_get_rused      = (osips_get_mmstat_f)hp_rpm_get_real_used;
-		gen_rpm_get_mused      = (osips_get_mmstat_f)hp_rpm_get_max_real_used;
-		gen_rpm_get_free       = (osips_get_mmstat_f)hp_rpm_get_free;
-		gen_rpm_get_frags      = (osips_get_mmstat_f)hp_rpm_get_frags;
+		gen_rpm_malloc         = (oMarinkaRodeo_block_malloc_f)hp_rpm_malloc_dbg;
+		gen_rpm_malloc_unsafe  = (oMarinkaRodeo_block_malloc_f)hp_rpm_malloc_unsafe_dbg;
+		gen_rpm_realloc        = (oMarinkaRodeo_block_realloc_f)hp_rpm_realloc_dbg;
+		gen_rpm_realloc_unsafe = (oMarinkaRodeo_block_realloc_f)hp_rpm_realloc_unsafe_dbg;
+		gen_rpm_free           = (oMarinkaRodeo_block_free_f)hp_rpm_free_dbg;
+		gen_rpm_free_unsafe    = (oMarinkaRodeo_block_free_f)hp_rpm_free_unsafe_dbg;
+		gen_rpm_info           = (oMarinkaRodeo_mem_info_f)hp_info;
+		gen_rpm_status         = (oMarinkaRodeo_mem_status_f)hp_status_dbg;
+		gen_rpm_get_size       = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_size;
+		gen_rpm_get_used       = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_used;
+		gen_rpm_get_rused      = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_real_used;
+		gen_rpm_get_mused      = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_max_real_used;
+		gen_rpm_get_free       = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_free;
+		gen_rpm_get_frags      = (oMarinkaRodeo_get_mmstat_f)hp_rpm_get_frags;
 		break;
 #endif
 #endif
@@ -411,7 +411,7 @@ int load_rpm_file(void)
 	struct _rpm_map_block tmp;
 	int fd, ret;
 	int bytes_needed, bytes_read;
-	enum osips_mm alloc;
+	enum oMarinkaRodeo_mm alloc;
 
 	fd = open(rpm_mem_file, O_RDWR);
 	if (fd < 0) {
@@ -423,7 +423,9 @@ int load_rpm_file(void)
 	bytes_needed = sizeof(tmp);
 	do {
 		ret = read(fd, ((char *)&tmp) + bytes_read, bytes_needed);
-		if (ret < 0 && errno != EINTR) {
+		if (ret < 0) {
+			if (errno == EINTR)
+				continue;
 			LM_ERR("could not read from restart persistency file: %s (%d: %s)\n",
 					rpm_mem_file, errno, strerror(errno));
 			close(fd);

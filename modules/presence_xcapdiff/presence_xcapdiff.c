@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008 AG Projects
+ * Copyright (C) 2008 AG Projects
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -35,7 +35,7 @@ static const param_export_t params[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "presence", DEP_SILENT },
 		{ MOD_TYPE_DEFAULT, "pua",      DEP_SILENT },
 		{ MOD_TYPE_NULL, NULL, 0 },
@@ -51,7 +51,7 @@ struct module_exports exports= {
     MODULE_VERSION,             /* module version */
     DEFAULT_DLFLAGS,            /* dlopen flags */
     0,				            /* load function */
-    &deps,                      /* Marina.Rodeo module dependencies */
+    &deps,                      /* OpenMarinkaRodeo module dependencies */
     0,                          /* exported functions */
     0,                          /* exported async functions */
     params,                     /* exported parameters */

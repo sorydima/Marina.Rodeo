@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Marina.Rodeo Solutions
+ * Copyright (C) 2011 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -25,6 +25,7 @@
 
 #include "../../dprint.h"
 #include "cachedb_redis_dbase.h"
+#include "cachedb_redis_utils.h"
 #include "../../mem/mem.h"
 #include "../../ut.h"
 #include "../../cachedb/cachedb.h"
@@ -88,14 +89,43 @@ cluster_node *get_redis_connection(redis_con *con,str *key)
 	unsigned short hash_slot;
 	cluster_node *it;
 
-	if (con->flags & REDIS_SINGLE_INSTANCE)
+	if (con->flags & REDIS_SINGLE_INSTANCE) {
+		LM_DBG("Single redis connection, returning %p\n",con->nodes);
 		return con->nodes;
-	else {
+	} else {
 		hash_slot = redisHash(con, key);
 		for (it=con->nodes;it;it=it->next) {
-			if (it->start_slot <= hash_slot && it->end_slot >= hash_slot)
+
+			if (it->start_slot <= hash_slot && it->end_slot >= hash_slot) {
+				LM_DBG("Redis cluster connection, matched con %p for slot %u \n",it,hash_slot);
 				return it;
+			}
 		}
+		return NULL;
+	}
+}
+
+cluster_node *get_redis_connection_by_endpoint(redis_con *con, redis_moved *redis_info)
+{
+	cluster_node *it;
+
+	if (con->flags & REDIS_SINGLE_INSTANCE) {
+		LM_DBG("Single redis connection, returning %p\n",con->nodes);
+		return con->nodes;
+	} else {
+		for (it=con->nodes;it;it=it->next) {
+			if (match_prefix(redis_info->endpoint.s, redis_info->endpoint.len, it->ip, strlen(it->ip))) {
+				if (it->port == redis_info->port) {
+					// Removed slot comparison as it may be a little too aggressive of a match
+					// Code is still here in the event that it needs to be added back in
+					//if (it->start_slot <= redis_info->slot && it->end_slot >= redis_info->slot) {
+						LM_DBG("Redis cluster connection, matched con %p for endpoint: %.*s:%d slot: [%u] %u [%u] \n", it, redis_info->endpoint.len, redis_info->endpoint.s, redis_info->port, it->start_slot, redis_info->slot, it->end_slot);
+						return it;
+					//}
+				}
+			}
+		}
+		LM_ERR("Redis cluster connection, No match found for endpoint: %.*s:%d slot %u\n", redis_info->endpoint.len, redis_info->endpoint.s, redis_info->port, redis_info->slot);
 		return NULL;
 	}
 }
@@ -191,13 +221,14 @@ int build_cluster_nodes(redis_con *con,char *info,int size)
 	char *ip, *block = NULL;
 	unsigned short port,start_slot,end_slot;
 	int len;
+	struct datavalues **newret1, **newret2, **newret3;
 
 	// Define **pointers for new structures 
-	struct datavalues **newret1 = pkg_malloc(sizeof(struct datavalues *));
+	newret1 = pkg_malloc(sizeof(struct datavalues *));
 	if (!chkmalloc3(newret1)) goto error;
-	struct datavalues **newret2 = pkg_malloc(sizeof(struct datavalues *));
+	newret2 = pkg_malloc(sizeof(struct datavalues *));
 	if (!chkmalloc3(newret2)) goto error;
-	struct datavalues **newret3 = pkg_malloc(sizeof(struct datavalues *));
+	newret3 = pkg_malloc(sizeof(struct datavalues *));
 	if (!chkmalloc3(newret3)) goto error;
 
 	// Allocate space for the structures
@@ -223,13 +254,14 @@ int build_cluster_nodes(redis_con *con,char *info,int size)
 
 
 	// Redis really only requires two connections ("myself,master" && one other master) || (at least two masters)
-	// but this will supply info for upto 1000 masters due to current Marina.Rodeo design (hopefully representing the total hash slots)
+	// but this will supply info for upto 1000 masters due to current OpenMarinkaRodeo design (hopefully representing the total hash slots)
 	// will always connect to myself,master
 	strstr(info,"myself,master")?(count = 999):(count = 1000);
 
 	// Cluster data into Array
 	if (explode(info,delimeters,newret1)) {
 		for (i=0;i<=newret1[0]->count;i++) {
+			LM_DBG("Nodes : %s\n",newret1[0]->redisdata[i]);
 
 			if ((strstr(newret1[0]->redisdata[i],"master") && (masters <= count)) || strstr(newret1[0]->redisdata[i],"myself,master")) {
 
@@ -243,10 +275,14 @@ int build_cluster_nodes(redis_con *con,char *info,int size)
 
 						if (strstr(newret1[0]->redisdata[i],"myself") && strstr(newret2[0]->redisdata[j],"myself")) {
 							//myself no ip
-							ip = con->id->host;
-							port = con->id->port;
-							if (i==0) masters--;
-			
+							if (ip == NULL) {
+								ip = con->id->host;
+								port = con->id->port;
+								LM_DBG("Myself and no IP, set ip to main host %s\n",con->id->host);
+								if (i==0) masters--;
+							} else
+								LM_DBG("Master already discovered to not be myself, not going to main host \n");
+
 						} else {
 							//Get the ip and port of other master
 							if (strstr(newret2[0]->redisdata[j],":") && (strlen(newret2[0]->redisdata[j]) > 5)) {
@@ -269,8 +305,6 @@ int build_cluster_nodes(redis_con *con,char *info,int size)
 
 				} else { block = "row to array"; goto error;}
 
-				LM_DBG("ip port start end %s %hu %hu %hu\n",ip,port,start_slot,end_slot);
-
 				if ( ip == NULL || !(port > 0) || (start_slot > end_slot) || !(end_slot > 0) ) {block = ":processing row"; goto error;}
 
 				len = strlen(ip);
@@ -287,6 +321,8 @@ int build_cluster_nodes(redis_con *con,char *info,int size)
 				new->port = port;
 				new->start_slot = start_slot;
 				new->end_slot = end_slot;
+
+				LM_DBG("Saving connection %p for ip %s port %hu start %hu end %hu\n",new,ip,port,start_slot,end_slot);
 
 				if (con->nodes == NULL)
 					con->nodes = new;
@@ -309,4 +345,99 @@ error:
 	LM_ERR("Error while parsing cluster nodes in %s\n",block);
 	destroy_cluster_nodes(con);
 	return -1;
+}
+
+/*
+ When Redis is operating as a cluster, it is possible (very likely)
+ that a MOVED redirection will be returned by the Redis nodes that
+ received the request. The general format of the reply from Redis is:
+ MOVED slot [IP|FQDN]:port
+
+ This routine will parse the Redis MOVED reply into its components.
+ Note that the redisReply struct MUST be released outside of this routine
+ to avoid a memory leak. The out->endpoint pointer must not be used after
+ the redisReply has been released.
+
+ The parsed data is stored into the following redis_moved struct:
+ 
+ typedef struct {
+	int slot;
+	const_str endpoint;
+	int port;
+ } redis_moved;
+
+*/
+int parse_moved_reply(redisReply *reply, redis_moved *out) {
+	int i;
+	int slot = 0;
+	const char *p;
+	const char *end;
+	const char *host_start;
+	const char *colon = NULL;
+	const char *port_start;
+	int port = REDIS_DF_PORT; // Default to Redis standard port
+
+	if (!reply || !reply->str || reply->len < MOVED_PREFIX_LEN || !out)
+		return ERR_INVALID_REPLY;
+
+	p = reply->str;
+	end = reply->str + reply->len;
+
+	for (i = 0; i < MOVED_PREFIX_LEN; ++i) {
+		if (p[i] != MOVED_PREFIX[i]) {
+		return ERR_INVALID_REPLY;
+		}
+	}
+	p += MOVED_PREFIX_LEN;
+
+	// Parse slot number
+	while (p < end && *p >= '0' && *p <= '9') {
+		slot = slot * 10 + (*p - '0');
+		p++;
+	}
+	if (slot == 0 && (p == reply->str + MOVED_PREFIX_LEN || *(p - 1) < '0' || *(p - 1) > '9'))
+		return ERR_INVALID_SLOT;
+
+	// Skip spaces
+	while (p < end && *p == ' ') p++;
+
+	// Parse host and port
+	host_start = p;
+	while (p < end) {
+		if (*p == ':') {
+			colon = p;
+			break;
+		}
+		p++;
+	}
+
+	out->endpoint.s = NULL;
+	out->endpoint.len = 0;
+
+	if (colon) {
+		out->endpoint.s = host_start;
+		out->endpoint.len = colon - host_start;
+
+		// Parse port
+		port_start = colon + 1;
+		p = port_start;
+		if (p < end) {
+			port = 0;
+			while (p < end && *p >= '0' && *p <= '9') {
+				port = port * 10 + (*p - '0');
+				p++;
+			}
+			if (port < 0 || port > 65535 || port_start == p)
+				return ERR_INVALID_PORT;
+		}
+	} else if (out->endpoint.s < end) {
+		out->endpoint.s = host_start;
+		out->endpoint.len = end - host_start;
+	}
+
+	// Fill output
+	out->slot = slot;
+	out->port = port;
+
+	return 0;
 }

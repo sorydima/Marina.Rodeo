@@ -1,16 +1,16 @@
 /*
  * emergency module - basic support for emergency calls
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2015 Robison Tesini & Evandro Villaron
+ * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -110,7 +110,7 @@ static const param_export_t params[] = {
  * Module parameter variables
  */
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_SQLDB, NULL, DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -128,7 +128,7 @@ struct module_exports exports = {
 	MODULE_VERSION, /* module version */
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds, /* Exported functions */
 	NULL,      /* Exported async functions */
 	params, /* Exported parameters */
@@ -530,8 +530,8 @@ static void free_subs(void) {
 	int i;
 
 	time(&rawtime);
-	time_C = (int)rawtime;
-	LM_DBG("TIME : %d \n", (int)rawtime );
+	time_C = (int)(unsigned long)rawtime;
+	LM_DBG("TIME : %d \n", (int)(unsigned long)rawtime );
 
 	for(i= 0; i< subst_size; i++){
 
@@ -1032,7 +1032,7 @@ error :
 /* verify if the call is an emergency call
  *  - verify if the field uri has a urn standard for emergency call defined by RFC 5031
  *  - if it does not, then verify if se user field is one of the emengency_code in the database
- *    - if it is a code, the module checks if the host is from the Marina.Rodeo
+ *    - if it is a code, the module checks if the host is from the openMarinkaRodeo
  or if there is a field Geolocation_routing = 'yes"
  */
 int is_emergency_call(struct sip_msg *msg) {
@@ -1074,7 +1074,7 @@ int is_emergency_call(struct sip_msg *msg) {
 						LM_DBG(" --- IT IS ONWER HOST  \n \n");
 						return 1;
 					} else {
-						// Host isn't same of Marina.Rodeo, Geolocation_Routing determine if routing the INVITE (RFC 6442)
+						// Host isn't same of openMarinkaRodeo, Geolocation_Routing determine if routing the INVITE (RFC 6442)
 						int ret = check_geolocation_header(msg);
 						return ret;
 					}
@@ -1094,7 +1094,7 @@ error:
 
 
 /* treatment of an emergency call
- *   - verify the Marina.Rodeo configuration:
+ *   - verify the openMarinkaRodeo configuration:
  *       - 0 : Call Server from scenario I or Routing Proxy scenario II
  *       - 1 : Call Server from scenario II
  *       - 2 : callserver from scenario III
@@ -1217,6 +1217,11 @@ int send_request_vpc(struct sip_msg *msg) {
 		if(locationHeader && strlen(locationHeader)>1){
 			int size_lie =  strlen(pidf_body) + strlen(locationHeader) + 2;
 			lie = pkg_malloc(sizeof (char)* size_lie);
+			if (!lie) {
+				pkg_free(callidHeader);
+				pkg_free(from_tag);
+				goto error;
+			}
 			memset(lie, 0, size_lie);
 			sprintf(lie, "%s %s", locationHeader, pidf_body);
 			pkg_free(pidf_body);
@@ -1398,7 +1403,7 @@ int treat_routing(struct sip_msg* msg, struct esct *call_cell, char* callidHeade
 		goto error;
 	}
 
-	// Marina.Rodeo with call server role in scenario I or with routing proxy hole in scenario II
+	// openMarinkaRodeo with call server role in scenario I or with routing proxy hole in scenario II
 	if ((proxy_role == 0) || (proxy_role == 1)){
 
 		if (range == 2) {
@@ -1458,7 +1463,7 @@ int treat_routing(struct sip_msg* msg, struct esct *call_cell, char* callidHeade
 		}
 
 	}else{
-		// Marina.Rodeo with redirect server role
+		// openMarinkaRodeo with redirect server role
 		if (proxy_role == 4){
 			LM_DBG(" ---TRATA REDIRECT\n \n");
 			if(add_hdr_rpl(call_cell, msg)==-1)
@@ -1531,6 +1536,11 @@ int routing_by_ert( struct sip_msg *msg, ESCT *call_cell, int failure) {
 			call_cell->esgwri = esgwri_db;
 
 			char *r = strstr(call_cell->esgwri, "@");
+			if (!r) {
+				LM_ERR("String '@' not found\n");
+				return -1;
+			}
+
 			r++;
 			int tam_esgw = call_cell->esgwri + strlen(call_cell->esgwri) - r;
 
@@ -1737,7 +1747,7 @@ int bye(struct sip_msg *msg, int dir) {
 
 	time(&rawtime);
 	localtime_r(&rawtime, &timeinfo);
-	time_now = (int)rawtime;
+	time_now = (int)(unsigned long)rawtime;
 
 	if (proxy_role == 2) {
 		// Call Server scenario II
@@ -1985,7 +1995,7 @@ int fill_parm_with_BS(char** var) {
 	return 1;
 }
 
-/* verify if the ruri is from the same Marina.Rodeo
+/* verify if the ruri is from the same openMarinkaRodeo
 */
 int check_myself(struct sip_msg *msg) {
 	int ret = 0;
@@ -1995,7 +2005,7 @@ int check_myself(struct sip_msg *msg) {
 		LM_ERR("cannot parse msg URI\n");
 		return 0;
 	}
-	LM_DBG(" --- Marina.Rodeo host %.*s \n \n",
+	LM_DBG(" --- openMarinkaRodeo host %.*s \n \n",
 		msg->parsed_uri.host.len, msg->parsed_uri.host.s);
 
 	ret=check_self(&msg->parsed_uri.host, 0, 0);
@@ -2086,7 +2096,7 @@ char* formatted_xml(struct sip_msg *msg, char* lie, char* callidHeader, char* cb
 	}
 
 	if (proxy_role == 1 && ((strlen(vsp_hostname) == 0) || (strlen(vsp_nena_id) == 0))){
-		LM_ERR("vsp_hostname and vsp_nena_id are mandatory when Marina.Rodeo role as routing proxy in scenario II\n");
+		LM_ERR("vsp_hostname and vsp_nena_id are mandatory when openMarinkaRodeo role as routing proxy in scenario II\n");
 		return NULL;
 	}
 

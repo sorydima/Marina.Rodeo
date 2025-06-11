@@ -1,16 +1,16 @@
 /*
  * Hash functions for cached domain table
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2002-2008 Juha Heinanen
+ * Copyright (C) 2002-2008 Juha Heinanen
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -26,6 +26,7 @@
 #include "../../hash_func.h"
 #include "../../mem/shm_mem.h"
 #include "../../mi/mi.h"
+#include "../../name_alias.h"
 #include "domain_mod.h"
 #include <stdlib.h>
 #include <string.h>
@@ -36,7 +37,7 @@
 
 
 /* Add domain to hash table */
-int hash_table_install (struct domain_list **hash_table, str *d, str *a)
+int hash_table_install (struct domain_list **hash_table, str *d, str *a, int as)
 {
 	struct domain_list *np;
 	unsigned int hash_val;
@@ -61,6 +62,8 @@ int hash_table_install (struct domain_list **hash_table, str *d, str *a)
 		np->attrs.s = NULL;
 	}
 
+	np->accept_subdomain = as;
+
 	hash_val = dom_hash(&np->domain);
 	np->next = hash_table[hash_val];
 	hash_table[hash_val] = np;
@@ -70,14 +73,13 @@ int hash_table_install (struct domain_list **hash_table, str *d, str *a)
 
 
 /* Check if domain exists in hash table */
-int hash_table_lookup (struct sip_msg *msg, str *domain, pv_spec_t *pv)
+int hash_table_lookup (struct sip_msg *msg, str *lookup_domain, str *host, pv_spec_t *pv)
 {
 	struct domain_list *np;
 	pv_value_t val;
 
-	for (np = (*hash_table)[dom_hash(domain)]; np != NULL; np = np->next) {
-		if ((np->domain.len == domain->len) &&
-			(strncasecmp(np->domain.s, domain->s, domain->len) == 0)) {
+	for (np = (*hash_table)[dom_hash(lookup_domain)]; np != NULL; np = np->next) {
+		if (match_domain(np->domain.s, np->domain.len, host->s, host->len, np->accept_subdomain)) {
 			if (pv && np->attrs.s) {
 				val.rs = np->attrs;
 				val.flags = PV_VAL_STR;

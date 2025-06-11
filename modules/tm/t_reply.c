@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2010-2014 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2010-2014 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -68,6 +68,7 @@
 #include "../../dprint.h"
 #include "../../config.h"
 #include "../../parser/parser_f.h"
+#include "../../parser/msg_parser.h"
 #include "../../ut.h"
 #include "../../timer.h"
 #include "../../error.h"
@@ -119,7 +120,7 @@ static struct script_route_ref *goto_on_reply = NULL;
 /* currently processed branch */
 extern int _tm_branch_index;
 
-
+static struct sip_msg dummy_msg;
 
 /* returns the picked branch */
 int t_get_picked_branch(void)
@@ -193,7 +194,7 @@ struct script_route_ref *get_on_reply(void)
 void tm_init_tags(void)
 {
 	init_tags(tm_tags, &tm_tag_suffix,
-		"Marina.Rodeo-TM/tags", TM_TAG_SEPARATOR );
+		"OpenMarinkaRodeo-TM/tags", TM_TAG_SEPARATOR );
 }
 
 /* returns 0 if the message was previously acknowledged
@@ -294,13 +295,16 @@ inline static int update_totag_set(struct cell *t, struct sip_msg *ok)
 
 /*
  * Build and send an ACK to a negative reply
+ * On successful send:
+ *   - return 0
+ *   - populate @ack_buf, for callback purposes, which *must* be SHM freed!
  */
-static int send_ack(struct sip_msg* rpl, struct cell *trans, int branch)
+static int send_ack(struct sip_msg* rpl, struct cell *trans, int branch, str *ack_buf)
 {
 	str method = str_init(ACK);
 	str to;
-	str ack_buf;
 	struct usr_avp **backup_list;
+	int rc;
 
 	if(parse_headers(rpl,is_local(trans)?HDR_EOH_F:(HDR_TO_F|HDR_FROM_F),0)==-1
 	|| !rpl->to || !rpl->from ) {
@@ -310,10 +314,10 @@ static int send_ack(struct sip_msg* rpl, struct cell *trans, int branch)
 	to.s=rpl->to->name.s;
 	to.len=rpl->to->len;
 
-	ack_buf.s = is_local(trans)?
-		build_dlg_ack(rpl, trans, branch, &to, (unsigned int*)&ack_buf.len):
-		build_local( trans, branch, &method, NULL, rpl, (unsigned int*)&ack_buf.len );
-	if (ack_buf.s==0) {
+	ack_buf->s = is_local(trans)?
+		build_dlg_ack(rpl, trans, branch, &to, (unsigned int*)&ack_buf->len):
+		build_local( trans, branch, &method, NULL, rpl, (unsigned int*)&ack_buf->len );
+	if (ack_buf->s==0) {
 		LM_ERR("failed to build ACK\n");
 		goto error;
 	}
@@ -323,23 +327,17 @@ static int send_ack(struct sip_msg* rpl, struct cell *trans, int branch)
 
 	set_bavp_list(&trans->uac[branch].user_avps);
 	backup_list = set_avp_list( &trans->user_avps );
-	if(SEND_PR_BUFFER(&trans->uac[branch].request, ack_buf.s, ack_buf.len)==0){
-		/* successfully sent out */
-		if ( has_tran_tmcbs( trans, TMCB_MSG_SENT_OUT) ) {
-			set_extra_tmcb_params( &ack_buf, &trans->uac[branch].request.dst);
-			run_trans_callbacks( TMCB_MSG_SENT_OUT,
-				trans, trans->uas.request, 0, 0);
-		}
-	}
+
+	rc = SEND_PR_BUFFER(&trans->uac[branch].request, ack_buf->s, ack_buf->len);
+
 	set_avp_list(backup_list);
 	reset_bavp_list();
 
 	tcp_no_new_conn = 0;
 
-	shm_free(ack_buf.s);
-
-	return 0;
+	return rc;
 error:
+	memset(ack_buf, 0, sizeof *ack_buf);
 	return -1;
 }
 
@@ -443,6 +441,22 @@ static int _reply_light( struct cell *trans, char* buf, unsigned int len,
 	if(trans->uas.request && trans->uas.request->flags&tcp_no_new_conn_rplflag)
 		tcp_no_new_conn = 1;
 
+	if(ref_script_route_is_valid(tm_local_reply_route)) {
+		LM_DBG("Found Local-Reply Route...\n");
+		memset(&dummy_msg, 0, sizeof(struct sip_msg));
+		dummy_msg.buf = buf;
+		dummy_msg.len = len;
+
+		if (parse_msg(buf, len, &dummy_msg) == 0) {
+			LM_DBG("Parsed Message, executing Local-Reply Route "
+				"with Message...\n");
+			run_top_route(sroutes->request[tm_local_reply_route->idx],
+				&dummy_msg);
+		}
+		free_sip_msg(&dummy_msg);
+	}
+
+
 	if ( SEND_PR_BUFFER( rb, buf, len )==0 ) {
 		LM_DBG("reply sent out. buf=%p: %.9s..., "
 			"shmem=%p: %.9s\n", buf, buf, rb->buffer.s, rb->buffer.s );
@@ -544,7 +558,7 @@ static inline void faked_env( struct cell *t,struct sip_msg *msg)
 {
 	static struct cell *backup_t;
 	static struct usr_avp **backup_list;
-	static struct socket_info* backup_si;
+	static const struct socket_info* backup_si;
 	static int backup_route_type;
 
 	if (msg) {
@@ -1513,148 +1527,12 @@ error:
 	return RPS_ERROR;
 }
 
-
-/*  This function is called whenever a reply for our module is received;
-  * we need to register  this function on module initialization;
-  *  Returns :   0 - core router stops
-  *              1 - core router relay statelessly
-  */
-int reply_received( struct sip_msg  *p_msg )
+void process_reply_and_timer(struct cell *t,int branch,int msg_status, 
+	struct sip_msg *p_msg,int last_uac_status, struct ua_client *uac)
 {
-	int msg_status;
-	int last_uac_status;
-	int branch;
 	int reply_status;
+	branch_bm_t cancel_bitmap=0;
 	utime_t timer;
-	/* has the transaction completed now and we need to clean-up? */
-	branch_bm_t cancel_bitmap;
-	struct ua_client *uac;
-	struct cell *t;
-	struct usr_avp **backup_list;
-	unsigned int has_reply_route;
-	int old_route_type;
-
-	set_t(T_UNDEFINED);
-
-	/* make sure we know the associated transaction ... */
-	switch (t_check(p_msg, &branch )) {
-		case -1: goto not_found;
-		case -2: return 0; /* reply forwarded elsewhere */
-	}
-
-	/*... if there is none, tell the core router to fwd statelessly */
-	t = get_t();
-	if ((t == 0) || (t == T_UNDEFINED)) goto not_found;
-
-	cancel_bitmap=0;
-	msg_status=p_msg->REPLY_STATUS;
-
-	uac=&t->uac[branch];
-	LM_DBG("org. status uas=%d, uac[%d]=%d local=%d is_invite=%d)\n",
-		t->uas.status, branch, uac->last_received,
-		is_local(t), is_invite(t));
-	last_uac_status=uac->last_received;
-	if_update_stat( tm_enable_stats, tm_rcv_rpls , 1);
-
-	/* it's a cancel which is not e2e ? */
-	if ( get_cseq(p_msg)->method_id==METHOD_CANCEL && is_invite(t) ) {
-		/* ... then just stop timers */
-		reset_timer( &uac->local_cancel.retr_timer);
-		if ( msg_status >= 200 ) {
-				reset_timer( &uac->local_cancel.fr_timer);
-		}
-		LM_DBG("reply to local CANCEL processed\n");
-
-		if (has_tran_tmcbs( t, TMCB_MSG_MATCHED_IN) )
-			run_trans_callbacks( TMCB_MSG_MATCHED_IN, t, 0,
-				p_msg, p_msg->REPLY_STATUS);
-
-		goto done;
-	}
-
-	/* *** stop timers *** */
-	/* stop retransmission */
-	reset_timer(&uac->request.retr_timer);
-
-	/* stop final response timer only if I got a final response */
-	if ( msg_status >= 200 ) {
-		reset_timer( &uac->request.fr_timer);
-	}
-
-	/* acknowledge negative INVITE replies (do it before detailed
-	 * on_reply processing, which may take very long, like if it
-	 * is attempted to establish a TCP connection to a fail-over dst */
-	if (is_invite(t) && ((msg_status >= 300) ||
-	(is_local(t) && !no_autoack(t) && msg_status >= 200) )) {
-		if (send_ack(p_msg, t, branch)!=0)
-			LM_ERR("failed to send ACK (local=%s)\n", is_local(t)?"yes":"no");
-	}
-
-	_tm_branch_index = branch;
-
-	if (has_tran_tmcbs( t, TMCB_MSG_MATCHED_IN) )
-		run_trans_callbacks( TMCB_MSG_MATCHED_IN, t, 0,
-			p_msg, p_msg->REPLY_STATUS);
-
-	if (!is_local(t))
-		run_trans_callbacks( TMCB_RESPONSE_IN, t, t->uas.request, p_msg,
-			p_msg->REPLY_STATUS);
-
-	/* processing of on_reply block */
-	has_reply_route = (t->on_reply) || (t->uac[branch].on_reply);
-	if (has_reply_route) {
-		if (onreply_avp_mode) {
-			/* lock the reply*/
-			LOCK_REPLIES( t );
-			/* set the as avp_list the one from transaction */
-			backup_list = set_avp_list(&t->user_avps);
-		} else {
-			backup_list = 0;
-		}
-		/* transfer transaction flag to branch context */
-		p_msg->flags = t->uas.request ? t->uas.request->flags : 0;
-		setb0flags( p_msg, t->uac[branch].br_flags);
-
-		swap_route_type(old_route_type, ONREPLY_ROUTE);
-		/* run block - first per branch and then global one */
-		if ( ref_script_route_check_and_update(t->uac[branch].on_reply) &&
-		(run_top_route(sroutes->onreply[t->uac[branch].on_reply->idx],p_msg)
-		&ACT_FL_DROP) && (msg_status<200) ) {
-			set_route_type(old_route_type);
-			if (onreply_avp_mode) {
-				UNLOCK_REPLIES( t );
-				set_avp_list( backup_list );
-			}
-			LM_DBG("dropping provisional reply %d\n", msg_status);
-			goto done;
-		}
-		if ( ref_script_route_check_and_update(t->on_reply) &&
-		(run_top_route(sroutes->onreply[t->on_reply->idx],p_msg)
-		&ACT_FL_DROP) && (msg_status<200) ) {
-			set_route_type(old_route_type);
-			if (onreply_avp_mode) {
-				UNLOCK_REPLIES( t );
-				set_avp_list( backup_list );
-			}
-			LM_DBG("dropping provisional reply %d\n", msg_status);
-			goto done;
-		}
-		set_route_type(old_route_type);
-		/* transfer current message context back to t */
-		t->uac[branch].br_flags = getb0flags(p_msg);
-		if (t->uas.request)
-			t->uas.request->flags = p_msg->flags;
-		if (onreply_avp_mode)
-			/* restore original avp list */
-			set_avp_list( backup_list );
-	}
-
-	if (!onreply_avp_mode || !has_reply_route)
-		/* lock the reply*/
-		LOCK_REPLIES( t );
-
-	/* mark that the UAC received replies */
-	uac->flags |= T_UAC_HAS_RECV_REPLY;
 
 	/* we fire a cancel on spot if (a) branch is marked "to be canceled" or (b)
 	 * the whole transaction was canceled (received cancel) and no cancel sent
@@ -1692,7 +1570,7 @@ int reply_received( struct sip_msg  *p_msg )
 	}
 
 	if (reply_status!=RPS_PROVISIONAL)
-		goto done;
+		return;
 
 	/* update FR/RETR timers on provisional replies */
 	if (msg_status < 200 && (restart_fr_on_each_reply ||
@@ -1716,6 +1594,174 @@ int reply_received( struct sip_msg  *p_msg )
 		}
 	} /* provisional replies */
 
+}
+
+/*  This function is called whenever a reply for our module is received;
+  * we need to register  this function on module initialization;
+  *  Returns :   0 - core router stops
+  *              1 - core router relay statelessly
+  */
+int reply_received( struct sip_msg  *p_msg )
+{
+	int msg_status;
+	int last_uac_status;
+	int branch;
+	/* has the transaction completed now and we need to clean-up? */
+	struct ua_client *uac;
+	struct cell *t;
+	struct usr_avp **backup_list;
+	unsigned int has_reply_route;
+	int old_route_type, ack_sent = 0;
+	str ack_buf;
+
+	set_t(T_UNDEFINED);
+
+	/* make sure we know the associated transaction ... */
+	switch (t_check(p_msg, &branch )) {
+		case -1: goto not_found;
+		case -2: return 0; /* reply forwarded elsewhere */
+	}
+
+	/*... if there is none, tell the core router to fwd statelessly */
+	t = get_t();
+	if ((t == 0) || (t == T_UNDEFINED)) goto not_found;
+
+	msg_status=p_msg->REPLY_STATUS;
+
+	uac=&t->uac[branch];
+	LM_DBG("org. status uas=%d, uac[%d]=%d local=%d is_invite=%d)\n",
+		t->uas.status, branch, uac->last_received,
+		is_local(t), is_invite(t));
+	last_uac_status=uac->last_received;
+	if_update_stat( tm_enable_stats, tm_rcv_rpls , 1);
+
+	/* it's a cancel which is not e2e ? */
+	if ( get_cseq(p_msg)->method_id==METHOD_CANCEL && is_invite(t) ) {
+		/* ... then just stop timers */
+		reset_timer( &uac->local_cancel.retr_timer);
+		if ( msg_status >= 200 ) {
+				reset_timer( &uac->local_cancel.fr_timer);
+		}
+		LM_DBG("reply to local CANCEL processed\n");
+
+		if (has_tran_tmcbs( t, TMCB_MSG_MATCHED_IN) )
+			run_trans_callbacks( TMCB_MSG_MATCHED_IN, t, 0,
+				p_msg, p_msg->REPLY_STATUS);
+
+		goto done;
+	}
+
+	/* *** stop timers *** */
+	/* stop retransmission */
+	reset_timer(&uac->request.retr_timer);
+
+	/* stop final response timer only if I got a final response */
+	if ( msg_status >= 200 ) {
+		reset_timer( &uac->request.fr_timer);
+	}
+
+	/* acknowledge negative INVITE replies ASAP! (do it before detailed
+	 * on_reply processing, which may take very long, like if it
+	 * is attempted to establish a TCP connection to a fail-over dst */
+	if (is_invite(t) && ((msg_status >= 300) ||
+	(is_local(t) && !no_autoack(t) && msg_status >= 200) )) {
+		if (!(ack_sent = (send_ack(p_msg, t, branch, &ack_buf)>=0)))
+			LM_ERR("failed to send ACK (local=%s)\n", is_local(t)?"yes":"no");
+	}
+
+	_tm_branch_index = branch;
+
+	if (has_tran_tmcbs( t, TMCB_MSG_MATCHED_IN) )
+		run_trans_callbacks( TMCB_MSG_MATCHED_IN, t, 0,
+			p_msg, p_msg->REPLY_STATUS);
+
+	if (!is_local(t))
+		run_trans_callbacks( TMCB_RESPONSE_IN, t, t->uas.request, p_msg,
+			p_msg->REPLY_STATUS);
+
+	if (ack_sent) {
+		if ( has_tran_tmcbs( t, TMCB_MSG_SENT_OUT) ) {
+			set_extra_tmcb_params( &ack_buf, &t->uac[branch].request.dst);
+			run_trans_callbacks( TMCB_MSG_SENT_OUT,
+				t, t->uas.request, 0, 0);
+		}
+		shm_free(ack_buf.s);
+	}
+
+	/* processing of on_reply block */
+	has_reply_route = (t->on_reply) || (t->uac[branch].on_reply);
+	if (has_reply_route) {
+		if (onreply_avp_mode) {
+			/* lock the reply*/
+			LOCK_REPLIES( t );
+			/* set the as avp_list the one from transaction */
+			backup_list = set_avp_list(&t->user_avps);
+		} else {
+			backup_list = 0;
+		}
+		/* transfer transaction flag to branch context */
+		p_msg->flags = t->uas.request ? t->uas.request->flags : 0;
+		setb0flags( p_msg, t->uac[branch].br_flags);
+
+		swap_route_type(old_route_type, ONREPLY_ROUTE);
+		/* run block - first per branch and then global one */
+		if ( ref_script_route_check_and_update(t->uac[branch].on_reply) &&
+		(run_top_route(sroutes->onreply[t->uac[branch].on_reply->idx],p_msg)
+		&ACT_FL_DROP) && (msg_status<200) ) {
+			set_route_type(old_route_type);
+			if (onreply_avp_mode) {
+				UNLOCK_REPLIES( t );
+				set_avp_list( backup_list );
+			}
+			LM_DBG("dropping provisional reply %d\n", msg_status);
+			goto done;
+		}
+
+		async_status = ASYNC_NO_IO;
+
+		if ( ref_script_route_check_and_update(t->on_reply) &&
+		(run_top_route(sroutes->onreply[t->on_reply->idx],p_msg)
+		&ACT_FL_DROP) && (msg_status<200) ) {
+			set_route_type(old_route_type);
+			if (onreply_avp_mode) {
+				UNLOCK_REPLIES( t );
+				set_avp_list( backup_list );
+			}
+			LM_DBG("dropping provisional reply %d\n", msg_status);
+			goto done;
+		}
+		set_route_type(old_route_type);
+		/* transfer current message context back to t */
+		t->uac[branch].br_flags = getb0flags(p_msg);
+		if (t->uas.request)
+			t->uas.request->flags = p_msg->flags;
+		if (onreply_avp_mode)
+			/* restore original avp list */
+			set_avp_list( backup_list );
+
+		if (async_status > 0) {
+			/* async was started in the onreply route, no need to do anything more here */
+			/* mark that the UAC received replies */
+			uac->flags |= T_UAC_HAS_RECV_REPLY;
+
+			if (onreply_avp_mode) {
+				UNLOCK_REPLIES( t );
+				set_avp_list( backup_list );
+			}
+			/* we exit and do not unref T, keep the ref for as long the async is in progress */
+			goto done_no_unref;
+		}
+	}
+
+	if (!onreply_avp_mode || !has_reply_route)
+		/* lock the reply*/
+		LOCK_REPLIES( t );
+
+	/* mark that the UAC received replies */
+	uac->flags |= T_UAC_HAS_RECV_REPLY;
+
+	process_reply_and_timer(t,branch,msg_status,p_msg,last_uac_status,uac);
+
 done:
 	/* we are done with the transaction, so unref it - the reference
 	 * was incremented by t_check() function -bogdan*/
@@ -1725,6 +1771,7 @@ done:
 	 * simply do nothing; that will make the other party to
 	 * retransmit; hopefuly, we'll then be better off
 	 */
+done_no_unref:
 	_tm_branch_index = 0;
 	return 0;
 not_found:

@@ -1,14 +1,14 @@
-# New ports collection makefile for:	Marina.Rodeo
+# New ports collection makefile for:	openMarinkaRodeo
 # Date created:				20 October 2005
 # Whom:					jesusr
 #
-# $FreeBSD: ports/net/Marina.Rodeo/Makefile,v 1.9 2007/08/20 09:12:42 miwi Exp $
+# $FreeBSD: ports/net/openMarinkaRodeo/Makefile,v 1.9 2007/08/20 09:12:42 miwi Exp $
 #
 
-PORTNAME=	Marina.Rodeo
+PORTNAME=	openMarinkaRodeo
 PORTVERSION=	3.1.0
 CATEGORIES=	net
-MASTER_SITES=	https://Marina.Rodeo.org/pub/Marina.Rodeo/${PORTVERSION}/
+MASTER_SITES=	https://openMarinkaRodeo.org/pub/openMarinkaRodeo/${PORTVERSION}/
 DISTNAME=	${PORTNAME}-${PORTVERSION}-tls_src
 
 MAINTAINER=	jesusr@FreeBSD.org
@@ -24,11 +24,11 @@ MAKE_ENV=	CC="${CC}" \
 		PTHREAD_CFLAGS="${PTHREAD_CFLAGS}" \
 		PTHREAD_LIBS="${PTHREAD_LIBS}"
 
-PLIST_FILES=	sbin/Marina.Rodeo
+PLIST_FILES=	sbin/openMarinkaRodeo
 
-PLIST_DIRS=	lib/Marina.Rodeo/modules lib/Marina.Rodeo
+PLIST_DIRS=	lib/openMarinkaRodeo/modules lib/openMarinkaRodeo
 
-MODULES=	acc alias_db auth auth_db auth_diameter avpops benchmark \
+MODULES=	acc alias_db auth auth_db auth_diameter sqlops benchmark \
 		cfgutils dbtext dialog dispatcher diversion domain \
 		domainpolicy enum exec flatstore gflags group imc \
 		mangler maxfwd mediaproxy mi_datagram mi_fifo msilo nathelper \
@@ -38,14 +38,14 @@ MODULES=	acc alias_db auth auth_db auth_diameter avpops benchmark \
 
 RC_FILES=	acc/radiusclient.conf \
 		acc/servers \
-		dictionary.Marina.Rodeo \
-		Marina.Rodeo.cfg
+		dictionary.openMarinkaRodeo \
+		openMarinkaRodeo.cfg
 RC_DIRS=	acc
 
 ONLY_FOR_ARCHS=	i386
 
-MAN5=		Marina.Rodeo.cfg.5
-MAN8=		Marina.Rodeo.8
+MAN5=		openMarinkaRodeo.cfg.5
+MAN8=		openMarinkaRodeo.8
 
 PORTDOCS=	*
 
@@ -85,7 +85,7 @@ MAKE_ENV+=	UNIXODBC=unixodbc
 .if defined(WITH_CPL)
 USE_GNOME=	libxml2
 MODULES+=	cpl_c
-PLIST_FILES+=	etc/Marina.Rodeo/cpl-06.dtd
+PLIST_FILES+=	etc/openMarinkaRodeo/cpl-06.dtd
 .else
 MAKE_ENV+=	CPL=cpl_c
 .endif
@@ -125,8 +125,8 @@ MODULES+=	snmpstats
 MAKE_ENV+=	SNMPSTATS=snmpstats
 .endif
 
-PLIST_FILES+=	${MODULES:S|^|lib/Marina.Rodeo/modules/|:S|$|.so|} \
-		${RC_FILES:S|^|etc/Marina.Rodeo/|:S|$|.default|}
+PLIST_FILES+=	${MODULES:S|^|lib/openMarinkaRodeo/modules/|:S|$|.so|} \
+		${RC_FILES:S|^|etc/openMarinkaRodeo/|:S|$|.default|}
 
 post-patch:
 .if defined(NOPORTDOCS)
@@ -134,14 +134,14 @@ post-patch:
 		${WRKSRC}/Makefile
 .endif
 	@${REINPLACE_CMD} -e 's|-g -O9 ||' -e 's|-O9 ||' ${WRKSRC}/Makefile.defs
-	@${REINPLACE_CMD} -e 's|/etc/Marina.Rodeo|${PREFIX}/etc/Marina.Rodeo|' \
+	@${REINPLACE_CMD} -e 's|/etc/openMarinkaRodeo|${PREFIX}/etc/openMarinkaRodeo|' \
 		${WRKSRC}/modules/mediaproxy/README \
 		${WRKSRC}/modules/cpl_c/README \
 		${WRKSRC}/INSTALL
-	@${REINPLACE_CMD} -e 's|/usr/local/sbin/Marina.Rodeo|${PREFIX}/sbin/Marina.Rodeo|' \
+	@${REINPLACE_CMD} -e 's|/usr/local/sbin/openMarinkaRodeo|${PREFIX}/sbin/openMarinkaRodeo|' \
 		${WRKSRC}/INSTALL
 	@${REINPLACE_CMD} -e 's|/usr/local|${PREFIX}|' \
-		${WRKSRC}/etc/Marina.Rodeo.cfg \
+		${WRKSRC}/etc/openMarinkaRodeo.cfg \
 		${WRKSRC}/modules/acc/README \
 		${WRKSRC}/modules/avp_radius/README \
 		${WRKSRC}/modules/db_berkeley/README \
@@ -153,22 +153,22 @@ post-patch:
 		${WRKSRC}/modules/unixodbc/README
 	@${REINPLACE_CMD} -e 's|/usr/local|${LOCALBASE}|' \
 		${WRKSRC}/modules/acc/etc/radiusclient.conf
-	@${REINPLACE_CMD} -e 's|/usr/local/etc/radiusclient|${PREFIX}/etc/Marina.Rodeo/acc|' \
+	@${REINPLACE_CMD} -e 's|/usr/local/etc/radiusclient|${PREFIX}/etc/openMarinkaRodeo/acc|' \
 		${WRKSRC}/modules/acc/acc_mod.c ${WRKSRC}/modules/acc/README
 
 post-install:
-	${INSTALL_DATA} ${WRKSRC}/etc/Marina.Rodeo.cfg \
-		${PREFIX}/etc/Marina.Rodeo/Marina.Rodeo.cfg.default
-	${MKDIR} ${PREFIX}/etc/Marina.Rodeo/acc
+	${INSTALL_DATA} ${WRKSRC}/etc/openMarinkaRodeo.cfg \
+		${PREFIX}/etc/openMarinkaRodeo/openMarinkaRodeo.cfg.default
+	${MKDIR} ${PREFIX}/etc/openMarinkaRodeo/acc
 	${INSTALL_DATA} ${WRKSRC}/modules/acc/etc/radiusclient.conf \
-		${PREFIX}/etc/Marina.Rodeo/acc/radiusclient.conf.default
+		${PREFIX}/etc/openMarinkaRodeo/acc/radiusclient.conf.default
 	${INSTALL_DATA} ${WRKSRC}/modules/acc/etc/servers \
-		${PREFIX}/etc/Marina.Rodeo/acc/servers.default
+		${PREFIX}/etc/openMarinkaRodeo/acc/servers.default
 .for d in ${TLS_RC_DIRS}
-	${MKDIR} ${PREFIX}/etc/Marina.Rodeo/${d}
+	${MKDIR} ${PREFIX}/etc/openMarinkaRodeo/${d}
 .endfor
 .for f in ${TLS_RC_FILES}
-	${INSTALL_DATA} ${WRKSRC}/etc/${f} ${PREFIX}/etc/Marina.Rodeo/${f}.default
+	${INSTALL_DATA} ${WRKSRC}/etc/${f} ${PREFIX}/etc/openMarinkaRodeo/${f}.default
 .endfor
 	@PKG_PREFIX=${PREFIX} ${SH} ${PKGINSTALL} ${PKGNAME} POST-INSTALL
 

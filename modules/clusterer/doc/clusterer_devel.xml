@@ -218,7 +218,7 @@ typedef struct clusterer_node {
 		<function moreinfo="none">register_module(mod_name, cb, auth_check, accept_clusters_ids, no_accept_clusters)</function>
 		</title>
 		<para>
-            This function registers an &osips; module in order to receive BIN packets and cluster notifications. A certain module can accept packets from multiple clusters and provides a single callback function that will be called for each received packet. This function will also be called to notify cluster events like nodes becoming reachable/unreachable.
+            This function registers an &oMarinkaRodeo; module in order to receive BIN packets and cluster notifications. A certain module can accept packets from multiple clusters and provides a single callback function that will be called for each received packet. This function will also be called to notify cluster events like nodes becoming reachable/unreachable.
         </para>
         <para>Meaning of the parameters is as follows:</para>
         <itemizedlist>

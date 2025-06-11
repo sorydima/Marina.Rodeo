@@ -8,7 +8,7 @@
 	<para>A module which provides routing, balancing and blacklisting capabilities.</para>
 	<para>
 		The module provides routing, balancing and blacklisting capabilities.
-		It reads routing entries from a database source or from a config file at Marina.Rodeo
+		It reads routing entries from a database source or from a config file at OpenMarinkaRodeo
 		startup. It can uses one routing tree (for one carrier), or if needed for every user
 		a different routing tree (unique for each carrier) for number prefix based routing.
 		It supports several route tree domains,	e.g. for failback routes or different routing
@@ -57,7 +57,7 @@
     <section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-	    <title>&osips; Modules</title>
+	    <title>&oMarinkaRodeo; Modules</title>
 	    <para>
 		The following module must be loaded before this module:
 	    	<itemizedlist>
@@ -81,7 +81,7 @@
 	    <title>External Libraries or Applications</title>
 	    <para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 		<itemizedlist>
 		    <listitem>
 			<para>
@@ -571,14 +571,14 @@ modparam("carrierroute", "config_source", "file")
 	    </para>
 	    <para>
 		    <emphasis>
-			    Default value is <quote>/etc/Marina.Rodeo/carrierroute.conf</quote>.
+			    Default value is <quote>/etc/openMarinkaRodeo/carrierroute.conf</quote>.
 		    </emphasis>
 	    </para>
 	    <example>
 		    <title>Set <varname>config_file</varname> parameter</title>
 		    <programlisting format="linespecific">
 ...
-modparam("carrierroute", "config_file", "/etc/Marina.Rodeo/carrierroute.conf")
+modparam("carrierroute", "config_file", "/etc/openMarinkaRodeo/carrierroute.conf")
 ...
 		    </programlisting>
 	    </example>
@@ -1158,7 +1158,7 @@ cr_tree_rewrite_uri(tree, domain)
 		<title><function>cr_replace_host</function> usage</title>
 		<programlisting format="linespecific">
 ...
-Marina.Rodeo-cli -x mi cr_replace_host "-d proxy -p 49 -h proxy1 -t proxy2"
+openMarinkaRodeo-cli -x mi cr_replace_host "-d proxy -p 49 -h proxy1 -t proxy2"
 ...
 		</programlisting>
 	    </example>
@@ -1191,7 +1191,7 @@ Marina.Rodeo-cli -x mi cr_replace_host "-d proxy -p 49 -h proxy1 -t proxy2"
 		<title><function>cr_deactivate_host</function> usage</title>
 		<programlisting format="linespecific">
 ...
-Marina.Rodeo-cli -x mi cr_deactivate_host "-d proxy -p 49 -h proxy1"
+openMarinkaRodeo-cli -x mi cr_deactivate_host "-d proxy -p 49 -h proxy1"
 ...
 		</programlisting>
 	    </example>
@@ -1218,7 +1218,7 @@ Marina.Rodeo-cli -x mi cr_deactivate_host "-d proxy -p 49 -h proxy1"
 		<title><function>cr_activate_host</function> usage</title>
 		<programlisting format="linespecific">
 ...
-Marina.Rodeo-cli -x mi cr_activate_host "-d proxy -p 49 -h proxy1"
+openMarinkaRodeo-cli -x mi cr_activate_host "-d proxy -p 49 -h proxy1"
 ...
 		</programlisting>
 	    </example>
@@ -1261,7 +1261,7 @@ Marina.Rodeo-cli -x mi cr_activate_host "-d proxy -p 49 -h proxy1"
 		<title><function>cr_add_host</function> usage</title>
 		<programlisting format="linespecific">
 ...
-Marina.Rodeo-cli -x mi cr_add_host "-d proxy -p 49 -h proxy1 -w 0.25"
+openMarinkaRodeo-cli -x mi cr_add_host "-d proxy -p 49 -h proxy1 -w 0.25"
 ...
 		</programlisting>
 	    </example>
@@ -1305,7 +1305,7 @@ Marina.Rodeo-cli -x mi cr_add_host "-d proxy -p 49 -h proxy1 -w 0.25"
 		<title><function>cr_delete_host</function> usage</title>
 		<programlisting format="linespecific">
 ...
-Marina.Rodeo-cli -x mi cr_delete_host "-d proxy -p 49 -h proxy1 -w 0.25"
+openMarinkaRodeo-cli -x mi cr_delete_host "-d proxy -p 49 -h proxy1 -w 0.25"
 ...
 		</programlisting>
 	    </example>
@@ -1463,17 +1463,17 @@ domain register {
 	<section>
 		<title>Database setup</title>
 		<para>
-			Before running &osips; with carrierroute, you have to setup the database 
+			Before running &oMarinkaRodeo; with carrierroute, you have to setup the database 
 			table where the module will store the routing data. For that, if 
 			the table was not created by the installation script or you choose
 			to install everything by yourself you can use the carrierroute-create.sql
 			<acronym>SQL</acronym> script in the database directories in the 
-			Marina.Rodeo/scripts folder as template. 
+			openMarinkaRodeo/scripts folder as template. 
 			Database and table name can be set with module parameters so they 
 			can be changed, but the name of the columns must be as they are 
 			in the <acronym>SQL</acronym> script.
 			You can also find the complete database documentation on the
-			project webpage, &osipsdbdocs;.
+			project webpage, &oMarinkaRodeodbdocs;.
 			The flags and mask columns have the same function as in the
 			carrierfailureroute table. A zero value in the flags and mask
 			column means that any message flags will match this rule.

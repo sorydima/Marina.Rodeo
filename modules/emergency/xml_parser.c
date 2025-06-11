@@ -1,16 +1,16 @@
 /*
  * emergency module - basic support for emergency calls
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2015 Robison Tesini & Evandro Villaron
+ * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -294,10 +294,15 @@ struct notify_body* parse_notify(char* xml){
 		return NULL;
 
 	notify = pkg_malloc(sizeof(struct notify_body));
+	if (!notify) {
+		LM_ERR("No more pkg mem!\n");
+		return NULL;
+	}
+
 	notify->params = pkg_malloc(sizeof(struct dialog_params));
 	notify->target = pkg_malloc(sizeof(struct target_info));
 
-	if(notify == NULL || notify->params == NULL || notify->target == NULL)
+	if(notify->params == NULL || notify->target == NULL)
 		return NULL;
 
 	pt_version = strstr(dialog_body,version);
@@ -396,6 +401,11 @@ PARSED* parse_xml(char* xml){
 	char *new_vpc, *new_destination, *new_ert;
 
 	PARSED *parsed = pkg_malloc(sizeof(PARSED));
+	if (!parsed) {
+		LM_ERR("No more pkg mem\n");
+		return NULL;
+	}
+
 	parsed->vpc =pkg_malloc(sizeof(NENA));
 	parsed->destination =pkg_malloc(sizeof(NENA));
 	parsed->ert =pkg_malloc(sizeof(ERT));
@@ -403,7 +413,7 @@ PARSED* parse_xml(char* xml){
 	if (check_str_between_init_tags(xml))
 		return NULL;
 
-	if(parsed == NULL || parsed->vpc == NULL || parsed->destination == NULL || parsed->ert == NULL)
+	if(parsed->vpc == NULL || parsed->destination == NULL || parsed->ert == NULL)
 		return NULL;
 
 	parsed->result = copy_str_between_two_tags(result,xml);

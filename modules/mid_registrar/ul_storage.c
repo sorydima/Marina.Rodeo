@@ -6,16 +6,16 @@
  * register at high enough frequencies that they actually degrade the
  * performance of their registrars.
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2016-2020 Marina.Rodeo Solutions
+ * Copyright (C) 2016-2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -147,7 +147,7 @@ int update_urecord_data(urecord_t *r, int no_rpl_contacts, const str *callid,
 		if (!ul.put_urecord_key(r, &ul_key_skip_dereg, &value))
 			return -1;
 	} else {
-		last_reg_ts = get_act_time();
+		last_reg_ts = (unsigned int)(unsigned long)get_act_time();
 	}
 
 	value.i = last_reg_ts;
@@ -233,7 +233,7 @@ int update_ucontact_data(ucontact_t *c, int expires, int expires_out,
 	if (!ul.put_ucontact_key(c, &ul_key_last_cseq, &value))
 		return -1;
 
-	value.i = get_act_time();
+	value.i = (int)(unsigned long)get_act_time();
 	if (!ul.put_ucontact_key(c, &ul_key_last_reg_ts, &value))
 		return -1;
 

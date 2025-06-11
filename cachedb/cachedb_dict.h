@@ -1,16 +1,16 @@
 /*
  * Doubly-linked list implementation of a dictionary
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2018 Marina.Rodeo Solutions
+ * Copyright (C) 2018 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -61,7 +61,13 @@ void cdb_free_entries(cdb_dict_t *dict, void (*free_val_str) (void *val));
 struct cdb_pair *cdb_dict_fetch(const struct cdb_key *key,
                                 const cdb_dict_t *dict);
 int cdb_dict_has_pair(const cdb_dict_t *haystack, const struct cdb_pair *pair);
+int cdb_dict_has_subkeys(const cdb_dict_t *dict);
 struct cdb_pair *nth_pair(const cdb_dict_t *dict, int nth);
+char *cdb_dict_to_json(const cdb_dict_t *dict,
+         unsigned int (*escape)(char *dst, const str *src),
+         unsigned int (*calc_escaped_len)(str *in));
+int cdb_json_to_dict(const char *json, cdb_dict_t *out,
+         void (*unescape)(char *inout));
 int dict_cmp(const cdb_dict_t *a, const cdb_dict_t *b);
 int val_cmp(const struct cdb_val *v1, const struct cdb_val *v2);
 

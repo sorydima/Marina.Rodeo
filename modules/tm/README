@@ -15,7 +15,7 @@ tm Module
 
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -42,6 +42,8 @@ tm Module
               1.3.20. tm_replication_cluster (integer)
               1.3.21. cluster_param (string)
               1.3.22. cluster_auto_cancel (boolean)
+              1.3.23. local_request_route (string)
+              1.3.24. local_reply_route (string)
 
         1.4. Exported Functions
 
@@ -54,9 +56,8 @@ tm Module
               1.4.7. t_local_replied(reply)
               1.4.8. t_was_cancelled()
               1.4.9. t_cancel_branch([flags])
-              1.4.10.
-                      t_new_request(method,RURI,from,to[,body[,ctx]
-                      ])
+              1.4.10. t_new_request( method, RURI, from, to [,
+                      body[, ctx]])
 
               1.4.11. t_on_failure(failure_route)
               1.4.12. t_on_reply(reply_route)
@@ -75,6 +76,9 @@ tm Module
               1.4.23. t_reply_by_callid(code, reason_phrase,
                       [callid], [cseq])
 
+              1.4.24. t_get_branch_idx_by_attr(attr, [val_str],
+                      [val_int], [result_var], [offset])
+
         1.5. Exported Pseudo-Variables
 
               1.5.1. $T_branch_idx
@@ -85,6 +89,16 @@ tm Module
               1.5.6. $bavp(name)
               1.5.7. $T_id
               1.5.8. $T_branch_last_reply_code
+              1.5.9. $tm.branch.uri[]
+              1.5.10. $tm.branch.duri[]
+              1.5.11. $tm.branch.path[]
+              1.5.12. $tm.branch.q[]
+              1.5.13. $tm.branch.flags[]
+              1.5.14. $tm.branch.socket[]
+              1.5.15. $tm.branch.flag()[]
+              1.5.16. $tm.branch.attr()[]
+              1.5.17. $tm.branch.last_received[]
+              1.5.18. $tm.branch.type[]
 
         1.6. Exported MI Functions
 
@@ -161,29 +175,32 @@ tm Module
    1.20. Set tm_replication_cluster parameter
    1.21. Set the cluster_param parameter
    1.22. Set the cluster_auto_cancel parameter
-   1.23. t_relay usage
-   1.24. t_reply usage
-   1.25. t_reply_with_body usage
-   1.26. t_newtran usage
-   1.27. t_check_trans usage
-   1.28. t_check_status usage
-   1.29. t_local_replied usage
-   1.30. t_was_cancelled usage
-   1.31. t_cancel_branch usage
-   1.32. t_new_request usage
-   1.33. t_on_failure usage
-   1.34. t_on_reply usage
-   1.35. t_on_branch usage
-   1.36. t_inject_branches usage
-   1.37. t_wait_for_new_branches usage
-   1.38. t_wait_no_more_branches usage
-   1.39. t_add_hdrs usage
-   1.40. t_add_cancel_reason usage
-   1.41. t_replicate usage
-   1.42. t_write_req/unix usage
-   1.43. t_flush_flags usage
-   1.44. t_anycast_replicate usage
-   1.45. t_reply_by_callid usage
+   1.23. Set the local_request_route parameter
+   1.24. Set the local_reply_route parameter
+   1.25. t_relay usage
+   1.26. t_reply usage
+   1.27. t_reply_with_body usage
+   1.28. t_newtran usage
+   1.29. t_check_trans usage
+   1.30. t_check_status usage
+   1.31. t_local_replied usage
+   1.32. t_was_cancelled usage
+   1.33. t_cancel_branch usage
+   1.34. t_new_request usage
+   1.35. t_on_failure usage
+   1.36. t_on_reply usage
+   1.37. t_on_branch usage
+   1.38. t_inject_branches usage
+   1.39. t_wait_for_new_branches usage
+   1.40. t_wait_no_more_branches usage
+   1.41. t_add_hdrs usage
+   1.42. t_add_cancel_reason usage
+   1.43. t_replicate usage
+   1.44. t_write_req/unix usage
+   1.45. t_flush_flags usage
+   1.46. t_anycast_replicate usage
+   1.47. t_reply_by_callid usage
+   1.48. t_get_branch_idx_by_attr usage
 
 Chapter 1. Admin Guide
 
@@ -242,7 +259,7 @@ Chapter 1. Admin Guide
    sent out - changes in that route should reflect only on that
    branch.
 
-   There are several types of flags in Marina.Rodeo :
+   There are several types of flags in OpenMarinkaRodeo :
      * message/transaction flags - they are visible everywhere in
        the transaction (in all routes and in all sequential
        replies/request).
@@ -386,7 +403,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * clusterer module, if the anycast scenario is enabled (see
@@ -395,7 +412,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -643,9 +660,9 @@ modparam("tm", "enable_stats", 0)
    A branch flag index to be used in script to mark the minor
    branches ( before t_relay() ).
 
-   A minor branch is a branch Marina.Rodeo will not wait to complete
+   A minor branch is a branch OpenMarinkaRodeo will not wait to complete
    during parallel forking. So, if the rest of the branches are
-   negativly replied Marina.Rodeo will not wait for a final answer
+   negativly replied OpenMarinkaRodeo will not wait for a final answer
    from the minor branch, but it will simply cancel it.
 
    Main applicability of minor branch is to fork a branch to a
@@ -731,7 +748,7 @@ modparam("tm", "cluster_param", "tid")
    This parameter should be used in an anycast setup, and
    specifies whether a CANCEL message received on a listener that
    is marked as anycast should be automatically handled, or should
-   get in the Marina.Rodeo script. If this parameter is enabled
+   get in the OpenMarinkaRodeo script. If this parameter is enabled
    (default), CANCEL messages received on an anycast listener will
    never enter the script, thus making the script cleaner.
 
@@ -743,6 +760,72 @@ modparam("tm", "cluster_param", "tid")
 ...
 # disable auto-cancel handling
 modparam("tm", "cluster_auto_cancel", no)
+...
+
+1.3.23. local_request_route (string)
+
+   This parameter points to a route, which is executed whenever TM
+   is about to send out a locally generated request (e.g., through
+   the B2B modules or through MI).
+
+   The purpose of this route is limited to exposing the content of
+   the request as SIP message
+
+   The route is executed with the generated message by TM,
+   incorporating all modifications.
+
+   IMPORTANT: this route is executed AFTER the local_route (if
+   defined) and it expose all the changes from that route.
+
+   IMPORTANT: this route is to be used in a read-only manner,
+   inspection only. Any changes you do here will discarded.
+
+   IMPORTANT: this route does not offer any message, transactional
+   or dialog context, so do not rely on any variables with scope
+   (like AVPs).
+
+   Example 1.23. Set the local_request_route parameter
+...
+# Execute the route "local_request_route" upon sending a request
+modparam("tm", "local_request_route", "tm_local_request")
+
+route[tm_local_request] {
+        if (is_method("INVITE") && $rb(application/sdp) && !has_totag())
+ {
+                $avp(sdp_request) := $rb(application/sdp);
+        }
+}
+...
+
+1.3.24. local_reply_route (string)
+
+   This parameter points to a route, which is executed whenever TM
+   is about to send out a locally generated reply (e.g., through
+   the B2B modules or through MI).
+
+   The purpose of this route is limited to exposing the content of
+   the reply as SIP message
+
+   IMPORTANT: this route is to be used in a read-only manner,
+   inspection only. Any changes you do here will discarded.
+
+   IMPORTANT: this route does not offer any message, transactional
+   or dialog context, so do not rely on any variables with scope
+   (like AVPs).
+
+   Example 1.24. Set the local_reply_route parameter
+...
+# Execute the route "tm_local_reply" upon sending a request
+modparam("tm", "local_reply_route", "tm_local_reply")
+
+route[tm_local_reply] {
+        if (is_method("BYE")) {
+                $var(rc) = rest_get("http://localhost/qos/delete",
+                                        $var(recv_body), $var(recv_ct),
+$var(rcode));
+        }
+}
+
 ...
 
 1.4. Exported Functions
@@ -784,7 +867,7 @@ modparam("tm", "cluster_auto_cancel", no)
        CANCEL, trust and pass further the Reason header from the
        received CANCEL - shortly, will propagate the Reason
        header.
-     * allow-no-cancel - (old 0x10 flag) Allows Marina.Rodeo to
+     * allow-no-cancel - (old 0x10 flag) Allows OpenMarinkaRodeo to
        inspect and follow the Content-Disposition "no-cancel"
        indication (if present). As per RFC3841, section 9.1, the
        TM module may be instructed not to cancel all ongoing
@@ -811,7 +894,7 @@ modparam("tm", "cluster_auto_cancel", no)
 
    This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
 
-   Example 1.23. t_relay usage
+   Example 1.25. t_relay usage
 ...
 if (!t_relay()) {
     sl_reply_error();
@@ -836,7 +919,7 @@ t_relay(0x1, "mydomain.com:5070");
 
    This function can be used from REQUEST_ROUTE, FAILURE_ROUTE.
 
-   Example 1.24. t_reply usage
+   Example 1.26. t_reply usage
 ...
 t_reply(404, "Use $rU not found");
 ...
@@ -855,7 +938,7 @@ t_reply(404, "Use $rU not found");
 
    This function can be used from REQUEST_ROUTE and FAILURE_ROUTE.
 
-   Example 1.25. t_reply_with_body usage
+   Example 1.27. t_reply_with_body usage
 ...
         if(is_method("INVITE"))
         {
@@ -873,12 +956,12 @@ t_reply(404, "Use $rU not found");
    requests, a 100 Trying reply will be immediately sent, unless
    auto_100trying is disabled. Once a SIP transaction is created,
    calling t_newtran() for retransmitted requests will end the
-   Marina.Rodeo script execution, with the lastly sent reply being
+   OpenMarinkaRodeo script execution, with the lastly sent reply being
    retransmitted upstream.
 
    This function can be used from REQUEST_ROUTE.
 
-   Example 1.26. t_newtran usage
+   Example 1.28. t_newtran usage
 ...
 t_newtran();  # 100 Trying is fired here
 xlog("doing my complicated routing logic\n");
@@ -913,7 +996,7 @@ t_relay(); # send the call further
 
    This function can be used from REQUEST_ROUTE and BRANCH_ROUTE.
 
-   Example 1.27. t_check_trans usage
+   Example 1.29. t_check_trans usage
 ...
 if ( is_method("CANCEL") ) {
         if ( t_check_trans() )
@@ -934,7 +1017,7 @@ if ( is_method("CANCEL") ) {
    This function can be used from REQUEST_ROUTE, ONREPLY_ROUTE,
    FAILURE_ROUTE and BRANCH_ROUTE .
 
-   Example 1.28. t_check_status usage
+   Example 1.30. t_check_status usage
 ...
 if (t_check_status("(487)|(408)")) {
     log("487 or 408 negative reply\n");
@@ -951,7 +1034,7 @@ if (t_check_status("(487)|(408)")) {
    This function can be used from REQUEST_ROUTE, BRANCH_ROUTE,
    FAILURE_ROUTE and ONREPLY_ROUTE.
 
-   Example 1.29. t_local_replied usage
+   Example 1.31. t_local_replied usage
 ...
 if (t_local_replied("all")) {
         log ("no reply received\n");
@@ -965,7 +1048,7 @@ if (t_local_replied("all")) {
 
    This function can be used from ONREPLY_ROUTE, FAILURE_ROUTE.
 
-   Example 1.30. t_was_cancelled usage
+   Example 1.32. t_was_cancelled usage
 ...
 if (t_was_cancelled()) {
     log("transaction was cancelled by UAC\n");
@@ -987,7 +1070,7 @@ if (t_was_cancelled()) {
 
    This function can be used from ONREPLY_ROUTE.
 
-   Example 1.31. t_cancel_branch usage
+   Example 1.33. t_cancel_branch usage
 onreply_route[3] {
 ...
         if (t_check_status(183)) {
@@ -997,7 +1080,7 @@ onreply_route[3] {
 ...
 }
 
-1.4.10.  t_new_request(method,RURI,from,to[,body[,ctx]])
+1.4.10.  t_new_request( method, RURI, from, to [, body[, ctx]])
 
    This function generates and sends out a new SIP request (in a
    stateful way). The new request is completly unrelated to the
@@ -1017,7 +1100,7 @@ onreply_route[3] {
        added to the new transaction as an AVP with name "uac_ctx"
        (it may be visible in local route)
 
-   Example 1.32. t_new_request usage
+   Example 1.34. t_new_request usage
 ...
         # send a MESSAGE request
         t_new_request("MESSAGE","sip:alice@192.168.2.2","BOB sip:userB@m
@@ -1052,7 +1135,7 @@ ydomain.net","ALICE sip:userA@mydomain.net","text/plain Hello Alice!"))
    This function can be used from REQUEST_ROUTE, BRANCH_ROUTE,
    ONREPLY_ROUTE and FAILURE_ROUTE.
 
-   Example 1.33. t_on_failure usage
+   Example 1.35. t_on_failure usage
 ...
 route {
         t_on_failure("1");
@@ -1101,11 +1184,11 @@ failure_route[1] {
    This function can be used from REQUEST_ROUTE, BRANCH_ROUTE,
    ONREPLY_ROUTE and FAILURE_ROUTE.
 
-   Example 1.34. t_on_reply usage
+   Example 1.36. t_on_reply usage
 ...
 route {
-        seturi("sip:bob@Marina.Rodeo.org");  # first branch
-        append_branch("sip:alice@Marina.Rodeo.org"); # second branch
+        seturi("sip:bob@openMarinkaRodeo.org");  # first branch
+        append_branch("sip:alice@openMarinkaRodeo.org"); # second branch
 
         t_on_reply("global"); # the "global" reply route
                               # is set the whole transaction
@@ -1158,7 +1241,7 @@ onreply_route[global] {
    This function can be used from REQUEST_ROUTE, BRANCH_ROUTE,
    ONREPLY_ROUTE and FAILURE_ROUTE.
 
-   Example 1.35. t_on_branch usage
+   Example 1.37. t_on_branch usage
 ...
 route {
         t_on_branch("1");
@@ -1214,7 +1297,7 @@ branch_route[1] {
             transaction, do not wait for any other branches to be
             injected.
 
-   Example 1.36. t_inject_branches usage
+   Example 1.38. t_inject_branches usage
 ...
 route[event_notification] {
         t_inject_branches("event");
@@ -1245,7 +1328,7 @@ route[event_notification] {
      * branches (integer, options) - what is the maximum number of
        branches to be waited for.
 
-   Example 1.37. t_wait_for_new_branches usage
+   Example 1.39. t_wait_for_new_branches usage
 ...
 t_newtran();
 t_wait_for_new_branches();
@@ -1267,7 +1350,7 @@ t_relay();
    wait for more branches, depending on the answers you get from
    various devices, fix or mobile).
 
-   Example 1.38. t_wait_no_more_branches usage
+   Example 1.40. t_wait_no_more_branches usage
 ...
 t_wait_no_more_branches();
 ...
@@ -1281,7 +1364,7 @@ t_wait_no_more_branches();
    Parameters:
      * sip_hdrs (string)
 
-   Example 1.39. t_add_hdrs usage
+   Example 1.41. t_add_hdrs usage
 ...
 t_add_hdrs("X-origin: 1.1.1.1\r\n");
 ...
@@ -1299,7 +1382,7 @@ t_add_hdrs("X-origin: 1.1.1.1\r\n");
    Parameters:
      * reason_hdr (string)
 
-   Example 1.40. t_add_cancel_reason usage
+   Example 1.42. t_add_cancel_reason usage
 ...
 t_add_cancel_reason("Reason: SIP ;cause=200 ;text=\"Call completed elsew
 here\"\r\n");
@@ -1325,7 +1408,7 @@ t_relay();
 
    This functions can be used from REQUEST_ROUTE.
 
-   Example 1.41. t_replicate usage
+   Example 1.43. t_replicate usage
 ...
 t_replicate("sip:1.2.3.4:5060");
 t_replicate("sip:1.2.3.4:5060;transport=tcp");
@@ -1345,7 +1428,7 @@ t_replicate("sip:1.2.3.4",0x4);
    This functions can be used from REQUEST_ROUTE, FAILURE_ROUTE
    and BRANCH_ROUTE.
 
-   Example 1.42. t_write_req/unix usage
+   Example 1.44. t_write_req/unix usage
 ...
 modparam("tm","tw_append","append1:Email=$avp(email);UA=$ua")
 modparam("tm","tw_append","append2:body=$rb")
@@ -1364,7 +1447,7 @@ t_write_unix("logger/append2","/var/run/logger.sock");
 
    This function can be used from REQUEST_ROUTE and BRANCH_ROUTE .
 
-   Example 1.43. t_flush_flags usage
+   Example 1.45. t_flush_flags usage
 ...
 t_flush_flags();
 ...
@@ -1377,7 +1460,7 @@ t_flush_flags();
    the cluster, but only the “owner” of the transaction will be
    able to handle it.
 
-   Example 1.44. t_anycast_replicate usage
+   Example 1.46. t_anycast_replicate usage
 ...
 if (is_method("ACK|CANCEL") && !t_check_trans()) {
         t_anycast_replicate();
@@ -1388,9 +1471,9 @@ if (is_method("ACK|CANCEL") && !t_check_trans()) {
 1.4.23.  t_reply_by_callid(code, reason_phrase, [callid], [cseq])
 
    This function is used to send a reply to an existing INVITE
-   transaction. The usual use case is when Marina.Rodeo is used as an
+   transaction. The usual use case is when OpenMarinkaRodeo is used as an
    UAS and when an INVITE is receveid, it is "parked" locally on
-   Marina.Rodeo by replying to it with “t_reply(180, "Ringing")” or
+   OpenMarinkaRodeo by replying to it with “t_reply(180, "Ringing")” or
    “t_reply(183, "Session Progress")” and later we need to handle
    CANCEL or BYE for it and send '487 Request Terminated' to the
    original INVITE transaction.
@@ -1402,7 +1485,7 @@ if (is_method("ACK|CANCEL") && !t_check_trans()) {
 
    This function can be used from REQUEST_ROUTE.
 
-   Example 1.45. t_reply_by_callid usage
+   Example 1.47. t_reply_by_callid usage
 ...
 route{
         if($rU == "LOCAL_PARK") {
@@ -1438,6 +1521,36 @@ _in(ip):$socket_in(port)\r\n");
 }
 ...
 
+1.4.24.  t_get_branch_idx_by_attr(attr, [val_str], [val_int],
+[result_var], [offset])
+
+   This function may be used to search for the index of another
+   branch of the current transaction. The searching is done based
+   on the per-branch attribute - you need to provide the name of
+   the attribute at least. Optionally you can provide a value
+   (string or integer) for the attribute used for searching. As
+   input, the function may take an optional branch offset
+   (absolute value, covering all branches of the transaction)
+   where the search should start from.
+
+   The function returns true if a branch (having the given name
+   and value for the attribute) was found. The status of the
+   branch (like if ongoing, completed ) is not relevant. If found,
+   the "result_var" variable will be populated with the branch
+   index (as integer).
+
+   This function can be used from ONREPLY_ROUTE, BRANCH_ROUTE and
+   FAILURE_ROUTE.
+
+   Example 1.48. t_get_branch_idx_by_attr usage
+...
+        # search for a branch which has the "name" attribute
+        # with string value "pstn"
+        if (t_get_branch_idx_by_attr("name", "pstn", , $var(idx))) {
+                xlog("found branch has index $var(idx)\n");
+        }
+...
+
 1.5. Exported Pseudo-Variables
 
    Exported variables are listed in the next sections.
@@ -1446,9 +1559,10 @@ _in(ip):$socket_in(port)\r\n");
 
    $T_branch_idx - the index (starting with 0 for the first
    branch) of the currently proccessed branch. This index makes
-   sense only in BRANCH and REPLY routes (where there is a concept
-   of per branch processing). In all the other types of routes,
-   the value of this index will be NULL.
+   sense only in BRANCH and REPLY routes (where the processing is
+   per branch) and in FAILURE route (where it points to the branch
+   with the last final reply on the transaction). In all the other
+   types of routes, the value of this index will be NULL.
 
 1.5.2. $T_reply_code
 
@@ -1471,7 +1585,9 @@ _in(ip):$socket_in(port)\r\n");
 1.5.4. $T_fr_inv_timeout
 
    $T_fr_inv_timeout (R/W) - the timeout for the final reply to an
-   INVITE request, after a 1XX reply was received
+   INVITE request, after a 1XX reply was received. This variable
+   may also be set in an onreply_route (e.g. on 180 Ringing, after
+   100 Trying) and still take effect.
 
    With each different request received, $T_fr_inv_timeout will
    initially be equal to the fr_inv_timeout parameter.
@@ -1504,6 +1620,103 @@ _in(ip):$socket_in(port)\r\n");
    is specified, the last reply for the current branch is
    retrieved.
 
+1.5.9. $tm.branch.uri[]
+
+   $tm.branch.uri - gives read-only access over the Request URI
+   (as string) of a TM existing branch. The status of the branch
+   (completed, ongoing, etc) is not relevant.
+
+   The TM (UAC side) branches are created when the request is sent
+   to new destinations via "t_relay()" or "t_inject()".
+
+   The indexing of the branches starts from 0, giving access to
+   all branches (past and active) of the transaction. Nevertheless
+   the indexing supports two optional suffixes, to simplify the
+   scripting:
+     * /active - the indexing starts also from 0, but it is
+       relative to the last set of branches - the parallel
+       branches created by the last "t_relay()"-ing.
+     * /all - similar to "no suffix" case, meaning it is an
+       absolute index, covering all the branches of the
+       trasactions (resulted from all "t_relay()"s performed over
+       the transaction).
+
+   IF no index is specified, the current branch used. This depends
+   on the scripting context. Like in reply route, the current
+   branch is the branch the reply came for; in branch route, the
+   current branch is the branch to be sent out; in failure route,
+   the current branch is the winning branch.
+
+   NOTES:
+     * The index ALL ( "*" ) is not supported;
+     * In branch route, only the "$tm.branch.attr" and
+       "$tm.branch.flag" variables work for the current branch
+       (the rest of the branch related variables will return NULL)
+     * Negative values are accepted, meaning indexing from the end
+       ( -1 is the latest/higher branch)
+
+   The variable can be used in BRANCH, ONREPLY and FAILURE routes.
+
+1.5.10. $tm.branch.duri[]
+
+   $tm.branch.duri - 100% similar to $tm.branch.uri, but returning
+   the Detination-URI value of the branch.
+
+1.5.11. $tm.branch.path[]
+
+   $tm.branch.path - 100% similar to $tm.branch.uri, but returning
+   the PATH value of the branch.
+
+1.5.12. $tm.branch.q[]
+
+   $tm.branch.q - 100% similar to $tm.branch.uri, but returning
+   the Q value of the branch.
+
+1.5.13. $tm.branch.flags[]
+
+   $tm.branch.flags - 100% similar to $tm.branch.uri, but
+   returning the list (comma separated) of per-branch flags which
+   are set for the branch.
+
+1.5.14. $tm.branch.socket[]
+
+   $tm.branch.socket - 100% similar to $tm.branch.uri, but
+   returning the socket description (proto:ip:port) used for
+   sending the branch out.
+
+1.5.15. $tm.branch.flag()[]
+
+   $tm.branch.flag(name) - similar to $tm.branch.uri, but gives
+   read/write access to a single branch flag (by its name).
+
+   The accepted values are 0 for FALSE, pozitive non-zero for
+   TRUE. The returned values are 0 for FALSE and 1 for TRUE.
+
+   The flags operated here are the same as the bflags you can
+   operated with via the "[re]setbflag()" functions.
+
+1.5.16. $tm.branch.attr()[]
+
+   $tm.branch.attr(name) - similar to $tm.branch.uri, but gives
+   read/write access to the attributed attached to the branch.
+
+   An attribute can have whatever name (no need to be pre-defined)
+   and it can have a single value (at a time), string or integer.
+
+1.5.17. $tm.branch.last_received[]
+
+   $tm.branch.last_received - 100% similar to $tm.branch.uri, but
+   returning the reply code of the last received reply (from the
+   network) on this branch. NULL is returned in no reply was
+   received so far.
+
+1.5.18. $tm.branch.type[]
+
+   $tm.branch.type - 100% similar to $tm.branch.uri, but returning
+   the type of the current branch. This may be "phone" if it not a
+   real branch (has no SIP signalling, used by waiting for branch
+   injection) or "sip" (a real signalling branch).
+
 1.6. Exported MI Functions
 
 1.6.1.  t_uac_dlg
@@ -1523,7 +1736,7 @@ _in(ip):$socket_in(port)\r\n");
        “Content-Type” and “Content-length” headers)
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi t_uac_dlg method=INVITE ruri="sip:ali
+                openMarinkaRodeo-cli -x mi t_uac_dlg method=INVITE ruri="sip:ali
 ce@127.0.0.1:7050" headers="From: sip:bobster@127.0.0.1:1337\r\nTo: sip:
 alice@127.0.0.1:7050\r\nContact: sip:bobster@127.0.0.1:1337\r\n"
 
@@ -1536,7 +1749,7 @@ alice@127.0.0.1:7050\r\nContact: sip:bobster@127.0.0.1:1337\r\n"
      * cseq - cseq of the INVITE request to be cancelled.
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi t_uac_cancel "1-23454@127.0.0.1" "1 I
+                openMarinkaRodeo-cli -x mi t_uac_cancel "1-23454@127.0.0.1" "1 I
 NVITE"
 
 1.6.3.  t_hash
@@ -1547,7 +1760,7 @@ NVITE"
      * none
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi t_hash
+                openMarinkaRodeo-cli -x mi t_hash
 
 1.6.4.  t_reply
 
@@ -1566,7 +1779,7 @@ NVITE"
        “Content-Type” and “Content-length” headers)
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi t_reply 403 Forbidden 46961:127968763
+                openMarinkaRodeo-cli -x mi t_reply 403 Forbidden 46961:127968763
 7 abcde .
 
 1.7. Exported Statistics
@@ -1686,7 +1899,7 @@ Chapter 3. Frequently Asked Questions
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
+   https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues.
 
 Chapter 4. Contributors
 
@@ -1695,31 +1908,31 @@ Chapter 4. Contributors
    Table 4.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Bogdan-Andrei Iancu (@bogdan-iancu) 1080 627 21951 16758
-   2. Jiri Kuthan (@jiriatipteldotorg) 534 198 18723 11167
-   3. Jan Janak (@janakj) 160 76 6462 1840
-   4. Andrei Pelinescu-Onciul 145 105 2447 1210
-   5. Razvan Crainea (@razvancrainea) 134 103 2024 847
-   6. Liviu Chircu (@liviuchircu) 108 82 1263 886
-   7. Daniel-Constantin Mierla (@miconda) 43 37 322 166
-   8. Vlad Patrascu (@rvlad-patrascu) 40 18 916 826
-   9. Anca Vamanu 37 19 778 651
-   10. Vlad Paiu (@vladpaiu) 27 24 172 57
+   1. Bogdan-Andrei Iancu (@bogdan-iancu) 1115 643 22953 16870
+   2. Jiri Kuthan (@jiriatipteldotorg) 541 198 18723 11167
+   3. Jan Janak (@janakj) 162 76 6462 1840
+   4. Andrei Pelinescu-Onciul 146 105 2447 1210
+   5. Razvan Crainea (@razvancrainea) 145 112 2066 866
+   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 118 90 1318 946
+   7. Vlad Paiu (@vladpaiu) 45 33 675 339
+   8. Daniel-Constantin Mierla (@miconda) 43 37 322 166
+   9. Vlad Patrascu (@rvlad-patrascu) 40 18 916 826
+   10. Anca Vamanu 37 19 778 651
 
-   All remaining contributors: Dan Pascu (@danpascu), Henning
-   Westerholt (@henningw), Maksym Sobolyev (@sobomax), Ovidiu Sas
+   All remaining contributors: Henning Westerholt (@henningw), Dan
+   Pascu (@danpascu), Maksym Sobolyev (@sobomax), Ovidiu Sas
    (@ovidiusas), Juha Heinanen (@juha-h), Ionut Ionita
    (@ionutrazvanionita), Raphael Coeffic, Nils Ohlmeier, Klaus
    Darilion, Peter Lemenkov (@lemenkov), Andreas Granig, Elias
    Baixas, Marcus Hunger, Christophe Sollet (@csollet), Jeffrey
-   Magder, Ezequiel Lovelle (@lovelle), Saúl Ibarra Corretgé
-   (@saghul), Elena-Ramona Modroiu, John Riordan, Julián Moreno
-   Patiño, Andrei Dragus, Jesus Rodrigues, Konstantin Bokarius,
-   Aron Podrigal (@ar45), Anonymous, Dusan Klinec (@ph4r05), Mark
-   Dalby, Walter Doekes (@wdoekes), Alexey Vasilyev
-   (@vasilevalex), Fabian Gast (@fgast), Nick Altmann (@nikbyte),
-   Zero King (@l2dy), Edson Gellert Schubert, MayamaTakeshi, Ingo
-   Wolfsberger, Daniel Hsueh.
+   Magder, Ezequiel Lovelle (@lovelle), Carsten Bock, Saúl Ibarra
+   Corretgé (@saghul), Elena-Ramona Modroiu, John Riordan, Julián
+   Moreno Patiño, Andrei Dragus, Jesus Rodrigues, Konstantin
+   Bokarius, Aron Podrigal (@ar45), Anonymous, Dusan Klinec
+   (@ph4r05), Mark Dalby, Walter Doekes (@wdoekes), Alexey
+   Vasilyev (@vasilevalex), Fabian Gast (@fgast), Nick Altmann
+   (@nikbyte), Zero King (@l2dy), Edson Gellert Schubert,
+   MayamaTakeshi, Ingo Wolfsberger, Daniel Hsueh.
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -1729,7 +1942,7 @@ Chapter 4. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1741,29 +1954,30 @@ Chapter 4. Contributors
 
    Table 4.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Razvan Crainea (@razvancrainea)     Jul 2010 - Jul 2023
-   2.  Bogdan-Andrei Iancu (@bogdan-iancu) Nov 2001 - Jul 2023
-   3.  Vlad Paiu (@vladpaiu)               Jun 2011 - Jul 2023
-   4.  Liviu Chircu (@liviuchircu)         Jan 2013 - May 2023
-   5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2023
-   6.  Maksym Sobolyev (@sobomax)          Mar 2004 - Feb 2023
-   7.  MayamaTakeshi                       Oct 2022 - Oct 2022
-   8.  Peter Lemenkov (@lemenkov)          Jun 2018 - Feb 2021
-   9.  Zero King (@l2dy)                   Mar 2020 - Mar 2020
-   10. Dan Pascu (@danpascu)               Feb 2006 - Feb 2020
+   1.  Razvan Crainea (@razvancrainea)     Jul 2010 - May 2025
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jan 2013 - May 2025
+   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Nov 2001 - May 2025
+   4.  Vlad Paiu (@vladpaiu)               Jun 2011 - Apr 2025
+   5.  Carsten Bock                        Mar 2024 - Mar 2024
+   6.  Maksym Sobolyev (@sobomax)          Mar 2004 - Nov 2023
+   7.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2023
+   8.  MayamaTakeshi                       Oct 2022 - Oct 2022
+   9.  Peter Lemenkov (@lemenkov)          Jun 2018 - Feb 2021
+   10. Zero King (@l2dy)                   Mar 2020 - Mar 2020
 
-   All remaining contributors: Fabian Gast (@fgast), Aron Podrigal
-   (@ar45), Alexey Vasilyev (@vasilevalex), Ionut Ionita
-   (@ionutrazvanionita), Julián Moreno Patiño, Nick Altmann
-   (@nikbyte), Ovidiu Sas (@ovidiusas), Dusan Klinec (@ph4r05),
-   Ezequiel Lovelle (@lovelle), Walter Doekes (@wdoekes),
-   Christophe Sollet (@csollet), Saúl Ibarra Corretgé (@saghul),
-   Anonymous, Mark Dalby, Anca Vamanu, Andrei Dragus, John
-   Riordan, Henning Westerholt (@henningw), Klaus Darilion,
-   Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
-   Gellert Schubert, Jesus Rodrigues, Marcus Hunger, Juha Heinanen
-   (@juha-h), Jeffrey Magder, Elias Baixas, Daniel Hsueh, Andreas
-   Granig, Elena-Ramona Modroiu, Ingo Wolfsberger, Andrei
+   All remaining contributors: Dan Pascu (@danpascu), Fabian Gast
+   (@fgast), Aron Podrigal (@ar45), Alexey Vasilyev
+   (@vasilevalex), Ionut Ionita (@ionutrazvanionita), Julián
+   Moreno Patiño, Nick Altmann (@nikbyte), Ovidiu Sas
+   (@ovidiusas), Dusan Klinec (@ph4r05), Ezequiel Lovelle
+   (@lovelle), Walter Doekes (@wdoekes), Christophe Sollet
+   (@csollet), Saúl Ibarra Corretgé (@saghul), Anonymous, Mark
+   Dalby, Anca Vamanu, Andrei Dragus, John Riordan, Henning
+   Westerholt (@henningw), Klaus Darilion, Daniel-Constantin
+   Mierla (@miconda), Konstantin Bokarius, Edson Gellert Schubert,
+   Jesus Rodrigues, Marcus Hunger, Juha Heinanen (@juha-h),
+   Jeffrey Magder, Elias Baixas, Daniel Hsueh, Andreas Granig,
+   Elena-Ramona Modroiu, Ingo Wolfsberger, Andrei
    Pelinescu-Onciul, Jan Janak (@janakj), Jiri Kuthan
    (@jiriatipteldotorg), Raphael Coeffic, Nils Ohlmeier.
 
@@ -1774,19 +1988,19 @@ Chapter 5. Documentation
 
 5.1. Contributors
 
-   Last edited by: Razvan Crainea (@razvancrainea), Bogdan-Andrei
-   Iancu (@bogdan-iancu), Vlad Patrascu (@rvlad-patrascu), Liviu
-   Chircu (@liviuchircu), Fabian Gast (@fgast), Alexey Vasilyev
-   (@vasilevalex), Peter Lemenkov (@lemenkov), Nick Altmann
-   (@nikbyte), Ovidiu Sas (@ovidiusas), Vlad Paiu (@vladpaiu),
-   Anca Vamanu, Henning Westerholt (@henningw), Klaus Darilion,
-   Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
-   Gellert Schubert, Dan Pascu (@danpascu), Juha Heinanen
-   (@juha-h), Elena-Ramona Modroiu, Jan Janak (@janakj), Jiri
-   Kuthan (@jiriatipteldotorg).
+   Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Liviu
+   Chircu (@sorydima), Carsten Bock, Razvan Crainea
+   (@razvancrainea), Vlad Patrascu (@rvlad-patrascu), Fabian Gast
+   (@fgast), Alexey Vasilyev (@vasilevalex), Peter Lemenkov
+   (@lemenkov), Nick Altmann (@nikbyte), Ovidiu Sas (@ovidiusas),
+   Vlad Paiu (@vladpaiu), Anca Vamanu, Henning Westerholt
+   (@henningw), Klaus Darilion, Daniel-Constantin Mierla
+   (@miconda), Konstantin Bokarius, Edson Gellert Schubert, Dan
+   Pascu (@danpascu), Juha Heinanen (@juha-h), Elena-Ramona
+   Modroiu, Jan Janak (@janakj), Jiri Kuthan (@jiriatipteldotorg).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005-2008 Voice Sistem SRL
+   Copyright © 2005-2008 Voice Sistem SRL
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS
+   Copyright © 2003 FhG FOKUS

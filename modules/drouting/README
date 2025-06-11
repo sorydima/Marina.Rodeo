@@ -16,7 +16,7 @@ Dynamic Routing Module
 
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -59,6 +59,7 @@ Dynamic Routing Module
               1.3.36. extra_prefix_chars (str)
               1.3.37. extra_id_chars (str)
               1.3.38. rule_tables_query (str)
+              1.3.39. generate_data_checksum (int)
 
         1.4. Exported Functions
 
@@ -168,22 +169,23 @@ Dynamic Routing Module
    1.36. Set extra_prefix_chars parameter
    1.37. Set extra_id_chars parameter
    1.38. Set the rule_tables_query parameter
-   1.39. do_routing usage
-   1.40. route_to_carrier usage
-   1.41. route_to_gw usage
-   1.42. use_next_gw usage
-   1.43. goes_to_gw usage
-   1.44. is_from_gw usage
-   1.45. dr_is_gw usage
-   1.46. dr_disable() usage
-   1.47. dr_match usage
-   1.48. dr_gw_status usage when use_partitions is set to 0
-   1.49. dr_gw_status usage when use_partitionsis set to 1
-   1.50. dr_carrier_status usage when use_partitions is 0
-   1.51. dr_carrier_status usage when use_partitions is 1
-   1.52. dr_reload_status usage when use_partitions is 0
-   1.53. dr_reload_status usage when use_partitions is 1
-   1.54. dr_enable_probing usage
+   1.39. Set the generate_data_checksum parameter
+   1.40. do_routing usage
+   1.41. route_to_carrier usage
+   1.42. route_to_gw usage
+   1.43. use_next_gw usage
+   1.44. goes_to_gw usage
+   1.45. is_from_gw usage
+   1.46. dr_is_gw usage
+   1.47. dr_disable() usage
+   1.48. dr_match usage
+   1.49. dr_gw_status usage when use_partitions is set to 0
+   1.50. dr_gw_status usage when use_partitionsis set to 1
+   1.51. dr_carrier_status usage when use_partitions is 0
+   1.52. dr_carrier_status usage when use_partitions is 1
+   1.53. dr_reload_status usage when use_partitions is 0
+   1.54. dr_reload_status usage when use_partitions is 1
+   1.55. dr_enable_probing usage
 
 Chapter 1. Admin Guide
 
@@ -216,7 +218,7 @@ Chapter 1. Admin Guide
 
 1.1.2. Features
 
-   The dynamic routing implementation for Marina.Rodeo is designed
+   The dynamic routing implementation for OpenMarinkaRodeo is designed
    with the following properties:
      * The routing info (destinations, carriers, rules, groups) is
        stored in a database and loaded into memory at start up
@@ -444,7 +446,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * a database module.
@@ -467,7 +469,7 @@ Chapter 1. Admin Guide
    Example 1.1. Set db_url parameter
 ...
 modparam("drouting", "db_url",
-        "mysql://Marina.Rodeo:Marina.Rodeo@localhost/Marina.Rodeo")
+        "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo")
 ...
 
 1.3.2. drd_table(str)
@@ -749,13 +751,13 @@ modparam("drouting", "probing_reply_codes", "501, 403")
 1.3.22. probing_socket (string)
 
    A socket description [proto:]host[:port] of the local socket
-   (which is used by Marina.Rodeo for SIP traffic) to be used (if
+   (which is used by OpenMarinkaRodeo for SIP traffic) to be used (if
    multiple) for sending the probing messages from.
 
    For probing gateway the highest priority has socket from
    gateway configuration in dr_gateways table. Then socket from
    global probing_socket parameter and the lowest priority is
-   default behaviour with auto selected socket wich Marina.Rodeo
+   default behaviour with auto selected socket wich OpenMarinkaRodeo
    listens on.
 
    Default value is “NULL”.
@@ -774,15 +776,15 @@ modparam("drouting", "probing_socket", "udp:192.168.1.100:5060")
    The supported filtering modes are:
      * "all" - all the gateways defined in DB are loaded into
        memory, disregarding what socket value they have. NOTE: for
-       the gw sockets not matching any Marina.Rodeo listeners/sockets,
+       the gw sockets not matching any OpenMarinkaRodeo listeners/sockets,
        the GW will be loaded with NULL/no socket.
      * "ignore" - all the gateways defined in DB are loaded into
        memory, but ignoring the socket value they have (the socket
        will be set to NULL/NONE with no attempt to check it
-       against the Marina.Rodeo listeners/sockets).
+       against the OpenMarinkaRodeo listeners/sockets).
      * "matched-only" - in this mode the module will load from DB
        only the gateways that have a configured a socket matching
-       any of the the Marina.Rodeo listeners/sockets. If the gateways
+       any of the the OpenMarinkaRodeo listeners/sockets. If the gateways
        socket does not match, it will be discards, not loaded into
        memory at all.
 
@@ -790,11 +792,11 @@ modparam("drouting", "probing_socket", "udp:192.168.1.100:5060")
 
    Example 1.23. Set gw_socket_filter_mode parameter
 ...
-# multiple Marina.Rodeo instances sharing a DR setting, so each should
+# multiple OpenMarinkaRodeo instances sharing a DR setting, so each should
 # load only the GWs they have sockets for.
 modparam("drouting", "gw_socket_filter_mode", "matched-only")
 ...
-# an Marina.Rodeo instance not doing routing, but needing to be
+# an OpenMarinkaRodeo instance not doing routing, but needing to be
 # aware of all the gws, so load them all ignoring the sockets
 modparam("drouting", "gw_socket_filter_mode", "ignore")
 ...
@@ -808,7 +810,7 @@ modparam("drouting", "gw_socket_filter_mode", "ignore")
 
    If clustering enbled, the module will automatically share
    changes over the status of the gateways/destinations/carriers
-   with the other Marina.Rodeo instances that are part of a cluster.
+   with the other OpenMarinkaRodeo instances that are part of a cluster.
    Whenever such a status changes (following an MI command, a
    probing result, a script command), the module will replicate
    this status change to all the nodes in this given cluster.
@@ -817,14 +819,22 @@ modparam("drouting", "gw_socket_filter_mode", "ignore")
    which node in the cluster will perform the pinging/probing to
    gateways. See the cluster_sharing_tag option.
 
+   This OpenMarinkaRodeo cluster exposes the "drouting-status-repl"
+   capability in order to mark nodes as eligible for becoming data
+   donors during an arbitrary sync request. Consequently, the
+   cluster must have at least one node marked with the "seed"
+   value as the clusterer.flags column/property in order to be
+   fully functional. Consult the clusterer - Capabilities chapter
+   for more details.
+
    For more info on how to define and populate a cluster (with
-   Marina.Rodeo nodes) see the "clusterer" module.
+   OpenMarinkaRodeo nodes) see the clusterer module.
 
    Default value is “0 (none)”.
 
    Example 1.24. Set cluster_id parameter
 ...
-# replicate gw/carrier status with all Marina.Rodeo in cluster ID 9
+# replicate gw/carrier status with all OpenMarinkaRodeo in cluster ID 9
 modparam("drouting", "cluster_id", 9)
 ...
 
@@ -968,7 +978,7 @@ modparam("drouting", "use_partitions", 1)
    Example 1.32. Set db_partitions_url parameter
 ...
 modparam("drouting", "db_partitions_url", "mysql://user:password@localho
-st/Marina.Rodeo_partitions")
+st/openMarinkaRodeo_partitions")
 ...
 
 1.3.33. db_partitions_table (str)
@@ -1053,7 +1063,7 @@ modparam("drouting", "extra_id_chars", ":_-.")
    partition.
 
    The syntax of the parameter is: "token : query", where token is
-   a special name given to a "dr_rules" table, so Marina.Rodeo can
+   a special name given to a "dr_rules" table, so OpenMarinkaRodeo can
    match it against the custom queries defined using this
    parameter.
 
@@ -1070,6 +1080,17 @@ modparam("drouting", "drr_table", "MY_RULES_QUERY")
 modparam("drouting", "rule_tables_query", "
         MY_RULES_QUERY:
                 SELECT 'dr_rules_a' UNION SELECT 'dr_rules_b'")
+...
+
+1.3.39. generate_data_checksum (int)
+
+   If enabled, it will generate a checksum ( MD5 ) for drouting
+   loaded data, attach that to the reload_status MI command output
+   and to the reload generated status reports
+
+   Example 1.39. Set the generate_data_checksum parameter
+...
+modparam("drouting", "generate_data_checksum", 1)
 ...
 
 1.4. Exported Functions
@@ -1126,7 +1147,7 @@ modparam("drouting", "rule_tables_query", "
        specifing the name of one partition, you can use the "*"
        wildcard sign to force routing over all partitions.
 
-   Example 1.39. do_routing usage
+   Example 1.40. do_routing usage
 ...
 # all groups, sort on order, use_partitions is 0
 do_routing();
@@ -1182,7 +1203,7 @@ do_routing(2, "F", , , $var(gw_attributes));
        "use_partition" module parameter is turned on. Wildcard
        sign is not accepted by the function.
 
-   Example 1.40. route_to_carrier usage
+   Example 1.41. route_to_carrier usage
 ...
 # use_partitions is not set
 if ( route_to_carrier("my_top_carrier, def_carrier", , $var(carrier_att)
@@ -1237,7 +1258,7 @@ if ( route_to_carrier($var(carrierId), , , $var(my_partition)) ) {
        "use_partition" module parameter is turned on. Wildcard
        sign is not accepted by the function.
 
-   Example 1.41. route_to_gw usage
+   Example 1.42. route_to_gw usage
 ...
 # use_partitions is not set
 if ( route_to_gw("gw_europe") ) {
@@ -1303,7 +1324,7 @@ if ( route_to_gw("gw1,gw2,gw3", $var(gw_attrs), , "my_partition") ) {
        "use_partition" module parameter is turned on. Wildcard
        sign is not accepted by the function.
 
-   Example 1.42. use_next_gw usage
+   Example 1.43. use_next_gw usage
 ...
 # use_partitions is not set
 if (use_next_gw()) {
@@ -1345,7 +1366,7 @@ if (use_next_gw( , ,$var(carrier_attrs), "my_partition")) {
    This function does not change anything in the message.
 
    This function can be used from REQUEST_ROUTE, FAILURE_ROUTE,
-   BRANCH_ROUTE and ONREPLY_ROUTE.
+   BRANCH_ROUTE, ONREPLY_ROUTE and LOCAL_ROUTE.
 
    If you set use_partitions parameter to 1 you must supply the
    "partition" parameter to instruct on the partition where the
@@ -1380,7 +1401,7 @@ if (use_next_gw( , ,$var(carrier_attrs), "my_partition")) {
        "use_partition" module parameter is turned on. Wildcard
        sign is accepted by this function.
 
-   Example 1.43. goes_to_gw usage
+   Example 1.44. goes_to_gw usage
 ...
 # use_partitions is not set
 if (goes_to_gw( 1, , $var(gw_attrs))) {
@@ -1440,7 +1461,7 @@ if (goes_to_gw(1, , $var(gw_attrs), , "my_partition")) {
        "use_partition" module parameter is turned on. Wildcard
        sign is accepted by this function.
 
-   Example 1.44. is_from_gw usage
+   Example 1.45. is_from_gw usage
 # use_partitions is not set
 # match the source IP (only) against all gateways
 if (is_from_gw(-1, "n")) {
@@ -1499,7 +1520,7 @@ if (is_from_gw(, "c", , , "outbound")) {
        "use_partition" module parameter is turned on. Wildcard
        sign is accepted by this function.
 
-   Example 1.45. dr_is_gw usage
+   Example 1.46. dr_is_gw usage
 # match the SIP URI host within $var(uac) against all gateways
 if (dr_is_gw( $var(uac), , "n")) {
         ...
@@ -1533,7 +1554,7 @@ if (dr_is_gw( $avp(uac), , "n", , , "partition")) {
        "use_partition" module parameter is turned on. Wildcard
        sign is accepted by this function.
 
-   Example 1.46. dr_disable() usage
+   Example 1.47. dr_disable() usage
 ...
 if (t_check_status("(408)|(5[0-9][0-9])")) {
         dr_disable();
@@ -1575,7 +1596,7 @@ if (t_check_status("(408)|(5[0-9][0-9])")) {
        to be used. This parameter is to be defined ONLY if the
        "use_partition" module parameter is turned on.
 
-   Example 1.47. dr_match usage
+   Example 1.48. dr_match usage
 ...
 if ( dr_match( 1, "L" , $fU, ,"dids") )
         xlog("Full From Username $fU found in group 1 partition DIDS\n")
@@ -1600,15 +1621,13 @@ if ( dr_match( 1, , $var(did) ) )
           + partition_name (optional) - if not provided all the
             partitions will be reloaded, otherwise just the
             partition given as parameter will be reloaded.
-       <listitem>
-       inherit_state (optional) : whether inherit old state of the
-       gateway , default is y.
-          + “n”: no inherit state
-          + “y”: inherit state
-       </listitem>
+          + inherit_state (optional) : whether inherit old state
+            of the gateway , default is y.
+               o “n”: no inherit state
+               o “y”: inherit state
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi dr_reload part_1
+                openMarinkaRodeo-cli -x mi dr_reload part_1
 
 1.5.2. dr_gw_status
 
@@ -1635,24 +1654,24 @@ if ( dr_match( 1, , $var(did) ) )
             GW (0 - disable, 1 - enable). Only makes sense if
             gw_id is provided.
 
-   Example 1.48. dr_gw_status usage when use_partitions is set to
+   Example 1.49. dr_gw_status usage when use_partitions is set to
    0
-$ Marina.Rodeo-cli -x mi dr_gw_status gw_id=2
+$ openMarinkaRodeo-cli -x mi dr_gw_status gw_id=2
 State:: Active
-$ Marina.Rodeo-cli -x mi dr_gw_status gw_id=2 status=0
-$ Marina.Rodeo-cli -x mi dr_gw_status gw_id=2
+$ openMarinkaRodeo-cli -x mi dr_gw_status gw_id=2 status=0
+$ openMarinkaRodeo-cli -x mi dr_gw_status gw_id=2
 Enabled:: Disabled MI
-$ Marina.Rodeo-cli -x mi dr_gw_status gw_id=3
+$ openMarinkaRodeo-cli -x mi dr_gw_status gw_id=3
 Enabled:: Inactive
 
-   Example 1.49. dr_gw_status usage when use_partitionsis set to 1
-$ Marina.Rodeo-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw
+   Example 1.50. dr_gw_status usage when use_partitionsis set to 1
+$ openMarinkaRodeo-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw
 State:: Active
-$ Marina.Rodeo-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw stat
+$ openMarinkaRodeo-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw stat
 us=0
-$ Marina.Rodeo-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw
+$ openMarinkaRodeo-cli -x mi dr_gw_status partition_name=part_1 gw_id=my_gw
 enabled:: disabled mi
-$ Marina.Rodeo-cli -x mi dr_gw_status partition_name=partition8 status=3
+$ openMarinkaRodeo-cli -x mi dr_gw_status partition_name=partition8 status=3
 enabled:: inactive
 
 1.5.3. dr_carrier_status
@@ -1680,20 +1699,20 @@ enabled:: inactive
             carrier (0 - disable, 1 - enable). Only makes sense if
             carrier_id is provided.
 
-   Example 1.50. dr_carrier_status usage when use_partitions is 0
-$ Marina.Rodeo-cli -x mi dr_carrier_status carrier_id=CR1
+   Example 1.51. dr_carrier_status usage when use_partitions is 0
+$ openMarinkaRodeo-cli -x mi dr_carrier_status carrier_id=CR1
 Enabled:: no
-$ Marina.Rodeo-cli -x mi dr_carrier_status carrier_id=CR1 status=1
-$ Marina.Rodeo-cli -x mi dr_carrier_status carrier_id=CR1
+$ openMarinkaRodeo-cli -x mi dr_carrier_status carrier_id=CR1 status=1
+$ openMarinkaRodeo-cli -x mi dr_carrier_status carrier_id=CR1
 Enabled:: yes
 
-   Example 1.51. dr_carrier_status usage when use_partitions is 1
-$ Marina.Rodeo-cli -x mi dr_carrier_status partition_name=my_partition carri
+   Example 1.52. dr_carrier_status usage when use_partitions is 1
+$ openMarinkaRodeo-cli -x mi dr_carrier_status partition_name=my_partition carri
 er_id=CR1
 Enabled:: no
-$ Marina.Rodeo-cli -x mi dr_carrier_status partition_name=partition_1 carrie
+$ openMarinkaRodeo-cli -x mi dr_carrier_status partition_name=partition_1 carrie
 r_id=CR1 status=1
-$ Marina.Rodeo-cli -x mi dr_carrier_status partition_name=partition_3 carrie
+$ openMarinkaRodeo-cli -x mi dr_carrier_status partition_name=partition_3 carrie
 r_id=CR1
 Enabled:: yes
 
@@ -1709,15 +1728,15 @@ Enabled:: yes
             every partition. Otherwise, the function will list the
             time of the last reload for the given partition.
 
-   Example 1.52. dr_reload_status usage when use_partitions is 0
-$ Marina.Rodeo-cli -x mi dr_reload_status
+   Example 1.53. dr_reload_status usage when use_partitions is 0
+$ openMarinkaRodeo-cli -x mi dr_reload_status
 Date:: Tue Aug 12 12:26:00 2014
 
-   Example 1.53. dr_reload_status usage when use_partitions is 1
-$ Marina.Rodeo-cli -x mi dr_reload_status
+   Example 1.54. dr_reload_status usage when use_partitions is 1
+$ openMarinkaRodeo-cli -x mi dr_reload_status
 Partition:: part_test Date=Tue Aug 12 12:24:13 2014
 Partition:: part_2 Date=Tue Aug 12 12:24:13 2014
-$ Marina.Rodeo-cli -x mi dr_reload_status part_test
+$ openMarinkaRodeo-cli -x mi dr_reload_status part_test
 Partition:: part_test Date=Tue Aug 12 12:24:13 2014
 
 1.5.5. dr_number_routing
@@ -1738,7 +1757,7 @@ Partition:: part_test Date=Tue Aug 12 12:24:13 2014
           + number - the number to test against
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi dr_number_routing partition_name=part
+                openMarinkaRodeo-cli -x mi dr_number_routing partition_name=part
 1 group_id=3 number=012340987
 
 1.5.6.  dr_enable_probing
@@ -1749,11 +1768,11 @@ Partition:: part_test Date=Tue Aug 12 12:24:13 2014
    Parameters:
      * status (optional) - 1 - enable, 0 - disable gateway probing
 
-   Example 1.54. dr_enable_probing usage
-$ Marina.Rodeo-cli -x mi dr_enable_probing
+   Example 1.55. dr_enable_probing usage
+$ openMarinkaRodeo-cli -x mi dr_enable_probing
 Status:: 1
-$ Marina.Rodeo-cli -x mi dr_enable_probing 0
-$ Marina.Rodeo-cli -x mi dr_enable_probing
+$ openMarinkaRodeo-cli -x mi dr_enable_probing 0
+$ openMarinkaRodeo-cli -x mi dr_enable_probing
 Status:: 0
 
 1.6. Exported Events
@@ -1854,17 +1873,24 @@ probing reply\n"
         ]
     }
 
+   For how to access and use the Status/Report information, please
+   see
+   https://www.openMarinkaRodeo.org/Documentation/Interface-StatusReport-3
+   -3.
+
 1.8. Installation
 
-   The module requires 4 tables in the Marina.Rodeo database:
+   The module requires 4 tables in the OpenMarinkaRodeo database:
    dr_groups, dr_gateways, dr_carriers, dr_rules. The SQL syntax
    to create them can be found in the drouting-create.sql script,
-   located in the database directories of the Marina.Rodeo/scripts
-   folder.
+   located in the database directories of the openMarinkaRodeo/scripts
+   folder. You can also find the complete database documentation
+   on the project webpage,
+   https://openMarinkaRodeo.org/docs/db/db-schema-devel.html.
 
 Chapter 2. Developer Guide
 
-   The module provides no function to be used by other Marina.Rodeo
+   The module provides no function to be used by other OpenMarinkaRodeo
    modules.
 
 Chapter 3. Contributors
@@ -1874,24 +1900,24 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Bogdan-Andrei Iancu (@bogdan-iancu) 408 200 13802 5820
-   2. Liviu Chircu (@liviuchircu) 155 91 2461 2588
-   3. Razvan Crainea (@razvancrainea) 99 52 1169 2224
-   4. Mihai Tiganus (@tallicamike) 71 20 4301 910
-   5. Vlad Patrascu (@rvlad-patrascu) 41 20 1100 735
-   6. Vlad Paiu (@vladpaiu) 23 20 244 47
+   1. Bogdan-Andrei Iancu (@bogdan-iancu) 416 202 13810 5824
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 163 97 2515 2613
+   3. Razvan Crainea (@razvancrainea) 100 53 1171 2226
+   4. Mihai Tiganus (@tallicamike) 73 20 4301 910
+   5. Vlad Patrascu (@rvlad-patrascu) 43 20 1100 735
+   6. Vlad Paiu (@vladpaiu) 28 22 421 65
    7. Andrei Datcu (@andrei-datcu) 20 12 551 134
    8. Ovidiu Sas (@ovidiusas) 15 11 132 70
    9. Ionut Ionita (@ionutrazvanionita) 15 9 370 108
-   10. Andrei Dragus 10 3 657 40
+   10. Maksym Sobolyev (@sobomax) 10 8 30 29
 
-   All remaining contributors: Maksym Sobolyev (@sobomax), Anca
-   Vamanu, Nick Altmann (@nikbyte), Jeremy Martinez
-   (@JeremyMartinez51), wangdd, nexbridge, Dusan Klinec (@ph4r05),
-   Walter Doekes (@wdoekes), MayamaTakeshi, Matt Lehner, Julián
-   Moreno Patiño, Sergio Gutierrez, Le Roy Christophe, Peter
-   Lemenkov (@lemenkov), Alexey Vasilyev (@vasilevalex),
-   Ozzyboshi, Aron Podrigal (@ar45).
+   All remaining contributors: Andrei Dragus, Anca Vamanu, Nick
+   Altmann (@nikbyte), Jeremy Martinez (@JeremyMartinez51),
+   wangdd, nexbridge, Dusan Klinec (@ph4r05), Walter Doekes
+   (@wdoekes), MayamaTakeshi, Matt Lehner, Julián Moreno Patiño,
+   Sergio Gutierrez, Le Roy Christophe, Peter Lemenkov
+   (@lemenkov), Alexey Vasilyev (@vasilevalex), Ozzyboshi, Aron
+   Podrigal (@ar45).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -1901,7 +1927,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -1913,20 +1939,20 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Liviu Chircu (@liviuchircu)         Nov 2012 - Jun 2023
-   2.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2008 - May 2023
-   3.  wangdd                              May 2023 - May 2023
-   4.  MayamaTakeshi                       Apr 2023 - Apr 2023
-   5.  nexbridge                           Feb 2023 - Mar 2023
-   6.  Maksym Sobolyev (@sobomax)          Oct 2020 - Feb 2023
-   7.  Razvan Crainea (@razvancrainea)     Sep 2010 - Oct 2022
+   1.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2008 - Nov 2024
+   2.  Vlad Paiu (@vladpaiu)               Aug 2011 - Feb 2024
+   3.  Maksym Sobolyev (@sobomax)          Oct 2020 - Nov 2023
+   4.  Razvan Crainea (@razvancrainea)     Sep 2010 - Oct 2023
+   5.  wangdd                              May 2023 - May 2023
+   6.  MayamaTakeshi                       Apr 2023 - Apr 2023
+   7.  nexbridge                           Feb 2023 - Mar 2023
    8.  Vlad Patrascu (@rvlad-patrascu)     Mar 2017 - Jul 2022
    9.  Nick Altmann (@nikbyte)             Mar 2013 - May 2021
    10. Walter Doekes (@wdoekes)            May 2014 - Apr 2021
 
-   All remaining contributors: Aron Podrigal (@ar45), Vlad Paiu
-   (@vladpaiu), Alexey Vasilyev (@vasilevalex), Peter Lemenkov
-   (@lemenkov), Ovidiu Sas (@ovidiusas), Jeremy Martinez
+   All remaining contributors: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Aron
+   Podrigal (@ar45), Alexey Vasilyev (@vasilevalex), Peter
+   Lemenkov (@lemenkov), Ovidiu Sas (@ovidiusas), Jeremy Martinez
    (@JeremyMartinez51), Le Roy Christophe, Ionut Ionita
    (@ionutrazvanionita), Ozzyboshi, Julián Moreno Patiño, Dusan
    Klinec (@ph4r05), Mihai Tiganus (@tallicamike), Andrei Datcu
@@ -1940,17 +1966,17 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: wangdd, Liviu Chircu (@liviuchircu), Vlad
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Vlad Paiu
+   (@vladpaiu), Razvan Crainea (@razvancrainea), wangdd, Vlad
    Patrascu (@rvlad-patrascu), Bogdan-Andrei Iancu
-   (@bogdan-iancu), Razvan Crainea (@razvancrainea), Nick Altmann
-   (@nikbyte), Alexey Vasilyev (@vasilevalex), Peter Lemenkov
-   (@lemenkov), Ionut Ionita (@ionutrazvanionita), Vlad Paiu
-   (@vladpaiu), Mihai Tiganus (@tallicamike), Andrei Datcu
-   (@andrei-datcu), Matt Lehner, Anca Vamanu, Andrei Dragus,
+   (@bogdan-iancu), Nick Altmann (@nikbyte), Alexey Vasilyev
+   (@vasilevalex), Peter Lemenkov (@lemenkov), Ionut Ionita
+   (@ionutrazvanionita), Mihai Tiganus (@tallicamike), Andrei
+   Datcu (@andrei-datcu), Matt Lehner, Anca Vamanu, Andrei Dragus,
    Sergio Gutierrez.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
+   Copyright © 2009-2012 www.openMarinkaRodeo-solutions.com
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2005-2008 Voice Sistem SRL
+   Copyright © 2005-2008 Voice Sistem SRL

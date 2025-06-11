@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2013-2015 Marina.Rodeo Solutions
+ * Copyright (C) 2013-2015 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -109,7 +109,7 @@ int validate_curl_http_version(const int *http_version);
 
 /* module dependencies */
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "tracer", DEP_SILENT },
 		{ MOD_TYPE_NULL, NULL, 0 }
 	},
@@ -218,7 +218,7 @@ struct module_exports exports = {
 	MODULE_VERSION,   /* module version */
 	DEFAULT_DLFLAGS,  /* dlopen flags */
 	0,				  /* load function */
-	&deps,            /* Marina.Rodeo module dependencies */
+	&deps,            /* OpenMarinkaRodeo module dependencies */
 	cmds,             /* Exported functions */
 	acmds,            /* Exported async functions */
 	params,           /* Exported parameters */
@@ -615,6 +615,9 @@ int async_rest_method(enum rest_client_method method, struct sip_msg *msg,
 	if (no_concurrent_connects && (lrc=rcl_acquire_url(url, &host)) < RCL_OK)
 		return lrc;
 
+	param->timeout_s = (ctx->timeout_s && ctx->timeout_s < curl_timeout) ?
+			ctx->timeout_s : curl_timeout;
+
 	rc = start_async_http_req(msg, method, url, body, ctype,
 			param, &param->body, ctype_pv ? &param->ctype : NULL, &read_fd);
 
@@ -631,7 +634,7 @@ int async_rest_method(enum rest_client_method method, struct sip_msg *msg,
 
 		/* keep default async status of NO_IO */
 		pkg_free(param);
-		return rc;
+		goto done;
 
 	/* no need for async - transfer already completed! */
 	} else if (read_fd == ASYNC_SYNC) {
@@ -643,7 +646,8 @@ int async_rest_method(enum rest_client_method method, struct sip_msg *msg,
 			val.ri = (int)http_rc;
 			if (pv_set_value(msg, (pv_spec_p)code_pv, 0, &val) != 0) {
 				LM_ERR("failed to set output code pv\n");
-				return RCL_INTERNAL_ERR;
+				rc = RCL_INTERNAL_ERR;
+				goto done;
 			}
 		}
 
@@ -651,14 +655,16 @@ int async_rest_method(enum rest_client_method method, struct sip_msg *msg,
 		val.rs = param->body;
 		if (pv_set_value(msg, (pv_spec_p)body_pv, 0, &val) != 0) {
 			LM_ERR("failed to set output body pv\n");
-			return RCL_INTERNAL_ERR;
+			rc = RCL_INTERNAL_ERR;
+			goto done;
 		}
 
 		if (ctype_pv) {
 			val.rs = param->ctype;
 			if (pv_set_value(msg, (pv_spec_p)ctype_pv, 0, &val) != 0) {
 				LM_ERR("failed to set output ctype pv\n");
-				return RCL_INTERNAL_ERR;
+				rc = RCL_INTERNAL_ERR;
+				goto done;
 			}
 		}
 
@@ -669,7 +675,7 @@ int async_rest_method(enum rest_client_method method, struct sip_msg *msg,
 		pkg_free(param);
 
 		async_status = ASYNC_SYNC;
-		return rc;
+		goto done;
 	}
 
 	/* the TCP connection is established, async started with success */
@@ -679,6 +685,7 @@ int async_rest_method(enum rest_client_method method, struct sip_msg *msg,
 
 	ctx->resume_f = resume_async_http_req;
 	ctx->timeout_f = time_out_async_http_req;
+	ctx->timeout_s = param->timeout_s;
 
 	param->method = method;
 	param->body_pv = (pv_spec_p)body_pv;
@@ -688,6 +695,11 @@ int async_rest_method(enum rest_client_method method, struct sip_msg *msg,
 
 	async_status = read_fd;
 	return 1;
+
+done:
+	if (lrc == RCL_OK_LOCKED)
+		rcl_release_url(host, rc == RCL_OK);
+	return rc;
 }
 
 static int w_async_rest_get(struct sip_msg *msg, async_ctx *ctx, str *url,

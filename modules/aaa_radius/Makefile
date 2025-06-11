@@ -65,10 +65,10 @@ include ../../Makefile.modules
 
 install_module_custom: $(cfg_prefix)/$(cfg_dir)
 	$(INSTALL_TOUCH) \
-		$(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo.sample ; \
-	$(INSTALL_CFG) $(ETC_DIR)/dictionary.Marina.Rodeo \
-		$(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo.sample ; \
-	if [ ! -f $(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo ]; then \
-		mv -f $(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo.sample \
-			$(cfg_prefix)/$(cfg_dir)/dictionary.Marina.Rodeo; \
+		$(cfg_prefix)/$(cfg_dir)/dictionary.openMarinkaRodeo.sample ; \
+	$(INSTALL_CFG) $(ETC_DIR)/dictionary.openMarinkaRodeo \
+		$(cfg_prefix)/$(cfg_dir)/dictionary.openMarinkaRodeo.sample ; \
+	if [ ! -f $(cfg_prefix)/$(cfg_dir)/dictionary.openMarinkaRodeo ]; then \
+		mv -f $(cfg_prefix)/$(cfg_dir)/dictionary.openMarinkaRodeo.sample \
+			$(cfg_prefix)/$(cfg_dir)/dictionary.openMarinkaRodeo; \
 	fi; \

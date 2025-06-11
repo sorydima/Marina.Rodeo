@@ -1,16 +1,16 @@
 /*
  * statistics module - script interface to internal statistics manager
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem S.R.L.
+ * Copyright (C) 2006 Voice Sistem S.R.L.
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -98,8 +98,8 @@ union stat_series_slot {
 		unsigned int nr;
 	} avg;
 	struct {
-		unsigned long true;
-		unsigned long false;
+		unsigned long t;
+		unsigned long f;
 	} perc;
 	long acc;
 };
@@ -138,7 +138,7 @@ static int w_stat_iter_next(struct sip_msg *msg, pv_spec_t *key, pv_spec_t *val,
 						struct stat_iter *iter);
 
 struct list_head script_iters;
-static OSIPS_LIST_HEAD(series_profiles);
+static OMarinkaRodeo_LIST_HEAD(series_profiles);
 
 static const cmd_export_t cmds[]={
 	{"update_stat", (cmd_function)w_update_stat, {
@@ -178,7 +178,7 @@ static const param_export_t mod_params[]={
 
 
 static const pv_export_t mod_items[] = {
-	{ {"stat",     sizeof("stat")-1},      1100, pv_get_stat,
+	{ str_const_init("stat"),      1100, pv_get_stat,
 		pv_set_stat,    pv_parse_name, 0, 0, 0},
 	{ {0, 0}, 0, 0, 0, 0, 0, 0, 0 }
 };
@@ -191,7 +191,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,	/* dlopen flags */
 	0,					/* load function */
-	NULL,				/* Marina.Rodeo module dependencies */
+	NULL,				/* OpenMarinkaRodeo module dependencies */
 	cmds,				/* exported functions */
 	0,					/* exported async functions */
 	mod_params,			/* param exports */
@@ -806,8 +806,8 @@ static inline int get_stat_name(struct sip_msg* msg, pv_name_t *name,
 			//shm_free(name->u.isname.name.s.s);
 			name->u.isname.name.s.s = NULL;
 			name->u.isname.name.s.len = 0;
-			name->type = PV_NAME_PVAR;
 			name->u.dname = (void*)*stat;
+			name->type = PV_NAME_PVAR;
 		}
 	} else {
 		/* stat already found ! */
@@ -919,8 +919,8 @@ inline static void reset_stat_series_slot(struct stat_series *ss, union stat_ser
 			ss->cache.acc -= slot->acc;
 			break;
 		case STAT_ALG_PERC:
-			ss->cache.perc.true -= slot->perc.true;
-			ss->cache.perc.false -= slot->perc.false;
+			ss->cache.perc.t -= slot->perc.t;
+			ss->cache.perc.f -= slot->perc.f;
 			break;
 		default:
 			LM_ERR("unknown profile algorithm %d\n", ss->profile->algorithm);
@@ -984,9 +984,9 @@ static unsigned long get_stat_series(struct stat_series *ss)
 			ret = ss->cache.acc;
 			break;
 		case STAT_ALG_PERC:
-			total = ss->cache.perc.true + ss->cache.perc.false;
+			total = ss->cache.perc.t + ss->cache.perc.f;
 			if (total != 0)
-				ret = ss->cache.perc.true * ss->profile->factor / total;
+				ret = ss->cache.perc.t * ss->profile->factor / total;
 			break;
 		default:
 			LM_ERR("unknown profile algorithm %d\n", ss->profile->algorithm);
@@ -1002,7 +1002,17 @@ end:
 
 static struct stat_series *new_stat_series(struct stat_series_profile *profile, str *name)
 {
-	struct stat_series *ss = shm_malloc(sizeof *ss + name->len + 1 +
+	struct stat_series *ss;
+
+	/* we should first check whether there is an overlapping statistic with
+	 * this name, since we are not allowed to have that
+	 */
+	if (get_stat(name)) {
+		LM_DBG("%.*s stat already exists!\n", name->len, name->s);
+		return NULL;
+	}
+
+	ss = shm_malloc(sizeof *ss + name->len + 1 +
 			profile->slots * sizeof (*ss->slots));
 	if (!ss) {
 		LM_ERR("could not allocate new stat series!\n");
@@ -1062,11 +1072,11 @@ static int update_stat_series(struct stat_series *ss, int value)
 			break;
 		case STAT_ALG_PERC:
 			if (value > 0) {
-				s->perc.true += value;
-				ss->cache.perc.true += value;
+				s->perc.t += value;
+				ss->cache.perc.t += value;
 			} else {
-				s->perc.false -= value;
-				ss->cache.perc.false -= value;
+				s->perc.f -= value;
+				ss->cache.perc.f -= value;
 			}
 			break;
 		default:

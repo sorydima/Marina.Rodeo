@@ -8,7 +8,7 @@ Perl Virtual Database Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -17,14 +17,14 @@ Perl Virtual Database Module
    2. Developer Guide
 
         2.1. Introduction
-        2.2. Base class Marina.Rodeo::VDB
+        2.2. Base class OpenMarinkaRodeo::VDB
         2.3. Data types
 
-              2.3.1. Marina.Rodeo::VDB::Value
-              2.3.2. Marina.Rodeo::VDB::Pair
-              2.3.3. Marina.Rodeo::VDB::ReqCond
-              2.3.4. Marina.Rodeo::VDB::Column
-              2.3.5. Marina.Rodeo::VDB::Result
+              2.3.1. OpenMarinkaRodeo::VDB::Value
+              2.3.2. OpenMarinkaRodeo::VDB::Pair
+              2.3.3. OpenMarinkaRodeo::VDB::ReqCond
+              2.3.4. OpenMarinkaRodeo::VDB::Column
+              2.3.5. OpenMarinkaRodeo::VDB::Result
 
         2.4. Adapters
 
@@ -53,7 +53,7 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The Perl Virtual Database (VDB) provides a virtualization
-   framework for Marina.Rodeo's database access. It does not handle a
+   framework for OpenMarinkaRodeo's database access. It does not handle a
    particular database engine itself but lets the user relay
    database requests to arbitrary Perl functions.
 
@@ -61,23 +61,23 @@ Chapter 1. Admin Guide
    supply functionality dedicated to the client module. See below
    for options.
 
-   The module can be used in all current Marina.Rodeo modules that
+   The module can be used in all current OpenMarinkaRodeo modules that
    need database access. Relaying of insert, update, query and
    delete operations is supported.
 
    Modules can be configured to use the db_perlvdb module as
    database backend using the db_url_parameter:
-modparam("acc", "db_url", "perlvdb:Marina.Rodeo::VDB::Adapter::AccountingSIP
+modparam("acc", "db_url", "perlvdb:OpenMarinkaRodeo::VDB::Adapter::AccountingSIP
 trace")
 
    This configuration options tells acc module that it should use
    the db_perlvdb module which will in turn use the Perl class
-   Marina.Rodeo::VDB::Adapter::AccountingSIPtrace to relay the
+   OpenMarinkaRodeo::VDB::Adapter::AccountingSIPtrace to relay the
    database requests.
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * perl -- Perl module
@@ -85,7 +85,7 @@ trace")
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None (Besides the ones mentioned in the perl module
        documentation).
 
@@ -101,7 +101,7 @@ Chapter 2. Developer Guide
 
 2.1. Introduction
 
-   Marina.Rodeo uses a database API for requests of numerous different
+   OpenMarinkaRodeo uses a database API for requests of numerous different
    types of data. Four primary operations are supported:
      * query
      * insert
@@ -111,23 +111,23 @@ Chapter 2. Developer Guide
    This module relays these database requests to user implemented
    Perl functions.
 
-2.2. Base class Marina.Rodeo::VDB
+2.2. Base class OpenMarinkaRodeo::VDB
 
    A client module has to be configured to use the db_perlvdb
    module in conjunction with a Perl class to provide the
    functions. The configured class needs to inherit from the base
-   class Marina.Rodeo::VDB.
+   class OpenMarinkaRodeo::VDB.
 
    Derived classes have to implement the necessary functions
    "query", "insert", "update" and/or "delete". The client module
    specifies the necessary functions. To find out which functions
    are called from a module, its processes may be evaluated with
-   the Marina.Rodeo::VDB::Adapter::Describe class which will log
+   the OpenMarinkaRodeo::VDB::Adapter::Describe class which will log
    incoming requests (without actually providing any real
    functionality).
 
    While users can directly implement their desired functionality
-   in a class derived from Marina.Rodeo::VDB, it is advisable to split
+   in a class derived from OpenMarinkaRodeo::VDB, it is advisable to split
    the implementation into an Adapter that transforms the
    relational structured parameters into pure Perl function
    arguments, and add a virtual table (VTab) to provide the
@@ -136,44 +136,44 @@ Chapter 2. Developer Guide
 2.3. Data types
 
    Before introducing the higher level concepts of this module,
-   the used datatypes will briefly be explained. The Marina.Rodeo Perl
+   the used datatypes will briefly be explained. The OpenMarinkaRodeo Perl
    library includes some data types that have to be used in this
    module:
 
-2.3.1. Marina.Rodeo::VDB::Value
+2.3.1. OpenMarinkaRodeo::VDB::Value
 
    A value includes a data type flag and a value. Valid data types
    are DB_INT, DB_DOUBLE, DB_STRING, DB_STR, DB_DATETIME, DB_BLOB,
    DB_BITMAP. A new variable may be created with
-my $val = new Marina.Rodeo::VDB::Value(DB_STRING, "foobar");
+my $val = new OpenMarinkaRodeo::VDB::Value(DB_STRING, "foobar");
 
    Value objects contain the type() and data() methods to get or
    set the type and data attributes.
 
-2.3.2. Marina.Rodeo::VDB::Pair
+2.3.2. OpenMarinkaRodeo::VDB::Pair
 
    The Pair class is derived from the Value class and additionally
    contains a column name (key). A new variable may be created
    with
-my $pair = new Marina.Rodeo::VDB::Pair("foo", DB_STRING, "bar");
+my $pair = new OpenMarinkaRodeo::VDB::Pair("foo", DB_STRING, "bar");
 
    where foo is the key and bar is the value. Additonally to the
    methods of the Value class, it contains a key() method to get
    or set the key attribute.
 
-2.3.3. Marina.Rodeo::VDB::ReqCond
+2.3.3. OpenMarinkaRodeo::VDB::ReqCond
 
    The ReqCond class is used for select condition and is derived
    from the Pair class. It contains an addtional operator
    attribute. A new variable may be created with
-my $cond = new Marina.Rodeo::VDB::ReqCond("foo", ">", DB_INT, 5);
+my $cond = new OpenMarinkaRodeo::VDB::ReqCond("foo", ">", DB_INT, 5);
 
    where foo is the key, "greater" is the operator and 5 is the
    value to compare. Additonally to the methods of the Pair class,
    it contains an op() method to get or set the operator
    attribute.
 
-2.3.4. Marina.Rodeo::VDB::Column
+2.3.4. OpenMarinkaRodeo::VDB::Column
 
    This class represents a column definition or database schema.
    It contains an array for the column names and an array for the
@@ -181,12 +181,12 @@ my $cond = new Marina.Rodeo::VDB::ReqCond("foo", ">", DB_INT, 5);
    variable may be created with
 my @types = { DB_INT, DB_STRING };
 my @names = { "id", "vals" };
-my $cols = new Marina.Rodeo::VDB::Column(\@types, \@names);
+my $cols = new OpenMarinkaRodeo::VDB::Column(\@types, \@names);
 
    The class contains the methods type() and name() to get or set
    the type and name arrays.
 
-2.3.5. Marina.Rodeo::VDB::Result
+2.3.5. OpenMarinkaRodeo::VDB::Result
 
    The Result class represents a query result. It contains a
    schema (class Column) and an array of rows, where each row is
@@ -202,7 +202,7 @@ my $cols = new Marina.Rodeo::VDB::Column(\@types, \@names);
    adapter turns the ReqCond array into two separate scalars that
    are used as parameters for a VTab call.
 
-   Adapter classes have to inherit from the Marina.Rodeo::VDB base
+   Adapter classes have to inherit from the OpenMarinkaRodeo::VDB base
    class and may provide one or more functions with the names
    insert, update, replace, query and/or delete, depending on the
    module which is to be used with the adapter. While modules such
@@ -215,24 +215,24 @@ my $cols = new Marina.Rodeo::VDB::Column(\@types, \@names);
    types. The parameter and return types are listed in this
    section.
 
-   insert() is passed an array of Marina.Rodeo::VDB::Pair objects. It
+   insert() is passed an array of OpenMarinkaRodeo::VDB::Pair objects. It
    should return an integer value.
 
-   replace() is passed an array of Marina.Rodeo::VDB::Pair objects.
+   replace() is passed an array of OpenMarinkaRodeo::VDB::Pair objects.
    This function is currently not used by any publicly available
    modules. It should return an integer value.
 
-   delete() is passed an array of Marina.Rodeo::VDB::ReqCond objects.
+   delete() is passed an array of OpenMarinkaRodeo::VDB::ReqCond objects.
    It should return an integer value.
 
-   update() is passed an array of Marina.Rodeo::VDB::ReqCond objects
-   (which rows to update) and an array of Marina.Rodeo::VDB::Pair
+   update() is passed an array of OpenMarinkaRodeo::VDB::ReqCond objects
+   (which rows to update) and an array of OpenMarinkaRodeo::VDB::Pair
    objects (new data). It should return an integer value.
 
-   query() is passed an array of Marina.Rodeo::VDB::ReqCond objects
+   query() is passed an array of OpenMarinkaRodeo::VDB::ReqCond objects
    (which rows to select), an array of strings (which column names
    to return) and a single string by which column to sort. It
-   should return an object of type Marina.Rodeo::VDB::Result.
+   should return an object of type OpenMarinkaRodeo::VDB::Result.
 
 2.5. VTabs
 
@@ -273,9 +273,9 @@ Chapter 3. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 26 19 257 202
-   2. Bastian Friedrich 18 2 1820 18
-   3. Liviu Chircu (@liviuchircu) 13 11 25 55
-   4. Razvan Crainea (@razvancrainea) 10 8 26 13
+   2. Bastian Friedrich 19 2 1820 18
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 14 12 25 57
+   4. Razvan Crainea (@razvancrainea) 11 9 27 14
    5. Daniel-Constantin Mierla (@miconda) 9 7 27 25
    6. Maksym Sobolyev (@sobomax) 5 3 5 21
    7. Henning Westerholt (@henningw) 4 2 14 13
@@ -283,8 +283,8 @@ Chapter 3. Contributors
    9. Ancuta Onofrei 3 1 13 20
    10. Konstantin Bokarius 3 1 3 5
 
-   All remaining contributors: Julián Moreno Patiño, Peter
-   Lemenkov (@lemenkov), Edson Gellert Schubert.
+   All remaining contributors: Alexandra Titoc, Julián Moreno
+   Patiño, Peter Lemenkov (@lemenkov), Edson Gellert Schubert.
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -294,7 +294,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -306,19 +306,19 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Oct 2022 - Feb 2023
-   2.  Liviu Chircu (@liviuchircu)         Mar 2014 - May 2020
-   3.  Razvan Crainea (@razvancrainea)     Aug 2015 - Sep 2019
-   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2007 - Apr 2019
-   5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   7.  Julián Moreno Patiño                Feb 2016 - Feb 2016
-   8.  Daniel-Constantin Mierla (@miconda) Oct 2007 - Mar 2008
-   9.  Konstantin Bokarius                 Mar 2008 - Mar 2008
-   10. Edson Gellert Schubert              Feb 2008 - Feb 2008
+   1.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
+   3.  Razvan Crainea (@razvancrainea)     Aug 2015 - Aug 2023
+   4.  Maksym Sobolyev (@sobomax)          Oct 2022 - Feb 2023
+   5.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2007 - Apr 2019
+   6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
+   7.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
+   8.  Julián Moreno Patiño                Feb 2016 - Feb 2016
+   9.  Daniel-Constantin Mierla (@miconda) Oct 2007 - Mar 2008
+   10. Konstantin Bokarius                 Mar 2008 - Mar 2008
 
-   All remaining contributors: Henning Westerholt (@henningw),
-   Ancuta Onofrei, Bastian Friedrich.
+   All remaining contributors: Edson Gellert Schubert, Henning
+   Westerholt (@henningw), Ancuta Onofrei, Bastian Friedrich.
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -327,11 +327,11 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Peter Lemenkov (@lemenkov), Liviu Chircu
-   (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu),
+   Last edited by: Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
+   (@sorydima), Bogdan-Andrei Iancu (@bogdan-iancu),
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Bastian Friedrich.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
+   Copyright © 2007 Collax GmbH

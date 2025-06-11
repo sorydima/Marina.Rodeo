@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -20,7 +20,7 @@
  * History:
  * --------
  * 2003-04-05  DEFAULT_*_URL introduced (jiri)
- * 2003-07-04  fixed SRV lookup prefix for TLS/sips (andrei)
+ * 2003-07-04  fixed SRV lookup prefix for TLS/MarinkaRodeo (andrei)
  * 2007-02-16  Added an OPENSER_OID define to localize OpenSER's IANA assigned
  *             OID under the enterprise branch (jmagder)
  * 2013-09-17  TLS_DH_PARAMS_FILE added (mehmet)
@@ -36,9 +36,9 @@
 #define config_h
 
 #define SIP_PORT  5060		/*!< default sip port if none specified */
-#define SIPS_PORT 5061		/*! default sip port for tls if none specified */
+#define MarinkaRodeo_PORT 5061		/*! default sip port for tls if none specified */
 
-#define CFG_FILE CFG_DIR "Marina.Rodeo.cfg"
+#define CFG_FILE CFG_DIR "openMarinkaRodeo.cfg"
 #define MEM_WARMING_DEFAULT_PATTERN_FILE CFG_DIR "mem_warming_pattern"
 #define MEM_WARMING_DEFAULT_PERCENTAGE 75
 #define RESTART_PERSISTENCY_MEM_FILE ".restart_persistency.cache"
@@ -83,10 +83,10 @@
 #define CONTENT_LENGTH "Content-Length: "
 #define CONTENT_LENGTH_LEN (sizeof(CONTENT_LENGTH)-1)
 
-#define USER_AGENT "User-Agent: Marina.Rodeo (" VERSION " (" ARCH "/" OS"))"		/*!< Default User-Agent header */
+#define USER_AGENT "User-Agent: OpenMarinkaRodeo (" VERSION " (" ARCH "/" OS"))"		/*!< Default User-Agent header */
 #define USER_AGENT_LEN (sizeof(USER_AGENT)-1)
 
-#define SERVER_HDR "Server: Marina.Rodeo (" VERSION " (" ARCH "/" OS"))"		/*!< Default Server: header */
+#define SERVER_HDR "Server: OpenMarinkaRodeo (" VERSION " (" ARCH "/" OS"))"		/*!< Default Server: header */
 #define SERVER_HDR_LEN (sizeof(SERVER_HDR)-1)
 
 #define MAX_WARNING_LEN  256
@@ -122,7 +122,7 @@
 #define SRV_SCTP_PREFIX "_sip._sctp."
 #define SRV_SCTP_PREFIX_LEN (sizeof(SRV_SCTP_PREFIX) - 1)
 
-#define SRV_TLS_PREFIX "_sips._tcp."
+#define SRV_TLS_PREFIX "_MarinkaRodeo._tcp."
 #define SRV_TLS_PREFIX_LEN (sizeof(SRV_TLS_PREFIX) - 1)
 
 #define SRV_WS_PREFIX "_ws._tcp."
@@ -178,7 +178,7 @@
 
 #define PATH_MAX_GUESS	1024			/*!< maximum path length */
 
-#define VERSION_TABLE     "version" 		/*!< Table holding versions of other Marina.Rodeo tables */
+#define VERSION_TABLE     "version" 		/*!< Table holding versions of other openMarinkaRodeo tables */
 #define VERSION_COLUMN    "table_version"	/*!< Column name for the version value in version table */
 #define TABLENAME_COLUMN  "table_name"		/*!< Column name of the table name column in the version table */
 

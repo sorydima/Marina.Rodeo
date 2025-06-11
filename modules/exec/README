@@ -8,7 +8,7 @@ exec Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -56,9 +56,9 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The Exec module enables the execution of external commands from
-   the Marina.Rodeo script. Any valid shell commands are accepted. The
+   the OpenMarinkaRodeo script. Any valid shell commands are accepted. The
    final input string is evaluated and executed using the
-   "/bin/sh" symlink/binary. Marina.Rodeo may additionally pass a lot
+   "/bin/sh" symlink/binary. OpenMarinkaRodeo may additionally pass a lot
    more information about the request using environment variables:
      * SIP_HF_<hf_name> contains value of each header field in
        request. If a header field occurred multiple times, values
@@ -80,19 +80,19 @@ Chapter 1. Admin Guide
    NOTE: Any environment variables which are given to the exec
    module functions must be specified using the '$$' delimiter
    (e.g., $$SIP_OUSER), otherwise they will be evaluated as
-   Marina.Rodeo pseudo-variables, throwing scripting errors.
+   OpenMarinkaRodeo pseudo-variables, throwing scripting errors.
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other Marina.Rodeo modules.
+     * No dependencies on other OpenMarinkaRodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -122,9 +122,9 @@ modparam("exec", "setvars", 1)
    sent to all job pids once the "time_to_kill" expiration timeout
    hits. On a standard system, this should have no side-effects,
    as pids are monotonically increasing in a slow manner, and
-   Marina.Rodeo should run under the "Marina.Rodeo" user, thus rendering
+   OpenMarinkaRodeo should run under the "openMarinkaRodeo" user, thus rendering
    it unable to terminate non-child processes. If this is not the
-   case on your system, do not use the Marina.Rodeo "time_to_kill"
+   case on your system, do not use the OpenMarinkaRodeo "time_to_kill"
    feature -- rather implement it within your external app!
 
    Default value is 0 (disabled).
@@ -159,16 +159,16 @@ modparam("exec", "time_to_kill", 20)
      * envavp (var, optional) - optional AVP which holds the
        values for the environment variables to be passed for the
        command. The names of the environment variables will be
-       "OSIPS_EXEC_#", where "#" starts from 0. For example, if we
+       "OMarinkaRodeo_EXEC_#", where "#" starts from 0. For example, if we
        push two values (e.g. "b" and "a") into an AVP variable,
-       which acts like a stack, OSIPS_EXEC_0 will hold "a", while
-       OSIPS_EXEC_1 will hold "b".
+       which acts like a stack, OMarinkaRodeo_EXEC_0 will hold "a", while
+       OMarinkaRodeo_EXEC_1 will hold "b".
 
    NOTE: If expecting a multi-line formatted output, you should
    use $avp variables for the "stdout" and "stderr" parameters, to
    avoid only receiving the last lines of each stream.
 
-   WARNING: any Marina.Rodeo pseudo-vars which may contain special
+   WARNING: any OpenMarinkaRodeo pseudo-vars which may contain special
    bourne shell (sh/bash) characters should be placed inside
    quotes, e.g. exec("update-stats.sh '$(ct{re.subst,/'//g})'");
 
@@ -201,12 +201,12 @@ vp(env));
    Executes an external command. This function does exactly the
    same as exec() (in terms of input, output and processing), but
    in an asynchronous way. The script execution is suspended until
-   the external script provided all its output. Marina.Rodeo waits for
+   the external script provided all its output. OpenMarinkaRodeo waits for
    the external script to close its output stream, not necessarily
-   to terminate (so the script may still be running when Marina.Rodeo
+   to terminate (so the script may still be running when OpenMarinkaRodeo
    resumes the script execution on "seeing" EOF on the the output
    stream)
-   NOTE: if the stdout variable is missing, Marina.Rodeo will assume
+   NOTE: if the stdout variable is missing, OpenMarinkaRodeo will assume
    that the output of the external script is not needed and it
    will NOT WAIT at all for the script. So, if triggered via
    "launch()", there will be no asynchronous waiting, so no resume
@@ -218,7 +218,7 @@ vp(env));
 
    To read and understand more on the asynchronous functions, how
    to use them and what are their advantages, please refer to the
-   Marina.Rodeo online Manual.
+   OpenMarinkaRodeo online Manual.
 
    Example 1.4. async exec usage
 {
@@ -247,22 +247,22 @@ Chapter 2. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 44 29 651 534
-   2. Liviu Chircu (@liviuchircu) 39 22 344 825
-   3. Jiri Kuthan (@jiriatipteldotorg) 27 11 1579 152
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 40 23 344 827
+   3. Jiri Kuthan (@jiriatipteldotorg) 28 11 1579 152
    4. Daniel-Constantin Mierla (@miconda) 26 19 440 131
    5. Razvan Crainea (@razvancrainea) 20 16 320 59
    6. Jan Janak (@janakj) 16 10 463 111
-   7. Ionut Ionita (@ionutrazvanionita) 14 7 612 117
+   7. Ionut Ionita (@ionutrazvanionita) 15 7 612 117
    8. Andrei Pelinescu-Onciul 11 8 29 105
    9. Vlad Patrascu (@rvlad-patrascu) 8 2 46 297
    10. Henning Westerholt (@henningw) 4 2 8 8
 
    All remaining contributors: Walter Doekes (@wdoekes), Maksym
-   Sobolyev (@sobomax), Zero King (@l2dy), Anca Vamanu, Dan Pascu
-   (@danpascu), Elena-Ramona Modroiu, Konstantin Bokarius, Vlad
-   Paiu (@vladpaiu), Andreas Granig, Julián Moreno Patiño,
-   Octavian Cerna, Peter Lemenkov (@lemenkov), Edson Gellert
-   Schubert, Dror Wald.
+   Sobolyev (@sobomax), Zero King (@l2dy), Dror Wald, Anca Vamanu,
+   Dan Pascu (@danpascu), Elena-Ramona Modroiu, Konstantin
+   Bokarius, Vlad Paiu (@vladpaiu), Andreas Granig, Julián Moreno
+   Patiño, Octavian Cerna, Peter Lemenkov (@lemenkov), Edson
+   Gellert Schubert.
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -272,7 +272,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -284,8 +284,8 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Liviu Chircu (@liviuchircu)         Feb 2014 - Jul 2020
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Feb 2014 - May 2024
+   2.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
    3.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2004 - Apr 2020
    4.  Zero King (@l2dy)                   Mar 2020 - Mar 2020
    5.  Razvan Crainea (@razvancrainea)     Jun 2011 - Jan 2020
@@ -310,13 +310,13 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Liviu
-   Chircu (@liviuchircu), Peter Lemenkov (@lemenkov), Walter
+   Chircu (@sorydima), Peter Lemenkov (@lemenkov), Walter
    Doekes (@wdoekes), Ionut Ionita (@ionutrazvanionita), Razvan
    Crainea (@razvancrainea), Anca Vamanu, Dror Wald, Dan Pascu
    (@danpascu), Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert, Elena-Ramona Modroiu, Jan
    Janak (@janakj).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS
+   Copyright © 2003 FhG FOKUS

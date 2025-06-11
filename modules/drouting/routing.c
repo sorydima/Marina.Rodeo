@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2008 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2005-2008 Voice Sistem SRL
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of SIP Server (Marina.Rodeo).
+ * This file is part of Open SIP Server (OpenMarinkaRodeo).
  *
- * DROUTING Marina.Rodeo-module is free software; you can redistribute it and/or
+ * DROUTING OpenMarinkaRodeo-module is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * DROUTING Marina.Rodeo-module is distributed in the hope that it will be useful,
+ * DROUTING OpenMarinkaRodeo-module is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -82,7 +82,7 @@ err_exit:
 
 
 int parse_destination_list(rt_data_t* rd, char *dstlist, pgw_list_t** pgwl_ret,
-		unsigned short *len, int no_resize, osips_malloc_f mf)
+		unsigned short *len, int no_resize, oMarinkaRodeo_malloc_f mf)
 {
 #define PGWL_SIZE 32
 	pgw_list_t *pgwl=NULL, *p = NULL;
@@ -230,10 +230,46 @@ error:
 	return -1;
 }
 
+void hash_dst(pgw_t *pgw,MD5_CTX *hash_ctx) 
+{
+	if (hash_ctx == NULL)
+		return;
+
+	MD5Update(hash_ctx, pgw->id.s, pgw->id.len);
+	MD5Update(hash_ctx, (char *)&pgw->type, sizeof(pgw->type));
+	MD5Update(hash_ctx, pgw->ip_str.s, pgw->ip_str.len);
+	if (pgw->pri.s && pgw->pri.len)
+		MD5Update(hash_ctx, pgw->pri.s, pgw->pri.len);
+	MD5Update(hash_ctx, (char *)&pgw->strip, sizeof(pgw->strip));
+	if (pgw->attrs.s && pgw->attrs.len)
+		MD5Update(hash_ctx, pgw->attrs.s, pgw->attrs.len);
+}
+
+void hash_carrier(pcr_t *pcr,MD5_CTX *hash_ctx) 
+{
+	int i;
+
+	if (hash_ctx == NULL)
+		return;
+
+	MD5Update(hash_ctx, pcr->id.s, pcr->id.len);
+	MD5Update(hash_ctx, (char *)pcr->sort_alg, sizeof(pcr->sort_alg));
+	for (i=0;i<pcr->pgwa_len;i++) {
+		if (pcr->pgwl[i].is_carrier == 1)
+			hash_carrier(pcr->pgwl[i].dst.carrier,hash_ctx);
+		else
+			hash_dst(pcr->pgwl[i].dst.gw,hash_ctx);
+
+		MD5Update(hash_ctx, (char *)&pcr->pgwl[i].weight, sizeof(pcr->pgwl[i].weight));
+	}
+
+	if (pcr->attrs.s && pcr->attrs.len)
+		MD5Update(hash_ctx, pcr->attrs.s, pcr->attrs.len);
+}
 
 int add_carrier(char *id, int flags, char *sort_alg, char *gwlist, char *attrs,
 										int state, rt_data_t *rd,
-										osips_malloc_f mf, osips_free_f ff)
+										oMarinkaRodeo_malloc_f mf, oMarinkaRodeo_free_f ff, MD5_CTX *hash_ctx)
 {
 	pcr_t *cr;
 	unsigned int i;
@@ -293,6 +329,7 @@ int add_carrier(char *id, int flags, char *sort_alg, char *gwlist, char *attrs,
 	key.len = strlen(id);
 	map_put(rd->carriers_tree, key, cr);
 
+	hash_carrier(cr,hash_ctx);
 
 	return 0;
 error:
@@ -318,8 +355,8 @@ build_rt_info(
 	int qr_profile,
 	char* attrs,
 	rt_data_t* rd,
-	osips_malloc_f mf,
-	osips_free_f ff
+	oMarinkaRodeo_malloc_f mf,
+	oMarinkaRodeo_free_f ff
 	)
 {
 	int i;
@@ -423,8 +460,8 @@ int add_rt_info(
 	ptree_node_t *pn,
 	rt_info_t* r,
 	unsigned int rgid,
-	osips_malloc_f malloc_f,
-	osips_free_f free_f
+	oMarinkaRodeo_malloc_f malloc_f,
+	oMarinkaRodeo_free_f free_f
 	)
 {
 	rg_entry_t    *trg=NULL;
@@ -522,11 +559,12 @@ add_dst(
 	/* probe_mode */
 	int probing,
 	/* socket */
-	struct socket_info *sock,
+	const struct socket_info *sock,
 	/* state */
 	int state,
-	osips_malloc_f mf,
-	osips_free_f ff
+	oMarinkaRodeo_malloc_f mf,
+	oMarinkaRodeo_free_f ff,
+	MD5_CTX* hash_ctx
 	)
 {
 	static unsigned id_counter = 0;
@@ -559,11 +597,11 @@ add_dst(
 			goto err_exit;
 		}
 
-	/* check if GW address starts with 'sip' or 'sips' */
+	/* check if GW address starts with 'sip' or 'MarinkaRodeo' */
 	if (l_ip>5) {
 		if ( strncasecmp("sip:", ip, 4)==0)
 			sip_prefix = 4;
-		else if ( strncasecmp("sips:", ip, 5)==0)
+		else if ( strncasecmp("MarinkaRodeo:", ip, 5)==0)
 			sip_prefix = 5;
 		else sip_prefix = 0;
 	} else
@@ -659,7 +697,7 @@ add_dst(
 	pgw->type = type;
 
 	/* add address in the global list of destinations/GWs */
-	proxy = mk_proxy(&uri.host,uri.port_no,uri.proto,(uri.type==SIPS_URI_T));
+	proxy = mk_proxy(&uri.host,uri.port_no,uri.proto,(uri.type==MarinkaRodeo_URI_T));
 	if (proxy==NULL) {
 		if(dr_force_dns) {
 			LM_ERR("cannot resolve <%.*s>\n",
@@ -698,6 +736,8 @@ done:
 		LM_ERR("Duplicate gateway!\n");
 		return -1;
 	}
+
+	hash_dst(pgw,hash_ctx);
 
 	return 0;
 
@@ -754,7 +794,7 @@ void del_carriers_list(
 	void
 free_rt_data(
 		rt_data_t* rt_data,
-		osips_free_f free_f
+		oMarinkaRodeo_free_f free_f
 		)
 {
 	int j;

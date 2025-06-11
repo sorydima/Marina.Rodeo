@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2022 - Marina.Rodeo Solutions
+ * Copyright (C) 2022 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -106,7 +106,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,               /* load function */
-	0,          /* Marina.Rodeo module dependencies */
+	0,          /* OpenMarinkaRodeo module dependencies */
 	0,          /* exported functions */
 	0,          /* exported async functions */
 	params,     /* module parameters */
@@ -348,7 +348,7 @@ static inline int msrp_uri_cmp(struct msrp_url *a, struct msrp_url *b)
 
 
 static int run_msrp_socket_route(struct receive_info *rcv, char *d_schema_s,
-		str *d_host, struct socket_info **si)
+		str *d_host, const struct socket_info **si)
 {
 	pv_value_t pval;
 	struct sip_msg *dummy_msg;
@@ -404,7 +404,7 @@ int handle_msrp_request(struct msrp_msg *req, void *param)
 	int from_peer = 0;
 	struct msrp_url *my_url;
 	int report = 0;
-	struct socket_info *si;
+	const struct socket_info *si;
 
 	LM_DBG("Received MSRP request [%.*s]\n", req->fl.u.request.method.len,
 		req->fl.u.request.method.s);

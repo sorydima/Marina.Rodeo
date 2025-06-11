@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Marina.Rodeo Solutions
+ * Copyright (C) 2011 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -95,6 +95,7 @@ typedef struct rl_pipe {
 	time_t last_used;			/* timestamp when the pipe was last accessed */
 	time_t last_local_used;		/* timestamp when the pipe was last locally accessed */
 	rl_repl_counter_t *dsts;	/* counters per destination */
+	int repl_zero_cnt;			/* only broadcast a zero counter N times */
 	rl_window_t rwin;			/* window of requests */
 } rl_pipe_t;
 
@@ -139,6 +140,7 @@ int w_rl_check(struct sip_msg*, str *, int *, str *);
 int w_rl_dec(struct sip_msg*, str *);
 int w_rl_reset(struct sip_msg*, str *);
 int w_rl_set_count(str, int);
+int w_rl_values(struct sip_msg*, pv_spec_t *out, regex_t *regexp);
 int rl_stats(mi_item_t *, str *, str *, int);
 int rl_pipe_check(rl_pipe_t *);
 int rl_get_counter_value(str *);

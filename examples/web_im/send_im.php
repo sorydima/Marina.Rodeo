@@ -1,5 +1,4 @@
 <html>
-<!-- $Id$ -->
 <head>
 <title>
 Send IM Status
@@ -15,7 +14,7 @@ Send IM Status
 
 /* config values */
 $web_contact="sip:daemon@mydomain.net";
-$fifo="/tmp/Marina.Rodeo_fifo";
+$fifo="/tmp/openMarinkaRodeo_fifo";
 $signature="web_im_0.1.0";
 
 /* open reply fifo */

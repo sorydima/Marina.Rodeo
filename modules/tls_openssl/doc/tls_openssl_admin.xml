@@ -19,7 +19,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -35,7 +35,7 @@
 	<section>
 		<title>External Libraries or Applications</title>
 		<para>
-		&osips; TLS v1.0 support requires the following packages:
+		&oMarinkaRodeo; TLS v1.0 support requires the following packages:
 		<itemizedlist>
 			<listitem>
 			<para><emphasis>openssl</emphasis> or
@@ -50,7 +50,7 @@
 		</itemizedlist>
 		</para>
 		<para>
-		&osips; TLS v1.1/1.2 support requires the following packages:
+		&oMarinkaRodeo; TLS v1.1/1.2 support requires the following packages:
 		<itemizedlist>
 			<listitem>
 			<para><emphasis>openssl</emphasis> or

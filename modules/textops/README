@@ -11,7 +11,7 @@ textops Module
 
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Functions
@@ -67,7 +67,7 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The module implements text based operations over the SIP
-   message processed by Marina.Rodeo. SIP is a text based protocol and
+   message processed by OpenMarinkaRodeo. SIP is a text based protocol and
    the module provides a large set of very useful functions to
    manipulate the message at text level, e.g., regular expression
    search and replace, Perl-like substitutions, etc.
@@ -85,15 +85,15 @@ From: medabeda
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other Marina.Rodeo modules.
+     * No dependencies on other OpenMarinkaRodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Functions
@@ -174,7 +174,7 @@ search_append_body("[Oo]pen[Ss]er", " SIP Proxy");
 
    Example 1.5. replace usage
 ...
-replace("Marina.Rodeo", "Open SIP Server");
+replace("openMarinkaRodeo", "Open SIP Server");
 ...
 
 1.3.6.  replace_body(re, txt)
@@ -191,7 +191,7 @@ replace("Marina.Rodeo", "Open SIP Server");
 
    Example 1.6. replace_body usage
 ...
-replace_body("Marina.Rodeo", "Open SIP Server");
+replace_body("openMarinkaRodeo", "Open SIP Server");
 ...
 
 1.3.7.  replace_all(re, txt)
@@ -207,7 +207,7 @@ replace_body("Marina.Rodeo", "Open SIP Server");
 
    Example 1.7. replace_all usage
 ...
-replace_all("Marina.Rodeo", "Open SIP Server");
+replace_all("openMarinkaRodeo", "Open SIP Server");
 ...
 
 1.3.8.  replace_body_all(re, txt)
@@ -224,7 +224,7 @@ replace_all("Marina.Rodeo", "Open SIP Server");
 
    Example 1.8. replace_body_all usage
 ...
-replace_body_all("Marina.Rodeo", "Open SIP Server");
+replace_body_all("openMarinkaRodeo", "Open SIP Server");
 ...
 
 1.3.9.  replace_body_atonce(re, txt)
@@ -370,12 +370,12 @@ Chapter 2. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 55 43 440 475
    2. Daniel-Constantin Mierla (@miconda) 40 28 938 201
-   3. Razvan Crainea (@razvancrainea) 39 6 16 1952
+   3. Razvan Crainea (@razvancrainea) 40 6 16 1952
    4. Andrei Dragus 32 15 1540 196
    5. Andrei Pelinescu-Onciul 28 21 446 134
    6. Jiri Kuthan (@jiriatipteldotorg) 18 14 293 45
-   7. Jan Janak (@janakj) 12 6 496 27
-   8. Liviu Chircu (@liviuchircu) 11 9 32 58
+   7. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 12 10 32 60
+   8. Jan Janak (@janakj) 12 6 496 27
    9. Vlad Patrascu (@rvlad-patrascu) 10 5 129 147
    10. Juha Heinanen (@juha-h) 8 5 210 8
 
@@ -395,7 +395,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -407,9 +407,9 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Jul 2004 - Feb 2023
-   2.  Razvan Crainea (@razvancrainea)     Feb 2012 - Sep 2019
-   3.  Liviu Chircu (@liviuchircu)         Oct 2013 - Sep 2019
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Oct 2013 - May 2024
+   2.  Maksym Sobolyev (@sobomax)          Jul 2004 - Feb 2023
+   3.  Razvan Crainea (@razvancrainea)     Feb 2012 - Sep 2019
    4.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jul 2019
    5.  Bogdan-Andrei Iancu (@bogdan-iancu) Feb 2002 - Apr 2019
    6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
@@ -433,7 +433,7 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Vlad Patrascu
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Vlad Patrascu
    (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Razvan Crainea
    (@razvancrainea), Bogdan-Andrei Iancu (@bogdan-iancu), Ovidiu
    Sas (@ovidiusas), Andrei Dragus, Anca Vamanu, Andreas Granig,
@@ -443,6 +443,6 @@ Chapter 3. Documentation
    Sobolyev (@sobomax), Jiri Kuthan (@jiriatipteldotorg), Andrei
    Pelinescu-Onciul.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2003 FhG FOKUS
+   Copyright © 2003 FhG FOKUS

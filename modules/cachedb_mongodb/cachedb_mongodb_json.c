@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011-2017 Marina.Rodeo Project
+ * Copyright (C) 2011-2017 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -78,7 +78,11 @@ int json_to_bson_append_element(bson_t *doc, const char *k, struct json_object *
 	bson_t child;
 
 	if (!v) {
-		bson_append_null(doc, k, -1);
+		if (!bson_append_null(doc, k, -1)) {
+			LM_ERR("failed to append NULL doc\n");
+			return -1;
+		}
+
 		return 0;
 	}
 
@@ -191,7 +195,7 @@ void bson_to_json_generic(struct json_object *obj, bson_iter_t *it,
 					break;
 				case BSON_TYPE_INT64:
 					LM_DBG("Found key %s with type long\n", curr_key);
-					/* no intrinsic support in Marina.Rodeo for 64bit integers -
+					/* no intrinsic support in OpenMarinkaRodeo for 64bit integers -
 					 * converting to string */
 					s = int2str(bson_iter_int64(it), &len);
 					s[len]=0;
@@ -202,7 +206,7 @@ void bson_to_json_generic(struct json_object *obj, bson_iter_t *it,
 					}
 					break;
 				case BSON_TYPE_DOUBLE:
-					/* no intrinsic support in Marina.Rodeo for floating point numbers
+					/* no intrinsic support in OpenMarinkaRodeo for floating point numbers
 					 * converting to int */
 					LM_DBG("Found key %s with type double\n",curr_key);
 					if (type == BSON_TYPE_DOCUMENT)

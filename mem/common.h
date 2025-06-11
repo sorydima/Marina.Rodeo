@@ -1,16 +1,16 @@
 /*
  * shared code between all memory allocators
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2019 Marina.Rodeo Solutions
+ * Copyright (C) 2014-2019 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -23,30 +23,42 @@
 #ifndef mem_common_h
 #define mem_common_h
 
+#include "../lock_ops.h"
+
+#define TOTAL_F_PARALLEL_POOLS 32
+
 extern void *mem_block;
 extern void *shm_block;
 extern void *shm_dbg_block;
 extern void *rpm_block;
+extern void **shm_blocks;
+extern int init_done;
+extern gen_lock_t *hash_locks[TOTAL_F_PARALLEL_POOLS];
 
 #include "meminfo.h"
 
-#if !defined(F_MALLOC) && !defined(Q_MALLOC) && !defined(HP_MALLOC)
-#error "no memory allocator selected"
-/* if exactly an allocator was selected, let's inline it! */
-#elif ((!defined Q_MALLOC && !defined HP_MALLOC) || \
-	 (!defined F_MALLOC && !defined HP_MALLOC) || \
-	 (!defined F_MALLOC && !defined Q_MALLOC))
+#if !defined(F_MALLOC) && !defined(Q_MALLOC) && !defined(HP_MALLOC) && !defined(F_PARALLEL_MALLOC)
+#error "no memory allocator selected"b
+
+/* if exactly one allocator was selected, let's inline it! */
+#elif ((!defined(F_MALLOC) && !defined(Q_MALLOC) && !defined(HP_MALLOC)) || \
+    (!defined(F_MALLOC) && !defined(Q_MALLOC) && !defined(F_PARALLEL_MALLOC)) || \
+    (!defined(F_MALLOC) && !defined(HP_MALLOC) && !defined(F_PARALLEL_MALLOC)) || \
+    (!defined(Q_MALLOC) && !defined(HP_MALLOC) && !defined(F_PARALLEL_MALLOC)))
 #define INLINE_ALLOC
 #endif
 
-enum osips_mm {
+
+enum oMarinkaRodeo_mm {
 	MM_NONE,
 	MM_F_MALLOC,
 	MM_Q_MALLOC,
 	MM_HP_MALLOC,
+	MM_F_PARALLEL_MALLOC,
 	MM_F_MALLOC_DBG,
 	MM_Q_MALLOC_DBG,
 	MM_HP_MALLOC_DBG,
+	MM_F_PARALLEL_MALLOC_DBG,
 };
 
 #if defined F_MALLOC
@@ -61,43 +73,49 @@ enum osips_mm {
 #include "hp_malloc.h"
 #endif
 
+#if defined F_PARALLEL_MALLOC
+#include "f_parallel_malloc.h"
+#endif
+
 extern int mem_warming_enabled;
 extern char *mem_warming_pattern_file;
 extern int mem_warming_percentage;
-extern enum osips_mm mem_allocator;
+extern enum oMarinkaRodeo_mm mem_allocator;
 
 /* returns -1 if @mm_name is unrecognized */
 int set_global_mm(const char *mm_name);
 
 /* returns -1 if @mm_name is unrecognized */
-int parse_mm(const char *mm_name, enum osips_mm *mm);
+int parse_mm(const char *mm_name, enum oMarinkaRodeo_mm *mm);
 
 #define mm_str(mm) \
 	((mm) == MM_NONE ? "NONE" : \
 	 (mm) == MM_F_MALLOC ? "F_MALLOC" : \
 	 (mm) == MM_Q_MALLOC ? "Q_MALLOC" : \
 	 (mm) == MM_HP_MALLOC ? "HP_MALLOC" : \
+	 (mm) == MM_F_PARALLEL_MALLOC ? "F_PARALLEL_MALLOC" : \
 	 (mm) == MM_F_MALLOC_DBG ? "F_MALLOC_DBG" : \
 	 (mm) == MM_Q_MALLOC_DBG ? "Q_MALLOC_DBG" : \
+	 (mm) == MM_F_PARALLEL_MALLOC_DBG ? "F_PARALLEL_MALLOC_DBG" : \
 	 (mm) == MM_HP_MALLOC_DBG ? "HP_MALLOC_DBG" : "unknown")
 
 #ifdef DBG_MALLOC
-typedef void *(*osips_block_malloc_f) (void *block, unsigned long size,
+typedef void *(*oMarinkaRodeo_block_malloc_f) (void *block, unsigned long size,
                       const char *file, const char *func, unsigned int line);
-typedef void *(*osips_block_realloc_f) (void *block, void *ptr, unsigned long size,
+typedef void *(*oMarinkaRodeo_block_realloc_f) (void *block, void *ptr, unsigned long size,
                       const char *file, const char *func, unsigned int line);
-typedef void (*osips_block_free_f) (void *block, void *ptr,
+typedef void (*oMarinkaRodeo_block_free_f) (void *block, void *ptr,
                       const char *file, const char *func, unsigned int line);
 #else
-typedef void *(*osips_block_malloc_f) (void *block, unsigned long size);
-typedef void *(*osips_block_realloc_f) (void *block, void *ptr, unsigned long size);
-typedef void (*osips_block_free_f) (void *block, void *ptr);
+typedef void *(*oMarinkaRodeo_block_malloc_f) (void *block, unsigned long size);
+typedef void *(*oMarinkaRodeo_block_realloc_f) (void *block, void *ptr, unsigned long size);
+typedef void (*oMarinkaRodeo_block_free_f) (void *block, void *ptr);
 #endif
 
-typedef void (*osips_mem_info_f) (void *block, struct mem_info *i);
-typedef void (*osips_mem_status_f) (void *block);
-typedef unsigned long (*osips_get_mmstat_f) (void *block);
-typedef void (*osips_shm_stats_init_f) (void *block, int core_index);
+typedef void (*oMarinkaRodeo_mem_info_f) (void *block, struct mem_info *i);
+typedef void (*oMarinkaRodeo_mem_status_f) (void *block);
+typedef unsigned long (*oMarinkaRodeo_get_mmstat_f) (void *block);
+typedef void (*oMarinkaRodeo_shm_stats_init_f) (void *block, int core_index);
 
 #define oom_errorf \
 	"not enough free %s memory (%ld bytes left, need %lu), " \

@@ -1,16 +1,16 @@
 /*
  * SNMPStats Module
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 SOMA Networks, INC.
+ * Copyright (C) 2006 SOMA Networks, INC.
  * Written by: Jeffrey Magder (jmagder@somanetworks.com)
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify it
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful, but
+ * openMarinkaRodeo is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
@@ -65,25 +65,25 @@ void init_openserSIPCommonObjects(void)
 	static oid openserSIPProtocolVersion_oid[] =
 		{ OPENSER_OID,3,1,1,1,1,1 };
 
-	static oid openserSIPServiceStartTime_oid[] =
+	static oid openserMarinkaRodeoerviceStartTime_oid[] =
 		{ OPENSER_OID,3,1,1,1,1,2 };
 
 	static oid openserSIPEntityType_oid[] =
 		{ OPENSER_OID,3,1,1,1,1,4 };
 
-	static oid openserSIPSummaryInRequests_oid[] =
+	static oid openserMarinkaRodeoummaryInRequests_oid[] =
 		{ OPENSER_OID,3,1,1,1,3,1 };
 
-	static oid openserSIPSummaryOutRequests_oid[] =
+	static oid openserMarinkaRodeoummaryOutRequests_oid[] =
 		{ OPENSER_OID,3,1,1,1,3,2 };
 
-	static oid openserSIPSummaryInResponses_oid[] =
+	static oid openserMarinkaRodeoummaryInResponses_oid[] =
 		{ OPENSER_OID,3,1,1,1,3,3 };
 
-	static oid openserSIPSummaryOutResponses_oid[] =
+	static oid openserMarinkaRodeoummaryOutResponses_oid[] =
 		{ OPENSER_OID,3,1,1,1,3,4 };
 
-	static oid openserSIPSummaryTotalTransactions_oid[] =
+	static oid openserMarinkaRodeoummaryTotalTransactions_oid[] =
 		{ OPENSER_OID,3,1,1,1,3,5 };
 
 	static oid openserSIPCurrentTransactions_oid[] =
@@ -110,10 +110,10 @@ void init_openserSIPCommonObjects(void)
 
 	netsnmp_register_scalar(
 		netsnmp_create_handler_registration(
-			"openserSIPServiceStartTime",
-			handle_openserSIPServiceStartTime,
-			openserSIPServiceStartTime_oid,
-			OID_LENGTH(openserSIPServiceStartTime_oid),
+			"openserMarinkaRodeoerviceStartTime",
+			handle_openserMarinkaRodeoerviceStartTime,
+			openserMarinkaRodeoerviceStartTime_oid,
+			OID_LENGTH(openserMarinkaRodeoerviceStartTime_oid),
 			HANDLER_CAN_RONLY));
 
 	netsnmp_register_scalar(
@@ -126,42 +126,42 @@ void init_openserSIPCommonObjects(void)
 
 	netsnmp_register_scalar(
 		netsnmp_create_handler_registration(
-			"openserSIPSummaryInRequests",
-			handle_openserSIPSummaryInRequests,
-			openserSIPSummaryInRequests_oid,
-			OID_LENGTH(openserSIPSummaryInRequests_oid),
+			"openserMarinkaRodeoummaryInRequests",
+			handle_openserMarinkaRodeoummaryInRequests,
+			openserMarinkaRodeoummaryInRequests_oid,
+			OID_LENGTH(openserMarinkaRodeoummaryInRequests_oid),
 			HANDLER_CAN_RONLY));
 
 	netsnmp_register_scalar(
 		netsnmp_create_handler_registration(
-			"openserSIPSummaryOutRequests",
-			handle_openserSIPSummaryOutRequests,
-			openserSIPSummaryOutRequests_oid,
-			OID_LENGTH(openserSIPSummaryOutRequests_oid),
+			"openserMarinkaRodeoummaryOutRequests",
+			handle_openserMarinkaRodeoummaryOutRequests,
+			openserMarinkaRodeoummaryOutRequests_oid,
+			OID_LENGTH(openserMarinkaRodeoummaryOutRequests_oid),
 			HANDLER_CAN_RONLY));
 
 	netsnmp_register_scalar(
 		netsnmp_create_handler_registration(
-			"openserSIPSummaryInResponses",
-			handle_openserSIPSummaryInResponses,
-			openserSIPSummaryInResponses_oid,
-			OID_LENGTH(openserSIPSummaryInResponses_oid),
+			"openserMarinkaRodeoummaryInResponses",
+			handle_openserMarinkaRodeoummaryInResponses,
+			openserMarinkaRodeoummaryInResponses_oid,
+			OID_LENGTH(openserMarinkaRodeoummaryInResponses_oid),
 			HANDLER_CAN_RONLY));
 
 	netsnmp_register_scalar(
 		netsnmp_create_handler_registration(
-			"openserSIPSummaryOutResponses",
-			handle_openserSIPSummaryOutResponses,
-			openserSIPSummaryOutResponses_oid,
-			OID_LENGTH(openserSIPSummaryOutResponses_oid),
+			"openserMarinkaRodeoummaryOutResponses",
+			handle_openserMarinkaRodeoummaryOutResponses,
+			openserMarinkaRodeoummaryOutResponses_oid,
+			OID_LENGTH(openserMarinkaRodeoummaryOutResponses_oid),
 			HANDLER_CAN_RONLY));
 
 	netsnmp_register_scalar(
 		netsnmp_create_handler_registration(
-			"openserSIPSummaryTotalTransactions",
-			handle_openserSIPSummaryTotalTransactions,
-			openserSIPSummaryTotalTransactions_oid,
-			OID_LENGTH(openserSIPSummaryTotalTransactions_oid),
+			"openserMarinkaRodeoummaryTotalTransactions",
+			handle_openserMarinkaRodeoummaryTotalTransactions,
+			openserMarinkaRodeoummaryTotalTransactions_oid,
+			OID_LENGTH(openserMarinkaRodeoummaryTotalTransactions_oid),
 			HANDLER_CAN_RONLY));
 
 	netsnmp_register_scalar(
@@ -213,11 +213,11 @@ int handle_openserSIPProtocolVersion(netsnmp_mib_handler *handler,
 }
 
 /*
- * The scalar represents what sysUpTime was when Marina.Rodeo first started.  This
+ * The scalar represents what sysUpTime was when OpenMarinkaRodeo first started.  This
  * data was stored in a file when SNMPStats first started up, as a result of a
  * call to spawn_sysUpTime_child()
  */
-int handle_openserSIPServiceStartTime(netsnmp_mib_handler *handler,
+int handle_openserMarinkaRodeoerviceStartTime(netsnmp_mib_handler *handler,
 		netsnmp_handler_registration *reginfo,
 		netsnmp_agent_request_info   *reqinfo,
 		netsnmp_request_info         *requests)
@@ -281,7 +281,7 @@ int handle_openserSIPEntityType(netsnmp_mib_handler *handler,
 }
 
 
-int handle_openserSIPSummaryInRequests(netsnmp_mib_handler *handler,
+int handle_openserMarinkaRodeoummaryInRequests(netsnmp_mib_handler *handler,
 		netsnmp_handler_registration *reginfo,
 		netsnmp_agent_request_info   *reqinfo,
 		netsnmp_request_info         *requests)
@@ -297,7 +297,7 @@ int handle_openserSIPSummaryInRequests(netsnmp_mib_handler *handler,
 	return SNMP_ERR_GENERR;
 }
 
-int handle_openserSIPSummaryOutRequests(netsnmp_mib_handler *handler,
+int handle_openserMarinkaRodeoummaryOutRequests(netsnmp_mib_handler *handler,
 		netsnmp_handler_registration *reginfo,
 		netsnmp_agent_request_info   *reqinfo,
 		netsnmp_request_info         *requests)
@@ -313,7 +313,7 @@ int handle_openserSIPSummaryOutRequests(netsnmp_mib_handler *handler,
 	return SNMP_ERR_GENERR;
 }
 
-int handle_openserSIPSummaryInResponses(netsnmp_mib_handler *handler,
+int handle_openserMarinkaRodeoummaryInResponses(netsnmp_mib_handler *handler,
 		netsnmp_handler_registration *reginfo,
 		netsnmp_agent_request_info   *reqinfo,
 		netsnmp_request_info         *requests)
@@ -329,7 +329,7 @@ int handle_openserSIPSummaryInResponses(netsnmp_mib_handler *handler,
 	return SNMP_ERR_GENERR;
 }
 
-int handle_openserSIPSummaryOutResponses(netsnmp_mib_handler *handler,
+int handle_openserMarinkaRodeoummaryOutResponses(netsnmp_mib_handler *handler,
 		netsnmp_handler_registration *reginfo,
 		netsnmp_agent_request_info   *reqinfo,
 		netsnmp_request_info         *requests)
@@ -359,7 +359,7 @@ int handle_openserSIPSummaryOutResponses(netsnmp_mib_handler *handler,
 	return SNMP_ERR_GENERR;
 }
 
-int handle_openserSIPSummaryTotalTransactions(netsnmp_mib_handler *handler,
+int handle_openserMarinkaRodeoummaryTotalTransactions(netsnmp_mib_handler *handler,
 		netsnmp_handler_registration *reginfo,
 		netsnmp_agent_request_info   *reqinfo,
 		netsnmp_request_info         *requests)

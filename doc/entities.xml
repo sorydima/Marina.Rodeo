@@ -1,49 +1,47 @@
-<!-- $Id$ -->
-
 <!-- Entities often used in the documentation -->
 
 <!ENTITY fhg "FhG FOKUS">
 <!ENTITY vsname "Voice Sistem SRL">
 <!ENTITY voicesystem "Voice Sistem SRL">
 
-<!ENTITY osips "Marina.Rodeo">
-<!ENTITY osipsproj "Marina.Rodeo Project">
-<!ENTITY osipsname "Open SIP Server">
+<!ENTITY oMarinkaRodeo "OpenMarinkaRodeo">
+<!ENTITY oMarinkaRodeoproj "OpenMarinkaRodeo Project">
+<!ENTITY oMarinkaRodeoname "Open SIP Server">
 
-<!ENTITY osipssolname "Marina.Rodeo Solutions">
-<!ENTITY osipssol "<ulink url='http://www.marina.rodeo/'>www.marina.rodeo</ulink>">
-<!ENTITY OSS "<ulink url='http://marina.rodeo'>Marina.Rodeo Solutions</ulink>">
+<!ENTITY oMarinkaRodeosolname "OpenMarinkaRodeo Solutions">
+<!ENTITY oMarinkaRodeosol "<ulink url='http://www.openMarinkaRodeo-solutions.com/'>www.openMarinkaRodeo-solutions.com</ulink>">
+<!ENTITY OSS "<ulink url='http://openMarinkaRodeo-solutions.com'>OpenMarinkaRodeo Solutions</ulink>">
 
-<!ENTITY osipshome "https://marina.rodeo/">
-<!ENTITY osipsbugs "https://github.com/sorydima/Marina.Rodeo/issues">
-<!ENTITY osipshelp "http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users">
-<!ENTITY osipsusers "http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users">
-<!ENTITY osipsdev "http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel">
-<!ENTITY osipsdbdocs "https://Marina.Rodeo.org/docs/db/db-schema-devel.html">
+<!ENTITY oMarinkaRodeohome "https://openMarinkaRodeo.org/">
+<!ENTITY oMarinkaRodeobugs "https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues">
+<!ENTITY oMarinkaRodeohelp "http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users">
+<!ENTITY oMarinkaRodeousers "http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users">
+<!ENTITY oMarinkaRodeodev "http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/devel">
+<!ENTITY oMarinkaRodeodbdocs "https://openMarinkaRodeo.org/docs/db/db-schema-devel.html">
 
-<!ENTITY osipshomelink "<ulink url='&osipshome;'>&osipshome;</ulink>">
-<!ENTITY osipsbugslink "<ulink url='&osipsbugs;'>&osipsbugs;</ulink>">
-<!ENTITY osipshelplink "<ulink url='&osipshelp;'>&osipshelp;</ulink>">
-<!ENTITY osipsuserslink "<ulink url='&osipsusers;'>&osipsusers;</ulink>">
-<!ENTITY osipsdevlink "<ulink url='&osipsdev;'>&osipsdev;</ulink>">
-<!ENTITY osipsdbdocslink "<ulink url='&osipsdbdocs;'>&osipsdbdocs;</ulink>">
+<!ENTITY oMarinkaRodeohomelink "<ulink url='&oMarinkaRodeohome;'>&oMarinkaRodeohome;</ulink>">
+<!ENTITY oMarinkaRodeobugslink "<ulink url='&oMarinkaRodeobugs;'>&oMarinkaRodeobugs;</ulink>">
+<!ENTITY oMarinkaRodeohelplink "<ulink url='&oMarinkaRodeohelp;'>&oMarinkaRodeohelp;</ulink>">
+<!ENTITY oMarinkaRodeouserslink "<ulink url='&oMarinkaRodeousers;'>&oMarinkaRodeousers;</ulink>">
+<!ENTITY oMarinkaRodeodevlink "<ulink url='&oMarinkaRodeodev;'>&oMarinkaRodeodev;</ulink>">
+<!ENTITY oMarinkaRodeodbdocslink "<ulink url='&oMarinkaRodeodbdocs;'>&oMarinkaRodeodbdocs;</ulink>">
 
-<!ENTITY osipshelpmail "<email>support@rechain.email</email>">
-<!ENTITY osipsusersmail "<email>pr@rechain.email</email>">
-<!ENTITY osipsdevmail "<email>sip@rechain.email</email>">
+<!ENTITY oMarinkaRodeohelpmail "<email>users@lists.openMarinkaRodeo.org</email>">
+<!ENTITY oMarinkaRodeousersmail "<email>users@lists.openMarinkaRodeo.org</email>">
+<!ENTITY oMarinkaRodeodevmail "<email>devel@lists.openMarinkaRodeo.org</email>">
 
 <!ENTITY adminguide "Admin Guide">
 <!ENTITY develguide "Developer Guide">
 <!ENTITY faqguide "Frequently Asked Questions">
 <!ENTITY contributors "Contributors">
 
-<!ENTITY defaultdb "mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo">
-<!ENTITY defaultrodb "mysql://Marina.Rodeoro:Marina.Rodeoro@localhost/Marina.Rodeo">
+<!ENTITY defaultdb "mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo">
+<!ENTITY defaultrodb "mysql://openMarinkaRodeoro:openMarinkaRodeoro@localhost/openMarinkaRodeo">
 <!ENTITY exampledb "dbdriver://username:password@dbhost/dbname">
-<!ENTITY examplecdb "mongodb://10.0.0.4:27017/Marina.RodeoDB.userlocation">
+<!ENTITY examplecdb "mongodb://10.0.0.4:27017/openMarinkaRodeoDB.userlocation">
 
-<!ENTITY docCopyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s '<para><emphasis>Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:</emphasis></para>'>
-<!ENTITY Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 "Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 ©">
+<!ENTITY docCopyrights '<para><emphasis>Documentation Copyrights:</emphasis></para>'>
+<!ENTITY copyright "Copyright ©">
 
 <!-- Often used acronyms -->
 

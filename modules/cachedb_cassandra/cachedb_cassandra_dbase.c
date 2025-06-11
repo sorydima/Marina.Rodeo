@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2018 Marina.Rodeo Solutions
+ * Copyright (C) 2018 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -25,7 +25,7 @@
 #include <cassandra.h>
 #include "cachedb_cassandra.h"
 #include "cachedb_cassandra_dbase.h"
-#include "../../lib/osips_malloc.h"
+#include "../../lib/oMarinkaRodeo_malloc.h"
 
 CassConsistency rd_consistency = CASS_CONSISTENCY_UNKNOWN;
 CassConsistency wr_consistency = CASS_CONSISTENCY_UNKNOWN;
@@ -138,9 +138,12 @@ int cassandra_reopen(cassandra_con *cass_con)
 	return 0;
 }
 
-int cassandra_new_connection(cassandra_con *con, char *host, int port)
+int cassandra_new_connection(cassandra_con *con, char *host, int port, char *username, char *password)
 {
 	con->cluster = cass_cluster_new();
+	if (username && password) {
+	  cass_cluster_set_credentials(con->cluster, username, password);
+	}
 	if (!con->cluster) {
 		LM_ERR("Failed to create Cassandra Cluster object\n");
 		return -1;
@@ -256,7 +259,7 @@ void *cassandra_init_connection(struct cachedb_id *id)
 	con->table = table;
 	con->cnt_table = cnt_table;
 
-	if (cassandra_new_connection(con, id->host, id->port) < 0) {
+	if (cassandra_new_connection(con, id->host, id->port, id->username, id->password) < 0) {
 		LM_ERR("failed to create new connection to Cassandra\n");
 		pkg_free(con);
 		return NULL;
@@ -1464,7 +1467,7 @@ int cass_result_to_cdb_res(const CassResult *cass_result, cdb_res_t *cdb_res,
 			}
 			if (append_cass_val_to_dict(cass_val, &cdb_row->dict, &cdb_key, 0) < 0) {
 				LM_ERR("Failed to add column to cdb result\n");
-				cdb_free_entries(&cdb_row->dict, osips_pkg_free);
+				cdb_free_entries(&cdb_row->dict, oMarinkaRodeo_pkg_free);
 				goto error;
 			}
 		}

@@ -7,7 +7,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para> 
-	The modules is an XCAP client for Marina.Rodeo that can be used by other modules.
+	The modules is an XCAP client for OpenMarinkaRodeo that can be used by other modules.
 	It fetches XCAP elements, either documents or part of them, by sending 
 	HTTP GET requests. It also offers support for conditional queries.
 	It uses libcurl library as a client-side HTTP transfer library.
@@ -37,7 +37,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -54,7 +54,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -79,7 +79,7 @@
 		A flag to disable periodical query as an update method for
 		the documents the module is responsible for. It could be
 		disabled when the xcap server is capable to send the exported
-		MI command when a change occurs or when another module in &osips;
+		MI command when a change occurs or when another module in &oMarinkaRodeo;
 		handles updates.
 		</para>
 		<para>
@@ -158,7 +158,7 @@ modparam("xcap_client", "query_period", 50)
 		</para>
         <programlisting  format="linespecific">
 ...
-Marina.Rodeo-cli -x mi refreshXcapDoc /xcap-root/resource-lists/users/eyebeam/buddies-resource-list.xml 8000
+openMarinkaRodeo-cli -x mi refreshXcapDoc /xcap-root/resource-lists/users/eyebeam/buddies-resource-list.xml 8000
 ...
 		</programlisting>
 	</section>

@@ -186,7 +186,7 @@
 	<section  id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section id="sec-module-dependencies">
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -219,7 +219,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -507,6 +507,9 @@ modparam("mid_registrar", "received_param", "rcv")
 		<programlisting format="linespecific">
 # NB: AVPs are cleared with every new SIP request
 modparam("mid_registrar", "extra_contact_params_avp", "$avp(extra_ct_params)")
+
+# setting the AVP during SIP message processing
+$avp(extra_ct_params) = ";transport=tls";
 </programlisting>
 		</example>
 	</section>
@@ -609,7 +612,7 @@ modparam("mid_registrar", "max_expires", 7200)
 		<title><varname>default_q</varname> (integer)</title>
 		<para>
 		Sets the default <emphasis>"q"</emphasis> value for new contacts.
-		Because &osips; does not support floating point module parameters,
+		Because &oMarinkaRodeo; does not support floating point module parameters,
 		the supplied <emphasis>"q"</emphasis> value must be multiplied by 1000.
 		For example, if you want
 		<emphasis><xref linkend="param_default_q"/></emphasis>
@@ -704,7 +707,7 @@ modparam("mid_registrar", "case_sensitive", 0)
 		situations. It could, for example, happen when the
 		<emphasis><xref linkend="param_max_contacts"/></emphasis> parameter
 		is set and the processing of REGISTER request would exceed the limit.
-		In this case, Marina.Rodeo would respond with "503 Service Unavailable".
+		In this case, OpenMarinkaRodeo would respond with "503 Service Unavailable".
 		</para>
 		<para>
 		If you want to add the Retry-After header field in 5xx replies, set
@@ -806,7 +809,7 @@ modparam("mid_registrar", "gruu_secret", "my_secret")
 						<listitem>
 							<para>
 								replace the "host:port" part of all Contact URIs of the
-								incoming REGISTER request with an Marina.Rodeo listening interface
+								incoming REGISTER request with an OpenMarinkaRodeo listening interface
 							</para>
 						</listitem>
 						<listitem>
@@ -856,8 +859,8 @@ modparam("mid_registrar", "gruu_secret", "my_secret")
 		</listitem>
 		<listitem>
 			<para>
-			<emphasis>flags</emphasis> (string, optional) - string of
-			the following flags:
+			<emphasis>flags</emphasis> (string, optional) - string composed of
+				one or more of the following flags, comma-separated:
 			</para>
 			<itemizedlist>
 				&save_common_flags;

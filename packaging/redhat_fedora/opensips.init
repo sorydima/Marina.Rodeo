@@ -1,27 +1,27 @@
 #!/bin/bash
 #
-# Startup script for Marina.Rodeo
+# Startup script for OpenMarinkaRodeo
 #
 # chkconfig: - 85 15
-# description: Marina.Rodeo is a fast SIP Server.
+# description: OpenMarinkaRodeo is a fast SIP Server.
 #
-# processname: Marina.Rodeo
-# pidfile: /run/Marina.Rodeo.pid
-# config: /etc/Marina.Rodeo/Marina.Rodeo.cfg
+# processname: openMarinkaRodeo
+# pidfile: /run/openMarinkaRodeo.pid
+# config: /etc/openMarinkaRodeo/openMarinkaRodeo.cfg
 #
 ### BEGIN INIT INFO
-# Provides: Marina.Rodeo
+# Provides: openMarinkaRodeo
 # Required-Start: $local_fs $network $named
 # Should-Start: mysqld postgresql
-# Short-Description: start, stop Marina.Rodeo
-# Description: Marina.Rodeo is a very fast and flexible SIP (RFC3261) server.
+# Short-Description: start, stop OpenMarinkaRodeo
+# Description: OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261) server.
 ### END INIT INFO
 
 # Source function library.
 . /etc/rc.d/init.d/functions
 
-prog=Marina.Rodeo
-Marina.Rodeo=/usr/sbin/$prog
+prog=openMarinkaRodeo
+openMarinkaRodeo=/usr/sbin/$prog
 cfgdir="/etc/$prog"
 pidfile="/run/$prog.pid"
 lockfile="/var/lock/subsys/$prog"
@@ -38,7 +38,7 @@ RETVAL=0
 start() {
 	echo -n $"Starting $prog: "
 
-	# check whether Marina.Rodeo was already started
+	# check whether OpenMarinkaRodeo was already started
 	if status -p $pidfile $prog > /dev/null 2>&1 ; then
 		echo -n "already running" && warning && echo
 		return 0
@@ -69,7 +69,7 @@ start() {
 
 	# there is something at end of this output which is needed to
 	# report proper [ OK ] status in Fedora scripts
-	daemon $Marina.Rodeo -u $prog -g $prog -P $pidfile -f $configfile -m $S_MEMORY -M $P_MEMORY $OPTIONS 2>/dev/null | tail -1
+	daemon $openMarinkaRodeo -u $prog -g $prog -P $pidfile -f $configfile -m $S_MEMORY -M $P_MEMORY $OPTIONS 2>/dev/null | tail -1
 	RETVAL=$?
 	echo
 	[ $RETVAL = 0 ] && touch $lockfile
@@ -78,7 +78,7 @@ start() {
 
 stop() {
 	echo -n $"Stopping $prog: "
-	# check whether Marina.Rodeo is running
+	# check whether OpenMarinkaRodeo is running
 	if ! status -p $pidfile $prog > /dev/null 2>&1 ; then
 		echo -n "not running" && warning && echo
 		return 0

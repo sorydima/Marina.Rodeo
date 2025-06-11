@@ -1,16 +1,16 @@
 /*
  * call center module - call queuing and distributio
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2020 Marina.Rodeo Solutions
+ * Copyright (C) 2014-2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -633,7 +633,7 @@ int add_cc_agent( struct cc_data *data, str *id, struct media_info *media,
 			goto error;
 		}
 #endif
-		if (wrapup_end_time && (wrapup_end_time > (int)time(NULL))) {
+		if (wrapup_end_time && (wrapup_end_time > (int)(unsigned long)time(NULL))) {
 			agent->state = CC_AGENT_WRAPUP;
 			agent->wrapup_end_time = wrapup_end_time - startup_time;
 		}
@@ -1218,7 +1218,7 @@ void agent_raise_event(struct cc_agent *agent, struct cc_call *call)
 	}
 
 	if (agent->state==CC_AGENT_WRAPUP) {
-		ts = (int)time(NULL)+agent->wrapup_end_time-get_ticks();
+		ts = (int)(unsigned long)time(NULL)+agent->wrapup_end_time-get_ticks();
 		if (evi_param_add_int(list, &wrapup_ends_str, &ts) < 0) {
 			LM_ERR("cannot add wrapup time\n");
 			goto error;
@@ -1240,7 +1240,7 @@ void agent_raise_event(struct cc_agent *agent, struct cc_call *call)
 			goto error;
 		}
 		if ( agent->wrapup_end_time>get_ticks() ) {
-			ts = (int)time(NULL)+agent->wrapup_end_time-get_ticks();
+			ts = (int)(unsigned long)time(NULL)+agent->wrapup_end_time-get_ticks();
 			if (evi_param_add_int(list, &wrapup_ends_str, &ts) < 0) {
 				LM_ERR("cannot add wrapup time\n");
 				goto error;

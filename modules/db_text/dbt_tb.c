@@ -1,16 +1,16 @@
 /*
  * DBText library
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -173,7 +173,7 @@ dbt_table_p dbt_table_new(const str *_tbname, const str *_dbname, const char *pa
 	dtp->dbname.s[_dbname->len] = '\0';
 	dtp->dbname.len = _dbname->len;
 
-	dtp->mark = (int)time(NULL);
+	dtp->mark = (int)(unsigned long)time(NULL);
 	dtp->flag = DBT_TBFL_ZERO;
 	dtp->auto_col = -1;
 	if(stat(path, &s) == 0)
@@ -331,7 +331,7 @@ int dbt_row_set_val(dbt_row_p _drp, dbt_val_p _vp, int _t, int _idx)
 
 			case DB_DATETIME:
 				_drp->fields[_idx].type = _t;
-				_drp->fields[_idx].val.int_val = (int)_vp->val.time_val;
+				_drp->fields[_idx].val.int_val = (int)(unsigned long)_vp->val.time_val;
 			break;
 
 			case DB_BITMAP:
@@ -425,7 +425,7 @@ int dbt_row_update_val(dbt_row_p _drp, dbt_val_p _vp, int _t, int _idx)
 
 			case DB_DATETIME:
 				_drp->fields[_idx].type = _t;
-				_drp->fields[_idx].val.int_val = (int)_vp->val.time_val;
+				_drp->fields[_idx].val.int_val = (int)(unsigned long)_vp->val.time_val;
 			break;
 
 			case DB_BITMAP:
@@ -497,7 +497,7 @@ int dbt_table_update_flags(dbt_table_p _dtp, int _f, int _o, int _m)
 			_dtp->flag &= ~_f;
 
 	if(_m)
-		_dtp->mark = (int)time(NULL);
+		_dtp->mark = (int)(unsigned long)time(NULL);
 
 	return 0;
 }

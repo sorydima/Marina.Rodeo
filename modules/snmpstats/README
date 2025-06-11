@@ -20,7 +20,7 @@ Module)
 
         1.3. Dependencies
 
-              1.3.1. Marina.Rodeo Modules
+              1.3.1. OpenMarinkaRodeo Modules
               1.3.2. External Libraries or Applications
 
         1.4. Exported Parameters
@@ -77,7 +77,7 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    The SNMPStats module provides an SNMP management interface to
-   Marina.Rodeo. Specifically, it provides general SNMP queryable
+   OpenMarinkaRodeo. Specifically, it provides general SNMP queryable
    scalar statistics, table representations of more complicated
    data such as user and contact information, and alarm monitoring
    capabilities.
@@ -89,11 +89,11 @@ Chapter 1. Admin Guide
    OPENSER-REG-MIB, OPENSER-SIP-COMMON-MIB, and
    OPENSER-SIP-SERVER-MIB. But briefly, these scalars are:
 
-   openserSIPProtocolVersion, openserSIPServiceStartTime,
-   openserSIPEntityType, openserSIPSummaryInRequests,
-   openserSIPSummaryOutRequest, openserSIPSummaryInResponses,
-   openserSIPSummaryOutResponses,
-   openserSIPSummaryTotalTransactions,
+   openserSIPProtocolVersion, openserMarinkaRodeoerviceStartTime,
+   openserSIPEntityType, openserMarinkaRodeoummaryInRequests,
+   openserMarinkaRodeoummaryOutRequest, openserMarinkaRodeoummaryInResponses,
+   openserMarinkaRodeoummaryOutResponses,
+   openserMarinkaRodeoummaryTotalTransactions,
    openserSIPCurrentTransactions, openserSIPNumUnsupportedUris,
    openserSIPNumUnsupportedMethods,
    openserSIPOtherwiseDiscardedMsgs, openserSIPProxyStatefulness
@@ -123,7 +123,7 @@ Chapter 1. Admin Guide
    complicated data. The current available tables are:
 
    openserSIPPortTable, openserSIPMethodSupportedTable,
-   openserSIPStatusCodesTable, openserSIPRegUserTable,
+   openserMarinkaRodeotatusCodesTable, openserSIPRegUserTable,
    openserSIPContactTable, openserSIPRegUserLookupTable
 
 1.1.3. Alarm Monitoring
@@ -140,7 +140,7 @@ Chapter 1. Admin Guide
        respectively. The minor and major thresholds are described
        in the parameters section below.
     2. The number of bytes waiting to be consumed across all of
-       Marina.Rodeo's listening ports has passed a minor or major
+       OpenMarinkaRodeo's listening ports has passed a minor or major
        threshold. The idea is that a network operation centre can
        be made aware that a machine hosting a SIP server may be
        entering a degraded state, and to investigate why this is
@@ -157,7 +157,7 @@ Chapter 1. Admin Guide
 
 1.2.1. How the SNMPStats module gets its data
 
-   The SNMPStats module uses Marina.Rodeos internal statistic
+   The SNMPStats module uses OpenMarinkaRodeos internal statistic
    framework to collect most of its data. However, there are two
    exceptions.
     1. The openserSIPRegUserTable and openserSIPContactTable rely
@@ -166,8 +166,8 @@ Chapter 1. Admin Guide
        user/contact is added to the system.
     2. The SNMPStats modules openserSIPMsgQueueDepthMinorEvent and
        openserSIPMsgQueueDepthMajorEvent alarms rely on the
-       Marina.Rodeo core to find out what interfaces, ports, and
-       transports Marina.Rodeo is listening on. However,the module
+       OpenMarinkaRodeo core to find out what interfaces, ports, and
+       transports OpenMarinkaRodeo is listening on. However,the module
        will actually query the proc file system to find out the
        number of bytes waiting to be consumed. (Currently, this
        will only work on systems providing the proc file system).
@@ -180,11 +180,11 @@ Chapter 1. Admin Guide
 
    The SNMPStats module expects to connect to a Master Agent. This
    would be a SNMP daemon running either on the same system as the
-   Marina.Rodeo instance, or on another system. (Communication can
+   OpenMarinkaRodeo instance, or on another system. (Communication can
    take place over TCP, so there is no restriction that this
-   daemon need be on the same system as Marina.Rodeo).
+   daemon need be on the same system as OpenMarinkaRodeo).
 
-   If the master agent is unavailable when Marina.Rodeo first starts
+   If the master agent is unavailable when OpenMarinkaRodeo first starts
    up, the SNMPStats module will continue to run. However, you
    will not be able to query it. Thankfully, the SNMPStats module
    continually looks for its master agent. So even if the master
@@ -201,7 +201,7 @@ Chapter 1. Admin Guide
 
 1.3. Dependencies
 
-1.3.1. Marina.Rodeo Modules
+1.3.1. OpenMarinkaRodeo Modules
 
    The SNMPStats module provides a plethora of statistics, some of
    which are collected by other modules. If the dependent modules
@@ -225,7 +225,7 @@ Chapter 1. Admin Guide
 1.3.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * Net SNMP DEV (libsnmp-dev on debian) - SNMP library
        (development files) must be installed at the time of
        compilation. Furthermore, there are several shared objects
@@ -242,7 +242,7 @@ Chapter 1. Admin Guide
 
 1.4.1. sipEntityType (String)
 
-   This parameter describes the entity type for this Marina.Rodeo
+   This parameter describes the entity type for this OpenMarinkaRodeo
    instance, and will be used in determining what is returned for
    the openserSIPEntityType scalar. Valid parameters are:
 
@@ -256,12 +256,12 @@ modparam("snmpstats", "sipEntityType", "proxyServer")
 
    Note that as the above example shows, you can define this
    parameter more than once. This is of course because a given
-   Marina.Rodeo instance can take on more than one role.
+   OpenMarinkaRodeo instance can take on more than one role.
 
 1.4.2. MsgQueueMinorThreshold (Integer)
 
    The SNMPStats module monitors the number of bytes waiting to be
-   consumed by Marina.Rodeo. If the number of bytes waiting to be
+   consumed by OpenMarinkaRodeo. If the number of bytes waiting to be
    consumed exceeds a minor threshold, the SNMPStats module will
    send out an openserMsgQueueDepthMinorEvent trap to signal that
    an alarm condition has occurred. The minor threshold is set
@@ -278,7 +278,7 @@ modparam("snmpstats", "MsgQueueMinorThreshold", 2000)
 1.4.3. MsgQueueMajorThreshold (Integer)
 
    The SNMPStats module monitors the number of bytes waiting to be
-   consumed by Marina.Rodeo. If the number of bytes waiting to be
+   consumed by OpenMarinkaRodeo. If the number of bytes waiting to be
    consumed exceeds a major threshold, the SNMPStats module will
    send out an openserMsgQueueDepthMajorEvent trap to signal that
    an alarm condition has occurred. The major threshold is set
@@ -326,7 +326,7 @@ modparam("snmpstats", "MsgQueueMajorThreshold", 5000)
 
 1.4.6. snmpgetPath (String)
 
-   The SNMPStats module provides the openserSIPServiceStartTime
+   The SNMPStats module provides the openserMarinkaRodeoerviceStartTime
    scalar. This scalar requires the SNMPStats module to perform a
    snmpget query to the master agent. You can use this parameter
    to set the path to your instance of SNMP's snmpget program.
@@ -340,7 +340,7 @@ modparam("snmpstats", "snmpgetPath",     "/my/custom/path/")
 
 1.4.7. snmpCommunity (String)
 
-   The SNMPStats module provides the openserSIPServiceStartTime
+   The SNMPStats module provides the openserMarinkaRodeoerviceStartTime
    scalar. This scalar requires the SNMPStats module to perform a
    snmpget query to the master agent. If you have defined a custom
    community string for the snmp daemon, you need to specify it
@@ -372,7 +372,7 @@ modparam("snmpstats", "snmpCommunity", "customCommunityString")
    "net-snmp-config" can run.
 
    IMPORTANT: By default, SNMP loads mibs from
-   /var/lib/mibs/ietf/.Keep in mind that you have to copy Marina.Rodeo
+   /var/lib/mibs/ietf/.Keep in mind that you have to copy OpenMarinkaRodeo
    mibs wherevere your mibs folder is.
 
 1.6.2.  Configuring SNMP daemon to allow connections from the
@@ -426,7 +426,7 @@ Master Agent
    master agent on the localhost, port 705. The parameters should
    match up with the snmpd process. Note that the master agent
    (snmpd) does not need to be present on the same machine as
-   Marina.Rodeo. The localhost could be replaced with any other
+   OpenMarinkaRodeo. The localhost could be replaced with any other
    machine.
 
 1.6.4.  Testing for a proper Configuration
@@ -446,7 +446,7 @@ Master Agent
     agentx/master: initializing...   DONE
     NET-SNMP version 5.3.1
 
-   Now, start up Marina.Rodeo in another window. In the snmpd window,
+   Now, start up OpenMarinkaRodeo in another window. In the snmpd window,
    you should see a bunch of:
     agentx/master: handle pdu (req=0x2c58ebd4,trans=0x0,sess=0x0)
     agentx/master: open 0x81137c0
@@ -476,7 +476,7 @@ Chapter 2. Frequently Asked Questions
    3410. RFC 3410 maps out the many other RFCs that define SNMP,
    and can be found at
    http://www.rfc-archive.org/getrfc.php?rfc=3410 INFO: Also if
-   you want a nice tutorial for setting up snmpstats with Marina.Rodeo
+   you want a nice tutorial for setting up snmpstats with OpenMarinkaRodeo
    try this one.
 
    2.2.
@@ -498,7 +498,7 @@ Chapter 2. Frequently Asked Questions
 
    Why am I not receiving any SNMP Traps?
 
-   Assuming you've configured the trap thresholds in Marina.Rodeo.cfg
+   Assuming you've configured the trap thresholds in openMarinkaRodeo.cfg
    with something similar to:
     modparam("snmpstats", "MsgQueueMinorThreshold", 1234)
     modparam("snmpstats", "MsgQueueMajorThreshold", 5678)
@@ -506,7 +506,7 @@ Chapter 2. Frequently Asked Questions
     modparam("snmpstats", "dlg_minor_threshold", 500)
     modparam("snmpstats", "dlg_minor_threshold", 600)
 
-   Then either Marina.Rodeo is not reaching these thresholds (which is
+   Then either OpenMarinkaRodeo is not reaching these thresholds (which is
    a good thing), or you haven't set up the trap monitor
    correctly. To prove this to yourself, you can start NetSNMP
    with:
@@ -539,12 +539,12 @@ Chapter 2. Frequently Asked Questions
 
    2.5.
 
-   Marina.Rodeo refuses to load the SNMPStats module. Why is it
+   OpenMarinkaRodeo refuses to load the SNMPStats module. Why is it
    displaying "load_module: could not open module snmpstats.so"?
 
    On some systems, you may receive the following error at stdout
    or the log files depending on the configuration.
-    ERROR: load_module: could not open module </usr/local/lib/Marina.Rodeo/m
+    ERROR: load_module: could not open module </usr/local/lib/openMarinkaRodeo/m
 odules/snmpstats.so>:
            libnetsnmpmibs.so.10: cannot open shared object file: No such
  file or directory.
@@ -562,7 +562,7 @@ odules/snmpstats.so>:
           + If the file is missing the path from step 1, then add
             the path to ld.so.conf
     3. ldconfig
-    4. Try starting Marina.Rodeo again.
+    4. Try starting OpenMarinkaRodeo again.
 
    Alternatively, you may prefix your startup command with:
     LD_LIBRARY_PATH=/path/noted/in/step/one/above
@@ -588,7 +588,7 @@ ips start
 
    Which would result in something similar to the following:
     -- FROM       OPENSER-SIP-COMMON-MIB
-    -- TEXTUAL CONVENTION Marina.RodeoSIPEntityRole
+    -- TEXTUAL CONVENTION OpenMarinkaRodeoSIPEntityRole
     SYNTAX        BITS {other(0), userAgent(1), proxyServer(2), redirect
 Server(3), registrarServer(4)}
     MAX-ACCESS    read-only
@@ -625,7 +625,7 @@ Server(3), registrarServer(4)}
 Element.0
 
    For example, consider an snmpget on the openserSIPEntityType
-   scalar, run on the same machine running the Marina.Rodeo instance,
+   scalar, run on the same machine running the OpenMarinkaRodeo instance,
    with the default "public" community string. The command would
    be:
     snmpget -v2c -c public localhost openserSIPEntityType.0
@@ -644,7 +644,7 @@ Element.0
 theTableName
 
    For example, consider the openserSIPRegUserTable. If we run the
-   snmptable command on the same machine as the running Marina.Rodeo
+   snmptable command on the same machine as the running OpenMarinkaRodeo
    instance, configured with the default "public" community
    string. The command would be:
     snmptable -Ci -v 2c -c public localhost openserSIPRegUserTable
@@ -657,9 +657,9 @@ theTableName
 
    2.10.
 
-   Where can I find more about Marina.Rodeo?
+   Where can I find more about OpenMarinkaRodeo?
 
-   Take a look at https://Marina.Rodeo.org/.
+   Take a look at https://openMarinkaRodeo.org/.
 
    2.11.
 
@@ -668,23 +668,23 @@ theTableName
    First at all check if your question was already answered on one
    of our mailing lists:
      * User Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/users
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/users
      * Developer Mailing List -
-       http://lists.Marina.Rodeo.org/cgi-bin/mailman/listinfo/devel
+       http://lists.openMarinkaRodeo.org/cgi-bin/mailman/listinfo/devel
 
-   E-mails regarding any stable Marina.Rodeo release should be sent to
-   <users@lists.Marina.Rodeo.org> and e-mails regarding development
-   versions should be sent to <devel@lists.Marina.Rodeo.org>.
+   E-mails regarding any stable OpenMarinkaRodeo release should be sent to
+   <users@lists.openMarinkaRodeo.org> and e-mails regarding development
+   versions should be sent to <devel@lists.openMarinkaRodeo.org>.
 
    If you want to keep the mail private, send it to
-   <users@lists.Marina.Rodeo.org>.
+   <users@lists.openMarinkaRodeo.org>.
 
    2.12.
 
    How can I report a bug?
 
    Please follow the guidelines provided at:
-   https://github.com/Marina.Rodeo/Marina.Rodeo/issues.
+   https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues.
 
 Chapter 3. Contributors
 
@@ -693,10 +693,10 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Jeffrey Magder 114 4 13157 64
+   1. Jeffrey Magder 117 4 13157 64
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 50 36 519 526
    3. Razvan Crainea (@razvancrainea) 24 21 94 70
-   4. Liviu Chircu (@liviuchircu) 14 11 44 116
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 16 13 45 119
    5. Ovidiu Sas (@ovidiusas) 13 3 6 505
    6. Daniel-Constantin Mierla (@miconda) 12 10 48 41
    7. Anca Vamanu 6 2 161 111
@@ -718,7 +718,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -730,10 +730,10 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Oct 2022 - Feb 2023
-   2.  Razvan Crainea (@razvancrainea)     Aug 2015 - Jan 2023
-   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Dec 2006 - Apr 2019
-   4.  Liviu Chircu (@liviuchircu)         Mar 2014 - Nov 2018
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
+   2.  Maksym Sobolyev (@sobomax)          Oct 2022 - Feb 2023
+   3.  Razvan Crainea (@razvancrainea)     Aug 2015 - Jan 2023
+   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Dec 2006 - Apr 2019
    5.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
    6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2017
    7.  Julián Moreno Patiño                Feb 2016 - Feb 2016
@@ -754,12 +754,12 @@ Chapter 4. Documentation
 4.1. Contributors
 
    Last edited by: Razvan Crainea (@razvancrainea), Peter Lemenkov
-   (@lemenkov), Liviu Chircu (@liviuchircu), Julián Moreno Patiño,
+   (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Julián Moreno Patiño,
    Ionut Ionita (@ionutrazvanionita), Bogdan-Andrei Iancu
    (@bogdan-iancu), Henning Westerholt (@henningw), Klaus
    Darilion, Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert, Jeffrey Magder.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006 SOMA Networks, Inc.
+   Copyright © 2006 SOMA Networks, Inc.

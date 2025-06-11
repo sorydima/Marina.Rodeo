@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2022 - Marina.Rodeo Solutions
+ * Copyright (C) 2022 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -31,7 +31,7 @@
 #include "../../ip_addr.h"
 #include "../../parser/hf.h"
 #include "../../ut.h"
-#include "../../lib/osips_malloc.h"
+#include "../../lib/oMarinkaRodeo_malloc.h"
 
 enum msrp_msg_type { MSRP_UNKNOWN=0, MSRP_REQUEST=1, MSRP_REPLY=2};
 
@@ -356,7 +356,7 @@ error:
 }
 
 
-static inline void _free_msrp_path(struct msrp_url *list, osips_free_t free_f)
+static inline void _free_msrp_path(struct msrp_url *list, oMarinkaRodeo_free_t free_f)
 {
 	struct msrp_url *url;
 
@@ -367,13 +367,13 @@ static inline void _free_msrp_path(struct msrp_url *list, osips_free_t free_f)
 	}
 }
 
-#define free_msrp_path(list) _free_msrp_path(list, osips_pkg_free)
+#define free_msrp_path(list) _free_msrp_path(list, oMarinkaRodeo_pkg_free)
 
-#define free_msrp_path_shm(path) _free_msrp_path(path, osips_shm_free)
+#define free_msrp_path_shm(path) _free_msrp_path(path, oMarinkaRodeo_shm_free)
 
 
 static inline struct msrp_url* _parse_msrp_path(str *path,
-	osips_malloc_t malloc_f, osips_free_t free_f)
+	oMarinkaRodeo_malloc_t malloc_f, oMarinkaRodeo_free_t free_f)
 {
 	struct msrp_url *url, *it, *list=NULL;
 	char *p, *end;
@@ -425,10 +425,10 @@ error:
 /* parses a path of multiple MSRL URLs
  * Returns an pkg allocated list of URLs or NULL on error
  */
-#define parse_msrp_path(path) _parse_msrp_path(path, osips_pkg_malloc, \
-	osips_pkg_free)
+#define parse_msrp_path(path) _parse_msrp_path(path, oMarinkaRodeo_pkg_malloc, \
+	oMarinkaRodeo_pkg_free)
 
-#define parse_msrp_path_shm(path) _parse_msrp_path(path, osips_shm_malloc, \
-	osips_shm_free)
+#define parse_msrp_path_shm(path) _parse_msrp_path(path, oMarinkaRodeo_shm_malloc, \
+	oMarinkaRodeo_shm_free)
 
 #endif

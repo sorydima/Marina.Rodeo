@@ -1,20 +1,20 @@
 [Unit]
-Description=Marina.Rodeo is a very fast and flexible SIP (RFC3261) server
-Documentation=man:Marina.Rodeo
+Description=OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261) server
+Documentation=man:openMarinkaRodeo
 After=network.target mysqld.service postgresql.service rtpproxy.service
 
 [Service]
 Type=forking
-User=Marina.Rodeo
-Group=Marina.Rodeo
-RuntimeDirectory=Marina.Rodeo
+User=openMarinkaRodeo
+Group=openMarinkaRodeo
+RuntimeDirectory=openMarinkaRodeo
 RuntimeDirectoryMode=775
 Environment=P_MEMORY=32 S_MEMORY=32
-EnvironmentFile=-/etc/default/Marina.Rodeo
+EnvironmentFile=-/etc/default/openMarinkaRodeo
 PermissionsStartOnly=yes
-PIDFile=%t/Marina.Rodeo/Marina.Rodeo.pid
-ExecStart=/usr/sbin/Marina.Rodeo -P %t/Marina.Rodeo/Marina.Rodeo.pid -f /etc/Marina.Rodeo/Marina.Rodeo.cfg -m $S_MEMORY -M $P_MEMORY $OPTIONS
-ExecStop=/usr/bin/pkill --pidfile %t/Marina.Rodeo/Marina.Rodeo.pid
+PIDFile=%t/openMarinkaRodeo/openMarinkaRodeo.pid
+ExecStart=/usr/sbin/openMarinkaRodeo -P %t/openMarinkaRodeo/openMarinkaRodeo.pid -f /etc/openMarinkaRodeo/openMarinkaRodeo.cfg -m $S_MEMORY -M $P_MEMORY $OPTIONS
+ExecStop=/usr/bin/pkill --pidfile %t/openMarinkaRodeo/openMarinkaRodeo.pid
 Restart=always
 TimeoutStopSec=30s
 LimitNOFILE=262144

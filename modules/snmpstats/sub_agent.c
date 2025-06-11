@@ -21,13 +21,13 @@
 
 /* Bring in the initialization functions for all scalars */
 #include "openserSIPCommonObjects.h"
-#include "openserSIPServerObjects.h"
+#include "openserMarinkaRodeoerverObjects.h"
 #include "openserObjects.h"
 
 /* Bring in the initialization functions for all tables */
 #include "openserSIPPortTable.h"
 #include "openserSIPMethodSupportedTable.h"
-#include "openserSIPStatusCodesTable.h"
+#include "openserMarinkaRodeotatusCodesTable.h"
 #include "openserSIPRegUserTable.h"
 #include "openserSIPContactTable.h"
 #include "openserSIPRegUserLookupTable.h"
@@ -69,14 +69,14 @@ static int initialize_agentx(void)
 	/* Initialize all scalars, and let the master agent know we want to
 	 * handle all OID's pertaining to these scalars. */
 	init_openserSIPCommonObjects();
-	init_openserSIPServerObjects();
+	init_openserMarinkaRodeoerverObjects();
 	init_openserObjects();
 
 	/* Initialiaze all the tables, and let the master agent know we want to
 	 * handle all the OID's pertaining to these tables */
 	init_openserSIPPortTable();
 	init_openserSIPMethodSupportedTable();
-	init_openserSIPStatusCodesTable();
+	init_openserMarinkaRodeotatusCodesTable();
 	init_openserSIPRegUserTable();
 	init_openserSIPContactTable();
 	init_openserSIPRegUserLookupTable();
@@ -96,7 +96,7 @@ static int initialize_agentx(void)
 }
 
 /* Creates a child that will become the AgentX sub-agent.  The child will
- * insulate itself from the rest of Marina.Rodeo by overriding most of signal
+ * insulate itself from the rest of OpenMarinkaRodeo by overriding most of signal
  * handlers. */
 void agentx_child(int rank)
 {
@@ -110,8 +110,8 @@ void agentx_child(int rank)
 	new_sigterm_handler.sa_handler = sigterm_handler;
 	sigaction(SIGTERM, &new_sigterm_handler, NULL);
 
-	/* We don't want Marina.Rodeo's normal handlers doing anything when
-	 * we die.  As far as Marina.Rodeo knows this process never existed.
+	/* We don't want OpenMarinkaRodeo's normal handlers doing anything when
+	 * we die.  As far as OpenMarinkaRodeo knows this process never existed.
 	 * So override all signal handlers to the OS default. */
 	sigemptyset(&default_handlers.sa_mask);
 	default_handlers.sa_flags = 0;
@@ -121,7 +121,7 @@ void agentx_child(int rank)
 	sigaction(SIGINT,  &default_handlers, NULL);
 	sigaction(SIGHUP,  &default_handlers, NULL);
 	sigaction(SIGUSR1, &default_handlers, NULL);
-	/* SIGUSR2 must be handled by Marina.Rodeo as it is used for
+	/* SIGUSR2 must be handled by OpenMarinkaRodeo as it is used for
 	   collecting info on pkg memory */
 	/*sigaction(SIGUSR2, &default_handlers, NULL);*/
 

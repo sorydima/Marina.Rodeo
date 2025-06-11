@@ -1,16 +1,16 @@
 /*
  * Digest Authentication Module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -40,12 +40,15 @@ typedef enum auth_result {
 	INVALID_PASSWORD,   /* Invalid password */
 	USER_UNKNOWN,       /* User non existant */
 	ERROR,              /* Error occurred, a reply has been sent out -> */
-	                    /* return 0 to the Marina.Rodeo core */
+	                    /* return 0 to the openMarinkaRodeo core */
 	AUTHORIZED,         /* Authorized. If returned by pre_auth, */
 	                    /* no digest authorization necessary */
 	DO_AUTHORIZATION,   /* Can only be returned by pre_auth. */
 	                    /* Means to continue doing authorization */
 } auth_result_t;
+
+#define AUTH_SKIP_CRED_CHECK	(1<<0)
+#define AUTH_SKIP_NONCE_CHECK	(1<<1)
 
 
 /*
@@ -55,9 +58,9 @@ typedef enum auth_result {
  * ACK and CANCEL
  */
 typedef auth_result_t (*pre_auth_t)(struct sip_msg* _m, str* _realm,
-		hdr_types_t _hftype, struct hdr_field** _h);
+		hdr_types_t _hftype, struct hdr_field** _h, unsigned skip_flags);
 auth_result_t pre_auth(struct sip_msg* _m, str* _realm,
-		hdr_types_t _hftype, struct hdr_field** _h);
+		hdr_types_t _hftype, struct hdr_field** _h, unsigned skip_flags);
 
 
 /*
@@ -104,6 +107,12 @@ typedef str *(*build_auth_info_hf_t)(str *msg_body, str *method, dig_cred_t *cre
 	struct digest_auth_credential *auth_data);
 
 /*
+ * Helper function to send a reply
+ */
+typedef int (*send_resp_t)(struct sip_msg* _m, int _code,
+		const str* _reason, const str hdrs[], int nhdrs);
+
+/*
  * Strip the beginning of realm
  */
 void strip_realm(str *_realm);
@@ -121,6 +130,7 @@ typedef struct auth_api {
 	check_response_t check_response; /* check auth response */
 	build_auth_hf_t build_auth_hf;   /* build {WWW,Proxy}-Authenticate header field */
 	build_auth_info_hf_t build_auth_info_hf; /* build Authentication-Info header */
+	send_resp_t  send_resp;/* Helper function to send a response */
 } auth_api_t;
 
 

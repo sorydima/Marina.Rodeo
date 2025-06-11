@@ -8,7 +8,7 @@ xmpp Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -58,7 +58,7 @@ Chapter 1. Admin Guide
 
 1.1. Overview
 
-   This modules is a gateway between Marina.Rodeo and a jabber server.
+   This modules is a gateway between OpenMarinkaRodeo and a jabber server.
    It enables the exchange of instant messages between SIP clients
    and XMPP(jabber) clients.
 
@@ -77,19 +77,19 @@ Chapter 1. Admin Guide
    server.
 
    After you have a running XMPP server, what you need to do is
-   set the following parameters in the Marina.Rodeo configuration
+   set the following parameters in the OpenMarinkaRodeo configuration
    file:
      * xmpp_domain and xmpp_host, which are explained in the
        Exported Parameters section;
      * socket= your ip;
-     * alias=Marina.Rodeo domain and alias=gateway domain;
+     * alias=openMarinkaRodeo domain and alias=gateway domain;
      * you can also change the jabber server password, which must
        be the same as the xmpp_password parameter.
 
    A use case, for the component-mode, would look like this:
-     * Marina.Rodeo is running on sip-server.Marina.Rodeo.org;
-     * the jabber server is running on xmpp.Marina.Rodeo.org;
-     * the component is running on xmpp-sip.Marina.Rodeo.org.
+     * OpenMarinkaRodeo is running on sip-server.openMarinkaRodeo.org;
+     * the jabber server is running on xmpp.openMarinkaRodeo.org;
+     * the component is running on xmpp-sip.openMarinkaRodeo.org.
 
    In the server mode, the xmpp module is a minimal jabber server,
    thus you do not need to install another jabber server, the
@@ -101,12 +101,12 @@ Chapter 1. Admin Guide
    section, from component to server.
 
    A use case, for the server-mode, would look like this:
-     * Marina.Rodeo is running on sip-server.Marina.Rodeo.org;
-     * the "XMPP server" is running on xmpp-sip.Marina.Rodeo.org.
+     * OpenMarinkaRodeo is running on sip-server.openMarinkaRodeo.org;
+     * the "XMPP server" is running on xmpp-sip.openMarinkaRodeo.org.
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * requires 'tm' module.
@@ -114,7 +114,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * libexpat1-devel - used for parsing/building XML.
 
 1.3. Exported Parameters
@@ -140,7 +140,7 @@ Chapter 1. Admin Guide
 
    Example 1.2. Set xmpp_domain parameter
 ...
- modparam("xmpp", "xmpp_domain", "xmpp.Marina.Rodeo.org")
+ modparam("xmpp", "xmpp_domain", "xmpp.openMarinkaRodeo.org")
 ...
 
 1.3.3. xmpp_host (string)
@@ -153,7 +153,7 @@ Chapter 1. Admin Guide
 
    Example 1.3. Set xmpp_host parameter
 ...
- modparam("xmpp", "xmpp_host", "xmpp.Marina.Rodeo.org")
+ modparam("xmpp", "xmpp_host", "xmpp.openMarinkaRodeo.org")
 ...
 
 1.3.4. sip_domain (string)
@@ -169,18 +169,18 @@ Chapter 1. Admin Guide
    domain name into another domain when sending messages in xmpp.
    This parameter is exactly the name that should be used as the
    SIP domain name in XMPP. Usage example: If the sip and xmpp
-   domain is Marina.Rodeo.org and this parameter is set to
-   sip.Marina.Rodeo.org, than in all the requests sent in xmpp the sip
-   users will have the domain translated to sip.Marina.Rodeo.org.
+   domain is openMarinkaRodeo.org and this parameter is set to
+   sip.openMarinkaRodeo.org, than in all the requests sent in xmpp the sip
+   users will have the domain translated to sip.openMarinkaRodeo.org.
    Also, in XMPP account the SIP buddies must have this domain:
-   sip.Marina.Rodeo.org, and it will be translated to the real one
-   Marina.Rodeo.org when traversing the gateway.
+   sip.openMarinkaRodeo.org, and it will be translated to the real one
+   openMarinkaRodeo.org when traversing the gateway.
 
    Default value is NULL.
 
    Example 1.4. Set xmpp_host parameter
 ...
- modparam("xmpp", "sip_domain", "sip.Marina.Rodeo.org")
+ modparam("xmpp", "sip_domain", "sip.openMarinkaRodeo.org")
 ...
 
 1.3.5. xmpp_port (integer)
@@ -218,8 +218,8 @@ Chapter 1. Admin Guide
 1.3.7. outbound_proxy (string)
 
    The SIP address used as next hop when sending the message. Very
-   useful when using Marina.Rodeo with a domain name not in DNS, or
-   when using a separate Marina.Rodeo instance for xmpp processing. If
+   useful when using OpenMarinkaRodeo with a domain name not in DNS, or
+   when using a separate OpenMarinkaRodeo instance for xmpp processing. If
    not set, the message will be sent to the address in destination
    URI.
 
@@ -227,7 +227,7 @@ Chapter 1. Admin Guide
 
    Example 1.7. Set outbound_proxy parameter
 ...
- modparam("xmpp", "outbound_proxy", "sip:Marina.Rodeo.org;transport=tcp")
+ modparam("xmpp", "outbound_proxy", "sip:openMarinkaRodeo.org;transport=tcp")
 ...
 
 1.4. Exported Functions
@@ -246,7 +246,7 @@ xmpp_send_message();
 
    Next is presented a sample configuration file one can use to
    implement a standalone SIP-to-XMPP gateway. You can run an
-   instance of Marina.Rodeo on a separate machine or on different port
+   instance of OpenMarinkaRodeo on a separate machine or on different port
    with the following config, and have the main SIP server
    configured to forward all SIP requests for XMPP world to it.
 ....
@@ -272,11 +272,11 @@ rev_dns=no      # (cmd. line: -R)
 udp_workers=4
 
 socket=udp:10.10.10.10:5076
-alias=sip-xmpp.Marina.Rodeo.org
+alias=sip-xmpp.openMarinkaRodeo.org
 
 # ------------------ module loading ----------------------------------
 
-mpath="/usr/local/Marina.Rodeo/lib/Marina.Rodeo/modules/"
+mpath="/usr/local/openMarinkaRodeo/lib/openMarinkaRodeo/modules/"
 loadmodule "sl.so"
 loadmodule "tm.so"
 loadmodule "rr.so"
@@ -288,8 +288,8 @@ loadmodule "mi_fifo.so"
 # XMPP
 loadmodule "xmpp.so"
 
-modparam("xmpp", "xmpp_domain", "xmpp-sip.Marina.Rodeo.org")
-modparam("xmpp", "xmpp_host", "xmpp.Marina.Rodeo.org")
+modparam("xmpp", "xmpp_domain", "xmpp-sip.openMarinkaRodeo.org")
+modparam("xmpp", "xmpp_host", "xmpp.openMarinkaRodeo.org")
 
 #modparam("xmpp", "backend", "server")
 modparam("xmpp", "backend", "component")
@@ -298,7 +298,7 @@ modparam("xmpp", "backend", "component")
 
 # -- mi_fifo params --
 
-modparam("mi_fifo", "fifo_name", "/tmp/Marina.Rodeo_fifo_xmpp")
+modparam("mi_fifo", "fifo_name", "/tmp/openMarinkaRodeo_fifo_xmpp")
 
 # -------------------------  request routing logic -------------------
 
@@ -343,10 +343,10 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Daniel-Constantin Mierla (@miconda) 67 16 5988 76
-   2. Bogdan-Andrei Iancu (@bogdan-iancu) 28 23 120 245
+   1. Daniel-Constantin Mierla (@miconda) 69 16 5988 76
+   2. Bogdan-Andrei Iancu (@bogdan-iancu) 30 23 120 245
    3. Anca Vamanu 20 9 438 398
-   4. Liviu Chircu (@liviuchircu) 13 10 56 96
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 14 11 56 98
    5. Razvan Crainea (@razvancrainea) 9 7 31 23
    6. Vlad Patrascu (@rvlad-patrascu) 6 4 9 5
    7. Henning Westerholt (@henningw) 5 3 13 13
@@ -366,7 +366,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -378,7 +378,7 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Liviu Chircu (@liviuchircu)         Mar 2014 - May 2023
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
    2.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2023
    3.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
    4.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2006 - Apr 2020
@@ -401,12 +401,12 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Vlad Patrascu
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Vlad Patrascu
    (@rvlad-patrascu), Bogdan-Andrei Iancu (@bogdan-iancu), Peter
    Lemenkov (@lemenkov), Anca Vamanu, Henning Westerholt
    (@henningw), Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert, Juha Heinanen (@juha-h).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006-2008 Voice Sistem SRL
+   Copyright © 2006-2008 Voice Sistem SRL

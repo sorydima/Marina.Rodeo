@@ -78,7 +78,7 @@
 		</listitem>
 		<listitem>
 			<para>
-			&osips; now supports session/dialog accounting. It can
+			&oMarinkaRodeo; now supports session/dialog accounting. It can
 			automatically correlate INVITEs with BYEs for generating proper CDRs,
 			for example for billing purposes.
 			</para>
@@ -97,6 +97,11 @@
 	<para>
 		The SQL, Event Interface and AAA backend support are compiled in the
 		module.
+	</para>
+	<para>
+	A very comprehensive description of how the accounting module works in
+	terms accounting scope, accounting events and accounting backends can
+	be found in this online <ulink url="https://www.openMarinkaRodeo.org/Documentation/Tutorials-Advanced-Accounting/">Advanced Accounting Tutorial</ulink>.
 	</para>
 	<section>
 		<title>General Example</title>
@@ -245,7 +250,7 @@ modparam("acc", "extra_fields", "log: a -> test_a")
 			enabled just by setting <emphasis>acc_leg</emphasis> variable
 			<varname>leg_fields</varname> module parameter. Note that
 			the last one only makes sense only for CDRs that are generated
-			automatically by &osips;.
+			automatically by &oMarinkaRodeo;.
 			</para>
 			</section>
 		<section>
@@ -291,6 +296,14 @@ modparam("acc", "extra_fields", "log: a -> test_a")
 				</listitem>
 
 			</itemizedlist>
+			<para>
+				<emphasis>Important!!!</emphasis> In order to use <emphasis>RADIUS</emphasis>,
+				one must include the AVPs which are located in
+				$(openMarinkaRodeo_install_dir)/etc/dictionary.openMarinkaRodeo, both in openMarinkaRodeo radius config
+				script dictionary and radius server dictionary. Most important are the last three
+				AVPs (IDs : 227, 228, 229) which you won't find in any SIP dictionary
+				(at least at this moment) because they are only used in openMarinkaRodeo.
+			</para>
 		</section>
 	</section>
 
@@ -332,7 +345,7 @@ modparam("acc", "extra_fields", "log: a -> test_a")
 	<section id="dependencies" xreflabel="Dependencies">
 		<title>Dependencies</title>
 		<section>
-			<title>&osips; Modules</title>
+			<title>&oMarinkaRodeo; Modules</title>
 			<para>
 			The module depends on the following modules (in the other words
 			the listed modules must be loaded before this module):
@@ -364,7 +377,7 @@ modparam("acc", "extra_fields", "log: a -> test_a")
 			<title>External Libraries or Applications</title>
 			<para>
 			The following libraries or applications must be installed
-			before running &osips; with this module loaded:
+			before running &oMarinkaRodeo; with this module loaded:
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -613,7 +626,7 @@ modparam("acc", "db_table_missed_calls", "myMC_table")
 		<example>
 		<title>db_url example</title>
 		<programlisting format="linespecific">
-modparam("acc", "db_url", "mysql://user:password@localhost/Marina.Rodeo")
+modparam("acc", "db_url", "mysql://user:password@localhost/openMarinkaRodeo")
 </programlisting>
 		</example>
 	</section>
@@ -823,7 +836,7 @@ $(acc_leg(caller)[-2])
 			<itemizedlist>
 				<listitem>
 					<para><emphasis>cdr</emphasis> - enables dialog-level accounting.
-						Marina.Rodeo will internally detect dialog termination (generation/receipt
+						OpenMarinkaRodeo will internally detect dialog termination (generation/receipt
 						of a BYE request), and store the CDR as soon as the BYE request
 						is replied to. By enabling the "cdr" flag, the following additional
 						fields will be populated: duration, ms_duration, setuptime, created.
@@ -1078,7 +1091,7 @@ acc_aaa_request("403 Destination not allowed");
 		<para>
 		Like <function moreinfo="none">acc_log_request</function>,
 		<function moreinfo="none">acc_evi_request</function> reports on a
-		request. The report is packed as an event sent through the &osips; Event
+		request. The report is packed as an event sent through the &oMarinkaRodeo; Event
 		Interface as <emphasis>E_ACC_EVENT</emphasis> if the reply code is a
 		positive one (lower than 300), or <emphasis>E_ACC_MISSED_EVENT</emphasis>
 		for negative or no codes. More information on this in

@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -86,7 +86,7 @@ struct script_route_ref {
 	int type;
 	union {
 		/* how many times this script route was referentiated
-		 * by Marina.Rodeo code (by looking the name) */
+		 * by openMarinkaRodeo code (by looking the name) */
 		unsigned int refcnt;
 		/* script version */
 		unsigned int version;
@@ -94,6 +94,29 @@ struct script_route_ref {
 	/* linking into per-process list of ref's. this is not used
 	 * if the ref resides in SHM */
 	struct script_route_ref *next;
+};
+
+enum script_return_type {
+	SCRIPT_ROUTE_RET_NULL,
+	SCRIPT_ROUTE_RET_INT,
+	SCRIPT_ROUTE_RET_STR,
+	SCRIPT_ROUTE_RET_VAR,
+};
+
+struct script_return_param {
+	union {
+		int rint;
+		struct _pv_spec *rspec;
+		str rstr;
+	};
+	unsigned int type;
+	struct script_return_param *next;
+};
+
+struct script_return_value {
+	pv_value_t val;
+	struct script_return_value *next;
+	char buf[0];
 };
 
 
@@ -153,7 +176,7 @@ void get_route_name(int idx, str *name);
 	((_ref)!=NULL && (_ref)->idx!=-1)
 
 #define ref_script_route_check_and_update(_ref) \
-	((_ref)!=NULL && (\
+	(sroutes && (_ref)!=NULL && (\
 		((_ref)->u.version==sroutes->version)\
 		||\
 		(update_script_route_ref(_ref)==0 && ((_ref)->u.version=sroutes->version))\
@@ -205,6 +228,11 @@ int is_script_func_used(const char *name, int param_no);
 
 int is_script_async_func_used(const char *name, int param_no);
 
+void script_return_set(struct sip_msg *msg, struct script_return_param *params);
+int script_return_get(pv_value_t *res, int index);
+void script_return_free(struct script_return_value **values);
+int script_return_push(void);
+void script_return_pop(int level);
 
 void push(struct action* a, struct action** head);
 

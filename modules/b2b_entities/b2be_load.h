@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * In addition, as a special exception, the Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 holders give
+ * In addition, as a special exception, the copyright holders give
  * permission to link the code of portions of this program with the
  * OpenSSL library under certain conditions as described in each
  * individual source file, and distribute linked combinations
@@ -21,7 +21,7 @@
  * version.  If you delete this exception statement from all source
  * files in the program, then also delete it here.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -75,7 +75,8 @@ typedef struct client_info
 	str local_contact;
 	unsigned int cseq;
 	unsigned int maxfwd;
-	struct socket_info* send_sock;
+	const struct socket_info* send_sock;
+	const struct socket_info* pref_sock;
 	struct usr_avp *avps;
 }client_info_t;
 
@@ -108,6 +109,7 @@ typedef struct b2b_rpl_data
 	str* text;
 	str* body;
 	str* extra_headers;
+	str* contact;
 	b2b_dlginfo_t* dlginfo;
 }b2b_rpl_data_t;
 
@@ -216,12 +218,12 @@ static inline b2b_dlginfo_t *b2b_new_dlginfo(str *callid, str *fromtag, str *tot
 	dlg->callid.s = (char *)(dlg + 1);
 	dlg->callid.len = callid->len;
 	memcpy(dlg->callid.s, callid->s, callid->len);
-	if (totag->s) {
+	if (totag && totag->s) {
 		dlg->totag.len = totag->len;
 		dlg->totag.s = dlg->callid.s + dlg->callid.len;
 		memcpy(dlg->totag.s, totag->s, totag->len);
 	}
-	if (fromtag->s) {
+	if (fromtag && fromtag->s) {
 		dlg->fromtag.len = fromtag->len;
 		dlg->fromtag.s = dlg->callid.s + dlg->callid.len + dlg->totag.len;
 		memcpy(dlg->fromtag.s, fromtag->s, fromtag->len);

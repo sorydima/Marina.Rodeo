@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008-2019 Marina.Rodeo Project
+ * Copyright (C) 2007 Voice Sistem SRL
+ * Copyright (C) 2008-2019 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -41,7 +41,7 @@
  * alloc'ed in shared mem if possible */
 struct process_table *pt = NULL;
 
-/* The maximum number of processes that will ever exist in Marina.Rodeo. This is
+/* The maximum number of processes that will ever exist in OpenMarinkaRodeo. This is
  * actually the size of the process table
  * This is READONLY!! */
 unsigned int counted_max_processes = 0;
@@ -416,7 +416,7 @@ child_is_down:
 }
 
 
-/* counts the number of processes created by Marina.Rodeo at startup. processes
+/* counts the number of processes created by OpenMarinkaRodeo at startup. processes
  * that also do child_init() (the per-process module init)
  *
  * used for proper status return code
@@ -440,7 +440,7 @@ int count_init_child_processes(void)
 	return ret;
 }
 
-/* counts the number of processes known by Marina.Rodeo at startup.
+/* counts the number of processes known by OpenMarinkaRodeo at startup.
  * Note that the number of processes might change during init, if one of the
  * module decides that it will no longer use a process (ex; rtpproxy timeout
  * process)
@@ -489,6 +489,8 @@ void dynamic_process_final_exit(void)
 
 	/* if a TCP proc by chance, reset the tcp-related data */
 	tcp_reset_worker_slot();
+
+	pt_become_idle();
 
 	/* mark myself as DYNAMIC (just in case) to have an err-less termination */
 	pt[process_no].flags |= OSS_PROC_SELFEXIT;

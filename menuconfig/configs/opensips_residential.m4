@@ -1,11 +1,16 @@
 #
-# Marina.Rodeo residential configuration script
-#     by Marina.Rodeo Solutions <sip@rechain.email>
+# OpenMarinkaRodeo residential configuration script
+#     by OpenMarinkaRodeo Solutions <team@openMarinkaRodeo-solutions.com>
 #
 # This script was generated via "make menuconfig", from
 #   the "Residential" scenario.
 # You can enable / disable more features / functionalities by
 #   re-generating the scenario with different options.#
+#
+# Please refer to the Core CookBook at:
+#      https://openMarinkaRodeo.org/Resources/DocsCookbooks
+# for a explanation of possible statements, functions and parameters.
+#
 
 
 ####### Global Parameters #########
@@ -37,7 +42,7 @@ ifelse(ENABLE_TLS,`yes',`socket=tls:127.0.0.1:5061   # CUSTOMIZE ME', `')
 ####### Modules Section ########
 
 #set module path
-mpath="/usr/local/lib/Marina.Rodeo/modules/"
+mpath="/usr/local/lib/openMarinkaRodeo/modules/"
 
 #### SIGNALING module
 loadmodule "signaling.so"
@@ -65,7 +70,7 @@ loadmodule "sipmsgops.so"
 
 #### FIFO Management Interface
 loadmodule "mi_fifo.so"
-modparam("mi_fifo", "fifo_name", "/tmp/Marina.Rodeo_fifo")
+modparam("mi_fifo", "fifo_name", "/tmp/openMarinkaRodeo_fifo")
 modparam("mi_fifo", "fifo_mode", 0666)
 
 ifelse(USE_DR_PSTN,`yes',`ifelse(HAVE_INBOUND_PSTN,`yes',`define(`USE_DR_MODULE',`yes')',HAVE_OUTBOUND_PSTN,`yes',`define(`USE_DR_MODULE',`yes')',)',`')dnl
@@ -85,7 +90,7 @@ loadmodule "usrloc.so"
 modparam("usrloc", "nat_bflag", "NAT")
 ifelse(USE_DBUSRLOC,`yes',`modparam("usrloc", "working_mode_preset", "single-instance-sql-write-back")
 modparam("usrloc", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 ', `modparam("usrloc", "working_mode_preset", "single-instance-no-db")')
 
 #### REGISTRAR module
@@ -105,7 +110,7 @@ modparam("acc", "report_cancels", 0)
    in "rr" module */
 modparam("acc", "detect_direction", 0)
 ifelse(USE_DBACC,`yes',`modparam("acc", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 ', `')dnl
 
 ifelse(USE_AUTH,`yes',`#### AUTHentication modules
@@ -114,20 +119,20 @@ loadmodule "auth_db.so"
 modparam("auth_db", "calculate_ha1", yes)
 modparam("auth_db", "password_column", "password")
 modparam("auth_db", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 modparam("auth_db", "load_credentials", "")
 
 ', `')dnl
 ifelse(USE_ALIASES,`yes',`#### ALIAS module
 loadmodule "alias_db.so"
 modparam("alias_db", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 
 ', `')dnl
 ifelse(USE_MULTIDOMAIN,`yes',`#### DOMAIN module
 loadmodule "domain.so"
 modparam("domain", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 modparam("domain", "db_mode", 1)   # Use caching
 modparam("auth_db|usrloc", "use_domain", 1)
 
@@ -137,7 +142,7 @@ loadmodule "xcap.so"
 loadmodule "presence.so"
 loadmodule "presence_xml.so"
 modparam("xcap|presence", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 modparam("presence_xml", "force_active", 1)
 modparam("presence", "fallback2db", 0)
 
@@ -148,7 +153,7 @@ modparam("dialog", "dlg_match_mode", 1)
 modparam("dialog", "default_timeout", 21600)  # 6 hours timeout
 modparam("dialog", "db_mode", 2)
 modparam("dialog", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 
 ',`')dnl
 ifelse(USE_NAT,`yes',`####  NAT modules
@@ -166,13 +171,13 @@ modparam("rtpproxy", "rtpproxy_sock", "udp:localhost:12221") # CUSTOMIZE ME
 ifelse(USE_DIALPLAN,`yes',`####  DIALPLAN module
 loadmodule "dialplan.so"
 modparam("dialplan", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 
 ',`')dnl
 ifelse(USE_DR_MODULE,`yes',`####  DYNAMMIC ROUTING module
 loadmodule "drouting.so"
 modparam("drouting", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 
 ',`')dnl
 ifelse(USE_HTTP_MANAGEMENT_INTERFACE,`yes',`####  MI_HTTP module
@@ -180,17 +185,18 @@ loadmodule "mi_http.so"
 
 ',`')dnl
 loadmodule "proto_udp.so"
-ifelse(ENABLE_TCP, `yes', `loadmodule "proto_tcp.so"' , `')dnl
+ifelse(ENABLE_TCP, `yes', `loadmodule "proto_tcp.so"' , `')
 ifelse(ENABLE_TLS, `yes', `loadmodule "proto_tls.so"
+loadmodule "tls_wolfssl.so"
 loadmodule "tls_mgm.so"
 modparam("tls_mgm","server_domain", "default")
 modparam("tls_mgm","match_ip_address", "[default]*")
 modparam("tls_mgm","verify_cert", "[default]1")
 modparam("tls_mgm","require_cert", "[default]0")
 modparam("tls_mgm","tls_method", "[default]TLSv1")
-modparam("tls_mgm","certificate", "[default]/etc/Marina.Rodeo/tls/user/user-cert.pem")
-modparam("tls_mgm","private_key", "[default]/etc/Marina.Rodeo/tls/user/user-privkey.pem")
-modparam("tls_mgm","ca_list", "[default]/etc/Marina.Rodeo/tls/user/user-calist.pem")
+modparam("tls_mgm","certificate", "[default]/etc/openMarinkaRodeo/tls/user/user-cert.pem")
+modparam("tls_mgm","private_key", "[default]/etc/openMarinkaRodeo/tls/user/user-privkey.pem")
+modparam("tls_mgm","ca_list", "[default]/etc/openMarinkaRodeo/tls/user/user-calist.pem")
 ' , `')dnl
 
 ####### Routing Logic ########
@@ -202,7 +208,7 @@ ifelse(USE_NAT,`yes',`
 	# initial NAT handling; detect if the request comes from behind a NAT
 	# and apply contact fixing
 	force_rport();
-	if (nat_uac_test(23)) {
+	if (nat_uac_test("diff-port-src-via,private-via,diff-ip-src-via,private-contact")) {
 		if (is_method("REGISTER")) {
 			fix_nated_register();
 			setbflag("NAT");
@@ -496,7 +502,7 @@ branch_route[per_branch_ops] {
 
 
 onreply_route[handle_nat] {
-	ifelse(USE_NAT,`yes',`if (nat_uac_test(1))
+	ifelse(USE_NAT,`yes',`if (nat_uac_test("private-contact"))
 		fix_nated_contact();
 	if ( isflagset("NAT") && has_body("application/sdp") )
 		rtpproxy_answer("ro");',`')

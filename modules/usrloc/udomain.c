@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -618,7 +618,7 @@ int preload_udomain(db_con_t* _c, udomain_t* _d)
 					_d->table[sl].next_label = rlabel + 1;
 
 				if (r->next_clabel <= clabel || r->next_clabel == 0)
-					r->next_clabel = CLABEL_INC_AND_TEST(clabel);
+					r->next_clabel = CLABEL_NEXT(clabel);
 
 				r->label = rlabel;
 			}
@@ -658,7 +658,7 @@ int preload_udomain(db_con_t* _c, udomain_t* _d)
 			if (cid_regen && old_expires) {
 				/* rebuild the contact id for this contact */
 				ci->contact_id = pack_indexes(r->aorhash, r->label, r->next_clabel);
-				r->next_clabel = CLABEL_INC_AND_TEST(r->next_clabel);
+				r->next_clabel = CLABEL_NEXT(r->next_clabel);
 
 				ci->expires = old_expires;
 
@@ -883,7 +883,7 @@ cdb_load_urecord_locations(const udomain_t *_d, const str *_aor, urecord_t *_r)
 		row = list_entry(_, cdb_row_t, list);
 		pair = cdb_dict_fetch(&home_ip_key, &row->dict);
 		if (!pair) {
-			LM_ERR("metadata with no home_ip, aor: %.*s", _aor->len, _aor->s);
+			LM_ERR("metadata with no home_ip, aor: %.*s\n", _aor->len, _aor->s);
 			continue;
 		}
 
@@ -975,7 +975,8 @@ urecord_t* cdb_load_urecord(const udomain_t* _d, const str *_aor)
 	}
 
 	if (res.count != 1)
-		LM_BUG("more than 1 result for AoR %.*s\n", _aor->len, _aor->s);
+		LM_ERR("more than 1 result (%d) for AoR %.*s, consider a full clear "
+		        "of the cacheDB keys\n", res.count, _aor->len, _aor->s);
 
 	r = NULL;
 
@@ -990,7 +991,8 @@ urecord_t* cdb_load_urecord(const udomain_t* _d, const str *_aor)
 		}
 	}
 
-	LM_ERR("no 'contacts' field for AoR %.*s\n", _aor->len, _aor->s);
+	LM_ERR("no 'contacts' field for AoR %.*s (foreign cacheDB data?!)\n",
+	        _aor->len, _aor->s);
 	goto out_null;
 
 have_contacts:
@@ -1178,7 +1180,7 @@ int mem_timer_udomain(udomain_t* _d)
 				if (exists_ulcb_type(UL_AOR_EXPIRE))
 					run_ul_callbacks(UL_AOR_EXPIRE, ptr, NULL);
 
-				if (location_cluster) {
+				if (location_cluster && ul_is_active_node()) {
 					if (cluster_mode == CM_FEDERATION_CACHEDB &&
 					    cdb_update_urecord_metadata(&ptr->aor, 1) != 0)
 						LM_ERR("failed to delete metadata, aor: %.*s\n",

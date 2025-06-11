@@ -1,12 +1,12 @@
 #
-# Marina.Rodeo startup options
+# OpenMarinkaRodeo startup options
 #
 
-# Amount of shared memory to allocate for the running Marina.Rodeo server (in Mb)
+# Amount of shared memory to allocate for the running OpenMarinkaRodeo server (in Mb)
 S_MEMORY=64
 
-# Amount of pkg memory to allocate for the running Marina.Rodeo server (in Mb)
+# Amount of pkg memory to allocate for the running OpenMarinkaRodeo server (in Mb)
 P_MEMORY=4
 
-# Any additional Marina.Rodeo options
+# Any additional OpenMarinkaRodeo options
 OPTIONS=""

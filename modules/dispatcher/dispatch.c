@@ -1,18 +1,18 @@
 /*
  * dispatcher module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2010-2015 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2010 Voice-System.ro
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2004-2006 FhG Fokus
+ * Copyright (C) 2010-2015 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2005-2010 Voice-System.ro
+ * Copyright (C) 2004-2006 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -57,7 +57,7 @@
 
 extern ds_partition_t *partitions;
 
-extern struct socket_info *probing_sock;
+extern const struct socket_info *probing_sock;
 extern event_id_t dispatch_evi_id;
 extern ds_partition_t *default_partition;
 
@@ -174,7 +174,7 @@ void ds_destroy_data(ds_partition_t *partition)
 }
 
 
-int add_dest2list(int id, str uri, struct socket_info *sock, str *comsock, int state,
+int add_dest2list(int id, str uri, const struct socket_info *sock, str *comsock, int state,
 			int weight, int prio, int probe_mode, str attrs, str description, ds_data_t *d_data)
 {
 	ds_dest_p dp = NULL;
@@ -313,7 +313,7 @@ int add_dest2list(int id, str uri, struct socket_info *sock, str *comsock, int s
 
 	/* Do a DNS-Lookup for the Host-Name: */
 	proxy = mk_proxy( &puri.host, puri.port_no, puri.proto,
-		(puri.type==SIPS_URI_T));
+		(puri.type==MarinkaRodeo_URI_T));
 	if (proxy==NULL) {
 		LM_ERR("could not resolve %.*s, skipping it\n",
 			puri.host.len, puri.host.s);
@@ -366,6 +366,11 @@ int add_dest2list(int id, str uri, struct socket_info *sock, str *comsock, int s
 			           uri.len, uri.s, weight, max_freeswitch_weight);
 			dp->weight = max_freeswitch_weight;
 		}
+	}
+
+	if (!lock_init(&dp->wlock)) {
+		LM_ERR("failed to init lock\n");
+		goto err;
 	}
 
 	/*
@@ -470,7 +475,6 @@ int reindex_dests( ds_data_t *d_data)
 	for( sp=d_data->sets ; sp!= NULL ; sp=sp->next )
 	{
 		if (sp->nr == 0) {
-			dp0 = NULL;
 			continue;
 		}
 
@@ -571,8 +575,15 @@ ds_pvar_param_p ds_get_pvar_param(int id, str uri)
 	int len = ds_pattern_prefix.len + ds_pattern_infix.len + ds_pattern_suffix.len 
 				+ uri.len + str_id.len;
 
-	char buf[len]; /* XXX: check if this works for all compilers */
+	char *buf;
 	ds_pvar_param_p param;
+
+	param = shm_malloc(sizeof *param + len);
+	if (!param) {
+		LM_ERR("no more shm memory\n");
+		return NULL;
+	}
+	buf = param->buf;
 
 	if (ds_pattern_one>DS_PATTERN_NONE) {
 		name.len = 0;
@@ -597,12 +608,6 @@ ds_pvar_param_p ds_get_pvar_param(int id, str uri)
 		}
 		memcpy(name.s + name.len, ds_pattern_suffix.s, ds_pattern_suffix.len);
 		name.len += ds_pattern_suffix.len;
-	}
-
-	param = shm_malloc(sizeof(ds_pvar_param_t));
-	if (!param) {
-		LM_ERR("no more shm memory\n");
-		return NULL;
 	}
 
 	if (!pv_parse_spec(ds_pattern_one>DS_PATTERN_NONE ? &name : &ds_pattern_prefix,
@@ -642,6 +647,8 @@ int ds_pvar_algo(struct sip_msg *msg, ds_set_p set, ds_dest_p **sorted_set,
 	}
 
 	for (i = 0, cnt = 0; i < set->nr - (ds_use_default?1:0); i++) {
+		int locked = 0;
+
 		if ( !dst_is_active(set->dlist[i]) ) {
 			/* move to the end of the list */
 			sset[end_idx--] = &set->dlist[i];
@@ -656,15 +663,38 @@ int ds_pvar_algo(struct sip_msg *msg, ds_set_p set, ds_dest_p **sorted_set,
 					   set->dlist[i].uri.len, set->dlist[i].uri.s);
 				continue;
 			}
-			set->dlist[i].param = (void *)param;
+
+			/* concurrent access -- avoid SHM leak */
+			lock_get(&set->dlist[i].wlock);
+			if (set->dlist[i].param) {
+				shm_free(param);
+				param = (ds_pvar_param_p)set->dlist[i].param;
+			} else {
+				set->dlist[i].param = (void *)param;
+			}
+			lock_release(&set->dlist[i].wlock);
 		} else {
 			param = (ds_pvar_param_p)set->dlist[i].param;
 		}
+
+		/* until the underlying (stat *) struct is created, we cannot
+		 * perform READ/WRITE against this pv_spec_t concurrently */
+		if (!pv_has_dname(&param->pvar)) {
+			locked = 1;
+			lock_get(&set->dlist[i].wlock);
+		}
+
 		if (pv_get_spec_value(msg, &param->pvar, &val) < 0) {
+			if (locked)
+				lock_release(&set->dlist[i].wlock);
 			LM_ERR("cannot get spec value for spec %.*s\n",
 				   set->dlist[i].uri.len, set->dlist[i].uri.s);
 			continue;
 		}
+
+		if (locked)
+			lock_release(&set->dlist[i].wlock);
+
 		if (!(val.flags & PV_VAL_NULL)) {
 			if (!(val.flags & PV_VAL_INT)) {
 				/* last attempt to retrieve value */
@@ -807,6 +837,12 @@ int ds_route_algo(struct sip_msg *msg, ds_set_p set,
 
 		fret = run_route_algo(msg, algo_route->idx, &set->dlist[i]);
 		set->dlist[i].route_algo_value = fret;
+
+		if (fret < 0) {
+			/* move to the end of the list */
+			sset[end_idx--] = &set->dlist[i];
+			continue;
+		}
 
 		/* search the proper position */
 		j = 0;
@@ -1010,7 +1046,7 @@ static ds_data_t* ds_load_data(ds_partition_t *partition)
 	int weight;
 	int prio;
 	int probe_mode;
-	struct socket_info *sock;
+	const struct socket_info *sock;
 	str uri;
 	str attrs, weight_st;
 	str description;
@@ -1086,7 +1122,7 @@ static ds_data_t* ds_load_data(ds_partition_t *partition)
 		if ( attrs.len ) {
 			sock = parse_sock_info(&attrs);
 			if (sock == NULL) {
-				LM_ERR("socket <%.*s> is not local to Marina.Rodeo (we must "
+				LM_ERR("socket <%.*s> is not local to openMarinkaRodeo (we must "
 					"listen on it) -> ignoring it\n", attrs.len, attrs.s);
 			}
 		} else {
@@ -1104,7 +1140,8 @@ static ds_data_t* ds_load_data(ds_partition_t *partition)
 			get_str_from_dbval("WEIGHT", values+3,
 			                   0/*not_null*/, 0/*not_empty*/, weight_st, error2);
 			if (!is_fs_url(&weight_st)) {
-				str2int(&weight_st, (unsigned int *)&weight);
+				if (str2int(&weight_st, (unsigned int *)&weight) < 0)
+					goto error;
 				memset(&weight_st, 0, sizeof weight_st);
 			}
 		}
@@ -1597,7 +1634,7 @@ static inline int ds_get_index(int group, ds_set_p *index,
 }
 
 
-int ds_update_dst(struct sip_msg *msg, str *uri, struct socket_info *sock,
+int ds_update_dst(struct sip_msg *msg, str *uri, const struct socket_info *sock,
 																	int mode)
 {
 	uri_type utype;
@@ -2099,7 +2136,7 @@ error:
 
 int ds_next_dst(struct sip_msg *msg, int mode, ds_partition_t *partition)
 {
-	struct socket_info *sock;
+	const struct socket_info *sock;
 	struct usr_avp *avp;
 	struct usr_avp *tmp_avp;
 	struct usr_avp *attr_avp;
@@ -2662,7 +2699,7 @@ void ds_check_timer(unsigned int ticks, void* param)
 		 * to free the whole structure here */
 		ds_options_callback_param_t params;
 
-		struct socket_info *sock;
+		const struct socket_info *sock;
 		struct usr_avp *avps;
 
 		struct gw_prob_pack *next;
@@ -2775,7 +2812,9 @@ void ds_check_timer(unsigned int ticks, void* param)
 							&partition->ping_from:
 							&ds_ping_from),
 			&pack->params.uri, NULL, NULL,
-			pack->sock?pack->sock:probing_sock,
+			pack->sock?pack->sock:(partition->ping_sock.len?
+							partition->ping_sock_info:
+							probing_sock),
 			&dlg) != 0 ) {
 				LM_ERR("failed to create new TM dlg\n");
 					continue;
@@ -2797,8 +2836,15 @@ void ds_check_timer(unsigned int ticks, void* param)
 					dlg,
 					ds_options_callback,
 					(void*)pack,
-					osips_shm_free) < 0) {
-				LM_ERR("unable to execute dialog\n");
+					oMarinkaRodeo_shm_free) < 0)
+			{
+				LM_ERR("failed to send probe for <%.*s>, set %d, setting "
+					"it to probing\n",
+					pack->params.uri.len, pack->params.uri.s,
+					pack->params.set_id);
+				ds_set_state( pack->params.set_id, &pack->params.uri,
+					DS_PROBING_DST, 1, pack->params.partition, 1, 0,
+					MI_SSTR("failed to send probe"));
 				shm_free(pack);
 			}
 			tmb.free_dlg(dlg);

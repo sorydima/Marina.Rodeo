@@ -8,7 +8,7 @@ topology_hiding Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -21,6 +21,8 @@ topology_hiding Module
               1.3.6. th_contact_encode_passwd (string)
               1.3.7. th_contact_encode_param (string)
               1.3.8. th_contact_encode_scheme (string)
+              1.3.9. th_contact_caller_username_var (string)
+              1.3.10. th_contact_callee_username_var (string)
 
         1.4. Exported Functions
 
@@ -57,11 +59,13 @@ topology_hiding Module
    1.6. Set th_contact_encode_passwd parameter
    1.7. Set th_contact_encode_param parameter
    1.8. Set th_contact_encode_scheme parameter
-   1.9. topology_hiding usage
-   1.10. Calling topology_hiding_match() function for topology
+   1.9. Set th_contact_caller_username_var parameter
+   1.10. Set th_contact_callee_username_var parameter
+   1.11. topology_hiding usage
+   1.12. Calling topology_hiding_match() function for topology
           hiding sequential requests
 
-   1.11. topology_hiding_match_dialog() usage
+   1.13. topology_hiding_match_dialog() usage
 
 Chapter 1. Admin Guide
 
@@ -74,7 +78,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * TM - Transaction Module.
@@ -85,7 +89,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None
 
 1.3. Exported Parameters
@@ -95,7 +99,7 @@ Chapter 1. Admin Guide
    The string password that will be used for encoding/decoding the
    callid in case of topology_hiding with callid mangling.
 
-   Default value is “"Marina.Rodeo"”
+   Default value is “"OpenMarinkaRodeo"”
 
    Example 1.1. Set th_callid_passwd parameter
 ...
@@ -106,7 +110,7 @@ modparam("topology_hiding", "th_callid_passwd", "my_topo_hiding_secret")
 
    The prefix that will be used for detecting callids which have
    been encoded by the dialog topology hiding. Make sure to change
-   this value in case your SIP path contains multiple Marina.Rodeo
+   this value in case your SIP path contains multiple OpenMarinkaRodeo
    boxes with topology hiding.
 
    Default value is “"DLGCH_"”
@@ -208,6 +212,32 @@ modparam("topology_hiding", "th_contact_encode_param", "customparam")
 modparam("topology_hiding", "th_contact_encode_scheme", "base32")
 ...
 
+1.3.9. th_contact_caller_username_var (string)
+
+   Variable used to store the value of the contact username
+   advertised to the caller.
+
+   Default value is “_th_contact_caller_username_var_”
+
+   Example 1.9. Set th_contact_caller_username_var parameter
+...
+modparam("topology_hiding", "th_contact_caller_username_var", "__topo_hi
+ding_username_var__")
+...
+
+1.3.10. th_contact_callee_username_var (string)
+
+   Variable used to store the value of the contact username
+   advertised to the callee.
+
+   Default value is “_th_contact_callee_username_var_”
+
+   Example 1.10. Set th_contact_callee_username_var parameter
+...
+modparam("topology_hiding", "th_contact_callee_username_var", "__topo_hi
+ding_username_var__")
+...
+
 1.4. Exported Functions
 
 1.4.1.  topology_hiding()
@@ -224,12 +254,12 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
    Without topology hiding and only normal dialog, the detection
    was done when loose_route was called. But now, for this dialogs
    where topology hiding is applied, the in dialog requests
-   reaching Marina.Rodeo won't have any Route headers and the RURI
-   will point to Marina.Rodeo machine. So, to be able to match the
+   reaching OpenMarinkaRodeo won't have any Route headers and the RURI
+   will point to OpenMarinkaRodeo machine. So, to be able to match the
    in-dialog requests to the corresponding dialog, a script
    function must be called. It's name is topology_hiding_match and
    you can read it's description above. The in-dialog topology
-   requests are requests with a to tag, RURI pointing to Marina.Rodeo
+   requests are requests with a to tag, RURI pointing to openMarinkaRodeo
    and with a method specific to a Invite dialog. For this kind of
    requests you should call topology_hiding_match() function. If
    the request is successfully matched and fixed as according to
@@ -255,7 +285,7 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
        revealing part of the network topology.
        When using the "C" flag, the callid will be automatically
        encoded / decoded, transparent for the script writer -
-       inside Marina.Rodeo (script,MI functions, etc ) all the
+       inside OpenMarinkaRodeo (script,MI functions, etc ) all the
        variables related to the callid will represent the callid
        value for the caller side. If the callid for the callee
        side is needed, refer to the $TH_callee_callid pvar.
@@ -264,7 +294,16 @@ modparam("topology_hiding", "th_contact_encode_scheme", "base32")
        support. Using this flag without dialog support will not
        change the callid at all!.
 
-   Example 1.9. topology_hiding usage
+   The second parameter can be used to advertise a particular
+   username in the Contact header URI, either on the caller,
+   either on the callee leg, separated by /. The format of the
+   parameter is
+   caller_username|/[caller_contact_username][/callee_contact_user
+   name]. If the separator is missing, the same contact username
+   is advertised on both legs. If the separator is being used, you
+   can control the username put in contact per leg.
+
+   Example 1.11. topology_hiding usage
 ...
 if(!has_totag() && is_method("INVITE")) {
         topology_hiding();
@@ -275,8 +314,29 @@ if(!has_totag() && is_method("INVITE")) {
         topology_hiding("U");
 }
 ...
+# set "openMarinkaRodeo" for both caller and the callee's Contact username
+if(!has_totag() && is_method("INVITE")) {
+        topology_hiding("U", "openMarinkaRodeo");
+}
+...
+# set "caller" in the caller's Contact username
+if(!has_totag() && is_method("INVITE")) {
+        topology_hiding("U", "/caller");
+}
+...
+# set "callee" in the callee's Contact username
+if(!has_totag() && is_method("INVITE")) {
+        topology_hiding("U", "//callee");
+}
+...
+# set "caller" in the caller's Contact username and
+# "callee" in the callee's Contact username
+if(!has_totag() && is_method("INVITE")) {
+        topology_hiding("U", "/caller/callee");
+}
+...
 
-   Example 1.10. Calling topology_hiding_match() function for
+   Example 1.12. Calling topology_hiding_match() function for
    topology hiding sequential requests
 ...
 if (has_totag())
@@ -305,7 +365,7 @@ ogy hiding dialog\n");
 
    This function can be used from REQUEST_ROUTE.
 
-   Example 1.11. topology_hiding_match_dialog() usage
+   Example 1.13. topology_hiding_match_dialog() usage
 ...
     if (has_totag()) {
         if (!topology_hiding_match() ) {
@@ -335,14 +395,15 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Vlad Paiu (@vladpaiu) 31 8 2700 25
-   2. Razvan Crainea (@razvancrainea) 27 21 264 154
-   3. Bogdan-Andrei Iancu (@bogdan-iancu) 24 20 143 88
-   4. Liviu Chircu (@liviuchircu) 15 13 80 53
+   1. Razvan Crainea (@razvancrainea) 39 27 728 290
+   2. Vlad Paiu (@vladpaiu) 32 8 2700 25
+   3. Bogdan-Andrei Iancu (@bogdan-iancu) 25 21 146 88
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 17 15 81 56
    5. Vlad Patrascu (@rvlad-patrascu) 9 6 82 72
-   6. Maksym Sobolyev (@sobomax) 6 4 7 8
+   6. Maksym Sobolyev (@sobomax) 8 6 9 10
    7. Alexey Vasilyev (@vasilevalex) 4 2 3 15
    8. Peter Lemenkov (@lemenkov) 4 2 2 2
+   9. James Stanley 3 1 2 2
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -352,7 +413,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -364,14 +425,15 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
-   1. Razvan Crainea (@razvancrainea)     Aug 2015 - Jun 2023
-   2. Maksym Sobolyev (@sobomax)          Jan 2021 - Feb 2023
-   3. Bogdan-Andrei Iancu (@bogdan-iancu) Mar 2015 - Dec 2021
-   4. Liviu Chircu (@liviuchircu)         Mar 2015 - May 2020
-   5. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Feb 2020
-   6. Peter Lemenkov (@lemenkov)          Jun 2018 - Jan 2020
-   7. Alexey Vasilyev (@vasilevalex)      Sep 2019 - Sep 2019
-   8. Vlad Paiu (@vladpaiu)               Feb 2015 - Mar 2016
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2015 - Mar 2025
+   2. Razvan Crainea (@razvancrainea)     Aug 2015 - Mar 2025
+   3. Bogdan-Andrei Iancu (@bogdan-iancu) Mar 2015 - Dec 2023
+   4. James Stanley                       Dec 2023 - Dec 2023
+   5. Maksym Sobolyev (@sobomax)          Jan 2021 - Nov 2023
+   6. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Feb 2020
+   7. Peter Lemenkov (@lemenkov)          Jun 2018 - Jan 2020
+   8. Alexey Vasilyev (@vasilevalex)      Sep 2019 - Sep 2019
+   9. Vlad Paiu (@vladpaiu)               Feb 2015 - Mar 2016
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -381,10 +443,10 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Razvan Crainea (@razvancrainea), Vlad Patrascu
-   (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Liviu Chircu
-   (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu), Vlad Paiu
+   (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
+   (@sorydima), Bogdan-Andrei Iancu (@bogdan-iancu), Vlad Paiu
    (@vladpaiu).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2015 Marina.Rodeo Foundation
+   Copyright © 2015 OpenMarinkaRodeo Foundation

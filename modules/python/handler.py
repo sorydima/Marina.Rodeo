@@ -1,4 +1,4 @@
-from Marina.Rodeo import LM_ERR
+from OpenMarinkaRodeo import LM_ERR
 
 class test:
     def __init__(self):

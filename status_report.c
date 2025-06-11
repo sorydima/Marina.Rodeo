@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2022 Marina.Rodeo Solutions
+ * Copyright (C) 2022 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -54,7 +54,7 @@ typedef struct _sr_identifier {
 	 * it is optional*/
 	str status_txt;
 	/* value of the status "> 0" ok; "< 0" not ok ; 0 not allowed */
-	short status;
+	enum sr_core_states status;
 	/* size of the "reports" array, pre-allocated */
 	short max_reports;
 	/* indexes of first and last used reports
@@ -693,10 +693,15 @@ static int _check_status(sr_group *srg, str *identifier, mi_item_t *id_item)
 }
 
 
-/****************** SR status of the Marina.Rodeo core  **************/
+/****************** SR status of the OpenMarinkaRodeo core  **************/
 
-int sr_set_core_status(int status, char *txt_s, int txt_len)
+int sr_set_core_status(enum sr_core_states status, char *txt_s, int txt_len)
 {
+	if (status == STATE_RUNNING) {
+		ready_time = time(NULL);
+		ready_delay = ready_time - startup_time;
+	}
+
 	return sr_set_status( srg_core, CHAR_INT_NULL /*main*/, status,
 		txt_s, txt_len, 0);
 }
@@ -715,7 +720,7 @@ void sr_set_core_status_terminating( void )
 }
 
 
-int sr_get_core_status(void)
+enum sr_core_states sr_get_core_status(void)
 {
 	return sri_core->status;
 }

@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Razvan
+ * Copyright (C) 2009 Voice Sistem SRL
+ * Copyright (C) 2009 Razvan
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -35,10 +35,10 @@
 #include "stun.h"
 
 /* Globals */
-struct socket_info* grep1 = NULL;
-struct socket_info* grep2 = NULL;
-struct socket_info* grep3 = NULL;
-struct socket_info* grep4 = NULL;
+const struct socket_info* grep1 = NULL;
+const struct socket_info* grep2 = NULL;
+const struct socket_info* grep3 = NULL;
+const struct socket_info* grep4 = NULL;
 int assign_once = FALSE;
 
 int sockfd4=-1;	/* ip2 port2 */
@@ -90,7 +90,7 @@ struct module_exports exports = {
 	MODULE_VERSION,     /* module version */
 	DEFAULT_DLFLAGS,    /* dlopen flags */
 	0,				    /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	0,                  /* exported functions */
 	0,                  /* exported async functions */
 	params,             /* module parameters */
@@ -162,8 +162,8 @@ static struct stun_socket *add_sock_to_set(struct stun_socket_set *set,
 static int stun_mod_init(void)
 {
 	str s;
-	struct socket_info *si;
-	struct socket_info **si_list;
+	struct socket_info_full *sif;
+	struct socket_info_full **si_list;
 	int i = 0;
 	int ip;
 	struct stun_socket *sock;
@@ -171,8 +171,8 @@ static int stun_mod_init(void)
 
 	if (use_listeners_as_primary) {
 		si_list = get_sock_info_list(PROTO_UDP);
-		for (si = si_list ? *si_list : 0; si; si = si->next)
-			if (si->address.af == AF_INET)
+		for (sif = si_list ? *si_list : 0; sif; sif = sif->next)
+			if (sif->socket_info.address.af == AF_INET)
 				no_socket_sets++;
 	} else {
 		if (!primary_ip || primary_ip[0] == '\0') {
@@ -212,7 +212,8 @@ static int stun_mod_init(void)
 		}
 
 		si_list = get_sock_info_list(PROTO_UDP);
-		for (si = si_list ? *si_list : 0; si; si = si->next) {
+		for (sif = si_list ? *si_list : 0; sif; sif = sif->next) {
+			const struct socket_info *si = &sif->socket_info;
 			if (si->address.af != AF_INET || si == grep4)
 				continue;
 			else

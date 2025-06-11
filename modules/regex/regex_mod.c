@@ -1,16 +1,16 @@
 /*
  * regex module - pcre operations
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008 Iñaki Baz Castillo
+ * Copyright (C) 2008 Iñaki Baz Castillo
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of OpenMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * OpenMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * OpenMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -22,13 +22,15 @@
  * History:
  * --------
  *  2009-01-14  initial version (Iñaki Baz Castillo)
+ *  2023-08-12  export pcres_match to MI (Fabien Aunay)
+ *  2023-08-12  export pcres_match_group to MI (Fabien Aunay)
  */
 
 
 /*!
  * \file
  * \brief REGEX :: Perl-compatible regular expressions using PCRE library
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2008 Iñaki Baz Castillo
+ * Copyright (C) 2008 Iñaki Baz Castillo
  * \ingroup regex
  */
 
@@ -46,8 +48,6 @@
 #include "../../locking.h"
 #include "../../mod_fix.h"
 #include "../../mi/mi.h"
-
-
 
 #define START 0
 #define RELOAD 1
@@ -108,8 +108,9 @@ static int w_pcre_match_group(struct sip_msg* _msg, str* string, int* _num_pcre)
 /*
  * MI functions
  */
-mi_response_t *mi_pcres_reload(const mi_params_t *params,
-								struct mi_handler *async_hdl);
+mi_response_t *mi_pcres_reload(const mi_params_t *params, struct mi_handler *async_hdl);
+mi_response_t *mi_pcres_match(const mi_params_t *params, struct mi_handler *async_hdl);
+mi_response_t *mi_pcres_match_group(const mi_params_t *params, struct mi_handler *async_hdl);
 
 
 /*
@@ -149,8 +150,16 @@ static const param_export_t params[] = {
  * Exported MI functions
  */
 static const mi_export_t mi_cmds[] = {
-	{ "regex_reload", 0, 0, 0, {
-		{mi_pcres_reload, {0}},
+	{ "regex_reload", "Causes regex module to re-read the content of the text file and re-compile the regular expressions", 0, 0, 
+		{{mi_pcres_reload, {0}},
+		{EMPTY_MI_RECIPE}}
+	},
+	{ "regex_match", "Matches the given string parameter against the regular expression pcre_regex", 0, 0, {
+		{mi_pcres_match, {"string", "pcre_regex", 0}},
+		{EMPTY_MI_RECIPE}}
+	},
+	{ "regex_match_group", "It uses the groups readed from the text file to match the given string parameter against the compiled regular expression in group number group", 0, 0, {
+		{mi_pcres_match_group, {"string", "group", 0}},
 		{EMPTY_MI_RECIPE}}
 	},
 	{EMPTY_MI_EXPORT}
@@ -165,7 +174,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,           /*!< dlopen flags */
 	0,				           /*!< load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	cmds,                      /*!< exported functions */
 	0,                         /*!< exported async functions */
 	params,                    /*!< exported parameters */
@@ -181,7 +190,6 @@ struct module_exports exports = {
 	0,                         /*!< per-child init function */
 	0                          /* reload confirm function */
 };
-
 
 
 /*! \brief
@@ -654,8 +662,7 @@ static int w_pcre_match_group(struct sip_msg* _msg, str* string, int* _num_pcre)
  */
 
 /*! \brief Reload pcres by reading the file again */
-mi_response_t *mi_pcres_reload(const mi_params_t *params,
-								struct mi_handler *async_hdl)
+mi_response_t *mi_pcres_reload(const mi_params_t *params, struct mi_handler *async_hdl)
 {
 	/* Check if group matching feature is enabled */
 	if (file == NULL) {
@@ -668,6 +675,102 @@ mi_response_t *mi_pcres_reload(const mi_params_t *params,
 		LM_ERR("failed to reload pcres\n");
 		return init_mi_error(500, MI_SSTR("Internal error"));
 	}
+
 	LM_NOTICE("reload success\n");
 	return init_mi_result_ok();
+}
+
+
+/*! \brief Matches the given string parameter against the regular expression pcre_regex */
+mi_response_t *mi_pcres_match(const mi_params_t *params, struct mi_handler *async_hdl)
+{
+	str string, pcre_regex;
+	int rc;
+
+	if ( get_mi_string_param(params, "string", &string.s, &string.len ) < 0) {
+		LM_DBG("mi_pcres_match string param error\n");
+		return init_mi_param_error();
+	}
+	if ( get_mi_string_param(params, "pcre_regex", &pcre_regex.s, &pcre_regex.len) < 0) {
+		LM_DBG("mi_pcres_match pcre_regex param error\n");
+		return init_mi_param_error();
+	}
+
+	/* handle call back function result */
+	rc = w_pcre_match(NULL, &string, &pcre_regex);
+	LM_DBG("w_pcre_match: string<%s>, pcre_regex=<%s>, result:<%i>\n", string.s, pcre_regex.s, rc);
+	
+	switch(rc) {
+		case -4:
+			/* Compilation error */
+			return init_mi_error(500, MI_SSTR("Error pcre_re compilation"));
+			break;
+		case -1:
+			/* Not Match */
+			return init_mi_result_string(MI_SSTR("Not Match"));
+			break;
+		case 1:
+			/* Match */
+			return init_mi_result_string(MI_SSTR("Match"));
+			break;
+		default:
+			/* Any other case */
+			return init_mi_error(500, MI_SSTR("Error"));
+	}
+}
+
+/*! \brief It uses the groups readed from the text file to match the given string parameter against
+ * the compiled regular expression in group number group
+ */
+mi_response_t *mi_pcres_match_group(const mi_params_t *params, struct mi_handler *async_hdl)
+{
+	str string, group;
+	int _group;
+	int rc;
+
+	if ( get_mi_string_param(params, "string", &string.s, &string.len ) < 0) {
+		LM_DBG("mi_pcres_match_group string param error\n");
+		return init_mi_param_error();
+	}
+	if ( get_mi_string_param(params, "group", &group.s, &group.len) < 0) {
+		LM_DBG("mi_pcres_match_group group param error\n");
+		return init_mi_param_error();
+	}
+
+	/* 
+	 *	type casting MI Param -> int(group) function.
+	 *	L.616 already test if group is an integer, if not, default 0 is set.
+	 */
+	_group = atoi(group.s);
+
+	/* No possible negative index */
+	if ( _group < 0 ) {
+		return init_mi_error(500, MI_SSTR("Error invalid pcre index"));
+	}
+
+	/* handle call back function result */
+	rc = w_pcre_match_group(NULL, &string, &_group);
+	LM_DBG("w_pcre_match_group: string<%s>, _group=<%i>, result:<%i>\n", string.s, _group, rc);
+
+	switch(rc) {
+		case -4:
+			/* Compilation error */
+			return init_mi_error(500, MI_SSTR("Error invalid pcre index"));
+			break;
+		case -2:
+			/* group is disabled */
+			return init_mi_error(500, MI_SSTR("Error group matching is disabled"));
+			break;
+		case -1:
+			/* Not Match */
+			return init_mi_result_string(MI_SSTR("Not Match"));
+			break;
+		case 1:
+			/* Match */
+			return init_mi_result_string(MI_SSTR("Match"));
+			break;
+		default:
+			/* Any other case */
+			return init_mi_error(500, MI_SSTR("Error"));
+	}
 }

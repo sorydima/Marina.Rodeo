@@ -1,7 +1,7 @@
 " Vim syntax file
-" Language:	Marina.Rodeo 2.4 script
-" Maintainer:	Liviu Chircu <liviu@Marina.Rodeo.org>
-" Last Change:	2017 Jul 30
+" Language:	OpenMarinkaRodeo 3.5 script
+" Maintainer:	Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  <sorydima@rechain.work>
+" Last Change:	2024 Jun 11
 
 " Quit when a (custom) syntax file was already loaded
 "if exists("b:current_syntax")
@@ -21,8 +21,10 @@ syn keyword osAction loadmodule modparam async launch
 syn keyword specialOperand yes no true false enable disable on off NULL null
 syn keyword specialOperand UDP TCP TLS SCTP WS WSS HEP_TCP HEP_UDP INET inet INET6 inet6
 
-syn keyword osGlobalParam xlog_level log_level memdump memlog stderror_enabled syslog_enabled syslog_facility syslog_name
-syn keyword osGlobalParam debug_mode udp_workers auto_aliases listen mpath tcp_workers
+syn keyword osGlobalParam xlog_level log_level memdump memlog stderror_enabled syslog_enabled
+syn keyword osGlobalParam xlog_print_level log_stdout syslog_facility syslog_name
+syn keyword osGlobalParam restart_persistency_cache_file restart_persistency_size
+syn keyword osGlobalParam debug_mode udp_workers auto_aliases socket mpath tcp_workers
 syn keyword osGlobalParam disable_tcp disable_tls check_via dns rev_dns
 syn keyword osGlobalParam tcp_send_timeout tcp_connect_timeout tcp_no_new_conn_bflag
 syn keyword osGlobalParam disable_dns_failover disable_dns_blacklist dst_blacklist
@@ -49,23 +51,28 @@ syn keyword osGlobalParam open_files_limit mcast_loopback mcast_ttl tos
 syn keyword osGlobalParam max_while_loops disable_stateless_fwd db_default_url
 syn keyword osGlobalParam disable_503_translation import_file server_header
 syn keyword osGlobalParam tcp_max_msg_time abort_on_assert anycast
+syn keyword osGlobalParam log_prefix tcp_parallel_read_on_workers
+syn keyword osGlobalParam stderror_log_format syslog_log_format
+syn keyword osGlobalParam log_json_buf_size log_msg_buf_size
+syn keyword osGlobalParam log_event_enabled log_event_level_filter
+syn keyword osGlobalParam shm_memlog_size
 
 " String constants
 syn match	osSpecial	contained 	display "\\\(x\x\+\|\o\{1,3}\|.\|$\)"
 
-" Marina.Rodeo-specific constructs
+" OpenMarinkaRodeo-specific constructs
 syn match	osLogFacility	/LOG_\(AUTH\|CRON\|DAEMON\|KERN\|LOCAL[0-7]\|LPR\|MAIL\|NEWS\|USER\|UUCP\|AUTHPRIV\|FTP\|SYSLOG\)/
 syn match	osRouteStmt	/^\s*\(\(onreply\|failure\|branch\|local\|startup\|timer\|event\|error\)_\)\=route\(\s\|\n\)*\(\[\|{\)/he=e-1
 syn match	osTransfm	contained /{[a-zA-Z][a-zA-Z0-9]*\.[a-zA-Z]\+[a-zA-Z0-9]*[^}]*}\+/
 syn region	osVarCtx	contained	matchgroup=ctxHi start="<" end="\(request\|reply\)>"
 syn region	osVarIndex	contained	start="\[" end="]" contains=osNumber,osVarNamed,osVarNamedS,osVarCon,osVarCtx,osTransfm
 
-" Marina.Rodeo variables
+" OpenMarinkaRodeo variables
 "	TODO: fix me with full list of OS vars (for better validation!)
 syn region	osVarCon	contained matchgroup=varHi start="[a-zA-Z_.0-9]\+(" end=")"
 syn region	osVar		matchgroup=varHi start="\$(" end=")" contains=osVarCtx,osVarCon,osTransfm,osVarIndex
 syn region	osVarNamed	matchgroup=varHi start="\$[a-zA-Z_.0-9]\+(" end=")"
-syn match	osVarNamedS	/\$[a-zA-Z_.0-9]\+[^a-zA-Z_0-9(]/me=e-1,he=e-1
+syn match	osVarNamedS	/\$[a-zA-Z_.0-9]\+[^a-zA-Z_.0-9(]/me=e-1,he=e-1
 
 syn region	osString	start=+"+ skip=+\\\\\|\\"+ end=+"+ extend contains=osSpecial,osVar,osVarNamed,osVarNamedS
 

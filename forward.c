@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2009 Voice Sistem SRL
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2005-2009 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -47,7 +47,7 @@
 
 /*!
  * \file
- * \brief Marina.Rodeo Stateless forward support
+ * \brief OpenMarinkaRodeo Stateless forward support
  */
 
 
@@ -90,12 +90,12 @@
  * be very likely noticeably slower, but it can deal better with
  * multihomed hosts
  */
-struct socket_info* get_out_socket(union sockaddr_union* to, int proto)
+const struct socket_info* get_out_socket(const union sockaddr_union* to, int proto)
 {
 	int temp_sock;
 	socklen_t len;
 	union sockaddr_union from;
-	struct socket_info* si;
+	const struct socket_info* si;
 	struct ip_addr ip, ip_dst;
 
 	if (proto!=PROTO_UDP) {
@@ -142,10 +142,10 @@ error:
  *
  * \note if msg!=null and msg->force_send_socket, the force_send_socket will be used
  */
-struct socket_info* get_send_socket(struct sip_msg *msg,
-										union sockaddr_union* to, int proto)
+const struct socket_info* get_send_socket(struct sip_msg *msg,
+										const union sockaddr_union* to, int proto)
 {
-	struct socket_info* send_sock;
+	const struct socket_info* send_sock;
 
 	/* check if send interface is not forced */
 	if (msg && msg->force_send_socket){
@@ -308,8 +308,8 @@ int forward_request( struct sip_msg* msg, struct proxy_l * p)
 {
 	union sockaddr_union to;
 	str buf;
-	struct socket_info* send_sock;
-	struct socket_info* last_sock;
+	const struct socket_info* send_sock;
+	const struct socket_info* last_sock;
 
 	buf.s=NULL;
 
@@ -473,7 +473,7 @@ int forward_reply(struct sip_msg* msg)
 	struct sr_module *mod;
 	int proto;
 	unsigned int id; /* used only by tcp*/
-	struct socket_info *send_sock;
+	const struct socket_info *send_sock;
 	char* s;
 	int len;
 
@@ -509,7 +509,11 @@ int forward_reply(struct sip_msg* msg)
 		|| (msg->via2==0) || (msg->via2->error!=PARSE_OK))
 	{
 		/* no second via => error */
-		LM_ERR("no 2nd via found in reply\n");
+		LM_ERR("no 2nd via found in [%.*s] [%.*s] reply from [%s] for callid [%.*s]\n",
+			msg->first_line.u.reply.status.len, msg->first_line.u.reply.status.s,
+			msg->cseq->body.len, msg->cseq->body.s,
+			ip_addr2a(&msg->rcv.src_ip),
+			msg->callid->body.len, msg->callid->body.s);
 		goto error;
 	}
 

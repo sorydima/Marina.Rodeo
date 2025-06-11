@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -21,7 +21,7 @@
 
 /*!
  * \file
- * \brief Marina.Rodeo Debug console print functions
+ * \brief OpenMarinkaRodeo Debug console print functions
  * \see syslog.h
  */
 
@@ -68,7 +68,7 @@
 #ifdef __SUNPRO_C
 	#define DP_PREFIX
 #else
-	#define DP_PREFIX  "%s [%d] "
+	#define DP_PREFIX  (char *)"%s [%d] "
 #endif
 
 #define DP_ALERT_STR    "ALERT"
@@ -140,7 +140,7 @@ extern str log_cee_hostname;
 
 /*
  * must be called after init_multi_proc_support()
- * must be called once for each Marina.Rodeo process
+ * must be called once for each OpenMarinkaRodeo process
  */
 int init_log_level(void);
 
@@ -170,7 +170,7 @@ int dp_my_pid(void);
 
 void stderr_dprint_tmp(char *format, ...);
 
-void dprint(int log_level, int facility, char *module, const char *func,
+void dprint(int log_level, int facility, const char *module, const char *func,
 	char *stderr_fmt, char *syslog_fmt, char *format, ...)
 	__attribute__ ((__format__ (__printf__, 5, 8)));
 
@@ -180,7 +180,7 @@ void __set_proc_log_level(int proc_idx, int level);
 
 void __set_proc_default_log_level(int proc_idx, int level);
 
-/* set the current and default log levels for all Marina.Rodeo processes */
+/* set the current and default log levels for all OpenMarinkaRodeo processes */
 void set_global_log_level(int level);
 
 /* set the log level of the current process */
@@ -206,9 +206,9 @@ static inline char* dp_time(void)
 	return ctime_buf+4;  /* remove name of day*/
 }
 
-static inline char *dp_log_level_str(int log_level)
+static inline const char *dp_log_level_str(int log_level)
 {
-	char *level_str;
+	const char *level_str;
 
 	switch (log_level) {
 	case L_ALERT:
@@ -454,8 +454,8 @@ static inline char *dp_log_level_str(int log_level)
 				dprint(_log_level, _log_facility, \
 					LOG_PREFIX_UTIL(MOD_NAME), __DP_FUNC, \
 					_stderr_prefix LOG_PREFIX _fmt, \
-					"%s" _syslog_prefix LOG_PREFIX _fmt, \
-					_fmt, \
+					(char *)"%s" _syslog_prefix LOG_PREFIX _fmt, \
+					(char *)_fmt, \
 					dp_time(), dp_my_pid(), log_prefix, __DP_FUNC, ## args) \
 
 		#define LM_GEN(_lev, fmt, args...) \
@@ -609,8 +609,8 @@ static inline char *dp_log_level_str(int log_level)
 #define LM_BUG(format, args...) \
 	do { \
 		LM_CRIT("\n>>> " format"\nIt seems you have hit a programming bug.\n" \
-				"Please help us make Marina.Rodeo better by reporting it at " \
-				"https://github.com/Marina.Rodeo/Marina.Rodeo/issues\n\n", ##args); \
+				"Please help us make OpenMarinkaRodeo better by reporting it at " \
+				"https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/issues\n\n", ##args); \
 	} while (0)
 
 #define CASE_PRINTENUM(em) \

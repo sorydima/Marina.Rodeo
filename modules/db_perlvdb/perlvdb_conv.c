@@ -1,17 +1,17 @@
 /*
  * Perl virtual database module interface
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 Collax GmbH
+ * Copyright (C) 2007 Collax GmbH
  *                    (Bastian Friedrich <bastian.friedrich@collax.com>)
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -62,7 +62,7 @@ AV *conds2perlarray(db_key_t* keys, db_op_t* ops, db_val_t* vals, int n) {
 				    *(ops + i), vals + i);
 			}
 		} else {
-/* OP_EQ is defined in Marina.Rodeo _and_ perl. Includes collide :( */
+/* OP_EQ is defined in OpenMarinkaRodeo _and_ perl. Includes collide :( */
 #ifdef OP_EQ
 			element = cond2perlcond(*(keys + i), OP_EQ, vals + i);
 #else
@@ -91,7 +91,7 @@ AV *keys2perlarray(db_key_t* keys, int n) {
 	return array;
 }
 
-inline SV *valdata(db_val_t* val) {
+static inline SV *valdata(db_val_t* val) {
 	SV *data = &PL_sv_undef;
 	const char* stringval;
 
@@ -121,7 +121,7 @@ inline SV *valdata(db_val_t* val) {
 			break;
 
 		case DB_DATETIME:
-			data = newSViv((unsigned int)VAL_TIME(val));
+			data = newSViv((unsigned int)(unsigned long)VAL_TIME(val));
 			break;
 
 		case DB_BLOB:
@@ -246,7 +246,7 @@ int perlresult2dbres(SV *perlres, db_res_t **r) {
 			     modified db result value. */
 
 	if (!(SvROK(perlres) &&
-		(sv_derived_from(perlres, "Marina.Rodeo::VDB::Result")))) {
+		(sv_derived_from(perlres, "OpenMarinkaRodeo::VDB::Result")))) {
 		goto error;
 	}
 
@@ -428,7 +428,7 @@ int perlresult2dbres(SV *perlres, db_res_t **r) {
 end:
 	return retval;
 error:
-	LM_CRIT("broken result set. Exiting, leaving Marina.Rodeo in unknown state.\n");
+	LM_CRIT("broken result set. Exiting, leaving OpenMarinkaRodeo in unknown state.\n");
 	return -1;
 }
 

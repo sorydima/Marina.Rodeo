@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2019 - Marina.Rodeo Project
+ * Copyright (C) 2019 - OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -59,8 +59,8 @@ static int mod_init(void);
 static int child_init(int rank);
 static int smpp_init(struct proto_info *pi);
 static int smpp_init_listener(struct socket_info *si);
-static int smpp_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int smpp_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id);
 static int smpp_read_req(struct tcp_connection* conn, int* bytes_read);
 static int smpp_write_async_req(struct tcp_connection* con,int fd);
@@ -116,7 +116,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,	/* dlopen flags */
 	0,					/* load function */
-	NULL,			/* Marina.Rodeo module dependencies */
+	NULL,			/* OpenMarinkaRodeo module dependencies */
 	cmds,			/* exported functions */
 	0,			/* exported async functions */
 	params,			/* module parameters */
@@ -144,11 +144,11 @@ static int smpp_init(struct proto_info *pi)
 	pi->tran.dst_attr	= tcp_conn_fcntl;
 
 	pi->net.flags		= PROTO_NET_USE_TCP;
-	pi->net.read		= (proto_net_read_f)smpp_read_req;
-	pi->net.write		= (proto_net_write_f)smpp_write_async_req;
+	pi->net.stream.read	= smpp_read_req;
+	pi->net.stream.write	= smpp_write_async_req;
 
-	pi->net.conn_init	= smpp_conn_init;
-	pi->net.conn_clean	= smpp_conn_clean;
+	pi->net.stream.conn.init  = smpp_conn_init;
+	pi->net.stream.conn.clean = smpp_conn_clean;
 
 	return 0;
 }
@@ -229,8 +229,8 @@ static int smpp_init_listener(struct socket_info *si)
 	return tcp_init_listener(si);
 }
 
-static int smpp_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int smpp_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id)
 {
 	LM_INFO("smpp_send called\n");

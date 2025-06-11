@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2022 - Marina.Rodeo Solutions
+ * Copyright (C) 2022 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -68,7 +68,7 @@ b2b_api_t b2b_api;
 str my_msrp_uri_str;
 struct msrp_url my_msrp_uri;
 
-struct socket_info *msrp_sock;
+const struct socket_info *msrp_sock;
 
 str adv_contact;
 
@@ -186,7 +186,7 @@ static module_dependency_t *get_deps_relay_uri(const param_export_t *param)
 }
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "proto_msrp"  , DEP_ABORT  },
 		{ MOD_TYPE_DEFAULT, "b2b_entities", DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
@@ -203,7 +203,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,               /* load function */
-	&deps,      /* Marina.Rodeo module dependencies */
+	&deps,      /* OpenMarinkaRodeo module dependencies */
 	cmds,       /* exported functions */
 	0,          /* exported async functions */
 	params,     /* module parameters */
@@ -423,7 +423,7 @@ static int mod_init(void)
 		LM_ERR("no more shm memory\n");
 		return -1;
 	}
-	*next_sdp_id = time(NULL);
+	*next_sdp_id = (int)(unsigned long)time(NULL);
 
 	if (msrpua_evi_init() < 0) {
 		LM_ERR("Failed to init events\n");
@@ -1112,7 +1112,7 @@ static int b2b_notify_request(int etype, struct sip_msg *msg, str *key,
 	switch (msg->REQ_METHOD) {
 	case METHOD_INVITE:
 		if (get_body(msg, &body) == 0 && body.len == 0) {
-			/* no SDP -> late negociation */
+			/* no SDP -> late negotiation */
 
 			if (msrpua_update_send_200ok(sess, etype) < 0)
 				LM_ERR("Failed to send 200 OK on reInvite with no SDP\n");
@@ -1171,7 +1171,7 @@ static int b2b_notify_request(int etype, struct sip_msg *msg, str *key,
 			/* ACK for reINVITE */
 
 			if (get_body(msg, &body) == 0 && body.len == 0) {
-				/* no SDP -> no late negociation, just update state */
+				/* no SDP -> no late negotiation, just update state */
 				sess->dlg_state = MSRPUA_DLG_EST;
 			} else {
 				/* ACK with SDP -> update session */

@@ -21,7 +21,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -38,7 +38,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before 
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -55,7 +55,7 @@
 	<section id="param_connect_timeout" xreflabel="connect_timeout">
 		<title><varname>connect_timeout</varname> (integer)</title>
 		<para>
-			The amount of milliseconds &osips; waits to connect to the the
+			The amount of milliseconds &oMarinkaRodeo; waits to connect to the the
 			JSON-RPC server, until it times out.
 		</para>
 		<para>
@@ -75,7 +75,7 @@ modparam("jsonrpc", "connect_timeout", 200)
 	<section id="param_write_timeout" xreflabel="write_timeout">
 		<title><varname>write_timeout</varname> (integer)</title>
 		<para>
-			The amount of milliseconds &osips; waits to send a RPC command to
+			The amount of milliseconds &oMarinkaRodeo; waits to send a RPC command to
 			the JSON-RPC server, until it times out.
 		</para>
 		<para>
@@ -95,7 +95,7 @@ modparam("jsonrpc", "write_timeout", 300)
 	<section id="param_read_timeout" xreflabel="read_timeout">
 		<title><varname>read_timeout</varname> (integer)</title>
 		<para>
-			The amount of milliseconds &osips; waits for the JSON-RPC server
+			The amount of milliseconds &oMarinkaRodeo; waits for the JSON-RPC server
 			to respond to a JSON-RPC request, until it times out. Note that
 			these parameter only affects the <emphasis>jsonrpc_request</emphasis>
 			command.

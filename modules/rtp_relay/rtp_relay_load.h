@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2021 Marina.Rodeo Solutions
+ * Copyright (C) 2021 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -37,7 +37,8 @@ struct rtp_relay_binds {
 	int (*answer)(rtp_ctx ctx, str *id, unsigned int flags, str *body);
 	int (*delete)(rtp_ctx ctx, str *id, unsigned int flags);
 	int (*copy_offer)(rtp_ctx ctx, str *id, str *flags,
-			unsigned int copy_flags, unsigned int streams, str *ret_body);
+			unsigned int copy_flags, unsigned int streams, str *ret_body,
+			struct rtp_relay_streams *ret_streams);
 	int (*copy_answer)(rtp_ctx ctx, str *id,
 			str *flags, str *body);
 	int (*copy_delete)(rtp_ctx ctx, str *id,
@@ -68,7 +69,8 @@ int rtp_relay_api_offer(rtp_ctx ctx, str *id, unsigned int flags, str *body);
 int rtp_relay_api_answer(rtp_ctx ctx, str *id, unsigned int flags, str *body);
 int rtp_relay_api_delete(rtp_ctx ctx, str *id, unsigned int flags);
 int rtp_relay_copy_offer(rtp_ctx ctx, str *id, str *flags,
-		unsigned int copy_flags, unsigned int streams, str *ret_body);
+		unsigned int copy_flags, unsigned int streams, str *ret_body,
+		struct rtp_relay_streams *ret_streams);
 int rtp_relay_copy_answer(rtp_ctx ctx, str *id,
 		str *flags, str *body);
 int rtp_relay_copy_delete(rtp_ctx ctx, str *id,

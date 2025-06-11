@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		This module can be used to efficiently run Python code directly from
-		the &osips; script, without executing the <emphasis>python</emphasis>
+		the &oMarinkaRodeo; script, without executing the <emphasis>python</emphasis>
 		interpreter.
 
 	</para>
@@ -97,7 +97,7 @@
 		</para></listitem>
 		<listitem><para>
 		<emphasis>dst_address</emphasis> - the (IP, port) tuple representing
-		the destination address (&osips; address) of the message
+		the destination address (&oMarinkaRodeo; address) of the message
 		</para></listitem>
 		<listitem><para>
 		<emphasis>copy()</emphasis> - copies the current SIP message in a new
@@ -137,7 +137,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -153,7 +153,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before 
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -174,14 +174,14 @@
 		</para>
 		<para>
 		<emphasis>
-			Default value is <quote>/usr/local/etc/Marina.Rodeo/handler.py</quote>.
+			Default value is <quote>/usr/local/etc/openMarinkaRodeo/handler.py</quote>.
 		</emphasis>
 		</para>
 		<example>
 		<title>Set <varname>script_name</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("python", "script_name", "/usr/local/bin/Marina.Rodeo_handler.py")
+modparam("python", "script_name", "/usr/local/bin/openMarinkaRodeo_handler.py")
 ...
 </programlisting>
 		</example>

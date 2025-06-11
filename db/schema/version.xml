@@ -1,3 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table PUBLIC "-//openMarinkaRodeo.org//DTD DBSchema V1.1//EN"
+    "https://openMarinkaRodeo.org/pub/openMarinkaRodeo/dbschema/dtd/1.1/dbschema.dtd"[
+    <!ENTITY % entities SYSTEM "entities.xml">
+    %entities;
+
+]>
+
 <table id="version" xmlns:xi="http://www.w3.org/2001/XInclude">
     <name>version</name>
     <type db="mysql">&MYSQL_TABLE_TYPE;</type>

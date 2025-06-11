@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2022 Marina.Rodeo Solutions
+ * Copyright (C) 2022 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -33,7 +33,7 @@ enum sr_status {
 	SR_STATUS_NO_DATA		=- 2,
 	SR_STATUS_LOADING_DATA	= -1,
 	SR_STATUS_NOT_READY		= -1,
-	SR_STATUS_RESEARVED		=  0,
+	SR_STATUS_RESERVED		=  0,
 	SR_STATUS_READY			=  1,
 	SR_STATUS_RELOADING_DATA=  2,
 	};
@@ -75,21 +75,21 @@ int sr_add_report_fmt(void *group,
 		char *fmt_val, ...);
 
 
-/* functions related to status of the Marina.Rodeo core */
+/* functions related to status of the OpenMarinkaRodeo core */
 
 enum sr_core_states { STATE_NONE=-100, STATE_TERMINATING=-2,
 		STATE_INITIALIZING=-1, STATE_RUNNING=1 };
 
-int sr_set_core_status(int status, char *txt_s, int txt_len);
+int sr_set_core_status(enum sr_core_states status, char *txt_s, int txt_len);
 
 void sr_set_core_status_terminating( void );
 
-int sr_get_core_status(void);
+enum sr_core_states sr_get_core_status(void);
 
 int sr_add_core_report(char *report_s, int report_len);
 
 
-/* functions used by the Marina.Rodeo core */
+/* functions used by the OpenMarinkaRodeo core */
 
 int init_status_report(void);
 

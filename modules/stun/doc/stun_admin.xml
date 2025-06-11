@@ -39,13 +39,13 @@
 				The sockets come from existing SIP sockets or are created.
 			</para>
 			<para>
-				Socket1 must allways be a SIP UDP listener from Marina.Rodeo.
+				Socket1 must allways be a SIP UDP listener from OpenMarinkaRodeo.
 			</para>
 			<para>
 			If <xref linkend="param_use_listeners_as_primary"/> is enabled
 			the STUN server will actually use multiple sets of sockets obtained
 			from the IP/port combinations described above, each set corresponding
-			to a SIP UDP listener from Marina.Rodeo.
+			to a SIP UDP listener from OpenMarinkaRodeo.
 			</para>
 			<para>
 				The server will create a separate process.
@@ -91,7 +91,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 		<title>Dependencies</title>
 		<section>
-			<title>&osips; Modules</title>
+			<title>&oMarinkaRodeo; Modules</title>
 			<para>
 			The following modules must be loaded before this module:
 			</para>
@@ -104,7 +104,7 @@
 			<title>External Libraries or Applications</title>
 			<para>
 			The following libraries or applications must be installed before 
-			running &osips; with this module loaded:
+			running &oMarinkaRodeo; with this module loaded:
 				<itemizedlist>
 					<listitem>
 						<para>
@@ -124,7 +124,7 @@
 			</title>
 			<para>
 			The IP of an interface which is configured as an UDP SIP listener
-			in &osips;. This is a mandatory parameter, unless
+			in &oMarinkaRodeo;. This is a mandatory parameter, unless
 			<xref linkend="param_use_listeners_as_primary"/> is enabled.
 			</para>
 			<para>
@@ -143,7 +143,7 @@
 ...
 modparam("stun", "primary_ip", "192.168.0.100")
 
-# Example of a STUN server within Marina.Rodeo which is behind NAT
+# Example of a STUN server within OpenMarinkaRodeo which is behind NAT
 modparam("stun", "primary_ip", "192.168.0.100 / 64.50.46.78")
 ...
 				</programlisting>
@@ -156,7 +156,7 @@ modparam("stun", "primary_ip", "192.168.0.100 / 64.50.46.78")
 			</title>
 			<para>
 			The port configured (together with the <emphasis>primary_ip</emphasis>) as an UDP SIP
-			listener in &osips;. The default value is 5060.
+			listener in &oMarinkaRodeo;. The default value is 5060.
 			</para>
 			<para>
 			Syntax: "port [/ advertised_port]
@@ -193,13 +193,13 @@ modparam("stun", "primary_port", "5060 / 5062")
 			<itemizedlist>
 				<listitem>
 				<para>
-				an IP from an existing UDP SIP listener configured in Marina.Rodeo,
+				an IP from an existing UDP SIP listener configured in OpenMarinkaRodeo,
 				but one that is different from all the other UPD listeners;
 				</para>
 				</listitem>
 				<listitem>
 				<para>
-				an IP that is different from the UDP SIP listeners configured in Marina.Rodeo.
+				an IP that is different from the UDP SIP listeners configured in OpenMarinkaRodeo.
 				</para>
 				</listitem>
 			</itemizedlist>
@@ -220,7 +220,7 @@ modparam("stun", "primary_port", "5060 / 5062")
 ...
 modparam("stun","alternate_ip","11.22.33.44")
 
-# Example of a STUN server within Marina.Rodeo which is behind NAT
+# Example of a STUN server within OpenMarinkaRodeo which is behind NAT
 modparam("stun", "alternate_ip", "192.168.0.100 / 64.78.46.50")
 ...
 				</programlisting>
@@ -241,13 +241,13 @@ modparam("stun", "alternate_ip", "192.168.0.100 / 64.78.46.50")
 			<itemizedlist>
 				<listitem>
 				<para>
-				a port from an existing UDP SIP listener configured in Marina.Rodeo,
+				a port from an existing UDP SIP listener configured in OpenMarinkaRodeo,
 				but one that is different from all the other UPD listeners;
 				</para>
 				</listitem>
 				<listitem>
 				<para>
-				a port that is different from the UDP SIP listeners configured in Marina.Rodeo.
+				a port that is different from the UDP SIP listeners configured in OpenMarinkaRodeo.
 				</para>
 				</listitem>
 			</itemizedlist>

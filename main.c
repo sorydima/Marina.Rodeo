@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2006 Voice Sistem S.R.L
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2005-2006 Voice Sistem S.R.L
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -168,8 +168,8 @@ static const char compiled[] =  __TIME__ " " __DATE__ ;
 static int own_pgid = 0; /* whether or not we have our own pgid (and it's ok
 			    to use kill(0, sig) */
 
-static char* version=Marina.Rodeo_FULL_VERSION;
-static char* flags=Marina.Rodeo_COMPILE_FLAGS;
+static char* version=OPENMarinkaRodeo_FULL_VERSION;
+static char* flags=OPENMarinkaRodeo_COMPILE_FLAGS;
 
 static int user_id = 0;
 static int group_id = 0;
@@ -192,9 +192,7 @@ static void print_ct_constants(void)
 		MAX_RECV_BUFFER_SIZE, MAX_LISTEN, MAX_URI_SIZE,
 		BUF_SIZE );
 	printf("poll method support: %s.\n", poll_support);
-#ifdef VERSIONTYPE
 	printf("%s revision: %s\n", core_scm_ver.type, core_scm_ver.rev);
-#endif
 }
 
 static int
@@ -227,6 +225,7 @@ static const struct main_script main_script[] = {
 	FN_HNDLR(init_db_support, !=, 0, "SQL database support"),
 	FN_HNDLR(init_cdb_support, !=, 0, "CacheDB support"),
 	FN_HNDLR(init_modules, !=, 0, "modules"),
+	FN_HNDLR(init_auto_scaling, !=, 0, "auto-scaling support"),
 	FN_HNDLR(init_xlog, <, 0, "xlog"),
 	FN_HNDLR(register_route_timers, <, 0, "route_timers"),
 	FN_HNDLR(init_pvar_support, !=, 0, "pseudo-variable support"),
@@ -235,7 +234,7 @@ static const struct main_script main_script[] = {
 	FN_HNDLR(fix_rls, !=, 0, "routing lists"),
 	FN_HNDLR(init_log_level, !=, 0, "logging levels"),
 	FN_HNDLR(init_log_event_cons, <, 0, "log event consumer"),
-	FN_HNDLR(trans_init_all_listeners, <, 0, "all SIP listeners"),
+	FN_HNDLR(trans_init_udp_listeners, <, 0, "all SIP listeners"),
 	FN_HNDLR(init_script_reload, <, 0, "cfg reload ctx"),
 	FN_HNDLR(init_suid, ==, -1, "do_suid"),
 	FN_HNDLR(run_post_fork_handlers, <, 0, "post-fork handlers"),
@@ -330,7 +329,7 @@ static int main_loop(void)
 		}
 
 		rc = run_unit_tests();
-		shutdown_Marina.Rodeo(rc);
+		shutdown_openMarinkaRodeo(rc);
 	}
 
 	report_conditional_status( (!no_daemon_mode), 0);
@@ -389,7 +388,7 @@ error:
  */
 int main(int argc, char** argv)
 {
-	int c;
+	int c, n;
 	char *tmp;
 	int tmp_len;
 	int port;
@@ -408,7 +407,7 @@ int main(int argc, char** argv)
 	/* process pkg mem size from command line */
 	opterr=0;
 
-	options="f:cCm:M:b:l:n:N:rRvdDFEVhw:t:u:g:p:P:G:W:o:a:k:s:"
+	options="A:f:cCm:M:b:l:n:N:rRvdDFEVhw:t:u:g:p:P:G:W:o:a:k:s:"
 #ifdef UNIT_TESTS
 	"T:"
 #endif
@@ -620,6 +619,10 @@ int main(int argc, char** argv)
 					if (add_arg_var(optarg) < 0)
 						LM_ERR("cannot add option %s\n", optarg);
 					break;
+			case 'A':
+					default_global_address->s = optarg;
+					default_global_address->len = strlen(optarg);
+					break;
 #ifdef UNIT_TESTS
 			case 'T':
 					LM_INFO("running in testing framework mode, for '%s'\n", optarg);
@@ -627,7 +630,7 @@ int main(int argc, char** argv)
 					testing_module = optarg;
 					if (strcmp(testing_module, "core")) {
 						cfg_file = malloc(100);
-						snprintf(cfg_file, 100, "modules/%s/test/Marina.Rodeo.cfg",
+						snprintf(cfg_file, 100, "modules/%s/test/openMarinkaRodeo.cfg",
 						         testing_module);
 					}
 					break;
@@ -702,7 +705,7 @@ try_again:
 	sr_add_core_report( MI_SSTR("initializing") );
 
 	if ((!testing_framework || strcmp(testing_module, "core"))
-	        && parse_Marina.Rodeo_cfg(cfg_file, preproc, NULL) < 0) {
+	        && parse_openMarinkaRodeo_cfg(cfg_file, preproc, NULL) < 0) {
 		LM_ERR("failed to parse config file %s\n", cfg_file);
 		goto error00;
 	}
@@ -860,7 +863,7 @@ try_again:
 		}
 	}
 
-	/* print Marina.Rodeo version to log for history tracking */
+	/* print OpenMarinkaRodeo version to log for history tracking */
 	LM_NOTICE("version: %s\n", version);
 
 	/* print some data about the configuration */
@@ -873,7 +876,7 @@ try_again:
 	LM_NOTICE("using system memory for private process memory\n");
 #endif
 
-	for (int n = 0; n < howmany(main_script, main_script[0]); n++) {
+	for (n = 0; n < howmany(main_script, main_script[0]); n++) {
 		int result = main_script[n].hndlr();
 		pred_cmp_f pred_cmp = cmps_ops[main_script[n].pval];
 		if (pred_cmp(result, main_script[n].pred)) {

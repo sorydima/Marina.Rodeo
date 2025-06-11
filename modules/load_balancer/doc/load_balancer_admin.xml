@@ -8,12 +8,12 @@
 	<title>Overview</title>
 	<para>
 	The Load-Balancer module comes to provide traffic routing based on load. 
-	Shortly, when &osips; routes calls to a set of destinations, it is able 
+	Shortly, when &oMarinkaRodeo; routes calls to a set of destinations, it is able 
 	to keep the load status (as number of ongoing calls) of each destination 
 	and to choose to route to the less loaded destination (at that moment). 
-	&osips; is aware of the capacity of each destination - it is preconfigured 
+	&oMarinkaRodeo; is aware of the capacity of each destination - it is preconfigured 
 	with the maximum load accepted by the destinations. To be more precise, 
-	when routing, &osips; will consider the less loaded destination not the 
+	when routing, &oMarinkaRodeo; will consider the less loaded destination not the 
 	destination with the smallest number of ongoing calls, but the destination 
 	with the largest available slot.
 	</para>
@@ -29,8 +29,8 @@
 	<section>
 	<title>How it works</title>
 		<para>
-		Please refer to the Load-Balancer tutorial from the &osips; website:
-		<ulink url='https://Marina.Rodeo.org/Documentation/Tutorials-LoadBalancing-1-9'>https://Marina.Rodeo.org/Documentation/Tutorials-LoadBalancing-1-9</ulink>.
+		Please refer to the Load-Balancer tutorial from the &oMarinkaRodeo; website:
+		<ulink url='https://openMarinkaRodeo.org/Documentation/Tutorials-LoadBalancing-1-9'>https://openMarinkaRodeo.org/Documentation/Tutorials-LoadBalancing-1-9</ulink>.
 		</para>
 	</section>
 
@@ -85,7 +85,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -124,7 +124,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before 
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -327,13 +327,13 @@ modparam("load_balancer", "lb_define_blacklist", "blist2= 2,10,6")
 		or <emphasis>"channels=fs://user:password@127.0.0.1:8021"</emphasis>. The default ESL port is 8021.
 		</para>
 		<para>
-		Marina.Rodeo will establish a connection with the given socket and
+		OpenMarinkaRodeo will establish a connection with the given socket and
 		periodically update the internal maximum value of the given resource
 		using statistics pushed by the FreeSWITCH box.
 		</para>
 		<para>
 		The max value of a resource is updated every <emphasis>event_heartbeat_interval</emphasis>
-		seconds (see the "freeswitch" Marina.Rodeo module for more details
+		seconds (see the "freeswitch" OpenMarinkaRodeo module for more details
 		regarding this setting), as the stats arrive from FreeSWITCH.
 	</para>
 	<para>
@@ -407,7 +407,7 @@ modparam("load_balancer", "initial_freeswitch_load", 200)
 		<para>
 		If clustering enbled, the module will automatically share changes
 		over the status of the destinations with the other 
-		Marina.Rodeo instances that are part of a cluster. Whenever such a status 
+		OpenMarinkaRodeo instances that are part of a cluster. Whenever such a status 
 		changes (following an MI command, a probing result, a script command),
 		the module will replicate this status change to all the nodes in this 
 		given cluster.
@@ -418,8 +418,11 @@ modparam("load_balancer", "initial_freeswitch_load", 200)
 		destinations. See the
 		<xref linkend="param_cluster_sharing_tag"/> option.
 		</para>
+
+			&clusterer_sync_cap_para;
+
 		<para>
-		For more info on how to define and populate a cluster (with Marina.Rodeo 
+		For more info on how to define and populate a cluster (with OpenMarinkaRodeo 
 		nodes) see the "clusterer" module.
 		</para>
 		<para>
@@ -431,7 +434,7 @@ modparam("load_balancer", "initial_freeswitch_load", 200)
 		<title>Set <varname>cluster_id</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-# replicate destination status with all Marina.Rodeo in cluster ID 9
+# replicate destination status with all OpenMarinkaRodeo in cluster ID 9
 modparam("load_balancer", "cluster_id", 9)
 ...
 </programlisting>
@@ -917,7 +920,7 @@ if (lb_is_destination($si,$sp) ) {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi lb_reload
+		openMarinkaRodeo-cli -x mi lb_reload
 		</programlisting>
 		</section>
 
@@ -942,7 +945,7 @@ if (lb_is_destination($si,$sp) ) {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi lb_resize 11 voicemail 56
+		openMarinkaRodeo-cli -x mi lb_resize 11 voicemail 56
 		</programlisting>
 		</section>
 
@@ -955,7 +958,7 @@ if (lb_is_destination($si,$sp) ) {
 		<example>
 		<title><function>lb_list</function> usage</title>
 		<programlisting format="linespecific">
-$ Marina.Rodeo-cli -x mi lb_list
+$ openMarinkaRodeo-cli -x mi lb_list
 Destination:: sip:127.0.0.1:5100 id=1 enabled=yes auto-re=on
         Resource:: pstn max=3 load=0
         Resource:: transc max=5 load=1
@@ -988,10 +991,10 @@ Destination:: sip:127.0.0.1:5200 id=2 enabled=no auto-re=on
 		<example>
 		<title><function>lb_status</function> usage</title>
 		<programlisting format="linespecific">
-$ Marina.Rodeo-cli -x mi lb_status 2
+$ openMarinkaRodeo-cli -x mi lb_status 2
 enable:: no
-$ Marina.Rodeo-cli -x mi lb_status 2 1
-$ Marina.Rodeo-cli -x mi lb_status 2
+$ openMarinkaRodeo-cli -x mi lb_status 2 1
+$ openMarinkaRodeo-cli -x mi lb_status 2
 enable:: yes
 </programlisting>
 		</example>

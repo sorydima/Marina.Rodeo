@@ -1,16 +1,16 @@
 /*
  * DBText module interface
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -50,10 +50,13 @@ static mi_response_t *mi_dbt_reload_1(const mi_params_t *params,
 static mi_response_t *mi_dbt_reload_2(const mi_params_t *params,
 								struct mi_handler *async_hdl);
 
+#define DEFAULT_DB_TEXT_READ_BUFFER_SIZE 4096
+
 /*
  * Module parameter variables
  */
 int db_mode = 0;  /* Database usage mode: 0 = cache, 1 = no cache */
+int buffer_size = DEFAULT_DB_TEXT_READ_BUFFER_SIZE;
 
 int dbt_bind_api(const str* mod, db_func_t *dbb);
 
@@ -70,6 +73,7 @@ static const cmd_export_t cmds[] = {
  */
 static const param_export_t params[] = {
 	{"db_mode", INT_PARAM, &db_mode},
+	{"buffer_size", INT_PARAM, &buffer_size},
 	{0, 0, 0}
 };
 
@@ -95,7 +99,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	cmds,     /* Exported functions */
 	NULL,     /* Exported async functions */
 	params,   /* Exported parameters */

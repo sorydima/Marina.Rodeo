@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007 Elena-Ramona Modroiu
+ * Copyright (C) 2007 Elena-Ramona Modroiu
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -70,6 +70,12 @@ sh_var_t* add_shvar(const str *name)
 	hash_lock(sh_vars, e);
 
 	shv_holder = (sh_var_t **)hash_get(sh_vars, e, *name);
+	if (!shv_holder) {
+		LM_ERR("oom\n");
+		hash_unlock(sh_vars, e);
+		return NULL;
+	}
+
 	if (*shv_holder) {
 		hash_unlock(sh_vars, e);
 		return *shv_holder;
@@ -447,7 +453,8 @@ int mi_print_var(sh_var_t *shv, mi_item_t *var_item, int do_locking)
 			return -1;
 		}
 
-		unlock_shvar(shv);
+		if (do_locking)
+			unlock_shvar(shv);
 	} else {
 		ival = shv->v.value.n;
 		if (do_locking)
@@ -547,7 +554,7 @@ mi_response_t *mi_shvar_get_1(const mi_params_t *params, struct mi_handler *_)
 	if (!var_obj)
 		goto error;
 
-	if (mi_print_var(shv, var_obj, 0) < 0)
+	if (mi_print_var(shv, var_obj, 1) < 0)
 		goto error;
 
 	return resp;

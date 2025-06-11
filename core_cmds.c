@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2019 Marina.Rodeo Solutions
+ * Copyright (C) 2019 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -20,7 +20,7 @@
  */
 
 /*
- * Script functions exported by the Marina.Rodeo core
+ * Script functions exported by the OpenMarinkaRodeo core
  */
 
 #include "action.h"
@@ -39,6 +39,7 @@
 #include "status_report.h"
 #include "cachedb/cachedb.h"
 #include "msg_translator.h"
+#include "mod_fix.h"
 /* needed by tcpconn_add_alias() */
 #include "net/tcp_conn_defs.h"
 
@@ -48,6 +49,8 @@ static int fixup_free_destination(void** param);
 static int fixup_mflag(void** param);
 static int fixup_bflag(void** param);
 static int fixup_qvalue(void** param);
+static int fixup_branch_keep(void** param);
+static int fixup_branch_index(void** param);
 static int fixup_f_send_sock(void** param);
 static int fixup_blacklist_name(void** param);
 static int fixup_blacklist(void** param);
@@ -62,6 +65,9 @@ static int fixup_format_string(void** param);
 static int fixup_nt_string(void** param);
 static int fixup_nt_str(void** param);
 static int fixup_nt_str_free(void** param);
+static int fixup_via_hdl(void** param);
+static int fixup_append_mbranch_flags(void** param);
+
 
 static int w_forward(struct sip_msg *msg, struct proxy_l *dest);
 static int w_send(struct sip_msg *msg, struct proxy_l *dest, str *headers);
@@ -80,8 +86,14 @@ static int w_seturi(struct sip_msg *msg, str *uri);
 static int w_prefix(struct sip_msg *msg, str *prefix);
 static int w_strip(struct sip_msg *msg, int *nchars);
 static int w_strip_tail(struct sip_msg *msg, int *nchars);
-static int w_append_branch(struct sip_msg *msg, str *uri, int *qvalue);
-static int w_remove_branch(struct sip_msg *msg, int *branch);
+static int w_append_branch_old(struct sip_msg *msg, str *uri, int *qvalue);
+static int w_append_msg_branch(struct sip_msg *msg, str *uri, int *qvalue,
+		void *flags);
+static int w_remove_msg_branch(struct sip_msg *msg, int *branch);
+static int w_move_msg_branch(struct sip_msg *msg,
+		int *src_idx, int *dst_idx, int *keep);
+static int w_swap_msg_branches(struct sip_msg *msg,
+		int *src_idx, int *dst_idx);
 static int w_pv_printf(struct sip_msg *msg, pv_spec_t *var, str *fmt_str);
 static int w_revert_uri(struct sip_msg *msg);
 static int w_setdsturi(struct sip_msg *msg, str *uri);
@@ -122,6 +134,8 @@ static int w_get_timestamp(struct sip_msg *msg, pv_spec_t *sec_avp,
 static int w_script_trace(struct sip_msg *msg, int *log_level,
 					pv_elem_t *fmt_string, void *info_str);
 static int w_is_myself(struct sip_msg *msg, str *host, int *port);
+static int w_print_avps(struct sip_msg* msg, char* foo, char *bar);
+static int w_set_via_handling(struct sip_msg* msg, int flags);
 
 #ifndef FUZZ_BUILD
 static
@@ -183,13 +197,31 @@ const cmd_export_t core_cmds[]={
 	{"strip_tail", (cmd_function)w_strip_tail, {
 		{CMD_PARAM_INT, 0, 0}, {0,0,0}},
 		ALL_ROUTES},
-	{"append_branch", (cmd_function)w_append_branch, {
+	{"append_branch_old", (cmd_function)w_append_branch_old, {
 		{CMD_PARAM_STR|CMD_PARAM_OPT, 0, 0},
 		{CMD_PARAM_STR|CMD_PARAM_OPT|CMD_PARAM_FIX_NULL,
 			fixup_qvalue, 0}, {0,0,0}},
 		ALL_ROUTES},
-	{"remove_branch", (cmd_function)w_remove_branch, {
+	{"append_msg_branch", (cmd_function)w_append_msg_branch, {
+		{CMD_PARAM_STR, 0, 0},
+		{CMD_PARAM_STR|CMD_PARAM_OPT|CMD_PARAM_FIX_NULL,
+			fixup_qvalue, 0},
+		{CMD_PARAM_STR|CMD_PARAM_OPT,fixup_append_mbranch_flags,0},
+		{0,0,0}},
+		ALL_ROUTES},
+	{"remove_msg_branch", (cmd_function)w_remove_msg_branch, {
 		{CMD_PARAM_INT, 0, 0}, {0,0,0}},
+		ALL_ROUTES},
+	{"move_msg_branch", (cmd_function)w_move_msg_branch, {
+		{CMD_PARAM_INT|CMD_PARAM_OPT, fixup_branch_index, 0},
+		{CMD_PARAM_INT|CMD_PARAM_OPT, fixup_branch_index, 0},
+		{CMD_PARAM_STR|CMD_PARAM_OPT, fixup_branch_keep, 0},
+		{0,0,0}},
+		ALL_ROUTES},
+	{"swap_msg_branches", (cmd_function)w_swap_msg_branches, {
+		{CMD_PARAM_INT|CMD_PARAM_OPT, fixup_branch_index, 0},
+		{CMD_PARAM_INT|CMD_PARAM_OPT, fixup_branch_index, 0},
+		{0,0,0}},
 		ALL_ROUTES},
 	{"pv_printf", (cmd_function)w_pv_printf, {
 		{CMD_PARAM_VAR, 0, 0},
@@ -238,7 +270,7 @@ const cmd_export_t core_cmds[]={
 	{"unuse_blacklist", (cmd_function)w_unuse_blacklist, {
 		{CMD_PARAM_STR, fixup_blacklist, 0}, {0,0,0}},
 		ALL_ROUTES},
-	{"check_blacklist", (cmd_function)w_check_blacklist, {
+	{"check_blacklist_rule", (cmd_function)w_check_blacklist, {
 		{CMD_PARAM_STR, fixup_blacklist, 0},
 		{CMD_PARAM_STR, fixup_blacklist_ip, fixup_blacklist_free}, /* ip */
 		{CMD_PARAM_INT|CMD_PARAM_OPT, 0, 0}, /* port */
@@ -344,7 +376,11 @@ const cmd_export_t core_cmds[]={
 		{CMD_PARAM_STR, fixup_sr_group, 0},
 		{CMD_PARAM_STR|CMD_PARAM_OPT, 0, 0}, {0,0,0}},
 		ALL_ROUTES},
-
+	{"avp_print", (cmd_function)w_print_avps, {{0, 0, 0}},
+		ALL_ROUTES},
+	{"set_via_handling", (cmd_function)w_set_via_handling, {
+		{CMD_PARAM_STR, fixup_via_hdl, 0}, {0,0,0}},
+		ALL_ROUTES},
 	{0,0,{{0,0,0}},0}
 };
 
@@ -447,13 +483,43 @@ static int fixup_qvalue(void** param)
 	return 0;
 }
 
+static int fixup_branch_keep(void** param)
+{
+	str *s = (str*)*param;
+
+	/* default value is to discard */
+	*param = (void*)(long)0;
+	if (!s)
+		return 0;
+
+	if (str_strcasecmp(s, _str("keep")) == 0)
+		*param = (void*)(long)1;
+	return 0;
+}
+
+static int fixup_branch_index(void** param)
+{
+	int *i = (int *)*param;
+
+	/* default value is -1 */
+	if (!i || *i < 0)
+		*param = NULL; /* normalize to NULL */
+	else if (*i >= MAX_BRANCHES) {
+		LM_ERR("invalid branch index %d\n", *i);
+		return -1;
+	}
+	/* else allow the branch provisioned */
+
+	return 0;
+}
+
 static int fixup_f_send_sock(void** param)
 {
 	str *s = (str*)*param;
 	str host, host_nt;
 	int proto=PROTO_NONE, port;
 	struct hostent* he;
-	struct socket_info* si;
+	const struct socket_info* si;
 	struct ip_addr ip;
 
 	if (parse_phostport(s->s, s->len, &host.s, &host.len, &port, &proto) != 0) {
@@ -474,14 +540,15 @@ static int fixup_f_send_sock(void** param)
 	si=find_si(&ip, port, proto);
 	if (si==0){
 		LM_ERR("bad force_send_socket"
-			" argument: %s:%d (Marina.Rodeo doesn't listen on it)\n",
+			" argument: %s:%d (openMarinkaRodeo doesn't listen on it)\n",
 			host_nt.s, port);
 		goto error;
 	}
 
 	pkg_free(host_nt.s);
 
-	*param = si;
+	const void **_param = (const void **)param;
+	*_param = si;
 	return 0;
 
 error:
@@ -676,7 +743,7 @@ static int w_forward(struct sip_msg *msg, struct proxy_l *dest)
 		}
 		/* create a temporary proxy*/
 		p=mk_proxy(u->maddr_val.len?&u->maddr_val:&u->host,
-			u->port_no, u->proto, (u->type==SIPS_URI_T)?1:0 );
+			u->port_no, u->proto, (u->type==MarinkaRodeo_URI_T)?1:0 );
 		if (p==0){
 			LM_ERR("bad host name in uri, dropping packet\n");
 			return E_BAD_ADDRESS;
@@ -834,15 +901,22 @@ static int w_strip_tail(struct sip_msg *msg, int *nchars)
 	return rewrite_ruri(msg, 0, *nchars, RW_RURI_STRIP_TAIL) ? -1 : 1;
 }
 
-static int w_append_branch(struct sip_msg *msg, str *uri, int *qvalue)
+static int w_append_branch_old(struct sip_msg *msg, str *uri, int *qvalue)
 {
+	struct msg_branch branch;
 	int ret;
 	qvalue_t q = (int)(long)qvalue;
 
+	memset( &branch, 0, sizeof branch);
+
 	if (!uri) {
-		ret = append_branch(msg, 0, &msg->dst_uri, &msg->path_vec,
-			(q==Q_UNSPECIFIED) ? get_ruri_q(msg) : q,
-			getb0flags(msg), msg->force_send_socket);
+		branch.uri = *GET_RURI(msg);
+		branch.dst_uri = msg->dst_uri;
+		branch.path = msg->path_vec;
+		branch.q = (q==Q_UNSPECIFIED) ? get_ruri_q(msg) : q;
+		branch.force_send_socket = msg->force_send_socket;
+		branch.bflags = msg->ruri_bflags;
+		ret = append_msg_branch(&branch);
 		/* reset all branch info */
 		msg->force_send_socket = 0;
 		setb0flags(msg,0);
@@ -858,15 +932,73 @@ static int w_append_branch(struct sip_msg *msg, str *uri, int *qvalue)
 
 		return ret;
 	} else {
-		return append_branch(msg, uri, &msg->dst_uri,
-			&msg->path_vec, q, getb0flags(msg),
-			msg->force_send_socket);
+		branch.uri = *uri;
+		branch.dst_uri = msg->dst_uri;
+		branch.path = msg->path_vec;
+		branch.q = q;
+		branch.force_send_socket = msg->force_send_socket;
+		branch.bflags = msg->ruri_bflags;
+		return append_msg_branch(&branch);
 	}
 }
 
-static int w_remove_branch(struct sip_msg *msg, int *branch)
+
+static str append_mbranch_flag_names[] =
 {
-	return (remove_branch(*branch)==0)?1:-1;
+	str_init("inherite"),
+	STR_NULL
+};
+
+static int fixup_append_mbranch_flags(void** param)
+{
+	return fixup_named_flags(param, append_mbranch_flag_names, NULL, NULL);
+}
+
+
+static int w_append_msg_branch(struct sip_msg *msg, str *uri, int *qvalue,
+																void *flags)
+{
+	unsigned int opts = (unsigned int)(unsigned long)flags;
+	struct msg_branch branch;
+	qvalue_t q = (int)(long)qvalue;
+
+	if (ZSTRP(uri)) {
+		LM_ERR("appending emptry URI :(\n");
+		return -1;
+	}
+
+	memset( &branch, 0, sizeof branch);
+	branch.uri = *uri;
+
+	if ( opts & (1<<0) ) {
+		/* inherite the rest of the branch attrs from RURI branch */
+		branch.dst_uri = msg->dst_uri;
+		branch.path = msg->path_vec;
+		branch.q = (q==Q_UNSPECIFIED) ? get_ruri_q(msg) : q;
+		branch.force_send_socket = msg->force_send_socket;
+		branch.bflags = msg->ruri_bflags;
+	} else {
+		branch.q = q;
+	}
+	return append_msg_branch(&branch);
+}
+
+static int w_remove_msg_branch(struct sip_msg *msg, int *branch)
+{
+	return (remove_msg_branch(*branch)==0) ? 1 : -1 ;
+}
+
+static int w_move_msg_branch(struct sip_msg *msg, int *src_idx,
+													int *dst_idx, int *keep)
+{
+	return (move_msg_branch(msg,
+		(src_idx?*src_idx:-1), (dst_idx?*dst_idx:-1), (keep?1:0))==0) ? 1 : -1;
+}
+
+static int w_swap_msg_branches(struct sip_msg *msg, int *src_idx, int *dst_idx)
+{
+	return (swap_msg_branches(msg,
+		(src_idx?*src_idx:-1), (dst_idx?*dst_idx:-1))==0) ? 1 : -1 ;
 }
 
 static int w_pv_printf(struct sip_msg *msg, pv_spec_t *var, str *fmt_str)
@@ -1001,7 +1133,7 @@ static int w_set_adv_port(struct sip_msg *msg, str *adv_port)
 
 static int w_f_send_sock(struct sip_msg *msg, struct socket_info *si)
 {
-	msg->force_send_socket=si;
+	msg->force_send_socket=(const struct socket_info *)si;
 
 	return 1;
 }
@@ -1370,3 +1502,73 @@ static int w_is_myself(struct sip_msg *msg, str *host, int *port)
 	else
 		return -1;
 }
+
+static int w_print_avps(struct sip_msg* msg, char* foo, char *bar)
+{
+	struct usr_avp **avp_list;
+	struct usr_avp *avp;
+	int_str         val;
+	str            *name;
+
+	/* go through all list */
+	avp_list = get_avp_list();
+	avp = *avp_list;
+
+	LM_INFO("----------- All AVPs in this context --------\n");
+	LM_INFO("  (SIP txn, script event, timer route, etc.)\n");
+	for ( ; avp ; avp=avp->next)
+	{
+		LM_INFO("p=%p, flags=0x%04X\n",avp, avp->flags);
+		name = get_avp_name(avp);
+		LM_INFO("    name=<%.*s>\n",name->len,name->s);
+		LM_INFO("    id=<%d>\n",avp->id);
+		get_avp_val( avp, &val);
+		if (avp->flags&AVP_VAL_STR)
+		{
+			LM_INFO("    val_str=<%.*s / %d>\n",val.s.len,val.s.s,
+					val.s.len);
+		} else {
+			LM_INFO("    val_int=<%d>\n",val.n);
+		}
+	}
+	LM_INFO("---------------- END ALL AVPs ---------------\n");
+
+	return 1;
+}
+
+
+static str via_hdl_flag_names[] = {
+	str_init("force-rport"),
+	str_init("add-local-rport"),
+	str_init("reply-to-via"),
+	str_init("force-tcp-alias"),
+	STR_NULL
+};
+enum via_hdl_flags {
+	VIA_HDL_FORCE_RPORT,
+	VIA_HDL_ADD_LOCAL_RPORT,
+	VIA_HDL_REPLY_TO_VIA,
+	VIA_HDL_FORCE_TCP_ALIAS,
+};
+static int fixup_via_hdl(void** param)
+{
+	return fixup_named_flags(param, via_hdl_flag_names, NULL, NULL);
+}
+
+static int w_set_via_handling(struct sip_msg* msg, int flags)
+{
+	if (flags & (1<<VIA_HDL_FORCE_RPORT))
+		msg->msg_flags |= FL_FORCE_RPORT;
+
+	if (flags & (1<<VIA_HDL_ADD_LOCAL_RPORT))
+		msg->msg_flags|=FL_FORCE_LOCAL_RPORT;
+
+	if (flags & (1<<VIA_HDL_REPLY_TO_VIA))
+		msg->msg_flags |= FL_REPLY_TO_VIA;
+
+	if (flags & (1<<VIA_HDL_FORCE_TCP_ALIAS))
+		w_force_tcp_alias( msg, 0);
+
+	return 1;
+}
+

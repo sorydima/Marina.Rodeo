@@ -1,16 +1,16 @@
 /*
  * back-to-back logic module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Free Software Fundation
+ * Copyright (C) 2011 Free Software Fundation
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -28,7 +28,7 @@
 #include <stdlib.h>
 
 #include "../../db/db.h"
-#include "../../lib/osips_malloc.h"
+#include "../../lib/oMarinkaRodeo_malloc.h"
 #include "b2b_logic.h"
 #include "b2bl_db.h"
 #include "entity_storage.h"
@@ -175,6 +175,7 @@ void cdb_add_n_pairs(cdb_dict_t *pairs, int idx_start, int idx_end)
 		if (qvals[i].nul || (qvals[i].type == DB_STR && !qvals[i].val.str_val.s))
 			cdb_dict_add_null(pairs, qcols[i]->s, qcols[i]->len);
 		else if (qvals[i].type == DB_STR)
+			/* coverity[check_result] - false positive */
 			cdb_dict_add_str(pairs, qcols[i]->s, qcols[i]->len,
 				&qvals[i].val.str_val);
 		else if (qvals[i].type == DB_INT)
@@ -237,7 +238,7 @@ void b2b_logic_dump(int no_lock)
 			}
 
 			qvals[2].val.int_val  = tuple->state;
-			qvals[3].val.int_val = tuple->lifetime - get_ticks() + (int)time(NULL);
+			qvals[3].val.int_val = tuple->lifetime - get_ticks() + (int)(unsigned long)time(NULL);
 			qvals[4].val.int_val = tuple->bridge_entities[0]->type;
 			qvals[5].val.str_val = tuple->bridge_entities[0]->scenario_id;
 			qvals[6].val.str_val = tuple->bridge_entities[0]->to_uri;
@@ -493,7 +494,7 @@ static int load_tuple(int_str_t *vals)
 	memset(bridge_entities, 0, 3*sizeof(b2bl_entity_id_t));
 
 	tuple.state = vals[2].i;
-	_time = (int)time(NULL);
+	_time = (int)(unsigned long)time(NULL);
 	if (vals[3].i <= _time)
 		tuple.lifetime = 1;
 	else
@@ -790,7 +791,7 @@ void b2bl_db_insert(b2bl_tuple_t* tuple)
 	}
 
 	qvals[2].val.int_val = tuple->state;
-	qvals[3].val.int_val= tuple->lifetime - get_ticks() + (int)time(NULL);
+	qvals[3].val.int_val= tuple->lifetime - get_ticks() + (int)(unsigned long)time(NULL);
 	ci = 4;
 
 	for(i = 0; i< 3; i++)
@@ -862,7 +863,7 @@ void b2bl_db_update(b2bl_tuple_t* tuple)
 	qvals[0].val.str_val = *tuple->key;
 
 	qvals[3].val.int_val  = tuple->state;
-	qvals[4].val.int_val = tuple->lifetime -get_ticks() + (int)time(NULL);
+	qvals[4].val.int_val = tuple->lifetime -get_ticks() + (int)(unsigned long)time(NULL);
 	ci = 4;
 
 	for(i = 0; i< 3; i++)

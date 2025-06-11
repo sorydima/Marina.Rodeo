@@ -11,7 +11,7 @@ db_cachedb Module
 
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -48,7 +48,7 @@ db_cachedb Module
    List of Examples
 
    1.1. Set cachedb_url parameter
-   1.2. Marina.Rodeo CFG Snippet for using DB_CACHEDB
+   1.2. OpenMarinkaRodeo CFG Snippet for using DB_CACHEDB
 
 Chapter 1. Admin Guide
 
@@ -58,15 +58,15 @@ Chapter 1. Admin Guide
 
    The db_cachedb module will expose the same front db api,
    however it will run on top of a NoSQL back-end, emulating the
-   SQL calls to the back-end specific queries. Thus, any Marina.Rodeo
+   SQL calls to the back-end specific queries. Thus, any OpenMarinkaRodeo
    module that would regularily need a regular SQL-based database,
    will now be able to run over a NoSQL back-end, allowing for a
    much easier distribution and integration of the currently
-   existing Marina.Rodeo modules in a distributed environment.
+   existing OpenMarinkaRodeo modules in a distributed environment.
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * At least one NoSQL cachedb_* module.
@@ -74,7 +74,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -98,7 +98,7 @@ modparam("db_cachedb","cachedb_url","mongodb:mycluster://127.0.0.1:27017
    db_url parameter of the auth_db module to point to the
    DB_CACHEDB URL.
 
-   Example 1.2. Marina.Rodeo CFG Snippet for using DB_CACHEDB
+   Example 1.2. OpenMarinkaRodeo CFG Snippet for using DB_CACHEDB
 loadmodule "auth_db.so"
 modparam("auth_db", "load_credentials", "$avp(user_rpid)=rpid")
 
@@ -130,7 +130,7 @@ modparam("auth_db","db_url","cachedb://mongodb:mycluster")
 
 1.5.2.  Extensive Testing Needed
 
-   Since there are many Marina.Rodeo modules that currently use the DB
+   Since there are many OpenMarinkaRodeo modules that currently use the DB
    interface, it wasn't feasible to test all scenarios with all
    modules, and there still might be some incompatibilities. The
    module was tested with some regularily used modules ( like
@@ -149,7 +149,7 @@ modparam("auth_db","db_url","cachedb://mongodb:mycluster")
    such a 'version' collection in the respective NoSQL back-end.
    For example, for the MongoDB cluster, 'version' is a reserved
    keyword, so one would have to change the default version table
-   that Marina.Rodeo uses ( via the 'db_version_table' global
+   that OpenMarinkaRodeo uses ( via the 'db_version_table' global
    parameter ) and then manually insert the version number with
    something like db.my_version_table.insert({table_version :
    NumberInt(5), table_name : "address"})
@@ -161,8 +161,8 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Vlad Paiu (@vladpaiu) 10 3 626 7
-   2. Liviu Chircu (@liviuchircu) 9 7 31 32
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 10 8 34 35
+   2. Vlad Paiu (@vladpaiu) 10 3 626 7
    3. Razvan Crainea (@razvancrainea) 7 5 7 5
    4. Maksym Sobolyev (@sobomax) 4 2 3 4
    5. Vlad Patrascu (@rvlad-patrascu) 4 2 3 2
@@ -178,7 +178,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -191,11 +191,11 @@ Chapter 2. Contributors
    Table 2.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
    1. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2. Razvan Crainea (@razvancrainea)     Aug 2015 - Sep 2019
-   3. Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Apr 2019
-   4. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   5. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   6. Liviu Chircu (@liviuchircu)         Mar 2014 - Jun 2018
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - Apr 2021
+   3. Razvan Crainea (@razvancrainea)     Aug 2015 - Sep 2019
+   4. Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Apr 2019
+   5. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
+   6. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
    7. Walter Doekes (@wdoekes)            May 2014 - May 2014
    8. Vlad Paiu (@vladpaiu)               Feb 2013 - Mar 2013
 
@@ -206,10 +206,10 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Peter Lemenkov (@lemenkov), Liviu Chircu
-   (@liviuchircu), Walter Doekes (@wdoekes), Vlad Paiu
+   Last edited by: Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
+   (@sorydima), Walter Doekes (@wdoekes), Vlad Paiu
    (@vladpaiu).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
+   Copyright © 2013 www.openMarinkaRodeo-solutions.com

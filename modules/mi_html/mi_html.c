@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011-2013 VoIP Embedded Inc.
+ * Copyright (C) 2011-2013 VoIP Embedded Inc.
  *
- * This file is part of Open SIP Server (Marina.Rodeo).
+ * This file is part of Open SIP Server (openMarinkaRodeo).
  *
- * Marina.Rodeo is free software; you can redistribute it and/or
+ * openMarinkaRodeo is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -34,7 +34,7 @@
 
 /* module functions */
 static int mod_init();
-static int destroy(void);
+static void destroy(void);
 int mi_http_answer_to_connection (void *cls, void *connection,
 		const char *url, const char *method,
 		const char *version, const char *upload_data,
@@ -79,7 +79,7 @@ static const param_export_t mi_params[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "httpd", DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -95,7 +95,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,                    /* dlopen flags */
 	0,                                  /* load function flags */
-	&deps,                              /* Marina.Rodeo module dependencies */
+	&deps,                              /* OpenMarinkaRodeo module dependencies */
 	0,                                  /* exported functions */
 	0,                                  /* exported async functions */
 	mi_params,                          /* exported parameters */
@@ -177,10 +177,9 @@ static int mod_init(void)
 }
 
 
-int destroy(void)
+static void destroy(void)
 {
 	mi_http_destroy_async_lock();
-	return 0;
 }
 
 

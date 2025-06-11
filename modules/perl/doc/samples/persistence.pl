@@ -1,5 +1,5 @@
-use Marina.Rodeo qw ( log );
-use Marina.Rodeo::Constants;
+use OpenMarinkaRodeo qw ( log );
+use OpenMarinkaRodeo::Constants;
 
 use IPC::Shareable;
 
@@ -9,7 +9,7 @@ my %lastcalltimes;
 my %lastcallids;
 
 
-# This function shows that normal persistent variables are _not_ valid between multiple instances of the Marina.Rodeo.
+# This function shows that normal persistent variables are _not_ valid between multiple instances of the OpenMarinkaRodeo.
 # With the default setup of 4 children, the value logged is only incremented every 4th time.
 sub limited {
 

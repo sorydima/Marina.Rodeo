@@ -15,9 +15,9 @@
 		 * unixodbc
 		 * virtual
 	-->
-	<db_url id="mysql">mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo</db_url>
+	<db_url id="mysql">mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo</db_url>
 	<!--
-	<db_url id="dbtext">text:///usr/local/etc/Marina.Rodeo/dbtext</db_url>
+	<db_url id="dbtext">text:///usr/local/etc/openMarinkaRodeo/dbtext</db_url>
 	-->
 	<!--	Declare all tables
 		Each table MUST have:

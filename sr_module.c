@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -59,6 +59,8 @@
 #include "net/proto_tcp/proto_tcp_handler.h"
 
 #include "test/unit_tests.h"
+
+#include "libgen.h"
 
 struct sr_module* modules=0;
 
@@ -223,15 +225,15 @@ static inline int version_control(const struct module_exports* exp, char *path)
 		return 0;
 	}
 
-	if (strcmp(Marina.Rodeo_FULL_VERSION, exp->ver_info.version)!=0) {
+	if (strcmp(OPENMarinkaRodeo_FULL_VERSION, exp->ver_info.version)!=0) {
 		LM_CRIT("module version mismatch for %s; core: %s; module: %s\n",
-			exp->name, Marina.Rodeo_FULL_VERSION, exp->ver_info.version );
+			exp->name, OPENMarinkaRodeo_FULL_VERSION, exp->ver_info.version );
 		return 0;
 	}
-	if (strcmp(Marina.Rodeo_COMPILE_FLAGS, exp->ver_info.compile_flags)!=0) {
+	if (strcmp(OPENMarinkaRodeo_COMPILE_FLAGS, exp->ver_info.compile_flags)!=0) {
 		LM_CRIT("module compile flags mismatch for %s "
 			" \ncore: %s \nmodule: %s\n", exp->name,
-			Marina.Rodeo_COMPILE_FLAGS, exp->ver_info.compile_flags);
+			OPENMarinkaRodeo_COMPILE_FLAGS, exp->ver_info.compile_flags);
 		return 0;
 	}
 	if (strcmp(core_scm_ver.type, exp->ver_info.scm.type) != 0) {
@@ -261,7 +263,7 @@ int sr_load_module(char* path)
 	struct sr_module* t;
 
 	/* load module */
-	handle=dlopen(path, Marina.Rodeo_DLFLAGS); /* resolve all symbols now */
+	handle=dlopen(path, OPENMarinkaRodeo_DLFLAGS); /* resolve all symbols now */
 	if (handle==0){
 		LM_ERR("could not open module <%s>: %s\n", path, dlerror() );
 		goto error;
@@ -285,7 +287,7 @@ int sr_load_module(char* path)
 	if (!version_control(exp, path)) {
 		exit(1);
 	}
-	if(exp->dlflags!=DEFAULT_DLFLAGS && exp->dlflags!=Marina.Rodeo_DLFLAGS) {
+	if(exp->dlflags!=DEFAULT_DLFLAGS && exp->dlflags!=OPENMarinkaRodeo_DLFLAGS) {
 		moddlflags = exp->dlflags;
 		dlclose(handle);
 		LM_DBG("reloading module %s with flags %d\n", path, moddlflags);
@@ -401,12 +403,48 @@ void add_mpath(const char *new_mpath)
 	nmpath->buf[nmpath->len] = '\0';
 }
 
+static struct {
+ char *module;
+ char *name;
+ unsigned int flags;
+} module_warnings[] = {
+	{ "rabbitmq", "'rabbitmq' module has been dropped - please use 'event_rabbitmq' instead!", MOD_WARN_EXIT },
+	{ "event_route", "'event_route' module has been integrated in core file. You no longer need to load the module.", MOD_WARN_SKIP }
+};
+
 /* returns 0 on success , <0 on error */
 int load_module(char* name)
 {
 	int i_tmp, len;
 	struct stat statf;
 	struct mpath *mp;
+	int module_warnings_len;
+	char *base_name;
+
+	base_name = basename(name);
+	len = strlen(base_name);
+	if (strstr(base_name, ".so"))
+		len -= 3;
+
+	module_warnings_len = sizeof(module_warnings) / sizeof(module_warnings[0]);
+
+	for (i_tmp = 0; i_tmp < module_warnings_len; i_tmp++) {
+		if (strncmp(base_name, module_warnings[i_tmp].module, len) == 0) {
+			switch (module_warnings[i_tmp].flags)
+			{
+				case MOD_WARN_EXIT:
+					LM_ERR("%s\n", module_warnings[i_tmp].name);
+					return -1;
+
+				case MOD_WARN_SKIP:
+					LM_WARN("%s\n", module_warnings[i_tmp].name);
+					return 0;
+
+				default:
+					break;
+			}
+		}
+	}
 
 	/* if this is a static module, load it directly */
 	if (load_static_module(name) == 0)
@@ -666,6 +704,7 @@ static int init_mod_child( struct sr_module* m, int rank, char *type,
 int init_child(int rank)
 {
 	char* type;
+	int rc;
 
 	type = 0;
 
@@ -683,7 +722,11 @@ int init_child(int rank)
 			type = "UNKNOWN";
 	}
 
-	return init_mod_child(modules, rank, type, 0);
+	rc = init_mod_child(modules, rank, type, 0);
+	ready_time = time(NULL);
+	ready_delay = ready_time - startup_time;
+
+	return rc;
 }
 
 
@@ -868,7 +911,6 @@ int start_module_procs(void)
 				flags = OSS_PROC_IS_EXTRA;
 				if (m->exports->procs[n].flags&PROC_FLAG_NEEDS_SCRIPT)
 					flags |= OSS_PROC_NEEDS_SCRIPT;
-				else
 				if ( (m->exports->procs[n].flags&PROC_FLAG_HAS_IPC)==0)
 					flags |= OSS_PROC_NO_IPC;
 				struct internal_fork_params ifp = {

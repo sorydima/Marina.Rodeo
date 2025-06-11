@@ -1,5 +1,5 @@
-use Marina.Rodeo qw ( log );
-use Marina.Rodeo::Constants;
+use OpenMarinkaRodeo qw ( log );
+use OpenMarinkaRodeo::Constants;
 
 #This function demonstrates how to call functions that are exported by other modules.
 sub exportedfuncs {
@@ -46,8 +46,8 @@ sub autotest {
 	return 1;
 }
 
-# The following two functions demonstrate that the Marina.Rodeo perl module handles
-# dieing interpreters correctly. Marina.Rodeo itself will not crash.
+# The following two functions demonstrate that the OpenMarinkaRodeo perl module handles
+# dieing interpreters correctly. OpenMarinkaRodeo itself will not crash.
 
 sub diefunc1 {
 	my $m = shift;

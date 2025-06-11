@@ -1,7 +1,7 @@
 /*
- * Marina.Rodeo osp module.
+ * openMarinkaRodeo osp module.
  *
- * This module enables Marina.Rodeo to communicate with an Open Settlement
+ * This module enables openMarinkaRodeo to communicate with an Open Settlement
  * Protocol (OSP) server.  The Open Settlement Protocol is an ETSI
  * defined standard for Inter-Domain VoIP pricing, authorization
  * and usage exchange.  The technical specifications for OSP
@@ -9,16 +9,16 @@
  *
  * Uli Abend was the original contributor to this module.
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2005 Fhg Fokus
+ * Copyright (C) 2001-2005 Fhg Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -32,20 +32,9 @@
  *  2016-01-25  Time related functions.
  */
 
-#define _XOPEN_SOURCE 600          /* glibc2 on linux, bsd */
-#define _XOPEN_SOURCE_EXTENDED 1   /* solaris */
-
-/**
- *  * _XOPEN_SOURCE creates conflict in swab definition in Solaris
- *   */
-#ifdef __OS_solaris
-    #undef _XOPEN_SOURCE
-#endif
-
+/* make strptime available */
+#define _GNU_SOURCE
 #include <time.h>
-
-#undef _XOPEN_SOURCE
-#undef _XOPEN_SOURCE_EXTENDED
 
 #include <stdlib.h>
 #include <osp/osp.h>

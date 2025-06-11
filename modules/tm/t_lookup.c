@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -330,7 +330,7 @@ static int matching_3261( struct sip_msg *p_msg, struct cell **trans,
 		 * to correlate the e2e ACKs with transaction context, e.g., for
 		 * purpose of accounting. We think it is a bad place here, among
 		 * other things because it is not reliable. If a transaction loops
-		 * via Marina.Rodeo the ACK can't be matched to proper INVITE transaction
+		 * via OpenMarinkaRodeo the ACK can't be matched to proper INVITE transaction
 		 * (it is a separate transactino with its own branch ID) and it
 		 * matches all transaction instances in the loop dialog-wise.
 		 * Eventually, regardless to which transaction in the loop the
@@ -942,8 +942,18 @@ int init_rb( struct retr_buf *rb, struct sip_msg *msg)
 {
 	int proto;
 
-	update_sock_struct_from_ip( &rb->dst.to, msg );
 	proto=msg->rcv.proto;
+
+	if (msg->msg_flags&FL_REPLY_TO_VIA) {
+		if (update_sock_struct_from_via( &(rb->dst.to), msg, msg->via1 )==-1) {
+			LM_ERR("cannot lookup reply dst: %.*s\n",
+					msg->via1->host.len, msg->via1->host.s );
+			ser_error=E_BAD_VIA;
+			return 0;
+		}
+	} else {
+		update_sock_struct_from_ip( &rb->dst.to, msg );
+	}
 	rb->dst.proto=proto;
 	rb->dst.proto_reserved1=msg->rcv.proto_reserved1;
 	/* use for sending replies the incoming interface of the request -bogdan */
@@ -1190,7 +1200,11 @@ int t_get_trans_ident(struct sip_msg* p_msg, unsigned int* hash_index,
 }
 
 
-
+/* Looks for the transaction with the given coordinates (index/label).
+ * If found, the transaction is ref'ed and retuned via parameter; note that
+ * the global T holder is not set.
+ * Returns 1 if transaction found, -1 otherwise.
+ */
 int t_lookup_ident(struct cell ** trans, unsigned int hash_index,
 															unsigned int label)
 {
@@ -1210,7 +1224,6 @@ int t_lookup_ident(struct cell ** trans, unsigned int hash_index,
 		if(p_cell->label == label){
 			REF_UNSAFE(p_cell);
 			UNLOCK_HASH(hash_index);
-			set_t(p_cell);
 			*trans=p_cell;
 			LM_DBG("transaction found\n");
 			return 1;
@@ -1218,7 +1231,6 @@ int t_lookup_ident(struct cell ** trans, unsigned int hash_index,
 	}
 
 	UNLOCK_HASH(hash_index);
-	set_t(0);
 	*trans=p_cell;
 
 	LM_DBG("transaction not found\n");

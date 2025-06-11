@@ -1,19 +1,16 @@
+# Perl module for OpenMarinkaRodeo
 #
-# $Id$
-#
-# Perl module for Marina.Rodeo
-#
-# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Collax GmbH 
+# Copyright (C) 2006 Collax GmbH 
 #                    (Bastian Friedrich <bastian.friedrich@collax.com>)
 #
-# This file is part of Marina.Rodeo, a free SIP server.
+# This file is part of openMarinkaRodeo, a free SIP server.
 #
-# Marina.Rodeo is free software; you can redistribute it and/or modify
+# openMarinkaRodeo is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version
 #
-# Marina.Rodeo is distributed in the hope that it will be useful,
+# openMarinkaRodeo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -25,12 +22,12 @@
 
 # This file was kindly donated by Collax GmbH
 
-=head1 Marina.Rodeo::LDAPUtils::LDAPConf
+=head1 OpenMarinkaRodeo::LDAPUtils::LDAPConf
 
-Marina.Rodeo::LDAPUtils::LDAPConf - Read openldap config from standard config files.
+OpenMarinkaRodeo::LDAPUtils::LDAPConf - Read openldap config from standard config files.
 
- use Marina.Rodeo::LDAPUtils::LDAPConf;
- my $conf = new Marina.Rodeo::LDAPUtils::LDAPConf();
+ use OpenMarinkaRodeo::LDAPUtils::LDAPConf;
+ my $conf = new OpenMarinkaRodeo::LDAPUtils::LDAPConf();
 
 This module may be used to retrieve the global LDAP configuration as
 used by other LDAP software, such as C<nsswitch.ldap> and C<pam-ldap>.
@@ -40,7 +37,7 @@ When used from an account with sufficient privilegs (e.g. root), the
 ldap manager passwort is also retrieved.
 
 =cut
-package Marina.Rodeo::LDAPUtils::LDAPConf;
+package OpenMarinkaRodeo::LDAPUtils::LDAPConf;
 
 my $def_ldap_path = "/etc/openldap" ;
 my $def_conf      = "ldap.conf";
@@ -48,7 +45,7 @@ my $def_secret    = "ldap.secret";
 
 =head2 Constructor new()
 
-Returns a new, initialized C<Marina.Rodeo::LDAPUtils::LDAPConf> object.
+Returns a new, initialized C<OpenMarinkaRodeo::LDAPUtils::LDAPConf> object.
 
 =cut
 sub new {

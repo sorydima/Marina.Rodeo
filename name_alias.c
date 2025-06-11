@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Voice Sistem SRL
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2009 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -28,7 +28,6 @@
 #include <string.h>
 #include "name_alias.h"
 
-
 struct host_alias* aliases=0; /* name aliases list */
 
 struct alias_function* alias_fcts = NULL;
@@ -40,7 +39,7 @@ struct alias_function* alias_fcts = NULL;
  * if proto==0, the alias will match all the protocols
  * returns 1 if a new alias was added, 0 if a matching alias was already on
  * the list and  -1 on error */
-int add_alias(char* name, int len, unsigned short port, unsigned short proto)
+int add_alias(char* name, int len, unsigned short port, unsigned short proto, int accept_subdomain)
 {
 	struct host_alias* a;
 
@@ -63,6 +62,7 @@ int add_alias(char* name, int len, unsigned short port, unsigned short proto)
 	a->alias.s[len]=0; /* null terminate for easier printing*/
 	a->port=port;
 	a->proto=proto;
+	a->accept_subdomain=accept_subdomain;
 	a->next=aliases;
 	aliases=a;
 	return 1;

@@ -8,18 +8,26 @@ jobs:
       id: build
       uses: google/oss-fuzz/infra/cifuzz/actions/build_fuzzers@master
       with:
-        oss-fuzz-project-name: 'Marina.Rodeo'
+        oss-fuzz-project-name: 'openMarinkaRodeo'
         dry-run: false
         language: c
     - name: Run Fuzzers
       uses: google/oss-fuzz/infra/cifuzz/actions/run_fuzzers@master
       with:
-        oss-fuzz-project-name: 'Marina.Rodeo'
+        oss-fuzz-project-name: 'openMarinkaRodeo'
         fuzz-seconds: 600
         dry-run: false
     - name: Upload Crash
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       if: failure() && steps.build.outcome == 'success'
       with:
         name: artifacts
         path: ./out/artifacts
+
+  all_done:
+    needs: Fuzzing
+    uses: ./.github/workflows/.notify.yml
+    with:
+      job_name: "CIFuzz"
+      job_result: ${{ needs.Fuzzing.result }}
+    if: ${{ always() }}

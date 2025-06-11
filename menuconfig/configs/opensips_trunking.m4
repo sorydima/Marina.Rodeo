@@ -1,11 +1,16 @@
 #
-# Marina.Rodeo trunking script
-#     by Marina.Rodeo Solutions <sip@rechain.email>
+# OpenMarinkaRodeo trunking script
+#     by OpenMarinkaRodeo Solutions <team@openMarinkaRodeo-solutions.com>
 #
 # This script was generated via "make menuconfig", from
 #   the "Trunking" scenario.
 # You can enable / disable more features / functionalities by
 #   re-generating the scenario with different options.
+#
+# Please refer to the Core CookBook at:
+#      https://openMarinkaRodeo.org/Resources/DocsCookbooks
+# for a explanation of possible statements, functions and parameters.
+#
 
 
 ####### Global Parameters #########
@@ -39,7 +44,7 @@ ifelse(USE_HTTP_MANAGEMENT_INTERFACE,`yes',`define(`HTTPD_NEEDED',`yes')', `')
 ####### Modules Section ########
 
 #set module path
-mpath="/usr/local/lib/Marina.Rodeo/modules/"
+mpath="/usr/local/lib/openMarinkaRodeo/modules/"
 
 ifdef(`HTTPD_NEEDED',`#### HTTPD module
 loadmodule "httpd.so"
@@ -71,24 +76,24 @@ loadmodule "sipmsgops.so"
 
 #### FIFO Management Interface
 loadmodule "mi_fifo.so"
-modparam("mi_fifo", "fifo_name", "/tmp/Marina.Rodeo_fifo")
+modparam("mi_fifo", "fifo_name", "/tmp/openMarinkaRodeo_fifo")
 modparam("mi_fifo", "fifo_mode", 0666)
 
 #### MYSQL module
 loadmodule "db_mysql.so"
 
-#### AVPOPS module
-loadmodule "avpops.so"
+#### SQLOPS module
+loadmodule "sqlops.so"
 
 ####  DYNAMIC ROUTING module
 loadmodule "drouting.so"
 modparam("drouting", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 
 ####  PERMISSIONS module
 loadmodule "permissions.so"
 modparam("permissions", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 
 #### ACCounting module
 loadmodule "acc.so"
@@ -100,7 +105,7 @@ modparam("acc", "report_cancels", 0)
    in "rr" module */
 modparam("acc", "detect_direction", 0)
 ifelse(USE_DBACC,`yes',`modparam("acc", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 ', `')
 
 ifelse(USE_DIALOG,`yes',`#### DIALOG module
@@ -109,7 +114,7 @@ modparam("dialog", "dlg_match_mode", 1)
 modparam("dialog", "default_timeout", 21600)  # 6 hours timeout
 modparam("dialog", "db_mode", 2)
 modparam("dialog", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 ifelse(DO_CALL_LIMITATION,`yes',`
 modparam("dialog", "profiles_with_value", "trunkCalls")
 ',`')
@@ -118,7 +123,7 @@ modparam("dialog", "profiles_with_value", "trunkCalls")
 ifelse(USE_DIALPLAN,`yes',`####  DIALPLAN module
 loadmodule "dialplan.so"
 modparam("dialplan", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo") # CUSTOMIZE ME
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo") # CUSTOMIZE ME
 ',`')
 
 ifelse(USE_HTTP_MANAGEMENT_INTERFACE,`yes',`####  MI_HTTP module
@@ -129,15 +134,16 @@ loadmodule "proto_udp.so"
 
 ifelse(ENABLE_TCP, `yes', `loadmodule "proto_tcp.so"' , `')
 ifelse(ENABLE_TLS, `yes', `loadmodule "proto_tls.so"
+loadmodule "tls_wolfssl.so"
 loadmodule "tls_mgm.so"
 modparam("tls_mgm","server_domain", "default")
 modparam("tls_mgm","match_ip_address", "[default]*")
 modparam("tls_mgm","verify_cert", "[default]1")
 modparam("tls_mgm","require_cert", "[default]0")
 modparam("tls_mgm","tls_method", "[default]TLSv1")
-modparam("tls_mgm","certificate", "[default]/etc/Marina.Rodeo/tls/user/user-cert.pem")
-modparam("tls_mgm","private_key", "[default]/etc/Marina.Rodeo/tls/user/user-privkey.pem")
-modparam("tls_mgm","ca_list", "[default]/etc/Marina.Rodeo/tls/user/user-calist.pem")
+modparam("tls_mgm","certificate", "[default]/etc/openMarinkaRodeo/tls/user/user-cert.pem")
+modparam("tls_mgm","private_key", "[default]/etc/openMarinkaRodeo/tls/user/user-privkey.pem")
+modparam("tls_mgm","ca_list", "[default]/etc/openMarinkaRodeo/tls/user/user-calist.pem")
 ' , `')
 
 ####### Routing Logic ########
@@ -246,7 +252,7 @@ route{
 	}
 
 	ifelse(DO_CALL_LIMITATION,`yes',`
-	if (is_avp_set("$avp(trunk_attrs)") && $avp(trunk_attrs)=~"^[0-9]+$") {
+	if ($avp(trunk_attrs) != NULL && $avp(trunk_attrs)=~"^[0-9]+$") {
 		get_profile_size("trunkCalls","$si",$var(size));
 		if ( $(var(size){s.int}) >= $(avp(trunk_attrs){s.int}) ) {
 			send_reply(486,"Busy Here");

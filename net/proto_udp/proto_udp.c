@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015 - Marina.Rodeo Foundation
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2015 - OpenMarinkaRodeo Foundation
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -43,11 +43,12 @@
 static int mod_init(void);
 static int proto_udp_init(struct proto_info *pi);
 static int proto_udp_init_listener(struct socket_info *si);
-static int proto_udp_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int proto_udp_bind_listener(struct socket_info *si);
+static int proto_udp_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id);
 
-static int udp_read_req(struct socket_info *src, int* bytes_read);
+static int udp_read_req(const struct socket_info *src, int* bytes_read);
 
 static callback_list* cb_list = NULL;
 
@@ -72,7 +73,7 @@ struct module_exports proto_udp_exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,               /* load function */
-	NULL,            /* Marina.Rodeo module dependencies */
+	NULL,            /* OpenMarinkaRodeo module dependencies */
 	cmds,       /* exported functions */
 	0,          /* exported async functions */
 	params,     /* module parameters */
@@ -104,10 +105,11 @@ static int proto_udp_init(struct proto_info *pi)
 	pi->default_port		= udp_port;
 
 	pi->tran.init_listener	= proto_udp_init_listener;
+	pi->tran.bind_listener	= proto_udp_bind_listener;
 	pi->tran.send			= proto_udp_send;
 
 	pi->net.flags			= PROTO_NET_USE_UDP;
-	pi->net.read			= (proto_net_read_f)udp_read_req;
+	pi->net.dgram.read		= udp_read_req;
 
 	return 0;
 }
@@ -120,8 +122,12 @@ static int proto_udp_init_listener(struct socket_info *si)
 	return udp_init_listener(si, O_NONBLOCK);
 }
 
+static int proto_udp_bind_listener(struct socket_info *si)
+{
+	return udp_bind_listener(si);
+}
 
-static int udp_read_req(struct socket_info *si, int* bytes_read)
+static int udp_read_req(const struct socket_info *si, int* bytes_read)
 {
 	struct receive_info ri;
 	int len;
@@ -133,7 +139,7 @@ static int udp_read_req(struct socket_info *si, int* bytes_read)
 
 	fromlen=sockaddru_len(si->su);
 	/* coverity[overrun-buffer-arg: FALSE] - union has 28 bytes, CID #200029 */
-	len=recvfrom(bind_address->socket, buf, BUF_SIZE,0,&ri.src_su.s,&fromlen);
+	len=recvfrom(si->socket, buf, BUF_SIZE,0,&ri.src_su.s,&fromlen);
 	if (len==-1){
 		if (errno==EAGAIN)
 			return 0;
@@ -198,8 +204,8 @@ static int udp_read_req(struct socket_info *si, int* bytes_read)
  * \param to destination address
  * \return -1 on error, the return value from sento on success
  */
-static int proto_udp_send(struct socket_info* source,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int proto_udp_send(const struct socket_info* source,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id)
 {
 	int n, tolen;

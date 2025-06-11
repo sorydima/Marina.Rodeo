@@ -1,16 +1,16 @@
 /*
  * memory cache system module
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Anca Vamanu
+ * Copyright (C) 2009 Anca Vamanu
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -36,7 +36,7 @@
 #include "cachedb_local_replication.h"
 #include "hash.h"
 
-void lcache_htable_remove_safe(osips_free_f free_f, str attr, lcache_entry_t** it);
+void lcache_htable_remove_safe(oMarinkaRodeo_free_f free_f, str attr, lcache_entry_t** it);
 
 int lcache_htable_init(struct lcache_col *col)
 {
@@ -82,7 +82,7 @@ error:
 	return -1;
 }
 
-void lcache_htable_destroy(lcache_htable_t *htable, osips_free_f free_f)
+void lcache_htable_destroy(lcache_htable_t *htable, oMarinkaRodeo_free_f free_f)
 {
 	int i;
 	lcache_entry_t* me1, *me2;
@@ -181,7 +181,7 @@ int _lcache_htable_insert(lcache_col_t *cache_col, str* attr, str* value,
 	return 1;
 }
 
-void lcache_htable_remove_safe(osips_free_f free_f, str attr, lcache_entry_t** it_p)
+void lcache_htable_remove_safe(oMarinkaRodeo_free_f free_f, str attr, lcache_entry_t** it_p)
 {
 	lcache_entry_t* me = NULL, *it= *it_p;
 
@@ -541,4 +541,35 @@ int lcache_htable_fetch_counter(cachedb_con* con,str* attr,int *val)
 		"cachedb_local fetch_counter",attr->s,attr->len,0,
 		cdb_slow_queries, cdb_total_queries);
 	return -2;
+}
+
+int lcache_htable_iter_keys(cachedb_con *con,
+                            int (*kv_func)(const str *_k, const str *_v))
+{
+	lcache_t* cache_htable;
+	lcache_col_t* cache_col;
+	lcache_entry_t* it;
+	int i, n = 0;
+
+	cache_col = ((lcache_con *)con->data)->col;
+	if (!cache_col) {
+		LM_ERR("url <%.*s> does not have any collection associated with!",
+		       con->url.len, con->url.s);
+		return -1;
+	}
+
+	cache_htable = cache_col->col_htable->htable;
+
+	for (i = 0; i < cache_col->size; i++) {
+		lock_get(&cache_htable[i].lock);
+
+		for (it = cache_htable[i].entries; it; it = it->next)
+			if (kv_func(&it->attr, &it->value) == 0)
+				n++;
+
+		lock_release(&cache_htable[i].lock);
+	}
+
+	/* number of successfully processed keys */
+	return n;
 }

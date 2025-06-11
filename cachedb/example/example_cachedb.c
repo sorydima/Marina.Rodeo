@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Marina.Rodeo Solutions
+ * Copyright (C) 2011 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -58,8 +58,8 @@ cachedb_con *con;
 
 static const cmd_export_t cmds[]=
 {
-	{"process_msg",  (cmd_function)process_msg,  0, 0, 0, REQUEST_ROUTE},
-	{0,0,0,0,0,0}
+	{"process_msg",  (cmd_function)process_msg,  {{0, 0, 0}}, REQUEST_ROUTE},
+	{0,0,{{0,0,0}},0}
 };
 
 static const param_export_t params[]={
@@ -68,24 +68,27 @@ static const param_export_t params[]={
 };
 
 
-/** module exports */
 struct module_exports exports= {
-	"example_cachedb",			/* module name */
-	MOD_TYPE_DEFAULT,/* class of this module */
+	"example_cachedb",					/* module name */
+	MOD_TYPE_DEFAULT,			/* class of this module */
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,			/* dlopen flags */
-	NULL,            /* Marina.Rodeo module dependencies */
+	0,							/* load function */
+	0,							/* OpenMarinkaRodeo module dependencies */
 	cmds,						/* exported functions */
+	0,							/* exported asynchronous functions */
 	params,						/* exported parameters */
 	0,							/* exported statistics */
-	0,						/* exported MI functions */
+	0,							/* exported MI functions */
 	0,							/* exported pseudo-variables */
 	0,							/* exported transformations */
 	0,							/* extra processes */
+	0,							/* module pre-initialization function */
 	mod_init,					/* module initialization function */
 	(response_function) 0,      /* response handling function */
 	(destroy_function)destroy,	/* destroy function */
-	child_init                  /* per-child init function */
+	child_init,					/* per-child init function */
+	0							/* reload-ack function */
 };
 
 
@@ -95,7 +98,7 @@ struct module_exports exports= {
 static int mod_init(void)
 {
 	LM_NOTICE("initializing module example_cachedb ...\n");
-	str key=str_init("marinarodeo_online");
+	str key=str_init("openMarinkaRodeo_online");
 	str value=str_init("1");
 
 	cachedb_url.len = cachedb_url.s ? strlen(cachedb_url.s) : 0;
@@ -121,7 +124,7 @@ static int mod_init(void)
 		return -1;
 	}
 
-	LM_DBG("Setting key marinarodeo_online in back-end\n");
+	LM_DBG("Setting key openMarinkaRodeo_online in back-end\n");
 	if (cdbf.set(con,&key,&value,0) < 0) {
 		LM_ERR("failed to set key\n");
 		return -1;
@@ -153,7 +156,7 @@ static int child_init(int rank)
  */
 static void destroy(void)
 {
-	str key_op=str_init("marinarodeo_online");
+	str key_op=str_init("openMarinkaRodeo_online");
 	str value_op=str_init("0");
 	str key_inv=str_init("inv_bye");
 	str val_inv;
@@ -163,8 +166,8 @@ static void destroy(void)
 	if (cdbf.get(con,&key_inv,&val_inv) < 0)
 		LM_ERR("failed to get key\n");
 
-	LM_DBG("At Marina.Rodeo shutdown, counter = %.*s\n",val_inv.len,val_inv.s);
-	LM_DBG("Setting key marinarodeo_online in back-end\n");
+	LM_DBG("At OpenMarinkaRodeo shutdown, counter = %.*s\n",val_inv.len,val_inv.s);
+	LM_DBG("Setting key openMarinkaRodeo_online in back-end\n");
 
 	if (cdbf.set(con,&key_op,&value_op,0) < 0)
 		LM_ERR("failed to set key\n");

@@ -1,9 +1,9 @@
-Source: Marina.Rodeo
+Source: openMarinkaRodeo
 Section: net
 Priority: optional
-Maintainer: Răzvan Crainea <razvan@Marina.Rodeo.org>
+Maintainer: Răzvan Crainea <razvan@openMarinkaRodeo.org>
 Build-Depends: bison,
-               debhelper (>= 9),
+               debhelper (>= 10),
                default-libmysqlclient-dev | libmysqlclient-dev,
                debhelper (>= 9.20160709) | dh-systemd (>= 1.5),
                dpkg-dev (>= 1.16.1.1),
@@ -24,6 +24,8 @@ Build-Depends: bison,
                liblua5.1-0-dev,
                libmemcached-dev,
                libmicrohttpd-dev,
+               libmnl-dev,
+               libjwt-dev | base-files,
                libbson-dev | base-files,
                libmongoc-dev | base-files,
                libncurses5-dev,
@@ -46,63 +48,64 @@ Build-Depends: bison,
                xsltproc,
                zlib1g-dev
 Standards-Version: 3.9.8
-Homepage: https://Marina.Rodeo.org/
+Homepage: https://openMarinkaRodeo.org/
 
-Package: Marina.Rodeo
+Package: openMarinkaRodeo
 Architecture: any
 Multi-Arch: foreign
 Depends: adduser, python | python-is-python3, ${misc:Depends}, ${shlibs:Depends}
-Suggests: Marina.Rodeo-auth-jwt-module,
-          Marina.Rodeo-auth-modules,
-          Marina.Rodeo-berkeley-module,
-          Marina.Rodeo-carrierroute-module,
-          Marina.Rodeo-cgrates-module,
-          Marina.Rodeo-compression-module,
-          Marina.Rodeo-cpl-module,
-          Marina.Rodeo-dbhttp-module,
-          Marina.Rodeo-dialplan-module,
-          Marina.Rodeo-diameter-module,
-          Marina.Rodeo-emergency-module,
-          Marina.Rodeo-geoip-module,
-          Marina.Rodeo-http-modules,
-          Marina.Rodeo-identity-module,
-          Marina.Rodeo-jabber-module,
-          Marina.Rodeo-json-module,
-          Marina.Rodeo-kafka-module,
-          Marina.Rodeo-ldap-modules,
-          Marina.Rodeo-lua-module,
-          Marina.Rodeo-memcached-module,
-          Marina.Rodeo-mongodb-module,
-          Marina.Rodeo-msrp-modules,
-          Marina.Rodeo-mysql-module,
-          Marina.Rodeo-perl-modules,
-          Marina.Rodeo-postgres-module,
-          Marina.Rodeo-presence-modules,
-          Marina.Rodeo-prometheus-module,
-          Marina.Rodeo-python-module,
-          Marina.Rodeo-rabbitmq-modules,
-          Marina.Rodeo-radius-modules,
-          Marina.Rodeo-redis-module,
-          Marina.Rodeo-regex-module,
-          Marina.Rodeo-restclient-module,
-          Marina.Rodeo-sctp-module [linux-any],
-          Marina.Rodeo-siprec-module,
-          Marina.Rodeo-snmpstats-module,
-          Marina.Rodeo-sqlite-module,
-          Marina.Rodeo-stir-shaken-module,
-          Marina.Rodeo-tls-module,
-          Marina.Rodeo-tls-openssl-module,
-          Marina.Rodeo-tls-wolfssl-module,
-          Marina.Rodeo-tlsmgm-module,
-          Marina.Rodeo-unixodbc-module,
-          Marina.Rodeo-uuid-module,
-          Marina.Rodeo-wss-module,
-          Marina.Rodeo-xml-module,
-          Marina.Rodeo-xmlrpc-module,
-          Marina.Rodeo-xmpp-module
+Suggests: openMarinkaRodeo-auth-jwt-module,
+          openMarinkaRodeo-auth-modules,
+          openMarinkaRodeo-berkeley-module,
+          openMarinkaRodeo-carrierroute-module,
+          openMarinkaRodeo-cgrates-module,
+          openMarinkaRodeo-compression-module,
+          openMarinkaRodeo-cpl-module,
+          openMarinkaRodeo-dbhttp-module,
+          openMarinkaRodeo-dialplan-module,
+          openMarinkaRodeo-diameter-module,
+          openMarinkaRodeo-emergency-module,
+          openMarinkaRodeo-geoip-module,
+          openMarinkaRodeo-http-modules,
+          openMarinkaRodeo-identity-module,
+          openMarinkaRodeo-ipsec-module,
+          openMarinkaRodeo-jabber-module,
+          openMarinkaRodeo-json-module,
+          openMarinkaRodeo-kafka-module,
+          openMarinkaRodeo-ldap-modules,
+          openMarinkaRodeo-lua-module,
+          openMarinkaRodeo-memcached-module,
+          openMarinkaRodeo-mongodb-module,
+          openMarinkaRodeo-msrp-modules,
+          openMarinkaRodeo-mysql-module,
+          openMarinkaRodeo-perl-modules,
+          openMarinkaRodeo-postgres-module,
+          openMarinkaRodeo-presence-modules,
+          openMarinkaRodeo-prometheus-module,
+          openMarinkaRodeo-python-module,
+          openMarinkaRodeo-rabbitmq-modules,
+          openMarinkaRodeo-radius-modules,
+          openMarinkaRodeo-redis-module,
+          openMarinkaRodeo-regex-module,
+          openMarinkaRodeo-restclient-module,
+          openMarinkaRodeo-sctp-module [linux-any],
+          openMarinkaRodeo-siprec-module,
+          openMarinkaRodeo-snmpstats-module,
+          openMarinkaRodeo-sqlite-module,
+          openMarinkaRodeo-stir-shaken-module,
+          openMarinkaRodeo-tls-module,
+          openMarinkaRodeo-tls-openssl-module,
+          openMarinkaRodeo-tls-wolfssl-module,
+          openMarinkaRodeo-tlsmgm-module,
+          openMarinkaRodeo-unixodbc-module,
+          openMarinkaRodeo-uuid-module,
+          openMarinkaRodeo-wss-module,
+          openMarinkaRodeo-xml-module,
+          openMarinkaRodeo-xmlrpc-module,
+          openMarinkaRodeo-xmpp-module
 Description: very fast and configurable SIP server
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  C Shell-like scripting language provides full control over the server's
@@ -115,18 +118,18 @@ Description: very fast and configurable SIP server
  Module, Registrar and User Location, Load Balaning/Dispatching/LCR,
  XMLRPC Interface.
  .
- This package contains the main Marina.Rodeo binary along with the principal modules
- and support binaries including Marina.Rodeomc configuration tool.
+ This package contains the main OpenMarinkaRodeo binary along with the principal modules
+ and support binaries including openMarinkaRodeomc configuration tool.
 
-Package: Marina.Rodeo-auth-jwt-module
+Package: openMarinkaRodeo-auth-jwt-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: JSON Web Tokens authentication module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: JSON Web Tokens authentication module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  The module implements authentication over JSON Web Tokens. In
@@ -134,7 +137,7 @@ Description: JSON Web Tokens authentication module for Marina.Rodeo
  layer ( other than SIP ), so it makes no sense to
  double-authenticate it on the SIP layer. Thus, the SIP client
  will simply present the JWT auth token it received from the
- server, and pass it on to Marina.Rodeo which will use that for
+ server, and pass it on to OpenMarinkaRodeo which will use that for
  authentication purposes. It relies on two DB tables, one
  containing JWT profiles ( a profile name and it's SIP username
  associated to it ) and one containing JWT secrets. Each secret
@@ -142,224 +145,250 @@ Description: JSON Web Tokens authentication module for Marina.Rodeo
  and two timestamps describing a validation interval. Multiple
  JWT secrets can point to the same JWT profile.
 
-Package: Marina.Rodeo-auth-modules
+Package: openMarinkaRodeo-auth-modules
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: Authentication interfaces for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: Authentication interfaces for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides the modules that are being used to provide
- SIP authentication in Marina.Rodeo. It consists of both the
+ SIP authentication in OpenMarinkaRodeo. It consists of both the
  authentication interface (the auth module), as well as the UAC
  authentication module (uac_auth).
 
-Package: Marina.Rodeo-berkeley-bin
+Package: openMarinkaRodeo-berkeley-bin
 Architecture: any
 Multi-Arch: foreign
-Depends: Marina.Rodeo (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: Berkeley Database module for Marina.Rodeo - helper program
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Suggests: openMarinkaRodeo-berkeley-module, openMarinkaRodeo-berkeley-schema
+Description: Berkeley Database module for OpenMarinkaRodeo - helper program
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the berkeley database module for Marina.Rodeo, a
+ This package provides the berkeley database module for OpenMarinkaRodeo, a
  high-performance embedded DB kernel. You should normally install
- Marina.Rodeo-berkeley-module and not this package directly.
+ openMarinkaRodeo-berkeley-module and not this package directly.
 
-Package: Marina.Rodeo-berkeley-module
+Package: openMarinkaRodeo-berkeley-module
 Architecture: any
 Multi-Arch: same
 Depends: db-util (>= 4.6.19),
-         Marina.Rodeo (= ${binary:Version}),
+         openMarinkaRodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: Berkeley Database module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Suggests: openMarinkaRodeo-berkeley-bin, openMarinkaRodeo-berkeley-schema
+Description: Berkeley Database module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the berkeley database module for Marina.Rodeo, a
+ This package provides the berkeley database module for OpenMarinkaRodeo, a
  high-performance embedded DB kernel. All database tables are stored
  in files, no additional server is necessary.
 
-Package: Marina.Rodeo-carrierroute-module
+Package: openMarinkaRodeo-berkeley-dbschema
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Carrierroute module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Suggests: openMarinkaRodeo-berkeley-bin, openMarinkaRodeo-berkeley-module
+Description: Berkeley database schema for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the carrierroute module for Marina.Rodeo, an integrated
- solution for routing, balancing and blacklisting.
+ This package provides the Berkeley database schema files for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-cgrates-module
+Package: openMarinkaRodeo-carrierroute-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: CGRateS connector for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Carrierroute module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
+ per second even on low-budget hardware.
+ .
+ This package provides the carrierroute module for OpenMarinkaRodeo, an integrated
+ solution for routing, balancing and blacklisting.
+
+Package: openMarinkaRodeo-cgrates-module
+Architecture: any
+Multi-Arch: same
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: CGRateS connector for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides a connnector to the CGRateS rating/billing engine.
 
-Package: Marina.Rodeo-compression-module
+Package: openMarinkaRodeo-compression-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
          zlib1g,
          ${misc:Depends},
          ${shlibs:Depends}
-Description: Headers and body compression module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: Headers and body compression module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides the compression module, that is able to compress
  SIP headers and body, as  well as shrink the size of a SIP package.
 
-Package: Marina.Rodeo-cpl-module
+Package: openMarinkaRodeo-cpl-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: CPL module (CPL interpreter engine) for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: CPL module (CPL interpreter engine) for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides a CPL (Call Processing Language) interpreter for
- Marina.Rodeo, turning Marina.Rodeo into a CPL server (storage and interpreter).
+ OpenMarinkaRodeo, turning OpenMarinkaRodeo into a CPL server (storage and interpreter).
 
-Package: Marina.Rodeo-dbg
+Package: openMarinkaRodeo-dbg
 Architecture: any
 Multi-Arch: same
 Section: debug
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}
 Description: very fast and configurable SIP server [debug symbols]
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package contains the debugging symbols for the Marina.Rodeo binaries and
- modules. You only need to install it if you need to debug Marina.Rodeo.
+ This package contains the debugging symbols for the OpenMarinkaRodeo binaries and
+ modules. You only need to install it if you need to debug OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-dbhttp-module
+Package: openMarinkaRodeo-dbhttp-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: HTTP database connectivity module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: HTTP database connectivity module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the HTTP-based database driver for Marina.Rodeo
+ This package provides the HTTP-based database driver for OpenMarinkaRodeo
 
-Package: Marina.Rodeo-dialplan-module
+Package: openMarinkaRodeo-dialplan-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Generic string translation module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Generic string translation module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides dialplan module that implements generic string
  translations based on matching and replacement rules. It can be used to
  manipulate R-URI or a PV and to translated to a new format/value.
 
-Package: Marina.Rodeo-diameter-module
+Package: openMarinkaRodeo-diameter-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Diameter module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Diameter module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides a DIAMETER driver for the AAA API from Marina.Rodeo.
+ This package provides a DIAMETER driver for the AAA API from OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-emergency-module
+Package: openMarinkaRodeo-emergency-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Emergency call module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Emergency call module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- The emergency module provides emergency call treatment for Marina.Rodeo, following
+ The emergency module provides emergency call treatment for OpenMarinkaRodeo, following
  the architecture i2 specification of the American entity NENA. (National
  Emergency Number Association).
 
-Package: Marina.Rodeo-geoip-module
+Package: openMarinkaRodeo-geoip-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: IP address-to-location looku (MaxMind GeoIP API) for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: IP address-to-location looku (MaxMind GeoIP API) for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module is a lightweight wrapper for the MaxMind GeoIP API.
- It adds IP address-to-location lookup capability to Marina.Rodeo
+ It adds IP address-to-location lookup capability to OpenMarinkaRodeo
  scripts. Lookups are executed against the freely-available GeoLite City
  database; and the non-free GeoIP City database is drop-in
  compatible   Lookups are executed against the freely-available GeoLite City
  database; and the non-free GeoIP City database is drop-in compatible
 
-Package: Marina.Rodeo-http-modules
+Package: openMarinkaRodeo-http-modules
 Architecture: any
 Multi-Arch: same
 Depends: libmicrohttpd10|libmicrohttpd12,
-         Marina.Rodeo (= ${binary:Version}),
+         openMarinkaRodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: HTTP transport layer and Management Interface for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: HTTP transport layer and Management Interface for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides an HTTP transport layer and Management Interface for
- Marina.Rodeo.
+ OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-identity-module
+Package: openMarinkaRodeo-identity-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: SIP Identity module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: SIP Identity module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides support for SIP Identity (see RFC 4474).
 
-Package: Marina.Rodeo-jabber-module
+Package: openMarinkaRodeo-ipsec-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Jabber gateway module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: IPSec proto module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the SIP to Jabber translator module for Marina.Rodeo.
+ This package provides IMS IPSec connections (see TS 33.203).
 
-Package: Marina.Rodeo-json-module
+Package: openMarinkaRodeo-jabber-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Support for JSON handling in Marina.Rodeo script
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Jabber gateway module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
+ per second even on low-budget hardware.
+ .
+ This package provides the SIP to Jabber translator module for OpenMarinkaRodeo.
+
+Package: openMarinkaRodeo-json-module
+Architecture: any
+Multi-Arch: same
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Support for JSON handling in OpenMarinkaRodeo script
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package introduces a new type of variable that provides both
@@ -367,51 +396,51 @@ Description: Support for JSON handling in Marina.Rodeo script
  provides ways to access (from script) objects and arrays to add,replace or
  delete values from the script.
 
-Package: Marina.Rodeo-kafka-module
+Package: openMarinkaRodeo-kafka-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Implementation of an Apache Kafka producer
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module is an implementation of an Apache Kafka producer.
  It serves as a transport backend for the Event Interface and
  also provides a stand-alone connector to be used from the
- Marina.Rodeo script in order to publish messages to Kafka brokers.
+ OpenMarinkaRodeo script in order to publish messages to Kafka brokers.
 
-Package: Marina.Rodeo-ldap-modules
+Package: openMarinkaRodeo-ldap-modules
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: LDAP modules for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: LDAP modules for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the ldap and h350 modules for Marina.Rodeo, enabling LDAP
- queries from the Marina.Rodeo config and storage of SIP account data in an LDAP
+ This package provides the ldap and h350 modules for OpenMarinkaRodeo, enabling LDAP
+ queries from the OpenMarinkaRodeo config and storage of SIP account data in an LDAP
  directory.
 
-Package: Marina.Rodeo-lua-module
+Package: openMarinkaRodeo-lua-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Lua extensions for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Lua extensions for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides an interface for Marina.Rodeo to utilize Lua extensions.
+ This package provides an interface for OpenMarinkaRodeo to utilize Lua extensions.
 
-Package: Marina.Rodeo-memcached-module
+Package: openMarinkaRodeo-memcached-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Interface module to interact with a memcached server
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides an implementation of a cache system designed to work
@@ -420,116 +449,144 @@ Description: Interface module to interact with a memcached server
  storing, fetching and removing a value to the core memcache management
  interface.
 
-Package: Marina.Rodeo-mongodb-module
+Package: openMarinkaRodeo-mongodb-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Interface module to interact with a MongoDB server
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module is an implementation of a cache system designed to work with
  MongoDB servers.
 
-Package: Marina.Rodeo-msrp-modules
+Package: openMarinkaRodeo-msrp-modules
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
-         Marina.Rodeo-auth-modules (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
+         openMarinkaRodeo-auth-modules (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Description: Implementation of the MSRP protocol
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the MSRP protocol support for Marina.Rodeo.
+ This package provides the MSRP protocol support for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-mysql-module
+Package: openMarinkaRodeo-mysql-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: MySQL database connectivity module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Suggests: openMarinkaRodeo-mysql-dbschema
+Description: MySQL database connectivity module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the MySQL database driver for Marina.Rodeo.
+ This package provides the MySQL database driver for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-perl-modules
+Package: openMarinkaRodeo-mysql-dbschema
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Perl extensions and database driver for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Suggests: openMarinkaRodeo-mysql-module
+Description: MySQL database schema for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides an interface for Marina.Rodeo to write Perl extensions and
- the db_perlvdb database driver for Marina.Rodeo.
+ This package provides the MySQL database schema files for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-postgres-module
+Package: openMarinkaRodeo-perl-modules
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Perl extensions and database driver for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
+ per second even on low-budget hardware.
+ .
+ This package provides an interface for OpenMarinkaRodeo to write Perl extensions and
+ the db_perlvdb database driver for OpenMarinkaRodeo.
+
+Package: openMarinkaRodeo-postgres-module
+Architecture: any
+Multi-Arch: same
+Depends: openMarinkaRodeo (= ${binary:Version}),
          postgresql-client,
          ${misc:Depends},
          ${shlibs:Depends}
-Description: PostgreSQL database connectivity module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Suggests: openMarinkaRodeo-postgres-dbschema
+Description: PostgreSQL database connectivity module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the PostgreSQL database driver for Marina.Rodeo.
+ This package provides the PostgreSQL database driver for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-presence-modules
+Package: openMarinkaRodeo-postgres-dbschema
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: SIMPLE presence modules for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Suggests: openMarinkaRodeo-postgres-module
+Description: PostgreSQL database schema for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides several Marina.Rodeo modules for implementing presence
+ This package provides the PostgreSQL database schema files for OpenMarinkaRodeo.
+
+Package: openMarinkaRodeo-presence-modules
+Architecture: any
+Multi-Arch: same
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: SIMPLE presence modules for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
+ per second even on low-budget hardware.
+ .
+ This package provides several OpenMarinkaRodeo modules for implementing presence
  server and presence user agent for RICH presence, registrar-based presence,
  external triggered presence and XCAP support.
 
-Package: Marina.Rodeo-prometheus-module
+Package: openMarinkaRodeo-prometheus-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
-         Marina.Rodeo-http-modules (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
+         openMarinkaRodeo-http-modules (= ${binary:Version}),
          ${shlibs:Depends}, ${misc:Depends}
-Description: Prometheus Monitoring support for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: Prometheus Monitoring support for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This module provides support in Marina.Rodeo for the Prometheus
+ This module provides support in OpenMarinkaRodeo for the Prometheus
  (https://prometheus.io/) monitoring tool.
 
-Package: Marina.Rodeo-python-module
+Package: openMarinkaRodeo-python-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Python scripting support
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module provides a Python interface to implement your scripting logic.
 
-Package: Marina.Rodeo-rabbitmq-modules
+Package: openMarinkaRodeo-rabbitmq-modules
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Interface module to interact with a RabbitMQ server
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides the implementation of a RabbitMQ client for the Event
@@ -537,24 +594,24 @@ Description: Interface module to interact with a RabbitMQ server
  the Event Interface triggers an event subscribed for. It also provides a
  module to publish RabbitMQ messages to a RabbitMQ server.
 
-Package: Marina.Rodeo-radius-modules
+Package: openMarinkaRodeo-radius-modules
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Radius modules for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Radius modules for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the RADIUS driver for the AAA API from Marina.Rodeo.
+ This package provides the RADIUS driver for the AAA API from OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-redis-module
+Package: openMarinkaRodeo-redis-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: Interface module to interact with a Redis server
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides an implementation of a cache system designed to
@@ -562,191 +619,205 @@ Description: Interface module to interact with a Redis server
  to either a single Redis server instance, or to a Redis Server inside
  a Redis Cluster. It uses the Key-Value interface exported from the core.
 
-Package: Marina.Rodeo-regex-module
+Package: openMarinkaRodeo-regex-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: PCRE regexp modules for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: PCRE regexp modules for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package provides a module for matching operations against regular
- expressions using the powerful PCRE library. By default, Marina.Rodeo support
+ expressions using the powerful PCRE library. By default, OpenMarinkaRodeo support
  sed-like regular expressions; PCRE library brings perl-like regular
  expressions.
 
-Package: Marina.Rodeo-restclient-module
+Package: openMarinkaRodeo-restclient-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: REST client module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: REST client module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the REST client support for Marina.Rodeo.
+ This package provides the REST client support for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-sctp-module
+Package: openMarinkaRodeo-sctp-module
 Architecture: linux-any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: SCTP transport module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: SCTP transport module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the SCTP support for Marina.Rodeo.
+ This package provides the SCTP support for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-siprec-module
+Package: openMarinkaRodeo-siprec-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
 Description: SIP Call Recording Implementation for the SIPREC Protocol
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module provides the means to Record Calls using the SIPREC protocol.
 
-Package: Marina.Rodeo-snmpstats-module
+Package: openMarinkaRodeo-snmpstats-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
          snmpd,
          ${misc:Depends},
          ${shlibs:Depends}
-Description: SNMP AgentX subagent module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: SNMP AgentX subagent module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the snmpstats module for Marina.Rodeo. This module acts
+ This package provides the snmpstats module for OpenMarinkaRodeo. This module acts
  as an AgentX subagent which connects to a master agent.
 
-Package: Marina.Rodeo-sqlite-module
+Package: openMarinkaRodeo-sqlite-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: SQLite database connectivity module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Suggests: openMarinkaRodeo-sqlite-dbschema
+Description: SQLite database connectivity module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the SQLite database driver for Marina.Rodeo.
+ This package provides the SQLite database driver for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-stir-shaken-module
+Package: openMarinkaRodeo-sqlite-dbschema
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: STIR/SHAKEN support for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Suggests: openMarinkaRodeo-sqlite-module
+Description: SQLite database schema for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
+ per second even on low-budget hardware.
+ .
+ This package provides the SQLite database schema files for OpenMarinkaRodeo.
+
+Package: openMarinkaRodeo-stir-shaken-module
+Architecture: any
+Multi-Arch: same
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: STIR/SHAKEN support for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This module adds support for implementing STIR/SHAKEN (RFC 8224, RFC 8588)
- Authentication and Verification services in Marina.Rodeo.
+ Authentication and Verification services in OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-tls-module
+Package: openMarinkaRodeo-tls-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
-         Marina.Rodeo-tlsmgm-module (= ${binary:Version}),
-         Marina.Rodeo-tls-openssl-module (= ${binary:Version}) | Marina.Rodeo-tls-wolfssl-module (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
+         openMarinkaRodeo-tlsmgm-module (= ${binary:Version}),
+         openMarinkaRodeo-tls-openssl-module (= ${binary:Version}) | openMarinkaRodeo-tls-wolfssl-module (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: TLS transport module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: TLS transport module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the TLS support for Marina.Rodeo.
+ This package provides the TLS support for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-tls-openssl-module
+Package: openMarinkaRodeo-tls-openssl-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
-         Marina.Rodeo-tlsmgm-module (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
+         openMarinkaRodeo-tlsmgm-module (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: TLS transport module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: TLS transport module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the OpenSSL implementation for TLS in Marina.Rodeo.
+ This package provides the OpenSSL implementation for TLS in OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-tls-wolfssl-module
+Package: openMarinkaRodeo-tls-wolfssl-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
-         Marina.Rodeo-tlsmgm-module (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
+         openMarinkaRodeo-tlsmgm-module (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: TLS transport module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: TLS transport module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the wolfSSL implementation for TLS in Marina.Rodeo.
+ This package provides the wolfSSL implementation for TLS in OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-tlsmgm-module
+Package: openMarinkaRodeo-tlsmgm-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: TLS management module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: TLS management module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides support for TLS management for Marina.Rodeo.
+ This package provides support for TLS management for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-unixodbc-module
+Package: openMarinkaRodeo-unixodbc-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: unixODBC database connectivity module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: unixODBC database connectivity module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the unixODBC database driver for Marina.Rodeo.
+ This package provides the unixODBC database driver for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-uuid-module
+Package: openMarinkaRodeo-uuid-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: UUID (Universally Unique Identifier) generator for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: UUID (Universally Unique Identifier) generator for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides a UUID generator for the Marina.Rodeo script.
+ This package provides a UUID generator for the OpenMarinkaRodeo script.
 
-Package: Marina.Rodeo-wss-module
+Package: openMarinkaRodeo-wss-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}),
-         Marina.Rodeo-tlsmgm-module (= ${binary:Version}),
-         Marina.Rodeo-tls-openssl-module (= ${binary:Version}) | Marina.Rodeo-tls-wolfssl-module (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
+         openMarinkaRodeo-tlsmgm-module (= ${binary:Version}),
+         openMarinkaRodeo-tls-openssl-module (= ${binary:Version}) | openMarinkaRodeo-tls-wolfssl-module (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Description: WebSocket Secure (WSS) transport module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: WebSocket Secure (WSS) transport module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the WebSocket Secure (WSS) support for Marina.Rodeo.
+ This package provides the WebSocket Secure (WSS) support for OpenMarinkaRodeo.
 
-Package: Marina.Rodeo-xml-module
+Package: openMarinkaRodeo-xml-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: Support for XML documents handling in Marina.Rodeo script
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: Support for XML documents handling in OpenMarinkaRodeo script
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
  This package introduces a new type of variable that provides both
@@ -754,27 +825,27 @@ Description: Support for XML documents handling in Marina.Rodeo script
  provides ways to access (from script) objects and arrays to add, replace or
  delete values from the script.
 
-Package: Marina.Rodeo-xmlrpc-module
+Package: openMarinkaRodeo-xmlrpc-module
 Architecture: any
-Depends: Marina.Rodeo (= ${binary:Version}),
-         Marina.Rodeo-http-modules (= ${binary:Version}),
+Depends: openMarinkaRodeo (= ${binary:Version}),
+         openMarinkaRodeo-http-modules (= ${binary:Version}),
          ${shlibs:Depends}, ${misc:Depends}
 Multi-Arch: same
-Description: XMLRPC support for Marina.Rodeo's Management Interface
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Description: XMLRPC support for OpenMarinkaRodeo's Management Interface
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the XMLRPC transport implementation for Marina.Rodeo's
+ This package provides the XMLRPC transport implementation for OpenMarinkaRodeo's
  Management Interface.
 
-Package: Marina.Rodeo-xmpp-module
+Package: openMarinkaRodeo-xmpp-module
 Architecture: any
 Multi-Arch: same
-Depends: Marina.Rodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
-Description: XMPP gateway module for Marina.Rodeo
- Marina.Rodeo is a very fast and flexible SIP (RFC3261)
- server. Written entirely in C, Marina.Rodeo can handle thousands calls
+Depends: openMarinkaRodeo (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: XMPP gateway module for OpenMarinkaRodeo
+ OpenMarinkaRodeo is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, OpenMarinkaRodeo can handle thousands calls
  per second even on low-budget hardware.
  .
- This package provides the SIP to XMPP IM translator module for Marina.Rodeo.
+ This package provides the SIP to XMPP IM translator module for OpenMarinkaRodeo.

@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2006 Voice Sistem S.R.L
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2005-2006 Voice Sistem S.R.L
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -39,7 +39,7 @@
 /* global vars */
 
 /*
- * when enabled ("-T <module>" cmdline param), Marina.Rodeo will behave as follows:
+ * when enabled ("-T <module>" cmdline param), OpenMarinkaRodeo will behave as follows:
  *   - enable debug mode
  *   - fork workers normally
  *   - run all currently enabled unit tests
@@ -115,7 +115,7 @@ str * const server_header = &str_init(SERVER_HDR);
    Default is to use USER_AGENT CRLF (assigned later).
 */
 str * const user_agent_header = &str_init(USER_AGENT);
-/* should Marina.Rodeo try to locate outbound interface on multihomed
+/* should openMarinkaRodeo try to locate outbound interface on multihomed
  * host? by default not -- too expensive
  */
 int mhomed=0;
@@ -138,7 +138,7 @@ int mcast_ttl = -1; /* if -1, don't touch it, use the default (usually 1) */
 
 int tos = IPTOS_LOWDELAY; // lgtm [cpp/short-global-name]
 
-struct socket_info* bind_address=NULL; /* pointer to the crt. proc.
+const struct socket_info* bind_address=NULL; /* pointer to the crt. proc.
 				       listening address*/
 
 /* if aliases should be automatically discovered and added
@@ -155,8 +155,12 @@ int process_no = 0;
 /* cfg parsing */
 int cfg_errors=0;
 
-/* start-up time */
-time_t startup_time = 0;
+/**
+ * @startup_time  - near to OpenMarinkaRodeo launch time, see init_mi_uptime()
+ * @ready_time    - per process, denotes completion of mod_init + child_init
+ * @ready_delay   - difference between above two UNIX timestamps
+ */
+time_t startup_time, ready_time, ready_delay;
 
 /* shared memory (in MB) */
 unsigned long shm_mem_size=SHM_MEM_SIZE * 1024 * 1024;

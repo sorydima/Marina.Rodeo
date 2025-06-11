@@ -3,7 +3,7 @@
 <chapter>
     <title>&develguide;</title>
 	<para>
-   The module provides an API that can be used from other &osips;
+   The module provides an API that can be used from other &oMarinkaRodeo;
    modules. The API offers the functions for instantiating b2b
    scenarios from other modules (this comes as an addition to the
    other two means of instantiating b2b scenarios - from script

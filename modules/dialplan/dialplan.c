@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C)  2007-2008 Voice Sistem SRL
+ * Copyright (C)  2007-2008 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -56,7 +56,6 @@
 
 static int mod_init(void);
 static int child_init(int rank);
-static int mi_child_init(void);
 static void mod_destroy();
 
 static mi_response_t *mi_reload_rules(const mi_params_t *params,
@@ -107,7 +106,7 @@ static const param_export_t mod_params[]={
 };
 
 static const mi_export_t mi_cmds[] = {
-	{ "dp_reload", 0, 0, mi_child_init, {
+	{ "dp_reload", 0, 0, NULL, {
 		{mi_reload_rules, {0}},
 		{mi_reload_rules_1, {"partition", 0}},
 		{EMPTY_MI_RECIPE}}
@@ -117,7 +116,7 @@ static const mi_export_t mi_cmds[] = {
 		{mi_translate3, {"dpid", "input", "partition", 0}},
 		{EMPTY_MI_RECIPE}}
 	},
-	{ "dp_show_partition", 0, 0, mi_child_init, {
+	{ "dp_show_partition", 0, 0, NULL, {
 		{mi_show_partition, {0}},
 		{mi_show_partition_1, {"partition", 0}},
 		{EMPTY_MI_RECIPE}}
@@ -141,7 +140,7 @@ static const cmd_export_t cmds[]={
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_SQLDB, NULL, DEP_WARN },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -156,7 +155,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,            /* exported functions */
 	0,               /* exported async functions */
 	mod_params,     /* param exports */
@@ -336,9 +335,9 @@ static void dp_print_list(void)
 		LM_DBG("List is empty\n");
 
 	while (start != NULL) {
-		LM_DBG("Partition=[%.*s] url=[%.*s] table=[%.*s] next=[%p]\n",
+		LM_DBG("Partition=[%.*s] url=[%s] table=[%.*s] next=[%p]\n",
 			start->partition.len, start->partition.s,
-			start->dp_db_url.len, start->dp_db_url.s,
+			db_url_escape(&start->dp_db_url),
 			start->dp_table_name.len, start->dp_table_name.s, start->next);
 		start = start->next;
 	}
@@ -420,10 +419,6 @@ static int child_init(int rank)
 {
 	dp_connection_list_p el;
 
-	/* only process with rank 1 loads data */
-	if (rank != 1)
-		return 0;
-
 	/* Connect to DBs.... */
 	for(el = dp_conns; el; el = el->next){
 		if (dp_connect_db(el) != 0) {
@@ -432,6 +427,10 @@ static int child_init(int rank)
 			return -1;
 		}
 	}
+
+	/* only process with rank 1 loads data */
+	if (rank != 1)
+		return 0;
 
 	/* ...and fire the RPC to perform the data load in the
 	 * same process, but after child_init is done */
@@ -442,29 +441,6 @@ static int child_init(int rank)
 
 	return 0;
 }
-
-
-static int mi_child_init(void)
-{
-	static int mi_child_initialized = 0;
-	dp_connection_list_p el;
-
-	if (mi_child_initialized)
-		return 0;
-
-	/* Connect to DB s */
-	for(el = dp_conns; el; el = el->next){
-		if (dp_connect_db(el) != 0) {
-			/* all el shall be freed in mod destroy */
-			LM_ERR("Unable to init/connect db connection\n");
-			return -1;
-		}
-	}
-
-	mi_child_initialized = 1;
-	return 0;
-}
-
 
 
 static void mod_destroy(void)

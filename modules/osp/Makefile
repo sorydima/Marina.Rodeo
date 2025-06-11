@@ -17,7 +17,7 @@ include ../../Makefile.modules
 install_module_custom:
 	echo "OSP module overwrites the default configuration file"
 	sed  \
-		-e "s#/usr/local/lib/Marina.Rodeo#$(modules_prefix)/$(lib_dir)#g" \
-		< etc/sample-osp-Marina.Rodeo.cfg \
-		> $(cfg_prefix)/$(cfg_dir)/Marina.Rodeo.cfg.sample
+		-e "s#/usr/local/lib/openMarinkaRodeo#$(modules_prefix)/$(lib_dir)#g" \
+		< etc/sample-osp-openMarinkaRodeo.cfg \
+		> $(cfg_prefix)/$(cfg_dir)/openMarinkaRodeo.cfg.sample
 

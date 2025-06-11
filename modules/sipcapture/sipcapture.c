@@ -1,16 +1,16 @@
 /*
  * sipcapture module - helper module to capture sip messages
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Alexandr Dubovikov (QSC AG) (alexandr.dubovikov@gmail.com)
+ * Copyright (C) 2011 Alexandr Dubovikov (QSC AG) (alexandr.dubovikov@gmail.com)
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -153,7 +153,7 @@ tz_table_t tz_table;
 tz_table_t rc_table;
 
 /* list of script used tables - we use this list to hold async queries;
- * when Marina.Rodeo is closed we need to run all queries for all the tables
+ * when openMarinkaRodeo is closed we need to run all queries for all the tables
  * in case max_async_queries is used */
 struct tz_table_list* tz_list=NULL;
 struct tz_table_list* rc_list=NULL;
@@ -421,13 +421,13 @@ static char payload_buf[MAX_PAYLOAD];
 
 
 
-#define VALUES_STR "(%ld,%lld,'%.*s','%.*s','%.*s','%.*s','%.*s','%.*s'," \
+#define VALUES_STR "(%lld,%lld,'%.*s','%.*s','%.*s','%.*s','%.*s','%.*s'," \
 					"'%.*s','%.*s','%.*s','%.*s','%.*s','%.*s','%.*s','%.*s','%.*s'," \
 					"'%.*s','%.*s','%.*s','%.*s','%.*s','%.*s',%d,'%.*s',%d," \
 					"'%.*s',%d,'%.*s',%d,%d,%d,'%.*s',%d,'%.*s','%.*s','%.*s'," \
 					"'%.*s', '%.*s', '%.*s', '%.*s', '%.*s', '%.*s')"
 
-#define RTCP_VALUES_STR "(%ld, %lld, '%.*s', '%.*s', %d, '%.*s', %d," \
+#define RTCP_VALUES_STR "(%lld, %lld, '%.*s', '%.*s', %d, '%.*s', %d," \
 						"%d, %d, %d, '%.*s', '%.*s')"
 
 int  max_async_queries=5;
@@ -640,7 +640,7 @@ static module_dependency_t *get_deps_hep(const param_export_t *param)
 
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_SQLDB, NULL, DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
@@ -654,9 +654,9 @@ static const dep_export_t deps = {
  * pseudo-variables
  */
 static const pv_export_t mod_items[] = {
-	{{"hep_net", sizeof("hep_net")-1}, 1201, pv_get_hep_net, 0,
+	{str_const_init("hep_net"), 1201, pv_get_hep_net, 0,
 		pv_parse_hep_net_name, 0, 0, 0},
-	{{"HEPVERSION", sizeof("HEPVERSION")-1}, 1202, pv_get_hep_version, 0,
+	{str_const_init("HEPVERSION"), 1202, pv_get_hep_version, 0,
 		0, 0, 0, 0},
 	{{0, 0}, 0, 0, 0, 0, 0, 0, 0}
 };
@@ -668,7 +668,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /*!< dlopen flags */
 	0,				 /*!< load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,       /*!< Exported functions */
 	acmds,          /*!< Exported async functions */
 	params,     /*!< Exported parameters */
@@ -2791,7 +2791,7 @@ static inline int append_sc_values(char* buf, int max_len, db_val_t* db_vals)
 	int len;
 
 	len = snprintf(buf, max_len, VALUES_STR,
-			VAL_TIME(db_vals+1), VAL_BIGINT(db_vals+2),
+			(long long)VAL_TIME(db_vals+1), VAL_BIGINT(db_vals+2),
 			VAL_STR(db_vals+3).len, VAL_STR(db_vals+3).s,
 			VAL_STR(db_vals+4).len, VAL_STR(db_vals+4).s,
 			VAL_STR(db_vals+5).len, VAL_STR(db_vals+5).s,
@@ -3464,7 +3464,7 @@ static int w_sip_capture(struct sip_msg *msg, void *table_name,
 	}
 
 	/* we change to internal proto id only for version 3; for version
-	 * 1/2 we don't change the buffer inside Marina.Rodeo so we don't need
+	 * 1/2 we don't change the buffer inside openMarinkaRodeo so we don't need
 	 * internal protocol id */
 	if (h && h->version == 3) {
 		if(sco.proto == PROTO_UDP) sco.proto=IPPROTO_UDP;
@@ -3673,7 +3673,7 @@ static int w_set_hep(struct sip_msg* msg, void *id, str *data_s,
 {
 	int data_len;
 	int data_type = TYPE_UTF8;
-	int vendor_id = HEP_Marina.Rodeo_VENDOR_ID;
+	int vendor_id = HEP_OPENMarinkaRodeo_VENDOR_ID;
 	unsigned int chunk_id = (unsigned int)(unsigned long)id;
 
 	unsigned int idata;
@@ -4250,7 +4250,7 @@ static int w_hep_relay(struct sip_msg *msg)
 	struct proxy_l* proxy;
 	struct sip_uri uri;
 
-	struct socket_info* send_sock;
+	const struct socket_info* send_sock;
 
 	union sockaddr_union to;
 
@@ -4289,12 +4289,18 @@ static int w_hep_relay(struct sip_msg *msg)
 
 	if (uri.proto == 0 || uri.proto == PROTO_UDP) {
 		hep_proto = PROTO_HEP_UDP;
-	} else if (uri.proto == PROTO_TCP || uri.proto == PROTO_TLS) {
+	} else if (uri.proto == PROTO_TCP) {
 		if (hep_version == 1 || hep_version == 2) {
-			LM_ERR("TCP and TLS not supported for HEPv%d\n", hep_version);
+			LM_ERR("TCP not supported for HEPv%d\n", hep_version);
 			return -1;
 		}
 		hep_proto = PROTO_HEP_TCP;
+	} else if (uri.proto == PROTO_TLS) {
+		if (hep_version == 1 || hep_version == 2) {
+			LM_ERR("TLS not supported for HEPv%d\n", hep_version);
+			return -1;
+		}
+		hep_proto = PROTO_HEP_TLS;
 	} else {
 		LM_ERR("cannot send hep with proto %s\n",
 					proto2str(uri.proto, proto_buf));
@@ -4490,7 +4496,7 @@ static inline int append_rc_values(char* buf, int max_len, db_val_t* db_vals)
 	int len;
 
 	len = snprintf(buf, max_len, RTCP_VALUES_STR,
-			VAL_TIME(db_vals+0), VAL_BIGINT(db_vals+1),
+			(long long)VAL_TIME(db_vals+0), VAL_BIGINT(db_vals+1),
 			VAL_STR(db_vals+2).len, VAL_STR(db_vals+2).s,
 			VAL_STR(db_vals+3).len, VAL_STR(db_vals+3).s,
 			VAL_INT(db_vals+4),

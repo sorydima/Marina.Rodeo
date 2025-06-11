@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2022 Marina.Rodeo Solutions
+ * Copyright (C) 2022 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -38,8 +38,8 @@ static int w_add_report(struct sip_msg *msg, void *srg,
 static const cmd_export_t cmds[]={
 	{"sr_set_status", (cmd_function)w_set_status, {
 		{CMD_PARAM_STR, fixup_sr_group, 0},
-		{CMD_PARAM_INT, 0, 0}, {0,0,0},
-		{CMD_PARAM_STR|CMD_PARAM_OPT, 0, 0}},
+		{CMD_PARAM_INT, 0, 0},
+		{CMD_PARAM_STR|CMD_PARAM_OPT, 0, 0}, {0,0,0}},
 		ALL_ROUTES},
 	{"sr_add_report", (cmd_function)w_add_report, {
 		{CMD_PARAM_STR, fixup_sr_group, 0},
@@ -60,7 +60,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,	/* dlopen flags */
 	NULL,				/* load function */
-	NULL,				/* Marina.Rodeo module dependencies */
+	NULL,				/* OpenMarinkaRodeo module dependencies */
 	cmds,				/* exported functions */
 	NULL,				/* exported async functions */
 	mod_params,			/* param exports */
@@ -125,12 +125,16 @@ static int w_add_report(struct sip_msg *msg, void *srg,
 static int w_set_status(struct sip_msg *msg, void *srg,
 		int *status, str *txt)
 {
+	int rc;
+
 	if (txt)
-		return sr_set_status( srg, CHAR_INT_NULL,
+		rc = sr_set_status( srg, CHAR_INT_NULL,
 			*status, txt->s, txt->len, 1/*public access*/);
 	else
-		return sr_set_status( srg, CHAR_INT_NULL,
+		rc = sr_set_status( srg, CHAR_INT_NULL,
 			*status, CHAR_INT_NULL, 1/*public access*/);
+
+	return !rc ? 1 : rc;
 }
 
 

@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Sippy Software, Inc., http://www.sippysoft.com
+ * Copyright (C) 2009 Sippy Software, Inc., http://www.sippysoft.com
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -36,7 +36,7 @@ static int mod_init(void);
 static int child_init(int rank);
 static void mod_destroy(void);
 
-static str script_name = str_init("/usr/local/etc/Marina.Rodeo/handler.py");
+static str script_name = str_init("/usr/local/etc/openMarinkaRodeo/handler.py");
 static str mod_init_fname = str_init("mod_init");
 static str child_init_mname = str_init("child_init");
 PyObject *handler_obj;
@@ -70,7 +70,7 @@ struct module_exports exports = {
     MODULE_VERSION,
     RTLD_NOW | RTLD_GLOBAL,         /* dlopen flags */
     0,                              /* load function */
-    NULL,                           /* Marina.Rodeo module dependencies */
+    NULL,                           /* OpenMarinkaRodeo module dependencies */
     cmds,                           /* exported functions */
     0,                              /* exported async functions */
     params,                         /* exported parameters */
@@ -101,9 +101,9 @@ mod_init(void)
 
     bname = basename(script_name.s);
     i = strlen(bname);
-    if (bname[i - 1] == 'c' || bname[i - 1] == 'o')
+    if (i > 4 && (bname[i - 1] == 'c' || bname[i - 1] == 'o'))
         i -= 1;
-    if (bname[i - 3] == '.' && bname[i - 2] == 'p' && bname[i - 1] == 'y') {
+    if (i > 3 && memcmp(&bname[i - 3], ".py", 3) == 0) {
         bname[i - 3] = '\0';
     } else {
         LM_ERR("%s: script_name doesn't look like a python script\n",
@@ -114,8 +114,8 @@ mod_init(void)
     if (strlen(dname) == 0)
         dname = ".";
 
-    if (PyImport_AppendInittab("Marina.Rodeo", &PyInit_Marina.Rodeo) < 0) {
-        LM_ERR("could not append init tab for Marina.Rodeo!\n");
+    if (PyImport_AppendInittab("OpenMarinkaRodeo", &PyInit_OpenMarinkaRodeo) < 0) {
+        LM_ERR("could not append init tab for OpenMarinkaRodeo!\n");
         return -1;
     }
 
@@ -303,15 +303,15 @@ mod_destroy(void)
 }
 
 #if PY_MAJOR_VERSION >= 3
-PyMODINIT_FUNC PyInit_Marina.Rodeo(void)
+PyMODINIT_FUNC PyInit_OpenMarinkaRodeo(void)
 {
     PyObject *m;
     static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
-        "Marina.Rodeo",          /* m_name */
+        "OpenMarinkaRodeo",          /* m_name */
         NULL,                /* m_doc */
         -1,                  /* m_size */
-        Marina.RodeoMethods,     /* m_methods */
+        OpenMarinkaRodeoMethods,     /* m_methods */
         NULL,                /* m_reload */
         NULL,                /* m_traverse */
         NULL,                /* m_clear */
@@ -319,14 +319,14 @@ PyMODINIT_FUNC PyInit_Marina.Rodeo(void)
     };
     m = PyModule_Create(&moduledef);
     if (!m) {
-        LM_ERR("could not create Marina.Rodeo module!\n");
+        LM_ERR("could not create OpenMarinkaRodeo module!\n");
         return NULL;
     }
     return m;
 }
 #else
-void initMarina.Rodeo(void)
+void initOpenMarinkaRodeo(void)
 {
-    Py_InitModule("Marina.Rodeo", Marina.RodeoMethods);
+    Py_InitModule("OpenMarinkaRodeo", OpenMarinkaRodeoMethods);
 }
 #endif

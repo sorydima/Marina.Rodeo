@@ -9,14 +9,14 @@
 		</question>
 		<answer>
 		<para>
-			Use one (the most appropriate) of the &osips; mailing lists:
+			Use one (the most appropriate) of the &oMarinkaRodeo; mailing lists:
 		</para>
 		<itemizedlist>
 			<listitem>
-			<para>User Mailing List - &osipsuserslink;</para>
+			<para>User Mailing List - &oMarinkaRodeouserslink;</para>
 			</listitem>
 			<listitem>
-			<para>Developer Mailing List - &osipsdevlink;</para>
+			<para>Developer Mailing List - &oMarinkaRodeodevlink;</para>
 			</listitem>
 		</itemizedlist>
 		<para>
@@ -31,14 +31,14 @@
 		</question>
 		<answer>
 		<para>
-			Accumulate as much as possible information (&osips; version,
-			Marina.Rodeo -V output, your OS (uname -a), &osips; logs, network dumps,
+			Accumulate as much as possible information (&oMarinkaRodeo; version,
+			openMarinkaRodeo -V output, your OS (uname -a), &oMarinkaRodeo; logs, network dumps,
 			core dump files, configuration file)
-			and send a mail to &osipsdevlink;
+			and send a mail to &oMarinkaRodeodevlink;
 		</para>
 		<para>
-			Also you may try Marina.Rodeo's bug report web page:
-			https://Marina.Rodeo.org/pmwiki.php?n=Development.Tracker
+			Also you may try OpenMarinkaRodeo's bug report web page:
+			https://openMarinkaRodeo.org/pmwiki.php?n=Development.Tracker
 		</para>
 	</answer>
 	</qandaentry>
@@ -48,7 +48,7 @@
 		</question>
 		<answer>
 		<para>
-			Increase the log level in Marina.Rodeo.cfg (log_level=4) and watch 
+			Increase the log level in openMarinkaRodeo.cfg (log_level=4) and watch 
 			the log statements in syslog.
 		</para>
 		<para>
@@ -73,11 +73,11 @@
 	</qandaentry>
 	<qandaentry>
 		<question>
-		<para>Where can I find more about Marina.Rodeo?</para>
+		<para>Where can I find more about OpenMarinkaRodeo?</para>
 		</question>
 		<answer>
 		<para>
-			Take a look at &osipshomelink;.
+			Take a look at &oMarinkaRodeohomelink;.
 		</para>
 		</answer>
 	</qandaentry>
@@ -92,20 +92,20 @@
 		</para>
 		<itemizedlist>
 			<listitem>
-			<para>User Mailing List - &osipsuserslink;</para>
+			<para>User Mailing List - &oMarinkaRodeouserslink;</para>
 			</listitem>
 			<listitem>
-			<para>Developer Mailing List - &osipsdevlink;</para>
+			<para>Developer Mailing List - &oMarinkaRodeodevlink;</para>
 			</listitem>
 		</itemizedlist>
 		<para>
-			E-mails regarding any stable &osips; release should be sent to
-			&osipsusersmail; and e-mails regarding development versions
-			should be sent to &osipsdevmail;.
+			E-mails regarding any stable &oMarinkaRodeo; release should be sent to
+			&oMarinkaRodeousersmail; and e-mails regarding development versions
+			should be sent to &oMarinkaRodeodevmail;.
 		</para>
 		<para>
 			If you want to keep the mail private, send it to
-			&osipshelpmail;.
+			&oMarinkaRodeohelpmail;.
 		</para>
 		</answer>
 	</qandaentry>
@@ -116,7 +116,7 @@
 		<answer>
 		<para>
 			Please follow the guidelines provided at:
-			&osipsbugslink;.
+			&oMarinkaRodeobugslink;.
 		</para>
 		</answer>
 	</qandaentry>

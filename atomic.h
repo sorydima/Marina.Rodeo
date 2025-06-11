@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 kernel.org
+ * Copyright (C) 2006 kernel.org
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -30,13 +30,20 @@
  *
  * Several of the above-mentioned OS'es use old gcc builds (4.8 or older), with
  * partial support for C11, so stdatomic.h is not present.  Dropping support
- * for these OS'es would affect a significant number of Marina.Rodeo deployments,
+ * for these OS'es would affect a significant number of OpenMarinkaRodeo deployments,
  * which is undesirable, at least for now.
  * ============================================================================
  */
 
 #ifndef _ATOMIC_OPS_H_
 #define _ATOMIC_OPS_H_
+
+#ifdef HAVE_STDATOMIC
+#include <stdatomic.h>
+#undef NO_ATOMIC_OPS
+
+typedef _Atomic(unsigned long) atomic_t;
+#else /* HAVE_STDATOMIC */
 
 /************************* i386 & x86_64 ARCH ****************************/
 
@@ -204,21 +211,6 @@ static __inline__ void atomic_dec(atomic_t *v)
 
 #undef NO_ATOMIC_OPS
 
-/************************* other ARCH ****************************/
-
-#else
-
-#define NO_ATOMIC_OPS
-
-#endif
-
-#if defined(NO_ATOMIC_OPS) && defined(HAVE_STDATOMIC)
-#undef NO_ATOMIC_OPS
-#include <stdatomic.h>
-
-typedef _Atomic(unsigned long) atomic_t;
-#else
-
 /* C11 stdatomics wrappers */
 #define atomic_init(a, v) atomic_set(a, v)
 #define atomic_store(a, v) atomic_set(a, v)
@@ -228,6 +220,14 @@ typedef _Atomic(unsigned long) atomic_t;
 		atomic_add(v, a);\
 	else \
 		atomic_sub(-(v), a);
-#endif
+
+/************************* other ARCH ****************************/
+
+#else
+
+#define NO_ATOMIC_OPS
 
 #endif
+#endif /* HAVE_STDATOMIC */
+
+#endif /* _ATOMIC_OPS_H_ */

@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015 - Marina.Rodeo Foundation
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2015 - OpenMarinkaRodeo Foundation
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -382,6 +382,7 @@ static inline int tcp_handle_req(struct tcp_req *req,
 
 		/* prepare for next request */
 		size=req->pos-req->parsed;
+		con->msg_attempts = 0;
 
 		if (req->state==H_PING_CRLFCRLF) {
 			/* we send the reply */
@@ -413,6 +414,7 @@ static inline int tcp_handle_req(struct tcp_req *req,
 					msg_buf_cpy[msg_len] = 0;
 					msg_buf = msg_buf_cpy;
 					tcp_done_reading( con );
+					con = NULL; /* having reached this, we MUST return 2 */
 				}
 
 			} else {
@@ -427,8 +429,6 @@ static inline int tcp_handle_req(struct tcp_req *req,
 			if (msg_buf_cpy)
 				pkg_free(msg_buf_cpy);
 		}
-
-		con->msg_attempts = 0;
 
 		if (size) {
 			/* restoring the char only makes sense if there is something else to
@@ -450,7 +450,8 @@ static inline int tcp_handle_req(struct tcp_req *req,
 			/* if we no longer need this tcp_req
 			 * we can free it now */
 			shm_free(req);
-			con->con_req = NULL;
+			if (con)
+				con->con_req = NULL;
 		}
 	} else {
 		/* request not complete - check the if the thresholds are exceeded */
@@ -469,7 +470,7 @@ static inline int tcp_handle_req(struct tcp_req *req,
 		if (req == &_tcp_common_current_req) {
 			/* let's duplicate this - most likely another conn will come in */
 
-			LM_ERR("We didn't manage to read a full request on con %p\n",con);
+			LM_DBG("We didn't manage to read a full request on con %p\n",con);
 			con->con_req = shm_malloc(sizeof(struct tcp_req));
 			if (con->con_req == NULL) {
 				LM_ERR("No more mem for dynamic con request buffer\n");
@@ -509,8 +510,8 @@ static inline int tcp_handle_req(struct tcp_req *req,
 		}
 	}
 
-	/* everything ok */
-	return 0;
+	/* everything ok; if connection was returned already, use special rc 2 */
+	return con ? 0 : 2;
 error:
 	/* report error */
 	return -1;

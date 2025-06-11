@@ -8,7 +8,7 @@ Berkeley DB Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -64,19 +64,19 @@ Chapter 1. Admin Guide
 1.1. Overview
 
    This is a module which integrates the Berkeley DB into
-   Marina.Rodeo. It implements the DB API defined in Marina.Rodeo.
+   OpenMarinkaRodeo. It implements the DB API defined in OpenMarinkaRodeo.
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other Marina.Rodeo modules.
+     * No dependencies on other OpenMarinkaRodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * Berkeley Berkeley DB 4.6 - an embedded database.
 
 1.3. Exported Parameters
@@ -149,10 +149,10 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
      * table_path - to reload a particular table provide the
        tablename as the arguement; to reload all tables provide
        the db_path to the db files. The path can be found in
-       Marina.Rodeo-cli config variable.
+       openMarinkaRodeoc-cli config variable.
 
    MI FIFO Command Format:
-                Marina.Rodeo-cli -x mi bdb_reload subscriber
+                openMarinkaRodeo-cli -x mi bdb_reload subscriber
 
 1.6. Installation and Running
 
@@ -160,7 +160,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
    outside the scope of this document. Documentation for this
    procedure is available on the Internet.
 
-   Next, prepare to compile Marina.Rodeo with the db_berkeley module.
+   Next, prepare to compile OpenMarinkaRodeo with the db_berkeley module.
    In the directory /modules/db_berkeley, modify the Makefile to
    point to your distribution of Berkeley DB. You may also define
    'BDB_EXTRA_DEBUG' to compile in extra debug logs. However, it
@@ -171,22 +171,22 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
    You can use one of the next options.
      * edit the "Makefile" and remove "db_berkeley" from
        "excluded_modules" list. Then follow the standard procedure
-       to install Marina.Rodeo: "make all; make install".
+       to install OpenMarinkaRodeo: "make all; make install".
      * from command line use: 'make all
        include_modules="db_berkeley"; make install
        include_modules="db_berkeley"'.
 
-   Installation of Marina.Rodeo is performed by simply running make
+   Installation of OpenMarinkaRodeo is performed by simply running make
    install as root user of the main directory. This will install
    the binaries in /usr/local/sbin/. If this was successful,
-   Marina.Rodeo control engine files should now be installed as
-   /usr/local/sbin/Marina.Rodeo-dbctl.
+   OpenMarinkaRodeo control engine files should now be installed as
+   /usr/local/sbin/openMarinkaRodeodbctl.
 
    Decide where (on the filesystem) you want to install the
    Berkeley DB files. For instance,
-   '/usr/local/etc/Marina.Rodeo/db_berkeley' directory. Make note of
-   this directory as we need to add this path to the Marina.Rodeo-cli
-   config file. Note: Marina.Rodeo will not startup without these DB
+   '/usr/local/etc/openMarinkaRodeo/db_berkeley' directory. Make note of
+   this directory as we need to add this path to the openMarinkaRodeo-cli
+   config file. Note: OpenMarinkaRodeo will not startup without these DB
    files.
 
    (Optional) Pre creation step- Customize your meta-data. The DB
@@ -194,7 +194,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
    good time to review the meta-data section details, before
    making modifications to your tables dbschema. By default, the
    files are installed in
-   '/usr/local/share/Marina.Rodeo/db_berkeley/Marina.Rodeo' By default
+   '/usr/local/share/openMarinkaRodeo/db_berkeley/openMarinkaRodeo' By default
    these tables are created Read/Write and without any journalling
    as shown. These settings can be modified on a per table basis.
    Note: If you plan to use bdb_recover, you must change the
@@ -204,17 +204,17 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
                 METADATA_LOGFLAGS
                 0
 
-   Execute Marina.Rodeo-dbctl - There are three (3) groups of tables
+   Execute openMarinkaRodeodbctl - There are three (3) groups of tables
    you may need depending on your situation.
-                Marina.Rodeo-dbctl create            (required)
-                Marina.Rodeo-dbctl presence          (optional)
-                Marina.Rodeo-dbctl extra             (optional)
+                openMarinkaRodeodbctl create            (required)
+                openMarinkaRodeodbctl presence          (optional)
+                openMarinkaRodeodbctl extra             (optional)
 
-   Modify the Marina.Rodeo configuration file to use db_berkeley
+   Modify the OpenMarinkaRodeo configuration file to use db_berkeley
    module. The database URL for modules must be the path to the
    directory where the Berkeley DB table-files are located,
    prefixed by "berkeley://", e.g.,
-   "berkeley:///usr/local/etc/Marina.Rodeo/db_berkeley".
+   "berkeley:///usr/local/etc/openMarinkaRodeo/db_berkeley".
 
    A couple other IMPORTANT things to consider are the 'db_mode'
    and the 'use_domain' modparams. The description of these
@@ -243,7 +243,7 @@ modparam("db_berkeley", "journal_roll_interval", 3600)
 
 1.7. Database Schema and Metadata
 
-   All Berkeley DB tables are created via the Marina.Rodeo-dbctl
+   All Berkeley DB tables are created via the openMarinkaRodeodbctl
    script. This section provides details as to the content and
    format of the DB file upon creation.
 
@@ -390,14 +390,14 @@ r) last_name(str) email_address(str) datetime_created(datetime) timezone
    The db_berkeley module uses the Concurrent Data Store (CDS)
    architecture. As such, no transaction or journaling is provided
    by the DB natively. The application bdb_recover is specifically
-   written to recover data from journal files that Marina.Rodeo
+   written to recover data from journal files that OpenMarinkaRodeo
    creates. The bdb_recover application requires an additional
    text file that contains the table schema.
 
    The schema is loaded with the '-s' option and is required for
    all operations. Provide the path to the db_berkeley plain-text
    schema files. By default, these install to
-   '/usr/local/share/Marina.Rodeo/db_berkeley/Marina.Rodeo/'.
+   '/usr/local/share/openMarinkaRodeo/db_berkeley/openMarinkaRodeo/'.
 
    The '-h' home option is the DB_PATH path. Unlike the Berkeley
    utilities, this application does not look for the DB_PATH
@@ -452,12 +452,12 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. William Quan 40 1 4682 0
-   2. Razvan Crainea (@razvancrainea) 28 23 153 154
+   1. William Quan 41 1 4682 0
+   2. Razvan Crainea (@razvancrainea) 30 25 157 156
    3. Henning Westerholt (@henningw) 26 10 381 688
    4. Bogdan-Andrei Iancu (@bogdan-iancu) 24 19 149 170
    5. Anonymous 16 4 681 341
-   6. Liviu Chircu (@liviuchircu) 12 9 19 77
+   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 13 10 19 79
    7. Daniel-Constantin Mierla (@miconda) 10 8 47 30
    8. Vlad Patrascu (@rvlad-patrascu) 6 4 34 28
    9. Andrei Dragus 5 1 135 103
@@ -476,7 +476,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -488,9 +488,9 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Razvan Crainea (@razvancrainea)     Sep 2011 - Jul 2020
-   3.  Liviu Chircu (@liviuchircu)         Mar 2014 - May 2019
+   1.  Razvan Crainea (@razvancrainea)     Sep 2011 - Jul 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
+   3.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
    4.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2008 - Apr 2019
    5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
    6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
@@ -512,12 +512,12 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Razvan Crainea (@razvancrainea), Vlad Patrascu
-   (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Liviu Chircu
-   (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu), Ovidiu Sas
+   (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
+   (@sorydima), Bogdan-Andrei Iancu (@bogdan-iancu), Ovidiu Sas
    (@ovidiusas), Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert, Henning Westerholt
    (@henningw), Anonymous, William Quan.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
+   Copyright © 2007 Cisco Systems

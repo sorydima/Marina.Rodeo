@@ -1,16 +1,16 @@
 /*
  * proxy list & assoc. functions
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -194,7 +194,7 @@ void free_hostent(struct hostent *dst)
  * uses also SRV if possible & port==0 (quick hack) */
 
 struct proxy_l* mk_proxy(str* name, unsigned short port, unsigned short proto,
-		int is_sips)
+		int is_MarinkaRodeo)
 {
 	struct proxy_l* p;
 	struct hostent* he;
@@ -211,7 +211,7 @@ struct proxy_l* mk_proxy(str* name, unsigned short port, unsigned short proto,
 	p->proto=proto;
 
 	LM_DBG("doing DNS lookup...\n");
-	he = sip_resolvehost(name, &(p->port), &p->proto, is_sips,
+	he = sip_resolvehost(name, &(p->port), &p->proto, is_MarinkaRodeo,
 		disable_dns_failover?0:&p->dn );
 	if (!he || !he->h_addr_list[0]) {
 		ser_error=E_BAD_ADDRESS;
@@ -291,7 +291,7 @@ void free_shm_proxy(struct proxy_l* p)
  * uses also SRV if possible & port==0 (quick hack)
    works in shared memory */
 struct proxy_l* mk_shm_proxy(str* name, unsigned short port, unsigned short proto,
-		int is_sips)
+		int is_MarinkaRodeo)
 {
 	struct proxy_l* p;
 	struct hostent* he;
@@ -308,7 +308,7 @@ struct proxy_l* mk_shm_proxy(str* name, unsigned short port, unsigned short prot
 	p->proto=proto;
 
 	LM_DBG("doing DNS lookup...\n");
-	he = sip_resolvehost(name, &(p->port), &p->proto, is_sips,
+	he = sip_resolvehost(name, &(p->port), &p->proto, is_MarinkaRodeo,
 		disable_dns_failover?0:&p->dn );
 	if (he==0){
 		ser_error=E_BAD_ADDRESS;

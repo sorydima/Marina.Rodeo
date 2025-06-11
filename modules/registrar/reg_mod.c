@@ -1,17 +1,17 @@
 /*
  * Registrar module interface
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -87,6 +87,7 @@ static int save_flags_fixup(void** param);
 static int save_flags_fixup_free(void** param);
 static int lookup_flags_fixup(void** param);
 static int lookup_flags_fixup_free(void** param);
+static int bflag_fixup(void** param);
 
 /*! \brief Functions */
 static int add_sock_hdr(struct sip_msg* msg, str *str);
@@ -154,7 +155,8 @@ static const cmd_export_t cmds[] = {
 		{CMD_PARAM_STR, 0, 0},
 		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
 		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
-		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0}, {0,0,0}},
+		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
+		{CMD_PARAM_STR|CMD_PARAM_OPT, bflag_fixup,0}, {0,0,0}},
 		REQUEST_ROUTE|ONREPLY_ROUTE},
 	{"remove_ip_port", (cmd_function)_remove_ip_port, {
 		{CMD_PARAM_STR, 0, 0},
@@ -235,7 +237,7 @@ static const stat_export_t mod_stats[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "usrloc",    DEP_ABORT  },
 		{ MOD_TYPE_DEFAULT, "signaling", DEP_ABORT  },
 		{ MOD_TYPE_DEFAULT, "tm",        DEP_SILENT },
@@ -256,7 +258,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	NULL,        /* load function */
-	&deps,       /* Marina.Rodeo module dependencies */
+	&deps,       /* OpenMarinkaRodeo module dependencies */
 	cmds,        /* Exported functions */
 	acmds,       /* Exported async functions */
 	params,      /* Exported parameters */
@@ -386,7 +388,7 @@ static int cfg_validate(void)
 	}
 
 	if (!pn_cfg_validate()) {
-		LM_ERR("failed to validate Marina.Rodeo.cfg PN configuration\n");
+		LM_ERR("failed to validate openMarinkaRodeo.cfg PN configuration\n");
 		return 0;
 	}
 
@@ -429,6 +431,21 @@ static int domain_fixup(void** param)
 	return 0;
 }
 
+
+static int bflag_fixup(void** param)
+{
+	unsigned int mask;
+
+	if ((mask=fixup_flag( FLAG_TYPE_BRANCH, (str*)*param))==NAMED_FLAG_ERROR)
+		return E_UNSPEC;
+
+	*param = (void*)(unsigned long)mask;
+
+	return 0;
+}
+
+
+
 static int save_flags_fixup(void **param)
 {
 	struct save_flags default_flags;
@@ -469,7 +486,7 @@ static void mod_destroy(void)
 
 static int add_sock_hdr(struct sip_msg* msg, str *hdr_name)
 {
-	struct socket_info* si;
+	const struct socket_info* si;
 	struct lump* anchor;
 	str hdr;
 	char *p;

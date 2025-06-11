@@ -8,7 +8,7 @@ pua dialoginfo
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -22,7 +22,7 @@ pua dialoginfo
               1.3.7. presence_server (string)
               1.3.8. caller_spec_param (string)
               1.3.9. callee_spec_param (string)
-              1.3.10. osips_ps (int)
+              1.3.10. oMarinkaRodeo_ps (int)
 
         1.4. Exported Functions
 
@@ -58,7 +58,7 @@ pua dialoginfo
    1.8. Set presence_server parameter
    1.9. Set caller_spec_param parameter
    1.10. Set caller_spec_param parameter
-   1.11. Set osips_ps parameter
+   1.11. Set oMarinkaRodeo_ps parameter
    1.12. dialoginfo_set usage
    1.13. dialoginfo_set_branch_callee usage
    1.14. dialoginfo_mute_branch usage
@@ -220,7 +220,7 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
      * dialog.
@@ -229,7 +229,7 @@ Chapter 1. Admin Guide
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * libxml.
 
 1.3. Exported Parameters
@@ -399,7 +399,7 @@ modparam("pua_dialoginfo", "nopublish_flag", "no_publish")
 
    Example 1.8. Set presence_server parameter
 ...
-modparam("pua_dialoginfo", "presence_server", "sip:ps@Marina.Rodeo.org:5060"
+modparam("pua_dialoginfo", "presence_server", "sip:ps@openMarinkaRodeo.org:5060"
 )
 ...
 
@@ -431,20 +431,20 @@ modparam("pua_dialoginfo", "caller_spec_param", "$avp(10)")
 modparam("pua_dialoginfo", "callee_spec_param", "$avp(11)")
 ...
 
-1.3.10. osips_ps (int)
+1.3.10. oMarinkaRodeo_ps (int)
 
    It is advisable to specify if you use a different presence
-   server than Marina.Rodeo presence server, by setting this parameter
+   server than OpenMarinkaRodeo presence server, by setting this parameter
    to 0. By default, a trick (version in the Publish body is set
-   '0000000') is used when working with Marina.Rodeo Presence Server
+   '0000000') is used when working with OpenMarinkaRodeo Presence Server
    to make the processing faster and this might not be accepted by
    other presence servers.
 
    Default value is “1”.
 
-   Example 1.11. Set osips_ps parameter
+   Example 1.11. Set oMarinkaRodeo_ps parameter
 ...
-modparam("pua_dialoginfo", "osips_ps", 0)
+modparam("pua_dialoginfo", "oMarinkaRodeo_ps", 0)
 ...
 
 1.4. Exported Functions
@@ -463,7 +463,7 @@ modparam("pua_dialoginfo", "osips_ps", 0)
    Example 1.12. dialoginfo_set usage
 ...
         if(is_method("INVITE"))
-                if($ru =~ "Marina.Rodeo.org")
+                if($ru =~ "openMarinkaRodeo.org")
                         dialoginfo_set();
 ...
 
@@ -489,7 +489,7 @@ branch_route[out]
 {
 ....
         #align the published info with the RURI of the branch
-        dialoginfo_set_branch_callee("sip:$rU@Marina.Rodeo.org");
+        dialoginfo_set_branch_callee("sip:$rU@openMarinkaRodeo.org");
 ...
 }
 
@@ -521,10 +521,10 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Bogdan-Andrei Iancu (@bogdan-iancu) 57 34 1205 742
+   1. Bogdan-Andrei Iancu (@bogdan-iancu) 58 34 1205 742
    2. Anca Vamanu 26 16 713 231
-   3. Razvan Crainea (@razvancrainea) 12 10 19 18
-   4. Liviu Chircu (@liviuchircu) 12 9 44 76
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 13 10 44 78
+   4. Razvan Crainea (@razvancrainea) 12 10 19 18
    5. Klaus Darilion 11 1 1109 0
    6. Vlad Patrascu (@rvlad-patrascu) 9 6 117 120
    7. Ovidiu Sas (@ovidiusas) 7 5 104 9
@@ -544,7 +544,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -556,14 +556,14 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Mar 2023
-   2.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   3.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2009 - Jun 2021
-   4.  Razvan Crainea (@razvancrainea)     Feb 2012 - Jul 2020
-   5.  Zero King (@l2dy)                   Mar 2020 - Mar 2020
-   6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Feb 2020
-   7.  Aron Podrigal (@ar45)               Jan 2019 - Jan 2019
-   8.  Liviu Chircu (@liviuchircu)         Mar 2014 - Nov 2018
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
+   2.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Mar 2023
+   3.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2009 - Jun 2021
+   5.  Razvan Crainea (@razvancrainea)     Feb 2012 - Jul 2020
+   6.  Zero King (@l2dy)                   Mar 2020 - Mar 2020
+   7.  Peter Lemenkov (@lemenkov)          Jun 2018 - Feb 2020
+   8.  Aron Podrigal (@ar45)               Jan 2019 - Jan 2019
    9.  Ovidiu Sas (@ovidiusas)             Sep 2010 - Jan 2014
    10. Damien Sandras (@dsandras)          Jul 2013 - Aug 2013
 
@@ -580,15 +580,15 @@ Chapter 3. Documentation
 
    Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Vlad
    Patrascu (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Liviu
-   Chircu (@liviuchircu), Razvan Crainea (@razvancrainea), Ovidiu
+   Chircu (@sorydima), Razvan Crainea (@razvancrainea), Ovidiu
    Sas (@ovidiusas), Damien Sandras (@dsandras), Vallimamod
    Abdullah, Anca Vamanu, Walter Doekes (@wdoekes), Klaus
    Darilion.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2014 VoIP Embedded, Inc.
+   Copyright © 2014 VoIP Embedded, Inc.
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2008 Klaus Darilion IPCom
+   Copyright © 2008 Klaus Darilion IPCom
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2006 Voice Sistem SRL
+   Copyright © 2006 Voice Sistem SRL

@@ -7,24 +7,24 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		The <emphasis>clusterer</emphasis> module is used to organize multiple &osips; instances into groups(clusters) in which the nodes can communicate with each other in order to replicate, share information or perform distributed tasks. The distributed logic is performed either by different modules that use the <emphasis>clusterer</emphasis> interface (i.e. the <emphasis>dialog</emphasis> module can replicate dialogs/profiles, the <emphasis>ratelimit</emphasis> module can share pipes across multiple 
+		The <emphasis>clusterer</emphasis> module is used to organize multiple &oMarinkaRodeo; instances into groups(clusters) in which the nodes can communicate with each other in order to replicate, share information or perform distributed tasks. The distributed logic is performed either by different modules that use the <emphasis>clusterer</emphasis> interface (i.e. the <emphasis>dialog</emphasis> module can replicate dialogs/profiles, the <emphasis>ratelimit</emphasis> module can share pipes across multiple 
 		instances etc.) or at the script level. The <emphasis>clusterer</emphasis> module itself only provides an interface to send/receive BIN packets and get notifications about node availability. It achieves this by internally learning the cluster topology and state of the nodes. Provisioning the nodes within a cluster is done over the database or through the configuration script. The node-related information can be checked and triggered to be reloaded by sending commands over the MI interface.
 	</para>
 	<para>
 		The topology established by the <emphasis>clusterer</emphasis> module is an overlay of nodes where the "links" represent communication availability at BIN interface level. For this purpose, a probing mechanism is used, consisting of regular pings to all nodes in a cluster for which replies must be received within a given interval. All nodes in the cluster exchange information about the state of their links with other nodes and compute a "routing table" which gives a next hop for each destination. The metric for the shortest path is the number of hops. When there is no direct link to a destination, the BIN packet sent by a module is transparently routed through the cluster.
 	</para>
 	<para>
-		Note that an &osips; instance can belong to multiple clusters, communicating and establishing the topology separately for each one. In order to provision this in the database or the script, each node has an unique ID at global level, which can be referenced in each cluster.
+		Note that an &oMarinkaRodeo; instance can belong to multiple clusters, communicating and establishing the topology separately for each one. In order to provision this in the database or the script, each node has an unique ID at global level, which can be referenced in each cluster.
 	</para>
 	<para>
-		An &osips; instance can dynamically learn all the nodes in the cluster if database provisioning is not desired. It is enough to define at least one neigbour in the script in order to discover all the cluster components.
+		An &oMarinkaRodeo; instance can dynamically learn all the nodes in the cluster if database provisioning is not desired. It is enough to define at least one neigbour in the script in order to discover all the cluster components.
 	</para>
 	</section>
 
 	<section id="capabilities" xreflabel="Capabilities layer">
 	<title>Capabilities layer</title>
 	<para>
-		The clusterer module also keeps track of the state of the nodes in terms of data synchronization for the functionalities (or "capabilities") implemented on top by other modules. Some capabilities require a full data sync(at &osips; startup or at runtime via MI) from a valid "donor" node in the cluster that has the full data set. Furthermore, a capability can query the clusterer module in order to partition some distributed logic only over the synchronized nodes in the cluster.
+		The clusterer module also keeps track of the state of the nodes in terms of data synchronization for the functionalities (or "capabilities") implemented on top by other modules. Some capabilities require a full data sync(at &oMarinkaRodeo; startup or at runtime via MI) from a valid "donor" node in the cluster that has the full data set. Furthermore, a capability can query the clusterer module in order to partition some distributed logic only over the synchronized nodes in the cluster.
 	</para>
 	<para>
 		Each node in the cluster starts with an empty dataset and tries to find
@@ -46,7 +46,7 @@
         <section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
                     <itemizedlist>
@@ -69,7 +69,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -149,7 +149,7 @@ modparam("clusterer", "db_mode", 0)
 		<programlisting format="linespecific">
 ...
 modparam("clusterer", "db_url",
-	"mysql://Marina.Rodeo:Marina.Rodeorw@localhost/Marina.Rodeo")
+	"mysql://openMarinkaRodeo:openMarinkaRodeorw@localhost/openMarinkaRodeo")
 ...
 		</programlisting>
 		</example>
@@ -395,7 +395,7 @@ modparam("clusterer", "sync_packet_size", 32765)
             <title><varname>dispatch_jobs</varname></title>
             <para>
             Enables the dispatching of jobs(processing replicated data packets)
-            from the receiving TCP worker process to free Marina.Rodeo workers
+            from the receiving TCP worker process to free openMarinkaRodeo workers
             (including UDP, timer processes etc.).
             </para>
             <para>
@@ -644,6 +644,29 @@ modparam("clusterer", "enable_stats", 0)
 			</example>
 		</section>
 
+		<section id="param_enable_rerouting" xreflabel="enable_rerouting">
+			<title><varname>enable_rerouting</varname> (integer)</title>
+			<para>
+				If packets should be rerouted via another node if a direct route
+				to destination is unavailible. Disabling may improve stability in
+				two-node topologies.
+				Set it to zero to disable or to non-zero to enable it.
+			</para>
+			<para>
+				<emphasis>
+					Default value is <quote>1 (enabled)</quote>.
+				</emphasis>
+			</para>
+			<example>
+				<title>Set <varname>enable_rerouting</varname> parameter</title>
+				<programlisting format="linespecific">
+...
+modparam("clusterer", "enable_rerouting", 0)
+...
+				</programlisting>
+			</example>
+		</section>
+
         </section>
 
         <section id="exported_functions" xreflabel="exported_functions">
@@ -685,7 +708,7 @@ modparam("clusterer", "enable_stats", 0)
 							<para><emphasis>-2</emphasis> - destination node is not reachable through any path according to the discovered topology</para>
 						</listitem>
 						<listitem>
-							<para><emphasis>-3</emphasis> - destination node or valid next hop appear to be reachable but send failed or other &osips; internal error</para>
+							<para><emphasis>-3</emphasis> - destination node or valid next hop appear to be reachable but send failed or other &oMarinkaRodeo; internal error</para>
 						</listitem>
 					</itemizedlist>
 				</para>
@@ -748,7 +771,7 @@ route[rpl_resume] {
 							<para><emphasis>-2</emphasis> - destination node is not reachable through any path according to the discovered topology</para>
 						</listitem>
 						<listitem>
-							<para><emphasis>-3</emphasis> - destination node or valid next hop appear to be reachable but send failed or other &osips; internal error</para>
+							<para><emphasis>-3</emphasis> - destination node or valid next hop appear to be reachable but send failed or other &oMarinkaRodeo; internal error</para>
 						</listitem>
 					</itemizedlist>
 				</para>
@@ -769,11 +792,16 @@ event_route[E_CLUSTERER_REQ_RECEIVED] {
 
 			<section id="func_cluster_broadcast_req" xreflabel="cluster_broadcast_req()">
 				<title>
-				<function moreinfo="none">cluster_broadcast_req(cluster_id, msg, [tag])</function>
+				<function moreinfo="none">cluster_broadcast_req(cluster_id, msg, [tag], [include_self])</function>
 				</title>
 				<para>
 					This function has a similar behaviour to the <function moreinfo="none">cluster_send_req()</function> function with the exception that the message is sent to all the nodes in the specified cluster.
 				</para>
+					<itemizedlist>
+					<listitem>
+						<para><emphasis>include_self</emphasis> (bool, optional, default: <emphasis>false</emphasis>) - raise the event for current node as well, but without actually sending a packet (both req and rpl).</para>
+					</listitem>
+					</itemizedlist>
 				<para>
 					The function can return the following values:
 					<itemizedlist>
@@ -787,7 +815,7 @@ event_route[E_CLUSTERER_REQ_RECEIVED] {
 							<para><emphasis>-2</emphasis> - all nodes in the cluster are unreachable according to the discovered topology;</para>
 						</listitem>
 						<listitem>
-							<para><emphasis>-3</emphasis> - send failed for all nodes in the cluster or other &osips; internal error.</para>
+							<para><emphasis>-3</emphasis> - send failed for all nodes in the cluster or other &oMarinkaRodeo; internal error.</para>
 						</listitem>
 					</itemizedlist>
 				</para>
@@ -801,7 +829,8 @@ event_route[E_CLUSTERER_REQ_RECEIVED] {
 						<title>cluster_broadcast_req() usage</title>
 						<programlisting format="linespecific">
 ...
-cluster_broadcast_req($var(cl_id), $var(share_data));
+# also raise the event for current node
+cluster_broadcast_req($var(cl_id), $var(share_data), , true);
 ...
 				</programlisting>
 				</example>
@@ -870,7 +899,7 @@ if (cluster_check_addr(1, $si)) {
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi clusterer_reload
+		openMarinkaRodeo-cli -x mi clusterer_reload
 		</programlisting>
 	</section>
 
@@ -888,7 +917,7 @@ if (cluster_check_addr(1, $si)) {
 		<example>
 		<title><function>clusterer_list</function> usage</title>
 		<programlisting format="linespecific">
-$ Marina.Rodeo-cli -x mi clusterer_list
+$ openMarinkaRodeo-cli -x mi clusterer_list
 {
     "Clusters": [
         {
@@ -927,7 +956,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list
 		<example>
 		<title><function>clusterer_list_topology</function> usage</title>
 		<programlisting format="linespecific">
-$ Marina.Rodeo-cli -x mi clusterer_list_topology
+$ openMarinkaRodeo-cli -x mi clusterer_list_topology
 {
     "Clusters": [
         {
@@ -981,9 +1010,9 @@ $ Marina.Rodeo-cli -x mi clusterer_list_topology
 		</para>
 		<programlisting  format="linespecific">
 		#disable the local instance
-		Marina.Rodeo-cli -x mi clusterer_set_status 1 0
+		openMarinkaRodeo-cli -x mi clusterer_set_status 1 0
 		#disable node ID 3
-		Marina.Rodeo-cli -x mi clusterer_set_status 1 3 0
+		openMarinkaRodeo-cli -x mi clusterer_set_status 1 3 0
 		</programlisting>
 	</section>
 
@@ -1018,7 +1047,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list_topology
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi clusterer_remove_node 1 3
+		openMarinkaRodeo-cli -x mi clusterer_remove_node 1 3
 		</programlisting>
 	</section>
 
@@ -1056,7 +1085,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list_topology
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi cluster_send_mi 1 3 lb_reload
+openMarinkaRodeo-cli -x mi cluster_send_mi 1 3 lb_reload
 		</programlisting>
 		</section>
 
@@ -1091,7 +1120,7 @@ Marina.Rodeo-cli -x mi cluster_send_mi 1 3 lb_reload
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi cluster_broadcast_mi 1 dr_reload partition_5
+openMarinkaRodeo-cli -x mi cluster_broadcast_mi 1 dr_reload partition_5
 		</programlisting>
 		</section>
 
@@ -1109,7 +1138,7 @@ Marina.Rodeo-cli -x mi cluster_broadcast_mi 1 dr_reload partition_5
 		<example>
 		<title><function>clusterer_list_cap</function> usage</title>
 		<programlisting format="linespecific">
-$ Marina.Rodeo-cli -x mi clusterer_list_cap
+$ openMarinkaRodeo-cli -x mi clusterer_list_cap
 {
     "Clusters": [
         {
@@ -1161,9 +1190,9 @@ $ Marina.Rodeo-cli -x mi clusterer_list_cap
 		</para>
 		<programlisting  format="linespecific">
 		#disable dialog replication in cluster 1
-		Marina.Rodeo-cli -x mi clusterer_set_cap_status 1 dialog-dlg-repl 0
+		openMarinkaRodeo-cli -x mi clusterer_set_cap_status 1 dialog-dlg-repl 0
 		#enable dialog profile replication in cluster 2
-		Marina.Rodeo-cli -x mi clusterer_set_cap_status 2 dialog-prof-repl 1
+		openMarinkaRodeo-cli -x mi clusterer_set_cap_status 2 dialog-prof-repl 1
 		</programlisting>
 	</section>
 
@@ -1186,7 +1215,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list_cap
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi clusterer_shtag_set_active vip1/3
+		openMarinkaRodeo-cli -x mi clusterer_shtag_set_active vip1/3
 		</programlisting>
 		</section>
 
@@ -1204,7 +1233,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list_cap
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-		Marina.Rodeo-cli -x mi clusterer_list_shtags
+		openMarinkaRodeo-cli -x mi clusterer_list_shtags
 		</programlisting>
 	</section>
 
@@ -1260,7 +1289,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list_cap
 		<function moreinfo="none">E_CLUSTERER_REQ_RECEIVED</function>
 		</title>
 		<para>
-			This event is raised when a generic, request-like, clusterer message is received. This type of message is sent directly from the script and not by an &osips; module.
+			This event is raised when a generic, request-like, clusterer message is received. This type of message is sent directly from the script and not by an &oMarinkaRodeo; module.
 		</para>
 		<para>Parameters:</para>
 		<itemizedlist>
@@ -1284,7 +1313,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list_cap
 		<function moreinfo="none">E_CLUSTERER_RPL_RECEIVED</function>
 		</title>
 		<para>
-			This event is raised when a generic, reply-like, clusterer message is received. This type of message is sent directly from the script and not by an &osips; module.
+			This event is raised when a generic, reply-like, clusterer message is received. This type of message is sent directly from the script and not by an &oMarinkaRodeo; module.
 		</para>
 		<para>Parameters:</para>
 		<itemizedlist>
@@ -1477,6 +1506,10 @@ $ Marina.Rodeo-cli -x mi clusterer_list_cap
 
 	</programlisting>
 	</section>
+	<para>
+	For how to access and use the Status/Report information, please see
+	<ulink url='https://www.openMarinkaRodeo.org/Documentation/Interface-StatusReport-3-4'>Status/Report Interface documentation</ulink>.
+	</para>
 
 </section>
 
@@ -1485,11 +1518,11 @@ $ Marina.Rodeo-cli -x mi clusterer_list_cap
 <section>
 	<title>Usage Example</title>
 	<para> This section provides an usage example for replicating ratelimit
-		pipes between two &osips; instances. It uses the clusterer module to
+		pipes between two &oMarinkaRodeo; instances. It uses the clusterer module to
 		manage the replicating nodes, and along with the
 		<emphasis>proto_bin</emphasis> module, to send the replicated information.
 	</para>
-	<para> The setup topology is simple: we have two &osips; nodes running on
+	<para> The setup topology is simple: we have two &oMarinkaRodeo; nodes running on
 		two separate machines (although they could run on the same machine as
 		well): <emphasis>Node A</emphasis> has IP 192.168.0.5 and
 		<emphasis>Node B</emphasis> has IP 192.168.0.6. Both have, besides the
@@ -1566,7 +1599,7 @@ $ Marina.Rodeo-cli -x mi clusterer_list_cap
 	</para>
 	<para>
 		After provisioning the two nodes in the database, we have to configure
-		the two instances of &osips;. First, we configure <emphasis>Node
+		the two instances of &oMarinkaRodeo;. First, we configure <emphasis>Node
 			A</emphasis>:
 	</para>
 	<example>
@@ -1578,7 +1611,7 @@ socket= bin:192.168.0.5:5566 # bin listener for Node A
 loadmodule "proto_bin.so"
 
 loadmodule "clusterer.so"
-modparam("clusterer", "db_url", "mysql://Marina.Rodeo@192.168.0.7/Marina.Rodeo")
+modparam("clusterer", "db_url", "mysql://openMarinkaRodeo@192.168.0.7/openMarinkaRodeo")
 modparam("clusterer", "my_node_id", 1) # node_id for Node A
 
 loadmodule "ratelimit.so"
@@ -1599,7 +1632,7 @@ loadmodule "proto_bin.so"
 
 loadmodule "clusterer.so"
 # ideally, use the same database for both nodes
-modparam("clusterer", "db_url", "mysql://Marina.Rodeo@192.168.0.7/Marina.Rodeo")
+modparam("clusterer", "db_url", "mysql://openMarinkaRodeo@192.168.0.7/openMarinkaRodeo")
 modparam("clusterer", "my_node_id", 2) # node_id for Node B
 
 loadmodule "ratelimit.so"
@@ -1610,7 +1643,7 @@ modparam("ratelimit", "pipe_replication_cluster", 1)
 </section>
 
 <para>
-	Starting the two &osips; instances with the above configurations provides
+	Starting the two &oMarinkaRodeo; instances with the above configurations provides
 	your platform the ability to used shared ratelimit pipes in a very
 	efficient and scalable way.
 </para>

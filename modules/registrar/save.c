@@ -1,17 +1,17 @@
 /*
  * Process REGISTER request and send reply
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem SRL
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2006 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -156,7 +156,7 @@ static inline int no_contacts(udomain_t* _d, struct save_ctx *_sctx,
 static int set_sock_hdr(struct sip_msg *msg, ucontact_info_t *ci,
                         unsigned int reg_flags)
 {
-	struct socket_info *sock;
+	const struct socket_info *sock;
 	struct hdr_field *hf;
 	str socks;
 	str hosts;
@@ -911,11 +911,12 @@ done:
  * @contact_gp:      contact URI to be deleted
  * @next_hop_gp:     IP/domain in front of contacts to be deleted
  * @sip_instance_gp: delete contacts with given "+sip_instance"
+ * @bflag:           delete contacts which the specific branch flag mask
  *
  * @return:      1 on success, negative on failure
  */
 int _remove(struct sip_msg *msg, void *udomain, str *aor_uri, str *match_ct,
-            str *match_next_hop, str *match_sin)
+            str *match_next_hop, str *match_sin, int* bflag)
 {
 	struct hostent delete_nh_he, *he;
 	urecord_t *record;
@@ -939,7 +940,7 @@ int _remove(struct sip_msg *msg, void *udomain, str *aor_uri, str *match_ct,
 	}
 
 	/* without any additional filtering, delete the whole urecord entry */
-	if (!match_ct && !match_next_hop && !match_sin) {
+	if (!match_ct && !match_next_hop && !match_sin && (!bflag ||!*bflag)) {
 		if (ul.delete_urecord((udomain_t *)udomain, &aor_user, record, 0) != 0) {
 			LM_ERR("failed to delete urecord for aor '%.*s'\n",
 			        aor_user.len, aor_user.s);
@@ -1015,6 +1016,11 @@ int _remove(struct sip_msg *msg, void *udomain, str *aor_uri, str *match_ct,
 
 		if (match_sin) {
 			if (str_strcmp(match_sin, &contact->instance))
+				continue;
+		}
+
+		if (bflag && *bflag) {
+			if ((contact->cflags & *(bflag)) == 0)
 				continue;
 		}
 

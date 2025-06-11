@@ -9,7 +9,7 @@
 	    <para>
 	    The module enables the handling of the "as-feature-event" event package (as
 	    defined by Broadsoft's
-	    <ulink url="http://community.polycom.com/polycom/attachments/polycom/VoIP/2234/1/DeviceFeatureKeySynchronizationFD.pdf">Device Feature Key Synchronization</ulink>
+	    <ulink url="https://h30434.www3.hp.com/psg/attachments/psg/Desk_IP_Conference_Phones/1740/1/DeviceFeatureKeySynchronizationFD.pdf">Device Feature Key Synchronization</ulink>
 	    protocol) by the presence module. This can be used to synchronize the status of
 	    features such as Do Not Disturb and different forwarding types between a SIP
 	    phone and a SIP server.
@@ -17,7 +17,7 @@
 	    <para>
 	    The module supports synchronization for the following features: Do Not Disturb,
 	    Call Forwarding Always, Call Forwarding Busy and Call Forwarding No Answer.
-	    Feature status can be changed either from the SIP phone or the Marina.Rodeo Server(
+	    Feature status can be changed either from the SIP phone or the OpenMarinkaRodeo Server(
 	    by running an MI command).
 	    </para>
 	    <para>
@@ -25,7 +25,7 @@
 	    route for each feature, that will be used to retrieve the current status of that
 	    feature. Conversely, a SUBSCRIBE with a body will trigger a script route where the
 	    updated status of a specific feature is available. This route might also be run
-	    if the feature update was triggered from Marina.Rodeo via MI.
+	    if the feature update was triggered from OpenMarinkaRodeo via MI.
 	    </para>
 	    <para>
 	    Note that the module does not automatically cache or persist any feature information
@@ -36,7 +36,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	  <title>Dependencies</title>
 	  <section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -193,7 +193,7 @@ modparam("presence_dfks", "set_route", "dfks_set")
 		MI FIFO Command Format:
 		</para>
 <programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi dfks_set_feature sip:alice@10.0.0.11 CallForwardingNoAnswer 1 1 \
+openMarinkaRodeo-cli -x mi dfks_set_feature sip:alice@10.0.0.11 CallForwardingNoAnswer 1 1 \
 ringCount/4 forwardTo/sip:bob@10.0.0.11
 </programlisting>
 		</section>

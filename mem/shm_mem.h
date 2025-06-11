@@ -1,17 +1,17 @@
 /*
  * Shared memory functions
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2019 Marina.Rodeo Solutions
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2019 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -101,6 +101,8 @@ extern unsigned long (*shm_frag_line)(void *p);
 #define shm_frag_size qm_frag_size
 #elif defined HP_MALLOC
 #define shm_frag_size hp_frag_size
+#elif defined F_PARALLEL_MALLOC
+#define shm_frag_size parallel_frag_size
 #endif
 #else
 extern unsigned long (*shm_frag_size)(void *p);
@@ -218,7 +220,7 @@ extern gen_lock_t* mem_locks;
 extern gen_lock_t* rpmem_locks;
 #endif
 
-extern enum osips_mm mem_allocator_shm;
+extern enum oMarinkaRodeo_mm mem_allocator_shm;
 
 #define INVALID_MAP ((void *)-1)
 int shm_mem_init(); /* calls shm_getmem & shm_mem_init_mallocs */
@@ -284,7 +286,7 @@ inline static void shm_threshold_check(void)
  #define shm_threshold_check()
 #endif
 
-#ifdef HP_MALLOC
+#if defined(HP_MALLOC) || defined(F_PARALLEL_MALLOC)
 	#ifdef INLINE_ALLOC
 	#define shm_lock()
 	#define shm_unlock()
@@ -301,6 +303,7 @@ inline static void shm_threshold_check(void)
 				lock_release(mem_lock); \
 		} while (0)
 	#endif
+	extern unsigned long long *shm_hash_usage;
 #else
 #define shm_lock()    lock_get(mem_lock)
 #define shm_unlock()  lock_release(mem_lock)
@@ -556,6 +559,7 @@ inline static void _shm_free(void *ptr,
 inline static void _shm_free_unsafe(void *ptr,
 		const char* file, const char* function, unsigned int line )
 {
+
 #ifdef SHM_EXTRA_STATS
 	if (shm_stats_get_index(ptr) !=  VAR_STAT(MOD_NAME)) {
 		update_module_stats(-shm_frag_size(ptr), -(shm_frag_size(ptr) + shm_frag_overhead), -1, shm_stats_get_index(ptr));
@@ -628,8 +632,6 @@ inline static void _shm_free_bulk(void *ptr,
 #define shm_free_bulk_func _shm_free_bulk
 #define shm_free_bulk( _ptr ) _shm_free_bulk( (_ptr), \
 	__FILE__, __FUNCTION__, __LINE__ )
-
-extern unsigned long long *shm_hash_usage;
 
 #else /*DBG_MALLOC*/
 
@@ -734,6 +736,7 @@ inline static void* shm_realloc(void *ptr, unsigned long size)
 inline static void* shm_realloc_unsafe(void *ptr, unsigned long size)
 {
 	void *p;
+
 #ifdef SHM_EXTRA_STATS
 	unsigned long origin = 0;
 	if (ptr) {
@@ -801,6 +804,7 @@ inline static void shm_free_unsafe(void *_p)
 #define shm_free_bulk_func shm_free_bulk
 inline static void shm_free_bulk(void *_p)
 {
+
 	#ifdef SHM_EXTRA_STATS
 		if (shm_stats_get_index(_p) !=  VAR_STAT(MOD_NAME)) {
 				update_module_stats(-shm_frag_size(_p), -(shm_frag_size(_p) + shm_frag_overhead), -1, shm_stats_get_index(_p));
@@ -852,7 +856,8 @@ inline static void shm_force_unlock(void)
 			for (i = 0; i < HP_HASH_SIZE; i++)
 				lock_release(&mem_locks[i]);
 		} else {
-			shm_unlock();
+			if (mem_lock)
+				shm_unlock();
 		}
 #elif defined HP_MALLOC
 		int i;

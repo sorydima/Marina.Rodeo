@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2022 - Marina.Rodeo Solutions
+ * Copyright (C) 2022 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -44,8 +44,8 @@ enum tcp_conn_attr {
  *   0 (success, but just the default TCP profile was returned)
  *   1 (success, a custom TCP profile from tcp_mgm DB was matched)
  */
-extern int (*tcp_con_get_profile)(union sockaddr_union *remote,
-             union sockaddr_union *local, enum sip_protos proto,
+extern int (*tcp_con_get_profile)(const union sockaddr_union *remote,
+             const union sockaddr_union *local, enum sip_protos proto,
              struct tcp_conn_profile *out_profile);
 
 /* initialize the support for customized, per-path TCP connection profiles */

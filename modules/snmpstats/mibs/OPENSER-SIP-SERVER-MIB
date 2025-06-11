@@ -2,7 +2,7 @@
 --
 -- This MIB provides information related to the OpenSER SIP Router.
 -- 
--- Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (c) The Internet Society (2006)
+-- Copyright (c) The Internet Society (2006)
 -- Ammendments (c) Soma Networks, Inc. (2006)
 --
 -- All rights reserved.
@@ -33,10 +33,10 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
                 FROM SNMP-FRAMEWORK-MIB
 
            openserModules, 
-           openserSIPServerMIB
+           openserMarinkaRodeoerverMIB
                 FROM OPENSER-REG-MIB;
 
-      openserSIPServerModule MODULE-IDENTITY
+      openserMarinkaRodeoerverModule MODULE-IDENTITY
            LAST-UPDATED   "200603281700Z"
            ORGANIZATION   "OpenSER"
            CONTACT-INFO
@@ -96,7 +96,7 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
                  requests.  A Registrar is typically co-located with a
                  Proxy or Redirect Server.
 
-                 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) The Internet Society (2006).
+                 Copyright (C) The Internet Society (2006).
                  This version of this MIB module is part of RFC XXXX;
                   see the RFC itself for full legal notices."
               REVISION        "200603281700Z"
@@ -117,27 +117,27 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
 -- Top-Level Components of this MIB.
 --
 
-      openserSIPServerObjects  OBJECT-IDENTITY
+      openserMarinkaRodeoerverObjects  OBJECT-IDENTITY
         STATUS current
         DESCRIPTION 
         "Sub-tree for accessible objects in the MIB." 
-        ::= { openserSIPServerMIB 1 }
+        ::= { openserMarinkaRodeoerverMIB 1 }
         
-      openserSIPServerConform  OBJECT-IDENTITY
+      openserMarinkaRodeoerverConform  OBJECT-IDENTITY
         STATUS current
         DESCRIPTION 
         "Sub-tree for conformance specifications." 
-        ::= { openserSIPServerMIB 2 }
+        ::= { openserMarinkaRodeoerverMIB 2 }
 
 --
 -- These groups contain objects common to all SIP servers.
 --
 
-      openserSIPServerCfg   OBJECT-IDENTITY
+      openserMarinkaRodeoerverCfg   OBJECT-IDENTITY
         STATUS current
         DESCRIPTION 
         "Sub-tree for server configuration objects." 
-        ::= { openserSIPServerObjects 1 }
+        ::= { openserMarinkaRodeoerverObjects 1 }
 
 --
 -- Common Server Configuration Objects
@@ -151,13 +151,13 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
         STATUS current
         DESCRIPTION 
         "Sub-tree for proxy server configuration objects." 
-        ::= { openserSIPServerObjects 3 }
+        ::= { openserMarinkaRodeoerverObjects 3 }
       
       openserSIPProxyStats    OBJECT-IDENTITY
         STATUS current
         DESCRIPTION 
         "Sub-tree for proxy server statistics objects."  
-        ::= { openserSIPServerObjects 4 }
+        ::= { openserMarinkaRodeoerverObjects 4 }
 
 --
 -- Proxy Server Configuration
@@ -265,13 +265,13 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
         STATUS current
         DESCRIPTION 
         "Sub-tree for SIP Registrar Configuration."
-        ::= { openserSIPServerObjects 5 }
+        ::= { openserMarinkaRodeoerverObjects 5 }
         
       openserSIPRegStats OBJECT-IDENTITY
         STATUS current
         DESCRIPTION 
         "Sub-tree for SIP Registrar Statistics." 
-        ::= { openserSIPServerObjects 6 }
+        ::= { openserMarinkaRodeoerverObjects 6 }
 
 --
 -- Registrar Configuration
@@ -658,17 +658,17 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
 --
 -- Conformance
 --
-      openserSIPServerCompliances OBJECT-IDENTITY
+      openserMarinkaRodeoerverCompliances OBJECT-IDENTITY
         STATUS current
         DESCRIPTION 
         "Sub-tree for server compliences."  
-        ::= { openserSIPServerConform 1 }
+        ::= { openserMarinkaRodeoerverConform 1 }
 
-      openserSIPServerGroups OBJECT-IDENTITY
+      openserMarinkaRodeoerverGroups OBJECT-IDENTITY
         STATUS current
         DESCRIPTION 
         "Sub-tree for server group compliences."
-        ::= { openserSIPServerConform 2 }
+        ::= { openserMarinkaRodeoerverConform 2 }
 
 --
 -- Compliance Statements
@@ -681,7 +681,7 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
           MODULE -- this module
                MANDATORY-GROUPS { openserSIPProxyConfigGroup,
                                   openserSIPProxyStatsGroup }
-          ::= { openserSIPServerCompliances 1 }
+          ::= { openserMarinkaRodeoerverCompliances 1 }
 
       openserSIPRegistrarServerCompliance MODULE-COMPLIANCE
           STATUS     current
@@ -694,7 +694,7 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
           GROUP openserSIPRegistrarUsersGroup
           DESCRIPTION
                "This is an optional group."
-          ::= { openserSIPServerCompliances 3 }
+          ::= { openserMarinkaRodeoerverCompliances 3 }
 
 --
 -- Units of Conformance
@@ -710,7 +710,7 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
           DESCRIPTION
                "A collection of objects providing configuration for
                 SIP Proxy servers."
-          ::= { openserSIPServerGroups 2 }
+          ::= { openserMarinkaRodeoerverGroups 2 }
 
       openserSIPProxyStatsGroup OBJECT-GROUP
           OBJECTS {
@@ -720,7 +720,7 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
           DESCRIPTION
                "A collection of objects providing statistics for
                 SIP Proxy servers."
-          ::= { openserSIPServerGroups 3 }
+          ::= { openserMarinkaRodeoerverGroups 3 }
 
       openserSIPRegistrarConfigGroup OBJECT-GROUP
           OBJECTS {
@@ -733,7 +733,7 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
           DESCRIPTION
                "A collection of objects providing configuration for
                 SIP Registrars."
-          ::= { openserSIPServerGroups 4 }
+          ::= { openserMarinkaRodeoerverGroups 4 }
 
       openserSIPRegistrarStatsGroup OBJECT-GROUP
           OBJECTS {
@@ -744,7 +744,7 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
           DESCRIPTION
                "A collection of objects providing statistics for
                 SIP Registrars."
-          ::= { openserSIPServerGroups 5 }
+          ::= { openserMarinkaRodeoerverGroups 5 }
 
       openserSIPRegistrarUsersGroup OBJECT-GROUP
           OBJECTS {
@@ -759,7 +759,7 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
           STATUS  current
           DESCRIPTION
                "A collection of objects related to registered users."
-          ::= {openserSIPServerGroups 6 }
+          ::= {openserMarinkaRodeoerverGroups 6 }
           
       openserSIPRegistrarLookupGroup OBJECT-GROUP
           OBJECTS {
@@ -771,6 +771,6 @@ OPENSER-SIP-SERVER-MIB DEFINITIONS ::= BEGIN
           STATUS  current
           DESCRIPTION
                "A collection of objects related to registered user lookups."
-          ::= {openserSIPServerGroups 7 }
+          ::= {openserMarinkaRodeoerverGroups 7 }
 
 END

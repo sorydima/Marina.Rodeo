@@ -1,19 +1,16 @@
+# Perl module for OpenMarinkaRodeo
 #
-# $Id$
-#
-# Perl module for Marina.Rodeo
-#
-# Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Collax GmbH
+# Copyright (C) 2006 Collax GmbH
 #                    (Bastian Friedrich <bastian.friedrich@collax.com>)
 #
-# This file is part of Marina.Rodeo, a free SIP server.
+# This file is part of openMarinkaRodeo, a free SIP server.
 #
-# Marina.Rodeo is free software; you can redistribute it and/or modify
+# openMarinkaRodeo is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version
 #
-# Marina.Rodeo is distributed in the hope that it will be useful,
+# openMarinkaRodeo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -26,13 +23,13 @@
 # This file was kindly donated by Collax GmbH
 
 
-=head1 Marina.Rodeo::Utils::PhoneNumbers
+=head1 OpenMarinkaRodeo::Utils::PhoneNumbers
 
-Marina.Rodeo::Utils::PhoneNumbers - Functions for canonical forms of phone numbers.
+OpenMarinkaRodeo::Utils::PhoneNumbers - Functions for canonical forms of phone numbers.
 
- use Marina.Rodeo::Utils::PhoneNumbers;
+ use OpenMarinkaRodeo::Utils::PhoneNumbers;
 
- my $phonenumbers = new Marina.Rodeo::Utils::PhoneNumbers(
+ my $phonenumbers = new OpenMarinkaRodeo::Utils::PhoneNumbers(
       publicAccessPrefix => "0",
       internationalPrefix => "+",
       longDistancePrefix => "0",
@@ -81,7 +78,7 @@ This module exports the following functions when C<use>ed:
 
 =cut
 
-package Marina.Rodeo::Utils::PhoneNumbers;
+package OpenMarinkaRodeo::Utils::PhoneNumbers;
 
 use Exporter;
 our @ISA = qw(Exporter);
@@ -94,7 +91,7 @@ our @EXPORT = qw(
 
 The new operator returns an object of this type and sets its locational
 context according to the passed parameters. See
-L<Marina.Rodeo::Utils::PhoneNumbers> above.
+L<OpenMarinkaRodeo::Utils::PhoneNumbers> above.
 
 =cut
 

@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017-2019 Marina.Rodeo Solutions
+ * Copyright (C) 2017-2019 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -26,8 +26,8 @@
 
 #include "csv.h"
 
-static osips_malloc_t malloc_f;
-static osips_free_t free_f;
+static oMarinkaRodeo_malloc_t malloc_f;
+static oMarinkaRodeo_free_t free_f;
 
 static str_list *push_csv_field(const str *field,
                                 str_list **record, enum csv_flags parse_flags)
@@ -81,11 +81,11 @@ csv_record *__parse_csv_record(const str *_in, enum csv_flags parse_flags,
 	char *ch, *p, *c, finished, *lim, *field_start;
 
 	if (parse_flags & CSV_SHM) {
-		malloc_f = osips_shm_malloc;
-		free_f = osips_shm_free;
+		malloc_f = oMarinkaRodeo_shm_malloc;
+		free_f = oMarinkaRodeo_shm_free;
 	} else {
-		malloc_f = osips_pkg_malloc;
-		free_f = osips_pkg_free;
+		malloc_f = oMarinkaRodeo_pkg_malloc;
+		free_f = oMarinkaRodeo_pkg_free;
 	}
 
 	if (parse_flags & CSV_RFC_4180)
@@ -229,9 +229,9 @@ void free_csv_record(csv_record *record)
 
 	flags_holder = *(enum csv_flags *)(record + 1);
 	if (flags_holder & CSV_SHM)
-		free_f = osips_shm_free;
+		free_f = oMarinkaRodeo_shm_free;
 	else
-		free_f = osips_pkg_free;
+		free_f = oMarinkaRodeo_pkg_free;
 
 	while (record) {
 		prev = record;
@@ -242,4 +242,79 @@ void free_csv_record(csv_record *record)
 
 		free_f(prev);
 	}
+}
+
+static int check_quote_csv_record(str *val, int *escape)
+{
+	char *p;
+	int quote = 0;
+	*escape = 0;
+
+	for (p = val->s; p < val->s + val->len; p++) {
+		switch (*p) {
+			case '"':
+				(*escape)++;
+				/* fallthrough */
+			case ',':
+			case '\n':
+				quote = 1;
+				break;
+		}
+	}
+	return quote;
+}
+
+str *__print_csv_record(csv_record *record, enum csv_flags print_flags,
+						unsigned char sep)
+{
+	static str ret;
+	str_list *it;
+	int len = -1, esc;
+	char *p, *c;
+
+	if (print_flags & CSV_SHM)
+		malloc_f = oMarinkaRodeo_shm_malloc;
+	else
+		malloc_f = oMarinkaRodeo_pkg_malloc;
+
+	for (it = record; it; it = it->next) {
+		len += 1 /* sep */ + it->s.len;
+		/* check to see if ne need to encode */
+		if (check_quote_csv_record(&it->s, &esc))
+			len += 2 + esc;
+	}
+
+	ret.s = malloc_f(len);
+	if (!ret.s)
+		return NULL;
+	p = ret.s;
+	for (it = record; it; it = it->next) {
+		if (it != record)
+			*p++ = sep;
+
+		if (check_quote_csv_record(&it->s, &esc)) {
+			if (!esc) {
+				/* simply add the quotes */
+				*p++ = '"';
+				memcpy(p, it->s.s, it->s.len);
+				p+= it->s.len;
+				*p++ = '"';
+			} else {
+				for (c = it->s.s; c < it->s.s + it->s.len; c++) {
+					switch (*c) {
+						case '"':
+							*p++ = '"';
+							break;
+					}
+					*p++ = *c;
+				}
+			}
+		} else {
+			/* simply copy the content */
+			memcpy(p, it->s.s, it->s.len);
+			p += it->s.len;
+		}
+	}
+	ret.len = len;
+	return &ret;
 }

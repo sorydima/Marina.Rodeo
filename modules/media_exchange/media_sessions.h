@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -24,6 +24,7 @@
 #include "media_exchange.h"
 #include "../dialog/dlg_load.h"
 
+#define MEDIA_SESSION_TYPE_ANY -1
 #define MEDIA_SESSION_TYPE_FORK 0
 #define MEDIA_SESSION_TYPE_EXCHANGE 1
 
@@ -43,6 +44,7 @@ struct media_session_leg {
 	int leg;
 	str b2b_key;
 	int nohold;
+	str instance;
 	gen_lock_t lock;
 	b2b_dlginfo_t *dlginfo;
 	enum b2b_entity_type b2b_entity;
@@ -83,6 +85,8 @@ struct media_session {
 
 #define DLG_MEDIA_SESSION_LEG(_dlg, _leg) \
 	(_leg == MEDIA_LEG_CALLER?DLG_CALLER_LEG:callee_idx(_dlg))
+#define DLG_MEDIA_SESSION_OTHER_LEG(_dlg, _leg) \
+	(_leg == MEDIA_LEG_CALLER?callee_idx(_dlg):DLG_CALLER_LEG)
 #define MEDIA_SESSION_DLG_LEG(_msl) \
 	DLG_MEDIA_SESSION_LEG(_msl->ms->dlg, _msl->leg)
 #define MEDIA_SESSION_DLG_OTHER_LEG(_msl) \
@@ -146,10 +150,13 @@ void media_session_push_dlg(struct media_session *ms, struct dlg_cell *dlg);
 struct media_session *media_session_get(struct dlg_cell *dlg);
 struct media_session *media_session_create(struct dlg_cell *dlg);
 struct media_session_leg *media_session_new_leg(struct dlg_cell *dlg,
-		int type, int leg, int nohold);
+		int type, int leg, int nohold, str *instance);
 void media_session_leg_free(struct media_session_leg *ms);
 struct media_session_leg *media_session_get_leg(struct media_session *ms,
-		int leg);
+		int leg, int type, str *instance);
+int media_session_match_leg(struct media_session_leg *msl, int leg, int type, str *instance);
+struct media_session_leg *media_session_get_next_leg(struct media_session_leg *msl,
+		int leg, int type, str *instance);
 struct media_session_leg *media_session_other_leg(
 		struct media_session_leg *msl);
 
@@ -164,6 +171,7 @@ int media_session_req(struct media_session_leg *msl, const char *method, str *bo
 int media_session_rpl(struct media_session_leg *msl,
 		int method, int code, str *reason, str *body);
 
-int media_session_end(struct media_session *ms, int legs, int nohold, int proxied);
+int media_session_end(struct media_session *ms, int legs,
+		int nohold, int proxied, str *instance);
 
 #endif /* _MEDIA_SESSION_H_ */

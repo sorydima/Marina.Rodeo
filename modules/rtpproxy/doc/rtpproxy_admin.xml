@@ -7,7 +7,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		This module is used by &osips; to communicate with RTPProxy, a media
+		This module is used by &oMarinkaRodeo; to communicate with RTPProxy, a media
 		relay proxy used to make the communication between user agents behind
 		NAT possible.
 	</para>
@@ -39,7 +39,7 @@
 		weight value than 0) respond. Default weight is 1.
 	</para>
 	<para>
-		Starting with &osips; 2.1, engage_rtp_proxy(), unforce_rtp_proxy()
+		Starting with &oMarinkaRodeo; 2.1, engage_rtp_proxy(), unforce_rtp_proxy()
 		and start_recording() functions have been fully replaced by
 		rtpproxy_engage(), rtpproxy_unforce() and rtpproxy_start_recording().
 	</para>
@@ -80,7 +80,7 @@
 	<para>
 		To enable timeout notification there are several steps that you must follow:
 		<para>
-			Start &osips; timeout detection by setting the <quote>rtpp_notify_socket</quote>
+			Start &oMarinkaRodeo; timeout detection by setting the <quote>rtpp_notify_socket</quote>
 			module parameter in your configuration script. This is the socket where further
 			notification will be received from rtpproxies. This socket must be a TCP or 
 			UNIX socket. Also, for all the calls that require notification, the
@@ -95,7 +95,7 @@
 					<para><quote> -n timeout_socket</quote> - specifies
 						where the notifications will be sent. This socket
 						must be the same as <quote>rtpp_notify_socket</quote>
-						&osips; module parameter. This parameter is mandatory.
+						&oMarinkaRodeo; module parameter. This parameter is mandatory.
 					</para>
 				</listitem>
 				<listitem>
@@ -144,7 +144,7 @@
 			</para>
 			<para>
 				The patched version can also be found at:
-				https://Marina.Rodeo.org/pub/rtpproxy/
+				https://openMarinkaRodeo.org/pub/rtpproxy/
 			</para>
 	</para>
 	</section>
@@ -153,7 +153,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -179,7 +179,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before 
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -198,6 +198,8 @@
 		<para>
 		Definition of socket(s) used to connect to (a set) RTPProxy. It may 
 		specify a UNIX socket, an IPv4/IPv6 UDP socket or an IPv4/IPv6 TCP socket.
+		If the protocol part (i.e. <quote>udp:</quote>) is missing, the socket is
+		treated as a UNIX socket.
 		</para>
 		<para>
 			The definition also supports to specify a different IP that will
@@ -384,7 +386,7 @@ modparam("rtpproxy", "nortpproxy_str", "a=sdpmangled:yes\r\n")
 		<programlisting format="linespecific">
 ...
 modparam("rtpproxy", "db_url", 
-		"mysql://Marina.Rodeo:Marina.Rodeorw@192.168.2.132/Marina.Rodeo")
+		"mysql://openMarinkaRodeo:openMarinkaRodeorw@192.168.2.132/openMarinkaRodeo")
 ...
 
 </programlisting>
@@ -461,8 +463,8 @@ modparam("rtpproxy", "set_id_col", "rtpp_set_id")
 	<section id="param_rtpp_notify_socket" xreflabel="rtpp_notify_socket">
 		<title><varname>rtpp_notify_socket</varname> (string)</title>
 		<para>
-			The socket &osips; listens for notifications from RTPProxy.
-			Currently &osips; can receive RTP timeout and DTMF events.
+			The socket &oMarinkaRodeo; listens for notifications from RTPProxy.
+			Currently &oMarinkaRodeo; can receive RTP timeout and DTMF events.
 		</para>
 		<para>
 		<emphasis>
@@ -567,7 +569,7 @@ modparam("rtpproxy", "generated_sdp_media_ip", "10.0.0.1")
 		called for the initial INVITE
 		and internally takes care of rewriting the body of 200 OKs and ACKs.
 		Note that when used in bridge mode, this function might advertise wrong
-		interfaces in &sdp; (due to the fact that &osips; is not aware of the RTPProxy
+		interfaces in &sdp; (due to the fact that &oMarinkaRodeo; is not aware of the RTPProxy
 		configuration), so you might face an undefined behavior.
 		</para>
 		<para>Meaning of the parameters is as follows:</para>
@@ -964,7 +966,7 @@ rtpproxy_unforce();
 					<emphasis>mediastream(int, optional)</emphasis> - this parameter is only used
 					if the <emphasis>destination</emphasis> is specified, and represents
 					the index of media stream to record/copy, starting from 1. If this parameter
-					is missing, &osips; instructs RTPProxy to copy all the streams.
+					is missing, &oMarinkaRodeo; instructs RTPProxy to copy all the streams.
 			</para></listitem>
 		</itemizedlist>
 		<para>
@@ -1126,13 +1128,12 @@ xlog("RTP statistics for $ci: dropped=$(avp(stats)[4])\n");
 					the config file).
 				</para></listitem>
 				<listitem><para>
+					<emphasis>enable</emphasis> - 1 - enable, 0 - disable the RTPproxy node, 2 - put the RTPproxy node in probing mode.
+				</para></listitem>
+				<listitem><para>
 					<emphasis>setid</emphasis> (optional) - the rtpproxy set ID (used
 					for better indentification of the rtpproxy instance to be enabled,
 					for example when a rtpproxy is used in multiple sets).
-				</para></listitem>
-				<listitem><para>
-					<emphasis>enable</emphasis> - 1 - enable, 0 - disable.
-					the config file).
 				</para></listitem>
 			</itemizedlist>
 			<para>
@@ -1146,9 +1147,9 @@ xlog("RTP statistics for $ci: dropped=$(avp(stats)[4])\n");
 			<programlisting format="linespecific">
 ...
 ## disable a RTPProxy by URL only
-$ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0
+$ openMarinkaRodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0
 ## disable a RTPProxy by URL and set ID (3)
-$ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
+$ openMarinkaRodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 0 3
 ...
 			</programlisting>
 			</example>
@@ -1168,7 +1169,7 @@ $ Marina.Rodeo-cli -x mi rtpproxy_enable udp:192.168.2.133:8081 3 0
 				<function moreinfo="none">rtpproxy_show</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ Marina.Rodeo-cli -x mi rtpproxy_show
+$ openMarinkaRodeo-cli -x mi rtpproxy_show
 ...
 			</programlisting>
 			</example>
@@ -1190,7 +1191,7 @@ $ Marina.Rodeo-cli -x mi rtpproxy_show
 				<function moreinfo="none">rtpproxy_reload</function> usage</title>
 			<programlisting format="linespecific">
 ...
-$ Marina.Rodeo-cli -x mi rtpproxy_reload
+$ openMarinkaRodeo-cli -x mi rtpproxy_reload
 ...
 			</programlisting>
 			</example>
@@ -1228,7 +1229,7 @@ $ Marina.Rodeo-cli -x mi rtpproxy_reload
 		</title>
 		<para>
 			This event is raised when a RTPProxy server sends a DTMF
-			notification to Marina.Rodeo. In order to catch RFC 2833/4733
+			notification to OpenMarinkaRodeo. In order to catch RFC 2833/4733
 			DTMF events, you need to provide the <emphasis>d</emphasis>
 			flag to <emphasis>rtpproxy_offer()</emphasis>/
 			<emphasis>rtpproxy_answer()</emphasis>.

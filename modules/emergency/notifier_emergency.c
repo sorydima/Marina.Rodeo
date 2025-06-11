@@ -1,16 +1,16 @@
 /*
  * emergency module - basic support for emergency calls
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014-2015 Robison Tesini & Evandro Villaron
+ * Copyright (C) 2014-2015 Robison Tesini & Evandro Villaron
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -134,8 +134,8 @@ struct sm_subscriber* build_notify_cell(struct sip_msg *msg, int expires){
 	LM_DBG("CALLID OK in subs_hash\n");
 
 	time(&rawtime);
-	time_now = (int)rawtime;
-	LM_DBG("TIME : %d \n", (int)rawtime );
+	time_now = (int)(unsigned long)rawtime;
+	LM_DBG("TIME : %d \n", (int)(unsigned long)rawtime );
 
 	// get source ip address that send INVITE
 	vsp_addr = ip_addr2a(&msg->rcv.src_ip);
@@ -420,8 +420,8 @@ void notif_cback_func(struct cell *t, int cb_type, struct tmcb_params *params){
 			time_t rawtime;
 
 			time(&rawtime);
-			int time_now = (int)rawtime;
-			LM_DBG("TIME : %d \n", (int)rawtime );
+			int time_now = (int)(unsigned long)rawtime;
+			LM_DBG("TIME : %d \n", (int)(unsigned long)rawtime );
 
 			// update timeout
 			params_notify->timeout =  params_notify->expires + time_now;

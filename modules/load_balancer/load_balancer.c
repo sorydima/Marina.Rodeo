@@ -1,16 +1,16 @@
 /*
  * load balancer module - complex call load balancing
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Voice Sistem SRL
+ * Copyright (C) 2009 Voice Sistem SRL
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -216,7 +216,7 @@ static module_dependency_t *get_deps_fetch_fs_load(const param_export_t *param)
 }
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "dialog", DEP_ABORT },
 		{ MOD_TYPE_SQLDB,   NULL,     DEP_ABORT },
 		{ MOD_TYPE_NULL, NULL, 0 },
@@ -235,7 +235,7 @@ struct module_exports exports= {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,            /* exported functions */
 	0,               /* exported async functions */
 	mod_params,      /* param exports */
@@ -422,14 +422,6 @@ static int mod_init(void)
 			return -1;
 		}
 
-		/* Register the max load recalculation timer */
-		if (fetch_freeswitch_stats &&
-		    register_timer("lb-update-max-load", lb_update_max_loads, NULL,
-		           fs_api.stats_update_interval, TIMER_FLAG_SKIP_ON_DELAY)<0) {
-			LM_ERR("failed to register timer for max load recalc!\n");
-			return -1;
-		}
-
 		if (lb_probe_replies.s) {
 			lb_probe_replies.len = strlen(lb_probe_replies.s);
 			if(parse_reply_codes( &lb_probe_replies, &probing_reply_codes,
@@ -439,6 +431,14 @@ static int mod_init(void)
 				return -1;
 			}
 		}
+	}
+
+	/* Register the max load recalculation timer */
+	if (fetch_freeswitch_stats &&
+	    register_timer("lb-update-max-load", lb_update_max_loads, NULL,
+	           fs_api.stats_update_interval, TIMER_FLAG_SKIP_ON_DELAY)<0) {
+		LM_ERR("failed to register timer for max load recalc!\n");
+		return -1;
 	}
 
 	/* parse avps */
@@ -479,17 +479,17 @@ static int mod_init(void)
 
 static int child_init(int rank)
 {
+	/* init DB connection */
+	if ( lb_connect_db(&db_url)!=0 ) {
+		LM_CRIT("cannot initialize database connection\n");
+		return -1;
+	}
 	return 0;
 }
 
 
 static int mi_child_init( void )
 {
-	/* init DB connection */
-	if ( lb_connect_db(&db_url)!=0 ) {
-		LM_CRIT("cannot initialize database connection\n");
-		return -1;
-	}
 	return 0;
 }
 
@@ -796,7 +796,7 @@ static void lb_update_max_loads(unsigned int ticks, void *param)
 				old = dst->rmap[ri].max_load;
 
 				/*
-				 * The normal case. Marina.Rodeo sees, at _most_, the same number
+				 * The normal case. OpenMarinkaRodeo sees, at _most_, the same number
 				 * of sessions as FreeSWITCH does. Any differences must be
 				 * subtracted from the remote "max sessions" value
 				 */

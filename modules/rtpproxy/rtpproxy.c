@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2003-2008 Sippy Software, Inc., http://www.sippysoft.com
+ * Copyright (C) 2003-2008 Sippy Software, Inc., http://www.sippysoft.com
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -188,6 +188,7 @@
 #include "rtpproxy_vcmd.h"
 #include "rtppn_connect.h"
 #include "../rtp_relay/rtp_relay.h"
+#include "../rtp.io/rtp_io_api.h"
 
 #define NH_TABLE_VERSION  0
 
@@ -322,13 +323,16 @@ static int rtpproxy_api_delete(struct rtp_relay_session *sess, struct rtp_relay_
 			str *flags, str *extra);
 static int rtpproxy_api_copy_offer(struct rtp_relay_session *sess,
 		struct rtp_relay_server *server, void **_ctx, str *flags,
-		unsigned int copy_flags, unsigned int streams, str *body);
+		unsigned int copy_flags, unsigned int streams, str *body,
+		struct rtp_relay_streams *streams_map);
 static int rtpproxy_api_copy_answer(struct rtp_relay_session *sess,
 		struct rtp_relay_server *server, void *_ctx, str *flags, str *body);
 static int rtpproxy_api_copy_delete(struct rtp_relay_session *sess,
 		struct rtp_relay_server *server, void *_ctx, str *flags);
 static int rtpproxy_api_copy_serialize(void *_ctx, bin_packet_t *packet);
 static int rtpproxy_api_copy_deserialize(void **_ctx, bin_packet_t *packet);
+static void rtpproxy_api_copy_release(void **_ctx);
+
 
 int connect_rtpproxies(struct rtpp_set *filter);
 int update_rtpp_proxies(struct rtpp_set *filter);
@@ -366,6 +370,7 @@ static int rtpproxy_autobridge = 0;
 static pid_t mypid;
 static int myrand = 0;
 static unsigned int myseqn = 0;
+static int myrank = 0;
 static str nortpproxy_str = str_init("a=nortpproxy:yes");
 str rtpp_notify_socket = {0, 0};
 /*
@@ -383,8 +388,13 @@ struct rtpp_set_head ** rtpp_set_list =0;
 struct rtpp_set ** default_rtpp_set=0;
 static int default_rtpp_set_no = DEFAULT_RTPP_SET_ID;
 
+struct rtpp_sock {
+	int fd;
+	enum comm_modes rn_umode;
+};
+
 /* array with the sockets used by rtpporxy (per process)*/
-static int *rtpp_socks = 0;
+static struct rtpp_sock *rtpp_socks = NULL;
 static unsigned int *rtpp_no = 0;
 static unsigned int *list_version;
 static unsigned int my_version = 0;
@@ -542,7 +552,7 @@ static const proc_export_t procs[] = {
 };
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "tm",     DEP_ABORT },
 		{ MOD_TYPE_DEFAULT, "dialog", DEP_SILENT },
 		{ MOD_TYPE_DEFAULT, "rtp_relay", DEP_SILENT|DEP_REVERSE },
@@ -560,7 +570,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,
 	NULL,
 	params,
@@ -639,8 +649,7 @@ static int rtpproxy_set_notify(modparam_t type, void * val)
 	return 0;
 }
 
-static int add_rtpproxy_socks(struct rtpp_set * rtpp_list,
-										char * rtpproxy){
+static int add_rtpproxy_socks(struct rtpp_set * rtpp_list, char *rtpproxy){
 	/* Make rtp proxies list. */
 	char *p, *p1, *p2, *p3, *p4, *plim;
 	struct rtpp_node *pnode;
@@ -724,6 +733,13 @@ static int add_rtpproxy_socks(struct rtpp_set * rtpp_list,
 		} else if (strncasecmp(pnode->rn_address, "cunix:", 6) == 0) {
 			pnode->rn_umode = CM_CUNIX;
 			pnode->rn_address += 6;
+		} else if (strncasecmp(pnode->rn_address, "rtp.io:auto", 11) == 0) {
+			if (pnode->rn_address[11] != '\0') {
+				LM_ERR("only \"rtp.io:auto\" is supported\n");
+				return -1;
+			}
+			pnode->rn_umode = CM_RTPIO;
+			pnode->rn_address += 11;
 		}
 
 		if (rtpp_list->rn_first == NULL) {
@@ -903,7 +919,7 @@ static mi_response_t *mi_enable_rtp_proxy(const mi_params_t *params,
 	int enable;
 	struct rtpp_set * rtpp_list;
 	struct rtpp_node * crt_rtpp;
-	int found;
+	int found, disabled, prev_disabled, recheck_ticks;
 
 	found = 0;
 
@@ -934,10 +950,25 @@ static mi_response_t *mi_enable_rtp_proxy(const mi_params_t *params,
 				if(strncmp(crt_rtpp->rn_url.s, rtpp_url.s, rtpp_url.len) == 0){
 					/*set the enabled/disabled status*/
 					found = 1;
-					crt_rtpp->rn_recheck_ticks =
-						enable? MI_MIN_RECHECK_TICKS : MI_MAX_RECHECK_TICKS;
-					crt_rtpp->rn_disabled = enable?0:1;
-					raise_rtpproxy_event(crt_rtpp, crt_rtpp->rn_disabled);
+					prev_disabled = crt_rtpp->rn_disabled;
+					switch (enable) {
+						case 0: /* disable */
+							recheck_ticks = MI_MAX_RECHECK_TICKS;
+							disabled = 1;
+							break;
+						case 2: /* pending */
+							recheck_ticks = get_ticks() + rtpproxy_disable_tout;
+							disabled = 1;
+							break;
+						default: /* enable */
+							recheck_ticks = MI_MIN_RECHECK_TICKS;
+							disabled = 0;
+							break;
+					}
+					crt_rtpp->rn_recheck_ticks = recheck_ticks;
+					crt_rtpp->rn_disabled = disabled;
+					if (prev_disabled != crt_rtpp->rn_disabled)
+						raise_rtpproxy_event(crt_rtpp, crt_rtpp->rn_disabled);
 				}
 			}
 		}
@@ -1106,11 +1137,22 @@ static int mod_preinit(void)
 		.copy_delete = rtpproxy_api_copy_delete,
 		.copy_serialize = rtpproxy_api_copy_serialize,
 		.copy_deserialize = rtpproxy_api_copy_deserialize,
+		.copy_release = rtpproxy_api_copy_release,
 	};
 	if (!pv_parse_spec(&rtpproxy_relay_pvar_str, &media_pvar))
 		return -1;
 	register_rtp_relay(exports.name, &binds, &rtp_relay);
 	return 0;
+}
+
+static rtp_io_getchildsock_t
+rtp_io_childsock_f(void)
+{
+	static rtp_io_getchildsock_t _rtp_io_getchildsock = {0};
+
+	if (_rtp_io_getchildsock == NULL)
+		_rtp_io_getchildsock = (rtp_io_getchildsock_t)find_export("rtp_io_getchildsock", 0);
+	return _rtp_io_getchildsock;
 }
 
 static int
@@ -1163,8 +1205,11 @@ mod_init(void)
 	if(db_url.s == NULL)
 	{
 		if (rtpp_sets == 0) {
-			LM_ERR("no rtpproxy set specified\n");
-			return -1;
+			int rtp_io_found = (rtp_io_childsock_f() == NULL) ? 0 : 1;
+			if (!rtp_io_found || rtpproxy_add_rtpproxy_set("rtp.io:auto", -1) != 0) {
+				LM_ERR("no rtpproxy set specified");
+				return -1;
+			}
 		}
 
 		/* storing the list of rtp proxy sets in shared memory*/
@@ -1352,7 +1397,7 @@ mod_init(void)
 
 static int mi_child_init(void)
 {
-	if(child_init(1) < 0)
+	if (child_init(1) < 0)
 	{
 		LM_ERR("Failed to initial rtpp socks\n");
 		return -1;
@@ -1462,6 +1507,7 @@ child_init(int rank)
 
 	mypid = getpid();
 	myrand = rand()%10000;
+	myrank = rank;
 
 	return connect_rtpproxies(NULL);
 }
@@ -1477,7 +1523,8 @@ int connect_rtpproxies(struct rtpp_set *filter)
 	LM_DBG("[Re]connecting sockets (%d > %d)\n", *rtpp_no, rtpp_number);
 
 	if (*rtpp_no > rtpp_number) {
-		rtpp_socks = (int*)pkg_realloc(rtpp_socks, *rtpp_no * sizeof(int) );
+		size_t asize = *rtpp_no * sizeof(rtpp_socks[0]);
+		rtpp_socks = (typeof(rtpp_socks))pkg_realloc(rtpp_socks, asize);
 		if (rtpp_socks==NULL) {
 			LM_ERR("no more pkg memory\n");
 			return -1;
@@ -1492,16 +1539,31 @@ int connect_rtpproxies(struct rtpp_set *filter)
 			continue;
 
 		for (pnode=rtpp_list->rn_first; pnode!=0; pnode = pnode->rn_next){
-			if (pnode->rn_umode == CM_UNIX) {
-				rtpp_socks[pnode->idx] = -1;
-			} else {
-				rtpp_socks[pnode->idx] = connect_rtpp_node(pnode);
-				LM_INFO("created to %d\n", rtpp_socks[pnode->idx]);
-				if (rtpp_socks[pnode->idx] == -1) {
+			switch (pnode->rn_umode) {
+			case CM_UNIX:
+				rtpp_socks[pnode->idx].fd = -1;
+				break;
+			case CM_RTPIO:
+				{
+					rtp_io_getchildsock_t gcs_f;
+					gcs_f = rtp_io_childsock_f();
+					if (gcs_f == NULL) {
+						LM_ERR("rtp.io is not loaded\n");
+						return -1;
+					}
+					rtpp_socks[pnode->idx].fd = gcs_f(myrank);
+				}
+				break;
+			default:
+				rtpp_socks[pnode->idx].fd = connect_rtpp_node(pnode);
+				LM_INFO("created to %d\n", rtpp_socks[pnode->idx].fd);
+				if (rtpp_socks[pnode->idx].fd == -1) {
 					LM_ERR("connect_rtpp_node() failed\n");
 					return -1;
 				}
+				break;
 			}
+			rtpp_socks[pnode->idx].rn_umode = pnode->rn_umode;
 			pnode->rn_disabled = rtpp_test(pnode, 0, 1);
 		}
 
@@ -1531,13 +1593,15 @@ int update_rtpp_proxies(struct rtpp_set *filter) {
 
 	update_rtpp_notify();
 	for (i = 0; i < rtpp_number; i++) {
+		if (rtpp_socks[i].rn_umode == CM_RTPIO)
+			continue;
 		if (!filter ||
 		        (filter->rtpp_socks_idx <= i
 		         && i < filter->rtpp_socks_idx + filter->rtpp_node_count)) {
-			LM_DBG("closing rtpp_socks[%d] | filter_set: %d\n", i,
+			LM_DBG("closing rtpp_socks[%d].fd | filter_set: %d\n", i,
 			       filter ? filter->id_set : -1);
-			shutdown(rtpp_socks[i], SHUT_RDWR);
-			close(rtpp_socks[i]);
+			shutdown(rtpp_socks[i].fd, SHUT_RDWR);
+			close(rtpp_socks[i].fd);
 		}
 	}
 
@@ -2059,8 +2123,9 @@ rtpp_test(struct rtpp_node *node, int isdisabled, int force)
 				"%s\n", node->rn_url.s, REQ_CPROTOVER);
 		goto error;
 	}
-	LM_INFO("rtp proxy <%s> found, support for it %senabled\n",
-	    node->rn_url.s, force == 0 ? "re-" : "");
+	if (isdisabled)
+		LM_INFO("rtp proxy <%s> found, support for it %senabled\n",
+				node->rn_url.s, force == 0 ? "re-" : "");
 	/* Check for optional capabilities */
 	if (rtpp_checkcap(node, RTP_CAP(REPACK)) > 0)
 		SET_CAP(node, REPACK);
@@ -2116,9 +2181,10 @@ send_rtpp_command(struct rtpp_node *node, struct rtpproxy_vcmd *vcmd, int vcnt)
 		max_vcnt = IOV_MAX;
 #endif
 
-	if (rtpp_socks[node->idx] == -1 && node->rn_umode != CM_UNIX) {
-		rtpp_socks[node->idx] = connect_rtpp_node(node);
-		if (rtpp_socks[node->idx] == -1) {
+	if (rtpp_socks[node->idx].fd == -1 && node->rn_umode != CM_UNIX &&
+	    node->rn_umode != CM_RTPIO) {
+		rtpp_socks[node->idx].fd = connect_rtpp_node(node);
+		if (rtpp_socks[node->idx].fd == -1) {
 			LM_ERR("connect_rtpp_node() failed\n");
 			return (NULL);
 		}
@@ -2199,18 +2265,18 @@ retry:
 		}
 	} else {
 		int rtry = CM_STREAM(node) ? 1 : rtpproxy_retr;
-		fds[0].fd = rtpp_socks[node->idx];
+		fds[0].fd = rtpp_socks[node->idx].fd;
 		fds[0].events = POLLIN | POLLRDHUP;
 		fds[0].revents = 0;
 		/* Drain input buffer */
 		while ((poll(fds, 1, 0) == 1) &&
 		    ((fds[0].revents & POLLIN) != 0)) {
 			if (fds[0].revents & (POLLERR|POLLNVAL|POLLRDHUP)) {
-				LM_ERR("error on rtpproxy socket %d!\n", rtpp_socks[node->idx]);
+				LM_ERR("error on rtpproxy socket %d!\n", rtpp_socks[node->idx].fd);
 				break;
 			}
 			fds[0].revents = 0;
-			if (recv(rtpp_socks[node->idx], buf, sizeof(buf) - 1, 0) < 0 &&
+			if (recv(rtpp_socks[node->idx].fd, buf, sizeof(buf) - 1, 0) < 0 &&
 					errno != EINTR) {
 				LM_ERR("error while draining rtpproxy %d!\n", errno);
 				break;
@@ -2226,7 +2292,7 @@ retry:
 		for (i = 0; i < rtry; i++) {
 			int buflen = sizeof(buf)-1;
 			do {
-				len = writev(rtpp_socks[node->idx], cv, vcnt + 1);
+				len = writev(rtpp_socks[node->idx].fd, cv, vcnt + 1);
 			} while (len == -1 && (errno == EINTR || errno == ENOBUFS));
 			if (len <= 0) {
 				LM_ERR("can't send (#%d iovec buffers) command to a RTP proxy (%d:%s)\n",
@@ -2238,7 +2304,7 @@ retry:
 				int s_errno;
 
 				do {
-					len = recv(rtpp_socks[node->idx], cp, buflen, 0);
+					len = recv(rtpp_socks[node->idx].fd, cp, buflen, 0);
 				} while (len == -1 && errno == EINTR);
 				s_errno = (len < 0) ? errno : 0;
 				if (len <= 0) {
@@ -2287,9 +2353,9 @@ out:
 	return cp;
 badproxy:
 	LM_ERR("proxy <%s> does not respond, disable it\n", node->rn_url.s);
-	if (CM_STREAM(node)) {
-		close(rtpp_socks[node->idx]);
-		rtpp_socks[node->idx] = -1;
+	if (CM_STREAM(node) && node->rn_umode != CM_RTPIO) {
+		close(rtpp_socks[node->idx].fd);
+		rtpp_socks[node->idx].fd = -1;
 	}
 	node->rn_disabled = 1;
 	node->rn_recheck_ticks = get_ticks() + rtpproxy_disable_tout;
@@ -2674,17 +2740,6 @@ rtpproxy_offer6_f(struct sip_msg *msg, str *param1, str *param2,
 				nh_set_param_t *param3, pv_spec_t *param4, pv_spec_t *param5,
 				pv_spec_t *param6)
 {
-	if(rtpp_notify_socket.s)
-	{
-		if ( (!msg->to && parse_headers(msg, HDR_TO_F,0)<0) || !msg->to ) {
-			LM_ERR("bad request or missing TO hdr\n");
-			return -1;
-		}
-
-		/* if an initial request - create a new dialog */
-		if(get_to(msg)->tag_value.s == NULL && dlg_api.create_dlg)
-			dlg_api.create_dlg(msg,0);
-	}
 	return rtpproxy_offer_answer6_f(msg, param1, param2, param3, param4,
 			param5, param6, 1);
 }
@@ -2953,7 +3008,7 @@ static int engage_force_rtpproxy(struct dlg_cell *dlg, struct sip_msg *msg)
 		if (!has_sdp) {
 			if (msg->first_line.type == SIP_REQUEST &&
 					(method_id == METHOD_INVITE ||  method_id == METHOD_UPDATE)) {
-				/* indicate there's an ongoing late negociation happening */
+				/* indicate there's an ongoing late negotiation happening */
 				value.s = late_name;
 				if (dlg_api.store_dlg_value(dlg, &late_name, &value,
 					DLG_VAL_TYPE_NONE) < 0) {
@@ -3448,7 +3503,9 @@ static inline int rtpp_get_error(char *command)
 {
 	int ret;
 	str val;
-	if (!command || command[0] != 'E')
+	if (!command)
+		return -1;
+	if (command[0] != 'E')
 		return 0;
 	val.s = command + 1;
 	val.len = strlen(val.s) - 1 /* newline */;
@@ -3778,6 +3835,16 @@ static int rtpproxy_offer_answer(struct sip_msg *msg, struct rtpp_args *args,
 
 	if (opts.s.s[0] == 'U') {
 		if(enable_notification && dlg_api.get_dlg) {
+
+			if ( (!msg->to && parse_headers(msg, HDR_TO_F,0)<0) || !msg->to ) {
+				LM_ERR("bad request or missing TO hdr\n");
+				goto error;
+			}
+
+			/* if an initial request - create a new dialog */
+			if(get_to(msg)->tag_value.s == NULL && dlg_api.create_dlg)
+				dlg_api.create_dlg(msg,0);
+
 			dlg = dlg_api.get_dlg();
 			if(dlg == NULL)
 			{
@@ -3834,7 +3901,7 @@ static int rtpproxy_offer_answer(struct sip_msg *msg, struct rtpp_args *args,
 			LM_ERR("could not allocate space for new body\n");
 			goto error;
 		}
-		allocated_body = args->body.len;
+		allocated_body = 1;
 		body->len = 0;
 	}
 
@@ -4555,6 +4622,10 @@ static inline int rtpproxy_stats_f(struct sip_msg *msg,
 		/* we are done reading -> unref the data */
 		lock_stop_read( nh_lock );
 	}
+	if (!ret) {
+		LM_DBG("nothing returned by RTPProxy!\n");
+		return -1;
+	}
 	error = rtpp_get_error(ret);
 	switch (error) {
 		case 0:
@@ -4653,6 +4724,10 @@ static inline int rtpproxy_all_stats_f(struct sip_msg *msg, pv_spec_t *pavp,
 	for (chunk = 0; chunk < rtpp_stats_chunks_no; chunk++) {
 		vstat->vu[nitems] = rtpp_stats_chunks[chunk];
 		result = send_rtpp_command(node, vstat, nitems + 1);
+		if (!result) {
+			LM_DBG("no result from RTPProxy!\n");
+			goto error;
+		}
 
 		error = rtpp_get_error(result);
 		if (error) {
@@ -4780,7 +4855,7 @@ static int w_rtpproxy_recording(struct sip_msg *msg, str *callid,
 	else
 		while (media_start <= media_stop) {
 			vrec.vu[9].iov_base = int2str(media_start, (int *)&vrec.vu[9].iov_len);
-			vrec.vu[13] = vrec.vu[9];
+			memcpy(&vrec.vu[13], &vrec.vu[9], sizeof *vrec.vu);
 			send_rtpp_command(node, &vrec, nitems);
 			media_start++;
 		}
@@ -4821,7 +4896,7 @@ static int w_rtpproxy_stop_recording(struct sip_msg *msg, str *callid,
 		STR2IOVEC(*to_tag, vstrec.vu[7]);
 
 	vstrec.vu[5].iov_base = int2str(medianum, (int *)&vstrec.vu[5].iov_len);
-	vstrec.vu[9] = vstrec.vu[5];
+	memcpy(&vstrec.vu[9], &vstrec.vu[5], sizeof *vstrec.vu);
 	send_rtpp_command(node, &vstrec, vstrec.useritems);
 
 	return 1;
@@ -5582,9 +5657,34 @@ static int rtpproxy_gen_sdp_medias(struct rtpproxy_sdp_buf *buf,
 	return 0;
 }
 
+static void rtpproxy_api_copy_fill_streams(
+		struct rtpproxy_copy_ctx *ctx, struct rtp_relay_streams* streams)
+{
+	struct rtpproxy_copy_stream *stream;
+	struct list_head *it;
+	int leg, s;
+	streams->count = 0;
+	for (leg = RTP_RELAY_CALLER; leg <= RTP_RELAY_CALLEE; leg++) {
+		list_for_each(it, &ctx->streams[leg]) {
+			stream = list_entry(it, struct rtpproxy_copy_stream, list);
+			s = streams->count;
+			if (s == RTP_COPY_MAX_STREAMS) {
+				LM_WARN("maximum amount of streams %d reached!\n",
+						RTP_COPY_MAX_STREAMS);
+				return;
+			}
+			streams->streams[s].leg = leg;
+			streams->streams[s].label = stream->index;
+			streams->streams[s].medianum = stream->medianum;
+			streams->count++;
+		}
+	}
+}
+
 static int rtpproxy_api_copy_offer(struct rtp_relay_session *sess,
 		struct rtp_relay_server *server, void **_ctx, str *flags,
-		unsigned int copy_flags, unsigned int streams, str *body)
+		unsigned int copy_flags, unsigned int streams, str *body,
+		struct rtp_relay_streams *streams_map)
 {
 	str *media_ip;
 	struct rtpproxy_sdp_buf *buf;
@@ -5608,6 +5708,9 @@ static int rtpproxy_api_copy_offer(struct rtp_relay_session *sess,
 
 	if (rtpproxy_gen_sdp_medias(buf, ctx, sess) < 0)
 		goto error;
+
+	if (streams_map)
+		rtpproxy_api_copy_fill_streams(ctx, streams_map);
 
 	*body = buf->buffer;
 	*_ctx = ctx;
@@ -5892,7 +5995,6 @@ error:
 	if (nh_lock)
 		lock_stop_read(nh_lock);
 	rtpproxy_free_call_args(&args);
-	rtpproxy_copy_ctx_free(_ctx);
 	return ret <= 0?-1:1;
 }
 
@@ -5986,4 +6088,10 @@ static int rtpproxy_api_copy_deserialize(void **_ctx, bin_packet_t *packet)
 	}
 	*_ctx = ctx;
 	return -1;
+}
+
+static void rtpproxy_api_copy_release(void **_ctx)
+{
+	rtpproxy_copy_ctx_free(*_ctx);
+	*_ctx = NULL;
 }

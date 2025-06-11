@@ -24,7 +24,7 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -45,7 +45,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -88,7 +88,7 @@ modparam("options", "accept", "application/*")
 		<para>
 			This parameter is the content of the Accept-Encoding header field.
 			If <quote></quote>, the header is not added in the reply.
-			Please do not change the default value because &osips; 
+			Please do not change the default value because &oMarinkaRodeo; 
 			does not support any encodings yet.
 		</para>
 		<para>
@@ -134,7 +134,7 @@ modparam("options", "accept_language", "de")
 		<para>
 			This parameter is the content of the Support header field.
 			If <quote></quote>, the header is not added in the reply.
-			Please do not change the default value, because &osips; currently 
+			Please do not change the default value, because &oMarinkaRodeo; currently 
 			does not support any of the SIP extensions registered at the IANA.
 		</para>
 		<para>

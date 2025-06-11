@@ -1,15 +1,15 @@
 /**
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009 Voice Sistem SRL
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2016 Marina.Rodeo Solutions
+ * Copyright (C) 2009 Voice Sistem SRL
+ * Copyright (C) 2016 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -22,6 +22,7 @@
 
 #include "../mem/mem.h"
 #include "../ut.h"
+#include "../sdp_ops.h"
 #include "parse_body.h"
 #include "parse_content.h"
 #include "parse_hname2.h"
@@ -230,20 +231,29 @@ static int parse_single_part(struct body_part *part, char * start, char * end)
 int parse_sip_body(struct sip_msg * msg)
 {
 	char *start, *end;
-	int type = 0;
+	int type = 0, new_sdp = 0;
 	struct body_part *part, *last;
 	str delimiter, body;
 
 	/* is body already parsed ? */
-	if (msg->body)
-		return 0;
+	if (msg->body) {
+		if (!have_sdp_ops(msg))
+			return 0;
+
+		free_sip_body(msg->body);
+		msg->body = NULL;
+	}
 
 	if ( get_body(msg,&body)!=0 || body.len==0)
 		return 0;
 
 	type = parse_content_type_hdr(msg);
-	if (type <= 0)
-		return 0;
+	if (type <= 0) {
+		if (!msg->sdp_ops || msg->sdp_ops->sdp.len == 0)
+			return 0;
+		type = (TYPE_APPLICATION<<16) + SUBTYPE_SDP;
+		new_sdp = 1;
+	}
 
 	msg->body = pkg_malloc(sizeof (struct sip_msg_body));
 	if (msg->body == 0)
@@ -255,7 +265,8 @@ int parse_sip_body(struct sip_msg * msg)
 
 	msg->body->body = body;
 
-	msg->body->boundary = ((content_t *) msg->content_type->parsed)->boundary;
+	if (!new_sdp)
+		msg->body->boundary = ((content_t *) msg->content_type->parsed)->boundary;
 
 	if ((type >> 16) == TYPE_MULTIPART)
 	{
@@ -269,7 +280,7 @@ int parse_sip_body(struct sip_msg * msg)
 		if (start == NULL) {
 			LM_ERR("Unable to parse multipart type:"
 				" malformed - missing start delimiters\n");
-			return 0;
+			goto out_free;
 		}
 
 		/* mark as first part (no previous one) */
@@ -293,7 +304,7 @@ int parse_sip_body(struct sip_msg * msg)
 			/* add 4 to delimiter 2 for "--"*/
 			if (parse_single_part(part, start + delimiter.len + 2, end)!=0) {
 				LM_ERR("Unable to parse part:[%.*s]\n",(int)(end-start),start);
-				return -1;
+				goto out_free;
 			}
 
 			/* set the parsing for the next cycle */
@@ -314,7 +325,7 @@ int parse_sip_body(struct sip_msg * msg)
 		part = &msg->body->first;
 
 		part->mime = type;
-		part->mime_s = msg->content_type->body;
+		part->mime_s = !new_sdp ? msg->content_type->body : str_init("application/sdp\r\n");
 		part->body = body;
 		part->headers.s = NULL;
 		part->headers.len = 0;
@@ -325,7 +336,11 @@ int parse_sip_body(struct sip_msg * msg)
 
 	return 0;
 
-};
+out_free:
+	free_sip_body(msg->body);
+	msg->body = NULL;
+	return -1;
+}
 
 
 struct body_part* add_body_part(struct sip_msg *msg, str *mime_s,
@@ -430,7 +445,7 @@ int delete_body_part(struct sip_msg *msg, struct body_part *part)
 void free_sip_body(struct sip_msg_body *body)
 {
 	struct body_part * p, *tmp;
-	osips_free_f my_free;
+	oMarinkaRodeo_free_f my_free;
 
 	if (body) {
 		my_free = (body->flags&SIP_BODY_FLAG_SHM) ? shm_free_func : pkg_free_func;
@@ -470,7 +485,7 @@ int clone_sip_msg_body(struct sip_msg *src_msg, struct sip_msg *dst_msg,
 {
 	struct sip_msg_body *dst, *src;
 	struct body_part *p, *np;
-	osips_malloc_f my_malloc;
+	oMarinkaRodeo_malloc_f my_malloc;
 	int extra_len;
 
 	if (src_msg==NULL || src_msg->body==NULL) {

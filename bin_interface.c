@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2013 Marina.Rodeo Solutions
+ * Copyright (C) 2013 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -37,7 +37,7 @@ void set_len(bin_packet_t *packet) {
 }
 
 /**
- * bin_init - begins the construction of a new binary packet (header part):
+ * _bin_init - begins the construction of a new binary packet (header part):
  *
  * +-----------------------------+-------------------------------------------------------+
  * |    12-byte HEADER           |       BODY                max 65535 bytes             |
@@ -48,8 +48,8 @@ void set_len(bin_packet_t *packet) {
  * @param: { LEN, CAP } + CMD + VERSION
  * @length: initial packet size. specify 0 to use the default size (BIN_MAX_BUF_LEN)
  */
-int bin_init(bin_packet_t *packet, str *capability, int packet_type,
-             short version, int length)
+int _bin_init(bin_packet_t *packet, str *capability, int packet_type,
+             short version, int length, int use_sysmalloc)
 {
 	if (length != 0 && length < MIN_BIN_PACKET_SIZE + capability->len) {
 		LM_ERR("Length parameter has to be greater than: %zu\n",
@@ -60,14 +60,20 @@ int bin_init(bin_packet_t *packet, str *capability, int packet_type,
 	if (!length) 
 		length = BIN_MAX_BUF_LEN;
 
-	packet->type = packet_type;
-
-	packet->buffer.s = pkg_malloc(length);
+	if (use_sysmalloc) {
+		packet->buffer.s = malloc(length);
+		packet->flags = BINFL_SYSMEM;
+	} else {
+		packet->buffer.s = pkg_malloc(length);
+		packet->flags = 0;
+	}
 	if (!packet->buffer.s) {
 		LM_ERR("No more pkg memory!\n");
 		return -1;
 	}
+
 	packet->buffer.len = 0;
+	packet->type = packet_type;
 	packet->size = length;
 
 	/* binary packet header: marker + pkg_len */
@@ -112,6 +118,7 @@ void bin_init_buffer(bin_packet_t *packet, char *buffer, int length)
 	packet->buffer.len = length;
 	packet->buffer.s = buffer;
 	packet->size = length;
+	packet->flags = 0;
 
 	bin_get_capability(packet, &capability);
 
@@ -441,6 +448,7 @@ void call_callbacks(char* buffer, struct receive_info *rcv)
 
 	packet.buffer.len = pkg_len;
 	packet.size = pkg_len + 50;
+	packet.flags = 0;
 	memcpy(packet.buffer.s, buffer, pkg_len);
 
 	bin_get_capability(&packet, &capability);
@@ -481,7 +489,9 @@ static int bin_extend(bin_packet_t *packet, int size)
 	else
 		packet->size = 2 * required;
 
-	packet->buffer.s = pkg_realloc(packet->buffer.s, packet->size);
+	packet->buffer.s = (packet->flags & BINFL_SYSMEM) ?
+			realloc(packet->buffer.s, packet->size) :
+			pkg_realloc(packet->buffer.s, packet->size);
 	if (!packet->buffer.s) {
 		LM_ERR("pkg realloc failed\n");
 		return -1;
@@ -493,7 +503,10 @@ static int bin_extend(bin_packet_t *packet, int size)
 void bin_free_packet(bin_packet_t *packet)
 {
 	if (packet->buffer.s) {
-		pkg_free(packet->buffer.s);
+		if (packet->flags & BINFL_SYSMEM)
+			free(packet->buffer.s);
+		else
+			pkg_free(packet->buffer.s);
 		packet->buffer.s = NULL;
 	} else {
 		LM_INFO("atempting to free uninitialized binary packet\n");

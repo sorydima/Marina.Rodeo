@@ -8,7 +8,7 @@ proto_hep Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -22,8 +22,10 @@ proto_hep Module
               1.3.7. hep_async (integer)
               1.3.8. hep_async_max_postponed_chunks (integer)
               1.3.9. hep_capture_id (integer)
-              1.3.10. hep_async_local_connect_timeout (integer)
-              1.3.11. hep_async_local_write_timeout (integer)
+              1.3.10. hep_retry_cooldown (integer)
+              1.3.11. hep_max_retries (integer)
+              1.3.12. hep_async_local_connect_timeout (integer)
+              1.3.13. hep_async_local_write_timeout (integer)
 
         1.4. Exported Functions
 
@@ -67,9 +69,11 @@ proto_hep Module
    1.7. Set hep_async parameter
    1.8. Set hep_async_max_postponed_chunks parameter
    1.9. Set hep_capture_id parameter
-   1.10. Set hep_async_local_connect_timeout parameter
-   1.11. Set hep_async_local_write_timeout parameter
-   1.12. correlate usage
+   1.10. Set hep_retry_cooldown parameter
+   1.11. Set hep_max_retries parameter
+   1.12. Set hep_async_local_connect_timeout parameter
+   1.13. Set hep_async_local_write_timeout parameter
+   1.14. correlate usage
 
 Chapter 1. Admin Guide
 
@@ -97,15 +101,16 @@ socket= hep_udp:127.0.0.1:6061          # change the listening IP
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * None.
+     * tls_mgm - optional, only if a TLS based HEP listener is
+       defined in the script.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * None.
 
 1.3. Exported Parameters
@@ -180,7 +185,7 @@ modparam("proto_hep", "hep_port", 6666)
 
    Time in milliseconds after a TCP connection will be closed if
    it is not available for blocking writing in this interval (and
-   Marina.Rodeo wants to send something on it).
+   OpenMarinkaRodeo wants to send something on it).
 
    Default value is 100 ms.
 
@@ -209,7 +214,7 @@ modparam("proto_hep", "hep_max_msg_chunks", 8)
 
    Specifies whether the TCP connect and write operations should
    be done in an asynchronous mode (non-blocking connect and
-   write) or not. If disabled, Marina.Rodeo will block and wait for
+   write) or not. If disabled, OpenMarinkaRodeo will block and wait for
    TCP operations like connect and write.
 
    Default value is 1 (enabled).
@@ -245,7 +250,34 @@ modparam("proto_hep", "hep_async_max_postponed_chunks", 16)
 modparam("proto_hep", "hep_capture_id", 234)
 ...
 
-1.3.10. hep_async_local_connect_timeout (integer)
+1.3.10. hep_retry_cooldown (integer)
+
+   This parameter defines how many seconds OpenMarinkaRodeo should wait
+   before retrying a TCP connection to the HEP destination after
+   reaching the maximum number of failed attempts set by
+   hep_max_retries. Limitation: 16-bit integer.
+
+   Default value is "3600".
+
+   Example 1.10. Set hep_retry_cooldown parameter
+...
+modparam("proto_hep", "hep_retry_cooldown", 60)
+...
+
+1.3.11. hep_max_retries (integer)
+
+   This parameter defines the maximum number of attempts OpenMarinkaRodeo
+   will make to establish a TCP connection with the HEP
+   destination. Limitation: 16-bit integer.
+
+   Default value is "5".
+
+   Example 1.11. Set hep_max_retries parameter
+...
+modparam("proto_hep", "hep_max_retries", 10)
+...
+
+1.3.12. hep_async_local_connect_timeout (integer)
 
    If hep_async is enabled, this specifies the number of
    milliseconds that a connect will be tried in blocking mode
@@ -255,12 +287,12 @@ modparam("proto_hep", "hep_capture_id", 234)
 
    Default value is 100 ms.
 
-   Example 1.10. Set hep_async_local_connect_timeout parameter
+   Example 1.12. Set hep_async_local_connect_timeout parameter
 ...
 modparam("proto_hep", "hep_async_local_connect_timeout", 200)
 ...
 
-1.3.11. hep_async_local_write_timeout (integer)
+1.3.13. hep_async_local_write_timeout (integer)
 
    If hep_async is enabled, this specifies the number of
    milliseconds that a write op will be tried in blocking mode
@@ -270,9 +302,9 @@ modparam("proto_hep", "hep_async_local_connect_timeout", 200)
 
    Default value is 10 ms.
 
-   Example 1.11. Set hep_async_local_write_timeout parameter
+   Example 1.13. Set hep_async_local_write_timeout parameter
 ...
-modparam("proto_hep", "tcp_async_local_write_timeout", 100)
+modparam("proto_hep", "hep_async_local_write_timeout", 100)
 ...
 
 1.4. Exported Functions
@@ -299,7 +331,7 @@ modparam("proto_hep", "tcp_async_local_write_timeout", 100)
      * correlation2 (string) the second extra correlation id that
        will be put in the extra correlation chunk.
 
-   Example 1.12. correlate usage
+   Example 1.14. correlate usage
 ...
 /* see declaration of hep_dst in trace_id section */
 /* we suppose we have two correlations in two varibles: cor1 and cor2 */
@@ -350,18 +382,19 @@ Chapter 3. Contributors
    Table 3.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Ionut Ionita (@ionutrazvanionita) 149 66 8047 998
-   2. Razvan Crainea (@razvancrainea) 36 27 83 486
-   3. Bogdan-Andrei Iancu (@bogdan-iancu) 26 19 384 170
-   4. Liviu Chircu (@liviuchircu) 18 15 81 92
-   5. Bence Szigeti 8 1 404 179
+   1. Ionut Ionita (@ionutrazvanionita) 151 66 8047 998
+   2. Razvan Crainea (@razvancrainea) 41 31 98 494
+   3. Bogdan-Andrei Iancu (@bogdan-iancu) 27 20 391 175
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 20 17 107 100
+   5. Bence Szigeti 9 2 405 180
    6. Vlad Patrascu (@rvlad-patrascu) 7 4 36 84
-   7. Maksym Sobolyev (@sobomax) 4 2 4 4
-   8. Nick Altmann (@nikbyte) 3 1 2 2
-   9. Dan Pascu (@danpascu) 3 1 1 1
-   10. Peter Lemenkov (@lemenkov) 3 1 1 1
+   7. Maksym Sobolyev (@sobomax) 5 3 41 41
+   8. rita7lopes 3 1 84 11
+   9. Nick Altmann (@nikbyte) 3 1 2 2
+   10. Dan Pascu (@danpascu) 3 1 1 1
 
-   All remaining contributors: Walter Doekes (@wdoekes).
+   All remaining contributors: Peter Lemenkov (@lemenkov), Walter
+   Doekes (@wdoekes).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -371,7 +404,7 @@ Chapter 3. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -383,18 +416,19 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Razvan Crainea (@razvancrainea)     Nov 2015 - Jul 2023
-   2.  Bence Szigeti                       Jul 2023 - Jul 2023
-   3.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   4.  Liviu Chircu (@liviuchircu)         Mar 2016 - Oct 2022
-   5.  Nick Altmann (@nikbyte)             May 2021 - May 2021
-   6.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2017 - Apr 2021
-   7.  Walter Doekes (@wdoekes)            May 2020 - May 2020
-   8.  Dan Pascu (@danpascu)               May 2019 - May 2019
-   9.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   10. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
+   1.  Razvan Crainea (@razvancrainea)     Nov 2015 - May 2025
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2016 - May 2025
+   3.  rita7lopes                          May 2025 - May 2025
+   4.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2017 - May 2024
+   5.  Maksym Sobolyev (@sobomax)          Feb 2023 - Nov 2023
+   6.  Bence Szigeti                       Jul 2023 - Aug 2023
+   7.  Nick Altmann (@nikbyte)             May 2021 - May 2021
+   8.  Walter Doekes (@wdoekes)            May 2020 - May 2020
+   9.  Dan Pascu (@danpascu)               May 2019 - May 2019
+   10. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
 
-   All remaining contributors: Ionut Ionita (@ionutrazvanionita).
+   All remaining contributors: Peter Lemenkov (@lemenkov), Ionut
+   Ionita (@ionutrazvanionita).
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -403,11 +437,12 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Bence Szigeti, Bogdan-Andrei Iancu
-   (@bogdan-iancu), Liviu Chircu (@liviuchircu), Razvan Crainea
-   (@razvancrainea), Vlad Patrascu (@rvlad-patrascu), Peter
-   Lemenkov (@lemenkov), Ionut Ionita (@ionutrazvanionita).
+   Last edited by: rita7lopes, Bogdan-Andrei Iancu
+   (@bogdan-iancu), Razvan Crainea (@razvancrainea), Bence
+   Szigeti, Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Vlad Patrascu
+   (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Ionut Ionita
+   (@ionutrazvanionita).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2015 www.Marina.Rodeo-solutions.com
+   Copyright © 2015 www.openMarinkaRodeo-solutions.com

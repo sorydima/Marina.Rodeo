@@ -1,7 +1,7 @@
 /*
- * Marina.Rodeo osp module.
+ * openMarinkaRodeo osp module.
  *
- * This module enables Marina.Rodeo to communicate with an Open Settlement
+ * This module enables openMarinkaRodeo to communicate with an Open Settlement
  * Protocol (OSP) server.  The Open Settlement Protocol is an ETSI
  * defined standard for Inter-Domain VoIP pricing, authorization
  * and usage exchange.  The technical specifications for OSP
@@ -9,16 +9,16 @@
  *
  * Uli Abend was the original contributor to this module.
  *
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2005 Fhg Fokus
+ * Copyright (C) 2001-2005 Fhg Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -967,6 +967,7 @@ static int ospPrepareDestination(
     osp_inbound* inbound = ospGetInboundInfo();
     osp_dest* dest = ospGetNextOrigDestination();
     int result = MODULE_RETURNCODE_TRUE;
+    struct msg_branch branch;
 
     if (inbound != NULL) {
         if (dest != NULL) {
@@ -1004,7 +1005,10 @@ static int ospPrepareDestination(
                             set_ruri(msg, &newuri);
                             set_ruri_q(msg, qvalue);
                         } else {
-                            append_branch(msg, &newuri, NULL, NULL, qvalue, 0, NULL);
+                            memset( &branch, 0, sizeof branch);
+                            branch.uri = newuri;
+                            branch.q = qvalue;
+                            append_msg_branch( &branch );
                         }
 
                         /* Do not add route specific OSP information */
@@ -1032,7 +1036,10 @@ static int ospPrepareDestination(
                     if (isfirst == OSP_FIRST_ROUTE) {
                         set_ruri(msg, &newuri);
                     } else {
-                        append_branch(msg, &newuri, NULL, NULL, Q_UNSPECIFIED, 0, NULL);
+                        memset( &branch, 0, sizeof branch);
+                        branch.uri = newuri;
+                        branch.q = Q_UNSPECIFIED;
+                        append_msg_branch( &branch );
                     }
 
                     /* Do not add route specific OSP information */
@@ -1076,7 +1083,7 @@ static int ospPrepareDestination(
 /*
  * Prepare OSP route
  *     This function only works in branch route block.
- *     This function is only for Marina.Rodeo.
+ *     This function is only for OpenMarinkaRodeo.
  * param msg SIP message
  * param ignore1
  * param ignore2

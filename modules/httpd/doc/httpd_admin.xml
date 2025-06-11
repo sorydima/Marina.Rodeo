@@ -7,7 +7,7 @@
 	<section id="overview" xreflabel="Overview">
 	<title>Overview</title>
 	<para>
-		This module provides an HTTP transport layer for &osips;.
+		This module provides an HTTP transport layer for &oMarinkaRodeo;.
 	</para>
 	<para>
 		Implementation of httpd module's http server is based on
@@ -27,13 +27,13 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
 			<listitem>
 			<para>
-				<emphasis>No dependencies on other &osips; modules</emphasis>.
+				<emphasis>No dependencies on other &oMarinkaRodeo; modules</emphasis>.
 			</para>
 			</listitem>
 			</itemizedlist>
@@ -44,7 +44,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before 
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -57,10 +57,10 @@
 		<para>
 			<emphasis role='bold'>WARNING!</emphasis>  Please be aware about an
 			EPOLL support regression in the <emphasis>libmicrohttpd</emphasis>
-			library and packaging which affects the Marina.Rodeo httpd module, which
+			library and packaging which affects the OpenMarinkaRodeo httpd module, which
 			was fixed according to the below timeline.  The effect of the
 			regression is that the HTTP reply body is <emphasis>sometimes</emphasis>
-			never written by the library, causing the client (e.g. Marina.Rodeo-cli)
+			never written by the library, causing the client (e.g. openMarinkaRodeo-cli)
 			to hang indefinitely waiting for it:
 		<itemizedlist>
 		<listitem>
@@ -126,6 +126,32 @@ modparam("httpd", "port", 8000)
 </programlisting>
 		</example>
 	</section>
+
+	<section id="param_conn_timeout" xreflabel="conn_timeout">
+		<title><varname>conn_timeout</varname>(integer)</title>
+		<para>
+		Auto-close TCP connections which are idle for more than the designated
+		timeout, in seconds.  Set to zero to never close any connections.
+		</para>
+		<para>
+		Note: the connection auto-close routine only seems to be executed
+		in an "on-demand" fashion, during an HTTPD network event (e.g. on a new
+		connection), which although not ideal, it should be good enough in
+		practical terms.
+		</para>
+		<para>
+		<emphasis>The default timeout is 30 seconds.</emphasis>
+		</para>
+		<example>
+		<title>Set <varname>conn_timeout</varname> parameter</title>
+		<programlisting format="linespecific">
+...
+modparam("httpd", "conn_timeout", 10)
+...
+</programlisting>
+		</example>
+	</section>
+
 	<section id="param_buf_size" xreflabel="buf_size">
 		<title><varname>buf_size</varname> (integer)</title>
 		<para>
@@ -167,6 +193,25 @@ modparam("httpd", "post_buf_size", 4096)
 </programlisting>
 		</example>
 	</section>
+
+	<section id="param_receive_buf_size" xreflabel="receive_buf_size">
+		<title><varname>receive_buf_size</varname> (integer)</title>
+		<para>
+		It specifies the maximum length (in bytes) of the received HTTP requests.  
+		For receiving large POST request, the default value might require to be increased.
+		</para>
+		<para>
+		<emphasis> The default value is 1024.</emphasis>
+		</para>
+		<example>
+		<title>Set <varname>receive_buf_size</varname> parameter</title>
+		<programlisting format="linespecific">
+...
+modparam("httpd", "receive_buf_size", 4096)
+...
+</programlisting>
+		</example>
+	</section>
 	<section id="param_tls_cert_file" xreflabel="tls_cert_file">
 		<title><varname>tls_cert_file</varname> (string)</title>
 		<para>
@@ -179,7 +224,7 @@ modparam("httpd", "post_buf_size", 4096)
 		<title>Set <varname>tls_cert_file</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("httpd", "tls_cert_file", "/etc/Marina.Rodeo/tls/server.pem")
+modparam("httpd", "tls_cert_file", "/etc/openMarinkaRodeo/tls/server.pem")
 ...
 </programlisting>
 		</example>
@@ -196,7 +241,7 @@ modparam("httpd", "tls_cert_file", "/etc/Marina.Rodeo/tls/server.pem")
 		<title>Set <varname>tls_key_file</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("httpd", "tls_key_file", "/etc/Marina.Rodeo/tls/server.key")
+modparam("httpd", "tls_key_file", "/etc/openMarinkaRodeo/tls/server.key")
 ...
 </programlisting>
 		</example>
@@ -248,7 +293,7 @@ modparam("httpd", "tls_ciphers", "SECURE256:+SECURE192:-VERS-ALL:+VERS-TLS1.2")
 		MI FIFO Command Format:
 		</para>
 		<programlisting  format="linespecific">
-Marina.Rodeo-cli -x mi httpd_list_root_path
+openMarinkaRodeo-cli -x mi httpd_list_root_path
 		</programlisting>
 	</section>
 	</section>
@@ -263,11 +308,11 @@ Marina.Rodeo-cli -x mi httpd_list_root_path
 	<section>
 	<title>Known issues</title>
 		<para>
-		Due to the fact that &osips; is a multiprocess application,
+		Due to the fact that &oMarinkaRodeo; is a multiprocess application,
 		the microhttpd library is used in "external select" mode.
 		This ensures that the library is not running in
 		multithread mode and the library is entirely controled
-		by &osips;.  Due to this particular mode of operations,
+		by &oMarinkaRodeo;.  Due to this particular mode of operations,
 		for now, the entire http response is built in a pre-allocated
 		buffer (see buf_size parameter).
 		</para>
@@ -279,9 +324,9 @@ Marina.Rodeo-cli -x mi httpd_list_root_path
 		forbidden by default in linux (kernel>=2.6.24).
 		To allow the port binding, one can use
 		<emphasis>setcap</emphasis> to give
-		extra privilleges to Marina.Rodeo binary:
+		extra privilleges to openMarinkaRodeo binary:
 		<programlisting  format="linespecific">
-setcap 'cap_net_bind_service=+ep' /usr/local/sbin/Marina.Rodeo
+setcap 'cap_net_bind_service=+ep' /usr/local/sbin/openMarinkaRodeo
 		</programlisting>
 		</para>
 	</section>

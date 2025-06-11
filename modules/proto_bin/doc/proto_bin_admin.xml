@@ -31,7 +31,7 @@ socket= bin:127.0.0.1:5080	# change the listening IP and port
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -48,7 +48,7 @@ socket= bin:127.0.0.1:5080	# change the listening IP and port
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -86,7 +86,7 @@ modparam("proto_bin", "bin_port", 6666)
 		<title><varname>bin_send_timeout</varname> (integer)</title>
 		<para>
 		Time in milliseconds after a TCP connection will be closed if it is
-		not available for blocking writing in this interval (and &osips; wants
+		not available for blocking writing in this interval (and &oMarinkaRodeo; wants
 		to send something on it).
 		</para>
 		<para>
@@ -132,7 +132,7 @@ modparam("proto_bin", "bin_max_msg_chunks", 8)
 		<para>
 			Specifies whether the TCP connect and write operations should be
 			done in an asynchronous mode (non-blocking connect and
-			write) or not. If disabled, Marina.Rodeo will block and wait for TCP
+			write) or not. If disabled, OpenMarinkaRodeo will block and wait for TCP
 			operations like connect and write.
 		</para>
 		<para>
@@ -159,14 +159,14 @@ modparam("proto_bin", "bin_async", 0)
 		</para>
 		<para>
 		<emphasis>
-			Default value is 32.
+			Default value is 1024.
 		</emphasis>
 		</para>
 		<example>
 		<title>Set <varname>bin_async_max_postponed_chunks</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("proto_bin", "bin_async_max_postponed_chunks", 16)
+modparam("proto_bin", "bin_async_max_postponed_chunks", 1024)
 ...
 </programlisting>
 		</example>

@@ -1,13 +1,13 @@
-		Marina.Rodeo.vim installation + auto filetype detection
+		openMarinkaRodeo.vim installation + auto filetype detection
 	-----------------------------------------------------------
 
-* Place "Marina.Rodeo.vim" in ~/.vim/syntax/Marina.Rodeo.vim
+* Place "openMarinkaRodeo.vim" in ~/.vim/syntax/openMarinkaRodeo.vim
 
 * Enable auto filetype detection in your ~/.vimrc with the following two lines:
 
 set filetype=on
-au BufNewFile,BufRead *Marina.Rodeo*.cfg,*.{os,osips,Marina.Rodeo} set filetype=Marina.Rodeo
+au BufNewFile,BufRead *openMarinkaRodeo*.cfg,*.{os,oMarinkaRodeo,openMarinkaRodeo} set filetype=openMarinkaRodeo
 
 
 For any questions / suggestions, please write us at:
-users@lists.Marina.Rodeo.org
+users@lists.openMarinkaRodeo.org

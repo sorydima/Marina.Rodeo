@@ -1,16 +1,16 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Andreas Granig <agranig@linguin.org>
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2006 Andreas Granig <agranig@linguin.org>
  *   ( covers insert_path_as_route() )
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -124,6 +124,7 @@
 #include "ut.h"
 #include "pt.h"
 #include "context.h"
+#include "sdp_ops.h"
 #include "net/trans.h"
 
 int disable_503_translation = 0;
@@ -328,7 +329,9 @@ char* clen_builder(struct sip_msg* msg, int *clen_len, int diff)
 		LM_ERR("no message body found (missing crlf?)");
 		return 0;
 	}
-	value = body.len + diff;
+
+	/* with SDP ops, the body len is fully known (ignore diff) */
+	value = body.len + (have_sdp_ops(msg) ? 0 : diff);
 	value_s=int2str(value, &value_len);
 	LM_DBG("content-length: %d (%s)\n", value, value_s);
 
@@ -353,10 +356,10 @@ char* clen_builder(struct sip_msg* msg, int *clen_len, int diff)
  * returns 1 if cond is true, 0 if false */
 static inline int lump_check_opt(	struct lump *l,
 									struct sip_msg* msg,
-									struct socket_info* snd_s
+									const struct socket_info* snd_s
 									)
 {
-	struct ip_addr* ip;
+	const struct ip_addr* ip;
 	unsigned short port;
 	int proto;
 
@@ -443,15 +446,15 @@ static inline int lump_check_opt(	struct lump *l,
 
 /*! \brief computes the "unpacked" len of a lump list,
    code moved from build_req_from_req */
-int lumps_len(struct sip_msg* msg, struct lump* lumps,
-								struct socket_info* send_sock, int max_offset)
+static int lumps_len(struct sip_msg* msg, struct lump* lumps,
+								const struct socket_info* send_sock, int max_offset)
 {
 	unsigned int s_offset, new_len;
 	unsigned int last_del;
 	struct lump *t, *r;
-	str *send_address_str, *send_port_str;
-	str *rcv_address_str=NULL;
-	str *rcv_port_str=NULL;
+	const str *send_address_str, *send_port_str;
+	const str *rcv_address_str=NULL;
+	const str *rcv_port_str=NULL;
 
 #define SUBST_LUMP_LEN(subst_l) \
 		switch((subst_l)->u.subst){ \
@@ -751,16 +754,16 @@ void process_lumps(	struct sip_msg* msg,
 					char* new_buf,
 					unsigned int* new_buf_offs,
 					unsigned int* orig_offs,
-					struct socket_info* send_sock,
+					const struct socket_info* send_sock,
 					int max_offset)
 {
 	struct lump *t, *r;
 	char* orig;
 	unsigned int size, offset, s_offset;
 	unsigned int last_del;
-	str *send_address_str, *send_port_str;
-	str *rcv_address_str=NULL;
-	str *rcv_port_str=NULL;
+	const str *send_address_str, *send_port_str;
+	const str *rcv_address_str=NULL;
+	const str *rcv_port_str=NULL;
 
 #define SUBST_LUMP(subst_l) \
 	switch((subst_l)->u.subst){ \
@@ -1250,7 +1253,7 @@ skip_after:
  *    result (as len).
  */
 unsigned int prep_reassemble_body_parts( struct sip_msg* msg,
-												struct socket_info* send_sock)
+												const struct socket_info* send_sock)
 {
 	struct body_part *part;
 	struct lump* lump;
@@ -1316,7 +1319,7 @@ unsigned int prep_reassemble_body_parts( struct sip_msg* msg,
 				 * inside this part */
 				orig_offs = part->body.s - msg->buf;
 				lump = msg->body_lumps;
-				while ( lump && lump->u.offset<(part->body.s-msg->buf) )
+				while ( lump && lump->u.offset < orig_offs )
 					lump=lump->next;
 				if (lump) {
 					LM_DBG("lumps found in the part, applying...\n");
@@ -1585,7 +1588,7 @@ unsigned int prep_reassemble_body_parts( struct sip_msg* msg,
 
 void reassemble_body_parts( struct sip_msg* msg, char* new_buf,
 						unsigned int* new_offs, unsigned int* orig_offs,
-						struct socket_info* send_sock)
+						const struct socket_info* send_sock)
 {
 	struct body_part *part;
 	struct lump* lump;
@@ -1881,8 +1884,23 @@ void reassemble_body_parts( struct sip_msg* msg, char* new_buf,
  *   lump-based changes and body_part-based changes.
  */
 static inline int calculate_body_diff(struct sip_msg *msg,
-													struct socket_info *sock )
+													const struct socket_info *sock )
 {
+	str body, rcv_body = STR_NULL;
+	struct sdp_body_part_ops *ops;
+
+	if (have_sdp_ops(msg)) {
+		if (get_body(msg, &body) != 0 || body.len==0)
+			return 0;
+
+		ops = msg->sdp_ops;
+		msg->sdp_ops = NULL;
+		get_body(msg, &rcv_body);
+		msg->sdp_ops = ops;
+
+		return body.len - rcv_body.len;
+	}
+
 	if (msg->body==NULL) {
 		/* no body parsed, no advanced ops done, just dummy lumps over body */
 		return lumps_len(msg, msg->body_lumps, sock, -1);
@@ -1899,13 +1917,29 @@ static inline int calculate_body_diff(struct sip_msg *msg,
  */
 static inline void apply_msg_changes(struct sip_msg *msg,
 							char *new_buf, unsigned int *new_offs,
-							unsigned int *orig_offs, struct socket_info *sock,
+							unsigned int *orig_offs, const struct socket_info *sock,
 							unsigned int max_offset)
 {
 	unsigned int size;
+	str body;
 
 	/* apply changes over the SIP headers */
 	process_lumps(msg, msg->add_rm, new_buf, new_offs, orig_offs, sock, -1);
+
+	/* real-time SDP changes */
+	if (have_sdp_ops(msg)) {
+		if (get_body(msg, &body) != 0 || body.len==0)
+			return;
+
+		memcpy(new_buf+*new_offs, msg->sdp_ops->sep, msg->sdp_ops->sep_len);
+		*new_offs += msg->sdp_ops->sep_len;
+
+		memcpy(new_buf+*new_offs, body.s, body.len);
+		*new_offs += body.len;
+		return;
+	}
+
+	/* lumps-based SDP changes */
 	if (msg->body==NULL) {
 		/* no body parsed, no advanced ops done, just dummy lumps over body */
 		process_lumps(msg, msg->body_lumps, new_buf, new_offs,
@@ -2073,6 +2107,8 @@ static inline int insert_path_as_route(struct sip_msg* msg, str* path)
 		return -1;
 	}
 
+	msg->msg_flags |= FL_HAS_ROUTE_LUMP;
+
 	return 0;
 }
 
@@ -2101,7 +2137,7 @@ int is_del_via1_lump(struct sip_msg* msg)
 
 char * build_req_buf_from_sip_req( struct sip_msg* msg,
 								unsigned int *returned_len,
-								struct socket_info* send_sock, int proto,
+								const struct socket_info* send_sock, int proto,
 								str *via_params, unsigned int flags)
 {
 	unsigned int len, new_len, received_len, rport_len, uri_len, via_len, body_delta;
@@ -2166,6 +2202,7 @@ char * build_req_buf_from_sip_req( struct sip_msg* msg,
 			}
 			memcpy(extra_params.s, via_params->s, via_params->len);
 			memcpy(extra_params.s + via_params->len, id_buf, id_len);
+			pkg_free(id_buf);
 		} else {
 			extra_params.s=id_buf;
 			extra_params.len=id_len;
@@ -2293,7 +2330,7 @@ char * build_req_buf_from_sip_req( struct sip_msg* msg,
 
 build_msg:
 	/* adjust len to the useful part of the message */
-	if (get_body(msg, &body) == 0 && body.len)
+	if (!have_sdp_ops(msg) && get_body(msg, &body) == 0 && body.len)
 		len -= (msg->buf + msg->len - body.s - body.len);
 
 	/* compute new msg len and fix overlapping zones*/
@@ -2359,7 +2396,7 @@ error:
 
 
 char * build_res_buf_from_sip_res( struct sip_msg* msg,
-	unsigned int *returned_len, struct socket_info *sock,int flags)
+	unsigned int *returned_len, const struct socket_info *sock,int flags)
 {
 	unsigned int new_len, body_delta, len;
 	char *new_buf, *buf;
@@ -2776,14 +2813,14 @@ int branch_builder( unsigned int hash_index,
 
 
 char* via_builder( unsigned int *len,
-	struct socket_info* send_sock,
+	const struct socket_info* send_sock,
 	str* branch, str* extra_params, int proto, struct hostport* hp)
 {
 	unsigned int via_len, extra_len;
 	char *line_buf;
 	int max_len, local_via_len=MY_VIA_LEN;
-	str* address_str; /* address displayed in via */
-	str* port_str; /* port no displayed in via */
+	const str* address_str; /* address displayed in via */
+	const str* port_str; /* port no displayed in via */
 
 	/* use pre-set address in via or the outbound socket one */
 	if (hp && hp->host && hp->host->len)
@@ -2918,12 +2955,12 @@ char *construct_uri(str *protocol,str *username,str *domain,str *port,
 }
 
 /* uses uri_buff above, since contact is still an uri */
-char *contact_builder(struct socket_info* send_sock, int *ct_len)
+char *contact_builder(const struct socket_info* send_sock, int *ct_len)
 {
 	char *p;
 	int proto_len = 0;
-	str* address_str = get_adv_host(send_sock);
-	str* port_str = get_adv_port(send_sock);
+	const str* address_str = get_adv_host(send_sock);
+	const str* port_str = get_adv_port(send_sock);
 
 	/* sip: */
 	p = uri_buff;

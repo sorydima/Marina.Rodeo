@@ -1,7 +1,7 @@
 #!/sbin/sh
 
-TMPLIST="/tmp/.Marina.Rodeopcre"
-echo "Set LD_LIBRARY_PATH to one of these directories before starting Marina.Rodeo:"
+TMPLIST="/tmp/.openMarinkaRodeopcre"
+echo "Set LD_LIBRARY_PATH to one of these directories before starting OpenMarinkaRodeo:"
 echo " "
 
 cat $TMPLIST

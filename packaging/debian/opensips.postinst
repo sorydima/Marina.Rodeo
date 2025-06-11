@@ -1,10 +1,8 @@
 #! /bin/sh
-#
-# $Id$
 
-PKG=Marina.Rodeo
-DEFAULTS=/etc/default/Marina.Rodeo
-HOMEDIR=/run/Marina.Rodeo
+PKG=openMarinkaRodeo
+DEFAULTS=/etc/default/openMarinkaRodeo
+HOMEDIR=/run/openMarinkaRodeo
 
 set -e
 
@@ -29,8 +27,8 @@ set -e
 case "$1" in
     configure)
         adduser --quiet --system --group --disabled-password \
-                --shell /bin/false --gecos "Marina.Rodeo" \
-                --home $HOMEDIR Marina.Rodeo || true
+                --shell /bin/false --gecos "OpenMarinkaRodeo" \
+                --home $HOMEDIR openMarinkaRodeo || true
 
         ;;
 

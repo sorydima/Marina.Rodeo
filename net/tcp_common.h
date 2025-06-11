@@ -1,13 +1,13 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2019 - Marina.Rodeo Solutions
+ * Copyright (C) 2019 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -30,11 +30,11 @@ int tcp_connect_blocking_timeout(int fd, const struct sockaddr *servaddr,
                         socklen_t addrlen, int timeout_ms);
 
 
-int tcp_sync_connect_fd(union sockaddr_union* src, union sockaddr_union* dst,
-                 enum sip_protos proto, struct tcp_conn_profile *prof, enum si_flags flags);
+int tcp_sync_connect_fd(const union sockaddr_union* src, const union sockaddr_union* dst,
+                 enum sip_protos proto, const struct tcp_conn_profile *prof, enum si_flags flags, int sock_tos);
 
-struct tcp_connection* tcp_sync_connect(struct socket_info* send_sock,
-               union sockaddr_union* server, struct tcp_conn_profile *prof,
+struct tcp_connection* tcp_sync_connect(const struct socket_info* send_sock,
+               const union sockaddr_union* server, struct tcp_conn_profile *prof,
                int *fd, int send2main);
 
 /* Attempts do a connect to the given destination. It returns:
@@ -42,8 +42,8 @@ struct tcp_connection* tcp_sync_connect(struct socket_info* send_sock,
  *   0 - connect launched as async (in progress)
  *  -1 - error
  */
-int tcp_async_connect(struct socket_info* send_sock,
-           union sockaddr_union* server, struct tcp_conn_profile *prof,
+int tcp_async_connect(const struct socket_info* send_sock,
+           const union sockaddr_union* server, struct tcp_conn_profile *prof,
            int timeout, struct tcp_connection** c, int *ret_fd, int send2main);
 
 /* Responsible for writing the TCP send chunks - called under con write lock
@@ -64,5 +64,7 @@ int tcp_async_add_chunk(struct tcp_connection *con, char *buf,
 struct tcp_async_chunk *tcp_async_get_chunk(struct tcp_connection *con);
 
 void tcp_async_update_write(struct tcp_connection *con, int len);
+
+int tcp_read(struct tcp_connection *c,struct tcp_req *r);
 
 #endif /* _NET_TCP_COMMON_H_ */

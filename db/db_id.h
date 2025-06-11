@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2005 iptel.org
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2007-2008 1&1 Internet AG
+ * Copyright (C) 2001-2005 iptel.org
+ * Copyright (C) 2007-2008 1&1 Internet AG
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -31,6 +31,11 @@
 
 #define DB_TLS_DOMAIN_PARAM "tls_domain"
 #define DB_TLS_DOMAIN_PARAM_EQ DB_TLS_DOMAIN_PARAM "="
+#define DB_TLS_DOMAIN_PARAM_EQ_S (sizeof(DB_TLS_DOMAIN_PARAM_EQ) - 1)
+
+#define DB_TLS_OPTS_PARAM "tls_opts"
+#define DB_TLS_OPTS_PARAM_EQ DB_TLS_OPTS_PARAM "="
+#define DB_TLS_OPTS_PARAM_EQ_S (sizeof(DB_TLS_OPTS_PARAM_EQ) - 1)
 
 /** Structure representing a database ID */
 struct db_id {
@@ -38,6 +43,7 @@ struct db_id {
 	char* username;      /**< Username, case sensitive */
 	char* password;      /**< Password, case sensitive */
 	char* host;          /**< Host or IP, case insensitive */
+	char* unix_socket;   /**< Unix socket location */
 	unsigned short port; /**< Port number */
 	char* database;      /**< Database, case sensitive */
 	char *parameters;	 /**< Parameters, case sensitive */

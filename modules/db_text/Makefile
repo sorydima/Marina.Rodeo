@@ -1,5 +1,3 @@
-# $Id$
-#
 # example module makefile
 #
 # 
@@ -16,13 +14,13 @@ NAME=db_text.so
 
 include ../../Makefile.modules
 
-install_module_custom: 
-	mkdir -p $(data_prefix)/$(data_dir)/dbtext/Marina.Rodeo ; \
-	for FILE in $(wildcard $(SCRIPTS_DIR)/dbtext/Marina.Rodeo/*) ; do \
+install_module_dbschema:
+	mkdir -p $(data_prefix)/$(data_dir)/dbtext/openMarinkaRodeo ; \
+	for FILE in $(wildcard $(SCRIPTS_DIR)/dbtext/openMarinkaRodeo/*) ; do \
 		if [ -f $$FILE ] ; then \
 			$(INSTALL_TOUCH) $$FILE \
-				$(data_prefix)/$(data_dir)/dbtext/Marina.Rodeo/`basename "$$FILE"` ; \
+				$(data_prefix)/$(data_dir)/dbtext/openMarinkaRodeo/`basename "$$FILE"` ; \
 			$(INSTALL_CFG) $$FILE \
-				$(data_prefix)/$(data_dir)/dbtext/Marina.Rodeo/`basename "$$FILE"` ; \
+				$(data_prefix)/$(data_dir)/dbtext/openMarinkaRodeo/`basename "$$FILE"` ; \
 		fi ;\
 	done ;\

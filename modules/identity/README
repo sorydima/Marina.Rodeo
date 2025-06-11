@@ -8,7 +8,7 @@ Identity Module
         1.1. Overview
         1.2. Dependencies
 
-              1.2.1. Marina.Rodeo Modules
+              1.2.1. OpenMarinkaRodeo Modules
               1.2.2. External Libraries or Applications
 
         1.3. Exported Parameters
@@ -64,15 +64,15 @@ Chapter 1. Admin Guide
 
 1.2. Dependencies
 
-1.2.1. Marina.Rodeo Modules
+1.2.1. OpenMarinkaRodeo Modules
 
    The following modules must be loaded before this module:
-     * No dependencies on other Marina.Rodeo modules.
+     * No dependencies on other OpenMarinkaRodeo modules.
 
 1.2.2. External Libraries or Applications
 
    The following libraries or applications must be installed
-   before running Marina.Rodeo with this module loaded:
+   before running OpenMarinkaRodeo with this module loaded:
      * openssl (libssl).
 
 1.3. Exported Parameters
@@ -346,18 +346,19 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Alexander Christ 22 1 2571 0
+   1. Alexander Christ 23 1 2571 0
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 14 12 28 19
-   3. Razvan Crainea (@razvancrainea) 11 9 82 24
-   4. Liviu Chircu (@liviuchircu) 11 8 23 67
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 12 9 23 69
+   4. Razvan Crainea (@razvancrainea) 11 9 82 24
    5. Vlad Patrascu (@rvlad-patrascu) 6 4 15 16
    6. Sergio Gutierrez 4 2 7 2
    7. Maksym Sobolyev (@sobomax) 4 2 3 20
-   8. Ovidiu Sas (@ovidiusas) 3 1 18 2
-   9. Julián Moreno Patiño 3 1 2 2
-   10. Peter Lemenkov (@lemenkov) 3 1 1 1
+   8. Alexandra Titoc 3 2 7 0
+   9. Ovidiu Sas (@ovidiusas) 3 1 18 2
+   10. Julián Moreno Patiño 3 1 2 2
 
-   All remaining contributors: Saúl Ibarra Corretgé (@saghul).
+   All remaining contributors: Peter Lemenkov (@lemenkov), Saúl
+   Ibarra Corretgé (@saghul).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -367,7 +368,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -379,18 +380,18 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Sep 2020 - Feb 2023
-   2.  Razvan Crainea (@razvancrainea)     Aug 2015 - Jan 2021
-   3.  Liviu Chircu (@liviuchircu)         Mar 2014 - Apr 2020
-   4.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
-   5.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2009 - Apr 2019
-   6.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   7.  Julián Moreno Patiño                Feb 2016 - Feb 2016
-   8.  Saúl Ibarra Corretgé (@saghul)      Oct 2014 - Oct 2014
-   9.  Ovidiu Sas (@ovidiusas)             Jan 2013 - Jan 2013
-   10. Sergio Gutierrez                    Feb 2009 - Feb 2009
+   1.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
+   3.  Maksym Sobolyev (@sobomax)          Sep 2020 - Feb 2023
+   4.  Razvan Crainea (@razvancrainea)     Aug 2015 - Jan 2021
+   5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
+   6.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2009 - Apr 2019
+   7.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
+   8.  Julián Moreno Patiño                Feb 2016 - Feb 2016
+   9.  Saúl Ibarra Corretgé (@saghul)      Oct 2014 - Oct 2014
+   10. Ovidiu Sas (@ovidiusas)             Jan 2013 - Jan 2013
 
-   All remaining contributors: Alexander Christ.
+   All remaining contributors: Sergio Gutierrez, Alexander Christ.
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -400,10 +401,10 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Bogdan-Andrei
-   Iancu (@bogdan-iancu), Peter Lemenkov (@lemenkov), Liviu Chircu
-   (@liviuchircu), Alexander Christ.
+   Iancu (@bogdan-iancu), Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
+   (@sorydima), Alexander Christ.
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2007 Alexander Christ, Cologne University of
+   Copyright © 2007 Alexander Christ, Cologne University of
    Applied Sciences

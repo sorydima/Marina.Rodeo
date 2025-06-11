@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2016 - Marina.Rodeo Solutions
+ * Copyright (C) 2016 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -55,7 +55,7 @@ extern struct mi_trace_param mi_tparam;
 
 void try_load_trace_api(void);
 
-int trace_mi_message(union sockaddr_union* src, union sockaddr_union* dst,
+int trace_mi_message(const union sockaddr_union* src, const union sockaddr_union* dst,
 	struct mi_trace_param* pld_param, str* correlation_value, trace_dest trace_dst);
 
 struct mi_trace_req* build_mi_trace_request(str *cmd, mi_item_t *params,
@@ -65,7 +65,7 @@ str *build_mi_trace_reply(str *rpl_msg);
 char* generate_correlation_id(int* len);;
 int load_correlation_id(void);
 
-static inline void mi_trace_reply( union sockaddr_union* src, union sockaddr_union* dst,
+static inline void mi_trace_reply( const union sockaddr_union* src, const union sockaddr_union* dst,
 		str* message, trace_dest t_dst)
 {
 	/* trace disabled */
@@ -91,7 +91,7 @@ static inline void mi_trace_reply( union sockaddr_union* src, union sockaddr_uni
 }
 
 
-static inline void mi_trace_request( union sockaddr_union* src, union sockaddr_union* dst,
+static inline void mi_trace_request( const union sockaddr_union* src, const union sockaddr_union* dst,
 		char* command, int len, mi_item_t *params, str* backend, trace_dest t_dst )
 {
 	str comm_s = { command, len };

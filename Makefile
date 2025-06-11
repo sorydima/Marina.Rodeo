@@ -1,5 +1,5 @@
 #
-# Marina.Rodeo makefile
+# OpenMarinkaRodeo makefile
 #
 # WARNING: requires gmake (GNU Make)
 #  Arch supported: Linux, FreeBSD, SunOS (tested on Solaris 8), OpenBSD (3.2),
@@ -8,7 +8,7 @@
 #  History:
 #  --------
 #              created by andrei
-#  2003-02-24  make install no longer overwrites Marina.Rodeo.cfg  - patch provided
+#  2003-02-24  make install no longer overwrites openMarinkaRodeo.cfg  - patch provided
 #               by Maxim Sobolev   <sobomax@FreeBSD.org> and
 #                  Tomas Bjoerklund <tomas@webservices.se>
 #  2003-03-11  PREFIX & LOCALBASE must also be exported (andrei)
@@ -20,9 +20,9 @@
 #               calls -- see comment (andrei)
 #  2003-06-02  make tar changes -- unpacks in $NAME-$RELEASE  (andrei)
 #  2003-06-03  make install-cfg will properly replace the module path
-#               in the cfg (re: /usr/.*lib/Marina.Rodeo/modules)
-#              Marina.Rodeo.cfg.default is installed only if there is a previous
-#               cfg. -- fixes packages containing Marina.Rodeo.cfg.default (andrei)
+#               in the cfg (re: /usr/.*lib/openMarinkaRodeo/modules)
+#              openMarinkaRodeo.cfg.default is installed only if there is a previous
+#               cfg. -- fixes packages containing openMarinkaRodeo.cfg.default (andrei)
 #  2003-08-29  install-modules-doc split from install-doc, added
 #               install-modules-all, removed README.cfg (andrei)
 #              added skip_cfg_install (andrei)
@@ -35,8 +35,8 @@
 NICER?=1
 auto_gen=lex.yy.c cfg.tab.c   #lexx, yacc etc
 
-# whether or not to install Marina.Rodeo.cfg or just Marina.Rodeo.cfg.default
-# (Marina.Rodeo.cfg will never be overwritten by make install, this is useful
+# whether or not to install openMarinkaRodeo.cfg or just openMarinkaRodeo.cfg.default
+# (openMarinkaRodeo.cfg will never be overwritten by make install, this is useful
 #  when creating packages)
 skip_cfg_install?=
 
@@ -112,11 +112,12 @@ endif
 
 modules_names=$(patsubst modules/%, %.so, $(modules))
 modules_basenames=$(patsubst modules/%, %, $(modules))
+db_modules_basenames=$(filter db_%, $(modules_basenames))
 modules_full_path=$(join $(modules), $(addprefix /, $(modules_names)))
 
 ALLDEP=Makefile Makefile.sources Makefile.defs Makefile.rules Makefile.conf $(deps_gen)
 
-install_docs := README-MODULES AUTHORS NEWS README
+install_docs := AUTHORS NEWS README
 ifneq ($(skip-install-doc),yes)
 	install_docs += INSTALL
 endif
@@ -465,7 +466,7 @@ sunpkg:
 	cd ../..)
 	cat /dev/null > ../$(NAME)-$(RELEASE)-$(OS)-$(ARCH)-local
 	pkgtrans -s tmp/$(NAME)_sun_pkg/ ../$(NAME)-$(RELEASE)-$(OS)-$(ARCH)-local \
-		Marina.Rodeo
+		OpenMarinkaRodeo
 	gzip -9 ../$(NAME)-$(RELEASE)-$(OS)-$(ARCH)-local
 	rm -rf tmp/$(NAME)
 	rm -rf tmp/$(NAME)_sun_pkg
@@ -477,12 +478,13 @@ install-app: mk-install-dirs install-cfg install-bin \
 	install-app-doc install-man
 
 # Install all module stuff (except modules-docbook?)
-install-modules-all: install-modules install-modules-doc
+install-modules-files: install-modules install-modules-doc
+install-modules-all: install-modules-files install-modules-dbschema
 
 # Install everything (except modules-docbook?)
 install: install-app install-modules-all
 
-Marina.Rodeomc: $(cfg_prefix)/$(cfg_dir) $(data_prefix)/$(data_dir)
+openMarinkaRodeomc: $(cfg_prefix)/$(cfg_dir) $(data_prefix)/$(data_dir)
 	$(MAKE) -C menuconfig proper
 	$(MAKE) -C menuconfig \
 		MENUCONFIG_CFG_PATH=$(data_target)/menuconfig_templates/ \
@@ -519,13 +521,13 @@ install-cfg: $(cfg_prefix)/$(cfg_dir)
 				$(cfg_prefix)/$(cfg_dir)$(NAME).cfg; \
 		fi
 
-install-bin: app $(bin_prefix)/$(bin_dir) Marina.Rodeomc utils
-		# install Marina.Rodeo binary
+install-bin: app $(bin_prefix)/$(bin_dir) openMarinkaRodeomc utils
+		# install openMarinkaRodeo binary
 		$(INSTALL_TOUCH) $(bin_prefix)/$(bin_dir)/$(NAME)
 		$(INSTALL_BIN) $(NAME) $(bin_prefix)/$(bin_dir)
-		# install Marina.Rodeo menuconfig
-		$(INSTALL_TOUCH) $(bin_prefix)/$(bin_dir)/osipsconfig
-		$(INSTALL_BIN) menuconfig/configure $(bin_prefix)/$(bin_dir)/osipsconfig
+		# install openMarinkaRodeo menuconfig
+		$(INSTALL_TOUCH) $(bin_prefix)/$(bin_dir)/oMarinkaRodeoconfig
+		$(INSTALL_BIN) menuconfig/configure $(bin_prefix)/$(bin_dir)/oMarinkaRodeoconfig
 
 .PHONY: utils
 utils:
@@ -546,6 +548,15 @@ install-modules: modules $(modules_prefix)/$(modules_dir)
 				$(MAKE) -C `dirname "$$r"` install_module_custom ; \
 			else \
 				echo "ERROR: module $$r not compiled" ; \
+			fi ;\
+		fi ; \
+	done
+
+install-modules-dbschema:
+	@for r in $(db_modules_basenames) "" ; do \
+		if [ -n "$$r" ]; then \
+			if [ -f modules/"$$r"/Makefile ]; then \
+				$(MAKE) -C modules/"$$r" install_module_dbschema ; \
 			fi ;\
 		fi ; \
 	done
@@ -615,7 +626,7 @@ install-modules-docbook: $(doc_prefix)/$(doc_dir)
 doxygen:
 	-@echo "Create Doxygen documentation"
 	# disable call graphes, because of the DOT dependencies
-	(cat doc/doxygen/Marina.Rodeo-doxygen; \
+	(cat doc/doxygen/openMarinkaRodeo-doxygen; \
 	echo "HAVE_DOT=no" ;\
 	echo "PROJECT_NUMBER=$(NAME)-$(RELEASE)" )| doxygen -
 	-@echo "Doxygen documentation created"

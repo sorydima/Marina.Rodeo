@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -73,7 +73,7 @@ int sl_startup(void)
 {
 
 	init_tags( sl_tag.s, &tag_suffix,
-			"Marina.Rodeo-stateless",
+			"OpenMarinkaRodeo-stateless",
 			SL_TOTAG_SEPARATOR );
 
 	/*timeout*/
@@ -115,7 +115,7 @@ static inline void update_sl_reply_stat(int code)
 	if (!sl_enable_stats)
 		return;
 
-	/* Marina.Rodeo already kept track of the total number of 1xx, 2xx, replies.
+	/* OpenMarinkaRodeo already kept track of the total number of 1xx, 2xx, replies.
 	* There may be setups that still expect these variables to exist, so we
 	* don't touch them */
 	if (code < 200 ) {
@@ -154,7 +154,15 @@ int sl_send_reply_helper(struct sip_msg *msg ,int code, const str *text)
 	if ( msg->REQ_METHOD==METHOD_ACK)
 		return 1;
 
-	update_sock_struct_from_ip( &to, msg );
+	if (msg->msg_flags&FL_REPLY_TO_VIA) {
+		if (update_sock_struct_from_via( &to, msg, msg->via1 )==-1) {
+			LM_ERR("cannot lookup reply dst: %.*s\n",
+					msg->via1->host.len, msg->via1->host.s);
+			goto error;
+		}
+	} else {
+		update_sock_struct_from_ip( &to, msg );
+	}
 
 	/* if that is a redirection message, dump current message set to it */
 	if (code>=300 && code<400) {

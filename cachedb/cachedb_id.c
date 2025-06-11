@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2011 Marina.Rodeo Solutions
+ * Copyright (C) 2011 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -89,7 +89,7 @@ static int parse_cachedb_url(struct cachedb_id* id, const str* url)
 
 	enum state st;
 	unsigned int len, i, ipv6_flag=0, multi_hosts=0;
-	char* begin;
+	char* begin, *last_at, *last_slash, *last_qm;
 	char* prev_token,*start_host=NULL,*start_prev=NULL,*ptr;
 
 	prev_token = 0;
@@ -111,6 +111,16 @@ static int parse_cachedb_url(struct cachedb_id* id, const str* url)
 
 	if (dupl_string(&id->initial_url,url->s,url->s+url->len) < 0)
 		goto err;
+
+	last_slash = q_memrchr(url->s, '/', url->len);
+	last_qm = q_memrchr(url->s, '?', url->len);
+
+	/* ignore any '@' characters inside the "params" part */
+	if (last_qm || last_slash)
+		last_at = q_memrchr(url->s, '@',
+		        last_slash ? (last_slash-url->s) : (last_qm-url->s));
+	else
+		last_at = q_memrchr(url->s, '@', url->len);
 
 	for(i = 0; i < len; i++) {
 		switch(st) {
@@ -165,6 +175,9 @@ static int parse_cachedb_url(struct cachedb_id* id, const str* url)
 		case ST_USER_HOST:
 			switch(url->s[i]) {
 			case '@':
+				if (&url->s[i] < last_at)
+					break;
+
 				st = ST_HOST;
 				multi_hosts = 0;
 				if (dupl_string(&id->username, begin, url->s + i) < 0) goto err;
@@ -201,6 +214,9 @@ static int parse_cachedb_url(struct cachedb_id* id, const str* url)
 		case ST_PASS_PORT:
 			switch(url->s[i]) {
 			case '@':
+				if (&url->s[i] < last_at)
+					break;
+
 				st = ST_HOST;
 				id->username = prev_token;
 				if (dupl_string(&id->password, begin, url->s + i) < 0) goto err;
@@ -340,7 +356,7 @@ static int parse_cachedb_url(struct cachedb_id* id, const str* url)
 		if (begin == url->s+url->len) {
 			if (st == ST_USER_HOST) {
 				/* Not considered an error - to cope with modules that
-				 * offer cacheDB functionality backed up by Marina.Rodeo mem */
+				 * offer cacheDB functionality backed up by OpenMarinkaRodeo mem */
 				id->flags |= CACHEDB_ID_NO_URL;
 				LM_DBG("Just scheme, no actual url\n");
 				return 0;

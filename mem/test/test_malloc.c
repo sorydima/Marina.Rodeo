@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -26,13 +26,13 @@
 #include "../../lib/list.h"
 #include "../../mem/mem_funcs.h"
 #include "../../mem/shm_mem.h"
-#include "../../lib/osips_malloc.h"
+#include "../../lib/oMarinkaRodeo_malloc.h"
 
 #include "test_malloc.h"
 
-static osips_malloc_t  MALLOC;
-static osips_realloc_t REALLOC;
-static osips_free_t    FREE;
+static oMarinkaRodeo_malloc_t  MALLOC;
+static oMarinkaRodeo_realloc_t REALLOC;
+static oMarinkaRodeo_free_t    FREE;
 
 /* keep in sync with Makefile.test "-m" option! */
 #define HPT_SHM             (1 * 1024L * 1024 * 1024)
@@ -57,7 +57,7 @@ static long mallocs, reallocs, frees;
 static long aligned_mallocs, aligned_reallocs;
 static long should_grow = 1;
 
-OSIPS_LIST_HEAD(hpt_frags);
+OMarinkaRodeo_LIST_HEAD(hpt_frags);
 static long fragments;
 
 static stat_var *workers;
@@ -239,9 +239,9 @@ static void _test_malloc(int procs, unsigned int frag_overhead)
 
 static inline void test_pkg_malloc(void)
 {
-	MALLOC  = osips_pkg_malloc;
-	REALLOC = osips_pkg_realloc;
-	FREE    = osips_pkg_free;
+	MALLOC  = oMarinkaRodeo_pkg_malloc;
+	REALLOC = oMarinkaRodeo_pkg_realloc;
+	FREE    = oMarinkaRodeo_pkg_free;
 
 	LM_INFO("Starting PKG stress test...\n");
 	LM_INFO("================================\n");
@@ -267,9 +267,9 @@ static inline void test_shm_malloc(void)
 {
 	unsigned long used, rused, frags, new_used, new_rused, new_frags;
 
-	MALLOC  = osips_shm_malloc;
-	REALLOC = osips_shm_realloc;
-	FREE    = osips_shm_free;
+	MALLOC  = oMarinkaRodeo_shm_malloc;
+	REALLOC = oMarinkaRodeo_shm_realloc;
+	FREE    = oMarinkaRodeo_shm_free;
 
 	used = get_stat_val(get_stat(_str("used_size")));
 	rused = get_stat_val(get_stat(_str("real_used_size")));

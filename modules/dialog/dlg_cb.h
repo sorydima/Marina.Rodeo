@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2009-2020 Marina.Rodeo Solutions
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2006 Voice Sistem SRLs
+ * Copyright (C) 2009-2020 OpenMarinkaRodeo Solutions
+ * Copyright (C) 2006 Voice Sistem SRLs
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -29,6 +29,7 @@ struct dlg_cell;
 struct dlg_cb_params {
 	struct sip_msg* msg;       /* sip msg related to the callback event */
 	unsigned int direction;    /* direction of the sip msg */
+	int dst_leg;               /* destination leg of the sip msg */
 	unsigned int is_active;    /* state of the node (active/backup) for this dialog */
 	void *dlg_data;            /* generic parameter, specific to callback */
 	void **param;              /* parameter passed at callback registration*/
@@ -112,7 +113,7 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
  *   - MI-based termination
  *
  * SIP signaling: confirmed and acknowledged dialog, and a BYE or an internal
- *                termination (in the latter case, Marina.Rodeo will take
+ *                termination (in the latter case, OpenMarinkaRodeo will take
  *                care of generating proper BYEs for each participant)
  * Registration:  per-dialog, "dlg" must be given
  * Trigger count: 0 - 1 times per dialog, exclusive with DLGCB_EXPIRED, and one
@@ -122,7 +123,7 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
 
 /*
  * The dialog's state has unequivocally progressed to "terminated" because the
- * maximum timeout value ($DLG_timeout) has been reached.  Marina.Rodeo will take
+ * maximum timeout value ($DLG_timeout) has been reached.  OpenMarinkaRodeo will take
  * care of generating proper BYEs for each participant.
  *
  * SIP signaling: confirmed and acknowledged dialog with exceeded max lifetime
@@ -172,7 +173,7 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
  * last chance to alter their contents before they end up on the network.
  *
  * Note: this does not include responses to internally generated dual BYE
- * requests, as they are not forwarded -- Marina.Rodeo just absorbs them.
+ * requests, as they are not forwarded -- OpenMarinkaRodeo just absorbs them.
  *
  * SIP signaling: confirmed and acknowledged dialog
  * Registration:  per-dialog, "dlg" must be given
@@ -220,7 +221,7 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
  * Called just before the dialog values / profiles are serialized and
  * written to disk or network (e.g. for binary replication).  Subscribers have
  * the chance to refresh their dialog-held information and avoid data loss or
- * inconsistencies between Marina.Rodeo cluster nodes.
+ * inconsistencies between OpenMarinkaRodeo cluster nodes.
  *
  * Triggered by:  SIP, timer, MI or shutdown
  * Registration:  per-dialog, "dlg" must be given
@@ -233,13 +234,17 @@ typedef int (*register_dlgcb_f)(struct dlg_cell* dlg, int cb_types,
 /*
  * Called just after the dialog values were received through the clusterer
  * replication packets. Subscribers have the chance to refresh their dialog-held
- * information and avoid data loss or inconsistencies between Marina.Rodeo cluster
+ * information and avoid data loss or inconsistencies between OpenMarinkaRodeo cluster
  * nodes.
  *
  * Triggered by:  replication packets received on the network
  * Registration:  per-dialog, "dlg" must be given
  * Trigger count: 0 - N times per dialog (e.g. for every update and create
  *                replicated packet received on the network)
+ * Params:
+ *   - (str *)params->dlg_data will hold the name of the variable that is being
+ *     replicated, if it was replicated after the dialog was confirmed, or
+ *     NULL if the variables were replicated in bulk
  */
 #define DLGCB_PROCESS_VARS (1<<14)
 
@@ -269,7 +274,7 @@ int register_dlgcb( struct dlg_cell* dlg, int types, dialog_cb f, void *param, p
 void run_create_callbacks(struct dlg_cell *dlg, struct sip_msg *msg);
 
 void run_dlg_callbacks( int type , struct dlg_cell *dlg, struct sip_msg *msg,
-		unsigned int dir, void *dlg_data, int locked, unsigned int is_active);
+		unsigned int dir, int leg, void *dlg_data, int locked, unsigned int is_active);
 
 void run_load_callback_per_dlg(struct dlg_cell *dlg);
 

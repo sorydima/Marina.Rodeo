@@ -174,7 +174,7 @@
 		<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
@@ -195,7 +195,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before running
-		&osips; with this module loaded:
+		&oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -420,7 +420,7 @@ modparam("pua_dialoginfo", "nopublish_flag", "no_publish")
 			<title>Set <varname>presence_server</varname> parameter</title>
 			<programlisting format="linespecific">
 ...
-modparam("pua_dialoginfo", "presence_server", "sip:ps@Marina.Rodeo.org:5060")
+modparam("pua_dialoginfo", "presence_server", "sip:ps@openMarinkaRodeo.org:5060")
 ...
 </programlisting>
 		</example>
@@ -466,13 +466,13 @@ modparam("pua_dialoginfo", "callee_spec_param", "$avp(11)")
 		</example>
 	</section>
 
-	<section id="param_osips_ps" xreflabel="osips_ps">
-		<title><varname>osips_ps</varname> (int)</title>
+	<section id="param_oMarinkaRodeo_ps" xreflabel="oMarinkaRodeo_ps">
+		<title><varname>oMarinkaRodeo_ps</varname> (int)</title>
 		<para>
 			It is advisable to specify if you use a different presence server
-			than Marina.Rodeo presence server, by setting this parameter to 0.
+			than OpenMarinkaRodeo presence server, by setting this parameter to 0.
 			By default, a trick (version in the Publish body is set '0000000') is
-			used when working with Marina.Rodeo Presence Server
+			used when working with OpenMarinkaRodeo Presence Server
 			to make the processing faster and this might not be accepted by other
 			presence servers.
 		</para>
@@ -480,10 +480,10 @@ modparam("pua_dialoginfo", "callee_spec_param", "$avp(11)")
 			<emphasis>Default value is <quote>1</quote>.</emphasis>
 		</para>
 		<example>
-			<title>Set <varname>osips_ps</varname> parameter</title>
+			<title>Set <varname>oMarinkaRodeo_ps</varname> parameter</title>
 			<programlisting format="linespecific">
 ...
-modparam("pua_dialoginfo", "osips_ps", 0)
+modparam("pua_dialoginfo", "oMarinkaRodeo_ps", 0)
 ...
 		</programlisting>
 		</example>
@@ -517,7 +517,7 @@ modparam("pua_dialoginfo", "osips_ps", 0)
 		<programlisting format="linespecific">
 ...
 	if(is_method("INVITE"))
-		if($ru =~ "Marina.Rodeo.org")
+		if($ru =~ "openMarinkaRodeo.org")
 			dialoginfo_set();
 ...
 		</programlisting>
@@ -557,7 +557,7 @@ branch_route[out]
 {
 ....
 	#align the published info with the RURI of the branch
-	dialoginfo_set_branch_callee("sip:$rU@Marina.Rodeo.org");
+	dialoginfo_set_branch_callee("sip:$rU@openMarinkaRodeo.org");
 ...
 }
 		</programlisting>

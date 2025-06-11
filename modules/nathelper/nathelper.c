@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2003-2008 Sippy Software, Inc., http://www.sippysoft.com
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2005-2019 Marina.Rodeo Project
+ * Copyright (C) 2003-2008 Sippy Software, Inc., http://www.sippysoft.com
+ * Copyright (C) 2005-2019 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -116,7 +116,7 @@ static int fixup_flags_sdp(void** param);
 
 static int nat_uac_test_f(struct sip_msg* msg, void *tests);
 static int fix_nated_contact_f(struct sip_msg* msg, str *params);
-static int fix_nated_sdp_f(struct sip_msg* msg, int* level, str *ip,
+static int fix_nated_sdp_f(struct sip_msg* msg, void *flags, str *ip,
 						str *new_sdp_lines);
 static int fix_nated_register_f(struct sip_msg *, char *, char *);
 static int add_rcv_param_f(struct sip_msg* msg, int *flag);
@@ -138,7 +138,7 @@ usrloc_api_t ul;
 static int cblen = 0;
 static str nortpproxy_str = str_init("a=nortpproxy:yes");
 static int natping_interval = 0;
-struct socket_info* force_socket = 0;
+const struct socket_info* force_socket = 0;
 
 /* */
 int ping_checker_interval = 1;
@@ -282,7 +282,7 @@ static module_dependency_t *get_deps_natping_interval(const param_export_t *para
 }
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
 	{ /* modparam dependencies */
@@ -297,7 +297,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS, /* dlopen flags */
 	0,				 /* load function */
-	&deps,           /* Marina.Rodeo module dependencies */
+	&deps,           /* OpenMarinkaRodeo module dependencies */
 	cmds,
 	NULL,
 	params,
@@ -1142,10 +1142,11 @@ static int fixup_flags_sdp(void** param)
 }
 
 static int
-fix_nated_sdp_f(struct sip_msg* msg, int* level, str *ip, str *new_sdp_lines)
+fix_nated_sdp_f(struct sip_msg* msg, void *_flags, str *ip, str *new_sdp_lines)
 {
 	str body;
 	int forcenulladdr = 0;
+	unsigned int flags = (unsigned int)(unsigned long)_flags;
 	char *buf;
 	struct lump* anchor;
 	struct body_part * p;
@@ -1168,14 +1169,13 @@ fix_nated_sdp_f(struct sip_msg* msg, int* level, str *ip, str *new_sdp_lines)
 							 || body.len == 0)
 			continue;
 
-		if (*level & (ADD_ADIRECTION | ADD_ANORTPPROXY)) {
-			msg->msg_flags |= FL_FORCE_ACTIVE;
+		if (flags & (ADD_ADIRECTION | ADD_ANORTPPROXY)) {
 			anchor = anchor_lump(msg, body.s + body.len - msg->buf, 0);
 			if (anchor == NULL) {
 				LM_ERR("anchor_lump failed\n");
 				return -1;
 			}
-			if (*level & ADD_ADIRECTION) {
+			if (flags & ADD_ADIRECTION) {
 				buf = pkg_malloc((ADIRECTION_LEN + CRLF_LEN) * sizeof(char));
 				if (buf == NULL) {
 					LM_ERR("out of pkg memory\n");
@@ -1189,7 +1189,7 @@ fix_nated_sdp_f(struct sip_msg* msg, int* level, str *ip, str *new_sdp_lines)
 					return -1;
 				}
 			}
-			if ((*level & ADD_ANORTPPROXY) && nortpproxy_str.len) {
+			if ((flags & ADD_ANORTPPROXY) && nortpproxy_str.len) {
 				buf = pkg_malloc((nortpproxy_str.len + CRLF_LEN) * sizeof(char));
 				if (buf == NULL) {
 					LM_ERR("out of pkg memory\n");
@@ -1218,14 +1218,14 @@ fix_nated_sdp_f(struct sip_msg* msg, int* level, str *ip, str *new_sdp_lines)
 			}
 		}
 
-		if (*level & FORCE_NULL_ADDR) { forcenulladdr = 1; }
+		if (flags & FORCE_NULL_ADDR) { forcenulladdr = 1; }
 
-		if (*level & FIX_ORGIP) {
+		if (flags & FIX_ORGIP) {
 			/* Iterate all o= and replace ips in them. */
 			if (replace_sdp_ip(msg, &body, "o=", ip?ip:0, forcenulladdr)==-1)
 				return -1;
 		}
-		if (*level & FIX_MEDIP) {
+		if (flags & FIX_MEDIP) {
 			/* Iterate all c= and replace ips in them. */
 			if (replace_sdp_ip(msg, &body, "c=", ip?ip:0, forcenulladdr)==-1)
 				return -1;
@@ -1310,7 +1310,7 @@ nh_timer(unsigned int ticks, void *timer_idx)
 	str received;
 	union sockaddr_union to;
 	struct hostent *he;
-	struct socket_info* send_sock;
+	const struct socket_info* send_sock;
 	unsigned int flags;
 	struct proxy_l next_hop;
 	ucontact_coords ct_coords = 0;

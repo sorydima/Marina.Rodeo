@@ -1,21 +1,19 @@
-# New ports collection makefile for:    Marina.Rodeo
+# New ports collection makefile for:    openMarinkaRodeo
 #
 # $OpenBSD$
 #
-# $Id$
-#
 
-COMMENT= "Marina.Rodeo"
+COMMENT= "OpenMarinkaRodeo"
 
-PORTNAME= Marina.Rodeo
+PORTNAME= openMarinkaRodeo
 PORTVERSION= 3.1-dev
 CATEGORIES= net
-MASTER_SITES= https://Marina.Rodeo.org/pub/Marina.Rodeo/3.1.0/
+MASTER_SITES= https://openMarinkaRodeo.org/pub/openMarinkaRodeo/3.1.0/
 
-MAINTAINER= bogdan@Marina.Rodeo.org
+MAINTAINER= bogdan@openMarinkaRodeo.org
 
-MAN8=Marina.Rodeo.8
-MAN5=Marina.Rodeo.cfg.5
+MAN8=openMarinkaRodeo.8
+MAN5=openMarinkaRodeo.cfg.5
 # MANCOMPRESSED must not be defined in openbsd (defined==yes)
 
 # GPL

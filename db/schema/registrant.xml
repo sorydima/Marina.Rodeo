@@ -1,10 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table PUBLIC "-//openMarinkaRodeo.org//DTD DBSchema V1.1//EN" 
+  "https://openMarinkaRodeo.org/pub/openMarinkaRodeo/dbschema/dtd/1.1/dbschema.dtd" [
+
+<!ENTITY % entities SYSTEM "entities.xml">
+%entities;
+
+]>
+
 <table id="registrant" xmlns:db="http://docbook.org/ns/docbook">
 	<name>registrant</name>
 	<version>3</version>
 	<type db="mysql">&MYSQL_TABLE_TYPE;</type>
 	<description>
 		<db:para>Registrant information for the uac_registrant module. More 
-		information can be found at: &Marina.Rodeo_MOD_DOC;uac_registrant.html
+		information can be found at: &OPENMarinkaRodeo_MOD_DOC;uac_registrant.html
 		</db:para>
 	</description>
 

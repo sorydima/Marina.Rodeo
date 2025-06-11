@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015-2017 Marina.Rodeo Project
+ * Copyright (C) 2015-2017 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -87,8 +87,8 @@ struct node_info {
 	/* fields protected by node lock */
 	clusterer_link_state link_state;	/* state of the "link" with this node */
 	int last_ping_state;				/* state(success/error) of the last ping sent to this node */
-	struct timeval last_ping;       	/* last ping sent to this node */
-	struct timeval last_pong;       	/* last pong received from this node */
+	struct timeval last_ping, last_sent;  /* last ping/packet sent to this node */
+	struct timeval last_pong, last_recv;  /* last pong/packet received from this node */
 	struct neighbour *neighbour_list;   /* list of directly reachable neighbours */
 	int ls_seq_no;                      /* sequence number of the last link state update */
 	int top_seq_no;                     /* sequence number of the last topology update message */
@@ -110,7 +110,7 @@ struct cluster_info {
 	int no_nodes;                   /* number of nodes in the cluster */
 	struct node_info *node_list;
 	struct node_info *current_node; /* current node's info in this cluster */
-	struct socket_info *send_sock;
+	const struct socket_info *send_sock;
 
 	gen_lock_t *lock;
 

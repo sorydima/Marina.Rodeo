@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2017 Marina.Rodeo Project
+ * Copyright (C) 2017 OpenMarinkaRodeo Project
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -27,6 +27,7 @@
 #include "../../sr_module.h"
 #include "../../mod_fix.h"
 #include "../../dprint.h"
+#include "../../lib/list.h"
 #include "../../ut.h"
 
 #include "siprec_sess.h"
@@ -34,18 +35,23 @@
 #include "siprec_var.h"
 #include "../rtp_relay/rtp_relay_load.h"
 
+#define srec_inst list_head
+
 static int mod_preinit(void);
 static int mod_init(void);
 static int child_init(int);
 static void mod_destroy(void);
 
-static int siprec_start_rec(struct sip_msg *msg, str *srs);
-static int siprec_pause_rec(struct sip_msg *msg);
-static int siprec_resume_rec(struct sip_msg *msg);
+static int siprec_start_rec(struct sip_msg *msg, str *srs, str *instance);
+static int siprec_pause_rec(struct sip_msg *msg, str *instance);
+static int siprec_resume_rec(struct sip_msg *msg, str *instance);
+static int siprec_stop_rec(struct sip_msg *msg, str *instance);
+static int siprec_send_indialog(struct sip_msg *msg, str *hdrs, str *body,
+		str *instance);
 
 /* modules dependencies */
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_DEFAULT, "tm", DEP_ABORT },
 		{ MOD_TYPE_DEFAULT, "dialog", DEP_ABORT },
 		{ MOD_TYPE_DEFAULT, "b2b_entities", DEP_ABORT },
@@ -61,12 +67,28 @@ static const dep_export_t deps = {
 /* exported commands */
 static const cmd_export_t cmds[] = {
 	{"siprec_start_recording",(cmd_function)siprec_start_rec, {
-		{CMD_PARAM_STR,0,0}, {0,0,0}},
+		{CMD_PARAM_STR,0,0},
+		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
+		{0,0,0}},
 		REQUEST_ROUTE|ONREPLY_ROUTE},
-	{"siprec_pause_recording",(cmd_function)siprec_pause_rec,
-		{{0,0,0}}, ALL_ROUTES},
-	{"siprec_resume_recording",(cmd_function)siprec_resume_rec,
-		{{0,0,0}}, ALL_ROUTES},
+	{"siprec_pause_recording",(cmd_function)siprec_pause_rec, {
+		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
+		{0,0,0}},
+		ALL_ROUTES},
+	{"siprec_resume_recording",(cmd_function)siprec_resume_rec, {
+		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
+		{0,0,0}},
+		ALL_ROUTES},
+	{"siprec_stop_recording",(cmd_function)siprec_stop_rec, {
+		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
+		{0,0,0}},
+		ALL_ROUTES},
+	{"siprec_send_indialog",(cmd_function)siprec_send_indialog, {
+		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
+		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
+		{CMD_PARAM_STR|CMD_PARAM_OPT,0,0},
+		{0,0,0}},
+		ALL_ROUTES},
 	{0,0,{{0,0,0}},0}
 };
 
@@ -77,12 +99,11 @@ static const param_export_t params[] = {
 };
 
 static const pv_export_t vars[] = {
-	{ {"siprec", sizeof("siprec")-1}, 1000,
+	{ str_const_init("siprec"), 1000,
 		pv_get_siprec, pv_set_siprec, pv_parse_siprec,
-		0, 0, 0 },
+		pv_parse_siprec_instance, 0, 0 },
 	{ {0, 0}, 0, 0, 0, 0, 0, 0, 0 }
 };
-
 
 /* module exports */
 struct module_exports exports = {
@@ -91,7 +112,7 @@ struct module_exports exports = {
 	MODULE_VERSION,
 	DEFAULT_DLFLAGS,				/* dlopen flags */
 	0,								/* load function */
-	&deps,							/* Marina.Rodeo module dependencies */
+	&deps,							/* OpenMarinkaRodeo module dependencies */
 	cmds,							/* exported functions */
 	0,								/* exported async functions */
 	params,							/* exported parameters */
@@ -143,7 +164,6 @@ static int mod_preinit(void)
 	return 0;
 }
 
-
 /**
  * init module function
  */
@@ -173,7 +193,7 @@ static int child_init(int rank)
 }
 
 /*
- * function called after Marina.Rodeo has been stopped to cleanup resources
+ * function called after OpenMarinkaRodeo has been stopped to cleanup resources
  */
 static void mod_destroy(void)
 {
@@ -182,6 +202,7 @@ static void mod_destroy(void)
 static void tm_src_unref_session(void *p)
 {
 	struct src_sess *ss = (struct src_sess *)p;
+	srec_dlg.dlg_unref(ss->ctx->dlg, 1); /* release the dialog */
 	srec_hlog(ss, SREC_UNREF, "start recording unref");
 	SIPREC_UNREF(ss);
 }
@@ -189,48 +210,61 @@ static void tm_src_unref_session(void *p)
 /*
  * function that simply prints the parameters passed
  */
-static int siprec_start_rec(struct sip_msg *msg, str *srs)
+static int siprec_start_rec(struct sip_msg *msg, str *srs, str *instance)
 {
-	int ret;
+	int ret = -2;
 	str *aor, *display, *xml_val;
+	struct src_ctx *ctx;
 	struct src_sess *ss;
 	struct dlg_cell *dlg;
 	struct srec_var *var;
-	rtp_ctx rtp;
+	struct cell *t;
+	str body;
+
+	if (!instance)
+		instance = &siprec_default_instance;
 
 	/* create the dialog, if does not exist yet */
 	dlg = srec_dlg.get_dlg();
 	if (!dlg) {
+		if (!msg) {
+			LM_ERR("no message or dialog available\n");
+			return -2;
+		}
 		if (srec_dlg.create_dlg(msg, 0) < 0) {
 			LM_ERR("cannot create dialog!\n");
 			return -2;
 		}
 		dlg = srec_dlg.get_dlg();
 	}
-	rtp = srec_rtp.get_ctx();
-	if (!rtp) {
-		LM_ERR("no existing rtp relay context!\n");
-		return -2;
+	ctx = src_get_ctx(dlg);
+	if (!ctx) {
+		ctx = src_new_ctx(dlg);
+		if (!ctx) {
+			LM_ERR("could not create new ctx\n");
+			return -2;
+		}
 	}
-
-	var = get_srec_var();
-
-	/* XXX: if there is a forced send socket in the message, use it
-	 * this is the only way to provide a different socket for SRS, but
-	 * we might need to take a different approach */
-	/* check if the current dialog has a siprec session ongoing */
-	if (!(ss = src_new_session(srs, rtp, var))) {
+	SIPREC_LOCK(ctx);
+	ss = src_get_session(ctx, instance);
+	if (ss) {
+		LM_DBG("session %p already exists!\n", ss);
+		if (ss->flags & SIPREC_STARTED) {
+			LM_WARN("session already started!\n");
+			goto release;
+		}
+		srs_add_nodes(ss, srs);
+		goto start_recording;
+	}
+	var = get_srec_var(instance);
+	if (!(ss = src_new_session(srs, ctx, var, instance))) {
 		LM_ERR("cannot create siprec session!\n");
-		return -2;
+		goto release;
 	}
 
 	/* we ref the dialog to make sure it does not dissapear until we receive
 	 * the reply from the SRS */
 	srec_dlg.dlg_ref(dlg, 1);
-	ss->dlg = dlg;
-	srec_dlg.dlg_ctx_put_ptr(dlg, srec_dlg_idx, ss);
-
-	ret = -2;
 
 	/* caller info */
 	if (var && var->caller.len) {
@@ -268,6 +302,19 @@ static int siprec_start_rec(struct sip_msg *msg, str *srs)
 		goto session_cleanup;
 	}
 
+	if (dlg->state > DLG_STATE_CONFIRMED_NA)
+		goto start_recording;
+
+	/* if we are in the context of a reply, but we're dealing with a late-negotiation
+	 * we need to postpone the 'copy-offer' command until we have both SDPs */
+	t = srec_tm.t_gett();
+	if (t && t != T_UNDEFINED && t->uas.request) {
+		if (get_body(t->uas.request, &body) >= 0 && body.len == 0) {
+			ret = srec_late_recording(ss);
+			goto release;
+		}
+	}
+
 	SIPREC_REF_UNSAFE(ss);
 	srec_hlog(ss, SREC_REF, "starting recording");
 	if (srec_tm.register_tmcb(msg, 0, TMCB_RESPONSE_OUT, tm_start_recording,
@@ -277,19 +324,57 @@ static int siprec_start_rec(struct sip_msg *msg, str *srs)
 		SIPREC_UNREF_UNSAFE(ss);
 		goto session_cleanup;
 	}
-	return 1;
+	ret = 1;
+	goto release;
 
 session_cleanup:
+	srec_dlg.dlg_unref(dlg, 1);
+	SIPREC_UNLOCK(ctx);
 	src_free_session(ss);
+	return ret;
+start_recording:
+	if (dlg->state >= DLG_STATE_DELETED) {
+		LM_WARN("call already terminated!\n");
+		ret = -1;
+		goto release;
+	}
+	ret = src_start_recording(msg, ss);
+	if (ret < 0)
+		LM_ERR("cannot start recording!\n");
+release:
+	SIPREC_UNLOCK(ctx);
 	return ret;
 }
 
-static int siprec_pause_rec(struct sip_msg *msg)
+static int siprec_pause_rec(struct sip_msg *msg, str *instance)
 {
-	return (src_pause_recording() < 0 ? -1: 1);
+	if (!instance)
+		instance = &siprec_default_instance;
+
+	return (src_pause_recording(instance) < 0 ? -1: 1);
 }
 
-static int siprec_resume_rec(struct sip_msg *msg)
+static int siprec_resume_rec(struct sip_msg *msg, str *instance)
 {
-	return (src_resume_recording() < 0 ? -1: 1);
+	if (!instance)
+		instance = &siprec_default_instance;
+
+	return (src_resume_recording(instance) < 0 ? -1: 1);
+}
+
+static int siprec_stop_rec(struct sip_msg *msg, str *instance)
+{
+	if (!instance)
+		instance = &siprec_default_instance;
+
+	return (src_stop_recording(instance) < 0 ? -1: 1);
+}
+
+static int siprec_send_indialog(struct sip_msg *msg, str *hdrs, str *body,
+		str *instance)
+{
+	if (!instance)
+		instance = &siprec_default_instance;
+
+	return (src_send_indialog(msg, hdrs, body, instance) < 0 ? -1: 1);
 }

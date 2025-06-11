@@ -8,7 +8,7 @@
 	<title>Overview</title>
 	<para>
 		The <emphasis>event_virtual</emphasis>
-		module provides the possibility to have multiple external applications, using different transport protocols, subscribed to the &osips; Event Interface as a single virtual subscriber, for a specific event. When an event is triggered, the event_virtual module notifies the specified transport modules using one of the following policies:
+		module provides the possibility to have multiple external applications, using different transport protocols, subscribed to the &oMarinkaRodeo; Event Interface as a single virtual subscriber, for a specific event. When an event is triggered, the event_virtual module notifies the specified transport modules using one of the following policies:
 		<itemizedlist>
 			<listitem><para>
 				<emphasis>PARALLEL</emphasis> - all subscribers (applications) are notified at once
@@ -62,11 +62,11 @@
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<para>
-				<emphasis>The Marina.Rodeo event modules which implement the transport protocols used by the subscribers</emphasis>.
+				<emphasis>The OpenMarinkaRodeo event modules which implement the transport protocols used by the subscribers</emphasis>.
 			</para>
 		</para>
 	</section>
@@ -75,7 +75,7 @@
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before 
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -124,7 +124,7 @@ modparam("event_virtual", "failover_timeout", 5)
 		</para>
 		<programlisting format="linespecific">
 
-	virtual:PARALLEL rabbitmq:guest:guest@127.0.0.1:5672/pike flatstore:/var/log/Marina.Rodeo_proxy.log
+	virtual:PARALLEL rabbitmq:guest:guest@127.0.0.1:5672/pike flatstore:/var/log/openMarinkaRodeo_proxy.log
 
 </programlisting>
 		</example>

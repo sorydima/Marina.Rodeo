@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2014 Marina.Rodeo Solutions
+ * Copyright (C) 2014 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -295,7 +295,7 @@ int async_script_launch(struct sip_msg *msg, struct action* a,
 		return -1;
 	}
 
-	if ( (ctx=shm_malloc(sizeof(async_launch_ctx) + (report_route_param?report_route_param->len:0)))==NULL) {
+	if ( (ctx=shm_malloc(sizeof(async_launch_ctx) + ( (report_route&&report_route_param)?report_route_param->len:0)))==NULL) {
 		LM_ERR("failed to allocate new ctx, forcing sync mode\n");
 		return -1;
 	}
@@ -339,20 +339,25 @@ int async_script_launch(struct sip_msg *msg, struct action* a,
 
 	/* ctx is to be used from this point further */
 
-	ctx->report_route = dup_ref_script_route_in_shm( report_route, 0);
-	if (!ref_script_route_is_valid(ctx->report_route)) {
-		LM_ERR("failed dup resume route -> act in sync mode\n");
-		goto sync;
-	}
-
-	if (report_route_param) {
-		ctx->report_route_param.s = (char *)(ctx+1);
-		ctx->report_route_param.len = report_route_param->len;
-		memcpy(ctx->report_route_param.s, report_route_param->s,
-			report_route_param->len);
-	} else {
-		ctx->report_route_param.s = NULL;
-		ctx->report_route_param.len = 0;
+	if (report_route) {
+		ctx->report_route = dup_ref_script_route_in_shm( report_route, 0);
+		if (!ref_script_route_is_valid(ctx->report_route)) {
+			LM_ERR("failed dup resume route -> ignoring it\n");
+			if (ctx->report_route) {
+				shm_free(ctx->report_route);
+				ctx->report_route = NULL;
+			}
+		} else {
+			if (report_route_param) {
+				ctx->report_route_param.s = (char *)(ctx+1);
+				ctx->report_route_param.len = report_route_param->len;
+				memcpy(ctx->report_route_param.s, report_route_param->s,
+					report_route_param->len);
+			} else {
+				ctx->report_route_param.s = NULL;
+				ctx->report_route_param.len = 0;
+			}
+		}
 	}
 
 	if (async_status!=ASYNC_NO_FD) {
@@ -381,7 +386,7 @@ report:
 	if (ctx->report_route)
 		shm_free(ctx->report_route);
 	shm_free(ctx);
-	if (report_route==NULL)
+	if (!ref_script_route_check_and_update(report_route))
 		return 1;
 
 	/* run the report route inline */

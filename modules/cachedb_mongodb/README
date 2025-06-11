@@ -10,7 +10,7 @@ cachedb_mongodb Module
         1.3. Limitations
         1.4. Dependencies
 
-              1.4.1. Marina.Rodeo Modules
+              1.4.1. OpenMarinkaRodeo Modules
               1.4.2. External Libraries or Applications
 
         1.5. Exported Parameters
@@ -57,7 +57,7 @@ Chapter 1. Admin Guide
 
    This module is an implementation of a cache system designed to
    work with MongoDB servers. It implements the Key-Value
-   interface exposed by the Marina.Rodeo core.
+   interface exposed by the OpenMarinkaRodeo core.
 
    The underlying client library is compatible with any of the
    following MongoDB server versions: 2.4, 2.6, 3.0, 3.2 and 3.4,
@@ -68,12 +68,12 @@ Chapter 1. Admin Guide
      * memory costs are no longer on the server
      * many servers can be used inside a cluster, so the memory is
        virtually unlimited
-     * the cache is 100% persistent. A restart of Marina.Rodeo server
+     * the cache is 100% persistent. A restart of OpenMarinkaRodeo server
        will not affect the DB. The MongoDB is also persistent so
        it can also be restarted without loss of information.
      * MongoDB is an open-source project so it can be used to
        exchange data with various other applications
-     * By creating a MongoDB Cluster, multiple Marina.Rodeo instances
+     * By creating a MongoDB Cluster, multiple OpenMarinkaRodeo instances
        can easily share key-value information
      * This module also implements the CacheDB Raw query
        capability, thus you can run whatever query that the
@@ -86,14 +86,14 @@ Chapter 1. Admin Guide
 
 1.4. Dependencies
 
-1.4.1. Marina.Rodeo Modules
+1.4.1. OpenMarinkaRodeo Modules
 
    None.
 
 1.4.2. External Libraries or Applications
 
    The following packages must be installed before running
-   Marina.Rodeo with this module loaded:
+   OpenMarinkaRodeo with this module loaded:
 
    Example 1.1. Runtime requirements for "cachedb_mongodb"
 # Debian / Ubuntu
@@ -116,9 +116,9 @@ sudo yum install json-c-devel mongo-c-driver-devel
 
 1.5.1. cachedb_url (string)
 
-   The URLs of the server groups that Marina.Rodeo will connect to in
+   The URLs of the server groups that OpenMarinkaRodeo will connect to in
    order to allow the cache_store(), cache_fetch(), etc. functions
-   to be used from the Marina.Rodeo script. It can be set more than
+   to be used from the OpenMarinkaRodeo script. It can be set more than
    one time. The prefix part of the URL will be the identifier
    that will be used from the script.
 
@@ -130,25 +130,25 @@ sudo yum install json-c-devel mongo-c-driver-devel
 ...
 # Connect to a single mongod instance
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb://localhost:27017/Marina.RodeoDB.dialog")
+         "mongodb://localhost:27017/openMarinkaRodeoDB.dialog")
 
 # Connect to a mongod replica set
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb://10.0.0.10,10.0.0.11:27017/Marina.RodeoDB.dialog?replicaS
+         "mongodb://10.0.0.10,10.0.0.11:27017/openMarinkaRodeoDB.dialog?replicaS
 et=my-set")
 
 # Connect to a mongos instance (routes to a sharded cluster)
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb://localhost/Marina.RodeoDB.dialog")
+         "mongodb://localhost/openMarinkaRodeoDB.dialog")
 
 # Example of multiple connections:
 #   * to a main mongos, with failover to a backup mongos
 #   * to a single mongod
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb:cluster://localhost,10.0.0.10:27017/Marina.RodeoDB.dialog"
+         "mongodb:cluster://localhost,10.0.0.10:27017/openMarinkaRodeoDB.dialog"
 )
 modparam("cachedb_mongodb", "cachedb_url",
-         "mongodb://localhost:27017/Marina.RodeoDB.userlocation")
+         "mongodb://localhost:27017/openMarinkaRodeoDB.userlocation")
 ...
 
    Example 1.4. Reference MongoDB connections
@@ -222,7 +222,7 @@ modparam("cachedb_mongodb", "compat_mode_3.0", 1)
    The query syntax is identical to the mongo cli. Documentation
    for it can be found on the MongoDB website. Query results are
    returned as JSON documents, that one can further process in the
-   Marina.Rodeo script by using the JSON module.
+   OpenMarinkaRodeo script by using the JSON module.
 
    Some example raw queries:
 
@@ -263,19 +263,19 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Liviu Chircu (@liviuchircu) 152 82 2920 2758
-   2. Vlad Paiu (@vladpaiu) 35 9 2964 50
-   3. Razvan Crainea (@razvancrainea) 12 10 30 26
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 154 83 2921 2759
+   2. Vlad Paiu (@vladpaiu) 37 10 3018 50
+   3. Razvan Crainea (@razvancrainea) 13 11 31 27
    4. Ovidiu Sas (@ovidiusas) 10 8 92 16
    5. Vlad Patrascu (@rvlad-patrascu) 6 4 96 11
    6. Bogdan-Andrei Iancu (@bogdan-iancu) 5 3 3 5
-   7. Dan Pascu (@danpascu) 4 2 4 4
-   8. Alessio Garzi (@Ozzyboshi) 4 2 2 2
-   9. @jalung 3 1 97 56
-   10. Maksym Sobolyev (@sobomax) 3 1 2 2
+   7. Alexandra Titoc 4 2 10 3
+   8. Dan Pascu (@danpascu) 4 2 4 4
+   9. Alessio Garzi (@Ozzyboshi) 4 2 2 2
+   10. @jalung 3 1 97 56
 
-   All remaining contributors: Julián Moreno Patiño, Peter
-   Lemenkov (@lemenkov).
+   All remaining contributors: tcresson, Maksym Sobolyev
+   (@sobomax), Julián Moreno Patiño, Peter Lemenkov (@lemenkov).
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -285,7 +285,7 @@ Chapter 2. Contributors
    merge commits. Regarding imported patches/code, we do our best
    to count the work on behalf of the proper owner, as per the
    "fix_authors" and "mod_renames" arrays in
-   Marina.Rodeo/doc/build-contrib.sh. If you identify any
+   openMarinkaRodeo/doc/build-contrib.sh. If you identify any
    patches/commits which do not get properly attributed to you,
    please submit a pull request which extends "fix_authors" and/or
    "mod_renames".
@@ -297,19 +297,19 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2.  Liviu Chircu (@liviuchircu)         Mar 2014 - Jul 2021
-   3.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2021
-   4.  Razvan Crainea (@razvancrainea)     Aug 2015 - Dec 2020
-   5.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Mar 2020
-   6.  Alessio Garzi (@Ozzyboshi)          Nov 2019 - Dec 2019
-   7.  Dan Pascu (@danpascu)               May 2019 - May 2019
-   8.  Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   9.  @jalung                             Aug 2017 - Aug 2017
-   10. Julián Moreno Patiño                Feb 2016 - Feb 2016
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - Sep 2024
+   2.  Razvan Crainea (@razvancrainea)     Aug 2015 - Sep 2024
+   3.  Alexandra Titoc                     Sep 2024 - Sep 2024
+   4.  Vlad Paiu (@vladpaiu)               Jan 2013 - Aug 2024
+   5.  tcresson                            Oct 2023 - Oct 2023
+   6.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
+   7.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2021
+   8.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Mar 2020
+   9.  Alessio Garzi (@Ozzyboshi)          Nov 2019 - Dec 2019
+   10. Dan Pascu (@danpascu)               May 2019 - May 2019
 
-   All remaining contributors: Vlad Paiu (@vladpaiu), Ovidiu Sas
-   (@ovidiusas).
+   All remaining contributors: Peter Lemenkov (@lemenkov),
+   @jalung, Julián Moreno Patiño, Ovidiu Sas (@ovidiusas).
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -318,9 +318,9 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Liviu Chircu (@liviuchircu), Peter Lemenkov
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Peter Lemenkov
    (@lemenkov), Julián Moreno Patiño, Vlad Paiu (@vladpaiu).
 
-   Documentation Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌s:
+   Documentation Copyrights:
 
-   Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌
+   Copyright © 2013-2017 www.openMarinkaRodeo-solutions.com

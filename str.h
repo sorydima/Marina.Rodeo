@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2001-2003 FhG Fokus
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -67,10 +67,12 @@ typedef struct __str str;
 typedef struct __str_const str_const;
 
 /* str initialization */
-#define STR_NULL (str){NULL, 0}
-#define STR_NULL_const (str_const){NULL, 0}
-#define str_init(_string)  (str){_string, sizeof(_string) - 1}
-#define str_const_init(_string)  (str_const){_string, sizeof(_string) - 1}
+#define STR_NULL ((str){NULL, 0})
+#define STR_NULL_const ((str_const){NULL, 0})
+#define STR_EMPTY ((str){"", 0})
+#define STR_EMPTY_const ((str_const){"", 0})
+#define str_init(_string)  ((str){_string, sizeof(_string) - 1})
+#define str_const_init(_string)  ((str_const){_string, sizeof(_string) - 1})
 
 static inline const str_const *_cs2cc(const str *_sp) {return (const str_const *)(const void *)(_sp);}
 static inline str_const *_s2c(str *_sp) {return (str_const *)(void *)(_sp);}
@@ -85,12 +87,14 @@ static inline void init_str(str *dest, const char *src)
 #define ZSTR(_s)    (!(_s).s || (_s).len == 0)
 #define ZSTRP(_sp)  (!(_sp) || ZSTR(*(_sp)))
 
-static inline str *str_cpy(str *dest, const str *src)
+static inline str *_str_cpy(str *dest, const str_const *src)
 {
 	memcpy(dest->s, src->s, src->len);
 	dest->len = src->len;
 	return dest;
 }
+
+#define str_cpy(dest, src) _str_cpy(dest, str2const(src))
 
 #define STR_L(s) s, strlen(s)
 

@@ -34,13 +34,14 @@ socket= hep_udp:127.0.0.1:6061 		# change the listening IP
 	<section id="dependencies" xreflabel="Dependencies">
 	<title>Dependencies</title>
 	<section>
-		<title>&osips; Modules</title>
+		<title>&oMarinkaRodeo; Modules</title>
 		<para>
 		The following modules must be loaded before this module:
 			<itemizedlist>
 			<listitem>
 			<para>
-				<emphasis>None</emphasis>.
+				<emphasis>tls_mgm</emphasis> - optional, only if a TLS based
+				HEP listener is defined in the script.
 			</para>
 			</listitem>
 			</itemizedlist>
@@ -51,7 +52,7 @@ socket= hep_udp:127.0.0.1:6061 		# change the listening IP
 		<title>External Libraries or Applications</title>
 		<para>
 		The following libraries or applications must be installed before
-		running &osips; with this module loaded:
+		running &oMarinkaRodeo; with this module loaded:
 			<itemizedlist>
 			<listitem>
 			<para>
@@ -175,7 +176,7 @@ modparam("proto_hep", "hep_port", 6666)
 		<title><varname>hep_send_timeout</varname> (integer)</title>
 		<para>
 		Time in milliseconds after a TCP connection will be closed if it is
-		not available for blocking writing in this interval (and &osips; wants
+		not available for blocking writing in this interval (and &oMarinkaRodeo; wants
 		to send something on it).
 		</para>
 		<para>
@@ -221,7 +222,7 @@ modparam("proto_hep", "hep_max_msg_chunks", 8)
 		<para>
 			Specifies whether the TCP connect and write operations should be
 			done in an asynchronous mode (non-blocking connect and
-			write) or not. If disabled, Marina.Rodeo will block and wait for TCP
+			write) or not. If disabled, OpenMarinkaRodeo will block and wait for TCP
 			operations like connect and write.
 		</para>
 		<para>
@@ -282,6 +283,48 @@ modparam("proto_hep", "hep_capture_id", 234)
 		</example>
 	</section>
 
+	<section id="param_hep_retry_cooldown" xreflabel="hep_retry_cooldown">
+		<title><varname>hep_retry_cooldown</varname> (integer)</title>
+		<para>
+			This parameter defines how many seconds OpenMarinkaRodeo should wait before retrying a TCP connection to the HEP destination after reaching the maximum number of failed attempts set by hep_max_retries.
+		Limitation: 16-bit integer.
+		</para>
+		<para>
+		<emphasis>
+		Default value is "3600".
+		</emphasis>
+		</para>
+		<example>
+		<title>Set <varname>hep_retry_cooldown</varname> parameter</title>
+		<programlisting format="linespecific">
+...
+modparam("proto_hep", "hep_retry_cooldown", 60)
+...
+</programlisting>
+		</example>
+	</section>
+
+	<section id="param_hep_max_retries" xreflabel="hep_max_retries">
+		<title><varname>hep_max_retries</varname> (integer)</title>
+		<para>
+			This parameter defines the maximum number of attempts OpenMarinkaRodeo will make to establish a TCP connection with the HEP destination.
+		Limitation: 16-bit integer.
+		</para>
+		<para>
+		<emphasis>
+		Default value is "5".
+		</emphasis>
+		</para>
+		<example>
+		<title>Set <varname>hep_max_retries</varname> parameter</title>
+		<programlisting format="linespecific">
+...
+modparam("proto_hep", "hep_max_retries", 10)
+...
+</programlisting>
+		</example>
+	</section>
+
 	<section id="param_hep_async_local_connect_timeout" xreflabel="hep_async_local_connect_timeout">
 		<title><varname>hep_async_local_connect_timeout</varname> (integer)</title>
 		<para>
@@ -323,7 +366,7 @@ modparam("proto_hep", "hep_async_local_connect_timeout", 200)
 		<title>Set <varname>hep_async_local_write_timeout</varname> parameter</title>
 		<programlisting format="linespecific">
 ...
-modparam("proto_hep", "tcp_async_local_write_timeout", 100)
+modparam("proto_hep", "hep_async_local_write_timeout", 100)
 ...
 </programlisting>
 		</example>

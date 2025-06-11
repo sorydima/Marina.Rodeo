@@ -1,14 +1,14 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2015-2023 - Marina.Rodeo Solutions
+ * Copyright (C) 2015-2023 - OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -54,23 +54,24 @@ static int proto_hep_init_udp(struct proto_info* pi);
 static int proto_hep_init_tcp(struct proto_info* pi);
 static int proto_hep_init_tls(struct proto_info* pi);
 static int proto_hep_init_udp_listener(struct socket_info* si);
+static int proto_hep_bind_udp_listener(struct socket_info* si);
 static int hep_tls_async_write(struct tcp_connection* con, int fd);
 static int hep_tcp_read_req(struct tcp_connection* con, int* bytes_read);
 static int hep_tls_read_req(struct tcp_connection* con, int* bytes_read);
 static int hep_tcp_or_tls_read_req(struct tcp_connection* con, int* bytes_read,
 		unsigned int is_tls);
-static int hep_udp_read_req(struct socket_info* si, int* bytes_read);
-static int hep_udp_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int hep_udp_read_req(const struct socket_info* si, int* bytes_read);
+static int hep_udp_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id);
-static int hep_tcp_or_tls_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int hep_tcp_or_tls_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id, unsigned int is_tls);
-static int hep_tcp_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int hep_tcp_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id);
-static int hep_tls_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int hep_tls_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id);
 static void update_recv_info(struct receive_info* ri, struct hep_desc* h);
 void free_hep_context(void* ptr);
@@ -91,6 +92,10 @@ static int hep_tls_async_handshake_connect_timeout = 10;
 int hep_ctx_idx = 0;
 int hep_capture_id = 1;
 int payload_compression = 0;
+int hep_max_retries = 5;
+int hep_retry_cooldown = 3600; //seconds
+extern atomic_t *hep_failed_retries;
+extern atomic_t *hep_last_attempt;
 
 int homer5_on = 1;
 str homer5_delim = {":", 0};
@@ -137,6 +142,8 @@ static const param_export_t params[] = {
 	{ "hep_id",                          STR_PARAM|USE_FUNC_PARAM, parse_hep_id     },
 	{ "homer5_on",                       INT_PARAM, &homer5_on                      },
 	{ "homer5_delim",                    STR_PARAM, &homer5_delim.s                 },
+	{ "hep_max_retries",                 INT_PARAM, &hep_max_retries                },
+	{ "hep_retry_cooldown",              INT_PARAM, &hep_retry_cooldown             },
 	{0, 0, 0}
 };
 
@@ -153,7 +160,7 @@ static module_dependency_t* get_deps_compression(const param_export_t* param)
 }
 
 static const dep_export_t deps = {
-	{ /* Marina.Rodeo module dependencies */
+	{ /* OpenMarinkaRodeo module dependencies */
 		{ MOD_TYPE_NULL, NULL, 0 },
 	},
 	{ /* modparam dependencies */
@@ -168,7 +175,7 @@ struct module_exports exports = {
 	MODULE_VERSION,      /* module version                     */
 	DEFAULT_DLFLAGS,     /* dlopen flags                       */
 	0,                   /* load function                      */
-	&deps,               /* Marina.Rodeo module dependencies       */
+	&deps,               /* OpenMarinkaRodeo module dependencies       */
 	cmds,                /* exported functions                 */
 	0,                   /* exported async functions           */
 	params,              /* module parameters                  */
@@ -187,6 +194,11 @@ struct module_exports exports = {
 
 static int mod_init(void)
 {
+	struct {
+		atomic_t hep_failed_retries;
+		atomic_t hep_last_attempt;
+	} *sh_holders;
+
 	/* check if any listeners defined for this proto */
 	if (!protos[PROTO_HEP_UDP].listeners && !protos[PROTO_HEP_TCP].listeners
 		&& !protos[PROTO_HEP_TLS].listeners) {
@@ -196,6 +208,20 @@ static int mod_init(void)
 
 	if (init_hep_id() < 0) {
 		LM_ERR("could not initialize HEP id list!\n");
+		return -1;
+	}
+
+	sh_holders = shm_malloc(sizeof *sh_holders);
+	if (!sh_holders) {
+		LM_ERR("oom\n");
+		return -1;
+	}
+	memset(sh_holders, 0, sizeof *sh_holders);
+	hep_failed_retries = &sh_holders->hep_failed_retries;
+	hep_last_attempt = &sh_holders->hep_last_attempt;
+
+	if (protos[PROTO_HEP_TLS].listeners && load_tls_mgm_api(&tls_mgm_api)!=0) {
+		LM_DBG("failed to find TLS API - is tls_mgm module loaded?\n");
 		return -1;
 	}
 
@@ -269,11 +295,12 @@ static int proto_hep_init_udp(struct proto_info* pi)
 	pi->name               = "hep_udp";
 	pi->default_port       = hep_port;
 	pi->tran.init_listener = proto_hep_init_udp_listener;
+	pi->tran.bind_listener = proto_hep_bind_udp_listener;
 
 	pi->tran.send          = hep_udp_send;
 
 	pi->net.flags          = PROTO_NET_USE_UDP;
-	pi->net.read           = (proto_net_read_f)hep_udp_read_req;
+	pi->net.dgram.read     = hep_udp_read_req;
 
 	return 0;
 }
@@ -290,13 +317,13 @@ static int proto_hep_init_tcp(struct proto_info* pi)
 
 	pi->net.flags          = PROTO_NET_USE_TCP;
 
-	pi->net.read           = (proto_net_read_f)hep_tcp_read_req;
-	pi->net.write          = (proto_net_write_f)tcp_async_write;
+	pi->net.stream.read    = hep_tcp_read_req;
+	pi->net.stream.write   = tcp_async_write;
 
 	pi->tran.send          = hep_tcp_send;
 
 	if (hep_async) {
-		pi->net.async_chunks= hep_async_max_postponed_chunks;
+		pi->net.stream.async_chunks= hep_async_max_postponed_chunks;
 	}
 
 	return 0;
@@ -304,10 +331,6 @@ static int proto_hep_init_tcp(struct proto_info* pi)
 
 static int proto_hep_init_tls(struct proto_info* pi)
 {
-	if (load_tls_mgm_api(&tls_mgm_api) != 0) {
-		LM_DBG("failed to find TLS API - is tls_mgm module loaded?\n");
-		return -1;
-	}
 
 	pi->id                  = PROTO_HEP_TLS;
 	pi->name                = "hep_tls";
@@ -318,13 +341,13 @@ static int proto_hep_init_tls(struct proto_info* pi)
 
 	pi->net.flags           = PROTO_NET_USE_TCP;
 
-	pi->net.read            = (proto_net_read_f)hep_tls_read_req;
-	pi->net.write           = (proto_net_write_f)hep_tls_async_write;
+	pi->net.stream.read     = hep_tls_read_req;
+	pi->net.stream.write    = hep_tls_async_write;
 
 	pi->tran.send           = hep_tls_send;
 
-	pi->net.conn_init       = proto_hep_tls_conn_init;
-	pi->net.conn_clean      = proto_hep_tls_conn_clean;
+	pi->net.stream.conn.init  = proto_hep_tls_conn_init;
+	pi->net.stream.conn.clean = proto_hep_tls_conn_clean;
 
 	if (hep_async && !tcp_has_async_write()) {
 		LM_WARN("TCP network layer does not have support for ASYNC write, "
@@ -333,7 +356,7 @@ static int proto_hep_init_tls(struct proto_info* pi)
 	}
 
 	if (hep_async != 0) {
-		pi->net.async_chunks= hep_async_max_postponed_chunks;
+		pi->net.stream.async_chunks= hep_async_max_postponed_chunks;
 	}
 
 	return 0;
@@ -344,8 +367,13 @@ static int proto_hep_init_udp_listener(struct socket_info* si)
 	return udp_init_listener(si, hep_async ? O_NONBLOCK : 0);
 }
 
-static int hep_udp_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int proto_hep_bind_udp_listener(struct socket_info* si)
+{
+	return udp_bind_listener(si);
+}
+
+static int hep_udp_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id)
 {
 	int n, tolen;
@@ -366,22 +394,22 @@ again:
 	return n;
 }
 
-static int hep_tcp_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int hep_tcp_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id)
 {
 	return hep_tcp_or_tls_send(send_sock, buf, len, to, id, 0);
 }
 
-static int hep_tls_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int hep_tls_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id)
 {
 	return hep_tcp_or_tls_send(send_sock, buf, len, to, id, 1);
 }
 
-static int hep_tcp_or_tls_send(struct socket_info* send_sock,
-		char* buf, unsigned int len, union sockaddr_union* to,
+static int hep_tcp_or_tls_send(const struct socket_info* send_sock,
+		char* buf, unsigned int len, const union sockaddr_union* to,
 		unsigned int id, unsigned int is_tls)
 {
 	struct tcp_connection* c;
@@ -392,7 +420,7 @@ static int hep_tcp_or_tls_send(struct socket_info* send_sock,
 	if (to) {
 		su2ip_addr(&ip, to);
 		port=su_getport(to);
-		n = tcp_conn_get(id, &ip, port, PROTO_HEP_TCP, NULL, &c, &fd, send_sock);
+		n = tcp_conn_get(id, &ip, port, is_tls ? PROTO_HEP_TLS : PROTO_HEP_TCP, NULL, &c, &fd, send_sock);
 	} else if (id) {
 		n = tcp_conn_get(id, 0, 0, PROTO_NONE, NULL, &c, &fd, NULL);
 	} else {
@@ -437,8 +465,8 @@ static int hep_tcp_or_tls_send(struct socket_info* send_sock,
 
 				/* mark the ID of the used connection (tracing purposes) */
 				last_outgoing_tcp_id = c->id;
-				send_sock->last_local_real_port = c->rcv.dst_port;
-				send_sock->last_remote_real_port = c->rcv.src_port;
+				send_sock->last_real_ports->local = c->rcv.dst_port;
+				send_sock->last_real_ports->remote = c->rcv.src_port;
 				/* connect is still in progress, break the sending
 				 * flow now (the actual write will be done when
 				 * connect will be completed */
@@ -508,8 +536,8 @@ static int hep_tcp_or_tls_send(struct socket_info* send_sock,
 
 			/* mark the ID of the used connection (tracing purposes) */
 			last_outgoing_tcp_id = c->id;
-			send_sock->last_local_real_port = c->rcv.dst_port;
-			send_sock->last_remote_real_port = c->rcv.src_port;
+			send_sock->last_real_ports->local = c->rcv.dst_port;
+			send_sock->last_real_ports->remote = c->rcv.src_port;
 
 			/* we successfully added our write chunk - success */
 			tcp_conn_release(c, 0);
@@ -553,8 +581,8 @@ send_it:
 
 	/* mark the ID of the used connection (tracing purposes) */
 	last_outgoing_tcp_id = c->id;
-	send_sock->last_local_real_port = c->rcv.dst_port;
-	send_sock->last_remote_real_port = c->rcv.src_port;
+	send_sock->last_real_ports->local = c->rcv.dst_port;
+	send_sock->last_real_ports->remote = c->rcv.src_port;
 
 	tcp_conn_release(c, (n < len) ? 1 : 0 /*pending data in async mode?*/);
 
@@ -959,7 +987,7 @@ error:
 	return -1;
 }
 
-static int hep_udp_read_req(struct socket_info* si, int* bytes_read)
+static int hep_udp_read_req(const struct socket_info* si, int* bytes_read)
 {
 	struct receive_info ri;
 	int len;
@@ -1053,11 +1081,11 @@ static int hep_udp_read_req(struct socket_info* si, int* bytes_read)
 	 * needed */
 	set_global_context(ctx);
 	ret = run_hep_cbs();
+	set_global_context(NULL);
 	if (ret < 0) {
 		LM_ERR("failed to run hep callbacks\n");
 		return -1;
 	}
-	set_global_context(NULL);
 
 	if (hep_ctx->h.version == 3) {
 		/* HEPv3 */

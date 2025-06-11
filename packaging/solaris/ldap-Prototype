@@ -2,10 +2,10 @@ i pkginfo
 i preinstall
 i postinstall
 d none /opt 0755 root sys
-d none /opt/Marina.Rodeo 0755 root root
-f none /opt/Marina.Rodeo/INSTALL 0644 root root
-d none /opt/Marina.Rodeo/lib64 0755 root root
-d none /opt/Marina.Rodeo/lib64/Marina.Rodeo 0755 root root
-d none /opt/Marina.Rodeo/lib64/Marina.Rodeo/modules 0755 root root
-f none /opt/Marina.Rodeo/lib64/Marina.Rodeo/modules/ldap.so 0755 root root
-f none /opt/Marina.Rodeo/README.ldap 0644 root root
+d none /opt/openMarinkaRodeo 0755 root root
+f none /opt/openMarinkaRodeo/INSTALL 0644 root root
+d none /opt/openMarinkaRodeo/lib64 0755 root root
+d none /opt/openMarinkaRodeo/lib64/openMarinkaRodeo 0755 root root
+d none /opt/openMarinkaRodeo/lib64/openMarinkaRodeo/modules 0755 root root
+f none /opt/openMarinkaRodeo/lib64/openMarinkaRodeo/modules/ldap.so 0755 root root
+f none /opt/openMarinkaRodeo/README.ldap 0644 root root

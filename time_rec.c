@@ -1,15 +1,15 @@
 /*
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2001-2003 FhG Fokus
- * Copyright © Need help? 🤔 Email us! 👇 A Dmitry Sorokin production. All rights reserved. Powered by REChain. 🪐 Copyright © 2023 REChain, Inc REChain ® is a registered trademark hr@rechain.email p2p@rechain.email pr@rechain.email sorydima@rechain.email support@rechain.email sip@rechain.email music@rechain.email Please allow anywhere from 1 to 5 business days for E-mail responses! 💌 (C) 2020 Marina.Rodeo Solutions
+ * Copyright (C) 2001-2003 FhG Fokus
+ * Copyright (C) 2020 OpenMarinkaRodeo Solutions
  *
- * This file is part of Marina.Rodeo, a free SIP server.
+ * This file is part of openMarinkaRodeo, a free SIP server.
  *
- * Marina.Rodeo is free software; you can redistribute it and/or modify
+ * openMarinkaRodeo is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version
  *
- * Marina.Rodeo is distributed in the hope that it will be useful,
+ * openMarinkaRodeo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -25,7 +25,7 @@
 
 #include "mem/mem.h"
 #include "mem/shm_mem.h"
-#include "lib/osips_malloc.h"
+#include "lib/oMarinkaRodeo_malloc.h"
 #include "time_rec.h"
 #include "ut.h"
 
@@ -1555,8 +1555,8 @@ int check_byxxx(tmrec_p _trp, ac_tm_p _atp)
 static inline int _tmrec_parse(const char *tr, tmrec_t *time_rec)
 {
 	char *p, *s;
-	osips_free_t free_f = (time_rec->flags & PKG_ALLOC ?
-	                           osips_pkg_free : osips_shm_free);
+	oMarinkaRodeo_free_t free_f = (time_rec->flags & PKG_ALLOC ?
+	                           oMarinkaRodeo_pkg_free : oMarinkaRodeo_shm_free);
 
 	/* empty definition? */
 	if (!tr || *tr == '\0')
@@ -1937,7 +1937,7 @@ tmrec_expr *tmrec_expr_parse(const char *trx, char alloc_type)
 	} state = NEED_OPERAND;
 
 	tmrec_expr_t *exp, *e;
-	osips_malloc_t malloc_f;
+	oMarinkaRodeo_malloc_t malloc_f;
 	char *p, *q, bkp, need_close, invert_next = 0, is_valid;
 	str aux;
 	int rc;
@@ -1948,7 +1948,7 @@ tmrec_expr *tmrec_expr_parse(const char *trx, char alloc_type)
 		return NULL;
 
 	malloc_f = (alloc_type & PKG_ALLOC ?
-	                osips_pkg_malloc : osips_shm_malloc);
+	                oMarinkaRodeo_pkg_malloc : oMarinkaRodeo_shm_malloc);
 	exp = malloc_f(sizeof *exp);
 	if (!exp) {
 		LM_ERR("oom\n");
@@ -2185,13 +2185,13 @@ void tmrec_expr_free(tmrec_expr *_trx)
 {
 	struct list_head *el, *next;
 	tmrec_expr_t *exp, *trx = (tmrec_expr_t *)_trx;
-	osips_free_t free_f;
+	oMarinkaRodeo_free_t free_f;
 
 	if (!trx)
 		return;
 
 	free_f = (trx->flags & PKG_ALLOC ?
-	              osips_pkg_free : osips_shm_free);
+	              oMarinkaRodeo_pkg_free : oMarinkaRodeo_shm_free);
 
 	list_for_each_safe (el, next, &trx->operands) {
 		exp = list_entry(el, tmrec_expr_t, list);
