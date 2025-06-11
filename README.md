@@ -1,7 +1,3 @@
-[![Build Status](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/main.yml?query=branch%3Amaster++)
-[![Unit Tests](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/unittests.yml/badge.svg?branch=master)](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/unittests.yml?query=branch%3Amaster++)
-[![OSS-Fuzz](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/cifuzz.yml/badge.svg?branch=master)](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/cifuzz.yml?query=branch%3Amaster++)
-[![Cross Platform Builds](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/multiarch.yml/badge.svg?branch=master)](https://github.com/OpenMarinkaRodeo/openMarinkaRodeo/actions/workflows/multiarch.yml?query=branch%3Amaster++)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/7580/badge.svg)](https://scan.coverity.com/projects/openMarinkaRodeo-openMarinkaRodeo)
 
 # Welcome to OpenMarinkaRodeo Project
