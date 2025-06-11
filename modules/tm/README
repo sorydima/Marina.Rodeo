@@ -1913,7 +1913,7 @@ Chapter 4. Contributors
    3. Jan Janak (@janakj) 162 76 6462 1840
    4. Andrei Pelinescu-Onciul 146 105 2447 1210
    5. Razvan Crainea (@razvancrainea) 145 112 2066 866
-   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 118 90 1318 946
+   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 118 90 1318 946
    7. Vlad Paiu (@vladpaiu) 45 33 675 339
    8. Daniel-Constantin Mierla (@miconda) 43 37 322 166
    9. Vlad Patrascu (@rvlad-patrascu) 40 18 916 826
@@ -1955,7 +1955,7 @@ Chapter 4. Contributors
    Table 4.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
    1.  Razvan Crainea (@razvancrainea)     Jul 2010 - May 2025
-   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jan 2013 - May 2025
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jan 2013 - May 2025
    3.  Bogdan-Andrei Iancu (@bogdan-iancu) Nov 2001 - May 2025
    4.  Vlad Paiu (@vladpaiu)               Jun 2011 - Apr 2025
    5.  Carsten Bock                        Mar 2024 - Mar 2024
@@ -1989,7 +1989,7 @@ Chapter 5. Documentation
 5.1. Contributors
 
    Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Liviu
-   Chircu (@liviuchircu), Carsten Bock, Razvan Crainea
+   Chircu (@sorydima), Carsten Bock, Razvan Crainea
    (@razvancrainea), Vlad Patrascu (@rvlad-patrascu), Fabian Gast
    (@fgast), Alexey Vasilyev (@vasilevalex), Peter Lemenkov
    (@lemenkov), Nick Altmann (@nikbyte), Ovidiu Sas (@ovidiusas),

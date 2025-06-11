@@ -398,7 +398,7 @@ Chapter 2. Contributors
    1. Razvan Crainea (@razvancrainea) 39 27 728 290
    2. Vlad Paiu (@vladpaiu) 32 8 2700 25
    3. Bogdan-Andrei Iancu (@bogdan-iancu) 25 21 146 88
-   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 17 15 81 56
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 17 15 81 56
    5. Vlad Patrascu (@rvlad-patrascu) 9 6 82 72
    6. Maksym Sobolyev (@sobomax) 8 6 9 10
    7. Alexey Vasilyev (@vasilevalex) 4 2 3 15
@@ -425,7 +425,7 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
-   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2015 - Mar 2025
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2015 - Mar 2025
    2. Razvan Crainea (@razvancrainea)     Aug 2015 - Mar 2025
    3. Bogdan-Andrei Iancu (@bogdan-iancu) Mar 2015 - Dec 2023
    4. James Stanley                       Dec 2023 - Dec 2023
@@ -444,7 +444,7 @@ Chapter 3. Documentation
 
    Last edited by: Razvan Crainea (@razvancrainea), Vlad Patrascu
    (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu), Vlad Paiu
+   (@sorydima), Bogdan-Andrei Iancu (@bogdan-iancu), Vlad Paiu
    (@vladpaiu).
 
    Documentation Copyrights:

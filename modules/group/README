@@ -366,7 +366,7 @@ Chapter 2. Contributors
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 46 31 848 397
    2. Jan Janak (@janakj) 35 20 1370 148
    3. Daniel-Constantin Mierla (@miconda) 24 18 176 226
-   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 16 12 87 154
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 16 12 87 154
    5. Razvan Crainea (@razvancrainea) 9 7 16 39
    6. Irina-Maria Stanescu 9 4 466 59
    7. Andrei Pelinescu-Onciul 7 5 101 40
@@ -401,7 +401,7 @@ Chapter 2. Contributors
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
    1.  Alexandra Titoc                     Sep 2024 - Sep 2024
-   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
    3.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
    4.  Razvan Crainea (@razvancrainea)     Jun 2011 - Jun 2021
    5.  Walter Doekes (@wdoekes)            Apr 2021 - Apr 2021
@@ -425,7 +425,7 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu), Razvan
+   (@sorydima), Bogdan-Andrei Iancu (@bogdan-iancu), Razvan
    Crainea (@razvancrainea), Irina-Maria Stanescu, Sergio
    Gutierrez, Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert, Dan Pascu (@danpascu), Jan

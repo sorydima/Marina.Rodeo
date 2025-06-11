@@ -161,7 +161,7 @@ Chapter 2. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 46 30 864 484
-   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 12 10 17 44
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 12 10 17 44
    3. Jan Janak (@janakj) 11 9 58 38
    4. Daniel-Constantin Mierla (@miconda) 11 9 23 19
    5. Andrei Pelinescu-Onciul 10 8 31 26
@@ -198,7 +198,7 @@ Chapter 2. Contributors
                       Name                   Commit Activity
    1.  Alexandra Titoc                     Sep 2024 - Sep 2024
    2.  Aron Podrigal (@ar45)               Sep 2024 - Sep 2024
-   3.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jan 2014 - May 2024
+   3.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jan 2014 - May 2024
    4.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
    5.  Razvan Crainea (@razvancrainea)     Feb 2012 - Sep 2019
    6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
@@ -221,7 +221,7 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Peter Lemenkov (@lemenkov), Razvan Crainea
+   (@sorydima), Peter Lemenkov (@lemenkov), Razvan Crainea
    (@razvancrainea), Bogdan-Andrei Iancu (@bogdan-iancu),
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Klaus Darilion, Elena-Ramona Modroiu.

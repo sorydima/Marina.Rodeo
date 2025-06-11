@@ -1699,7 +1699,7 @@ Chapter 3. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Jan Janak (@janakj) 416 117 15689 10095
-   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 358 215 9395 3830
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 358 215 9395 3830
    3. Bogdan-Andrei Iancu (@bogdan-iancu) 246 150 4232 3624
    4. Vlad Patrascu (@rvlad-patrascu) 43 25 794 661
    5. Ionut Ionita (@ionutrazvanionita) 41 24 1099 413
@@ -1745,7 +1745,7 @@ Chapter 3. Contributors
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
    1.  Norman Brandinger (@NormB)          Aug 2006 - May 2025
-   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jan 2013 - Feb 2025
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jan 2013 - Feb 2025
    3.  Gang Zhuo                           Nov 2024 - Nov 2024
    4.  Alexandra Titoc                     Sep 2024 - Sep 2024
    5.  Carsten Bock                        Mar 2024 - Mar 2024
@@ -1779,7 +1779,7 @@ Chapter 4. Documentation
 4.1. Contributors
 
    Last edited by: Norman Brandinger (@NormB), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Carsten Bock, Zero King (@l2dy), Alexey
+   (@sorydima), Carsten Bock, Zero King (@l2dy), Alexey
    Vasilyev (@vasilevalex), Vlad Patrascu (@rvlad-patrascu), Peter
    Lemenkov (@lemenkov), Bogdan-Andrei Iancu (@bogdan-iancu),
    Razvan Crainea (@razvancrainea), Ionut Ionita

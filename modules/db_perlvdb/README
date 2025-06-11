@@ -274,7 +274,7 @@ Chapter 3. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 26 19 257 202
    2. Bastian Friedrich 19 2 1820 18
-   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 14 12 25 57
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 14 12 25 57
    4. Razvan Crainea (@razvancrainea) 11 9 27 14
    5. Daniel-Constantin Mierla (@miconda) 9 7 27 25
    6. Maksym Sobolyev (@sobomax) 5 3 5 21
@@ -307,7 +307,7 @@ Chapter 3. Contributors
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
    1.  Alexandra Titoc                     Sep 2024 - Sep 2024
-   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
    3.  Razvan Crainea (@razvancrainea)     Aug 2015 - Aug 2023
    4.  Maksym Sobolyev (@sobomax)          Oct 2022 - Feb 2023
    5.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2007 - Apr 2019
@@ -328,7 +328,7 @@ Chapter 4. Documentation
 4.1. Contributors
 
    Last edited by: Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu),
+   (@sorydima), Bogdan-Andrei Iancu (@bogdan-iancu),
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Bastian Friedrich.
 

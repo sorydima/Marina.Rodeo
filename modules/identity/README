@@ -348,7 +348,7 @@ Chapter 2. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Alexander Christ 23 1 2571 0
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 14 12 28 19
-   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 12 9 23 69
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 12 9 23 69
    4. Razvan Crainea (@razvancrainea) 11 9 82 24
    5. Vlad Patrascu (@rvlad-patrascu) 6 4 15 16
    6. Sergio Gutierrez 4 2 7 2
@@ -381,7 +381,7 @@ Chapter 2. Contributors
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
    1.  Alexandra Titoc                     Sep 2024 - Sep 2024
-   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
    3.  Maksym Sobolyev (@sobomax)          Sep 2020 - Feb 2023
    4.  Razvan Crainea (@razvancrainea)     Aug 2015 - Jan 2021
    5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
@@ -402,7 +402,7 @@ Chapter 3. Documentation
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Bogdan-Andrei
    Iancu (@bogdan-iancu), Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Alexander Christ.
+   (@sorydima), Alexander Christ.
 
    Documentation Copyrights:
 

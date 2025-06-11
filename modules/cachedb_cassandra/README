@@ -278,7 +278,7 @@ Chapter 2. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Vlad Patrascu (@rvlad-patrascu) 378 13 1998 21057
    2. Vlad Paiu (@vladpaiu) 189 7 21444 38
-   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 11 9 39 50
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 11 9 39 50
    4. Razvan Crainea (@razvancrainea) 8 6 16 14
    5. fabriziopicconi 4 2 5 5
    6. Maksym Sobolyev (@sobomax) 4 2 3 3
@@ -313,7 +313,7 @@ Chapter 2. Contributors
    1.  Norman Brandinger (@NormB)          Jan 2025 - Jan 2025
    2.  Zoop                                Oct 2024 - Oct 2024
    3.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   4.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - Apr 2021
+   4.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - Apr 2021
    5.  Razvan Crainea (@razvancrainea)     Feb 2012 - Jan 2021
    6.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Jun 2020
    7.  Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Apr 2019
@@ -333,7 +333,7 @@ Chapter 3. Documentation
 
    Last edited by: Norman Brandinger (@NormB), Vlad Patrascu
    (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Julián Moreno Patiño, Vlad Paiu (@vladpaiu),
+   (@sorydima), Julián Moreno Patiño, Vlad Paiu (@vladpaiu),
    Razvan Crainea (@razvancrainea).
 
    Documentation Copyrights:

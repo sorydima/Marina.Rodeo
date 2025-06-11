@@ -110,7 +110,7 @@ Chapter 2. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Vlad Paiu (@vladpaiu) 15 5 1006 3
-   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 13 11 50 48
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 13 11 50 48
    3. Razvan Crainea (@razvancrainea) 11 9 12 14
    4. Bogdan-Andrei Iancu (@bogdan-iancu) 9 7 22 13
    5. Leo Smith 8 6 32 2
@@ -143,7 +143,7 @@ Chapter 2. Contributors
    2. Bogdan-Andrei Iancu (@bogdan-iancu) Jun 2012 - Dec 2024
    3. Alexandra Titoc                     Sep 2024 - Sep 2024
    4. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - Apr 2021
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - Apr 2021
    6. Razvan Crainea (@razvancrainea)     Feb 2012 - Sep 2019
    7. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
    8. Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2017
@@ -157,7 +157,7 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Leo Smith, Razvan Crainea (@razvancrainea),
-   Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu),
+   Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima),
    Bogdan-Andrei Iancu (@bogdan-iancu), Vlad Paiu (@vladpaiu).
 
    Documentation Copyrights:

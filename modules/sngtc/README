@@ -185,7 +185,7 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 33 14 2076 59
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 33 14 2076 59
    2. Razvan Crainea (@razvancrainea) 9 7 15 12
    3. Bogdan-Andrei Iancu (@bogdan-iancu) 9 6 29 64
    4. Vlad Patrascu (@rvlad-patrascu) 7 5 57 44
@@ -216,7 +216,7 @@ Chapter 2. Contributors
    2. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
    3. Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Mar 2020
    4. Razvan Crainea (@razvancrainea)     Aug 2015 - Feb 2020
-   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Aug 2013 - Jun 2018
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Aug 2013 - Jun 2018
    6. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
 
    (1) including any documentation-related commits, excluding
@@ -227,7 +227,7 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Peter Lemenkov (@lemenkov).
+   (@sorydima), Peter Lemenkov (@lemenkov).
 
    Documentation Copyrights:
 

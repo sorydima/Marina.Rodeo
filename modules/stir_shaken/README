@@ -490,7 +490,7 @@ Chapter 2. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Vlad Patrascu (@rvlad-patrascu) 59 26 3129 324
-   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 24 18 252 123
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 24 18 252 123
    3. MonkeyTester 14 9 388 14
    4. Maksym Sobolyev (@sobomax) 7 5 23 35
    5. Razvan Crainea (@razvancrainea) 6 4 49 25
@@ -526,7 +526,7 @@ Chapter 2. Contributors
    2.  MonkeyTester                        Aug 2023 - Aug 2024
    3.  Bogdan-Andrei Iancu (@bogdan-iancu) Mar 2024 - Jul 2024
    4.  Maksym Sobolyev (@sobomax)          Jan 2021 - Jun 2024
-   5.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Nov 2019 - Apr 2024
+   5.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Nov 2019 - Apr 2024
    6.  tcresson                            Oct 2023 - Oct 2023
    7.  Kevin                               Feb 2022 - Feb 2022
    8.  kworm83                             Jan 2022 - Jan 2022
@@ -543,7 +543,7 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Liviu
-   Chircu (@liviuchircu), MonkeyTester, Vlad Patrascu
+   Chircu (@sorydima), MonkeyTester, Vlad Patrascu
    (@rvlad-patrascu).
 
    Documentation Copyrights:

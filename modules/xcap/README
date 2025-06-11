@@ -215,7 +215,7 @@ Chapter 3. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Saúl Ibarra Corretgé (@saghul) 15 3 1260 53
-   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 11 8 55 106
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 11 8 55 106
    3. Razvan Crainea (@razvancrainea) 7 5 25 21
    4. Bogdan-Andrei Iancu (@bogdan-iancu) 5 3 6 10
    5. Ovidiu Sas (@ovidiusas) 3 1 13 3
@@ -243,7 +243,7 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
-   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jul 2014 - May 2024
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jul 2014 - May 2024
    2. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
    3. Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Mar 2020
    4. Razvan Crainea (@razvancrainea)     Aug 2015 - Sep 2019
@@ -260,7 +260,7 @@ Chapter 4. Documentation
 4.1. Contributors
 
    Last edited by: Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Saúl Ibarra Corretgé (@saghul).
+   (@sorydima), Saúl Ibarra Corretgé (@saghul).
 
    Documentation Copyrights:
 

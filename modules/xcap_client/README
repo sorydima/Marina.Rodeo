@@ -273,7 +273,7 @@ Chapter 3. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Anca Vamanu 37 14 2155 193
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 18 15 56 63
-   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 12 10 30 50
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 12 10 30 50
    4. Razvan Crainea (@razvancrainea) 12 10 18 18
    5. Daniel-Constantin Mierla (@miconda) 9 7 22 19
    6. Henning Westerholt (@henningw) 8 6 60 49
@@ -306,7 +306,7 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2024
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2024
    2.  Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
    3.  Razvan Crainea (@razvancrainea)     Sep 2011 - Sep 2019
    4.  Bogdan-Andrei Iancu (@bogdan-iancu) Feb 2008 - Apr 2019
@@ -331,7 +331,7 @@ Chapter 4. Documentation
 
    Last edited by: Razvan Crainea (@razvancrainea), Vlad Patrascu
    (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu), Saúl
+   (@sorydima), Bogdan-Andrei Iancu (@bogdan-iancu), Saúl
    Ibarra Corretgé (@saghul), Anca Vamanu, Henning Westerholt
    (@henningw), Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert.

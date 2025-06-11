@@ -251,7 +251,7 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
                    Name               DevScore Commits Lines ++ Lines --
-   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)        30       8      2085     215
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)        30       8      2085     215
    2. Razvan Crainea (@razvancrainea)    3        1       55       2
 
    (1) DevScore = author_commits + author_lines_added /
@@ -275,7 +275,7 @@ Chapter 2. Contributors
    Table 2.2. Most recently active contributors^(1) to this module
                    Name                 Commit Activity
    1. Razvan Crainea (@razvancrainea) May 2024 - May 2024
-   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)     Mar 2024 - May 2024
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)     Mar 2024 - May 2024
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -284,7 +284,7 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu).
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima).
 
    Documentation Copyrights:
 

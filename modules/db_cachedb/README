@@ -161,7 +161,7 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 10 8 34 35
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 10 8 34 35
    2. Vlad Paiu (@vladpaiu) 10 3 626 7
    3. Razvan Crainea (@razvancrainea) 7 5 7 5
    4. Maksym Sobolyev (@sobomax) 4 2 3 4
@@ -191,7 +191,7 @@ Chapter 2. Contributors
    Table 2.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
    1. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - Apr 2021
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - Apr 2021
    3. Razvan Crainea (@razvancrainea)     Aug 2015 - Sep 2019
    4. Bogdan-Andrei Iancu (@bogdan-iancu) Oct 2014 - Apr 2019
    5. Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
@@ -207,7 +207,7 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Peter Lemenkov (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles. 
-   (@liviuchircu), Walter Doekes (@wdoekes), Vlad Paiu
+   (@sorydima), Walter Doekes (@wdoekes), Vlad Paiu
    (@vladpaiu).
 
    Documentation Copyrights:

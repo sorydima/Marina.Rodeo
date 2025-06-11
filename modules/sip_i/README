@@ -760,7 +760,7 @@ Chapter 2. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Vlad Patrascu (@rvlad-patrascu) 129 44 6684 1643
    2. Razvan Crainea (@razvancrainea) 11 9 21 20
-   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 8 6 24 31
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 8 6 24 31
    4. Maksym Sobolyev (@sobomax) 7 5 14 15
    5. Bogdan-Andrei Iancu (@bogdan-iancu) 6 4 83 11
    6. Rustam Safargalin 3 1 80 1
@@ -794,7 +794,7 @@ Chapter 2. Contributors
    5. Rustam Safargalin                   Apr 2020 - Apr 2020
    6. Walter Doekes (@wdoekes)            Apr 2019 - Apr 2019
    7. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
-   8. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Apr 2018 - Jun 2018
+   8. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Apr 2018 - Jun 2018
 
    (1) including any documentation-related commits, excluding
    merge commits
@@ -804,7 +804,7 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Peter Lemenkov
-   (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Bogdan-Andrei Iancu
+   (@lemenkov), Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Bogdan-Andrei Iancu
    (@bogdan-iancu), Razvan Crainea (@razvancrainea).
 
    Documentation Copyrights:

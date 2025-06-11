@@ -185,7 +185,7 @@ Chapter 2. Contributors
    3. Norman Brandinger (@NormB) 55 4 1449 2247
    4. Greg Fausak 42 3 4472 2
    5. Daniel-Constantin Mierla (@miconda) 27 20 350 203
-   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 18 15 45 87
+   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 18 15 45 87
    7. Razvan Crainea (@razvancrainea) 15 12 210 27
    8. Jan Janak (@janakj) 12 8 300 23
    9. Klaus Darilion 10 6 139 67
@@ -220,7 +220,7 @@ Chapter 2. Contributors
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
    1.  Razvan Crainea (@razvancrainea)     Oct 2011 - Jul 2024
-   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Sep 2012 - May 2024
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Sep 2012 - May 2024
    3.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2005 - Feb 2024
    4.  Maksym Sobolyev (@sobomax)          Apr 2004 - Feb 2023
    5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Oct 2021
@@ -247,7 +247,7 @@ Chapter 3. Documentation
 
    Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Vlad
    Patrascu (@rvlad-patrascu), Norman Brandinger (@NormB), Liviu
-   Chircu (@liviuchircu), Razvan Crainea (@razvancrainea), Peter
+   Chircu (@sorydima), Razvan Crainea (@razvancrainea), Peter
    Lemenkov (@lemenkov), Aron Podrigal, Eseanu Marius Cristian
    (@eseanucristian), Vlad Paiu (@vladpaiu), Daniel-Constantin
    Mierla (@miconda), Konstantin Bokarius, Edson Gellert Schubert,

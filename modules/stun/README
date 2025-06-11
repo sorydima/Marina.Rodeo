@@ -243,7 +243,7 @@ Chapter 2. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Razvan Pistolea 20 3 1891 19
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 19 14 194 179
-   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 17 12 259 117
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 17 12 259 117
    4. Razvan Crainea (@razvancrainea) 14 12 27 20
    5. Vlad Paiu (@vladpaiu) 7 5 25 4
    6. Bernard 7 1 391 75
@@ -276,7 +276,7 @@ Chapter 2. Contributors
    3. Bernard                             Oct 2021 - Oct 2021
    4. Razvan Crainea (@razvancrainea)     Oct 2011 - Sep 2019
    5. Vlad Paiu (@vladpaiu)               Sep 2011 - Aug 2019
-   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - Nov 2018
+   6. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - Nov 2018
    7. Peter Lemenkov (@lemenkov)          Jun 2018 - Jun 2018
    8. Vlad Patrascu (@rvlad-patrascu)     May 2017 - May 2017
    9. Razvan Pistolea                     Sep 2009 - Sep 2009
@@ -289,7 +289,7 @@ Chapter 3. Documentation
 3.1. Contributors
 
    Last edited by: Bernard, Peter Lemenkov (@lemenkov), Liviu
-   Chircu (@liviuchircu), Bogdan-Andrei Iancu (@bogdan-iancu),
+   Chircu (@sorydima), Bogdan-Andrei Iancu (@bogdan-iancu),
    Razvan Pistolea.
 
    Documentation Copyrights:

@@ -500,7 +500,7 @@ Chapter 2. Contributors
    2. Ionut Ionita (@ionutrazvanionita) 107 52 2676 1887
    3. Razvan Crainea (@razvancrainea) 76 54 1665 453
    4. Daniel-Constantin Mierla (@miconda) 49 26 2215 191
-   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 26 23 87 80
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 26 23 87 80
    6. Vlad Paiu (@vladpaiu) 24 10 402 568
    7. Vlad Patrascu (@rvlad-patrascu) 17 8 286 335
    8. Henning Westerholt (@henningw) 11 6 146 155
@@ -537,7 +537,7 @@ Chapter 2. Contributors
                       Name                   Commit Activity
    1.  Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2006 - Jul 2024
    2.  Razvan Crainea (@razvancrainea)     Jun 2011 - Jul 2024
-   3.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jan 2013 - May 2024
+   3.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jan 2013 - May 2024
    4.  Ovidiu Sas (@ovidiusas)             Mar 2020 - Apr 2024
    5.  Vlad Paiu (@vladpaiu)               Jun 2011 - Dec 2023
    6.  Maksym Sobolyev (@sobomax)          Feb 2023 - Nov 2023
@@ -564,7 +564,7 @@ Chapter 3. Documentation
    Last edited by: Vlad Patrascu (@rvlad-patrascu), Peter Lemenkov
    (@lemenkov), Nick Altmann (@nikbyte), Razvan Crainea
    (@razvancrainea), Bogdan-Andrei Iancu (@bogdan-iancu), Liviu
-   Chircu (@liviuchircu), Ovidiu Sas (@ovidiusas), Ionut Ionita
+   Chircu (@sorydima), Ovidiu Sas (@ovidiusas), Ionut Ionita
    (@ionutrazvanionita), Andrei Datcu (@andrei-datcu), Alexandr
    Dubovikov (@adubovikov), Daniel-Constantin Mierla (@miconda),
    Konstantin Bokarius, Edson Gellert Schubert, Henning Westerholt

@@ -190,7 +190,7 @@ Chapter 3. Contributors
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
    1. Ovidiu Sas (@ovidiusas) 23 3 2152 13
-   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 16 13 41 72
+   2. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 16 13 41 72
    3. Bogdan-Andrei Iancu (@bogdan-iancu) 10 8 25 16
    4. Razvan Crainea (@razvancrainea) 9 7 19 19
    5. Vlad Patrascu (@rvlad-patrascu) 8 5 99 96
@@ -219,7 +219,7 @@ Chapter 3. Contributors
 
    Table 3.2. Most recently active contributors^(1) to this module
                      Name                   Commit Activity
-   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jan 2013 - May 2024
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jan 2013 - May 2024
    2. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
    3. Razvan Crainea (@razvancrainea)     Oct 2011 - Jul 2020
    4. Bogdan-Andrei Iancu (@bogdan-iancu) Jul 2009 - May 2020
@@ -236,7 +236,7 @@ Chapter 4. Documentation
 
 4.1. Contributors
 
-   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Peter Lemenkov
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Peter Lemenkov
    (@lemenkov), Vlad Patrascu (@rvlad-patrascu), Bogdan-Andrei
    Iancu (@bogdan-iancu), Vlad Paiu (@vladpaiu), Ovidiu Sas
    (@ovidiusas).

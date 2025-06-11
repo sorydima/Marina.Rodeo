@@ -263,7 +263,7 @@ Chapter 2. Contributors
    Table 2.1. Top contributors by DevScore^(1), authored
    commits^(2) and lines added/removed^(3)
      Name DevScore Commits Lines ++ Lines --
-   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 154 83 2921 2759
+   1. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 154 83 2921 2759
    2. Vlad Paiu (@vladpaiu) 37 10 3018 50
    3. Razvan Crainea (@razvancrainea) 13 11 31 27
    4. Ovidiu Sas (@ovidiusas) 10 8 92 16
@@ -297,7 +297,7 @@ Chapter 2. Contributors
 
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - Sep 2024
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - Sep 2024
    2.  Razvan Crainea (@razvancrainea)     Aug 2015 - Sep 2024
    3.  Alexandra Titoc                     Sep 2024 - Sep 2024
    4.  Vlad Paiu (@vladpaiu)               Jan 2013 - Aug 2024
@@ -318,7 +318,7 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Peter Lemenkov
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Peter Lemenkov
    (@lemenkov), Julián Moreno Patiño, Vlad Paiu (@vladpaiu).
 
    Documentation Copyrights:

@@ -442,7 +442,7 @@ Chapter 2. Contributors
    2. Vlad Patrascu (@rvlad-patrascu) 5 1 123 66
    3. Maksym Sobolyev (@sobomax) 4 2 4 5
    4. Bogdan-Andrei Iancu (@bogdan-iancu) 3 1 2 1
-   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 3 1 1 1
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 3 1 1 1
 
    (1) DevScore = author_commits + author_lines_added /
    (project_lines_added / project_commits) + author_lines_deleted
@@ -468,7 +468,7 @@ Chapter 2. Contributors
    2. Bogdan-Andrei Iancu (@bogdan-iancu) Apr 2023 - Apr 2023
    3. Vlad Patrascu (@rvlad-patrascu)     Mar 2023 - Mar 2023
    4. Maksym Sobolyev (@sobomax)          Feb 2023 - Feb 2023
-   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Jan 2021 - Jan 2021
+   5. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Jan 2021 - Jan 2021
 
    (1) including any documentation-related commits, excluding
    merge commits

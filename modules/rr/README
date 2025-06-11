@@ -541,7 +541,7 @@ Chapter 4. Contributors
      Name DevScore Commits Lines ++ Lines --
    1. Jan Janak (@janakj) 142 59 4374 2763
    2. Bogdan-Andrei Iancu (@bogdan-iancu) 96 65 1915 843
-   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 19 16 72 105
+   3. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 19 16 72 105
    4. Daniel-Constantin Mierla (@miconda) 19 14 244 92
    5. Vlad Paiu (@vladpaiu) 15 10 333 88
    6. Jiri Kuthan (@jiriatipteldotorg) 15 10 250 64
@@ -577,7 +577,7 @@ Chapter 4. Contributors
 
    Table 4.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
-   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Oct 2013 - May 2024
+   1.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Oct 2013 - May 2024
    2.  Maksym Sobolyev (@sobomax)          Feb 2023 - Nov 2023
    3.  Bogdan-Andrei Iancu (@bogdan-iancu) Jan 2002 - Nov 2022
    4.  Razvan Crainea (@razvancrainea)     Aug 2010 - Sep 2019
@@ -604,7 +604,7 @@ Chapter 5. Documentation
 
    Last edited by: Bogdan-Andrei Iancu (@bogdan-iancu), Vlad
    Patrascu (@rvlad-patrascu), Peter Lemenkov (@lemenkov), Liviu
-   Chircu (@liviuchircu), Razvan Crainea (@razvancrainea), Vlad
+   Chircu (@sorydima), Razvan Crainea (@razvancrainea), Vlad
    Paiu (@vladpaiu), Ovidiu Sas (@ovidiusas), Dan Pascu
    (@danpascu), Daniel-Constantin Mierla (@miconda), Konstantin
    Bokarius, Edson Gellert Schubert, Elena-Ramona Modroiu, Jan

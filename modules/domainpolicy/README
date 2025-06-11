@@ -512,7 +512,7 @@ Chapter 2. Contributors
    1. Bogdan-Andrei Iancu (@bogdan-iancu) 22 16 178 217
    2. Klaus Darilion 22 1 2456 0
    3. Razvan Crainea (@razvancrainea) 13 9 60 180
-   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu) 12 9 39 64
+   4. Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima) 12 9 39 64
    5. Daniel-Constantin Mierla (@miconda) 10 8 19 21
    6. Henning Westerholt (@henningw) 6 4 25 25
    7. Maksym Sobolyev (@sobomax) 5 3 4 5
@@ -543,7 +543,7 @@ Chapter 2. Contributors
    Table 2.2. Most recently active contributors^(1) to this module
                       Name                   Commit Activity
    1.  Maksym Sobolyev (@sobomax)          Feb 2023 - Nov 2023
-   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu)         Mar 2014 - May 2023
+   2.  Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima)         Mar 2014 - May 2023
    3.  Razvan Crainea (@razvancrainea)     Jun 2011 - Nov 2021
    4.  Bogdan-Andrei Iancu (@bogdan-iancu) Dec 2006 - Mar 2020
    5.  Vlad Patrascu (@rvlad-patrascu)     May 2017 - Apr 2019
@@ -563,7 +563,7 @@ Chapter 3. Documentation
 
 3.1. Contributors
 
-   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@liviuchircu), Peter Lemenkov
+   Last edited by: Sorokin Dmitry Olegovich - @sorydima , @sorydev , @durovshater , @DmitrySoro90935 Handles.  (@sorydima), Peter Lemenkov
    (@lemenkov), Bogdan-Andrei Iancu (@bogdan-iancu),
    Daniel-Constantin Mierla (@miconda), Konstantin Bokarius, Edson
    Gellert Schubert, Klaus Darilion.
